@@ -7,7 +7,7 @@ Below is a is of the modules currently available in this collection. More module
 | Module       | File              | Description                   |
 | ------------ | ----------------- | ----------------------------- |
 | `fifo`       | data/fifo.v       | Synchronous FIFO queue        |
-| `fifo_async` | data/fifo.v       | Asynchronous FIFO queue       |
+| `fifo_async` | data/fifo_async.v | Asynchronous FIFO queue       |
 | `lifo`       | data/lifo.v       | Synchronous LIFO stack        |
 | `sync`       | timing/sync.v     | Flip-flop synchronizer        |
 | `sync_vec`   | timing/sync_vec.v | Flip-flop vector synchronizer |
