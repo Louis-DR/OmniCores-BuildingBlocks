@@ -64,9 +64,9 @@ assign read_data = buffer[stack_ptr];
 
 
 
-//--------------------
-// Synchronous logic
-//--------------------
+// ┌───────────────────┐
+// │ Synchronous logic │
+// └───────────────────┘
 
 integer idx;
 always @(posedge clk or negedge arstn) begin

@@ -40,9 +40,9 @@ reg [WIDTH-1:0] buffer [DEPTH-1:0];
 
 
 
-//--------------
-// Write logic
-//--------------
+// ┌────── ──────┐
+// │ Write logic │
+// └────── ──────┘
 
 // Flag true if FIFO not full
 reg can_write;
@@ -60,9 +60,9 @@ assign full = ~can_write;
 
 
 
-//-------------
-// Read logic
-//-------------
+// ┌────────────┐
+// │ Read logic │
+// └────────────┘
 
 // Flag true if FIFO not empty
 reg can_read;
@@ -81,9 +81,9 @@ assign read_data = buffer[read_addr];
 
 
 
-//--------------------
-// Synchronous logic
-//--------------------
+// ┌───────────────────┐
+// │ Synchronous logic │
+// └───────────────────┘
 
 integer idx;
 always @(posedge clk or negedge arstn) begin

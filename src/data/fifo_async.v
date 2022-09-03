@@ -42,9 +42,9 @@ reg [WIDTH-1:0] buffer [DEPTH-1:0];
 
 
 
-//---------------------
-// Write clock domain
-//---------------------
+// ┌────────────────────┐
+// │ Write clock domain │
+// └────────────────────┘
 
 // Flag true if FIFO not full
 reg can_write;
@@ -85,9 +85,9 @@ end
 
 
 
-//--------------------
-// Read clock domain
-//--------------------
+// ┌───────────────────┐
+// │ Read clock domain │
+// └───────────────────┘
 
 // Flag true if FIFO not empty
 reg can_read;
@@ -140,9 +140,9 @@ end
 
 
 
-//------------------------
-// Clock domain crossing
-//------------------------
+// ┌───────────────────────┐
+// │ Clock domain crossing │
+// └───────────────────────┘
 
 sync_vec #(
   .WIDTH  (DEPTH_LOG2+1),
