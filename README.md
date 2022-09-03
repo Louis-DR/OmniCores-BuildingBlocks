@@ -8,6 +8,7 @@ Below is a is of the modules currently available in this collection. More module
 | ------------ | ----------------- | ----------------------------- |
 | `fifo`       | data/fifo.v       | Synchronous FIFO queue        |
 | `fifo_async` | data/fifo.v       | Asynchronous FIFO queue       |
+| `lifo`       | data/lifo.v       | Synchronous LIFO stack        |
 | `sync`       | timing/sync.v     | Flip-flop synchronizer        |
 | `sync_vec`   | timing/sync_vec.v | Flip-flop vector synchronizer |
 
@@ -15,7 +16,6 @@ Modules planned or in development :
 
 - Data structures
   - Advanced FIFO queue
-  - Synchronous LIFO stack
   - Asynchronous LIFO stack
   - Advanced LIFO queue
   - Content addressable memory
