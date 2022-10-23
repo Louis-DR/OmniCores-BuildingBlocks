@@ -6,6 +6,7 @@ Below is a is of the modules currently available in this collection. More module
 
 | Module       | File              | Description                   |
 | ------------ | ----------------- | ----------------------------- |
+| `buffer`     | data/buffer.v     | Data buffer                   |
 | `fifo`       | data/fifo.v       | Synchronous FIFO queue        |
 | `fifo_async` | data/fifo_async.v | Asynchronous FIFO queue       |
 | `lifo`       | data/lifo.v       | Synchronous LIFO stack        |
@@ -37,7 +38,7 @@ Modules planned or in development :
   - Req-ack handshake-based register slice
   - Valid-ready handshake-based register slice
   - Credit-based register slice
-- Transformation
+- Encoding
   - Binary to grey-code
   - Grey-code to binary
   - Binary to one-hot
