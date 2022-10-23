@@ -33,7 +33,7 @@ module fifo #(
   output             empty
 );
 
-parameter DEPTH = 2 ** DEPTH_LOG2;
+localparam DEPTH = 2 ** DEPTH_LOG2;
 
 // Memory array
 reg [WIDTH-1:0] buffer [DEPTH-1:0];
