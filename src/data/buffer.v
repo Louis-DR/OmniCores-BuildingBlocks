@@ -31,7 +31,7 @@ module buffer #(
 
 // Buffer register
 reg [WIDTH-1:0] buffer;
-wire [FLIT_WIDTH-1:0] buffer_next;
+wire [WIDTH-1:0] buffer_next;
 
 // Buffer state
 reg buffer_valid;
@@ -58,10 +58,10 @@ always @(posedge clk or negedge arstn) begin
     buffer <= '0;
     buffer_valid <= '0;
   end else begin
-    if (i_s_valid & ~buffer_valid) begin
+    if (slave_valid & ~buffer_valid) begin
       buffer <= buffer_next;
       buffer_valid <= '1;
-    end else if (i_m_ready) begin
+    end else if (master_ready) begin
       if (slave_ready) begin
         buffer <= buffer_next;
       end else begin
