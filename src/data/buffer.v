@@ -62,7 +62,7 @@ always @(posedge clk or negedge arstn) begin
       buffer <= buffer_next;
       buffer_valid <= '1;
     end else if (master_ready) begin
-      if (slave_ready) begin
+      if (slave_valid) begin
         buffer <= buffer_next;
       end else begin
         buffer <= '0;
