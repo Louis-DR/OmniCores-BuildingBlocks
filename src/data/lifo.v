@@ -75,7 +75,7 @@ always @(posedge clk or negedge arstn) begin
     stack_ptr <= '0;
     can_write <= '1;
     can_read  <= '0;
-    for (idx=0; idx<DEPTH; idx++) begin
+    for (idx=0; idx<DEPTH; idx=idx+1) begin
       buffer[idx] <= '0;
     end
 

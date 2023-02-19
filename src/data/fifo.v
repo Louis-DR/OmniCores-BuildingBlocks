@@ -92,7 +92,7 @@ always @(posedge clk or negedge arstn) begin
     can_write <= '1;
     read_ptr  <= '0;
     can_read  <= '0;
-    for (idx=0; idx<DEPTH; idx++) begin
+    for (idx=0; idx<DEPTH; idx=idx+1) begin
       buffer[idx] <= '0;
     end
   end else begin

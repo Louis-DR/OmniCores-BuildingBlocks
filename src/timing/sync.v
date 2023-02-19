@@ -36,7 +36,7 @@ always @(posedge clk or negedge arstn) begin
   if (!arstn) stages <= '0;
   else begin
     stages[0] <= din;
-    for (idx=1; idx<STAGES; idx++) begin
+    for (idx=1; idx<STAGES; idx=idx+1) begin
       stages[idx] <= stages[idx-1];
     end
   end

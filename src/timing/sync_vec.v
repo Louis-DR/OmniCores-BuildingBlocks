@@ -41,12 +41,12 @@ reg [WIDTH-1:0] stages [STAGES-1:0];
 integer idx;
 always @(posedge clk or negedge arstn) begin
   if (!arstn) begin
-    for (idx=0; idx<STAGES; idx++) begin
+    for (idx=0; idx<STAGES; idx=idx+1) begin
       stages[idx] <= '0;
     end
   end else begin
     stages[0] <= din;
-    for (idx=1; idx<STAGES; idx++) begin
+    for (idx=1; idx<STAGES; idx=idx+1) begin
       stages[idx] <= stages[idx-1];
     end
   end
