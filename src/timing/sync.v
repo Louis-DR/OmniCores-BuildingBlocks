@@ -23,25 +23,25 @@
 module sync #(
   parameter STAGES = 2
 ) (
-  input  clk,
-  input  arstn,
-  input  din,
-  output dout
+  input  clock,
+  input  resetn,
+  input  data_in,
+  output data_out
 );
 
 reg [STAGES-1:0] stages;
 
-integer idx;
-always @(posedge clk or negedge arstn) begin
-  if (!arstn) stages <= '0;
+integer stage_index;
+always @(posedge clock or negedge resetn) begin
+  if (!resetn) stages <= '0;
   else begin
-    stages[0] <= din;
-    for (idx=1; idx<STAGES; idx=idx+1) begin
-      stages[idx] <= stages[idx-1];
+    stages[0] <= data_in;
+    for (stage_index=1; stage_index<STAGES; stage_index=stage_index+1) begin
+      stages[stage_index] <= stages[stage_index-1];
     end
   end
 end
 
-assign dout = stages[STAGES-1];
+assign data_out = stages[STAGES-1];
 
 endmodule

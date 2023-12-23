@@ -17,8 +17,8 @@
 module buffer #(
   parameter WIDTH = 8
 ) (
-  input clk,
-  input arstn,
+  input clock,
+  input resetn,
   // Slave interface
   input  [WIDTH-1:0] slave_data,
   input              slave_valid,
@@ -30,7 +30,7 @@ module buffer #(
 );
 
 // Buffer register
-reg [WIDTH-1:0] buffer;
+reg  [WIDTH-1:0] buffer;
 wire [WIDTH-1:0] buffer_next;
 
 // Buffer state
@@ -53,8 +53,8 @@ assign master_data  =  buffer;
 // │ Synchronous logic │
 // └───────────────────┘
 
-always @(posedge clk or negedge arstn) begin
-  if (!arstn) begin
+always @(posedge clock or negedge resetn) begin
+  if (!resetn) begin
     buffer <= '0;
     buffer_valid <= '0;
   end else begin
