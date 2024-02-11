@@ -22,14 +22,15 @@ module async_fifo #(
   parameter DEPTH_LOG2 = 2,
   parameter STAGES     = 2
 ) (
-  input resetn,
   // Write interface
   input                  write_clock,
+  input                  write_resetn,
   input                  write,
   input      [WIDTH-1:0] write_data,
   output                 full,
   // Read interface
   input                  read_clock,
+  input                  read_resetn,
   input                  read,
   output reg [WIDTH-1:0] read_data,
   output                 empty
@@ -66,8 +67,8 @@ wire [DEPTH_LOG2:0] write_pointer_incremented_grey = (write_pointer_incremented 
 wire can_write_current = write_pointer_grey_w           != { ~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0] };
 wire can_write_next    = write_pointer_incremented_grey != { ~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0] };
 
-always @(posedge write_clock or negedge resetn) begin
-  if (!resetn) begin
+always @(posedge write_clock or negedge write_resetn) begin
+  if (!write_resetn) begin
     write_pointer <= '0;
     write_pointer_grey_w <= '0;
     can_write <= '1;
@@ -109,8 +110,8 @@ wire [DEPTH_LOG2:0] read_pointer_incremented_grey = (read_pointer_incremented >>
 wire can_read_current = read_pointer_grey_r    != write_pointer_grey_r;
 wire can_read_next    = read_pointer_incremented_grey != write_pointer_grey_r;
 
-always @(posedge read_clock or negedge resetn) begin
-  if (!resetn) begin
+always @(posedge read_clock or negedge read_resetn) begin
+  if (!read_resetn) begin
     read_pointer <= '0;
     read_pointer_grey_r <= '0;
     read_data <= '0;
@@ -145,23 +146,23 @@ end
 // └───────────────────────┘
 
 sync_vec #(
-  .WIDTH  (DEPTH_LOG2+1),
-  .STAGES (STAGES)
+  .WIDTH    ( DEPTH_LOG2+1        ),
+  .STAGES   ( STAGES              )
 ) read_pointer_grey_sync (
-  .clock    (write_clock),
-  .resetn   (resetn),
-  .data_in  (read_pointer_grey_r),
-  .data_out (read_pointer_grey_w)
+  .clock    ( write_clock         ),
+  .resetn   ( write_resetn        ),
+  .data_in  ( read_pointer_grey_r ),
+  .data_out ( read_pointer_grey_w )
 );
 
 sync_vec #(
-  .WIDTH  (DEPTH_LOG2+1),
-  .STAGES (STAGES)
+  .WIDTH    ( DEPTH_LOG2+1         ),
+  .STAGES   ( STAGES               )
 ) write_pointer_grey_sync (
-  .clock    (read_clock),
-  .resetn   (resetn),
-  .data_in  (write_pointer_grey_w),
-  .data_out (write_pointer_grey_r)
+  .clock    ( read_clock           ),
+  .resetn   ( read_resetn          ),
+  .data_in  ( write_pointer_grey_w ),
+  .data_out ( write_pointer_grey_r )
 );
 
 endmodule
