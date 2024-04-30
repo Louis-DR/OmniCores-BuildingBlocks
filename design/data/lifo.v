@@ -72,11 +72,11 @@ integer depth_index;
 always @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
-    stack_pointer <= '0;
-    can_write <= '1;
-    can_read <= '0;
+    stack_pointer <= 0;
+    can_write     <= 1;
+    can_read      <= 0;
     for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
-      buffer[depth_index] <= '0;
+      buffer[depth_index] <= 0;
     end
 
   end else begin
@@ -87,24 +87,24 @@ always @(posedge clock or negedge resetn) begin
         // Reading and writing in same cycle
         if (reading) begin
           buffer[stack_pointer] <= write_data;
-          can_write <= '1;
+          can_write <= 1;
         // Writing only
         end else begin
           buffer[stack_pointer + 1] <= write_data;
-          stack_pointer <= stack_pointer + 1;
-          can_write <= ~(stack_pointer == {{DEPTH_LOG2-2{1'b1}} , 1'b0});
+          stack_pointer             <= stack_pointer + 1;
+          can_write                 <= ~(stack_pointer == {{DEPTH_LOG2-2{1'b1}} , 1'b0});
         end
       // Writing to empty stack
       end else begin
-        buffer[0] <= write_data;
-        stack_pointer <= '0;
-        can_read  <= '1;
+        buffer[0]     <= write_data;
+        stack_pointer <= 0;
+        can_read      <= 1;
       end
     // Reading only
     end else if (reading) begin
       stack_pointer <= stack_pointer_zero ? stack_pointer : stack_pointer - 1;
-      can_read  <= ~stack_pointer_zero;
-      can_write <= '1;
+      can_read      <= ~stack_pointer_zero;
+      can_write     <= 1;
     end
   end
 end

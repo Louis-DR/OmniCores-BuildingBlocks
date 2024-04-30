@@ -24,7 +24,8 @@ Modules planned or in development :
   - Asynchronous LIFO stack
   - Advanced LIFO queue
   - Content addressable memory
-  - Behavioral memory
+  - Memory
+  - Set-associative memory
 - Pulse logic
   - Debounce
   - Pulse filter

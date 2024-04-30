@@ -55,18 +55,18 @@ assign master_data  =  buffer;
 
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
-    buffer <= '0;
-    buffer_valid <= '0;
+    buffer       <= 0;
+    buffer_valid <= 0;
   end else begin
     if (slave_valid & ~buffer_valid) begin
-      buffer <= buffer_next;
-      buffer_valid <= '1;
+      buffer       <= buffer_next;
+      buffer_valid <= 1;
     end else if (master_ready) begin
       if (slave_valid) begin
         buffer <= buffer_next;
       end else begin
-        buffer <= '0;
-        buffer_valid <= '0;
+        buffer <= 0;
+        buffer_valid <= 0;
       end
     end
   end

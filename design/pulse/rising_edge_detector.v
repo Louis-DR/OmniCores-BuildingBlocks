@@ -21,7 +21,7 @@ module rising_edge_detector (
 reg signal_previous;
 
 always @(posedge clock or negedge resetn) begin
-  if (!resetn) signal_previous <= 1'b0;
+  if (!resetn) signal_previous <= 0;
   else         signal_previous <= signal;
 end
 

@@ -69,9 +69,9 @@ wire can_write_next    = write_pointer_incremented_grey != { ~read_pointer_grey_
 
 always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
-    write_pointer <= '0;
-    write_pointer_grey_w <= '0;
-    can_write <= '1;
+    write_pointer        <= 0;
+    write_pointer_grey_w <= 0;
+    can_write            <= 1;
   end else begin
     if (write && can_write) begin
       write_pointer <= write_pointer_incremented;
@@ -112,28 +112,28 @@ wire can_read_next    = read_pointer_incremented_grey != write_pointer_grey_r;
 
 always @(posedge read_clock or negedge read_resetn) begin
   if (!read_resetn) begin
-    read_pointer <= '0;
-    read_pointer_grey_r <= '0;
-    read_data <= '0;
-    can_read <= '0;
+    read_pointer        <= 0;
+    read_pointer_grey_r <= 0;
+    read_data           <= 0;
+    can_read            <= 0;
   end else begin
     if (read) begin
       if (can_read) begin
-        read_pointer <= read_pointer_incremented;
+        read_pointer        <= read_pointer_incremented;
         read_pointer_grey_r <= read_pointer_incremented_grey;
       end
       can_read <= can_read_next;
       if (can_read_next) begin
         read_data <= buffer[read_pointer_incremented];
       end else begin
-        read_data <= '0;
+        read_data <= 0;
       end
     end else begin
       can_read = can_read_current;
       if (can_read_current) begin
         read_data <= buffer[read_address];
       end else begin
-        read_data <= '0;
+        read_data <= 0;
       end
     end
   end

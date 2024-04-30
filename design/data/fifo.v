@@ -88,18 +88,18 @@ assign read_data = buffer[read_address];
 integer depth_index;
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
-    write_pointer <= '0;
-    can_write <= '1;
-    read_pointer  <= '0;
-    can_read  <= '0;
+    write_pointer <= 0;
+    can_write     <= 1;
+    read_pointer  <= 0;
+    can_read      <= 0;
     for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
-      buffer[depth_index] <= '0;
+      buffer[depth_index] <= 0;
     end
   end else begin
     can_write <= can_write_next;
     can_read  <= can_read_next;
     if (write && can_write) begin
-      write_pointer <= write_pointer_incremented;
+      write_pointer         <= write_pointer_incremented;
       buffer[write_address] <= write_data;
     end
     if (read) begin
