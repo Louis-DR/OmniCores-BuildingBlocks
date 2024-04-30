@@ -17,9 +17,13 @@
 
 
 
+`include "common.vh"
+
+
+
 module fifo #(
-  parameter WIDTH      = 8,
-  parameter DEPTH_LOG2 = 2
+  parameter WIDTH = 8,
+  parameter DEPTH = 4
 ) (
   input clock,
   input resetn,
@@ -33,7 +37,7 @@ module fifo #(
   output             empty
 );
 
-localparam DEPTH = 2 ** DEPTH_LOG2;
+localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory array
 reg [WIDTH-1:0] buffer [DEPTH-1:0];

@@ -17,10 +17,14 @@
 
 
 
+`include "common.vh"
+
+
+
 module async_fifo #(
-  parameter WIDTH      = 8,
-  parameter DEPTH_LOG2 = 2,
-  parameter STAGES     = 2
+  parameter WIDTH  = 8,
+  parameter DEPTH  = 4,
+  parameter STAGES = 2
 ) (
   // Write interface
   input                  write_clock,
@@ -36,7 +40,7 @@ module async_fifo #(
   output                 empty
 );
 
-localparam DEPTH = 2 ** DEPTH_LOG2;
+localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory array
 reg [WIDTH-1:0] buffer [DEPTH-1:0];
