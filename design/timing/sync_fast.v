@@ -7,7 +7,8 @@
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Resynchronize a signal to a clock with flip-flop stages      ║
 // ║              using both rising and falling edges of the destination       ║
-// ║              clock.                                                       ║
+// ║              clock. The last stage is always clocked with the rising      ║
+// ║              edge.                                                        ║
 // ║                                                                           ║
 // ║              If the default two stages of flip-flops are not enough to    ║
 // ║              prevent metastable outputs, three or more stages can be      ║
