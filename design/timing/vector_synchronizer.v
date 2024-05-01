@@ -3,12 +3,10 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        sync_fast.v                                                  ║
+// ║ File:        vector_synchronizer.v                                        ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Resynchronize a signal to a clock with flip-flop stages      ║
-// ║              using both rising and falling edges of the destination       ║
-// ║              clock. The last stage is always clocked with the rising      ║
-// ║              edge.                                                        ║
+// ║ Description: Resynchronize a vector of signals to a clock with flip-flop  ║
+// ║              stages.                                                      ║
 // ║                                                                           ║
 // ║              If the default two stages of flip-flops are not enough to    ║
 // ║              prevent metastable outputs, three or more stages can be      ║
@@ -19,51 +17,37 @@
 // ║              should be used between clock domains of the same frequency   ║
 // ║              or when moving to to a faster clock domain.                  ║
 // ║                                                                           ║
+// ║              The synchronized signal must only change by one bit between  ║
+// ║              two clock cycles of the synchronization clock. In practice,  ║
+// ║              this module may be used for grey-coded incremental counters  ║
+// ║              or for bit fields in certain cases.                          ║
+// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
 
-module sync_fast #(
+module vector_synchronizer #(
+  parameter WIDTH  = 8,
   parameter STAGES = 2
 ) (
-  input  clock,
-  input  resetn,
-  input  data_in,
-  output data_out
+  input              clock,
+  input              resetn,
+  input  [WIDTH-1:0] data_in,
+  output [WIDTH-1:0] data_out
 );
 
-reg [STAGES-1:0] stages;
+reg [WIDTH-1:0] stages [STAGES-1:0];
 
 integer stage_index;
-
-always @(negedge clock or negedge resetn) begin
-  if (!resetn) begin
-    for (stage_index=STAGES-2; stage_index>=0; stage_index=stage_index-2) begin
-      stages[stage_index] <= 0;
-    end
-  end else begin
-    for (stage_index=STAGES-2; stage_index>=0; stage_index=stage_index-2) begin
-      if (stage_index == 0) begin
-        stages[stage_index] <= data_in;
-      end else begin
-        stages[stage_index] <= stages[stage_index-1];
-      end
-    end
-  end
-end
-
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
-    for (stage_index=STAGES-1; stage_index>=0; stage_index=stage_index-2) begin
+    for (stage_index=0; stage_index<STAGES; stage_index=stage_index+1) begin
       stages[stage_index] <= 0;
     end
   end else begin
-    for (stage_index=STAGES-1; stage_index>=0; stage_index=stage_index-2) begin
-      if (stage_index == 0) begin
-        stages[stage_index] <= data_in;
-      end else begin
-        stages[stage_index] <= stages[stage_index-1];
-      end
+    stages[0] <= data_in;
+    for (stage_index=1; stage_index<STAGES; stage_index=stage_index+1) begin
+      stages[stage_index] <= stages[stage_index-1];
     end
   end
 end

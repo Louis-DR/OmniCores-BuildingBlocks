@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        ram_dual_port.v                                              ║
+// ║ File:        dual_port_ram.v                                              ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Random access memory with separate ports for read and write. ║
 // ║                                                                           ║
@@ -15,7 +15,7 @@
 
 
 
-module ram_dual_port #(
+module dual_port_ram #(
   parameter WIDTH = 8,
   parameter DEPTH = 16,
   parameter ADDRESS_WIDTH = `CLOG2(DEPTH)

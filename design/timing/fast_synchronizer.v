@@ -3,9 +3,12 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        sync.v                                                       ║
+// ║ File:        fast_synchronizer.v                                          ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Resynchronize a signal to a clock with flip-flop stages.     ║
+// ║ Description: Resynchronize a signal to a clock with flip-flop stages      ║
+// ║              using both rising and falling edges of the destination       ║
+// ║              clock. The last stage is always clocked with the rising      ║
+// ║              edge.                                                        ║
 // ║                                                                           ║
 // ║              If the default two stages of flip-flops are not enough to    ║
 // ║              prevent metastable outputs, three or more stages can be      ║
@@ -20,7 +23,7 @@
 
 
 
-module sync #(
+module fast_synchronizer #(
   parameter STAGES = 2
 ) (
   input  clock,
@@ -32,12 +35,35 @@ module sync #(
 reg [STAGES-1:0] stages;
 
 integer stage_index;
+
+always @(negedge clock or negedge resetn) begin
+  if (!resetn) begin
+    for (stage_index=STAGES-2; stage_index>=0; stage_index=stage_index-2) begin
+      stages[stage_index] <= 0;
+    end
+  end else begin
+    for (stage_index=STAGES-2; stage_index>=0; stage_index=stage_index-2) begin
+      if (stage_index == 0) begin
+        stages[stage_index] <= data_in;
+      end else begin
+        stages[stage_index] <= stages[stage_index-1];
+      end
+    end
+  end
+end
+
 always @(posedge clock or negedge resetn) begin
-  if (!resetn) stages <= 0;
-  else begin
-    stages[0] <= data_in;
-    for (stage_index=1; stage_index<STAGES; stage_index=stage_index+1) begin
-      stages[stage_index] <= stages[stage_index-1];
+  if (!resetn) begin
+    for (stage_index=STAGES-1; stage_index>=0; stage_index=stage_index-2) begin
+      stages[stage_index] <= 0;
+    end
+  end else begin
+    for (stage_index=STAGES-1; stage_index>=0; stage_index=stage_index-2) begin
+      if (stage_index == 0) begin
+        stages[stage_index] <= data_in;
+      end else begin
+        stages[stage_index] <= stages[stage_index-1];
+      end
     end
   end
 end

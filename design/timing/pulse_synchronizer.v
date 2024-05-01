@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        sync_pulse.v                                                 ║
+// ║ File:        pulse_synchronizer.v                                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Resynchronize a pulse signal lasting one clock cycle to a    ║
 // ║              different clock domain.                                      ║
@@ -16,7 +16,7 @@
 
 
 
-module sync_pulse #(
+module pulse_synchronizer #(
   parameter STAGES = 2
 ) (
   input  source_clock,

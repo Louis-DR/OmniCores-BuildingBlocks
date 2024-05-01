@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        fifo_async.v                                                 ║
+// ║ File:        asynchronous_fifo.v                                          ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Asynchronous First-In First-Out queue.                       ║
 // ║                                                                           ║
@@ -21,7 +21,7 @@
 
 
 
-module async_fifo #(
+module asynchronous_fifo #(
   parameter WIDTH  = 8,
   parameter DEPTH  = 4,
   parameter STAGES = 2
@@ -149,7 +149,7 @@ end
 // │ Clock domain crossing │
 // └───────────────────────┘
 
-sync_vec #(
+vector_synchronizer #(
   .WIDTH    ( DEPTH_LOG2+1        ),
   .STAGES   ( STAGES              )
 ) read_pointer_grey_sync (
@@ -159,7 +159,7 @@ sync_vec #(
   .data_out ( read_pointer_grey_w )
 );
 
-sync_vec #(
+vector_synchronizer #(
   .WIDTH    ( DEPTH_LOG2+1         ),
   .STAGES   ( STAGES               )
 ) write_pointer_grey_sync (

@@ -3,10 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        sync_vec.v                                                   ║
+// ║ File:        synchronizer.v                                               ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Resynchronize a vector of signals to a clock with flip-flop  ║
-// ║              stages.                                                      ║
+// ║ Description: Resynchronize a signal to a clock with flip-flop stages.     ║
 // ║                                                                           ║
 // ║              If the default two stages of flip-flops are not enough to    ║
 // ║              prevent metastable outputs, three or more stages can be      ║
@@ -17,34 +16,25 @@
 // ║              should be used between clock domains of the same frequency   ║
 // ║              or when moving to to a faster clock domain.                  ║
 // ║                                                                           ║
-// ║              The synchronized signal must only change by one bit between  ║
-// ║              two clock cycles of the synchronization clock. In practice,  ║
-// ║              this module may be used for grey-coded incremental counters  ║
-// ║              or for bit fields in certain cases.                          ║
-// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
 
-module sync_vec #(
-  parameter WIDTH  = 8,
+module synchronizer #(
   parameter STAGES = 2
 ) (
-  input              clock,
-  input              resetn,
-  input  [WIDTH-1:0] data_in,
-  output [WIDTH-1:0] data_out
+  input  clock,
+  input  resetn,
+  input  data_in,
+  output data_out
 );
 
-reg [WIDTH-1:0] stages [STAGES-1:0];
+reg [STAGES-1:0] stages;
 
 integer stage_index;
 always @(posedge clock or negedge resetn) begin
-  if (!resetn) begin
-    for (stage_index=0; stage_index<STAGES; stage_index=stage_index+1) begin
-      stages[stage_index] <= 0;
-    end
-  end else begin
+  if (!resetn) stages <= 0;
+  else begin
     stages[0] <= data_in;
     for (stage_index=1; stage_index<STAGES; stage_index=stage_index+1) begin
       stages[stage_index] <= stages[stage_index-1];

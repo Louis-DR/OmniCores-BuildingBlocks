@@ -4,22 +4,23 @@ A collection of useful generic Verilog modules that can be used as building bloc
 
 Below is a list of the modules currently available in this collection. More modules are coming, and feel free to suggest or submit ones you think should be added.
 
-| Module                  | File                          | Description                       |
-| ----------------------- | ----------------------------- | --------------------------------- |
-| `buffer`                | data/buffer.v                 | Data buffer                       |
-| `fifo`                  | data/fifo.v                   | Synchronous FIFO queue            |
-| `fifo_async`            | data/fifo_async.v             | Asynchronous FIFO queue           |
-| `lifo`                  | data/lifo.v                   | Synchronous LIFO stack            |
-| `ram_single_port`       | data/ram_single_port.v        | Single-port RAM                   |
-| `ram_dual_port`         | data/ram_dual_port.v          | Dual-port RAM                     |
-| `ram_dual_port_async`   | data/ram_dual_port_async.v    | Asynchronous dual-port RAM        |
-| `edge_detector`         | pulse/edge_detector.v         | Edge detector                     |
-| `rising_edge_detector`  | pulse/rising_edge_detector.v  | Rising edge detector              |
-| `falling_edge_detector` | pulse/falling_edge_detector.v | Falling edge detector             |
-| `multi_edge_detector`   | pulse/multi_edge_detector.v   | Falling and falling edge detector |
-| `sync`                  | timing/sync.v                 | Flip-flop synchronizer            |
-| `sync_vec`              | timing/sync_vec.v             | Flip-flop vector synchronizer     |
-| `sync_fast`             | timing/sync_fast.v            | Flip-flop fast synchronizer       |
+| Module                       | File                              | Description                       |
+| ---------------------------- | --------------------------------- | --------------------------------- |
+| `buffer`                     | data/buffer.v                     | Data buffer                       |
+| `fifo`                       | data/fifo.v                       | Synchronous FIFO queue            |
+| `asynchronous_fifo`          | data/asynchronous_fifo.v          | Asynchronous FIFO queue           |
+| `lifo`                       | data/lifo.v                       | Synchronous LIFO stack            |
+| `single_port_ram`            | data/single_port_ram.v            | Single-port RAM                   |
+| `dual_port_ram`              | data/dual_port_ram.v              | Dual-port RAM                     |
+| `asynchronous_dual_port_ram` | data/asynchronous_dual_port_ram.v | Asynchronous dual-port RAM        |
+| `edge_detector`              | pulse/edge_detector.v             | Edge detector                     |
+| `rising_edge_detector`       | pulse/rising_edge_detector.v      | Rising edge detector              |
+| `falling_edge_detector`      | pulse/falling_edge_detector.v     | Falling edge detector             |
+| `multi_edge_detector`        | pulse/multi_edge_detector.v       | Falling and falling edge detector |
+| `synchronizer`               | timing/synchronizer.v             | Flip-flop synchronizer            |
+| `fast_synchronizer`          | timing/fast_synchronizer.v        | Flip-flop fast synchronizer       |
+| `vector_synchronizer`        | timing/vector_synchronizer.v      | Vector synchronizer               |
+| `pulse_synchronizer`         | timing/pulse_synchronizer.v       | Pulse synchronizer                |
 
 Modules planned or in development :
 
