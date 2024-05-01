@@ -4,23 +4,23 @@ A collection of useful generic Verilog modules that can be used as building bloc
 
 Below is a list of the modules currently available in this collection. More modules are coming, and feel free to suggest or submit ones you think should be added.
 
-| Module                       | File                                | Description                       |
-| ---------------------------- | ----------------------------------- | --------------------------------- |
-| `buffer`                     | data/buffer.v                       | Data buffer                       |
-| `fifo`                       | data/fifo.v                         | Synchronous FIFO queue            |
-| `asynchronous_fifo`          | data/asynchronous_fifo.v            | Asynchronous FIFO queue           |
-| `lifo`                       | data/lifo.v                         | Synchronous LIFO stack            |
-| `single_port_ram`            | memory/single_port_ram.v            | Single-port RAM                   |
-| `dual_port_ram`              | memory/dual_port_ram.v              | Dual-port RAM                     |
-| `asynchronous_dual_port_ram` | memory/asynchronous_dual_port_ram.v | Asynchronous dual-port RAM        |
-| `edge_detector`              | pulse/edge_detector.v               | Edge detector                     |
-| `rising_edge_detector`       | pulse/rising_edge_detector.v        | Rising edge detector              |
-| `falling_edge_detector`      | pulse/falling_edge_detector.v       | Falling edge detector             |
-| `multi_edge_detector`        | pulse/multi_edge_detector.v         | Falling and falling edge detector |
-| `synchronizer`               | timing/synchronizer.v               | Flip-flop synchronizer            |
-| `fast_synchronizer`          | timing/fast_synchronizer.v          | Flip-flop fast synchronizer       |
-| `vector_synchronizer`        | timing/vector_synchronizer.v        | Vector synchronizer               |
-| `pulse_synchronizer`         | timing/pulse_synchronizer.v         | Pulse synchronizer                |
+| Module                       | Directory                         | Description                       |
+| ---------------------------- | --------------------------------- | --------------------------------- |
+| `buffer`                     | data/buffer                       | Data buffer                       |
+| `fifo`                       | data/fifo                         | Synchronous FIFO queue            |
+| `asynchronous_fifo`          | data/asynchronous_fifo            | Asynchronous FIFO queue           |
+| `lifo`                       | data/lifo                         | Synchronous LIFO stack            |
+| `single_port_ram`            | memory/single_port_ram            | Single-port RAM                   |
+| `dual_port_ram`              | memory/dual_port_ram              | Dual-port RAM                     |
+| `asynchronous_dual_port_ram` | memory/asynchronous_dual_port_ram | Asynchronous dual-port RAM        |
+| `edge_detector`              | pulse/edge_detector               | Edge detector                     |
+| `rising_edge_detector`       | pulse/rising_edge_detector        | Rising edge detector              |
+| `falling_edge_detector`      | pulse/falling_edge_detector       | Falling edge detector             |
+| `multi_edge_detector`        | pulse/multi_edge_detector         | Falling and falling edge detector |
+| `synchronizer`               | timing/synchronizer               | Flip-flop synchronizer            |
+| `fast_synchronizer`          | timing/fast_synchronizer          | Flip-flop fast synchronizer       |
+| `vector_synchronizer`        | timing/vector_synchronizer        | Vector synchronizer               |
+| `pulse_synchronizer`         | timing/pulse_synchronizer         | Pulse synchronizer                |
 
 Modules planned or in development :
 
