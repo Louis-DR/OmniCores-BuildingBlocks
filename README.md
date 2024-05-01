@@ -25,17 +25,14 @@ Modules planned or in development :
 
 - Data structures
   - Advanced FIFO queue
-  - Asynchronous LIFO stack
   - Advanced LIFO queue
   - Content addressable memory
-  - Memory
   - Set-associative memory
 - Pulse logic
   - Debounce
   - Pulse filter
   - Pulse gater
   - Pulse extender
-  - Pulse clock domain crossing
   - Random pulse generator
 - Clock logic
   - Clock dividers
@@ -43,9 +40,10 @@ Modules planned or in development :
   - Programmable clock shaper
   - Glitch-less clock multiplexer
 - Timing
-  - Req-ack handshake-based register slice
-  - Valid-ready handshake-based register slice
-  - Credit-based register slice
+  - Two-phase Req-ack handshake-based skid buffer
+  - Four-phase Req-ack handshake-based skid buffer
+  - Valid-ready handshake-based skid buffer
+  - Credit-based buffer
 - Encoding
   - Binary to grey-code
   - Grey-code to binary
@@ -64,9 +62,9 @@ Modules planned or in development :
   - Bose–Chaudhuri–Hocquenghem codes
   - Modular redundancy
 - Cryptography and hashing
-  - MD5
-  - BLAKE2
-  - SHA1
+  - MD2, MD4, MD5, MD6
+  - BLAKE, BLAKE2, BLAKE3
+  - SHA1, SHA2, SHA3
   - SHA256, SHA384, SHA512
   - AES128, AES256
 - Arbiters
