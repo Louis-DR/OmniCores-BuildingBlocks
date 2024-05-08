@@ -19,14 +19,14 @@ module buffer #(
 ) (
   input clock,
   input resetn,
-  // Slave interface
-  input  [WIDTH-1:0] slave_data,
-  input              slave_valid,
-  output             slave_ready,
-  // Master interface
-  output [WIDTH-1:0] master_data,
-  output             master_valid,
-  input              master_ready
+  // Upstream interface
+  input  [WIDTH-1:0] upstream_data,
+  input              upstream_valid,
+  output             upstream_ready,
+  // Downstream interface
+  output [WIDTH-1:0] downstream_data,
+  output             downstream_valid,
+  input              downstream_ready
 );
 
 // Buffer register
@@ -42,10 +42,10 @@ reg buffer_valid;
 // │ IO connections │
 // └────────────────┘
 
-assign buffer_next  =  slave_data;
-assign slave_ready  = ~buffer_valid | master_ready;
-assign master_valid =  buffer_valid;
-assign master_data  =  buffer;
+assign buffer_next      =  upstream_data;
+assign upstream_ready   = ~buffer_valid | downstream_ready;
+assign downstream_valid =  buffer_valid;
+assign downstream_data  =  buffer;
 
 
 
@@ -58,14 +58,14 @@ always @(posedge clock or negedge resetn) begin
     buffer       <= 0;
     buffer_valid <= 0;
   end else begin
-    if (slave_valid & ~buffer_valid) begin
+    if (upstream_valid & ~buffer_valid) begin
       buffer       <= buffer_next;
       buffer_valid <= 1;
-    end else if (master_ready) begin
-      if (slave_valid) begin
-        buffer <= buffer_next;
+    end else if (downstream_ready) begin
+      if (upstream_valid) begin
+        buffer       <= buffer_next;
       end else begin
-        buffer <= 0;
+        buffer       <= 0;
         buffer_valid <= 0;
       end
     end

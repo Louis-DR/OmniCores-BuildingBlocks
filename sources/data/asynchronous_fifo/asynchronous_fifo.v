@@ -29,13 +29,13 @@ module asynchronous_fifo #(
   // Write interface
   input                  write_clock,
   input                  write_resetn,
-  input                  write,
+  input                  write_enable,
   input      [WIDTH-1:0] write_data,
   output                 full,
   // Read interface
   input                  read_clock,
   input                  read_resetn,
-  input                  read,
+  input                  read_enable,
   output reg [WIDTH-1:0] read_data,
   output                 empty
 );
@@ -51,11 +51,13 @@ reg [WIDTH-1:0] buffer [DEPTH-1:0];
 // │ Write clock domain │
 // └────────────────────┘
 
-// Flag true if FIFO not full
+// Write control signal
 reg can_write;
 assign full = ~can_write;
+
 // Write pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] write_pointer;
+
 // Write address without wrap bit to index the buffer
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 
@@ -77,7 +79,7 @@ always @(posedge write_clock or negedge write_resetn) begin
     write_pointer_grey_w <= 0;
     can_write            <= 1;
   end else begin
-    if (write && can_write) begin
+    if (write_enable && can_write) begin
       write_pointer <= write_pointer_incremented;
       write_pointer_grey_w <= write_pointer_incremented_grey;
       can_write <= can_write_next;
@@ -94,11 +96,13 @@ end
 // │ Read clock domain │
 // └───────────────────┘
 
-// Flag true if FIFO not empty
+// Read control signal
 reg can_read;
 assign empty = ~can_read;
+
 // Read pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] read_pointer;
+
 // Read address without wrap bit to index the buffer
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 
@@ -121,7 +125,7 @@ always @(posedge read_clock or negedge read_resetn) begin
     read_data           <= 0;
     can_read            <= 0;
   end else begin
-    if (read) begin
+    if (read_enable) begin
       if (can_read) begin
         read_pointer        <= read_pointer_incremented;
         read_pointer_grey_r <= read_pointer_incremented_grey;

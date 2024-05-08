@@ -28,11 +28,11 @@ module fifo #(
   input clock,
   input resetn,
   // Write interface
-  input              write,
+  input              write_enable,
   input  [WIDTH-1:0] write_data,
   output             full,
   // Read interface
-  input              read,
+  input              read_enable,
   output [WIDTH-1:0] read_data,
   output             empty
 );
@@ -48,19 +48,21 @@ reg [WIDTH-1:0] buffer [DEPTH-1:0];
 // │ Write logic │
 // └─────────────┘
 
-// Flag true if FIFO not full
+// Write control signal
 reg can_write;
+assign full = ~can_write;
+
 // Write pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] write_pointer;
+
 // Write address without wrap bit to index the buffer
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
+
 // Write pointer incremented
 wire [DEPTH_LOG2:0] write_pointer_incremented = write_pointer + 1;
 
 // Buffer is full if read and write addresses are the same and wrap bits are different
-wire can_write_next = (write_pointer_incremented != { ~read_pointer[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer[DEPTH_LOG2-2:0] }) | read;
-
-assign full = ~can_write;
+wire can_write_next = (write_pointer_incremented != { ~read_pointer[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer[DEPTH_LOG2-2:0] }) | read_enable;
 
 
 
@@ -68,19 +70,23 @@ assign full = ~can_write;
 // │ Read logic │
 // └────────────┘
 
-// Flag true if FIFO not empty
+// Read control signal
 reg can_read;
+assign empty = ~can_read;
+
 // Read pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] read_pointer;
+
 // Read address without wrap bit to index the buffer
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
+
 // Read pointer incremented
 wire [DEPTH_LOG2:0] read_pointer_incremented = read_pointer + 1;
 
 // Buffer empty if read and write addresses are the same including the wrap bits
-wire can_read_next = (read ? read_pointer_incremented : read_pointer) != (write ? write_pointer_incremented : write_pointer);
+wire can_read_next = (read_enable ? read_pointer_incremented : read_pointer) != (write_enable ? write_pointer_incremented : write_pointer);
 
-assign empty = ~can_read;
+// Value at the read pointer is always on the read data bus
 assign read_data = buffer[read_address];
 
 
@@ -91,6 +97,7 @@ assign read_data = buffer[read_address];
 
 integer depth_index;
 always @(posedge clock or negedge resetn) begin
+  // Reset
   if (!resetn) begin
     write_pointer <= 0;
     can_write     <= 1;
@@ -102,14 +109,14 @@ always @(posedge clock or negedge resetn) begin
   end else begin
     can_write <= can_write_next;
     can_read  <= can_read_next;
-    if (write && can_write) begin
+    // Write
+    if (write_enable && can_write) begin
       write_pointer         <= write_pointer_incremented;
       buffer[write_address] <= write_data;
     end
-    if (read) begin
-      if (can_read) begin
-        read_pointer <= read_pointer_incremented;
-      end
+    // Read
+    if (read_enable && can_read) begin
+      read_pointer <= read_pointer_incremented;
     end
   end
 end
