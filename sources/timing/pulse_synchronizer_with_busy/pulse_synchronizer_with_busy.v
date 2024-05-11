@@ -17,6 +17,10 @@
 // ║              can be used to prevent the upstream device from generating a ║
 // ║              pulse when the synchronizer is busy.                         ║
 // ║                                                                           ║
+// ║              This pulse resynchronizer needs more time between input      ║
+// ║              pulses because it resynchronizes the feedback to drive the   ║
+// ║              busy signal.                                                 ║
+// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
@@ -59,7 +63,7 @@ assign pulse_out = stages[STAGES-1] & ~stages[STAGES];
 synchronizer #(
   .STAGES   ( STAGES           )
 ) feedback_synchronizer (
-  .clock    ( clock            ),
+  .clock    ( source_clock     ),
   .resetn   ( resetn           ),
   .data_in  ( stages[STAGES-1] ),
   .data_out ( feedback         )
