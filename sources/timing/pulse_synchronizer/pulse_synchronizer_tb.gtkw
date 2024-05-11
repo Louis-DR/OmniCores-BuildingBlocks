@@ -1,0 +1,36 @@
+[*]
+[*] GTKWave Analyzer v3.3.107 (w)1999-2020 BSI
+[*] Sat May 11 13:59:19 2024
+[*]
+[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/timing/pulse_synchronizer/pulse_synchronizer_tb.vcd"
+[dumpfile_mtime] "Sat May 11 13:58:58 2024"
+[dumpfile_size] 7637
+[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/timing/pulse_synchronizer/pulse_synchronizer_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-15.871149 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] pulse_synchronizer_tb.
+[treeopen] pulse_synchronizer_tb.gen_stages[1].
+[treeopen] pulse_synchronizer_tb.gen_stages[2].
+[treeopen] pulse_synchronizer_tb.gen_stages[3].
+[treeopen] pulse_synchronizer_tb.gen_stages[4].
+[treeopen] pulse_synchronizer_tb.gen_stages[5].
+[sst_width] 193
+[signals_width] 354
+[sst_expanded] 1
+[sst_vpaned_height] 325
+@28
+pulse_synchronizer_tb.source_clock
+pulse_synchronizer_tb.destination_clock
+pulse_synchronizer_tb.resetn
+pulse_synchronizer_tb.pulse_in
+pulse_synchronizer_tb.pulse_out[5:1]
+pulse_synchronizer_tb.pulse_out_expected[5:1]
+pulse_synchronizer_tb.gen_stages[1].pulse_synchronizer_dut.pulse_out
+pulse_synchronizer_tb.gen_stages[2].pulse_synchronizer_dut.pulse_out
+pulse_synchronizer_tb.gen_stages[3].pulse_synchronizer_dut.pulse_out
+pulse_synchronizer_tb.gen_stages[4].pulse_synchronizer_dut.pulse_out
+pulse_synchronizer_tb.gen_stages[5].pulse_synchronizer_dut.pulse_out
+[pattern_trace] 1
+[pattern_trace] 0
