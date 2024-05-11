@@ -30,27 +30,30 @@ module pulse_synchronizer #(
   output pulse_out
 );
 
-reg            state;
-reg [STAGES:0] stages;
+reg  state_source;
+wire state_destination;
 
-wire state_resetn = resetn & ~stages[STAGES-1];
+wire state_resetn = resetn & ~state_destination;
 
 always @(posedge source_clock or negedge state_resetn) begin
-  if (!state_resetn) state <= 0;
-  else if (pulse_in) state <= 1;
+  if (!state_resetn) state_source <= 0;
+  else if (pulse_in) state_source <= 1;
 end
 
-integer stage_index;
-always @(posedge destination_clock or negedge resetn) begin
-  if (!resetn) stages <= 0;
-  else begin
-    stages[0] <= state;
-    for (stage_index=1; stage_index<=STAGES; stage_index=stage_index+1) begin
-      stages[stage_index] <= stages[stage_index-1];
-    end
-  end
-end
+synchronizer #(
+  .STAGES   ( STAGES            )
+) state_synchronizer (
+  .clock    ( destination_clock ),
+  .resetn   ( resetn            ),
+  .data_in  ( state_source      ),
+  .data_out ( state_destination )
+);
 
-assign pulse_out = stages[STAGES-1] & ~stages[STAGES];
+rising_edge_detector pulse_generator (
+  .clock       ( destination_clock ),
+  .resetn      ( resetn            ),
+  .signal      ( state_destination ),
+  .rising_edge ( pulse_out         )
+);
 
 endmodule

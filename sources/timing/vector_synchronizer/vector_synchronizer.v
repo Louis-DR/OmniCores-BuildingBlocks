@@ -36,22 +36,18 @@ module vector_synchronizer #(
   output [WIDTH-1:0] data_out
 );
 
-reg [WIDTH-1:0] stages [STAGES-1:0];
-
-integer stage_index;
-always @(posedge clock or negedge resetn) begin
-  if (!resetn) begin
-    for (stage_index=0; stage_index<STAGES; stage_index=stage_index+1) begin
-      stages[stage_index] <= 0;
-    end
-  end else begin
-    stages[0] <= data_in;
-    for (stage_index=1; stage_index<STAGES; stage_index=stage_index+1) begin
-      stages[stage_index] <= stages[stage_index-1];
-    end
+genvar data_bit;
+generate
+  for (data_bit=0; data_bit<WIDTH; data_bit=data_bit+1) begin : gen_data_bit
+    synchronizer #(
+      .STAGES   ( STAGES             )
+    ) synchronizer (
+      .clock    ( clock              ),
+      .resetn   ( resetn             ),
+      .data_in  ( data_in[data_bit]  ),
+      .data_out ( data_out[data_bit] )
+    );
   end
-end
-
-assign data_out = stages[STAGES-1];
+endgenerate
 
 endmodule
