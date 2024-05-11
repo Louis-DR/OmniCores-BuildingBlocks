@@ -5,7 +5,7 @@ GTKW_FILE     ?= $(DESIGN_NAME)_tb.gtkw
 COMPILE_FLAGS ?=
 
 compile:
-	iverilog $(COMPILE_FLAGS) -o $(VVP_FILE) $(RTL_SOURCES)
+	iverilog $(COMPILE_FLAGS) -o $(VVP_FILE) $(RTL_SOURCES) $(ADDITIONAL_RTL_SOURCES)
 
 simulate:
 	vvp $(VVP_FILE)
