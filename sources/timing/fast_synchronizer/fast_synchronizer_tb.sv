@@ -1,10 +1,30 @@
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║ Project:     AnyV-Generics                                                ║
+// ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
+// ║ Website:     louis-dr.github.io                                           ║
+// ║ License:     MIT License                                                  ║
+// ║ File:        fast_synchronizer_tb.sv                                      ║
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ Description: Testbench for the fast synchronizer.                         ║
+// ║                                                                           ║
+// ║              It verifies for multiple values of the parameter that sets   ║
+// ║              the number of stages of the synchronizer that the signal is  ║
+// ║              propagated with the expected number of clock cycles of       ║
+// ║              delay.                                                       ║
+// ║                                                                           ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+
 `timescale 1ns/1ns
+
+
 
 module fast_synchronizer_tb ();
 
 // Test parameters
-localparam CLOCK_PERIOD = 10;
-localparam MAX_TEST_STAGES = 5;
+localparam CLOCK_PERIOD    = 10;
+localparam MAX_TEST_STAGES =  5;
 
 // Device ports
 logic                     clock;
@@ -41,7 +61,7 @@ end
 // Checker task for synchronizer output
 task automatic check_data_out(logic [MAX_TEST_STAGES:1] data_out_expected);
   if (data_out != data_out_expected) begin
-    $error("[%0tns] Syncronizer output value differs from the expected value (%b != %b).", $time, data_out, data_out_expected);
+    $error("[%0tns] Synchronizer output value differs from the expected value (%b != %b).", $time, data_out, data_out_expected);
   end
 endtask
 

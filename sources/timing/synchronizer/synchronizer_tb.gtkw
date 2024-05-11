@@ -1,15 +1,10 @@
-[*]
-[*] GTKWave Analyzer v3.3.107 (w)1999-2020 BSI
-[*] Tue Apr 30 20:43:37 2024
-[*]
 [dumpfile] "synchronizer_tb.vcd"
-[dumpfile_mtime] "Tue Apr 30 20:40:39 2024"
-[dumpfile_size] 13528
+[dumpfile_size] 4513
 [savefile] "synchronizer_tb.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-6.375270 280 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-5.734429 280 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] synchronizer_tb.
 [treeopen] synchronizer_tb.gen_stages[1].
 [treeopen] synchronizer_tb.gen_stages[2].
