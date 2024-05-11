@@ -1,0 +1,62 @@
+[*]
+[*] GTKWave Analyzer v3.3.107 (w)1999-2020 BSI
+[*] Sat May 11 15:51:29 2024
+[*]
+[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/timing/pulse_synchronizer_with_busy/pulse_synchronizer_with_busy_tb.vcd"
+[dumpfile_mtime] "Sat May 11 15:50:43 2024"
+[dumpfile_size] 13502
+[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/timing/pulse_synchronizer_with_busy/pulse_synchronizer_with_busy_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-16.298571 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] pulse_synchronizer_with_busy_tb.
+[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[1].
+[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[2].
+[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[3].
+[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[4].
+[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[5].
+[sst_width] 193
+[signals_width] 354
+[sst_expanded] 1
+[sst_vpaned_height] 325
+@28
+pulse_synchronizer_with_busy_tb.source_clock
+pulse_synchronizer_with_busy_tb.destination_clock
+pulse_synchronizer_with_busy_tb.resetn
+pulse_synchronizer_with_busy_tb.pulse_in
+pulse_synchronizer_with_busy_tb.pulse_out[5:1]
+pulse_synchronizer_with_busy_tb.pulse_out_expected[5:1]
+pulse_synchronizer_with_busy_tb.gen_stages[1].pulse_synchronizer_with_busy_dut.pulse_out
+pulse_synchronizer_with_busy_tb.gen_stages[2].pulse_synchronizer_with_busy_dut.pulse_out
+pulse_synchronizer_with_busy_tb.gen_stages[3].pulse_synchronizer_with_busy_dut.pulse_out
+pulse_synchronizer_with_busy_tb.gen_stages[4].pulse_synchronizer_with_busy_dut.pulse_out
+pulse_synchronizer_with_busy_tb.gen_stages[5].pulse_synchronizer_with_busy_dut.pulse_out
+pulse_synchronizer_with_busy_tb.gen_stages[1].pulse_synchronizer_with_busy_dut.state
+pulse_synchronizer_with_busy_tb.gen_stages[2].pulse_synchronizer_with_busy_dut.state
+pulse_synchronizer_with_busy_tb.gen_stages[3].pulse_synchronizer_with_busy_dut.state
+pulse_synchronizer_with_busy_tb.gen_stages[4].pulse_synchronizer_with_busy_dut.state
+pulse_synchronizer_with_busy_tb.gen_stages[5].pulse_synchronizer_with_busy_dut.state
+pulse_synchronizer_with_busy_tb.gen_stages[1].pulse_synchronizer_with_busy_dut.state_resetn
+pulse_synchronizer_with_busy_tb.gen_stages[2].pulse_synchronizer_with_busy_dut.state_resetn
+pulse_synchronizer_with_busy_tb.gen_stages[3].pulse_synchronizer_with_busy_dut.state_resetn
+pulse_synchronizer_with_busy_tb.gen_stages[4].pulse_synchronizer_with_busy_dut.state_resetn
+pulse_synchronizer_with_busy_tb.gen_stages[5].pulse_synchronizer_with_busy_dut.state_resetn
+pulse_synchronizer_with_busy_tb.gen_stages[1].pulse_synchronizer_with_busy_dut.stages[1:0]
+pulse_synchronizer_with_busy_tb.gen_stages[2].pulse_synchronizer_with_busy_dut.stages[2:0]
+pulse_synchronizer_with_busy_tb.gen_stages[3].pulse_synchronizer_with_busy_dut.stages[3:0]
+pulse_synchronizer_with_busy_tb.gen_stages[4].pulse_synchronizer_with_busy_dut.stages[4:0]
+pulse_synchronizer_with_busy_tb.gen_stages[5].pulse_synchronizer_with_busy_dut.stages[5:0]
+pulse_synchronizer_with_busy_tb.gen_stages[1].pulse_synchronizer_with_busy_dut.feedback
+pulse_synchronizer_with_busy_tb.gen_stages[2].pulse_synchronizer_with_busy_dut.feedback
+pulse_synchronizer_with_busy_tb.gen_stages[3].pulse_synchronizer_with_busy_dut.feedback
+pulse_synchronizer_with_busy_tb.gen_stages[4].pulse_synchronizer_with_busy_dut.feedback
+pulse_synchronizer_with_busy_tb.gen_stages[5].pulse_synchronizer_with_busy_dut.feedback
+pulse_synchronizer_with_busy_tb.gen_stages[1].pulse_synchronizer_with_busy_dut.busy
+pulse_synchronizer_with_busy_tb.gen_stages[2].pulse_synchronizer_with_busy_dut.busy
+pulse_synchronizer_with_busy_tb.gen_stages[3].pulse_synchronizer_with_busy_dut.busy
+pulse_synchronizer_with_busy_tb.gen_stages[4].pulse_synchronizer_with_busy_dut.busy
+@29
+pulse_synchronizer_with_busy_tb.gen_stages[5].pulse_synchronizer_with_busy_dut.busy
+[pattern_trace] 1
+[pattern_trace] 0
