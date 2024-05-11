@@ -29,7 +29,7 @@ module pulse_synchronizer #(
 reg            state;
 reg [STAGES:0] stages;
 
-wire state_resetn = resetn & ~pulse_out;
+wire state_resetn = resetn & ~stages[STAGES-1];
 
 always @(posedge source_clock or negedge state_resetn) begin
   if (!state_resetn) state <= 0;
@@ -40,8 +40,8 @@ integer stage_index;
 always @(posedge destination_clock or negedge resetn) begin
   if (!resetn) stages <= 0;
   else begin
-    stages[0] <= pulse_in;
-    for (stage_index=1; stage_index<STAGES; stage_index=stage_index+1) begin
+    stages[0] <= state;
+    for (stage_index=1; stage_index<=STAGES; stage_index=stage_index+1) begin
       stages[stage_index] <= stages[stage_index-1];
     end
   end
