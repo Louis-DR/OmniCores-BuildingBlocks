@@ -6,6 +6,7 @@ Below is a list of the modules currently available in this collection. More modu
 
 | Module                         | Directory                           | Description                         |
 | ------------------------------ | ----------------------------------- | ----------------------------------- |
+| `clock_divider`                  | data/clock_divider                | Static clock divider                |
 | `clock_gater`                  | data/clock_gater                    | Clock gater behavioral model        |
 | `clock_multiplexer`            | data/clock_multiplexer              | Glitch free clock multiplexer       |
 | `buffer`                       | data/buffer                         | Data buffer                         |
@@ -40,7 +41,6 @@ Modules planned or in development :
   - Pulse extender
   - Random pulse generator
 - Clock logic
-  - Clock dividers
   - Programmable clock gater
   - Programmable clock shaper
 - Timing
