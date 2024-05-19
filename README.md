@@ -8,7 +8,8 @@ Below is a list of the modules currently available in this collection. More modu
 | ------------------------------ | ----------------------------------- | ----------------------------------- |
 | `clock_divider`                  | data/clock_divider                | Static clock divider                |
 | `clock_gater`                  | data/clock_gater                    | Clock gater behavioral model        |
-| `clock_multiplexer`            | data/clock_multiplexer              | Glitch free clock multiplexer       |
+| `clock_multiplexer`            | data/clock_multiplexer              | Glitch-free clock multiplexer       |
+| `fast_clock_multiplexer`       | data/fast_clock_multiplexer         | Glitch-free fast clock multiplexer  |
 | `buffer`                       | data/buffer                         | Data buffer                         |
 | `fifo`                         | data/fifo                           | Synchronous FIFO queue              |
 | `asynchronous_fifo`            | data/asynchronous_fifo              | Asynchronous FIFO queue             |
