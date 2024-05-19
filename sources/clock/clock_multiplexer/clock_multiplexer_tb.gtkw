@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.107 (w)1999-2020 BSI
+[*] Sun May 19 14:32:33 2024
+[*]
+[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/clock/clock_multiplexer/clock_multiplexer_tb.vcd"
+[dumpfile_mtime] "Sun May 19 14:32:29 2024"
+[dumpfile_size] 4421256
+[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/clock/clock_multiplexer/clock_multiplexer_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-34.565117 49350 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] clock_multiplexer_tb.
+[sst_width] 193
+[signals_width] 354
+[sst_expanded] 1
+[sst_vpaned_height] 325
+@28
+clock_multiplexer_tb.resetn
+clock_multiplexer_tb.clock_0
+clock_multiplexer_tb.clock_1
+@29
+clock_multiplexer_tb.select
+@28
+clock_multiplexer_tb.clock_out
+[pattern_trace] 1
+[pattern_trace] 0
