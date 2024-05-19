@@ -15,7 +15,7 @@
 
 
 
-`timescale 1ns/1ps
+`timescale 1ns/1fs
 
 
 
@@ -23,7 +23,7 @@ module pulse_synchronizer_tb ();
 
 // Test parameters
 localparam real    CLOCK_SLOW_PERIOD = 10;
-localparam real    CLOCK_FAST_PERIOD = CLOCK_SLOW_PERIOD/3;
+localparam real    CLOCK_FAST_PERIOD = CLOCK_SLOW_PERIOD/3.14159265359;
 localparam real    CLOCK_PHASE_SHIFT = CLOCK_FAST_PERIOD*3/2;
 localparam integer MAX_TEST_STAGES   = 5;
 

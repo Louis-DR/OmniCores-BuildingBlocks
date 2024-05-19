@@ -56,20 +56,20 @@ end
 // Macro to measure the frequency of a clock
 real time_start;
 real time_stop;
-`define measure_frequency(clock, frequency, length=FREQUENCY_MEASUREMENT_LENGTH)                 \
-  fork                                                      \
-    begin                                                   \
-      @(posedge clock)                                      \
-      time_start = $time;                                   \
-      repeat(length) @(posedge clock)                       \
-      time_stop = $time;                                    \
+`define measure_frequency(clock, frequency, length=FREQUENCY_MEASUREMENT_LENGTH)        \
+  fork                                                                                  \
+    begin                                                                               \
+      @(posedge clock)                                                                  \
+      time_start = $time;                                                               \
+      repeat(length) @(posedge clock)                                                   \
+      time_stop = $time;                                                                \
       frequency = FREQUENCY_MEASUREMENT_MULTIPLIER * length / (time_stop - time_start); \
-    end                                                     \
-    begin                                                   \
-      #(FREQUENCY_MEASUREMENT_TIMEOUT);                     \
-      frequency = 0;                                        \
-    end                                                     \
-  join_any                                                  \
+    end                                                                                 \
+    begin                                                                               \
+      #(FREQUENCY_MEASUREMENT_TIMEOUT);                                                 \
+      frequency = 0;                                                                    \
+    end                                                                                 \
+  join_any                                                                              \
   disable fork;
 
 // Main block
@@ -82,6 +82,7 @@ initial begin
   enable      = 0;
   test_enable = 0;
 
+  // Measure the input clock frequency
   @(posedge clock_in);
   `measure_frequency(clock_in, clock_in_frequency)
 

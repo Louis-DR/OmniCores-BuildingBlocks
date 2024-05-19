@@ -5,7 +5,7 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        clock_multiplexer_tb.sv                                      ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the clock glitch-free multiplexer.             ║
+// ║ Description: Testbench for the glitch-free clock multiplexer.             ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
