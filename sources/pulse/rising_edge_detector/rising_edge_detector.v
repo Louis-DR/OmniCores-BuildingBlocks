@@ -1,5 +1,5 @@
 // ╔═══════════════════════════════════════════════════════════════════════════╗
-// ║ Project:     AnyV-Generics                                                ║
+// ║ Project:     VerSiTile-BuildingBlocks                                     ║
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
