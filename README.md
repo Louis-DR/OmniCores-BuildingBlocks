@@ -4,28 +4,28 @@ A collection of useful generic Verilog modules that can be used as building bloc
 
 Below is a list of the modules currently available in this collection. More modules are coming, and feel free to suggest or submit ones you think should be added.
 
-| Module                         | Directory                           | Description                         |
-| ------------------------------ | ----------------------------------- | ----------------------------------- |
-| `clock_divider`                  | data/clock_divider                | Static clock divider                |
-| `clock_gater`                  | data/clock_gater                    | Clock gater behavioral model        |
-| `clock_multiplexer`            | data/clock_multiplexer              | Glitch-free clock multiplexer       |
-| `fast_clock_multiplexer`       | data/fast_clock_multiplexer         | Glitch-free fast clock multiplexer  |
-| `buffer`                       | data/buffer                         | Data buffer                         |
-| `fifo`                         | data/fifo                           | Synchronous FIFO queue              |
-| `asynchronous_fifo`            | data/asynchronous_fifo              | Asynchronous FIFO queue             |
-| `lifo`                         | data/lifo                           | Synchronous LIFO stack              |
-| `single_port_ram`              | memory/single_port_ram              | Single-port RAM                     |
-| `dual_port_ram`                | memory/dual_port_ram                | Dual-port RAM                       |
-| `asynchronous_dual_port_ram`   | memory/asynchronous_dual_port_ram   | Asynchronous dual-port RAM          |
-| `edge_detector`                | pulse/edge_detector                 | Edge detector                       |
-| `rising_edge_detector`         | pulse/rising_edge_detector          | Rising edge detector                |
-| `falling_edge_detector`        | pulse/falling_edge_detector         | Falling edge detector               |
-| `multi_edge_detector`          | pulse/multi_edge_detector           | Falling and falling edge detector   |
-| `synchronizer`                 | timing/synchronizer                 | Flip-flop synchronizer              |
-| `fast_synchronizer`            | timing/fast_synchronizer            | Flip-flop fast synchronizer         |
-| `vector_synchronizer`          | timing/vector_synchronizer          | Vector synchronizer                 |
-| `pulse_synchronizer`           | timing/pulse_synchronizer           | Pulse synchronizer                  |
-| `pulse_synchronizer_with_busy` | timing/pulse_synchronizer_with_busy | Pulse synchronizer with busy signal |
+| Module                         | Directory                           | Description                         |     Design     |   Testbench    | Documentation |
+| ------------------------------ | ----------------------------------- | ----------------------------------- | :------------: | :------------: | :-----------: |
+| `clock_divider`                | data/clock_divider                  | Static clock divider                | :green_circle: | :green_circle: | :red_circle:  |
+| `clock_gater`                  | data/clock_gater                    | Clock gater behavioral model        | :green_circle: | :green_circle: | :red_circle:  |
+| `clock_multiplexer`            | data/clock_multiplexer              | Glitch-free clock multiplexer       | :green_circle: | :green_circle: | :red_circle:  |
+| `fast_clock_multiplexer`       | data/fast_clock_multiplexer         | Glitch-free fast clock multiplexer  | :green_circle: | :green_circle: | :red_circle:  |
+| `buffer`                       | data/buffer                         | Data buffer                         | :green_circle: |  :red_circle:  | :red_circle:  |
+| `fifo`                         | data/fifo                           | Synchronous FIFO queue              | :green_circle: |  :red_circle:  | :red_circle:  |
+| `asynchronous_fifo`            | data/asynchronous_fifo              | Asynchronous FIFO queue             | :green_circle: |  :red_circle:  | :red_circle:  |
+| `lifo`                         | data/lifo                           | Synchronous LIFO stack              | :green_circle: |  :red_circle:  | :red_circle:  |
+| `single_port_ram`              | memory/single_port_ram              | Single-port RAM                     | :green_circle: |  :red_circle:  | :red_circle:  |
+| `dual_port_ram`                | memory/dual_port_ram                | Dual-port RAM                       | :green_circle: |  :red_circle:  | :red_circle:  |
+| `asynchronous_dual_port_ram`   | memory/asynchronous_dual_port_ram   | Asynchronous dual-port RAM          | :green_circle: |  :red_circle:  | :red_circle:  |
+| `edge_detector`                | pulse/edge_detector                 | Edge detector                       | :green_circle: |  :red_circle:  | :red_circle:  |
+| `rising_edge_detector`         | pulse/rising_edge_detector          | Rising edge detector                | :green_circle: |  :red_circle:  | :red_circle:  |
+| `falling_edge_detector`        | pulse/falling_edge_detector         | Falling edge detector               | :green_circle: |  :red_circle:  | :red_circle:  |
+| `multi_edge_detector`          | pulse/multi_edge_detector           | Falling and falling edge detector   | :green_circle: |  :red_circle:  | :red_circle:  |
+| `synchronizer`                 | timing/synchronizer                 | Flip-flop synchronizer              | :green_circle: | :green_circle: | :red_circle:  |
+| `fast_synchronizer`            | timing/fast_synchronizer            | Flip-flop fast synchronizer         | :green_circle: | :green_circle: | :red_circle:  |
+| `vector_synchronizer`          | timing/vector_synchronizer          | Vector synchronizer                 | :green_circle: |  :red_circle:  | :red_circle:  |
+| `pulse_synchronizer`           | timing/pulse_synchronizer           | Pulse synchronizer                  | :green_circle: | :green_circle: | :red_circle:  |
+| `pulse_synchronizer_with_busy` | timing/pulse_synchronizer_with_busy | Pulse synchronizer with busy signal | :green_circle: | :green_circle: | :red_circle:  |
 
 Modules planned or in development :
 
