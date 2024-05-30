@@ -1,11 +1,6 @@
-[*]
-[*] GTKWave Analyzer v3.3.107 (w)1999-2020 BSI
-[*] Sat May 11 15:51:29 2024
-[*]
-[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/timing/pulse_synchronizer_with_busy/pulse_synchronizer_with_busy_tb.vcd"
-[dumpfile_mtime] "Sat May 11 15:50:43 2024"
+[dumpfile] "pulse_synchronizer_with_busy_tb.vcd"
 [dumpfile_size] 13502
-[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/timing/pulse_synchronizer_with_busy/pulse_synchronizer_with_busy_tb.gtkw"
+[savefile] "pulse_synchronizer_with_busy_tb.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
