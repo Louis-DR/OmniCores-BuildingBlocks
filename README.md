@@ -1,16 +1,16 @@
 # OmniCores-BuildingBlocks
 
-A collection of useful generic Verilog modules that can be used as building blocks for projects, or to learn basic Verilog concepts.
+A collection of useful Verilog modules that can be used as building blocks for projects, or to learn basic Verilog concepts.
 
 Below is a list of the modules currently available in this collection. More modules are coming, and feel free to suggest or submit ones you think should be added.
 
 | Module                         | Categories    | Description                                                  |     Design      |    Testbench    | Documentation |
 | ------------------------------ | ------------- | ------------------------------------------------------------ | :-------------: | :-------------: | :-----------: |
-| `clock_divider`                | data          | Static clock divider                                         | :green_circle:  | :green_circle:  | :red_circle:  |
-| `clock_gater`                  | data          | Clock gater behavioral model                                 | :green_circle:  | :green_circle:  | :red_circle:  |
-| `clock_multiplexer`            | data          | Glitch-free clock multiplexer                                | :green_circle:  | :green_circle:  | :red_circle:  |
-| `fast_clock_multiplexer`       | data          | Glitch-free fast clock multiplexer                           | :green_circle:  | :green_circle:  | :red_circle:  |
-| `nonstop_clock_multiplexer`    | data          | Glitch-free clock multiplexer that works with stopped clocks | :orange_circle: | :orange_circle: | :red_circle:  |
+| `clock_divider`                | clock         | Static clock divider                                         | :green_circle:  | :green_circle:  | :red_circle:  |
+| `clock_gater`                  | clock         | Clock gater behavioral model                                 | :green_circle:  | :green_circle:  | :red_circle:  |
+| `clock_multiplexer`            | clock         | Glitch-free clock multiplexer                                | :green_circle:  | :green_circle:  | :red_circle:  |
+| `fast_clock_multiplexer`       | clock         | Glitch-free fast clock multiplexer                           | :green_circle:  | :green_circle:  | :red_circle:  |
+| `nonstop_clock_multiplexer`    | clock         | Glitch-free clock multiplexer that works with stopped clocks | :orange_circle: | :orange_circle: | :red_circle:  |
 | `buffer`                       | data          | Data buffer                                                  | :green_circle:  |  :red_circle:   | :red_circle:  |
 | `fifo`                         | data          | Synchronous FIFO queue                                       | :green_circle:  |  :red_circle:   | :red_circle:  |
 | `asynchronous_fifo`            | data, timing  | Asynchronous FIFO queue                                      | :green_circle:  |  :red_circle:   | :red_circle:  |
@@ -43,13 +43,14 @@ Modules planned or in development :
 - Pulse logic
   - Debounce
   - Pulse filter
-  - Pulse gater
+  - Pulse separator
   - Pulse extender
-  - Random pulse generator
 - Clock logic
   - Programmable clock gater
   - Programmable clock shaper
 - Timing
+  - Reset synchronizer
+  - Pre-registering synchronizer
   - Two-phase Req-ack handshake-based skid buffer
   - Four-phase Req-ack handshake-based skid buffer
   - Valid-ready handshake-based skid buffer
