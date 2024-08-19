@@ -23,6 +23,7 @@
 
 
 `include "common.vh"
+`define SIMUMLATOR_NO_BREAK_SUPPORT
 
 
 
@@ -63,10 +64,16 @@ integer depth_index;
 logic [INDEX_WIDTH-1:0] first_free_index;
 always_comb begin
   first_free_index = 0;
+`ifdef SIMUMLATOR_NO_BREAK_SUPPORT
+  for (depth_index=DEPTH-1; depth_index>=0; depth_index=depth_index-1) begin
+`else
   for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+`endif
     if (!valid[depth_index]) begin
       first_free_index = depth_index;
+`ifndef SIMUMLATOR_NO_BREAK_SUPPORT
       break;
+`endif
     end
   end
 end
@@ -90,11 +97,17 @@ end
 always_comb begin
   search_index = 0;
   search_hit   = 0;
+`ifdef SIMUMLATOR_NO_BREAK_SUPPORT
+  for (depth_index=DEPTH-1; depth_index>=0; depth_index=depth_index-1) begin
+`else
   for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+`endif
     if (valid[depth_index] && buffer[depth_index] == search_tag) begin
       search_index = depth_index;
       search_hit   = 1;
+`ifndef SIMUMLATOR_NO_BREAK_SUPPORT
       break;
+`endif
     end
   end
 end
@@ -109,7 +122,7 @@ always_ff @(posedge clock or negedge resetn) begin
       valid  [depth_index] <= 0;
     end
   end else begin
-    full = full_next;
+    full <= full_next;
     for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
       buffer [depth_index] <= buffer_next [depth_index];
       valid  [depth_index] <= valid_next  [depth_index];
