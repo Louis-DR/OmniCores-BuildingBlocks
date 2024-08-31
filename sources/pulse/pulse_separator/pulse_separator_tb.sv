@@ -19,7 +19,7 @@ module pulse_separator_tb ();
 
 // Test parameters
 localparam real    CLOCK_PERIOD        = 10;
-localparam integer PULSE_COUNTER_WIDTH = 6;
+localparam integer PULSE_COUNTER_WIDTH = 3;
 
 // Check value
 localparam integer SEPARATOR_LATENCY = 1;
@@ -58,7 +58,7 @@ initial begin
 end
 
 // Checker task for output pulse
-task automatic check_pulse_out(integer expected_pulse_count);
+task automatic check_pulse_out(integer duration, bit check_low_time = 1);
   if (pulse_out) begin
     $error("[%0tns] Output is already high at the start of the check.", $time);
   end
@@ -66,7 +66,7 @@ task automatic check_pulse_out(integer expected_pulse_count);
   current_pulse_length   = 0;
   current_pulse_polarity = 0;
   waiting_first_pulse    = 1;
-  repeat (expected_pulse_count*4) begin
+  repeat (duration) begin
     @(posedge clock);
     current_pulse_length += 1;
     if (pulse_out != current_pulse_polarity) begin
@@ -80,7 +80,7 @@ task automatic check_pulse_out(integer expected_pulse_count);
       end else if (current_pulse_length > 1) begin
         if (current_pulse_polarity) begin
           $error("[%0tns] Output pulse is more than one cycle wide.", $time);
-        end else begin
+        end else if (check_low_time) begin
           $error("[%0tns] Delay between pulses is more that one cycle.", $time);
         end
       end
@@ -92,6 +92,10 @@ task automatic check_pulse_out(integer expected_pulse_count);
   if (pulse_out) begin
     $error("[%0tns] Output is still high at the end of the check.", $time);
   end
+endtask
+
+// Checker task for output pulse
+task automatic check_pulse_count(integer expected_pulse_count);
   if (pulse_count == 0) begin
     $error("[%0tns] No output pulse.", $time);
   end else if (pulse_count > expected_pulse_count) begin
@@ -124,15 +128,16 @@ initial begin
     // Stimulus
     begin
       pulse_in = 1;
-      repeat (test_pulse_count) @(posedge clock);
+      @(posedge clock);
       pulse_in = 0;
       @(posedge clock);
     end
     // Check
     begin
-      check_pulse_out(test_pulse_count);
+      check_pulse_out(test_pulse_count*4);
     end
   join
+  check_pulse_count(test_pulse_count);
 
   // Check 2 : Single multi-cycle pulse
   $display("CHECK 2 : Single multi-cycle pulse.");
@@ -148,9 +153,10 @@ initial begin
     end
     // Check
     begin
-      check_pulse_out(test_pulse_count);
+      check_pulse_out(test_pulse_count*4);
     end
   join
+  check_pulse_count(test_pulse_count);
 
   // Check 3 : Multiple single-cycle pulses
   $display("CHECK 3 : Multiple single-cycle pulses.");
@@ -168,9 +174,10 @@ initial begin
     end
     // Check
     begin
-      check_pulse_out(test_pulse_count);
+      check_pulse_out(test_pulse_count*4);
     end
   join
+  check_pulse_count(test_pulse_count);
 
   // Check 4 : Saturating pulse
   $display("CHECK 4 : Saturating pulse.");
@@ -187,9 +194,34 @@ initial begin
     end
     // Check
     begin
-      check_pulse_out(test_pulse_count);
+      check_pulse_out(test_pulse_count*4);
     end
   join
+  check_pulse_count(test_pulse_count);
+
+  // Check 5 : Random stimulus
+  $display("CHECK 5 : Random stimulus.");
+  test_pulse_count = 1;
+  @(posedge clock);
+  fork
+    // Stimulus
+    begin
+      pulse_in = 1;
+      @(posedge clock);
+      repeat(100) begin
+        // Random pulse in with low being twice as likely
+        pulse_in = $urandom_range(2) & ~busy;
+        test_pulse_count += pulse_in;
+        @(posedge clock);
+      end
+      pulse_in = 0;
+    end
+    // Check
+    begin
+      check_pulse_out(100*2, 0);
+    end
+  join
+  check_pulse_count(test_pulse_count);
 
   // End of test
   $finish;
