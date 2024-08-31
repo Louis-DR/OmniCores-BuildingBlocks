@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        presynchronizing_synchronizer.v                              ║
+// ║ File:        registered_synchronizer.v                                    ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Registers a signal in its source clock domain and then       ║
 // ║              resynchronizes it to a destination clock with flip-flops.    ║
@@ -24,7 +24,7 @@
 
 
 
-module presynchronizing_synchronizer #(
+module registered_synchronizer #(
   parameter STAGES = 2
 ) (
   input  source_clock,
