@@ -8,16 +8,11 @@
 // ║ Description: Resynchronize the de-assertion edge of a reset signal to a   ║
 // ║              clock. The output reset can be considered to be asserted     ║
 // ║              asynchronously and deasserted synchronously to the           ║
-// ║              destination clock.                                           ║
+// ║              destination clock. The reset must be active-low.             ║
 // ║                                                                           ║
 // ║              If the default two stages of flip-flops are not enough to    ║
 // ║              prevent metastable outputs, three or more stages can be      ║
 // ║              used.                                                        ║
-// ║                                                                           ║
-// ║              The synchronized signal must last at least one clock cycle   ║
-// ║              of the synchronizing clock. In practice, this synchronizer   ║
-// ║              should be used between clock domains of the same frequency   ║
-// ║              or when moving to to a faster clock domain.                  ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
