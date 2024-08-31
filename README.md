@@ -24,6 +24,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `rising_edge_detector`         | pulse         | Rising edge detector                                         | :green_circle:  |  :red_circle:   | :red_circle:  |
 | `falling_edge_detector`        | pulse         | Falling edge detector                                        | :green_circle:  |  :red_circle:   | :red_circle:  |
 | `multi_edge_detector`          | pulse         | Rising and falling edge detector                             | :green_circle:  |  :red_circle:   | :red_circle:  |
+| `pulse_separator`              | pulse         | Pulse separator                                              | :green_circle:  |  :green_circle: | :red_circle:  |
 | `synchronizer`                 | timing        | Multi-stage synchronizer                                     | :green_circle:  | :green_circle:  | :red_circle:  |
 | `fast_synchronizer`            | timing        | Multi-stage fast synchronizer                                | :green_circle:  | :green_circle:  | :red_circle:  |
 | `vector_synchronizer`          | timing        | Vector synchronizer                                          | :green_circle:  | :orange_circle: | :red_circle:  |
