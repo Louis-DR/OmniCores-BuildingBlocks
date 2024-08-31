@@ -24,7 +24,8 @@ Below is a list of the modules currently available in this collection. More modu
 | `rising_edge_detector`         | pulse         | Rising edge detector                                         | :green_circle:  |  :red_circle:   | :red_circle:  |
 | `falling_edge_detector`        | pulse         | Falling edge detector                                        | :green_circle:  |  :red_circle:   | :red_circle:  |
 | `multi_edge_detector`          | pulse         | Rising and falling edge detector                             | :green_circle:  |  :red_circle:   | :red_circle:  |
-| `pulse_separator`              | pulse         | Pulse separator                                              | :green_circle:  |  :green_circle: | :red_circle:  |
+| `pulse_separator`              | pulse         | Pulse separator                                              | :green_circle:  | :green_circle:  | :red_circle:  |
+| `fast_pulse_separator`         | pulse         | Fast pulse separator                                         | :green_circle:  | :green_circle:  | :red_circle:  |
 | `synchronizer`                 | timing        | Multi-stage synchronizer                                     | :green_circle:  | :green_circle:  | :red_circle:  |
 | `fast_synchronizer`            | timing        | Multi-stage fast synchronizer                                | :green_circle:  | :green_circle:  | :red_circle:  |
 | `vector_synchronizer`          | timing        | Vector synchronizer                                          | :green_circle:  | :orange_circle: | :red_circle:  |
@@ -46,6 +47,7 @@ Modules planned or in development :
   - Pulse filter
   - Pulse separator
   - Pulse extender
+  - Pulse separator with different high and low time
 - Clock logic
   - Programmable clock gater
   - Programmable clock shaper
@@ -56,6 +58,11 @@ Modules planned or in development :
   - Four-phase Req-ack handshake-based skid buffer
   - Valid-ready handshake-based skid buffer
   - Credit-based buffer
+- Shift registers
+  - Fibonacci LFSR random number generator
+  - Galois LFSR random number generator
+  - SISR signature generator
+  - MISR signature generator
 - Encoding
   - Binary to grey-code
   - Grey-code to binary
@@ -79,6 +86,7 @@ Modules planned or in development :
   - SHA1, SHA2, SHA3
   - SHA256, SHA384, SHA512
   - AES128, AES256
+  - ShangMi 2, SM3, SM4
 - Arbiters
   - Random arbiter
   - Priority arbiter
@@ -86,3 +94,8 @@ Modules planned or in development :
   - Weighted round robin arbiter
   - Matrix robin arbiter
   - Dynamic priority arbiter
+- Predictors
+  - Saturating counter
+  - Probabilistic saturating counter
+  - Hysteresis saturating counter
+  - Two-level predictor
