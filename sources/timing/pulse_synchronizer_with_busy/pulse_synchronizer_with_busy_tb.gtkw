@@ -5,16 +5,10 @@
 [size] 1728 1051
 [pos] -1 -1
 *-16.298571 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[treeopen] pulse_synchronizer_with_busy_tb.
-[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[1].
-[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[2].
-[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[3].
-[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[4].
-[treeopen] pulse_synchronizer_with_busy_tb.gen_stages[5].
-[sst_width] 193
-[signals_width] 354
+[sst_width] 200
+[signals_width] 300
 [sst_expanded] 1
-[sst_vpaned_height] 325
+[sst_vpaned_height] 300
 @28
 pulse_synchronizer_with_busy_tb.source_clock
 pulse_synchronizer_with_busy_tb.destination_clock
@@ -51,7 +45,6 @@ pulse_synchronizer_with_busy_tb.gen_stages[1].pulse_synchronizer_with_busy_dut.b
 pulse_synchronizer_with_busy_tb.gen_stages[2].pulse_synchronizer_with_busy_dut.busy
 pulse_synchronizer_with_busy_tb.gen_stages[3].pulse_synchronizer_with_busy_dut.busy
 pulse_synchronizer_with_busy_tb.gen_stages[4].pulse_synchronizer_with_busy_dut.busy
-@29
 pulse_synchronizer_with_busy_tb.gen_stages[5].pulse_synchronizer_with_busy_dut.busy
 [pattern_trace] 1
 [pattern_trace] 0

@@ -5,21 +5,10 @@
 [size] 1728 1051
 [pos] -1 -1
 *-10.029770 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[treeopen] clock_divider_tb.
-[treeopen] clock_divider_tb.gen_division[1].
-[treeopen] clock_divider_tb.gen_division[2].
-[treeopen] clock_divider_tb.gen_division[3].
-[treeopen] clock_divider_tb.gen_division[4].
-[treeopen] clock_divider_tb.gen_division[5].
-[treeopen] clock_divider_tb.gen_division[6].
-[treeopen] clock_divider_tb.gen_division[7].
-[treeopen] clock_divider_tb.gen_division[8].
-[treeopen] clock_divider_tb.gen_division[9].
-[treeopen] clock_divider_tb.gen_division[10].
-[sst_width] 193
-[signals_width] 354
+[sst_width] 200
+[signals_width] 300
 [sst_expanded] 1
-[sst_vpaned_height] 325
+[sst_vpaned_height] 300
 @28
 clock_divider_tb.clock_in
 clock_divider_tb.resetn

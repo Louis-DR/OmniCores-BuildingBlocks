@@ -5,18 +5,15 @@
 [size] 1728 1051
 [pos] -1 -1
 *-31.853239 49350 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[treeopen] fast_clock_multiplexer_tb.
-[sst_width] 193
-[signals_width] 354
+[sst_width] 200
+[signals_width] 300
 [sst_expanded] 1
-[sst_vpaned_height] 325
+[sst_vpaned_height] 300
 @28
 fast_clock_multiplexer_tb.resetn
 fast_clock_multiplexer_tb.clock_0
 fast_clock_multiplexer_tb.clock_1
-@29
 fast_clock_multiplexer_tb.select
-@28
 fast_clock_multiplexer_tb.clock_out
 [pattern_trace] 1
 [pattern_trace] 0
