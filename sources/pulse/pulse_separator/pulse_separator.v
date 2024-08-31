@@ -19,10 +19,6 @@
 
 
 
-`include "common.vh"
-
-
-
 module pulse_separator #(
   parameter PULSE_COUNTER_WIDTH = 3
 ) (
