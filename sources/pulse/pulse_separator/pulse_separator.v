@@ -36,7 +36,7 @@ module pulse_separator #(
 reg  [PULSE_COUNTER_WIDTH-1:0] pulse_counter;
 wire [PULSE_COUNTER_WIDTH-1:0] pulse_counter_next;
 wire pulse_counter_is_not_zero  = pulse_counter != 0;
-wire pulse_counter_is_saturated = pulse_counter == {PULSE_COUNTER_WIDTH-1{1'b1}};
+wire pulse_counter_is_saturated = pulse_counter == {PULSE_COUNTER_WIDTH{1'b1}};
 
 wire pulse_out_next = pulse_counter_is_not_zero & ~pulse_out;
 
