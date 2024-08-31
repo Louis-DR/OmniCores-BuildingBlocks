@@ -5,8 +5,8 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        reset_synchronizer.v                                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Resynchronize a reset signal to a clock with flip-flop       ║
-// ║              stages. The output reset can be considered to be asserted    ║
+// ║ Description: Resynchronize the de-assertion edge of a reset signal to a   ║
+// ║              clock. The output reset can be considered to be asserted     ║
 // ║              asynchronously and deasserted synchronously to the           ║
 // ║              destination clock.                                           ║
 // ║                                                                           ║

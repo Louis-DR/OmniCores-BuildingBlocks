@@ -30,7 +30,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `synchronizer`                  | timing        | Multi-stage synchronizer                                     | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `fast_synchronizer`             | timing        | Multi-stage fast synchronizer                                | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `registered_synchronizer`       | timing        | Multi-stage registered synchronizer                          | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
-| `reset_synchronizer`            | timing        | Multi-stage reset synchronizer                               | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `reset_synchronizer`            | timing        | Multi-stage reset de-assertion synchronizer                  | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `vector_synchronizer`           | timing        | Vector synchronizer                                          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
 | `pulse_synchronizer`            | timing, pulse | Pulse synchronizer                                           | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `pulse_synchronizer_with_busy`  | timing, pulse | Pulse synchronizer with busy signal                          | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
@@ -50,8 +50,6 @@ Modules planned or in development :
 - Pulse logic
   - Debounce
   - Pulse filter
-  - Pulse separator
-  - Pulse extender
   - Pulse separator with different high and low time
 - Clock logic
   - Programmable clock gater
