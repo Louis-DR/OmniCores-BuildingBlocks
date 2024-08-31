@@ -12,6 +12,7 @@
 
 
 `timescale 1ns/1ns
+`include "common.svh"
 
 
 
@@ -36,7 +37,7 @@ integer test_pulse_count;
 integer pulse_count;
 integer current_pulse_length;
 integer current_pulse_polarity;
-bit     waiting_first_pulse;
+bool    waiting_first_pulse;
 
 // Device under test
 pulse_separator #(
@@ -58,14 +59,14 @@ initial begin
 end
 
 // Checker task for output pulse
-task automatic check_pulse_out(integer duration, bit check_low_time = 1);
+task automatic check_pulse_out(integer duration, bool check_low_time = true);
   if (pulse_out) begin
     $error("[%0tns] Output is already high at the start of the check.", $time);
   end
   pulse_count            = 0;
   current_pulse_length   = 0;
   current_pulse_polarity = 0;
-  waiting_first_pulse    = 1;
+  waiting_first_pulse    = true;
   repeat (duration) begin
     @(posedge clock);
     current_pulse_length += 1;
@@ -86,7 +87,7 @@ task automatic check_pulse_out(integer duration, bit check_low_time = 1);
       end
       current_pulse_polarity = pulse_out;
       current_pulse_length   = 0;
-      waiting_first_pulse    = 0;
+      waiting_first_pulse    = false;
     end
   end
   if (pulse_out) begin
@@ -218,7 +219,7 @@ initial begin
     end
     // Check
     begin
-      check_pulse_out(100*2, 0);
+      check_pulse_out(100*2, false);
     end
   join
   check_pulse_count(test_pulse_count);
