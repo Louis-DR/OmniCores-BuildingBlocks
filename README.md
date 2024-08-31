@@ -30,6 +30,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `synchronizer`                  | timing        | Multi-stage synchronizer                                     | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `fast_synchronizer`             | timing        | Multi-stage fast synchronizer                                | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `registered_synchronizer`       | timing        | Multi-stage registered synchronizer                          | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `reset_synchronizer`            | timing        | Multi-stage reset synchronizer                               | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `vector_synchronizer`           | timing        | Vector synchronizer                                          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
 | `pulse_synchronizer`            | timing, pulse | Pulse synchronizer                                           | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `pulse_synchronizer_with_busy`  | timing, pulse | Pulse synchronizer with busy signal                          | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
@@ -56,7 +57,6 @@ Modules planned or in development :
   - Programmable clock gater
   - Programmable clock shaper
 - Timing
-  - Reset synchronizer
   - Two-phase Req-ack handshake-based skid buffer
   - Four-phase Req-ack handshake-based skid buffer
   - Valid-ready handshake-based skid buffer
