@@ -4,36 +4,37 @@ A collection of useful Verilog modules that can be used as building blocks for p
 
 Below is a list of the modules currently available in this collection. More modules are coming, and feel free to suggest or submit ones you think should be added.
 
-| Module                          | Categories    | Description                                                  | Progress*                                                   |
-| ------------------------------- | ------------- | ------------------------------------------------------------ | ----------------------------------------------------------- |
-| `clock_divider`                 | clock         | Static clock divider                                         | :green_circle:  :green_circle:  :red_circle: :white_circle: |
-| `clock_gater`                   | clock         | Clock gater behavioral model                                 | :green_circle:  :green_circle:  :red_circle: :white_circle: |
-| `clock_multiplexer`             | clock         | Glitch-free clock multiplexer                                | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `fast_clock_multiplexer`        | clock         | Glitch-free fast clock multiplexer                           | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `nonstop_clock_multiplexer`     | clock         | Glitch-free clock multiplexer that works with stopped clocks | :orange_circle: :orange_circle: :red_circle: :red_circle:   |
-| `buffer`                        | data          | Data buffer                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `fifo`                          | data          | Synchronous FIFO queue                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `asynchronous_fifo`             | data, timing  | Asynchronous FIFO queue                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
-| `lifo`                          | data          | Synchronous LIFO stack                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `single_port_ram`               | memory        | Single-port RAM                                              | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `dual_port_ram`                 | memory        | Dual-port RAM                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `asynchronous_dual_port_ram`    | memory        | Asynchronous dual-port RAM                                   | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
-| `tag_directory`                 | memory        | Tag directory with manual eviction                           | :green_circle:  :orange_circle: :red_circle: :white_circle: |
-| `content_addressable_memory`    | memory        | Content addressable memory                                   | :orange_circle: :red_circle:    :red_circle: :white_circle: |
-| `edge_detector`                 | pulse         | Edge detector                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `rising_edge_detector`          | pulse         | Rising edge detector                                         | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `falling_edge_detector`         | pulse         | Falling edge detector                                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `multi_edge_detector`           | pulse         | Rising and falling edge detector                             | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `pulse_separator`               | pulse         | Pulse separator                                              | :green_circle:  :green_circle:  :red_circle: :white_circle: |
-| `fast_pulse_separator`          | pulse         | Fast pulse separator                                         | :green_circle:  :green_circle:  :red_circle: :white_circle: |
-| `pulse_extender`                | pulse         | Pulse extender                                               | :green_circle:  :green_circle:  :red_circle: :white_circle: |
-| `synchronizer`                  | timing        | Multi-stage synchronizer                                     | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `fast_synchronizer`             | timing        | Multi-stage fast synchronizer                                | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `registered_synchronizer`       | timing        | Multi-stage registered synchronizer                          | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
-| `reset_synchronizer`            | timing        | Multi-stage reset de-assertion synchronizer                  | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
-| `vector_synchronizer`           | timing        | Vector synchronizer                                          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
-| `pulse_synchronizer`            | timing, pulse | Pulse synchronizer                                           | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `pulse_synchronizer_with_busy`  | timing, pulse | Pulse synchronizer with busy signal                          | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| Module                         | Categories    | Description                                                  | Progress*                                                   |
+| ------------------------------ | ------------- | ------------------------------------------------------------ | ----------------------------------------------------------- |
+| `clock_divider`                | clock         | Static clock divider                                         | :green_circle:  :green_circle:  :red_circle: :white_circle: |
+| `clock_gater`                  | clock         | Clock gater behavioral model                                 | :green_circle:  :green_circle:  :red_circle: :white_circle: |
+| `clock_multiplexer`            | clock         | Glitch-free clock multiplexer                                | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `fast_clock_multiplexer`       | clock         | Glitch-free fast clock multiplexer                           | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `nonstop_clock_multiplexer`    | clock         | Glitch-free clock multiplexer that works with stopped clocks | :orange_circle: :orange_circle: :red_circle: :red_circle:   |
+| `buffer`                       | data          | Data buffer                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `fifo`                         | data          | Synchronous FIFO queue                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `asynchronous_fifo`            | data, timing  | Asynchronous FIFO queue                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `lifo`                         | data          | Synchronous LIFO stack                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `single_port_ram`              | memory        | Single-port RAM                                              | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `dual_port_ram`                | memory        | Dual-port RAM                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `asynchronous_dual_port_ram`   | memory        | Asynchronous dual-port RAM                                   | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `tag_directory`                | memory        | Tag directory with manual eviction                           | :green_circle:  :orange_circle: :red_circle: :white_circle: |
+| `content_addressable_memory`   | memory        | Content addressable memory                                   | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `edge_detector`                | pulse         | Edge detector                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `rising_edge_detector`         | pulse         | Rising edge detector                                         | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `falling_edge_detector`        | pulse         | Falling edge detector                                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `multi_edge_detector`          | pulse         | Rising and falling edge detector                             | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `pulse_separator`              | pulse         | Pulse separator                                              | :green_circle:  :green_circle:  :red_circle: :white_circle: |
+| `fast_pulse_separator`         | pulse         | Fast pulse separator                                         | :green_circle:  :green_circle:  :red_circle: :white_circle: |
+| `pulse_extender`               | pulse         | Pulse extender                                               | :green_circle:  :green_circle:  :red_circle: :white_circle: |
+| `synchronizer`                 | timing        | Multi-stage synchronizer                                     | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `fast_synchronizer`            | timing        | Multi-stage fast synchronizer                                | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `registered_synchronizer`      | timing        | Multi-stage registered synchronizer                          | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `reset_synchronizer`           | timing        | Multi-stage reset de-assertion synchronizer                  | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `vector_synchronizer`          | timing        | Vector synchronizer                                          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
+| `pulse_synchronizer`           | timing, pulse | Pulse synchronizer                                           | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `pulse_synchronizer_with_busy` | timing, pulse | Pulse synchronizer with busy signal                          | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `saturating_counter`           | counter       | Saturating counter                                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 
 *Progress is in order the design, the verification, the documentation, and the constraints.
 
@@ -95,8 +96,8 @@ Modules planned or in development :
   - Weighted round robin arbiter
   - Matrix robin arbiter
   - Dynamic priority arbiter
-- Predictors
-  - Saturating counter
+- Counters
   - Probabilistic saturating counter
   - Hysteresis saturating counter
+- Predictors
   - Two-level predictor
