@@ -5,7 +5,7 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        saturating_counter.v                                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Counts up and down with overflow and underflow prevention    ║
+// ║ Description: Counts up and down with overflow and underflow prevention.   ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -30,9 +30,9 @@ always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
     counter <= RESET;
   end else begin
-    if (increment && !counter_is_min) begin
+    if (increment && !counter_is_max) begin
       counter <= counter + 1;
-    end else if (decrement && !counter_is_max) begin
+    end else if (decrement && !counter_is_min) begin
       counter <= counter - 1;
     end
   end
