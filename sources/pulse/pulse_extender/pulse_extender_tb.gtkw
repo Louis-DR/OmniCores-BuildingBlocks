@@ -1,11 +1,6 @@
-[*]
-[*] GTKWave Analyzer v3.3.107 (w)1999-2020 BSI
-[*] Sat Aug 31 20:02:30 2024
-[*]
-[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/pulse/pulse_extender/pulse_extender_tb.vcd"
-[dumpfile_mtime] "Sat Aug 31 20:02:21 2024"
+[dumpfile] "pulse_extender_tb.vcd"
 [dumpfile_size] 8295
-[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/pulse/pulse_extender/pulse_extender_tb.gtkw"
+[savefile] "pulse_extender_tb.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
