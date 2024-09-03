@@ -22,6 +22,12 @@ module pulse_separator_tb ();
 localparam real    CLOCK_PERIOD        = 10;
 localparam integer PULSE_COUNTER_WIDTH = 3;
 
+// Check parameters
+localparam integer LONG_PULSE_CHECK_LENGTH        = 4;
+localparam integer MULTI_PULSE_CHECK_LENGTH       = 4;
+localparam integer RANDOM_CHECK_DURATION          = 100;
+localparam integer RANDOM_CHECK_PULSE_PROBABILITY = 0.3;
+
 // Check value
 localparam integer SEPARATOR_LATENCY = 1;
 
@@ -100,9 +106,9 @@ task automatic check_pulse_count(integer expected_pulse_count);
   if (pulse_count == 0) begin
     $error("[%0tns] No output pulse.", $time);
   end else if (pulse_count > expected_pulse_count) begin
-    $error("[%0tns] Too many output pulses.", $time);
+    $error("[%0tns] Too many output pulses. Received '%0d' but expected '%0d'", $time, pulse_count, expected_pulse_count);
   end else if (pulse_count < expected_pulse_count) begin
-    $error("[%0tns] Not enough output pulses.", $time);
+    $error("[%0tns] Not enough output pulses. Received '%0d' but expected '%0d'", $time, pulse_count, expected_pulse_count);
   end
 endtask
 
@@ -142,7 +148,7 @@ initial begin
 
   // Check 2 : Single multi-cycle pulse
   $display("CHECK 2 : Single multi-cycle pulse.");
-  test_pulse_count = 4;
+  test_pulse_count = LONG_PULSE_CHECK_LENGTH;
   @(posedge clock);
   fork
     // Stimulus
@@ -161,7 +167,7 @@ initial begin
 
   // Check 3 : Multiple single-cycle pulses
   $display("CHECK 3 : Multiple single-cycle pulses.");
-  test_pulse_count = 4;
+  test_pulse_count = MULTI_PULSE_CHECK_LENGTH;
   @(posedge clock);
   fork
     // Stimulus
@@ -209,9 +215,9 @@ initial begin
     begin
       pulse_in = 1;
       @(posedge clock);
-      repeat(100) begin
+      repeat(RANDOM_CHECK_DURATION) begin
         // Random pulse in with low being twice as likely
-        pulse_in = $urandom_range(2) & ~busy;
+        pulse_in = ($random < RANDOM_CHECK_PULSE_PROBABILITY) & ~busy;
         test_pulse_count += pulse_in;
         @(posedge clock);
       end

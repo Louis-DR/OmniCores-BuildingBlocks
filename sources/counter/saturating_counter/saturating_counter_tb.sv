@@ -22,6 +22,11 @@ localparam real    CLOCK_PERIOD = 10;
 localparam integer WIDTH        = 2;
 localparam integer RESET        = 0;
 
+// Check parameters
+localparam integer RANDOM_CHECK_DURATION              = 100;
+localparam integer RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
+localparam integer RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
+
 // Device ports
 logic             clock;
 logic             resetn;
@@ -73,7 +78,7 @@ initial begin
   // Check 1 : Reset value
   $display("CHECK 1 : Reset value.");
   if (count != RESET) begin
-    $error("[%0tns] Reset value is different than the one given as parameter.", $time);
+    $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count, RESET);
   end
 
   // Check 2 : Increment
@@ -118,13 +123,13 @@ initial begin
   @(negedge clock);
   resetn = 1;
   @(negedge clock);
-  repeat(100) begin
-    if (count != max_count && $random < 0.5) begin
+  repeat(RANDOM_CHECK_DURATION) begin
+    if (count != max_count && $random < RANDOM_CHECK_INCREMENT_PROBABILITY) begin
       decrement = 0;
       increment = 1;
       @(posedge clock);
       expected_count += 1;
-    end else if (count != min_count && $random < 0.5) begin
+    end else if (count != min_count && $random < RANDOM_CHECK_DECREMENT_PROBABILITY) begin
       decrement = 1;
       increment = 0;
       @(posedge clock);

@@ -22,8 +22,11 @@ module pulse_extender_tb ();
 localparam real    CLOCK_PERIOD = 10;
 localparam integer PULSE_LENGTH = 2;
 
-// Check value
-localparam integer EXTENDER_LATENCY = 1;
+// Check parameters
+localparam integer LONG_PULSE_CHECK_LENGTH        = 4;
+localparam integer MULTI_PULSE_CHECK_LENGTH       = 4;
+localparam integer RANDOM_CHECK_DURATION          = 100;
+localparam integer RANDOM_CHECK_PULSE_PROBABILITY = 0.3;
 
 // Device ports
 logic clock;
@@ -69,7 +72,7 @@ task automatic check_pulse_out(integer duration);
     if (pulse_out != current_pulse_polarity) begin
       if (current_pulse_polarity && current_pulse_length < PULSE_LENGTH) begin
         if (current_pulse_polarity) begin
-          $error("[%0tns] Output pulse is narrower than the extender parameter.", $time);
+          $error("[%0tns] Output pulse length '%0d' is narrower than the extender parameter '%0d'.", $time, current_pulse_length, PULSE_LENGTH);
         end
       end
       current_pulse_polarity = pulse_out;
@@ -116,7 +119,7 @@ initial begin
 
   // Check 2 : Single multi-cycle pulse
   $display("CHECK 2 : Single multi-cycle pulse.");
-  test_pulse_count = 4;
+  test_pulse_count = LONG_PULSE_CHECK_LENGTH;
   @(posedge clock);
   fork
     // Stimulus
@@ -134,7 +137,7 @@ initial begin
 
   // Check 3 : Multiple single-cycle pulses
   $display("CHECK 3 : Multiple single-cycle pulses.");
-  test_pulse_count = 4;
+  test_pulse_count = MULTI_PULSE_CHECK_LENGTH;
   @(posedge clock);
   fork
     // Stimulus
@@ -161,9 +164,9 @@ initial begin
     begin
       pulse_in = 1;
       @(posedge clock);
-      repeat(100) begin
+      repeat(RANDOM_CHECK_DURATION) begin
         // Random pulse in with low being twice as likely
-        pulse_in = $urandom_range(2);
+        pulse_in = $random < RANDOM_CHECK_PULSE_PROBABILITY;
         test_pulse_count += pulse_in;
         @(posedge clock);
       end
