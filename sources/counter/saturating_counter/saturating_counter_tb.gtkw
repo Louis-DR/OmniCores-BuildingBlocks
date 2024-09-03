@@ -1,10 +1,10 @@
 [dumpfile] "saturating_counter_tb.vcd"
-[dumpfile_size] 1451
+[dumpfile_size] 4753
 [savefile] "saturating_counter_tb.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-4.944030 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-7.587567 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
@@ -14,6 +14,7 @@ saturating_counter_tb.saturating_counter_dut.clock
 saturating_counter_tb.saturating_counter_dut.resetn
 saturating_counter_tb.saturating_counter_dut.increment
 saturating_counter_tb.saturating_counter_dut.decrement
-saturating_counter_tb.saturating_counter_dut.count[2:0]
+@24
+saturating_counter_tb.saturating_counter_dut.count[1:0]
 [pattern_trace] 1
 [pattern_trace] 0

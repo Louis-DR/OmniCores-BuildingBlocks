@@ -19,7 +19,7 @@ module saturating_counter_tb ();
 
 // Test parameters
 localparam real    CLOCK_PERIOD = 10;
-localparam integer WIDTH        = 3;
+localparam integer WIDTH        = 2;
 localparam integer RESET        = 0;
 
 // Device ports
@@ -105,6 +105,40 @@ initial begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
   end
+  decrement = 0;
+  @(posedge clock);
+
+  // Check 4 : Random
+  $display("CHECK 4 : Random.");
+  @(negedge clock);
+  decrement = 0;
+  increment = 0;
+  resetn    = 0;
+  expected_count = RESET;
+  @(negedge clock);
+  resetn = 1;
+  @(negedge clock);
+  repeat(100) begin
+    if (count != max_count && $random < 0.5) begin
+      decrement = 0;
+      increment = 1;
+      @(posedge clock);
+      expected_count += 1;
+    end else if (count != min_count && $random < 0.5) begin
+      decrement = 1;
+      increment = 0;
+      @(posedge clock);
+      expected_count -= 1;
+    end else begin
+      decrement = 0;
+      increment = 0;
+    end
+    @(negedge clock);
+    if (count != expected_count) begin
+      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+    end
+  end
+  increment = 0;
   decrement = 0;
   @(posedge clock);
 
