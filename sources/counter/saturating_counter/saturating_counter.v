@@ -27,9 +27,12 @@ module saturating_counter #(
   output [WIDTH_LOG2-1:0] count
 );
 
+localparam COUNTER_MIN = 0;
+localparam COUNTER_MAX = WIDTH-1;
+
 reg [WIDTH_LOG2-1:0] counter;
-wire counter_is_min = counter == 0;
-wire counter_is_max = counter == WIDTH-1;
+wire counter_is_min = counter == COUNTER_MIN;
+wire counter_is_max = counter == COUNTER_MAX;
 
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
