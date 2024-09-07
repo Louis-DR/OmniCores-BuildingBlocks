@@ -20,8 +20,8 @@ module saturating_counter_tb ();
 // Test parameters
 localparam real    CLOCK_PERIOD = 10;
 localparam integer WIDTH        = 4;
-localparam integer RESET        = 0;
 localparam integer WIDTH_LOG2   = $clog2(WIDTH);
+localparam integer RESET        = 0;
 
 // Check parameters
 localparam integer RANDOM_CHECK_DURATION              = 100;
