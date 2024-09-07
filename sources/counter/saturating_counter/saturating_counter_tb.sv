@@ -19,8 +19,9 @@ module saturating_counter_tb ();
 
 // Test parameters
 localparam real    CLOCK_PERIOD = 10;
-localparam integer WIDTH        = 2;
+localparam integer WIDTH        = 4;
 localparam integer RESET        = 0;
+localparam integer WIDTH_LOG2   = $clog2(WIDTH);
 
 // Check parameters
 localparam integer RANDOM_CHECK_DURATION              = 100;
@@ -28,15 +29,15 @@ localparam integer RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
 localparam integer RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 
 // Device ports
-logic             clock;
-logic             resetn;
-logic             increment;
-logic             decrement;
-logic [WIDTH-1:0] count;
+logic                  clock;
+logic                  resetn;
+logic                  increment;
+logic                  decrement;
+logic [WIDTH_LOG2-1:0] count;
 
 // Test variables
 integer min_count = 0;
-integer max_count = 2 ** WIDTH - 1;
+integer max_count = WIDTH - 1;
 integer expected_count;
 
 // Device under test

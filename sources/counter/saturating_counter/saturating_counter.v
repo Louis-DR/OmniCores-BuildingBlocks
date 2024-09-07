@@ -11,20 +11,26 @@
 
 
 
+`include "common.vh"
+
+
+
 module saturating_counter #(
-  parameter WIDTH = 2,
-  parameter RESET = 0
+  parameter WIDTH      = 4,
+  parameter RESET      = 0,
+  parameter WIDTH_LOG2 = `CLOG2(WIDTH)
 ) (
-  input              clock,
-  input              resetn,
-  input              increment,
-  input              decrement,
-  output [WIDTH-1:0] count
+  input                   clock,
+  input                   resetn,
+  input                   increment,
+  input                   decrement,
+  output [WIDTH_LOG2-1:0] count
 );
 
-reg [WIDTH-1:0] counter;
+
+reg [WIDTH_LOG2-1:0] counter;
 wire counter_is_min = counter == 0;
-wire counter_is_max = counter == {WIDTH{1'b1}};
+wire counter_is_max = counter == WIDTH-1;
 
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
