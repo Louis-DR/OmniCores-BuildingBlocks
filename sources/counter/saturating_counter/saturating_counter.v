@@ -17,8 +17,8 @@
 
 module saturating_counter #(
   parameter WIDTH      = 4,
-  parameter WIDTH_LOG2 = `CLOG2(WIDTH)
-  parameter RESET      = 0,
+  parameter WIDTH_LOG2 = `CLOG2(WIDTH),
+  parameter RESET      = 0
 ) (
   input                   clock,
   input                   resetn,
