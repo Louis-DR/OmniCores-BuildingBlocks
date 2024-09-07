@@ -27,7 +27,6 @@ module saturating_counter #(
   output [WIDTH_LOG2-1:0] count
 );
 
-
 reg [WIDTH_LOG2-1:0] counter;
 wire counter_is_min = counter == 0;
 wire counter_is_max = counter == WIDTH-1;
