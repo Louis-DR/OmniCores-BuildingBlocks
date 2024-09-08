@@ -18,6 +18,8 @@ Below is a list of the modules currently available in this collection. More modu
 | `fifo`                             | data           | Synchronous FIFO queue                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `asynchronous_fifo`                | data, timing   | Asynchronous FIFO queue                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `lifo`                             | data           | Synchronous LIFO stack                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `parity_encoder`                   | error control  | Parity encoder                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `parity_checker`                   | error control  | Parity checker                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `single_port_ram`                  | memory         | Single-port RAM                                              | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `dual_port_ram`                    | memory         | Dual-port RAM                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `asynchronous_dual_port_ram`       | memory         | Asynchronous dual-port RAM                                   | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
@@ -68,6 +70,10 @@ Modules planned or in development :
   - Programmable LFSR
   - SISR signature generator
   - MISR signature generator
+- Transformation
+  - Interleaver
+  - Deinterleaver
+  - Bit stripper
 - Encoding
   - Binary to grey-code
   - Grey-code to binary
@@ -77,7 +83,6 @@ Modules planned or in development :
   - Binary-coded-decimal to binary
   - Binary-coded-decimal to 7-segment
 - Error control
-  - Parity code
   - Hamming codes
   - Extended Hamming codes
   - Golay codes
