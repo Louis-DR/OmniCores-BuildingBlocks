@@ -14,12 +14,10 @@
 module parity_encoder #(
   parameter DATA_WIDTH = 8
 ) (
-  input                  clock,
-  input                  resetn,
   input [DATA_WIDTH-1:0] data,
   output                 code
 );
 
-assign parity = ^data;
+assign code = ^data;
 
 endmodule

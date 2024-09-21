@@ -14,8 +14,6 @@
 module parity_checker #(
   parameter DATA_WIDTH = 8
 ) (
-  input                  clock,
-  input                  resetn,
   input [DATA_WIDTH-1:0] data,
   input                  code,
   output                 error
