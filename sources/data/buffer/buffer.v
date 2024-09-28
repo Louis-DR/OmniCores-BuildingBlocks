@@ -5,10 +5,10 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        buffer.v                                                     ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Data buffer.                                                 ║
-// ║                                                                           ║
-// ║              Breaks the timing path for the data but not the valid-ready  ║
-// ║              flow control handshake.                                      ║
+// ║ Description: Single-entry data buffer that partially decouples the two    ║
+// ║              sides of an interface with valid-ready flow control. It only ║
+// ║              allows one transfer every two cycles. It breaks the timing   ║
+// ║              path for the data but not the handshake.                     ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -29,41 +29,28 @@ module buffer #(
   input              downstream_ready
 );
 
-// Buffer register
-reg  [WIDTH-1:0] buffer;
-wire [WIDTH-1:0] buffer_next;
+// Internal buffer
+reg [WIDTH-1:0] buffer;
+reg             buffer_valid;
 
-// Buffer state
-reg buffer_valid;
-
-
-
-// ┌────────────────┐
-// │ IO connections │
-// └────────────────┘
-
-assign buffer_next      =  upstream_data;
+// IO connection
 assign upstream_ready   = ~buffer_valid | downstream_ready;
 assign downstream_valid =  buffer_valid;
 assign downstream_data  =  buffer;
 
-
-
-// ┌───────────────────┐
-// │ Synchronous logic │
-// └───────────────────┘
-
+// Synchronous logic
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
     buffer       <= 0;
     buffer_valid <= 0;
   end else begin
     if (upstream_valid & ~buffer_valid) begin
-      buffer       <= buffer_next;
+      buffer       <= upstream_data;
       buffer_valid <= 1;
     end else if (downstream_ready) begin
       if (upstream_valid) begin
-        buffer       <= buffer_next;
+        buffer       <= upstream_data;
+        buffer_valid <= 1;
       end else begin
         buffer       <= 0;
         buffer_valid <= 0;
