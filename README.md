@@ -15,7 +15,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `hysteresis_saturating_counter`    | counter        | Hysteresis saturating counter                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `probabilistic_saturating_counter` | counter        | Probabilistic saturating counter                             | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `buffer`                           | data           | Single-entry data buffer                                     | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `skid_buffer`                      | data           | Two-entry data buffer                                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `skid_buffer`                      | data           | Two-entry data buffer                                        | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `fifo`                             | data           | Synchronous FIFO queue                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `asynchronous_fifo`                | data, timing   | Asynchronous FIFO queue                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `lifo`                             | data           | Synchronous LIFO stack                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
