@@ -5,10 +5,9 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        simple_buffer.v                                              ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Single-entry data buffer that decouples the read and write   ║
-// ║              sides. It doesn't support reading and writing in the same    ║
-// ║              cycle, and takes two cycles for each transfer. It breaks the ║
-// ║              timing path for both the data and the control signals.       ║
+// ║ Description: Single-entry data buffer that doesn't support reading and    ║
+// ║              writing in the same cycle. It breaks the timing path for     ║
+// ║              both the data and the control signals.                       ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 

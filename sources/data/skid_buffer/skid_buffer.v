@@ -5,10 +5,9 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        skid_buffer.v                                                ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Two-entry data buffer that decouples the two sides of an     ║
-// ║              interface with valid-ready flow control. It allows back-to-  ║
-// ║              back transfers. It breaks the timing path for both the data  ║
-// ║              and the control signals.                                     ║
+// ║ Description: Two-entry data buffer that supports reading and writing in   ║
+// ║              the same cycle and allows back-to-back transfers. It breaks  ║
+// ║              the timing path for both the data and the control signals.   ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
