@@ -8,7 +8,7 @@
 // ║ Description: Two-entry data buffer that decouples the two sides of an     ║
 // ║              interface with valid-ready flow control. It allows back-to-  ║
 // ║              back transfers. It breaks the timing path for both the data  ║
-// ║              and the handshake.                                           ║
+// ║              and the control signals.                                     ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
