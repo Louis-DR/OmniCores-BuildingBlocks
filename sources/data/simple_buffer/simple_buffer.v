@@ -17,16 +17,16 @@
 module simple_buffer #(
   parameter WIDTH = 8
 ) (
-  input clock,
-  input resetn,
-  // Upstream interface
-  input  [WIDTH-1:0] upstream_data,
-  input              upstream_valid,
-  output             upstream_ready,
-  // Downstream interface
-  output [WIDTH-1:0] downstream_data,
-  output             downstream_valid,
-  input              downstream_ready
+  input              clock,
+  input              resetn,
+  // Write interface
+  input              write_enable,
+  input  [WIDTH-1:0] write_data,
+  output             full,
+  // Read interface
+  input              read_enable,
+  output [WIDTH-1:0] read_data,
+  output             empty
 );
 
 // Internal buffer
@@ -34,9 +34,9 @@ reg [WIDTH-1:0] buffer;
 reg             buffer_valid;
 
 // IO connection
-assign upstream_ready   = ~buffer_valid | downstream_ready;
-assign downstream_valid =  buffer_valid;
-assign downstream_data  =  buffer;
+assign full      =  buffer_valid & ~read_enable;
+assign empty     = ~buffer_valid;
+assign read_data =  buffer;
 
 // Synchronous logic
 always @(posedge clock or negedge resetn) begin
@@ -44,12 +44,12 @@ always @(posedge clock or negedge resetn) begin
     buffer       <= 0;
     buffer_valid <= 0;
   end else begin
-    if (upstream_valid & ~buffer_valid) begin
-      buffer       <= upstream_data;
+    if (write_enable & ~buffer_valid) begin
+      buffer       <= write_data;
       buffer_valid <= 1;
-    end else if (downstream_ready) begin
-      if (upstream_valid) begin
-        buffer       <= upstream_data;
+    end else if (read_enable) begin
+      if (write_enable) begin
+        buffer       <= write_data;
         buffer_valid <= 1;
       end else begin
         buffer       <= 0;
