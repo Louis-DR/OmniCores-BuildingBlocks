@@ -14,9 +14,11 @@ Below is a list of the modules currently available in this collection. More modu
 | `saturating_counter`               | counter        | Saturating counter                                           | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `hysteresis_saturating_counter`    | counter        | Hysteresis saturating counter                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `probabilistic_saturating_counter` | counter        | Probabilistic saturating counter                             | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `buffer`                           | data           | Single-entry data buffer                                     | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `skid_buffer`                      | data           | Two-entry data buffer                                        | :green_circle:  :green_circle:  :red_circle: :white_circle: |
+| `simple_buffer`                    | data           | Single-entry data buffer for storage                         | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `skid_buffer`                      | data           | Two-entry data buffer for bus pipelining                     | :green_circle:  :green_circle:  :red_circle: :white_circle: |
+| `bypass_buffer`                    | data           | Single-entry data buffer for back-pressure relief            | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `fifo`                             | data           | Synchronous FIFO queue                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `advanced_fifo`                    | data           | Synchronous FIFO queue with additional features              | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `asynchronous_fifo`                | data, timing   | Asynchronous FIFO queue                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `lifo`                             | data           | Synchronous LIFO stack                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `parity_encoder`                   | error control  | Parity encoder                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |

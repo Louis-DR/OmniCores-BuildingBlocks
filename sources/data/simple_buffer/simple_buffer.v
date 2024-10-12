@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        buffer.v                                                     ║
+// ║ File:        simple_buffer.v                                              ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Single-entry data buffer that partially decouples the two    ║
 // ║              sides of an interface with valid-ready flow control. It only ║
@@ -14,7 +14,7 @@
 
 
 
-module buffer #(
+module simple_buffer #(
   parameter WIDTH = 8
 ) (
   input clock,
