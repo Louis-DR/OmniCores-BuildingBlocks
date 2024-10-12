@@ -19,11 +19,11 @@ module skid_buffer #(
 ) (
   input              clock,
   input              resetn,
-  // Upstream interface
+  // Write interface
   input              write_enable,
   input  [WIDTH-1:0] write_data,
   output             full,
-  // Downstream interface
+  // Read interface
   input              read_enable,
   output [WIDTH-1:0] read_data,
   output             empty
@@ -34,13 +34,13 @@ reg [WIDTH-1:0] buffer [1:0];
 reg       [1:0] buffer_valid;
 
 // Selectors
-reg upstream_buffer_selector;
-reg downstream_buffer_selector;
+reg write_buffer_selector;
+reg read_buffer_selector;
 
 // IO connections
-assign full      =  buffer_valid [upstream_buffer_selector];
-assign empty     = ~buffer_valid [downstream_buffer_selector];
-assign read_data =  buffer       [downstream_buffer_selector];
+assign full      =  buffer_valid [write_buffer_selector];
+assign empty     = ~buffer_valid [read_buffer_selector];
+assign read_data =  buffer       [read_buffer_selector];
 
 // Synchronous logic
 always @(posedge clock or negedge resetn) begin
@@ -48,17 +48,17 @@ always @(posedge clock or negedge resetn) begin
     buffer[0]    <= 0;
     buffer[1]    <= 0;
     buffer_valid <= 0;
-    upstream_buffer_selector   <= 0;
-    downstream_buffer_selector <= 0;
+    write_buffer_selector <= 0;
+    read_buffer_selector  <= 0;
   end else begin
     if (write_enable) begin
-      buffer       [upstream_buffer_selector] <= write_data;
-      buffer_valid [upstream_buffer_selector] <= 1;
-      upstream_buffer_selector <= ~upstream_buffer_selector;
+      buffer       [write_buffer_selector] <= write_data;
+      buffer_valid [write_buffer_selector] <= 1;
+      write_buffer_selector <= ~write_buffer_selector;
     end
     if (read_enable) begin
-      buffer_valid [downstream_buffer_selector] <= 0;
-      downstream_buffer_selector <= ~downstream_buffer_selector;
+      buffer_valid [read_buffer_selector] <= 0;
+      read_buffer_selector <= ~read_buffer_selector;
     end
   end
 end
