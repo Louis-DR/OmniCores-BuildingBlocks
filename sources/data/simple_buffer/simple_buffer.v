@@ -5,10 +5,9 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        simple_buffer.v                                              ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Single-entry data buffer that partially decouples the two    ║
-// ║              sides of an interface with valid-ready flow control. It only ║
-// ║              allows one transfer every two cycles. It breaks the timing   ║
-// ║              path for the data but not the handshake.                     ║
+// ║ Description: Single-entry data buffer that decouples the read and write   ║
+// ║              sides. It doesn't support reading and writing in the same    ║
+// ║              cycle.                                                       ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -34,7 +33,7 @@ reg [WIDTH-1:0] buffer;
 reg             buffer_valid;
 
 // IO connection
-assign full      =  buffer_valid & ~read_enable;
+assign full      =  buffer_valid;
 assign empty     = ~buffer_valid;
 assign read_data =  buffer;
 
@@ -44,17 +43,13 @@ always @(posedge clock or negedge resetn) begin
     buffer       <= 0;
     buffer_valid <= 0;
   end else begin
-    if (write_enable & ~buffer_valid) begin
+    if (write_enable & read_enable) begin
+      buffer       <= write_data;
+    end else if (write_enable) begin
       buffer       <= write_data;
       buffer_valid <= 1;
     end else if (read_enable) begin
-      if (write_enable) begin
-        buffer       <= write_data;
-        buffer_valid <= 1;
-      end else begin
-        buffer       <= 0;
-        buffer_valid <= 0;
-      end
+      buffer_valid <= 0;
     end
   end
 end
