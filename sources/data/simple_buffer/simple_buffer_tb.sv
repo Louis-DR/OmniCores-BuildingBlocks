@@ -84,8 +84,6 @@ initial begin
   #(CLOCK_PERIOD);
 
   // Check 1 : Writing to full
-  @(negedge clock);
-  read_enable = 0;
   $display("CHECK 1 : Writing to full.");
   // Initial state
   if (~empty) $error("[%0tns] Empty flag is deasserted after reset with data '%0h'. The buffer should be empty.", $time, read_data);
