@@ -1,0 +1,32 @@
+[dumpfile] "bypass_buffer_tb.vcd"
+[dumpfile_size] 59103
+[savefile] "bypass_buffer_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-10.676292 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 260
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+bypass_buffer_tb.bypass_buffer_dut.clock
+bypass_buffer_tb.bypass_buffer_dut.resetn
+@200
+-
+@28
+bypass_buffer_tb.bypass_buffer_dut.write_enable
+@22
+bypass_buffer_tb.bypass_buffer_dut.write_data[7:0]
+@28
+bypass_buffer_tb.bypass_buffer_dut.full
+@200
+-
+@28
+bypass_buffer_tb.bypass_buffer_dut.read_enable
+@22
+bypass_buffer_tb.bypass_buffer_dut.read_data[7:0]
+@28
+bypass_buffer_tb.bypass_buffer_dut.empty
+[pattern_trace] 1
+[pattern_trace] 0
