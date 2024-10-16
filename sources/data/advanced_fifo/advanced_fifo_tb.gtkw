@@ -1,0 +1,47 @@
+[*]
+[*] GTKWave Analyzer v3.3.107 (w)1999-2020 BSI
+[*] Thu Oct 17 12:18:40 2024
+[*]
+[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/data/advanced_fifo/advanced_fifo_tb.vcd"
+[dumpfile_mtime] "Thu Oct 17 12:17:24 2024"
+[dumpfile_size] 37871
+[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/InjectorAXI/dependencies/AnyV-Generics/sources/data/advanced_fifo/advanced_fifo_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-6.563104 237 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] advanced_fifo_tb.
+[sst_width] 260
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+advanced_fifo_tb.advanced_fifo_dut.clock
+advanced_fifo_tb.advanced_fifo_dut.resetn
+@200
+-
+@28
+advanced_fifo_tb.advanced_fifo_dut.write_enable
+@22
+advanced_fifo_tb.advanced_fifo_dut.write_data[7:0]
+@28
+advanced_fifo_tb.advanced_fifo_dut.full
+@200
+-
+@28
+advanced_fifo_tb.advanced_fifo_dut.read_enable
+@22
+advanced_fifo_tb.advanced_fifo_dut.read_data[7:0]
+@28
+advanced_fifo_tb.advanced_fifo_dut.empty
+@200
+-
+@28
+advanced_fifo_tb.advanced_fifo_dut.write_pointer[2:0]
+advanced_fifo_tb.advanced_fifo_dut.read_pointer[2:0]
+@24
+advanced_fifo_tb.level[2:0]
+@28
+advanced_fifo_tb.level[2:0]
+[pattern_trace] 1
+[pattern_trace] 0
