@@ -72,7 +72,7 @@ assign read_data = buffer[read_address];
 
 
 // ┌──────────────┐
-// │ Status flags │
+// │ Status logic │
 // └──────────────┘
 
 // Queue is full if the read and write pointers are the same but the wrap bits are different
