@@ -36,18 +36,13 @@ module vector_synchronizer #(
   output [WIDTH-1:0] data_out
 );
 
-genvar data_bit;
-generate
-  for (data_bit=0; data_bit<WIDTH; data_bit=data_bit+1) begin : gen_data_bit
-    synchronizer #(
-      .STAGES   ( STAGES             )
-    ) synchronizer (
-      .clock    ( clock              ),
-      .resetn   ( resetn             ),
-      .data_in  ( data_in[data_bit]  ),
-      .data_out ( data_out[data_bit] )
-    );
-  end
-endgenerate
+synchronizer #(
+  .STAGES   ( STAGES   )
+) synchronizer[WIDTH-1:0] (
+  .clock    ( clock    ),
+  .resetn   ( resetn   ),
+  .data_in  ( data_in  ),
+  .data_out ( data_out )
+);
 
 endmodule
