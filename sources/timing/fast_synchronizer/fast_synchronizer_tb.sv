@@ -76,9 +76,9 @@ initial begin
 
   // Reset
   resetn = 0;
-  #(CLOCK_PERIOD);
+  @(posedge clock);
   resetn = 1;
-  #(CLOCK_PERIOD);
+  @(posedge clock);
 
   // Check 1 : low-to-high at 25% of clock cycle
   $display("CHECK 1 : Low-to-high at 25%% of clock cycle.");
@@ -90,17 +90,17 @@ initial begin
     end
     // Check
     begin
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       data_out_expected = MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       for (int check_step = 0 ; check_step <= MAX_TEST_STAGES/2 ; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-2:1] , 2'b11 };
         check_data_out(data_out_expected);
-        #(CLOCK_PERIOD);
+        @(posedge clock);
       end
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
     end
   join
 
@@ -114,17 +114,17 @@ initial begin
     end
     // Check
     begin
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       data_out_expected = ~MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       for (int check_step = 0 ; check_step <= MAX_TEST_STAGES/2 ; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-2:1] , 2'b00 };
         check_data_out(data_out_expected);
-        #(CLOCK_PERIOD);
+        @(posedge clock);
       end
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
     end
   join
 
@@ -138,20 +138,20 @@ initial begin
     end
     // Check
     begin
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       data_out_expected = MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       data_out_expected[1] = 1'b1;
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       for (int check_step = 0 ; check_step <= MAX_TEST_STAGES/2 ; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-2:1] , 2'b11 };
         check_data_out(data_out_expected);
-        #(CLOCK_PERIOD);
+        @(posedge clock);
       end
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
     end
   join
 
@@ -165,20 +165,20 @@ initial begin
     end
     // Check
     begin
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       data_out_expected = ~MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       data_out_expected[1] = 1'b0;
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
       for (int check_step = 0 ; check_step <= MAX_TEST_STAGES/2 ; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-2:1] , 2'b00 };
         check_data_out(data_out_expected);
-        #(CLOCK_PERIOD);
+        @(posedge clock);
       end
       check_data_out(data_out_expected);
-      #(CLOCK_PERIOD);
+      @(posedge clock);
     end
   join
 

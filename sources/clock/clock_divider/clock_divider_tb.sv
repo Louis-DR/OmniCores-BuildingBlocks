@@ -83,9 +83,9 @@ initial begin
 
   // Reset
   resetn = 0;
-  #(CLOCK_PERIOD);
+  @(posedge clock_in);
   resetn = 1;
-  #(CLOCK_PERIOD);
+  @(posedge clock_in);
 
   // Measure the input clock frequency
   @(posedge clock_in);

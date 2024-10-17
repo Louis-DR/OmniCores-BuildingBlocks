@@ -79,9 +79,9 @@ initial begin
 
   // Reset
   resetn = 0;
-  #(CLOCK_PERIOD);
+  @(posedge clock);
   resetn = 1;
-  #(CLOCK_PERIOD);
+  @(posedge clock);
 
   // Check 1 : Writing to full
   $display("CHECK 1 : Writing to full.");

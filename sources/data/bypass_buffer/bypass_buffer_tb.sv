@@ -79,9 +79,9 @@ initial begin
 
   // Reset
   resetn = 0;
-  #(CLOCK_PERIOD);
+  @(posedge clock);
   resetn = 1;
-  #(CLOCK_PERIOD);
+  @(posedge clock);
 
   // Check 1 : Bypass path
   @(negedge clock);

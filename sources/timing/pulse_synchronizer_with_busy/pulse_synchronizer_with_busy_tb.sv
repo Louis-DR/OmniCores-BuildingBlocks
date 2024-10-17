@@ -95,9 +95,11 @@ initial begin
 
   // Reset
   resetn = 0;
-  #(SOURCE_CLOCK_PERIOD+DESTINATION_CLOCK_PERIOD);
+  @(posedge source_clock);
+  @(posedge destination_clock);
   resetn = 1;
-  #(SOURCE_CLOCK_PERIOD+DESTINATION_CLOCK_PERIOD);
+  @(posedge source_clock);
+  @(posedge destination_clock);
 
   // Check 1 : Between same frequencies
   $display("CHECK 1 : Between same frequencies.");

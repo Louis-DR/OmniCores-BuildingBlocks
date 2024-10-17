@@ -107,9 +107,11 @@ initial begin
 
   // Reset
   resetn = 0;
-  #(CLOCK_0_PERIOD+CLOCK_1_PERIOD);
+  @(posedge clock_0);
+  @(posedge clock_1);
   resetn = 1;
-  #(CLOCK_0_PERIOD+CLOCK_1_PERIOD);
+  @(posedge clock_0);
+  @(posedge clock_1);
 
   // Measure the input clocks frequency
   @(posedge clock_0);
