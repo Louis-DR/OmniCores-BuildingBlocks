@@ -117,7 +117,7 @@ initial begin
   if (!empty) $error("[%0tns] Empty flag is deasserted after reset. The FIFO should be empty.", $time);
   if ( full ) $error("[%0tns] Full flag is asserted after reset. The FIFO should be empty.", $time);
   // Writing
-  for (integer write_count=0 ; write_count<DEPTH ; write_count++) begin
+  for (integer write_count=1 ; write_count<=DEPTH ; write_count++) begin
     @(negedge clock);
     write_enable = 1;
     write_data   = $urandom_range(WIDTH_POW2);
@@ -128,7 +128,7 @@ initial begin
     @(negedge clock);
     write_enable = 0;
     write_data   = 0;
-    if (write_count != DEPTH-1) begin
+    if (write_count != DEPTH) begin
       if ( empty) $error("[%0tns] Empty flag is asserted after %0d writes.", $time, write_count);
       if ( full ) $error("[%0tns] Full flag is asserted after %0d writes.", $time, write_count);
     end
@@ -172,7 +172,7 @@ initial begin
   // Check 3 : Reading to empty
   $display("CHECK 3 : Reading to empty.");
   // Reading
-  for (integer read_count=0 ; read_count<DEPTH ; read_count++) begin
+  for (integer read_count=1 ; read_count<=DEPTH ; read_count++) begin
     @(negedge clock);
     read_enable = 1;
     @(posedge clock);
@@ -182,7 +182,7 @@ initial begin
     outstanding_count--;
     @(negedge clock);
     read_enable = 0;
-    if (read_count != DEPTH-1) begin
+    if (read_count != DEPTH) begin
       if ( empty) $error("[%0tns] Empty flag is asserted after %0d reads.", $time, read_count);
       if ( full ) $error("[%0tns] Full flag is asserted after %0d reads.", $time, read_count);
     end
@@ -227,7 +227,7 @@ initial begin
   // Write
   write_enable = 1;
   write_data   = 0;
-  for (integer iteration=1 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
     @(posedge clock);
     data_expected.push_back(write_data);
     @(negedge clock);
