@@ -26,10 +26,11 @@ localparam integer DEPTH_LOG2   = `CLOG2(DEPTH);
 
 // Check parameters
 localparam integer THROUGHPUT_CHECK_DURATION      = 100;
-localparam integer RANDOM_CHECK_DURATION          = 100;
+localparam integer RANDOM_CHECK_DURATION          = 500;
 localparam integer RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
 localparam integer RANDOM_CHECK_READ_PROBABILITY  = 0.5;
-localparam integer RANDOM_CHECK_TIMEOUT           = 1000;
+localparam integer RANDOM_CHECK_TIMEOUT           = 5000;
+localparam integer RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 
 // Device ports
 logic                clock;
@@ -52,6 +53,7 @@ integer pop_trash;
 integer transfer_count;
 integer outstanding_count;
 integer timeout_countdown;
+integer threshold_change_countdown;
 bool    write_outstanding;
 
 // Device under test
@@ -92,6 +94,8 @@ initial begin
   write_data   = 0;
   write_enable = 0;
   read_enable  = 0;
+  lower_threshold_level = 0;
+  upper_threshold_level = DEPTH;
 
   // Reset
   resetn = 0;
@@ -188,6 +192,7 @@ initial begin
   transfer_count    = 0;
   outstanding_count = 0;
   timeout_countdown = RANDOM_CHECK_TIMEOUT;
+  threshold_change_countdown = RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD;
   fork
     // Writing
     begin
@@ -233,6 +238,19 @@ initial begin
         end
       end
     end
+    // Thresholds change
+    begin
+      forever begin
+        @(negedge clock);
+        if (threshold_change_countdown == 0) begin
+          threshold_change_countdown = RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD;
+          lower_threshold_level = $urandom_range(DEPTH);
+          upper_threshold_level = $urandom_range(DEPTH);
+        end else begin
+          threshold_change_countdown--;
+        end
+      end
+    end
     // Status check
     begin
       forever begin
@@ -247,6 +265,12 @@ initial begin
         end else begin
           if ( empty) $error("[%0tns] Empty flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
           if ( full ) $error("[%0tns] Full flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
+        end
+        if (lower_threshold_status != level <= lower_threshold_level) begin
+          $error("[%0tns] Lower threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO level of '%0d'.", $time, lower_threshold_status, lower_threshold_level, level);
+        end
+        if (upper_threshold_status != level >= upper_threshold_level) begin
+          $error("[%0tns] Upper threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO level of '%0d'.", $time, upper_threshold_status, upper_threshold_level, level);
         end
       end
     end
