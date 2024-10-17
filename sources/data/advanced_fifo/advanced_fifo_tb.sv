@@ -41,8 +41,10 @@ logic                read_enable;
 logic    [WIDTH-1:0] read_data;
 logic                empty;
 logic [DEPTH_LOG2:0] level;
-logic [DEPTH_LOG2:0] threshold_level;
-logic                threshold_status;
+logic [DEPTH_LOG2:0] lower_threshold_level;
+logic                lower_threshold_status;
+logic [DEPTH_LOG2:0] upper_threshold_level;
+logic                upper_threshold_status;
 
 // Test variables
 integer data_expected[$];
@@ -57,17 +59,19 @@ advanced_fifo #(
   .WIDTH ( WIDTH ),
   .DEPTH ( DEPTH )
 ) advanced_fifo_dut (
-  .clock            ( clock            ),
-  .resetn           ( resetn           ),
-  .write_enable     ( write_enable     ),
-  .write_data       ( write_data       ),
-  .full             ( full             ),
-  .read_enable      ( read_enable      ),
-  .read_data        ( read_data        ),
-  .empty            ( empty            ),
-  .level            ( level            ),
-  .threshold_level  ( threshold_level  ),
-  .threshold_status ( threshold_status )
+  .clock                  ( clock                  ),
+  .resetn                 ( resetn                 ),
+  .write_enable           ( write_enable           ),
+  .write_data             ( write_data             ),
+  .full                   ( full                   ),
+  .read_enable            ( read_enable            ),
+  .read_data              ( read_data              ),
+  .empty                  ( empty                  ),
+  .level                  ( level                  ),
+  .lower_threshold_level  ( lower_threshold_level  ),
+  .lower_threshold_status ( lower_threshold_status ),
+  .upper_threshold_level  ( upper_threshold_level  ),
+  .upper_threshold_status ( upper_threshold_status )
 );
 
 // Source clock generation

@@ -43,8 +43,10 @@ module advanced_fifo #(
   output                empty,
   // Level and threshold
   output [DEPTH_LOG2:0] level,
-  input  [DEPTH_LOG2:0] threshold_level,
-  output                threshold_status
+  input  [DEPTH_LOG2:0] lower_threshold_level,
+  output                lower_threshold_status,
+  input  [DEPTH_LOG2:0] upper_threshold_level,
+  output                upper_threshold_status
 );
 
 
@@ -93,6 +95,10 @@ assign empty = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && 
 
 // Calculate FIFO level by comparing write and read pointers
 assign level = write_pointer - read_pointer;
+
+// Thresholds status
+assign lower_threshold_status = level <= lower_threshold_level;
+assign upper_threshold_status = level >= upper_threshold_level;
 
 
 

@@ -1,5 +1,5 @@
 [dumpfile] "advanced_fifo_tb.vcd"
-[dumpfile_size] 38094
+[dumpfile_size] 38308
 [savefile] "advanced_fifo_tb.gtkw"
 [timestart] 0
 [size] 1728 1051
@@ -33,8 +33,12 @@ advanced_fifo_tb.advanced_fifo_dut.empty
 -
 @24
 advanced_fifo_tb.advanced_fifo_dut.level[2:0]
-advanced_fifo_tb.advanced_fifo_dut.threshold_level[2:0]
+advanced_fifo_tb.lower_threshold_level[2:0]
 @28
-advanced_fifo_tb.advanced_fifo_dut.threshold_status
+advanced_fifo_tb.lower_threshold_status
+@24
+advanced_fifo_tb.upper_threshold_level[2:0]
+@28
+advanced_fifo_tb.upper_threshold_status
 [pattern_trace] 1
 [pattern_trace] 0
