@@ -31,15 +31,16 @@ module advanced_fifo #(
 ) (
   input                 clock,
   input                 resetn,
+  input                 clear_flags,
   // Write interface
   input                 write_enable,
   input     [WIDTH-1:0] write_data,
-  output                write_miss,
+  output reg            write_miss,
   output                full,
   // Read interface
   input                 read_enable,
   output    [WIDTH-1:0] read_data,
-  output                read_error,
+  output reg            read_error,
   output                empty,
   // Level and threshold
   output [DEPTH_LOG2:0] level,
@@ -112,6 +113,8 @@ always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
     write_pointer <= 0;
     read_pointer  <= 0;
+    write_miss    <= 0;
+    read_error    <= 0;
     for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
       buffer[depth_index] <= 0;
     end
@@ -119,14 +122,31 @@ always @(posedge clock or negedge resetn) begin
   // Operation
   else begin
     // Write
-    if (write_enable && !full) begin
-      write_pointer         <= write_pointer + 1;
-      buffer[write_address] <= write_data;
+    if (write_enable) begin
+      if (full) begin
+        if (!clear_flags) begin
+          write_miss <= 1;
+        end
+      end else begin
+        write_pointer         <= write_pointer + 1;
+        buffer[write_address] <= write_data;
+      end
     end
     // Read
-    if (read_enable && !empty) begin
-      read_pointer <= read_pointer + 1;
+    if (read_enable) begin
+      if (empty) begin
+        if (!clear_flags) begin
+          read_error <= 1;
+        end
+      end else begin
+        read_pointer <= read_pointer + 1;
+      end
     end
+  end
+  // Clear
+  if (clear_flags) begin
+    write_miss <= 0;
+    read_error <= 0;
   end
 end
 

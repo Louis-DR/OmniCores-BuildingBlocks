@@ -35,11 +35,14 @@ localparam integer RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 // Device ports
 logic                clock;
 logic                resetn;
+logic                clear_flags;
 logic                write_enable;
 logic    [WIDTH-1:0] write_data;
+logic                write_miss;
 logic                full;
 logic                read_enable;
 logic    [WIDTH-1:0] read_data;
+logic                read_error;
 logic                empty;
 logic [DEPTH_LOG2:0] level;
 logic [DEPTH_LOG2:0] lower_threshold_level;
@@ -63,11 +66,14 @@ advanced_fifo #(
 ) advanced_fifo_dut (
   .clock                  ( clock                  ),
   .resetn                 ( resetn                 ),
+  .clear_flags            ( clear_flags            ),
   .write_enable           ( write_enable           ),
   .write_data             ( write_data             ),
+  .write_miss             ( write_miss             ),
   .full                   ( full                   ),
   .read_enable            ( read_enable            ),
   .read_data              ( read_data              ),
+  .read_error             ( read_error             ),
   .empty                  ( empty                  ),
   .level                  ( level                  ),
   .lower_threshold_level  ( lower_threshold_level  ),
@@ -91,6 +97,7 @@ initial begin
   $dumpvars(0,advanced_fifo_tb);
 
   // Initialization
+  clear_flags  = 0;
   write_data   = 0;
   write_enable = 0;
   read_enable  = 0;

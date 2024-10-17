@@ -1,11 +1,10 @@
 [dumpfile] "advanced_fifo_tb.vcd"
-[dumpfile_size] 137937
+[dumpfile_size] 138059
 [savefile] "advanced_fifo_tb.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
 *-11.130356 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[treeopen] advanced_fifo_tb.
 [sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
@@ -13,6 +12,7 @@
 @28
 advanced_fifo_tb.advanced_fifo_dut.clock
 advanced_fifo_tb.advanced_fifo_dut.resetn
+advanced_fifo_tb.advanced_fifo_dut.clear_flags
 @200
 -
 @28
@@ -20,6 +20,7 @@ advanced_fifo_tb.advanced_fifo_dut.write_enable
 @22
 advanced_fifo_tb.advanced_fifo_dut.write_data[7:0]
 @28
+advanced_fifo_tb.write_miss
 advanced_fifo_tb.advanced_fifo_dut.full
 @200
 -
@@ -28,6 +29,7 @@ advanced_fifo_tb.advanced_fifo_dut.read_enable
 @22
 advanced_fifo_tb.advanced_fifo_dut.read_data[7:0]
 @28
+advanced_fifo_tb.read_error
 advanced_fifo_tb.advanced_fifo_dut.empty
 @200
 -
