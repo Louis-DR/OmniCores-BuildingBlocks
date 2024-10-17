@@ -139,8 +139,38 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 2 : Reading to empty
-  $display("CHECK 2 : Reading to empty.");
+  // Check 2 : Write miss
+  $display("CHECK 2 : Write miss.");
+  // Initial state
+  if ( empty     ) $error("[%0tns] Empty flag is asserted before the write miss check. The FIFO should be full.", $time);
+  if (!full      ) $error("[%0tns] Full flag is deasserted before the write miss check. The FIFO should be full.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted before the write miss check.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted before the write miss check.", $time);
+  // Write
+  @(negedge clock);
+  write_enable = 1;
+  write_data   = $urandom_range(WIDTH_POW2);
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  if ( empty     ) $error("[%0tns] Empty flag is asserted after a write while full. The FIFO should be full.", $time);
+  if (!full      ) $error("[%0tns] Full flag is deasserted after a write while full. The FIFO should be full.", $time);
+  if (!write_miss) $error("[%0tns] Write miss flag is deasserted after a write while full.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted after a write while full.", $time);
+  // Clear flags
+  @(negedge clock);
+  clear_flags  = 1;
+  @(negedge clock);
+  clear_flags  = 0;
+  if ( empty     ) $error("[%0tns] Empty flag is asserted after clearing the flags. The FIFO should be full.", $time);
+  if (!full      ) $error("[%0tns] Full flag is deasserted after clearing the flags. The FIFO should be full.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted after clearing the flags.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted after clearing the flags.", $time);
+
+  repeat(10) @(posedge clock);
+
+  // Check 3 : Reading to empty
+  $display("CHECK 3 : Reading to empty.");
   // Reading
   for (integer read_count=0 ; read_count<DEPTH ; read_count++) begin
     @(negedge clock);
@@ -163,8 +193,36 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 3 : Back-to-back transfers for full throughput
-  $display("CHECK 3 : Back-to-back transfers for full throughput.");
+  // Check 4 : Read error
+  $display("CHECK 4 : Read error.");
+  // Initial state
+  if (!empty     ) $error("[%0tns] Empty flag is deasserted before the read error check. The FIFO should be empty.", $time);
+  if ( full      ) $error("[%0tns] Full flag is asserted before the read error check. The FIFO should be empty.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted before the read error check.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted before the read error check.", $time);
+  // Write
+  @(negedge clock);
+  read_enable = 1;
+  @(negedge clock);
+  read_enable = 0;
+  if (!empty     ) $error("[%0tns] Empty flag is deasserted after a read while empty. The FIFO should be empty.", $time);
+  if ( full      ) $error("[%0tns] Full flag is asserted after a read while empty. The FIFO should be empty.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted after a read while empty.", $time);
+  if (!read_error) $error("[%0tns] Read error flag is deasserted after a read while empty.", $time);
+  // Clear flags
+  @(negedge clock);
+  clear_flags = 1;
+  @(negedge clock);
+  clear_flags = 0;
+  if (!empty     ) $error("[%0tns] Empty flag is deasserted after clearing the flags. The FIFO should be empty.", $time);
+  if ( full      ) $error("[%0tns] Full flag is asserted after clearing the flags. The FIFO should be empty.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted after clearing the flags.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted after clearing the flags.", $time);
+
+  repeat(10) @(posedge clock);
+
+  // Check 5 : Back-to-back transfers for full throughput
+  $display("CHECK 5 : Back-to-back transfers for full throughput.");
   @(negedge clock);
   // Write
   write_enable = 1;
@@ -188,13 +246,13 @@ initial begin
   @(negedge clock);
   read_enable = 0;
   // Final state
-  if (!empty) $error("[%0tns] Empty flag is deasserted after check 3. The FIFO should be empty.", $time);
-  if ( full ) $error("[%0tns] Full flag is asserted after check 3. The FIFO should be empty.", $time);
+  if (!empty) $error("[%0tns] Empty flag is deasserted after check 5. The FIFO should be empty.", $time);
+  if ( full ) $error("[%0tns] Full flag is asserted after check 5. The FIFO should be empty.", $time);
 
   repeat(10) @(posedge clock);
 
-  // Check 4 : Random stimulus
-  $display("CHECK 4 : Random stimulus.");
+  // Check 6 : Random stimulus
+  $display("CHECK 6 : Random stimulus.");
   @(negedge clock);
   transfer_count    = 0;
   outstanding_count = 0;
@@ -302,8 +360,8 @@ initial begin
   join_any
   disable fork;
   // Final state
-  if (!empty) $error("[%0tns] Empty flag is deasserted after check 4. The FIFO should be empty.", $time);
-  if ( full ) $error("[%0tns] Full flag is asserted after check 4. The FIFO should be empty.", $time);
+  if (!empty) $error("[%0tns] Empty flag is deasserted after check 6. The FIFO should be empty.", $time);
+  if ( full ) $error("[%0tns] Full flag is asserted after check 6. The FIFO should be empty.", $time);
 
   repeat(10) @(posedge clock);
 
