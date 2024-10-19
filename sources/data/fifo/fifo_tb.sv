@@ -120,7 +120,11 @@ initial begin
     @(negedge clock);
     read_enable = 1;
     @(posedge clock);
-    if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    if (data_expected.size() != 0) begin
+      if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    end else begin
+      $error("[%0tns] Read enabled while FIFO should be empty.", $time);
+    end
     pop_trash = data_expected.pop_front();
     @(negedge clock);
     read_enable = 0;
@@ -149,7 +153,11 @@ initial begin
     if ( full ) $error("[%0tns] Full flag is asserted.", $time);
     // Read
     read_enable = 1;
-    if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    if (data_expected.size() != 0) begin
+      if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    end else begin
+      $error("[%0tns] Read enabled while FIFO should be empty.", $time);
+    end
     pop_trash = data_expected.pop_front();
     // Increment write data
     write_data = write_data+1;
@@ -206,9 +214,13 @@ initial begin
         // Check
         @(posedge clock);
         if (read_enable) begin
-          if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
-          pop_trash = data_expected.pop_front();
-          outstanding_count--;
+          if (data_expected.size() != 0) begin
+            if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+            pop_trash = data_expected.pop_front();
+            outstanding_count--;
+          end else begin
+            $error("[%0tns] Read enabled while FIFO should be empty.", $time);
+          end
         end
       end
     end
