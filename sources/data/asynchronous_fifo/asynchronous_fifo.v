@@ -31,13 +31,13 @@ module asynchronous_fifo #(
   input              write_resetn,
   input              write_enable,
   input  [WIDTH-1:0] write_data,
-  output             full,
+  output             write_full,
   // Read interface
   input              read_clock,
   input              read_resetn,
   input              read_enable,
   output [WIDTH-1:0] read_data,
-  output             empty
+  output             read_empty
 );
 
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
@@ -53,7 +53,7 @@ reg [WIDTH-1:0] buffer [DEPTH-1:0];
 
 // Write control signal
 reg can_write;
-assign full = ~can_write;
+assign write_full = ~can_write;
 
 // Write pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] write_pointer;
@@ -98,7 +98,7 @@ end
 
 // Read control signal
 reg can_read;
-assign empty = ~can_read;
+assign read_empty = ~can_read;
 
 // Read pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] read_pointer;
