@@ -203,6 +203,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
+      $error("[%0tns] Timeout.", $time);
     end
   join_any
   disable fork;

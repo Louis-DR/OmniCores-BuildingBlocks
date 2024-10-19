@@ -176,7 +176,7 @@ initial begin
     @(negedge clock);
     read_enable = 1;
     @(posedge clock);
-    if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
     if (level != outstanding_count)    $error("[%0tns] Level '%0d' is not as expected '%0d'.", $time, level, outstanding_count);
     pop_trash = data_expected.pop_front();
     outstanding_count--;
@@ -235,7 +235,7 @@ initial begin
     if ( full ) $error("[%0tns] Full flag is asserted.", $time);
     // Read
     read_enable = 1;
-    if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
     pop_trash = data_expected.pop_front();
     // Increment write data
     write_data = write_data+1;
@@ -297,7 +297,7 @@ initial begin
         // Check
         @(posedge clock);
         if (read_enable) begin
-          if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+          if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
           pop_trash = data_expected.pop_front();
           outstanding_count--;
         end
@@ -356,6 +356,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
+      $error("[%0tns] Timeout.", $time);
     end
   join_any
   disable fork;

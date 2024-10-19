@@ -106,13 +106,13 @@ initial begin
   $display("CHECK 2 : Reading to empty.");
   // First read
   @(negedge clock); read_enable = 1;
-  if (read_data != data_expected[0]) $error("[%0tns] First read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+  if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] First read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
   @(negedge clock); read_enable = 0; pop_trash = data_expected.pop_front();
   if ( empty) $error("[%0tns] Empty flag is asserted after the first read. The buffer should contain the second transfer.", $time);
   if ( full ) $error("[%0tns] Full flag is asserted after the first read. The buffer should have one free slot.", $time);
   // Second read
   @(negedge clock); read_enable = 1;
-  if (read_data != data_expected[0]) $error("[%0tns] Second read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+  if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Second read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
   @(negedge clock); read_enable = 0; pop_trash = data_expected.pop_front();
   if (!empty) $error("[%0tns] Empty flag is deasserted after the second read with data '%0h'. The buffer should be empty.", $time, read_data);
   if ( full ) $error("[%0tns] Full flag is asserted after the second read. The buffer should be empty.", $time);
@@ -133,7 +133,7 @@ initial begin
     // Read when not empty
     if (!empty) begin
       read_enable = 1;
-      if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+      if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
       pop_trash = data_expected.pop_front();
     end
     // Increment write data
@@ -189,7 +189,7 @@ initial begin
         // Check
         @(posedge clock);
         if (read_enable) begin
-          if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+          if (data_expected.size() != 0) if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
           pop_trash = data_expected.pop_front();
         end
       end
@@ -211,6 +211,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
+      $error("[%0tns] Timeout.", $time);
     end
   join_any
   disable fork;
