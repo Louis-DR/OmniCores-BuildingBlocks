@@ -100,7 +100,7 @@ initial begin
   $display("CHECK 2 : Reading to empty.");
   // Read
   @(negedge clock); read_enable = 1;
-  if (read_data != data_expected) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+  if (read_data !== data_expected) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
   @(negedge clock); read_enable = 0; data_expected = 'x;
   if (!empty) $error("[%0tns] Empty flag is deasserted after read with data '%0h'. The buffer should be empty.", $time, read_data);
   if ( full ) $error("[%0tns] Full flag is asserted after read with data '%0h'. The buffer should be empty.", $time, read_data);
@@ -127,7 +127,7 @@ initial begin
     write_data   = write_data+1;
     write_enable = 0;
     read_enable  = 1;
-    if (read_data != data_expected) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+    if (read_data !== data_expected) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
     @(posedge clock);
     data_expected = 'x;
   end
@@ -181,7 +181,7 @@ initial begin
         // Check
         @(posedge clock);
         if (read_enable) begin
-          if (read_data != data_expected) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+          if (read_data !== data_expected) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
           data_expected = 'x;
         end
       end

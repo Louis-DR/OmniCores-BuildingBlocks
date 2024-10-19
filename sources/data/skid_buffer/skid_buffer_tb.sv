@@ -107,7 +107,7 @@ initial begin
   // First read
   @(negedge clock); read_enable = 1;
   if (data_expected.size() != 0) begin
-    if (read_data != data_expected[0]) $error("[%0tns] First read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    if (read_data !== data_expected[0]) $error("[%0tns] First read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
   end else begin
     $error("[%0tns] Read enabled while FIFO should be empty.", $time);
   end
@@ -117,7 +117,7 @@ initial begin
   // Second read
   @(negedge clock); read_enable = 1;
   if (data_expected.size() != 0) begin
-    if (read_data != data_expected[0]) $error("[%0tns] Second read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    if (read_data !== data_expected[0]) $error("[%0tns] Second read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
   end else begin
     $error("[%0tns] Read enabled while FIFO should be empty.", $time);
   end
@@ -142,7 +142,7 @@ initial begin
     if (!empty) begin
       read_enable = 1;
       if (data_expected.size() != 0) begin
-        if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+        if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
       end else begin
         $error("[%0tns] Read enabled while FIFO should be empty.", $time);
       end
@@ -202,7 +202,7 @@ initial begin
         @(posedge clock);
         if (read_enable) begin
           if (data_expected.size() != 0) begin
-            if (read_data != data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+            if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
             pop_trash = data_expected.pop_front();
           end else begin
             $error("[%0tns] Read enabled while FIFO should be empty.", $time);
