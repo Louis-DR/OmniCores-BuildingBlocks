@@ -27,17 +27,17 @@ module asynchronous_fifo #(
   parameter STAGES = 2
 ) (
   // Write interface
-  input                  write_clock,
-  input                  write_resetn,
-  input                  write_enable,
-  input      [WIDTH-1:0] write_data,
-  output                 full,
+  input              write_clock,
+  input              write_resetn,
+  input              write_enable,
+  input  [WIDTH-1:0] write_data,
+  output             full,
   // Read interface
-  input                  read_clock,
-  input                  read_resetn,
-  input                  read_enable,
-  output reg [WIDTH-1:0] read_data,
-  output                 empty
+  input              read_clock,
+  input              read_resetn,
+  input              read_enable,
+  output [WIDTH-1:0] read_data,
+  output             empty
 );
 
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
@@ -118,11 +118,13 @@ wire [DEPTH_LOG2:0] read_pointer_incremented_grey = (read_pointer_incremented >>
 wire can_read_current = read_pointer_grey_r    != write_pointer_grey_r;
 wire can_read_next    = read_pointer_incremented_grey != write_pointer_grey_r;
 
+// Value at the read pointer is always on the read data bus
+assign read_data = buffer[read_address];
+
 always @(posedge read_clock or negedge read_resetn) begin
   if (!read_resetn) begin
     read_pointer        <= 0;
     read_pointer_grey_r <= 0;
-    read_data           <= 0;
     can_read            <= 0;
   end else begin
     if (read_enable) begin
@@ -131,18 +133,8 @@ always @(posedge read_clock or negedge read_resetn) begin
         read_pointer_grey_r <= read_pointer_incremented_grey;
       end
       can_read <= can_read_next;
-      if (can_read_next) begin
-        read_data <= buffer[read_pointer_incremented];
-      end else begin
-        read_data <= 0;
-      end
     end else begin
-      can_read = can_read_current;
-      if (can_read_current) begin
-        read_data <= buffer[read_address];
-      end else begin
-        read_data <= 0;
-      end
+      can_read <= can_read_current;
     end
   end
 end
