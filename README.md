@@ -19,7 +19,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `bypass_buffer`                    | data           | Single-entry data buffer for back-pressure relief            | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `fifo`                             | data           | Synchronous FIFO queue                                       | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `advanced_fifo`                    | data           | Synchronous FIFO queue with additional features              | :green_circle:  :green_circle:  :red_circle: :white_circle: |
-| `asynchronous_fifo`                | data, timing   | Asynchronous FIFO queue                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `asynchronous_fifo`                | data, timing   | Asynchronous FIFO queue                                      | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `lifo`                             | data           | Synchronous LIFO stack                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `parity_encoder`                   | error control  | Parity encoder                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `parity_checker`                   | error control  | Parity checker                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
