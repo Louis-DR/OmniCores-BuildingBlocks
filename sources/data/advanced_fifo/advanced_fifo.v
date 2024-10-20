@@ -8,7 +8,8 @@
 // ║ Description: Synchronous First-In First-Out queue.                        ║
 // ║                                                                           ║
 // ║              Compared to the normal FIFO, this one also features read and ║
-// ║              write protection, a miss flag, and a dynamic threshold flag. ║
+// ║              write protection, write miss and read error flags, a level   ║
+// ║              outout, and a dynamic threshold flag.                        ║
 // ║                                                                           ║
 // ║              If the FIFO isn't empty, the read_data output is the value   ║
 // ║              of the tail of the queue. Toggling the read input signal     ║
