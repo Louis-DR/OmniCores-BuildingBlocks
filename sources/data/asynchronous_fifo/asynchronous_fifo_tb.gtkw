@@ -12,9 +12,9 @@
 @28
 asynchronous_fifo_tb.write_clock
 asynchronous_fifo_tb.write_resetn
-asynchronous_fifo_tb.asynchronous_fifo_dut.write_enable
+asynchronous_fifo_tb.write_enable
 @22
-asynchronous_fifo_tb.asynchronous_fifo_dut.write_data[7:0]
+asynchronous_fifo_tb.write_data[7:0]
 @28
 asynchronous_fifo_tb.write_full
 @200
@@ -22,9 +22,9 @@ asynchronous_fifo_tb.write_full
 @28
 asynchronous_fifo_tb.read_clock
 asynchronous_fifo_tb.read_resetn
-asynchronous_fifo_tb.asynchronous_fifo_dut.read_enable
+asynchronous_fifo_tb.read_enable
 @22
-asynchronous_fifo_tb.asynchronous_fifo_dut.read_data[7:0]
+asynchronous_fifo_tb.read_data[7:0]
 @28
 asynchronous_fifo_tb.read_empty
 [pattern_trace] 1

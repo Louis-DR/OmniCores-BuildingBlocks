@@ -51,10 +51,6 @@ reg [WIDTH-1:0] buffer [DEPTH-1:0];
 // │ Write clock domain │
 // └────────────────────┘
 
-// Write control signal
-reg can_write;
-assign write_full = ~can_write;
-
 // Write pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] write_pointer;
 
@@ -69,23 +65,18 @@ reg [DEPTH_LOG2:0] read_pointer_grey_w;
 wire [DEPTH_LOG2:0] write_pointer_incremented      = write_pointer + 1;
 wire [DEPTH_LOG2:0] write_pointer_incremented_grey = (write_pointer_incremented >> 1) ^ write_pointer_incremented;
 
-// Buffer is full if read and write addresses are the same and wrap bits are different
-wire can_write_current = write_pointer_grey_w           != { ~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0] };
-wire can_write_next    = write_pointer_incremented_grey != { ~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0] };
+// Queue is full if the read and write pointers are the same but the wrap bits are different
+assign write_full = write_pointer_grey_w == {~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0]};
 
 always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
     write_pointer        <= 0;
     write_pointer_grey_w <= 0;
-    can_write            <= 1;
   end else begin
-    if (write_enable && can_write) begin
-      write_pointer <= write_pointer_incremented;
-      write_pointer_grey_w <= write_pointer_incremented_grey;
-      can_write <= can_write_next;
+    if (write_enable) begin
+      write_pointer         <= write_pointer_incremented;
+      write_pointer_grey_w  <= write_pointer_incremented_grey;
       buffer[write_address] <= write_data;
-    end else begin
-      can_write <= can_write_current;
     end
   end
 end
@@ -95,10 +86,6 @@ end
 // ┌───────────────────┐
 // │ Read clock domain │
 // └───────────────────┘
-
-// Read control signal
-reg can_read;
-assign read_empty = ~can_read;
 
 // Read pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] read_pointer;
@@ -114,9 +101,8 @@ reg [DEPTH_LOG2:0] read_pointer_grey_r;
 wire [DEPTH_LOG2:0] read_pointer_incremented = read_pointer + 1;
 wire [DEPTH_LOG2:0] read_pointer_incremented_grey = (read_pointer_incremented >> 1) ^ read_pointer_incremented;
 
-// Buffer empty if read and write addresses are the same including the wrap bits
-wire can_read_current = read_pointer_grey_r    != write_pointer_grey_r;
-wire can_read_next    = read_pointer_incremented_grey != write_pointer_grey_r;
+// Queue is empty if the read and write pointers are the same and the wrap bits are equal
+assign read_empty = write_pointer_grey_r == read_pointer_grey_r;
 
 // Value at the read pointer is always on the read data bus
 assign read_data = buffer[read_address];
@@ -125,16 +111,10 @@ always @(posedge read_clock or negedge read_resetn) begin
   if (!read_resetn) begin
     read_pointer        <= 0;
     read_pointer_grey_r <= 0;
-    can_read            <= 0;
   end else begin
     if (read_enable) begin
-      if (can_read) begin
-        read_pointer        <= read_pointer_incremented;
-        read_pointer_grey_r <= read_pointer_incremented_grey;
-      end
-      can_read <= can_read_next;
-    end else begin
-      can_read <= can_read_current;
+      read_pointer        <= read_pointer_incremented;
+      read_pointer_grey_r <= read_pointer_incremented_grey;
     end
   end
 end
