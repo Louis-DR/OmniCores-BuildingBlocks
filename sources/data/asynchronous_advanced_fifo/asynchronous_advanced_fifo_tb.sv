@@ -162,6 +162,7 @@ initial begin
 
   // Check 1 : Writing to full
   $display("CHECK 1 : Writing to full.");
+  // outstanding_count = 0;
   // Initial state
   if (!read_empty) $error("[%0tns] Empty flag is deasserted after reset. The FIFO should be empty.", $time);
   if ( write_full) $error("[%0tns] Full flag is asserted after reset. The FIFO should be empty.", $time);
@@ -171,7 +172,9 @@ initial begin
     write_enable = 1;
     write_data   = $urandom_range(WIDTH_POW2);
     @(posedge write_clock);
+    // if (level != outstanding_count) $error("[%0tns] Level '%0d' is not as expected '%0d'.", $time, level, outstanding_count);
     data_expected.push_back(write_data);
+    // outstanding_count++;
     @(negedge write_clock);
     write_enable = 0;
     write_data   = 0;
