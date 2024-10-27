@@ -26,10 +26,11 @@
 
 
 module asynchronous_advanced_fifo #(
-  parameter WIDTH      = 8,
-  parameter DEPTH      = 4,
-  parameter DEPTH_LOG2 = `CLOG2(DEPTH),
-  parameter STAGES     = 2
+  parameter WIDTH        = 8,
+  parameter DEPTH        = 4,
+  parameter DEPTH_LOG2   = `CLOG2(DEPTH),
+  parameter STAGES_WRITE = 2,
+  parameter STAGES_READ  = 2
 ) (
   // Write interface
   input                 write_clock,
@@ -195,8 +196,8 @@ end
 // └───────────────────────┘
 
 vector_synchronizer #(
-  .WIDTH    ( DEPTH_LOG2+1        ),
-  .STAGES   ( STAGES              )
+  .WIDTH    ( DEPTH_LOG2+1 ),
+  .STAGES   ( STAGES_WRITE )
 ) read_pointer_grey_sync (
   .clock    ( write_clock         ),
   .resetn   ( write_resetn        ),
@@ -205,8 +206,8 @@ vector_synchronizer #(
 );
 
 vector_synchronizer #(
-  .WIDTH    ( DEPTH_LOG2+1         ),
-  .STAGES   ( STAGES               )
+  .WIDTH    ( DEPTH_LOG2+1 ),
+  .STAGES   ( STAGES_READ  )
 ) write_pointer_grey_sync (
   .clock    ( read_clock           ),
   .resetn   ( read_resetn          ),

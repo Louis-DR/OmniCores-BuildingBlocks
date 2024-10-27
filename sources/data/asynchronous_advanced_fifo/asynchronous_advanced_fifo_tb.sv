@@ -25,7 +25,8 @@ localparam integer WIDTH             = 8;
 localparam integer WIDTH_POW2        = 2**WIDTH;
 localparam integer DEPTH             = 4;
 localparam integer DEPTH_LOG2        = $clog2(DEPTH);
-localparam integer STAGES            = 2;
+localparam integer STAGES_WRITE      = 2;
+localparam integer STAGES_READ       = 2;
 
 // Check parameters
 localparam integer THROUGHPUT_CHECK_DURATION      = 100;
@@ -66,9 +67,10 @@ integer timeout_countdown;
 
 // Device under test
 asynchronous_advanced_fifo #(
-  .WIDTH  ( WIDTH  ),
-  .DEPTH  ( DEPTH  ),
-  .STAGES ( STAGES )
+  .WIDTH        ( WIDTH        ),
+  .DEPTH        ( DEPTH        ),
+  .STAGES_WRITE ( STAGES_WRITE ),
+  .STAGES_READ  ( STAGES_READ  )
 ) asynchronous_advanced_fifo_dut (
   .write_clock      ( write_clock      ),
   .write_resetn     ( write_resetn     ),
@@ -156,7 +158,7 @@ initial begin
     if (write_count != DEPTH) begin
       if ( write_full) $error("[%0tns] Full flag is asserted after %0d writes.", $time, write_count);
     end
-    repeat(STAGES) @(posedge read_clock); @(negedge read_clock);
+    repeat(STAGES_READ) @(posedge read_clock); @(negedge read_clock);
     if (write_count != DEPTH) begin
       if ( read_empty) $error("[%0tns] Empty flag is asserted after %0d writes.", $time, write_count);
     end
@@ -213,7 +215,7 @@ initial begin
     if (read_count != DEPTH) begin
       if ( read_empty) $error("[%0tns] Empty flag is asserted after %0d reads.", $time, read_count);
     end
-    repeat(STAGES) @(posedge write_clock); @(negedge write_clock);
+    repeat(STAGES_WRITE) @(posedge write_clock); @(negedge write_clock);
     if (read_count != DEPTH) begin
       if ( write_full) $error("[%0tns] Full flag is asserted after %0d reads.", $time, read_count);
     end
