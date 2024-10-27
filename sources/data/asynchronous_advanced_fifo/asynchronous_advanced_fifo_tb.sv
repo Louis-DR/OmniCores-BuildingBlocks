@@ -49,6 +49,10 @@ logic                write_full;
 logic                write_miss;
 logic                write_clear_miss;
 logic [DEPTH_LOG2:0] write_level;
+logic [DEPTH_LOG2:0] write_lower_threshold_level;
+logic                write_lower_threshold_status;
+logic [DEPTH_LOG2:0] write_upper_threshold_level;
+logic                write_upper_threshold_status;
 logic                read_clock;
 logic                read_resetn;
 logic                read_enable;
@@ -57,6 +61,10 @@ logic                read_empty;
 logic                read_error;
 logic                read_clear_error;
 logic [DEPTH_LOG2:0] read_level;
+logic [DEPTH_LOG2:0] read_lower_threshold_level;
+logic                read_lower_threshold_status;
+logic [DEPTH_LOG2:0] read_upper_threshold_level;
+logic                read_upper_threshold_status;
 
 // Test variables
 integer data_expected[$];
@@ -72,22 +80,30 @@ asynchronous_advanced_fifo #(
   .STAGES_WRITE ( STAGES_WRITE ),
   .STAGES_READ  ( STAGES_READ  )
 ) asynchronous_advanced_fifo_dut (
-  .write_clock      ( write_clock      ),
-  .write_resetn     ( write_resetn     ),
-  .write_enable     ( write_enable     ),
-  .write_data       ( write_data       ),
-  .write_full       ( write_full       ),
-  .write_miss       ( write_miss       ),
-  .write_clear_miss ( write_clear_miss ),
-  .write_level      ( write_level      ),
-  .read_clock       ( read_clock       ),
-  .read_resetn      ( read_resetn      ),
-  .read_enable      ( read_enable      ),
-  .read_data        ( read_data        ),
-  .read_empty       ( read_empty       ),
-  .read_error       ( read_error       ),
-  .read_clear_error ( read_clear_error ),
-  .read_level       ( read_level       )
+  .write_clock                  ( write_clock                  ),
+  .write_resetn                 ( write_resetn                 ),
+  .write_enable                 ( write_enable                 ),
+  .write_data                   ( write_data                   ),
+  .write_full                   ( write_full                   ),
+  .write_miss                   ( write_miss                   ),
+  .write_clear_miss             ( write_clear_miss             ),
+  .write_level                  ( write_level                  ),
+  .write_lower_threshold_level  ( write_lower_threshold_level  ),
+  .write_lower_threshold_status ( write_lower_threshold_status ),
+  .write_upper_threshold_level  ( write_upper_threshold_level  ),
+  .write_upper_threshold_status ( write_upper_threshold_status ),
+  .read_clock                   ( read_clock                   ),
+  .read_resetn                  ( read_resetn                  ),
+  .read_enable                  ( read_enable                  ),
+  .read_data                    ( read_data                    ),
+  .read_empty                   ( read_empty                   ),
+  .read_error                   ( read_error                   ),
+  .read_clear_error             ( read_clear_error             ),
+  .read_level                   ( read_level                   ),
+  .read_lower_threshold_level   ( read_lower_threshold_level   ),
+  .read_lower_threshold_status  ( read_lower_threshold_status  ),
+  .read_upper_threshold_level   ( read_upper_threshold_level   ),
+  .read_upper_threshold_status  ( read_upper_threshold_status  )
 );
 
 logic [WIDTH-1:0] fifo0;
@@ -129,6 +145,10 @@ initial begin
   read_enable      = 0;
   write_clear_miss = 0;
   read_clear_error = 0;
+  write_lower_threshold_level = 0;
+  write_upper_threshold_level = DEPTH;
+  read_lower_threshold_level  = 0;
+  read_upper_threshold_level  = DEPTH;
 
   // Reset
   write_resetn = 0;

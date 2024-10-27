@@ -1,5 +1,5 @@
 [dumpfile] "asynchronous_advanced_fifo_tb.vcd"
-[dumpfile_size] 334739
+[dumpfile_size] 341547
 [savefile] "asynchronous_advanced_fifo_tb.gtkw"
 [timestart] 0
 [size] 1728 1051
@@ -21,6 +21,13 @@ asynchronous_advanced_fifo_tb.write_miss
 asynchronous_advanced_fifo_tb.write_clear_miss
 @24
 asynchronous_advanced_fifo_tb.write_level[2:0]
+asynchronous_advanced_fifo_tb.write_lower_threshold_level[2:0]
+@28
+asynchronous_advanced_fifo_tb.write_lower_threshold_status
+@24
+asynchronous_advanced_fifo_tb.write_upper_threshold_level[2:0]
+@28
+asynchronous_advanced_fifo_tb.write_upper_threshold_status
 @200
 -
 @28
@@ -35,5 +42,12 @@ asynchronous_advanced_fifo_tb.read_error
 asynchronous_advanced_fifo_tb.read_clear_error
 @24
 asynchronous_advanced_fifo_tb.read_level[2:0]
+asynchronous_advanced_fifo_tb.read_lower_threshold_level[2:0]
+@28
+asynchronous_advanced_fifo_tb.read_lower_threshold_status
+@24
+asynchronous_advanced_fifo_tb.read_upper_threshold_level[2:0]
+@28
+asynchronous_advanced_fifo_tb.read_upper_threshold_status
 [pattern_trace] 1
 [pattern_trace] 0
