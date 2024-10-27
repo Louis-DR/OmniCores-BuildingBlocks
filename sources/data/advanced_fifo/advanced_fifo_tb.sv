@@ -116,6 +116,7 @@ initial begin
   // Initial state
   if (!empty) $error("[%0tns] Empty flag is deasserted after reset. The FIFO should be empty.", $time);
   if ( full ) $error("[%0tns] Full flag is asserted after reset. The FIFO should be empty.", $time);
+  if (level != 0) $error("[%0tns] Level '%0d' is not zero after reset. The FIFO should be empty.", $time, level);
   // Writing
   for (integer write_count=1 ; write_count<=DEPTH ; write_count++) begin
     @(negedge clock);
@@ -134,8 +135,9 @@ initial begin
     end
   end
   // Final state
-  if ( empty) $error("[%0tns] Empty flag is asserted after %0d writes. The FIFO should be full.", $time, DEPTH);
-  if (!full ) $error("[%0tns] Full flag is deasserted after %0d writes. The FIFO should be full.", $time, DEPTH);
+  if ( empty) $error("[%0tns] Empty flag is asserted after writing to full. The FIFO should be full.", $time);
+  if (!full ) $error("[%0tns] Full flag is deasserted after writing to full. The FIFO should be full.", $time);
+  if (level != DEPTH) $error("[%0tns] Level '%0d' is not equal to DEPTH='%0d' after writing to full. The FIFO should be full.", $time, level, DEPTH);
 
   repeat(10) @(posedge clock);
 
@@ -146,6 +148,7 @@ initial begin
   if (!full      ) $error("[%0tns] Full flag is deasserted before the write miss check. The FIFO should be full.", $time);
   if ( write_miss) $error("[%0tns] Write miss flag is asserted before the write miss check.", $time);
   if ( read_error) $error("[%0tns] Read error flag is asserted before the write miss check.", $time);
+  if (level != DEPTH) $error("[%0tns] Level '%0d' is not equal to DEPTH='%0d' before the write miss check. The FIFO should be full.", $time, level, DEPTH);
   // Write
   @(negedge clock);
   write_enable = 1;
@@ -157,6 +160,7 @@ initial begin
   if (!full      ) $error("[%0tns] Full flag is deasserted after a write while full. The FIFO should be full.", $time);
   if (!write_miss) $error("[%0tns] Write miss flag is deasserted after a write while full.", $time);
   if ( read_error) $error("[%0tns] Read error flag is asserted after a write while full.", $time);
+  if (level != DEPTH) $error("[%0tns] Level '%0d' is not equal to DEPTH='%0d' after a write while full. The FIFO should be full.", $time, level, DEPTH);
   // Clear flags
   @(negedge clock);
   clear_flags  = 1;
@@ -166,6 +170,7 @@ initial begin
   if (!full      ) $error("[%0tns] Full flag is deasserted after clearing the flags. The FIFO should be full.", $time);
   if ( write_miss) $error("[%0tns] Write miss flag is asserted after clearing the flags.", $time);
   if ( read_error) $error("[%0tns] Read error flag is asserted after clearing the flags.", $time);
+  if (level != DEPTH) $error("[%0tns] Level '%0d' is not equal to DEPTH='%0d' after clearing the flags. The FIFO should be full.", $time, level, DEPTH);
 
   repeat(10) @(posedge clock);
 
@@ -192,8 +197,9 @@ initial begin
     end
   end
   // Final state
-  if (!empty) $error("[%0tns] Empty flag is asserted after %0d reads. The FIFO should be empty.", $time, DEPTH);
-  if ( full ) $error("[%0tns] Full flag is deasserted after %0d reads. The FIFO should be empty.", $time, DEPTH);
+  if (!empty) $error("[%0tns] Empty flag is asserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
+  if ( full ) $error("[%0tns] Full flag is deasserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
+  if (level != 0) $error("[%0tns] Level '%0d' is not zero after reading to empty. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
@@ -204,6 +210,7 @@ initial begin
   if ( full      ) $error("[%0tns] Full flag is asserted before the read error check. The FIFO should be empty.", $time);
   if ( write_miss) $error("[%0tns] Write miss flag is asserted before the read error check.", $time);
   if ( read_error) $error("[%0tns] Read error flag is asserted before the read error check.", $time);
+  if (level != 0)  $error("[%0tns] Level '%0d' is not zero before the read error check. The FIFO should be empty.", $time, level);
   // Write
   @(negedge clock);
   read_enable = 1;
@@ -213,6 +220,7 @@ initial begin
   if ( full      ) $error("[%0tns] Full flag is asserted after a read while empty. The FIFO should be empty.", $time);
   if ( write_miss) $error("[%0tns] Write miss flag is asserted after a read while empty.", $time);
   if (!read_error) $error("[%0tns] Read error flag is deasserted after a read while empty.", $time);
+  if (level != 0)  $error("[%0tns] Level '%0d' is not zero after a read while empty. The FIFO should be empty.", $time, level);
   // Clear flags
   @(negedge clock);
   clear_flags = 1;
@@ -222,6 +230,7 @@ initial begin
   if ( full      ) $error("[%0tns] Full flag is asserted after clearing the flags. The FIFO should be empty.", $time);
   if ( write_miss) $error("[%0tns] Write miss flag is asserted after clearing the flags.", $time);
   if ( read_error) $error("[%0tns] Read error flag is asserted after clearing the flags.", $time);
+  if (level != 0)  $error("[%0tns] Level '%0d' is not zero after clearing the flags. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
@@ -256,6 +265,7 @@ initial begin
   // Final state
   if (!empty) $error("[%0tns] Empty flag is deasserted after check 5. The FIFO should be empty.", $time);
   if ( full ) $error("[%0tns] Full flag is asserted after check 5. The FIFO should be empty.", $time);
+  if (level != 0) $error("[%0tns] Level '%0d' is not zero after check 5.. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
@@ -375,6 +385,7 @@ initial begin
   // Final state
   if (!empty) $error("[%0tns] Empty flag is deasserted after check 6. The FIFO should be empty.", $time);
   if ( full ) $error("[%0tns] Full flag is asserted after check 6. The FIFO should be empty.", $time);
+  if (level != 0) $error("[%0tns] Level '%0d' is not zero after check 5.. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
