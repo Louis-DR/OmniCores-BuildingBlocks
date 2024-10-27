@@ -35,6 +35,7 @@ localparam integer RANDOM_CHECK_DURATION          = 100;
 localparam integer RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
 localparam integer RANDOM_CHECK_READ_PROBABILITY  = 0.5;
 localparam integer RANDOM_CHECK_TIMEOUT           = 1000;
+localparam integer RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 
 // Variable frequency test clocks
 real WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
@@ -72,6 +73,7 @@ integer pop_trash;
 integer transfer_count;
 integer outstanding_count;
 integer timeout_countdown;
+integer threshold_change_countdown;
 
 // Device under test
 asynchronous_advanced_fifo #(
@@ -427,6 +429,7 @@ initial begin
     transfer_count    = 0;
     outstanding_count = 0;
     timeout_countdown = RANDOM_CHECK_TIMEOUT;
+    threshold_change_countdown = RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD;
     fork
       // Writing
       begin
@@ -472,34 +475,62 @@ initial begin
           end
         end
       end
-      // // Write status check
-      // begin
-      //   forever begin
-      //     @(negedge write_clock);
-      //     if (write_level != outstanding_count) $error("[%0tns] Write level '%0d' is not as expected '%0d'.", $time, write_level, outstanding_count);
-      //     if (outstanding_count == 0) begin
-      //       if ( write_full) $error("[%0tns] Full flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
-      //     end else if (outstanding_count == DEPTH) begin
-      //       if (!write_full) $error("[%0tns] Full flag is deasserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
-      //     end else begin
-      //       if ( write_full) $error("[%0tns] Full flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
-      //     end
-      //   end
-      // end
-      // // Read status check
-      // begin
-      //   forever begin
-      //     @(negedge read_clock);
-      //     if (read_level != outstanding_count) $error("[%0tns] Read level '%0d' is not as expected '%0d'.", $time, read_level, outstanding_count);
-      //     if (outstanding_count == 0) begin
-      //       if (!read_empty) $error("[%0tns] Empty flag is deasserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
-      //     end else if (outstanding_count == DEPTH) begin
-      //       if ( read_empty) $error("[%0tns] Empty flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
-      //     end else begin
-      //       if ( read_empty) $error("[%0tns] Empty flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
-      //     end
-      //   end
-      // end
+      // Thresholds change
+      begin
+        forever begin
+          @(negedge write_clock);
+          if (threshold_change_countdown == 0) begin
+            threshold_change_countdown = RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD;
+            write_lower_threshold_level = $urandom_range(DEPTH);
+            write_upper_threshold_level = $urandom_range(DEPTH);
+            @(negedge read_clock);
+            read_lower_threshold_level  = $urandom_range(DEPTH);
+            read_upper_threshold_level  = $urandom_range(DEPTH);
+          end else begin
+            threshold_change_countdown--;
+          end
+        end
+      end
+      // Write status check
+      begin
+        forever begin
+          @(negedge write_clock);
+          // if (write_level != outstanding_count) $error("[%0tns] Write level '%0d' is not as expected '%0d'.", $time, write_level, outstanding_count);
+          // if (outstanding_count == 0) begin
+          //   if ( write_full) $error("[%0tns] Full flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
+          // end else if (outstanding_count == DEPTH) begin
+          //   if (!write_full) $error("[%0tns] Full flag is deasserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
+          // end else begin
+          //   if ( write_full) $error("[%0tns] Full flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
+          // end
+          if (write_lower_threshold_status != write_level <= write_lower_threshold_level) begin
+            $error("[%0tns] Write lower threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO write level of '%0d'.", $time, write_lower_threshold_status, write_lower_threshold_level, write_level);
+          end
+          if (write_upper_threshold_status != write_level >= write_upper_threshold_level) begin
+            $error("[%0tns] Upper threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO level of '%0d'.", $time, write_upper_threshold_status, write_upper_threshold_level, write_level);
+          end
+        end
+      end
+      // Read status check
+      begin
+        forever begin
+          @(negedge read_clock);
+          // if (read_level != outstanding_count) $error("[%0tns] Read level '%0d' is not as expected '%0d'.", $time, read_level, outstanding_count);
+          // if (outstanding_count == 0) begin
+          //   if (!read_empty) $error("[%0tns] Empty flag is deasserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
+          // end else if (outstanding_count == DEPTH) begin
+          //   if ( read_empty) $error("[%0tns] Empty flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
+          // end else begin
+          //   if ( read_empty) $error("[%0tns] Empty flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
+          // end
+          if (read_lower_threshold_status != read_level <= read_lower_threshold_level) begin
+            $error("[%0tns] Read lower threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO read level of '%0d'.", $time, read_lower_threshold_status, read_lower_threshold_level, read_level);
+          end
+          if (read_upper_threshold_status != read_level >= read_upper_threshold_level) begin
+            $error("[%0tns] Upper threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO level of '%0d'.", $time, read_upper_threshold_status, read_upper_threshold_level, read_level);
+          end
+        end
+      end
       // Stop condition
       begin
         // Transfer count
