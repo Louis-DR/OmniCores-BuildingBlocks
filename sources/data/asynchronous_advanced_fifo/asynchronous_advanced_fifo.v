@@ -101,6 +101,7 @@ always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
     write_pointer        <= 0;
     write_pointer_grey_w <= 0;
+    write_miss           <= 0;
   end else begin
     if (write_enable) begin
       if (write_full) begin
@@ -169,6 +170,7 @@ always @(posedge read_clock or negedge read_resetn) begin
   if (!read_resetn) begin
     read_pointer        <= 0;
     read_pointer_grey_r <= 0;
+    read_error          <= 0;
   end else begin
     if (read_enable) begin
       if (read_empty) begin
