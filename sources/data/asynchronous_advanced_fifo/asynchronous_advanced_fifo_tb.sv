@@ -429,7 +429,7 @@ initial begin
     transfer_count    = 0;
     outstanding_count = 0;
     timeout_countdown = RANDOM_CHECK_TIMEOUT;
-    threshold_change_countdown = RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD;
+    // threshold_change_countdown = RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD;
     fork
       // Writing
       begin
@@ -503,10 +503,10 @@ initial begin
           // end else begin
           //   if ( write_full) $error("[%0tns] Full flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
           // end
-          if (write_lower_threshold_status != write_level <= write_lower_threshold_level) begin
+          if (write_lower_threshold_status !== write_level <= write_lower_threshold_level) begin
             $error("[%0tns] Write lower threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO write level of '%0d'.", $time, write_lower_threshold_status, write_lower_threshold_level, write_level);
           end
-          if (write_upper_threshold_status != write_level >= write_upper_threshold_level) begin
+          if (write_upper_threshold_status !== write_level >= write_upper_threshold_level) begin
             $error("[%0tns] Upper threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO level of '%0d'.", $time, write_upper_threshold_status, write_upper_threshold_level, write_level);
           end
         end
@@ -523,10 +523,10 @@ initial begin
           // end else begin
           //   if ( read_empty) $error("[%0tns] Empty flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
           // end
-          if (read_lower_threshold_status != read_level <= read_lower_threshold_level) begin
+          if (read_lower_threshold_status !== read_level <= read_lower_threshold_level) begin
             $error("[%0tns] Read lower threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO read level of '%0d'.", $time, read_lower_threshold_status, read_lower_threshold_level, read_level);
           end
-          if (read_upper_threshold_status != read_level >= read_upper_threshold_level) begin
+          if (read_upper_threshold_status !== read_level >= read_upper_threshold_level) begin
             $error("[%0tns] Upper threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO level of '%0d'.", $time, read_upper_threshold_status, read_upper_threshold_level, read_level);
           end
         end
