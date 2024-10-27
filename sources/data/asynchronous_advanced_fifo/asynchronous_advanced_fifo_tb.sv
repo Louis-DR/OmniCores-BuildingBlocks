@@ -24,6 +24,7 @@ localparam real    CLOCK_PHASE_SHIFT = CLOCK_FAST_PERIOD*3/2;
 localparam integer WIDTH             = 8;
 localparam integer WIDTH_POW2        = 2**WIDTH;
 localparam integer DEPTH             = 4;
+localparam integer DEPTH_LOG2        = $clog2(DEPTH);
 localparam integer STAGES            = 2;
 
 // Check parameters
@@ -39,20 +40,22 @@ real WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
 real READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
 
 // Device ports
-logic             write_clock;
-logic             write_resetn;
-logic             write_enable;
-logic [WIDTH-1:0] write_data;
-logic             write_full;
-logic             write_miss;
-logic             write_clear_miss;
-logic             read_clock;
-logic             read_resetn;
-logic             read_enable;
-logic [WIDTH-1:0] read_data;
-logic             read_empty;
-logic             read_error;
-logic             read_clear_error;
+logic                write_clock;
+logic                write_resetn;
+logic                write_enable;
+logic    [WIDTH-1:0] write_data;
+logic                write_full;
+logic                write_miss;
+logic                write_clear_miss;
+logic [DEPTH_LOG2:0] write_level;
+logic                read_clock;
+logic                read_resetn;
+logic                read_enable;
+logic    [WIDTH-1:0] read_data;
+logic                read_empty;
+logic                read_error;
+logic                read_clear_error;
+logic [DEPTH_LOG2:0] read_level;
 
 // Test variables
 integer data_expected[$];
@@ -74,13 +77,15 @@ asynchronous_advanced_fifo #(
   .write_full       ( write_full       ),
   .write_miss       ( write_miss       ),
   .write_clear_miss ( write_clear_miss ),
+  .write_level      ( write_level      ),
   .read_clock       ( read_clock       ),
   .read_resetn      ( read_resetn      ),
   .read_enable      ( read_enable      ),
   .read_data        ( read_data        ),
   .read_empty       ( read_empty       ),
   .read_error       ( read_error       ),
-  .read_clear_error ( read_clear_error )
+  .read_clear_error ( read_clear_error ),
+  .read_level       ( read_level       )
 );
 
 logic [WIDTH-1:0] fifo0;

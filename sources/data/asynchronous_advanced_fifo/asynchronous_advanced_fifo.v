@@ -26,29 +26,30 @@
 
 
 module asynchronous_advanced_fifo #(
-  parameter WIDTH  = 8,
-  parameter DEPTH  = 4,
-  parameter STAGES = 2
+  parameter WIDTH      = 8,
+  parameter DEPTH      = 4,
+  parameter DEPTH_LOG2 = `CLOG2(DEPTH),
+  parameter STAGES     = 2
 ) (
   // Write interface
-  input              write_clock,
-  input              write_resetn,
-  input              write_enable,
-  input  [WIDTH-1:0] write_data,
-  output             write_full,
-  output reg         write_miss,
-  input              write_clear_miss,
+  input                 write_clock,
+  input                 write_resetn,
+  input                 write_enable,
+  input     [WIDTH-1:0] write_data,
+  output                write_full,
+  output reg            write_miss,
+  input                 write_clear_miss,
+  output [DEPTH_LOG2:0] write_level,
   // Read interface
-  input              read_clock,
-  input              read_resetn,
-  input              read_enable,
-  output [WIDTH-1:0] read_data,
-  output             read_empty,
-  output reg         read_error,
-  input              read_clear_error
+  input                 read_clock,
+  input                 read_resetn,
+  input                 read_enable,
+  output    [WIDTH-1:0] read_data,
+  output                read_empty,
+  output reg            read_error,
+  input                 read_clear_error,
+  output [DEPTH_LOG2:0] read_level
 );
-
-localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory array
 reg [WIDTH-1:0] buffer [DEPTH-1:0];
@@ -65,10 +66,6 @@ reg [DEPTH_LOG2:0] write_pointer;
 // Write address without wrap bit to index the buffer
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 
-// Grey-coded pointers in write clock domain
-reg [DEPTH_LOG2:0] write_pointer_grey_w;
-reg [DEPTH_LOG2:0] read_pointer_grey_w;
-
 // Write pointer incremented and corresponding grey-code
 wire [DEPTH_LOG2:0] write_pointer_incremented = write_pointer + 1;
 wire [DEPTH_LOG2:0] write_pointer_incremented_grey;
@@ -80,8 +77,25 @@ binary_to_grey #(
   .grey   ( write_pointer_incremented_grey )
 );
 
+// Grey-coded pointers in write clock domain
+reg [DEPTH_LOG2:0] write_pointer_grey_w;
+reg [DEPTH_LOG2:0] read_pointer_grey_w;
+
+// Read pointer in write clock domain
+wire [DEPTH_LOG2:0] read_pointer_w;
+
+grey_to_binary #(
+  .WIDTH  ( DEPTH_LOG2+1 )
+) read_pointer_grey_decoder (
+  .grey   ( read_pointer_grey_w ),
+  .binary ( read_pointer_w      )
+);
+
 // Queue is full if the grey-coded pointers match this expression
 assign write_full = write_pointer_grey_w == {~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0]};
+
+// Calculate FIFO level by comparing write and read pointers
+assign write_level = write_pointer - read_pointer_w;
 
 always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
@@ -117,10 +131,6 @@ reg [DEPTH_LOG2:0] read_pointer;
 // Read address without wrap bit to index the buffer
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 
-// Grey-coded pointers in read clock domain
-reg [DEPTH_LOG2:0] write_pointer_grey_r;
-reg [DEPTH_LOG2:0] read_pointer_grey_r;
-
 // Read pointer incremented and corresponding grey-code
 wire [DEPTH_LOG2:0] read_pointer_incremented = read_pointer + 1;
 wire [DEPTH_LOG2:0] read_pointer_incremented_grey;
@@ -132,8 +142,25 @@ binary_to_grey #(
   .grey   ( read_pointer_incremented_grey )
 );
 
+// Grey-coded pointers in read clock domain
+reg [DEPTH_LOG2:0] write_pointer_grey_r;
+reg [DEPTH_LOG2:0] read_pointer_grey_r;
+
+// Write pointer in read clock domain
+wire [DEPTH_LOG2:0] write_pointer_r;
+
+grey_to_binary #(
+  .WIDTH  ( DEPTH_LOG2+1 )
+) write_pointer_grey_decoder (
+  .grey   ( write_pointer_grey_r ),
+  .binary ( write_pointer_r      )
+);
+
 // Queue is empty if the grey-coded read and write pointers are the same
 assign read_empty = write_pointer_grey_r == read_pointer_grey_r;
+
+// Calculate FIFO level by comparing write and read pointers
+assign read_level = write_pointer_r - read_pointer;
 
 // Value at the read pointer is always on the read data bus
 assign read_data = buffer[read_address];
