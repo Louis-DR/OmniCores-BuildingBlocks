@@ -41,6 +41,10 @@ module asynchronous_advanced_fifo #(
   output reg            write_miss,
   input                 write_clear_miss,
   output [DEPTH_LOG2:0] write_level,
+  input  [DEPTH_LOG2:0] write_lower_threshold_level,
+  output                write_lower_threshold_status,
+  input  [DEPTH_LOG2:0] write_upper_threshold_level,
+  output                write_upper_threshold_status,
   // Read interface
   input                 read_clock,
   input                 read_resetn,
@@ -49,7 +53,11 @@ module asynchronous_advanced_fifo #(
   output                read_empty,
   output reg            read_error,
   input                 read_clear_error,
-  output [DEPTH_LOG2:0] read_level
+  output [DEPTH_LOG2:0] read_level,
+  input  [DEPTH_LOG2:0] read_lower_threshold_level,
+  output                read_lower_threshold_status,
+  input  [DEPTH_LOG2:0] read_upper_threshold_level,
+  output                read_upper_threshold_status
 );
 
 // Memory array
@@ -97,6 +105,10 @@ assign write_full = write_pointer_grey_w == {~read_pointer_grey_w[DEPTH_LOG2:DEP
 
 // Calculate FIFO level by comparing write and read pointers
 assign write_level = write_pointer - read_pointer_w;
+
+// Thresholds status
+assign write_lower_threshold_status = write_level <= write_lower_threshold_level;
+assign write_upper_threshold_status = write_level >= write_upper_threshold_level;
 
 always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
@@ -163,6 +175,10 @@ assign read_empty = write_pointer_grey_r == read_pointer_grey_r;
 
 // Calculate FIFO level by comparing write and read pointers
 assign read_level = write_pointer_r - read_pointer;
+
+// Thresholds status
+assign read_lower_threshold_status = read_level <= read_lower_threshold_level;
+assign read_upper_threshold_status = read_level >= read_upper_threshold_level;
 
 // Value at the read pointer is always on the read data bus
 assign read_data = buffer[read_address];
