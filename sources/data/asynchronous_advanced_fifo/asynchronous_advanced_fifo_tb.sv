@@ -199,8 +199,8 @@ initial begin
   repeat(5) @(posedge write_clock);
   repeat(5) @(posedge read_clock);
 
-  // Check 2 : Reading to empty
-  $display("CHECK 2 : Reading to empty.");
+  // Check 3 : Reading to empty
+  $display("CHECK 3 : Reading to empty.");
   // Reading
   for (integer read_count=1 ; read_count<=DEPTH ; read_count++) begin
     @(negedge read_clock);
@@ -225,21 +225,50 @@ initial begin
   repeat(5) @(posedge write_clock);
   repeat(5) @(posedge read_clock);
 
-  // Checks 3-5 : Maximal throughput
+  // Check 4 : Read error
+  $display("CHECK 4 : Read error.");
+  // Initial state
+  if (!read_empty) $error("[%0tns] Empty flag is deasserted before the read error check. The FIFO should be empty.", $time);
+  if ( write_full) $error("[%0tns] Full flag is asserted before the read error check. The FIFO should be empty.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted before the read error check.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted before the read error check.", $time);
+  // Write
+  @(negedge read_clock);
+  read_enable = 1;
+  @(negedge read_clock);
+  read_enable = 0;
+  if (!read_empty) $error("[%0tns] Empty flag is deasserted after a read while empty. The FIFO should be empty.", $time);
+  if ( write_full) $error("[%0tns] Full flag is asserted after a read while empty. The FIFO should be empty.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted after a read while empty.", $time);
+  if (!read_error) $error("[%0tns] Read error flag is deasserted after a read while empty.", $time);
+  // Clear flags
+  @(negedge read_clock);
+  read_clear_error = 1;
+  @(negedge read_clock);
+  read_clear_error = 0;
+  if (!read_empty) $error("[%0tns] Empty flag is deasserted after clearing the flags. The FIFO should be empty.", $time);
+  if ( write_full) $error("[%0tns] Full flag is asserted after clearing the flags. The FIFO should be empty.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted after clearing the flags.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted after clearing the flags.", $time);
+
+  repeat(5) @(posedge write_clock);
+  repeat(5) @(posedge read_clock);
+
+  // Checks 5-7 : Maximal throughput
   for (integer check=3 ; check<=5 ; check++) begin
     case (check)
       3: begin
-        $display("CHECK 3 : Maximal throughput with same frequencies.");
+        $display("CHECK 5 : Maximal throughput with same frequencies.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
       4: begin
-        $display("CHECK 4 : Maximal throughput with fast write and slow read.");
+        $display("CHECK 6 : Maximal throughput with fast write and slow read.");
         WRITE_CLOCK_PERIOD = CLOCK_FAST_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
       5: begin
-        $display("CHECK 5 : Maximal throughput with slow write and fast read.");
+        $display("CHECK 7 : Maximal throughput with slow write and fast read.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_FAST_PERIOD;
       end
@@ -324,21 +353,21 @@ initial begin
 
   end
 
-  // Checks 6-8 : Random stimulus
+  // Checks 8-10 : Random stimulus
   for (integer check=3 ; check<=5 ; check++) begin
     case (check)
       3: begin
-        $display("CHECK 6 : Random stimulus with same frequencies.");
+        $display("CHECK 8 : Random stimulus with same frequencies.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
       4: begin
-        $display("CHECK 7 : Random stimulus with fast write and slow read.");
+        $display("CHECK 9 : Random stimulus with fast write and slow read.");
         WRITE_CLOCK_PERIOD = CLOCK_FAST_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
       5: begin
-        $display("CHECK 8 : Random stimulus with slow write and fast read.");
+        $display("CHECK 10 : Random stimulus with slow write and fast read.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_FAST_PERIOD;
       end
