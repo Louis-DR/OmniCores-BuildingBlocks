@@ -22,6 +22,10 @@ Below is a list of the modules currently available in this collection. More modu
 | `asynchronous_fifo`                | data, timing   | Asynchronous FIFO queue                                      | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `asynchronous_advanced_fifo`       | data, timing   | Asynchronous FIFO queue with additional features             | :orange_circle: :red_circle:    :red_circle: :red_circle:   |
 | `lifo`                             | data           | Synchronous LIFO stack                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `binary_to_onehot`                 | encoding       | Binary to one-hot encoder                                    | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `onehot_to_binary`                 | encoding       | One-hot to binary decoder                                    | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `binary_to_grey`                   | encoding       | Binary to Grey encoder                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `grey_to_binary`                   | encoding       | Grey to binary decoder                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `parity_encoder`                   | error control  | Parity encoder                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `parity_checker`                   | error control  | Parity checker                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `repetition_encoder`               | error control  | Repetition encoder                                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
