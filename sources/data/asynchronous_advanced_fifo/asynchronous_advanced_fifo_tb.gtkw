@@ -1,10 +1,10 @@
 [dumpfile] "asynchronous_advanced_fifo_tb.vcd"
-[dumpfile_size] 301679
+[dumpfile_size] 334739
 [savefile] "asynchronous_advanced_fifo_tb.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-11.069551 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-10.932401 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
@@ -17,6 +17,10 @@ asynchronous_advanced_fifo_tb.write_enable
 asynchronous_advanced_fifo_tb.write_data[7:0]
 @28
 asynchronous_advanced_fifo_tb.write_full
+asynchronous_advanced_fifo_tb.write_miss
+asynchronous_advanced_fifo_tb.write_clear_miss
+@24
+asynchronous_advanced_fifo_tb.write_level[2:0]
 @200
 -
 @28
@@ -27,5 +31,9 @@ asynchronous_advanced_fifo_tb.read_enable
 asynchronous_advanced_fifo_tb.read_data[7:0]
 @28
 asynchronous_advanced_fifo_tb.read_empty
+asynchronous_advanced_fifo_tb.read_error
+asynchronous_advanced_fifo_tb.read_clear_error
+@24
+asynchronous_advanced_fifo_tb.read_level[2:0]
 [pattern_trace] 1
 [pattern_trace] 0
