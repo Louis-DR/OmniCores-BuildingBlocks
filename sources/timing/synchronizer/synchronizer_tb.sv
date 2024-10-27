@@ -37,7 +37,7 @@ logic [MAX_TEST_STAGES:1] data_out_expected;
 
 // Generate device with different parameter values
 generate
-  for (genvar stages=1 ; stages<=MAX_TEST_STAGES ; stages++) begin : gen_stages
+  for (genvar stages=1; stages<=MAX_TEST_STAGES; stages++) begin : gen_stages
     // Device under test
     synchronizer #(
       .STAGES   ( stages           )
@@ -94,7 +94,7 @@ initial begin
       data_out_expected = MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
       @(posedge clock);
-      for (int check_step = 0 ; check_step < MAX_TEST_STAGES ; check_step++) begin
+      for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b1 };
         check_data_out(data_out_expected);
         @(posedge clock);
@@ -118,7 +118,7 @@ initial begin
       data_out_expected = ~MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
       @(posedge clock);
-      for (int check_step = 0 ; check_step < MAX_TEST_STAGES ; check_step++) begin
+      for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b0 };
         check_data_out(data_out_expected);
         @(posedge clock);
@@ -142,7 +142,7 @@ initial begin
       data_out_expected = MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
       @(posedge clock);
-      for (int check_step = 0 ; check_step < MAX_TEST_STAGES ; check_step++) begin
+      for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b1 };
         check_data_out(data_out_expected);
         @(posedge clock);
@@ -166,7 +166,7 @@ initial begin
       data_out_expected = ~MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
       @(posedge clock);
-      for (int check_step = 0 ; check_step < MAX_TEST_STAGES ; check_step++) begin
+      for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b0 };
         check_data_out(data_out_expected);
         @(posedge clock);

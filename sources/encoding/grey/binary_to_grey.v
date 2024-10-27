@@ -20,7 +20,7 @@ module binary_to_grey #(
   output [WIDTH-1:0] grey
 );
 
-  // Gray code is obtained by XORing the binary input with itself shifted right by 1
-  assign grey = binary ^ (binary >> 1);
+// Gray code is obtained by XORing the binary input with itself shifted right by 1
+assign grey = binary ^ (binary >> 1);
 
 endmodule
