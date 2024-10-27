@@ -49,6 +49,8 @@ Below is a list of the modules currently available in this collection. More modu
 | `fast_synchronizer`                | timing         | Fast synchronizer                                            | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `registered_synchronizer`          | timing         | Registered synchronizer                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `reset_synchronizer`               | timing         | Reset de-assertion synchronizer                              | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `pulse_synchronizer`               | timing         | Single-cycle pulse synchronizer                              | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `pulse_synchronizer_with_busy`     | timing         | Single-cycle pulse synchronizer with busy signal             | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `vector_synchronizer`              | timing         | Vector synchronizer                                          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
 | `registered_vector_synchronizer`   | timing         | Registered vector synchronizer                               | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `grey_vector_synchronizer`         | timing         | Registered vector synchronizer with Grey encoding            | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
@@ -60,8 +62,13 @@ Below is a list of the modules currently available in this collection. More modu
 Modules planned or in development :
 
 - Data structures
-  - Advanced FIFO queue
+  - RAM-based FIFOs
   - Advanced LIFO queue
+  - Valid-ready structures
+  - Credit-based structures
+  - Two-phase request-acknowledge handshake-based structures
+  - Four-phase request-acknowledge handshake-based structures
+  - Struct-based data structures
 - Memories
   - Tag directory with eviction policy
   - Content addressable memory
@@ -75,10 +82,8 @@ Modules planned or in development :
   - Programmable clock gater
   - Programmable clock shaper
 - Timing
-  - Two-phase Req-ack handshake-based skid buffer
-  - Four-phase Req-ack handshake-based skid buffer
-  - Valid-ready handshake-based skid buffer
-  - Credit-based buffer
+  - Closed-loop synchronizer
+  - Pulse-based vector synchronizer
 - Shift registers
   - Programmable LFSR
   - SISR signature generator
@@ -88,13 +93,9 @@ Modules planned or in development :
   - Deinterleaver
   - Bit stripper
 - Encoding
-  - Binary to grey-code
-  - Grey-code to binary
-  - Binary to one-hot
-  - One-hot to binary
-  - Binary to binary-coded-decimal
-  - Binary-coded-decimal to binary
-  - Binary-coded-decimal to 7-segment
+  - Binary-coded-decimal encoder and decoder
+  - Seven-segment encoder and decoder
+  - ASCII encoder and decoder
 - Error control
   - Hamming codes
   - Extended Hamming codes
