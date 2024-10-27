@@ -122,9 +122,11 @@ initial begin
   $dumpvars(0,asynchronous_advanced_fifo_tb);
 
   // Initialization
-  write_data   = 0;
-  write_enable = 0;
-  read_enable  = 0;
+  write_data       = 0;
+  write_enable     = 0;
+  read_enable      = 0;
+  write_clear_miss = 0;
+  read_clear_error = 0;
 
   // Reset
   write_resetn = 0;
