@@ -5,8 +5,10 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        grey_vector_synchronizer.v                                   ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Resynchronize a vector of signals to a clock with flip-flop  ║
-// ║              stages and a Grey encoder-decoder.                           ║
+// ║ Description: Registers a vector of signals in its source clock domain,    ║
+// ║              then encodes it to Grey-code, resynchronize it to a          ║
+// ║              destination clock with flip-flop stages, and finally decodes ║
+// ║              it from Grey to binary.                                      ║
 // ║                                                                           ║
 // ║              If the default two stages of flip-flops are not enough to    ║
 // ║              prevent metastable outputs, three or more stages can be      ║
@@ -30,7 +32,8 @@ module grey_vector_synchronizer #(
   parameter WIDTH  = 8,
   parameter STAGES = 2
 ) (
-  input              clock,
+  input              source_clock,
+  input              destination_clock,
   input              resetn,
   input  [WIDTH-1:0] data_in,
   output [WIDTH-1:0] data_out
@@ -39,7 +42,6 @@ module grey_vector_synchronizer #(
 wire [WIDTH-1:0] data_grey_in;
 wire [WIDTH-1:0] data_grey_out;
 
-
 binary_to_grey #(
   .WIDTH  ( WIDTH )
 ) grey_encoder (
@@ -47,14 +49,15 @@ binary_to_grey #(
   .grey   ( data_grey_in )
 );
 
-vector_synchronizer #(
-  .WIDTH    ( WIDTH  ),
-  .STAGES   ( STAGES )
-) vector_synchronizer (
-  .clock    ( clock         ),
-  .resetn   ( resetn        ),
-  .data_in  ( data_grey_in  ),
-  .data_out ( data_grey_out )
+registered_vector_synchronizer #(
+  .WIDTH  ( WIDTH  ),
+  .STAGES ( STAGES )
+) registered_vector_synchronizer (
+  .source_clock      ( source_clock      ),
+  .destination_clock ( destination_clock ),
+  .resetn            ( resetn            ),
+  .data_in           ( data_grey_in      ),
+  .data_out          ( data_grey_out     )
 );
 
 grey_to_binary #(
