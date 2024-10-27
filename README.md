@@ -45,10 +45,10 @@ Below is a list of the modules currently available in this collection. More modu
 | `pulse_extender`                   | pulse          | Pulse extender                                               | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `fibonacci_lfsr`                   | shift register | Fibonacci linear feedback shift register                     | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `galois_lfsr`                      | shift register | Galois linear feedback shift register                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `synchronizer`                     | timing         | Multi-stage synchronizer                                     | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `fast_synchronizer`                | timing         | Multi-stage fast synchronizer                                | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `registered_synchronizer`          | timing         | Multi-stage registered synchronizer                          | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
-| `reset_synchronizer`               | timing         | Multi-stage reset de-assertion synchronizer                  | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `synchronizer`                     | timing         | Simple synchronizer                                          | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `fast_synchronizer`                | timing         | Fast synchronizer                                            | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `registered_synchronizer`          | timing         | Registered synchronizer                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
+| `reset_synchronizer`               | timing         | Reset de-assertion synchronizer                              | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `vector_synchronizer`              | timing         | Vector synchronizer                                          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
 | `pulse_synchronizer`               | timing, pulse  | Pulse synchronizer                                           | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `pulse_synchronizer_with_busy`     | timing, pulse  | Pulse synchronizer with busy signal                          | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
