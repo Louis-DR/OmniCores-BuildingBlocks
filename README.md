@@ -49,8 +49,6 @@ Below is a list of the modules currently available in this collection. More modu
 | `fast_synchronizer`                | timing         | Fast synchronizer                                            | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `registered_synchronizer`          | timing         | Registered synchronizer                                      | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `reset_synchronizer`               | timing         | Reset de-assertion synchronizer                              | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
-| `pulse_synchronizer`               | timing         | Single-cycle pulse synchronizer                              | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `pulse_synchronizer_with_busy`     | timing         | Single-cycle pulse synchronizer with busy signal             | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `vector_synchronizer`              | timing         | Vector synchronizer                                          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
 | `registered_vector_synchronizer`   | timing         | Registered vector synchronizer                               | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `grey_vector_synchronizer`         | timing         | Registered vector synchronizer with Grey encoding            | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
