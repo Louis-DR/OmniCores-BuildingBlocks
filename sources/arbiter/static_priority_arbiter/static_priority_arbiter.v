@@ -16,8 +16,6 @@
 module static_priority_arbiter #(
   parameter SIZE = 4
 ) (
-  input             clock,
-  input             resetn,
   input  [SIZE-1:0] requests,
   output [SIZE-1:0] grant
 );
