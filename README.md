@@ -6,6 +6,7 @@ Below is a list of the modules currently available in this collection. More modu
 
 | Module                             | Categories     | Description                                                  | Progress*                                                   |
 | ---------------------------------- | -------------- | ------------------------------------------------------------ | ----------------------------------------------------------- |
+| `static_priority_arbiter`          | arbiter        | Static priority arbiter                                      | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `clock_divider`                    | clock          | Static clock divider                                         | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `clock_gater`                      | clock          | Clock gater behavioral model                                 | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `clock_multiplexer`                | clock          | Glitch-free clock multiplexer                                | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
@@ -111,7 +112,6 @@ Modules planned or in development :
   - ShangMi 2, SM3, SM4
 - Arbiters
   - Random arbiter
-  - Priority arbiter
   - Round robin arbiter
   - Weighted round robin arbiter
   - Matrix robin arbiter
