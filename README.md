@@ -25,14 +25,14 @@ Below is a list of the modules currently available in this collection. More modu
 | `asynchronous_fifo`                      | data, timing   | Asynchronous FIFO queue                                        | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `asynchronous_advanced_fifo`             | data, timing   | Asynchronous FIFO queue with additional features               | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `lifo`                                   | data           | Synchronous LIFO stack                                         | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `valid_ready_simple_buffer`              | data           | Single-entry data buffer with valid-ready flow control         | :orange_circle: :orange_circle: :red_circle: :white_circle: |
-| `valid_ready_skid_buffer`                | data           | Two-entry data buffer with valid-ready flow control            | :orange_circle: :orange_circle: :red_circle: :white_circle: |
-| `valid_ready_bypass_buffer`              | data           | Single-entry data buffer with valid-ready flow control         | :orange_circle: :orange_circle: :red_circle: :white_circle: |
-| `valid_ready_fifo`                       | data           | Synchronous FIFO queue with valid-ready flow control           | :orange_circle: :orange_circle: :red_circle: :white_circle: |
-| `valid_ready_advanced_fifo`              | data           | Advanced synchronous FIFO queue with valid-ready flow control  | :orange_circle: :orange_circle: :red_circle: :white_circle: |
-| `valid_ready_asynchronous_fifo`          | data, timing   | Asynchronous FIFO queue with valid-ready flow control          | :orange_circle: :orange_circle: :red_circle: :red_circle:   |
-| `valid_ready_asynchronous_advanced_fifo` | data, timing   | Asynchronous advanced FIFO queue with valid-ready flow control | :orange_circle: :orange_circle: :red_circle: :red_circle:   |
-| `valid_ready_lifo`                       | data           | Synchronous LIFO stack with valid-ready flow control           | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `valid_ready_simple_buffer`              | data           | Single-entry data buffer with valid-ready flow control         | :green_circle:  :orange_circle: :red_circle: :white_circle: |
+| `valid_ready_skid_buffer`                | data           | Two-entry data buffer with valid-ready flow control            | :green_circle:  :orange_circle: :red_circle: :white_circle: |
+| `valid_ready_bypass_buffer`              | data           | Single-entry data buffer with valid-ready flow control         | :green_circle:  :orange_circle: :red_circle: :white_circle: |
+| `valid_ready_fifo`                       | data           | Synchronous FIFO queue with valid-ready flow control           | :green_circle:  :orange_circle: :red_circle: :white_circle: |
+| `valid_ready_advanced_fifo`              | data           | Advanced synchronous FIFO queue with valid-ready flow control  | :green_circle:  :orange_circle: :red_circle: :white_circle: |
+| `valid_ready_asynchronous_fifo`          | data, timing   | Asynchronous FIFO queue with valid-ready flow control          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
+| `valid_ready_asynchronous_advanced_fifo` | data, timing   | Asynchronous advanced FIFO queue with valid-ready flow control | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
+| `valid_ready_lifo`                       | data           | Synchronous LIFO stack with valid-ready flow control           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `binary_to_onehot`                       | encoding       | Binary to one-hot encoder                                      | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `onehot_to_binary`                       | encoding       | One-hot to binary decoder                                      | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `binary_to_grey`                         | encoding       | Binary to Grey encoder                                         | :green_circle:  :red_circle:    :red_circle: :white_circle: |
