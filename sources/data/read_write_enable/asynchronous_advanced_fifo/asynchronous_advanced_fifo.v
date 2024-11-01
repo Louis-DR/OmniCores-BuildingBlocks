@@ -37,6 +37,7 @@ module asynchronous_advanced_fifo #(
   input                 write_resetn,
   input                 write_enable,
   input     [WIDTH-1:0] write_data,
+  // Write status
   output                write_full,
   output reg            write_miss,
   input                 write_clear_miss,
@@ -50,6 +51,7 @@ module asynchronous_advanced_fifo #(
   input                 read_resetn,
   input                 read_enable,
   output    [WIDTH-1:0] read_data,
+  // Read status
   output                read_empty,
   output reg            read_error,
   input                 read_clear_error,

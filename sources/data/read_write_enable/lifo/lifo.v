@@ -31,8 +31,8 @@ module lifo #(
   parameter WIDTH = 8,
   parameter DEPTH = 4
 ) (
-  input clock,
-  input resetn,
+  input              clock,
+  input              resetn,
   // Write interface
   input              write_enable,
   input  [WIDTH-1:0] write_data,
