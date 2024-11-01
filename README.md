@@ -77,6 +77,7 @@ Modules planned or in development :
   - Two-phase request-acknowledge handshake-based structures
   - Four-phase request-acknowledge handshake-based structures
   - Struct-based data structures
+  - Priority FIFO
 - Memories
   - Tag directory with eviction policy
   - Content addressable memory
@@ -96,6 +97,16 @@ Modules planned or in development :
   - Programmable LFSR
   - SISR signature generator
   - MISR signature generator
+- Array and vector operations
+  - Min and max of packed array
+  - First one of vector
+  - Count ones
+- Arithmetic
+  - Adder
+  - Staged adder
+  - Multiplier
+  - Staged multiplier
+  - Barrel shifter
 - Transformation
   - Interleaver
   - Deinterleaver
