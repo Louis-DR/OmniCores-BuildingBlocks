@@ -13,7 +13,7 @@
 
 module binary_to_onehot #(
   parameter WIDTH_BINARY = 8,
-  parameter WIDTH_ONEHOT = 2**WIDTH
+  parameter WIDTH_ONEHOT = 2**WIDTH_BINARY
 ) (
   input  [WIDTH_BINARY-1:0] binary,
   output [WIDTH_ONEHOT-1:0] onehot
