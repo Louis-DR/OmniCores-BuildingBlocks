@@ -38,8 +38,8 @@ always @(posedge clock or negedge resetn) begin
   end
 end
 
-wire [SIZE-1:0] rotated_requests,
-wire [SIZE-1:0] rotated_grants,
+wire [SIZE-1:0] rotated_requests;
+wire [SIZE-1:0] rotated_grants;
 
 assign rotated_requests = (requests << rotating_pointer) | (requests >> SIZE - requests);
 
