@@ -8,7 +8,8 @@
 // ║ Description: Arbiters between different request channels. The grant is    ║
 // ║              given to the highest priority ready request channel. In case ║
 // ║              multiple channels with the highest priority are ready, the   ║
-// ║              first one in the order of the vector is chosen.              ║
+// ║              fallback arbiter is used. It can be configured to a static   ║
+// ║              priority arbiter, or round-robin arbiter.                    ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -19,10 +20,13 @@
 
 
 module dynamic_priority_arbiter #(
-  parameter SIZE             = 4,
-  parameter PRIORITY_WIDTH   = `CLOG2(SIZE),
-  parameter PRIORITIES_WIDTH = PRIORITY_WIDTH * SIZE
+  parameter SIZE                 = 4,
+  parameter PRIORITY_WIDTH       = `CLOG2(SIZE),
+  parameter PRIORITIES_WIDTH     = PRIORITY_WIDTH * SIZE,
+  parameter FALLBACK_ROUND_ROBIN = 0
 ) (
+  input                         clock,
+  input                         resetn,
   input              [SIZE-1:0] requests,
   input  [PRIORITIES_WIDTH-1:0] priorities,
   output             [SIZE-1:0] grant
@@ -97,12 +101,27 @@ generate
   end
 endgenerate
 
-// Static priority between the requests of highest priority
-static_priority_arbiter #(
-  .SIZE ( SIZE )
-) static_priority_arbiter (
-  .requests ( highest_priority_requests ),
-  .grant    ( grant                     )
-);
+generate
+  // Round robin between the requests of highest priority
+  if (FALLBACK_ROUND_ROBIN) begin
+    round_robin_arbiter #(
+      .SIZE ( SIZE )
+    ) fallback_arbiter (
+      .clock    ( clock                     ),
+      .resetn   ( resetn                    ),
+      .requests ( highest_priority_requests ),
+      .grant    ( grant                     )
+    );
+  end
+  // Static priority between the requests of highest priority
+  else begin
+    static_priority_arbiter #(
+      .SIZE ( SIZE )
+    ) fallback_arbiter (
+      .requests ( highest_priority_requests ),
+      .grant    ( grant                     )
+    );
+  end
+endgenerate
 
 endmodule
