@@ -9,23 +9,23 @@
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
-fifo_tb.fifo_dut.clock
-fifo_tb.fifo_dut.resetn
+fifo_tb.clock
+fifo_tb.resetn
 @200
 -
 @28
-fifo_tb.fifo_dut.write_enable
+fifo_tb.write_enable
 @22
-fifo_tb.fifo_dut.write_data[7:0]
+fifo_tb.write_data[7:0]
 @28
-fifo_tb.fifo_dut.full
+fifo_tb.full
 @200
 -
 @28
-fifo_tb.fifo_dut.read_enable
+fifo_tb.read_enable
 @22
-fifo_tb.fifo_dut.read_data[7:0]
+fifo_tb.read_data[7:0]
 @28
-fifo_tb.fifo_dut.empty
+fifo_tb.empty
 [pattern_trace] 1
 [pattern_trace] 0

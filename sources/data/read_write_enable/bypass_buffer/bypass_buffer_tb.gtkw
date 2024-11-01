@@ -9,23 +9,23 @@
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
-bypass_buffer_tb.bypass_buffer_dut.clock
-bypass_buffer_tb.bypass_buffer_dut.resetn
+bypass_buffer_tb.clock
+bypass_buffer_tb.resetn
 @200
 -
 @28
-bypass_buffer_tb.bypass_buffer_dut.write_enable
+bypass_buffer_tb.write_enable
 @22
-bypass_buffer_tb.bypass_buffer_dut.write_data[7:0]
+bypass_buffer_tb.write_data[7:0]
 @28
-bypass_buffer_tb.bypass_buffer_dut.full
+bypass_buffer_tb.full
 @200
 -
 @28
-bypass_buffer_tb.bypass_buffer_dut.read_enable
+bypass_buffer_tb.read_enable
 @22
-bypass_buffer_tb.bypass_buffer_dut.read_data[7:0]
+bypass_buffer_tb.read_data[7:0]
 @28
-bypass_buffer_tb.bypass_buffer_dut.empty
+bypass_buffer_tb.empty
 [pattern_trace] 1
 [pattern_trace] 0

@@ -9,23 +9,23 @@
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
-skid_buffer_tb.skid_buffer_dut.clock
-skid_buffer_tb.skid_buffer_dut.resetn
+skid_buffer_tb.clock
+skid_buffer_tb.resetn
 @200
 -
 @28
-skid_buffer_tb.skid_buffer_dut.write_enable
+skid_buffer_tb.write_enable
 @22
-skid_buffer_tb.skid_buffer_dut.write_data[7:0]
+skid_buffer_tb.write_data[7:0]
 @28
-skid_buffer_tb.skid_buffer_dut.full
+skid_buffer_tb.full
 @200
 -
 @28
-skid_buffer_tb.skid_buffer_dut.read_enable
+skid_buffer_tb.read_enable
 @22
-skid_buffer_tb.skid_buffer_dut.read_data[7:0]
+skid_buffer_tb.read_data[7:0]
 @28
-skid_buffer_tb.skid_buffer_dut.empty
+skid_buffer_tb.empty
 [pattern_trace] 1
 [pattern_trace] 0
