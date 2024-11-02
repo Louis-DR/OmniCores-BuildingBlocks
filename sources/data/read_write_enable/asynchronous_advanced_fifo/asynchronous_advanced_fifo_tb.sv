@@ -108,15 +108,6 @@ asynchronous_advanced_fifo #(
   .read_upper_threshold_status  ( read_upper_threshold_status  )
 );
 
-logic [WIDTH-1:0] fifo0;
-logic [WIDTH-1:0] fifo1;
-logic [WIDTH-1:0] fifo2;
-logic [WIDTH-1:0] fifo3;
-assign fifo0 = asynchronous_advanced_fifo_dut.buffer[0];
-assign fifo1 = asynchronous_advanced_fifo_dut.buffer[1];
-assign fifo2 = asynchronous_advanced_fifo_dut.buffer[2];
-assign fifo3 = asynchronous_advanced_fifo_dut.buffer[3];
-
 // Write clock generation
 initial begin
   write_clock = 1;
