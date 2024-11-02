@@ -239,6 +239,8 @@ initial begin
   // Last read
   @(negedge clock);
   read_ready = 0;
+  // Safety
+  write_valid = 0;
   // Final state
   if ( read_valid ) $error("[%0tns] Read valid is asserted after check 5. The FIFO should be empty.", $time);
   if (!write_ready) $error("[%0tns] Write ready is deasserted after check 5. The FIFO should be empty.", $time);
@@ -367,6 +369,9 @@ initial begin
     end
   join_any
   disable fork;
+  // Safety
+  write_valid = 0;
+  read_ready  = 0;
   // Final state
   if ( read_valid ) $error("[%0tns] Read valid is asserted after check 6. The FIFO should be empty.", $time);
   if (!write_ready) $error("[%0tns] Write ready is deasserted after check 6. The FIFO should be empty.", $time);

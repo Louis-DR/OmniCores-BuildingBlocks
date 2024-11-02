@@ -551,10 +551,10 @@ initial begin
     join_any
     disable fork;
     // Final state
-    if (!read_empty) $error("[%0tns] Empty flag is deasserted after random stimulus check. The FIFO should be empty.", $time);
-    if ( write_full) $error("[%0tns] Full flag is asserted after random stimulus check. The FIFO should be empty.", $time);
-    if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after random stimulus check. The FIFO should be empty.", $time, write_level);
-    if (read_level != 0) $error("[%0tns] Read level '%0d' is not zero after random stimulus check. The FIFO should be empty.", $time, read_level);
+    if (!read_empty) $error("[%0tns] Empty flag is deasserted after the random stimulus check. The FIFO should be empty.", $time);
+    if ( write_full) $error("[%0tns] Full flag is asserted after the random stimulus check. The FIFO should be empty.", $time);
+    if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after the random stimulus check. The FIFO should be empty.", $time, write_level);
+    if (read_level != 0) $error("[%0tns] Read level '%0d' is not zero after the random stimulus check. The FIFO should be empty.", $time, read_level);
 
     repeat(5) @(posedge write_clock);
     repeat(5) @(posedge read_clock);
