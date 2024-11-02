@@ -256,8 +256,8 @@ initial begin
     end
   end
   // Final state
-  if (!read_empty) $error("[%0tns] Empty flag is asserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if ( write_full) $error("[%0tns] Full flag is deasserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
+  if (!read_empty) $error("[%0tns] Empty flag is deasserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
+  if ( write_full) $error("[%0tns] Full flag is asserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
   if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after reading to empty. The FIFO should be empty.", $time, write_level);
   if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after reading to empty. The FIFO should be empty.", $time, read_level);
 
@@ -396,8 +396,8 @@ initial begin
     join_any
     disable fork;
     // Final state
-    if (!read_empty) $error("[%0tns] Empty flag is asserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
-    if ( write_full) $error("[%0tns] Full flag is deasserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
+    if (!read_empty) $error("[%0tns] Empty flag is deasserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
+    if ( write_full) $error("[%0tns] Full flag is asserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
     if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after the maximal throughput check. The FIFO should be empty.", $time, write_level);
     if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after the maximal throughput check. The FIFO should be empty.", $time, read_level);
 

@@ -103,8 +103,8 @@ initial begin
   write_enable = 0;
   write_data   = 0;
   @(posedge clock);
-  if (!empty) $error("[%0tns] Empty flag is asserted after a transfer bypassing the buffer. The buffer should be empty.", $time);
-  if ( full ) $error("[%0tns] Full flag is deasserted after a transfer bypassing the buffer. The buffer should be empty.", $time);
+  if (!empty) $error("[%0tns] Empty flag is deasserted after a transfer bypassing the buffer. The buffer should be empty.", $time);
+  if ( full ) $error("[%0tns] Full flag is asserted after a transfer bypassing the buffer. The buffer should be empty.", $time);
 
   // Check 2 : Writing to full
   @(negedge clock);

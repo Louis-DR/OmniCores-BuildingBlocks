@@ -173,8 +173,8 @@ initial begin
     end
   end
   // Final state
-  if (!read_empty) $error("[%0tns] Empty flag is asserted after %0d reads. The FIFO should be empty.", $time, DEPTH);
-  if ( write_full) $error("[%0tns] Full flag is deasserted after %0d reads. The FIFO should be empty.", $time, DEPTH);
+  if (!read_empty) $error("[%0tns] Empty flag is deasserted after %0d reads. The FIFO should be empty.", $time, DEPTH);
+  if ( write_full) $error("[%0tns] Full flag is asserted after %0d reads. The FIFO should be empty.", $time, DEPTH);
 
   repeat(5) @(posedge write_clock);
   repeat(5) @(posedge read_clock);
