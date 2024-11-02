@@ -1,0 +1,31 @@
+[dumpfile] "valid_ready_skid_buffer_tb.vcd"
+[savefile] "valid_ready_skid_buffer_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-9.748854 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+valid_ready_skid_buffer_tb.clock
+valid_ready_skid_buffer_tb.resetn
+@200
+-
+@22
+valid_ready_skid_buffer_tb.write_data[7:0]
+@28
+valid_ready_skid_buffer_tb.write_valid
+valid_ready_skid_buffer_tb.write_ready
+valid_ready_skid_buffer_tb.full
+@200
+-
+@22
+valid_ready_skid_buffer_tb.read_data[7:0]
+@28
+valid_ready_skid_buffer_tb.read_valid
+valid_ready_skid_buffer_tb.read_ready
+valid_ready_skid_buffer_tb.empty
+[pattern_trace] 1
+[pattern_trace] 0
