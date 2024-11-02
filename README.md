@@ -27,8 +27,8 @@ Below is a list of the modules currently available in this collection. More modu
 | `lifo`                                   | data           | Synchronous LIFO stack                                         | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `valid_ready_simple_buffer`              | data           | Single-entry data buffer with valid-ready flow control         | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `valid_ready_skid_buffer`                | data           | Two-entry data buffer with valid-ready flow control            | :green_circle:  :green_circle:  :red_circle: :white_circle: |
-| `valid_ready_bypass_buffer`              | data           | Single-entry data buffer with valid-ready flow control         | :green_circle:  :orange_circle: :red_circle: :white_circle: |
-| `valid_ready_fifo`                       | data           | Synchronous FIFO queue with valid-ready flow control           | :green_circle:  :orange_circle: :red_circle: :white_circle: |
+| `valid_ready_bypass_buffer`              | data           | Single-entry data buffer with valid-ready flow control         | :green_circle:  :green_circle:  :red_circle: :white_circle: |
+| `valid_ready_fifo`                       | data           | Synchronous FIFO queue with valid-ready flow control           | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `valid_ready_advanced_fifo`              | data           | Advanced synchronous FIFO queue with valid-ready flow control  | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `valid_ready_asynchronous_fifo`          | data, timing   | Asynchronous FIFO queue with valid-ready flow control          | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `valid_ready_asynchronous_advanced_fifo` | data, timing   | Asynchronous advanced FIFO queue with valid-ready flow control | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
