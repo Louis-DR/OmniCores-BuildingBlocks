@@ -34,8 +34,8 @@ module valid_ready_fifo #(
   output             empty
 );
 
-wire write_enable = write_valid;
-wire read_enable  = read_ready;
+wire write_enable = write_valid & write_ready;
+wire read_enable  = read_valid  & read_ready;
 
 fifo #(
   .WIDTH ( WIDTH ),
