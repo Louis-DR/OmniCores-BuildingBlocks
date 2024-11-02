@@ -1,0 +1,43 @@
+[dumpfile] "valid_ready_advanced_fifo_tb.vcd"
+[dumpfile_size] 164670
+[savefile] "valid_ready_advanced_fifo_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-11.155313 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+valid_ready_advanced_fifo_tb.clock
+valid_ready_advanced_fifo_tb.resetn
+@200
+-
+@22
+valid_ready_advanced_fifo_tb.write_data[7:0]
+@28
+valid_ready_advanced_fifo_tb.write_valid
+valid_ready_advanced_fifo_tb.write_ready
+@200
+-
+@22
+valid_ready_advanced_fifo_tb.read_data[7:0]
+@28
+valid_ready_advanced_fifo_tb.read_valid
+valid_ready_advanced_fifo_tb.read_ready
+@200
+-
+@24
+valid_ready_advanced_fifo_tb.full
+valid_ready_advanced_fifo_tb.empty
+valid_ready_advanced_fifo_tb.level[2:0]
+valid_ready_advanced_fifo_tb.lower_threshold_level[2:0]
+@28
+valid_ready_advanced_fifo_tb.lower_threshold_status
+@24
+valid_ready_advanced_fifo_tb.upper_threshold_level[2:0]
+@28
+valid_ready_advanced_fifo_tb.upper_threshold_status
+[pattern_trace] 1
+[pattern_trace] 0
