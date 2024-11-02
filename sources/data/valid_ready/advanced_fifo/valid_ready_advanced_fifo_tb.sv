@@ -196,7 +196,7 @@ initial begin
 
   // Check 4 : Read ready while empty
   $display("CHECK 4 : Read ready while empty.");
-  // Write
+  // Read
   @(negedge clock);
   read_ready = 1;
   @(negedge clock);
@@ -273,7 +273,7 @@ initial begin
         end
         // Check
         @(posedge clock);
-        if (write_valid && !full) begin
+        if (write_valid && write_ready) begin
           data_expected.push_back(write_data);
           transfer_count++;
           outstanding_count++;
@@ -293,7 +293,7 @@ initial begin
         end
         // Check
         @(posedge clock);
-        if (read_ready && read_valid) begin
+        if (read_valid && read_ready) begin
           if (data_expected.size() != 0) begin
             if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
             pop_trash = data_expected.pop_front();

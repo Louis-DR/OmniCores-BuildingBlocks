@@ -211,7 +211,7 @@ initial begin
   if ( write_miss) $error("[%0tns] Write miss flag is asserted before the read error check.", $time);
   if ( read_error) $error("[%0tns] Read error flag is asserted before the read error check.", $time);
   if (level != 0)  $error("[%0tns] Level '%0d' is not zero before the read error check. The FIFO should be empty.", $time, level);
-  // Write
+  // Read
   @(negedge clock);
   read_enable = 1;
   @(negedge clock);
