@@ -140,6 +140,7 @@ initial begin
   // Last read
   @(negedge clock);
   read_ready = 0;
+  data_expected = 'x;
   // Final state
   if (!empty) $error("[%0tns] Empty flag is deasserted after check 3. The buffer should be empty.", $time);
   if ( full ) $error("[%0tns] Full flag is asserted after check 3. The buffer should be empty.", $time);
@@ -214,6 +215,7 @@ initial begin
   // Safety
   write_valid = 0;
   read_ready  = 0;
+  data_expected = 'x;
   // Final state
   if (!empty) $error("[%0tns] Empty flag is deasserted after check 4. The buffer should be empty.", $time);
   if ( full ) $error("[%0tns] Full flag is asserted after check 4. The buffer should be empty.", $time);
