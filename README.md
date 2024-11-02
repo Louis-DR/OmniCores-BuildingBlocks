@@ -29,9 +29,9 @@ Below is a list of the modules currently available in this collection. More modu
 | `valid_ready_skid_buffer`                | data           | Two-entry data buffer with valid-ready flow control            | :green_circle:  :orange_circle: :red_circle: :white_circle: |
 | `valid_ready_bypass_buffer`              | data           | Single-entry data buffer with valid-ready flow control         | :green_circle:  :orange_circle: :red_circle: :white_circle: |
 | `valid_ready_fifo`                       | data           | Synchronous FIFO queue with valid-ready flow control           | :green_circle:  :orange_circle: :red_circle: :white_circle: |
-| `valid_ready_advanced_fifo`              | data           | Advanced synchronous FIFO queue with valid-ready flow control  | :green_circle:  :orange_circle: :red_circle: :white_circle: |
+| `valid_ready_advanced_fifo`              | data           | Advanced synchronous FIFO queue with valid-ready flow control  | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `valid_ready_asynchronous_fifo`          | data, timing   | Asynchronous FIFO queue with valid-ready flow control          | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
-| `valid_ready_asynchronous_advanced_fifo` | data, timing   | Asynchronous advanced FIFO queue with valid-ready flow control | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
+| `valid_ready_asynchronous_advanced_fifo` | data, timing   | Asynchronous advanced FIFO queue with valid-ready flow control | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 | `valid_ready_lifo`                       | data           | Synchronous LIFO stack with valid-ready flow control           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `binary_to_onehot`                       | encoding       | Binary to one-hot encoder                                      | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `onehot_to_binary`                       | encoding       | One-hot to binary decoder                                      | :green_circle:  :red_circle:    :red_circle: :white_circle: |
@@ -77,7 +77,7 @@ Modules planned or in development :
   - Two-phase request-acknowledge handshake-based structures
   - Four-phase request-acknowledge handshake-based structures
   - Struct-based data structures
-  - Priority FIFO
+  - Priority FIFO bank
 - Memories
   - Tag directory with eviction policy
   - Content addressable memory
@@ -106,8 +106,8 @@ Modules planned or in development :
   - Staged adder
   - Multiplier
   - Staged multiplier
-  - Barrel shifter
 - Transformation
+  - Barrel shifter
   - Interleaver
   - Deinterleaver
   - Bit stripper
