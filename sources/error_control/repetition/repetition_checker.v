@@ -13,22 +13,21 @@
 
 module repetition_checker #(
   parameter DATA_WIDTH = 8,
-  parameter REPETITION_INDEX = 3
+  parameter REPETITION = 3
 ) (
-  input                        [DATA_WIDTH-1:0] data,
-  input [(REPETITION_INDEX-1)*(DATA_WIDTH-1):0] code,
-  output                                        error
+  input                [DATA_WIDTH-1:0] data,
+  input [(REPETITION-1)*DATA_WIDTH-1:0] code,
+  output                                error
 );
 
-wire [REPETITION_INDEX(DATA_WIDTH-1):0] repeated_data;
-assign repeated_data = {data, code};
+wire [REPETITION*DATA_WIDTH-1:0] block = {data, code};
 
 wire [REPETITION-1:0] grouped_bits [DATA_WIDTH-1:0];
 
 generate
   for (genvar repetition_index = 0; repetition_index < REPETITION; repetition_index = repetition_index++) begin : gen_repetitions
     for (genvar bit_index = 0; bit_index < DATA_WIDTH; bit_index++) begin : gen_bits
-      assign grouped_bits[bit_index][repetition_index] = repeated_data[repetition_index*DATA_WIDTH + bit_index];
+      assign grouped_bits[bit_index][repetition_index] = block[repetition_index*DATA_WIDTH + bit_index];
     end
   end
 endgenerate
