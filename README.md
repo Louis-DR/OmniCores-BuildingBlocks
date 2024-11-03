@@ -40,9 +40,13 @@ Below is a list of the modules currently available in this collection. More modu
 | `grey_to_binary`                         | encoding       | Grey to binary decoder                                         | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `parity_encoder`                         | error control  | Parity encoder                                                 | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `parity_checker`                         | error control  | Parity checker                                                 | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `parity_block_checker`                   | error control  | Parity checker with block input                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `repetition_encoder`                     | error control  | Repetition encoder                                             | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `repetition_checker`                     | error control  | Repetition checker                                             | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `repetition_corrector`                   | error control  | Repetition corrector                                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `repetition_block_checker`               | error control  | Repetition checker with block input                            | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `repetition_block_corrector`             | error control  | Repetition corrector with block input                          | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `hamming_encoder`                        | error control  | Hamming encoder                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `single_port_ram`                        | memory         | Single-port RAM                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `dual_port_ram`                          | memory         | Dual-port RAM                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `asynchronous_dual_port_ram`             | memory         | Asynchronous dual-port RAM                                     | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
@@ -75,6 +79,8 @@ Modules planned or in development :
   - RAM-based FIFOs
   - Advanced LIFO queue
   - Credit-based structures
+  - On-off based structures
+  - Request-accept/deny based structures
   - Two-phase request-acknowledge handshake-based structures
   - Four-phase request-acknowledge handshake-based structures
   - Struct-based data structures
@@ -117,7 +123,6 @@ Modules planned or in development :
   - Seven-segment encoder and decoder
   - ASCII encoder and decoder
 - Error control
-  - Hamming codes
   - Extended Hamming codes
   - Golay codes
   - Extended Golay codes
