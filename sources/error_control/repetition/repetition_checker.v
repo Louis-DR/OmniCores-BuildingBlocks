@@ -22,26 +22,12 @@ module repetition_checker #(
 
 wire [REPETITION*DATA_WIDTH-1:0] block = {data, code};
 
-wire [REPETITION-1:0] grouped_bits [DATA_WIDTH-1:0];
-
-generate
-  for (genvar repetition_index = 0; repetition_index < REPETITION; repetition_index = repetition_index++) begin : gen_repetitions
-    for (genvar bit_index = 0; bit_index < DATA_WIDTH; bit_index++) begin : gen_bits
-      assign grouped_bits[bit_index][repetition_index] = block[repetition_index*DATA_WIDTH + bit_index];
-    end
-  end
-endgenerate
-
-wire [DATA_WIDTH-1:0] error_position;
-
-generate
-  for (genvar bit_index = 0; bit_index < DATA_WIDTH; bit_index++) begin : gen_bits
-    wire all_ones  =  & grouped_bits[bit_index];
-    wire all_zeros = ~| grouped_bits[bit_index];
-    assign error_position[bit_index] = ($countones(grouped_bits[bit_index]) > (REPETITION / 2)) ? 1'b1 : 1'b0;
-  end
-endgenerate
-
-assign error = |error_position;
+repetition_block_checker #(
+  .DATA_WIDTH ( DATA_WIDTH ),
+  .REPETITION ( REPETITION )
+) block_checker (
+  .block ( block ),
+  .error ( error )
+);
 
 endmodule
