@@ -19,17 +19,13 @@ module parity_checker #(
   output                 error
 );
 
-wire check_code;
+wire [DATA_WIDTH:0] block = {data, code};
 
-parity_encoder #(
+parity_block_checker #(
   .DATA_WIDTH ( DATA_WIDTH )
-) encoder (
-  .clock  ( clock      ),
-  .resetn ( resetn     ),
-  .data   ( data       ),
-  .code   ( check_code )
+) block_checker (
+  .block ( block ),
+  .error ( error )
 );
-
-assign error = code == check_code;
 
 endmodule

@@ -3,24 +3,35 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        parity_encoder.v                                             ║
+// ║ File:        parity_block_checker.v                                       ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Computes the parity code of the given data.                  ║
+// ║ Description: Check the data with its parity code.                         ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
 
-module parity_encoder #(
+module parity_block_checker #(
   parameter DATA_WIDTH = 8
 ) (
-  input [DATA_WIDTH-1:0] data,
-  output                 code,
-  output                 block
+  input [DATA_WIDTH:0] block,
+  output               error
 );
 
-assign code = ^data;
+wire [DATA_WIDTH-1:0] data = block[DATA_WIDTH-1:0];
+wire                  code = block[DATA_WIDTH];
 
-assign block = {code, data};
+wire check_code;
+
+parity_encoder #(
+  .DATA_WIDTH ( DATA_WIDTH )
+) encoder (
+  .clock  ( clock      ),
+  .resetn ( resetn     ),
+  .data   ( data       ),
+  .code   ( check_code )
+);
+
+assign error = code == check_code;
 
 endmodule
