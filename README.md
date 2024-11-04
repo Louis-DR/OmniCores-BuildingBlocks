@@ -47,6 +47,15 @@ Below is a list of the modules currently available in this collection. More modu
 | `repetition_block_checker`               | error control  | Repetition checker with block input                            | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `repetition_block_corrector`             | error control  | Repetition corrector with block input                          | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `hamming_encoder`                        | error control  | Hamming encoder                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `hamming_checker`                        | error control  | Hamming checker                                                | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `hamming_corrector`                      | error control  | Hamming corrector                                              | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `hamming_block_checker`                  | error control  | Hamming checker with block input                               | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `hamming_block_corrector`                | error control  | Hamming corrector with block input                             | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `extended_hamming_encoder`               | error control  | Extended Hamming encoder                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `extended_hamming_checker`               | error control  | Extended Hamming checker                                       | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `extended_hamming_corrector`             | error control  | Extended Hamming corrector                                     | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `extended_hamming_block_checker`         | error control  | Extended Hamming checker with block input                      | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `extended_hamming_block_corrector`       | error control  | Extended Hamming corrector with block input                    | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `single_port_ram`                        | memory         | Single-port RAM                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `dual_port_ram`                          | memory         | Dual-port RAM                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `asynchronous_dual_port_ram`             | memory         | Asynchronous dual-port RAM                                     | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
@@ -123,7 +132,6 @@ Modules planned or in development :
   - Seven-segment encoder and decoder
   - ASCII encoder and decoder
 - Error control
-  - Extended Hamming codes
   - Golay codes
   - Extended Golay codes
   - Reed-Solomon codes
