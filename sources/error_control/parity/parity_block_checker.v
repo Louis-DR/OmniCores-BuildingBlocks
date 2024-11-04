@@ -26,10 +26,9 @@ wire check_code;
 parity_encoder #(
   .DATA_WIDTH ( DATA_WIDTH )
 ) encoder (
-  .clock  ( clock      ),
-  .resetn ( resetn     ),
   .data   ( data       ),
-  .code   ( check_code )
+  .code   ( check_code ),
+  .block  (            )
 );
 
 assign error = code == check_code;
