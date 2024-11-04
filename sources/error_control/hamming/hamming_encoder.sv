@@ -34,6 +34,7 @@ module hamming_encoder #(
   output [PARITY_WIDTH-1:0] code,
   output  [BLOCK_WIDTH-1:0] block
 );
+
 // Pad the data to the message length corresponding to the number of parity bits
 localparam PADDED_DATA_WIDTH = (DATA_WIDTH <=     1) ?     1 : // Hamming(  3,  1)
                                (DATA_WIDTH <=     4) ?     4 : // Hamming(  7,  4)
@@ -52,6 +53,10 @@ localparam PADDED_DATA_WIDTH = (DATA_WIDTH <=     1) ?     1 : // Hamming(  3,  
                                (DATA_WIDTH <= 65519) ? 65519 : -1;
 logic [PADDED_DATA_WIDTH-1:0] data_padded = {{PADDED_DATA_WIDTH-DATA_WIDTH{1'b0}}, data};
 
+// Pad the block
+localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH+PARITY_WIDTH;
+logic [PADDED_BLOCK_WIDTH-1:0] block_padded;
+
 // Parity bits, combinational
 logic [PARITY_WIDTH-1:0] parity;
 assign code = parity;
@@ -59,16 +64,16 @@ assign code = parity;
 // Place the parity bits in the block
 generate
   for (genvar parity_index = 0; parity_index < PARITY_WIDTH; parity_index++) begin : gen_code_and_data_1
-    assign block[2**parity_index-1] = parity[parity_index];
+    assign block_padded[2**parity_index-1] = parity[parity_index];
   end
 endgenerate
 
 // Place the data bits in the block
 generate
   for (genvar parity_index = 2; parity_index < PARITY_WIDTH; parity_index++) begin : gen_code_and_data_2
-    assign block[ 2** parity_index    - 2
-                : 2**(parity_index-1)     ] = data[ 2**parity_index                       - parity_index - 2
-                                                  : 2**parity_index - 2**(parity_index-1) - parity_index     ];
+    assign block_padded[ 2** parity_index    - 2
+                       : 2**(parity_index-1)     ] = data[ 2**parity_index                       - parity_index - 2
+                                                         : 2**parity_index - 2**(parity_index-1) - parity_index     ];
   end
 endgenerate
 
@@ -83,5 +88,8 @@ always_comb begin
     end
   end
 end
+
+// Block output
+assign block = block_padded[BLOCK_WIDTH-1:0];
 
 endmodule
