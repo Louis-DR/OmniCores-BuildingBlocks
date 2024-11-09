@@ -68,9 +68,10 @@ always_comb begin
       // The parity bit doesn't depend on itself
       if (bit_index != parity_block_index) begin
         // This formula detects the block bits that match the pattern
-        if ( ((bit_index + 1) % (2**(parity_index+1)))+1 >= (2**parity_index) ) begin
+        if ( ((bit_index + 1) % (2**(parity_index+1))) >= (2**parity_index) ) begin
           // Parity bit is the XOR of all the matching bits of the block
-          parity[parity_index] ^= block[bit_index];
+          // Note that here a ^= would not work because of a bug probably
+          parity[parity_index] = parity[parity_index] ^ block[bit_index];
         end
       end
     end
