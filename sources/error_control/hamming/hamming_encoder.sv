@@ -27,6 +27,8 @@ module hamming_encoder #(
 
 // Pad the data to the message length corresponding to the number of parity bits
 localparam PADDED_DATA_WIDTH = `GET_HAMMING_DATA_WIDTH(PARITY_WIDTH);
+logic [PADDED_DATA_WIDTH-1:0] data_padded;
+assign data_padded = {{(PADDED_DATA_WIDTH-DATA_WIDTH){1'b0}}, data};
 
 // Pad the block
 localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH+PARITY_WIDTH;
@@ -45,10 +47,10 @@ endgenerate
 
 // Place the data bits in the block
 generate
-  for (genvar parity_index = 2; parity_index < PARITY_WIDTH; parity_index++) begin : gen_code_and_data_2
+  for (genvar parity_index = 2; parity_index <= PARITY_WIDTH; parity_index++) begin : gen_code_and_data_2
     assign block_padded[ 2** parity_index    - 2
-                       : 2**(parity_index-1)     ] = data[ 2**parity_index                       - parity_index - 2
-                                                         : 2**parity_index - 2**(parity_index-1) - parity_index     ];
+                       : 2**(parity_index-1)     ] = data_padded[ 2**parity_index                       - parity_index - 2
+                                                                : 2**parity_index - 2**(parity_index-1) - parity_index     ];
   end
 endgenerate
 
@@ -57,8 +59,10 @@ always_comb begin
   parity = 0;
   for (integer bit_index = 0; bit_index < PADDED_DATA_WIDTH; bit_index++) begin
     for (integer parity_index = 0; parity_index < PARITY_WIDTH; parity_index++) begin
-      if ( ((bit_index + 1) % (2**(parity_index+1))) >= (2**(parity_index)) ) begin
-        parity[parity_index] = parity[parity_index] ^ block[bit_index];
+      if (parity_index != bit_index) begin
+        if ( ((bit_index + 1) % (2**(parity_index+1))) >= (2**(parity_index)) ) begin
+          parity[parity_index] ^= block[bit_index];
+        end
       end
     end
   end
