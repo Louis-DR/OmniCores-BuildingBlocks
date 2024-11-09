@@ -11,24 +11,14 @@
 
 
 
+`include "hamming_encoder.svh"
+
+
+
 module hamming_encoder #(
   parameter  DATA_WIDTH   = 8,
-  localparam PARITY_WIDTH = (DATA_WIDTH <=     1) ?  2 : // Hamming(  3,  1)
-                            (DATA_WIDTH <=     4) ?  3 : // Hamming(  7,  4)
-                            (DATA_WIDTH <=    11) ?  4 : // Hamming( 15, 11)
-                            (DATA_WIDTH <=    26) ?  5 : // Hamming( 31, 26)
-                            (DATA_WIDTH <=    57) ?  6 : // Hamming( 63, 57)
-                            (DATA_WIDTH <=   120) ?  7 : // Hamming(127,120)
-                            (DATA_WIDTH <=   247) ?  8 : // Hamming(255,247)
-                            (DATA_WIDTH <=   502) ?  9 :
-                            (DATA_WIDTH <=  1013) ? 10 :
-                            (DATA_WIDTH <=  2036) ? 11 :
-                            (DATA_WIDTH <=  4083) ? 12 :
-                            (DATA_WIDTH <=  8178) ? 13 :
-                            (DATA_WIDTH <= 16369) ? 14 :
-                            (DATA_WIDTH <= 32752) ? 15 :
-                            (DATA_WIDTH <= 65519) ? 16 : -1,
-  localparam BLOCK_WIDTH = DATA_WIDTH+PARITY_WIDTH
+  localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH(DATA_WIDTH),
+  localparam BLOCK_WIDTH  = DATA_WIDTH+PARITY_WIDTH
 ) (
   input    [DATA_WIDTH-1:0] data,
   output [PARITY_WIDTH-1:0] code,
@@ -36,22 +26,7 @@ module hamming_encoder #(
 );
 
 // Pad the data to the message length corresponding to the number of parity bits
-localparam PADDED_DATA_WIDTH = (DATA_WIDTH <=     1) ?     1 : // Hamming(  3,  1)
-                               (DATA_WIDTH <=     4) ?     4 : // Hamming(  7,  4)
-                               (DATA_WIDTH <=    11) ?    11 : // Hamming( 15, 11)
-                               (DATA_WIDTH <=    26) ?    26 : // Hamming( 31, 26)
-                               (DATA_WIDTH <=    57) ?    57 : // Hamming( 63, 57)
-                               (DATA_WIDTH <=   120) ?   120 : // Hamming(127,120)
-                               (DATA_WIDTH <=   247) ?   247 : // Hamming(255,247)
-                               (DATA_WIDTH <=   502) ?   502 :
-                               (DATA_WIDTH <=  1013) ?  1013 :
-                               (DATA_WIDTH <=  2036) ?  2036 :
-                               (DATA_WIDTH <=  4083) ?  4083 :
-                               (DATA_WIDTH <=  8178) ?  8178 :
-                               (DATA_WIDTH <= 16369) ? 16369 :
-                               (DATA_WIDTH <= 32752) ? 32752 :
-                               (DATA_WIDTH <= 65519) ? 65519 : -1;
-logic [PADDED_DATA_WIDTH-1:0] data_padded = {{PADDED_DATA_WIDTH-DATA_WIDTH{1'b0}}, data};
+localparam PADDED_DATA_WIDTH = `GET_HAMMING_DATA_WIDTH(PARITY_WIDTH);
 
 // Pad the block
 localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH+PARITY_WIDTH;
