@@ -18,7 +18,7 @@
 module hamming_encoder #(
   parameter  DATA_WIDTH   = 8,
   localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH(DATA_WIDTH),
-  localparam BLOCK_WIDTH  = DATA_WIDTH+PARITY_WIDTH
+  localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH
 ) (
   input    [DATA_WIDTH-1:0] data,
   output [PARITY_WIDTH-1:0] code,
@@ -28,10 +28,10 @@ module hamming_encoder #(
 // Pad the data to the message length corresponding to the number of parity bits
 localparam PADDED_DATA_WIDTH = `GET_HAMMING_DATA_WIDTH(PARITY_WIDTH);
 logic [PADDED_DATA_WIDTH-1:0] data_padded;
-assign data_padded = {{(PADDED_DATA_WIDTH-DATA_WIDTH){1'b0}}, data};
+assign data_padded = {{(PADDED_DATA_WIDTH - DATA_WIDTH){1'b0}}, data};
 
 // Pad the block
-localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH+PARITY_WIDTH;
+localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH + PARITY_WIDTH;
 logic [PADDED_BLOCK_WIDTH-1:0] block_padded;
 
 // Parity bits, combinational
@@ -60,11 +60,11 @@ always_comb begin
   // Initial value of 0
   parity = 0;
   // Iterate over parity bits
-  for (integer parity_index = 0; parity_index <= PARITY_WIDTH; parity_index++) begin
+  for (integer parity_index = 0; parity_index < PARITY_WIDTH; parity_index++) begin
     // Index of the parity bit in the block
     parity_block_index = 2**parity_index-1;
     // Iterate over block bits
-    for (integer bit_index = 0; bit_index <= PADDED_BLOCK_WIDTH; bit_index++) begin
+    for (integer bit_index = 0; bit_index < PADDED_BLOCK_WIDTH; bit_index++) begin
       // The parity bit doesn't depend on itself
       if (bit_index != parity_block_index) begin
         // This formula detects the block bits that match the pattern
