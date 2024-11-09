@@ -55,12 +55,21 @@ generate
 endgenerate
 
 // Generate the parity bits
+integer parity_block_index;
 always_comb begin
+  // Initial value of 0
   parity = 0;
-  for (integer bit_index = 0; bit_index < PADDED_DATA_WIDTH; bit_index++) begin
-    for (integer parity_index = 0; parity_index < PARITY_WIDTH; parity_index++) begin
-      if (parity_index != bit_index) begin
-        if ( ((bit_index + 1) % (2**(parity_index+1))) >= (2**(parity_index)) ) begin
+  // Iterate over parity bits
+  for (integer parity_index = 0; parity_index <= PARITY_WIDTH; parity_index++) begin
+    // Index of the parity bit in the block
+    parity_block_index = 2**parity_index-1;
+    // Iterate over block bits
+    for (integer bit_index = 0; bit_index <= PADDED_BLOCK_WIDTH; bit_index++) begin
+      // The parity bit doesn't depend on itself
+      if (bit_index != parity_block_index) begin
+        // This formula detects the block bits that match the pattern
+        if ( ((bit_index + 1) % (2**(parity_index+1)))+1 >= (2**parity_index) ) begin
+          // Parity bit is the XOR of all the matching bits of the block
           parity[parity_index] ^= block[bit_index];
         end
       end
