@@ -3,6 +3,7 @@ RTL_SOURCES   := $(RTL_SOURCES) $(ADDITIONAL_RTL_SOURCES)
 RTL_INCLUDES  := $(addprefix -I ,$(RTL_INCLUDES))
 VVP_FILE      ?= $(DESIGN_NAME)_tb.vvp
 VCD_FILE      ?= $(DESIGN_NAME)_tb.vcd
+LOG_FILE      ?= $(DESIGN_NAME)_tb.log
 GTKW_FILE     ?= $(DESIGN_NAME)_tb.gtkw
 COMPILE_FLAGS ?=
 
@@ -10,7 +11,7 @@ compile:
 	iverilog $(COMPILE_FLAGS) -o $(VVP_FILE) $(RTL_INCLUDES) $(RTL_SOURCES)
 
 simulate:
-	vvp $(VVP_FILE)
+	vvp -l $(LOG_FILE) $(VVP_FILE)
 
 waves:
 	gtkwave $(GTKW_FILE) &
