@@ -156,6 +156,7 @@ initial begin
     $display("CHECK : Full coverage.");
     for (integer data_index=0 ; data_index<DATA_WIDTH_POW2 ; data_index++) begin
       data = data_index;
+      #(1);
       check_code();
       check_block();
       #(1);
@@ -169,6 +170,7 @@ initial begin
       // std:randomize() isn't supported by every simulator
       // This alternative only works up to 128 bits
       data = {$urandom(), $urandom(), $urandom(), $urandom()};
+      #(1);
       check_code();
       check_block();
       #(1);
