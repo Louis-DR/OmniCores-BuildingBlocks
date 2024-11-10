@@ -46,7 +46,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `repetition_corrector`                   | error control  | Repetition corrector                                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `repetition_block_checker`               | error control  | Repetition checker with block input                            | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `repetition_block_corrector`             | error control  | Repetition corrector with block input                          | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `hamming_encoder`                        | error control  | Hamming encoder                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `hamming_encoder`                        | error control  | Hamming encoder                                                | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `hamming_checker`                        | error control  | Hamming checker                                                | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `hamming_corrector`                      | error control  | Hamming corrector                                              | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `hamming_block_checker`                  | error control  | Hamming checker with block input                               | :orange_circle: :red_circle:    :red_circle: :white_circle: |
