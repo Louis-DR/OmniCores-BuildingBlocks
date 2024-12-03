@@ -11,7 +11,7 @@
 
 
 
-`include "hamming_encoder.svh"
+`include "hamming.svh"
 
 
 

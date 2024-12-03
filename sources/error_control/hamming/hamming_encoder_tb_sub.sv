@@ -12,7 +12,7 @@
 
 
 `timescale 1ns/1ns
-`include "hamming_encoder.svh"
+`include "hamming.svh"
 
 
 
