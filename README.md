@@ -51,11 +51,15 @@ Below is a list of the modules currently available in this collection. More modu
 | `hamming_corrector`                      | error control  | Hamming corrector                                              | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `hamming_block_checker`                  | error control  | Hamming checker with block input                               | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `hamming_block_corrector`                | error control  | Hamming corrector with block input                             | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `hamming_block_packer`                   | error control  | Hamming block packer                                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `hamming_block_extractor`                | error control  | Hamming block extractor                                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `extended_hamming_encoder`               | error control  | Extended Hamming encoder                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `extended_hamming_checker`               | error control  | Extended Hamming checker                                       | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `extended_hamming_corrector`             | error control  | Extended Hamming corrector                                     | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `extended_hamming_block_checker`         | error control  | Extended Hamming checker with block input                      | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `extended_hamming_block_corrector`       | error control  | Extended Hamming corrector with block input                    | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `extended_hamming_block_packer`          | error control  | Extended Hamming block packer                                  | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `extended_hamming_block_extractor`       | error control  | Extended Hamming block extractor                               | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `single_port_ram`                        | memory         | Single-port RAM                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `dual_port_ram`                          | memory         | Dual-port RAM                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `asynchronous_dual_port_ram`             | memory         | Asynchronous dual-port RAM                                     | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
@@ -94,6 +98,9 @@ Modules planned or in development :
   - Four-phase request-acknowledge handshake-based structures
   - Struct-based data structures
   - Priority FIFO bank
+- Path flow
+  - Multiplexer-router
+  - Fork-join
 - Memories
   - Tag directory with eviction policy
   - Content addressable memory
