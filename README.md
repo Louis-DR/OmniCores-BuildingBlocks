@@ -65,6 +65,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `asynchronous_dual_port_ram`             | memory         | Asynchronous dual-port RAM                                     | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `tag_directory`                          | memory         | Tag directory with manual eviction                             | :green_circle:  :orange_circle: :red_circle: :white_circle: |
 | `content_addressable_memory`             | memory         | Content addressable memory                                     | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `count_ones`                             | operations     | Count the number of ones                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `edge_detector`                          | pulse          | Edge detector                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `rising_edge_detector`                   | pulse          | Rising edge detector                                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `falling_edge_detector`                  | pulse          | Falling edge detector                                          | :green_circle:  :red_circle:    :red_circle: :white_circle: |
