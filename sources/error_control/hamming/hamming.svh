@@ -38,3 +38,43 @@
   (PARITY_WIDTH == 16) ? 65519 : \
   -1
 `endif
+
+`ifndef GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH
+`define GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH) \
+  (BLOCK_WIDTH <=     3) ?  2 : \
+  (BLOCK_WIDTH <=     7) ?  3 : \
+  (BLOCK_WIDTH <=    15) ?  4 : \
+  (BLOCK_WIDTH <=    31) ?  5 : \
+  (BLOCK_WIDTH <=    63) ?  6 : \
+  (BLOCK_WIDTH <=   127) ?  7 : \
+  (BLOCK_WIDTH <=   255) ?  8 : \
+  (BLOCK_WIDTH <=   511) ?  9 : \
+  (BLOCK_WIDTH <=  1023) ? 10 : \
+  (BLOCK_WIDTH <=  2047) ? 11 : \
+  (BLOCK_WIDTH <=  4095) ? 12 : \
+  (BLOCK_WIDTH <=  8191) ? 13 : \
+  (BLOCK_WIDTH <= 16383) ? 14 : \
+  (BLOCK_WIDTH <= 32767) ? 15 : \
+  (BLOCK_WIDTH <= 65535) ? 16 : \
+  -1
+`endif
+
+`ifndef GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH
+`define GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH) \
+  (BLOCK_WIDTH <=     3) ? (BLOCK_WIDTH -  2) : \
+  (BLOCK_WIDTH <=     7) ? (BLOCK_WIDTH -  3) : \
+  (BLOCK_WIDTH <=    15) ? (BLOCK_WIDTH -  4) : \
+  (BLOCK_WIDTH <=    31) ? (BLOCK_WIDTH -  5) : \
+  (BLOCK_WIDTH <=    63) ? (BLOCK_WIDTH -  6) : \
+  (BLOCK_WIDTH <=   127) ? (BLOCK_WIDTH -  7) : \
+  (BLOCK_WIDTH <=   255) ? (BLOCK_WIDTH -  8) : \
+  (BLOCK_WIDTH <=   511) ? (BLOCK_WIDTH -  9) : \
+  (BLOCK_WIDTH <=  1023) ? (BLOCK_WIDTH - 10) : \
+  (BLOCK_WIDTH <=  2047) ? (BLOCK_WIDTH - 11) : \
+  (BLOCK_WIDTH <=  4095) ? (BLOCK_WIDTH - 12) : \
+  (BLOCK_WIDTH <=  8191) ? (BLOCK_WIDTH - 13) : \
+  (BLOCK_WIDTH <= 16383) ? (BLOCK_WIDTH - 14) : \
+  (BLOCK_WIDTH <= 32767) ? (BLOCK_WIDTH - 15) : \
+  (BLOCK_WIDTH <= 65535) ? (BLOCK_WIDTH - 16) : \
+  -1
+`endif
