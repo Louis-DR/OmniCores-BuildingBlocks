@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        count_ones.v                                                 ║
+// ║ File:        first_one.v                                                  ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Count the number of high bits in a vector.                   ║
+// ║ Description: Determine the position of the first one in a vector.         ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -15,21 +15,18 @@
 
 
 
-module count_ones #(
-  parameter WIDTH      = 8,
-  parameter WIDTH_LOG2 = `CLOG2(WIDTH)
+module first_one #(
+  parameter WIDTH = 8
 ) (
-  input       [WIDTH-1:0] data,
-  output [WIDTH_LOG2-1:0] count
+  input  [WIDTH-1:0] data,
+  output [WIDTH-1:0] first_one
 );
 
-always @(*) begin
-  count = 0;
-  for (integer bit_index=0 ; bit_index<WIDTH ; bit_index++) begin
-    if (data[bit_index]) begin
-      count = count + 1;
-    end
+assign first_one[0] = data[0];
+generate
+  for (genvar bit_index = 1; bit_index < WIDTH; bit_index++) begin : gen_bits
+    assign first_one[bit_index] = ~first_one[0:bit_index-1] & data[bit_index];
   end
-end
+endgenerate
 
 endmodule

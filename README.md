@@ -66,6 +66,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `tag_directory`                          | memory         | Tag directory with manual eviction                             | :green_circle:  :orange_circle: :red_circle: :white_circle: |
 | `content_addressable_memory`             | memory         | Content addressable memory                                     | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `count_ones`                             | operations     | Count the number of ones                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `first_one`                              | operations     | Determine the position of the first one                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `edge_detector`                          | pulse          | Edge detector                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `rising_edge_detector`                   | pulse          | Rising edge detector                                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `falling_edge_detector`                  | pulse          | Falling edge detector                                          | :green_circle:  :red_circle:    :red_circle: :white_circle: |
@@ -123,8 +124,6 @@ Modules planned or in development :
   - MISR signature generator
 - Array and vector operations
   - Min and max of packed array
-  - First one of vector
-  - Count ones
 - Arithmetic
   - Adder
   - Staged adder
