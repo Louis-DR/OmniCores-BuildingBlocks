@@ -38,21 +38,14 @@ logic [PADDED_BLOCK_WIDTH-1:0] block_padded;
 logic [PARITY_WIDTH-1:0] parity;
 assign code = parity;
 
-// Place the parity bits in the block
-generate
-  for (genvar parity_index = 0; parity_index < PARITY_WIDTH; parity_index++) begin : gen_code_and_data_1
-    assign block_padded[2**parity_index-1] = parity[parity_index];
-  end
-endgenerate
-
-// Place the data bits in the block
-generate
-  for (genvar parity_index = 2; parity_index <= PARITY_WIDTH; parity_index++) begin : gen_code_and_data_2
-    assign block_padded[ 2** parity_index    - 2
-                       : 2**(parity_index-1)     ] = data_padded[ 2**parity_index                       - parity_index - 2
-                                                                : 2**parity_index - 2**(parity_index-1) - parity_index     ];
-  end
-endgenerate
+// Package the data and parity code into a block
+hamming_block_packager #(
+  .DATA_WIDTH ( DATA_WIDTH )
+) packager (
+  .data  ( data_padded  ),
+  .code  ( parity       ),
+  .block ( block_padded )
+);
 
 // Generate the parity bits
 integer parity_block_index;
