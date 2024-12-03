@@ -71,7 +71,7 @@ always_comb begin
         if ( ((bit_index + 1) % (2**(parity_index+1))) >= (2**parity_index) ) begin
           // Parity bit is the XOR of all the matching bits of the block
           // Note that here a ^= would not work because of a bug probably
-          parity[parity_index] = parity[parity_index] ^ block[bit_index];
+          parity[parity_index] = parity[parity_index] ^ block_padded[bit_index];
         end
       end
     end
