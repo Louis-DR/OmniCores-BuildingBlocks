@@ -129,9 +129,9 @@ always @(posedge write_clock or negedge write_resetn) begin
         buffer[write_address] <= write_data;
       end
     end
-  end
-  if (write_clear_miss) begin
-    write_miss <= 0;
+    if (write_clear_miss) begin
+      write_miss <= 0;
+    end
   end
 end
 
@@ -201,9 +201,9 @@ always @(posedge read_clock or negedge read_resetn) begin
         read_pointer_grey_r <= read_pointer_incremented_grey;
       end
     end
-  end
-  if (read_clear_error) begin
-    read_error <= 0;
+    if (read_clear_error) begin
+      read_error <= 0;
+    end
   end
 end
 

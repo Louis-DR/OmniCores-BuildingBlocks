@@ -143,11 +143,11 @@ always @(posedge clock or negedge resetn) begin
         read_pointer <= read_pointer + 1;
       end
     end
-  end
-  // Clear
-  if (clear_flags) begin
-    write_miss <= 0;
-    read_error <= 0;
+    // Clear
+    if (clear_flags) begin
+      write_miss <= 0;
+      read_error <= 0;
+    end
   end
 end
 
