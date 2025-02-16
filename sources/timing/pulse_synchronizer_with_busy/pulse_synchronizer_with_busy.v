@@ -72,6 +72,6 @@ synchronizer #(
   .data_out ( feedback          )
 );
 
-assign busy = state | feedback;
+assign busy = state_source | feedback;
 
 endmodule
