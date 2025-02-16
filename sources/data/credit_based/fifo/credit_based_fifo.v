@@ -26,7 +26,7 @@ module credit_based_fifo #(
   // Write interface
   input  [WIDTH-1:0] write_data,
   input              write_valid,
-  output             write_credit,
+  output reg         write_credit,
   output             full,
   // Read interface
   output [WIDTH-1:0] read_data,
@@ -37,10 +37,10 @@ module credit_based_fifo #(
 
 localparam CREDIT_COUNT_LOG2 = `CLOG2(CREDIT_COUNT);
 
-assign read_valid = ~empty & (read_credit_count > 0);
-
 reg [CREDIT_COUNT_LOG2-1:0] write_credit_count;
 reg [CREDIT_COUNT_LOG2-1:0] read_credit_count;
+
+assign read_valid = ~empty & (read_credit_count > 0);
 
 always @(posedge clock or negedge resetn) begin
   // Reset
