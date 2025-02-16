@@ -35,6 +35,7 @@ module asynchronous_advanced_fifo #(
   // Write interface
   input                 write_clock,
   input                 write_resetn,
+  input                 write_flush,
   input                 write_enable,
   input     [WIDTH-1:0] write_data,
   // Write status
@@ -49,6 +50,7 @@ module asynchronous_advanced_fifo #(
   // Read interface
   input                 read_clock,
   input                 read_resetn,
+  input                 read_flush,
   input                 read_enable,
   output    [WIDTH-1:0] read_data,
   // Read status
@@ -118,7 +120,10 @@ always @(posedge write_clock or negedge write_resetn) begin
     write_pointer_grey_w <= 0;
     write_miss           <= 0;
   end else begin
-    if (write_enable) begin
+    if (write_flush) begin
+      write_pointer        <= read_pointer_w;
+      write_pointer_grey_w <= read_pointer_grey_w;
+    end else if (write_enable) begin
       if (write_full) begin
         if (!write_clear_miss) begin
           write_miss <= 1;
@@ -191,7 +196,10 @@ always @(posedge read_clock or negedge read_resetn) begin
     read_pointer_grey_r <= 0;
     read_error          <= 0;
   end else begin
-    if (read_enable) begin
+    if (read_flush) begin
+      read_pointer        <= write_pointer_r;
+      read_pointer_grey_r <= write_pointer_grey_r;
+    end else if (read_enable) begin
       if (read_empty) begin
         if (!read_clear_error) begin
           read_error <= 1;
