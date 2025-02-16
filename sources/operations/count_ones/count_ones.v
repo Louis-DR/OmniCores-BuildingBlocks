@@ -23,9 +23,10 @@ module count_ones #(
   output [WIDTH_LOG2-1:0] count
 );
 
+integer bit_index;
 always @(*) begin
   count = 0;
-  for (integer bit_index=0 ; bit_index<WIDTH ; bit_index++) begin
+  for (bit_index=0 ; bit_index<WIDTH ; bit_index++) begin
     if (data[bit_index]) begin
       count = count + 1;
     end

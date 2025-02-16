@@ -23,11 +23,12 @@ module onehot_to_binary #(
   output [WIDTH_BINARY-1:0] binary
 );
 
+integer bit_index;
 always @(*) begin
   // Default value
   binary = 0;
   // Check each one-hot encoded value
-  for (integer bit_index = 0; bit_index < WIDTH_ONEHOT; bit_index++) begin
+  for (bit_index = 0; bit_index < WIDTH_ONEHOT; bit_index++) begin
     if (onehot[bit_index]) begin
       binary = `CLOG2(bit_index);
     end
