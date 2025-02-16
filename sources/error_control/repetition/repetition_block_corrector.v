@@ -23,7 +23,7 @@ module repetition_corrector #(
 // Group bits by repetition
 wire [REPETITION-1:0] grouped_bits [DATA_WIDTH-1:0];
 generate
-  for (genvar repetition_index = 0; repetition_index < REPETITION; repetition_index++) begin : gen_repetitions
+  for (genvar repetition_index = 0; repetition_index < REPETITION; repetition_index = repetition_index+1) begin : gen_repetitions
     for (genvar bit_index = 0; bit_index < DATA_WIDTH; bit_index = bit_index+1) begin : gen_bits
       assign grouped_bits[bit_index][repetition_index] = block[repetition_index*DATA_WIDTH + bit_index];
     end
