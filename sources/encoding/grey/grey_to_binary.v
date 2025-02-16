@@ -22,8 +22,9 @@ module grey_to_binary #(
 assign binary[WIDTH-1] = grey[WIDTH-1];
 
 // Generate the rest of the bits using XOR operations from MSB to LSB
+genvar bit_index;
 generate
-  for (genvar bit_index = WIDTH-2; bit_index >= 0; bit_index = bit_index-1) begin : gen_bits
+  for (bit_index = WIDTH-2; bit_index >= 0; bit_index = bit_index-1) begin : gen_bits
     assign binary[bit_index] = binary[bit_index+1] ^ grey[bit_index];
   end
 endgenerate

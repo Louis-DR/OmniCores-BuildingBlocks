@@ -21,8 +21,9 @@ module static_priority_arbiter #(
 );
 
 assign grant[0] = requests[0];
+genvar bit_index;
 generate
-  for (genvar bit_index = 1; bit_index < SIZE; bit_index = bit_index+1) begin : gen_bits
+  for (bit_index = 1; bit_index < SIZE; bit_index = bit_index+1) begin : gen_bits
     assign grant[bit_index] = ~grant[bit_index-1] & requests[bit_index];
   end
 endgenerate
