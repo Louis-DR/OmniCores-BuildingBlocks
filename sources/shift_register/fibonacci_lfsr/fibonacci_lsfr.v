@@ -14,7 +14,7 @@
 
 module fibonacci_lfsr #(
   parameter WIDTH = 8,
-  parameter TAPS  = 8'b000011101,
+  parameter TAPS  = 8'b00011101,
   parameter SEED  = 1
 ) (
   input                  clock,
