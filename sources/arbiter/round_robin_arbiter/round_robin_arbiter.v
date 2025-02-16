@@ -26,7 +26,7 @@ module round_robin_arbiter #(
   output [SIZE-1:0] grant
 );
 
-localparam SIZE_LOG2 = `CLOG2(DIVISION);
+localparam SIZE_LOG2 = `CLOG2(SIZE);
 
 reg [SIZE_LOG2-1:0] rotating_pointer;
 
