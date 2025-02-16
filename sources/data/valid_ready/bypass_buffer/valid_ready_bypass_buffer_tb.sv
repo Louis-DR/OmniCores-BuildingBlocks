@@ -148,7 +148,7 @@ initial begin
   $display("CHECK 4 : Successive transfers.");
   @(negedge clock);
   write_data = 0;
-  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     // Write
     @(negedge clock);
     if ( read_valid ) $error("[%0tns] Read valid is asserted with data '%0h'. The buffer should be empty.", $time, read_data);
@@ -192,7 +192,7 @@ initial begin
   read_ready  = 1;
   write_valid = 1;
   write_data  = 0;
-  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     if (!read_valid ) $error("[%0tns] Read valid is deasserted.", $time, read_data);
     if (!write_ready) $error("[%0tns] Write ready is deasserted.", $time, read_data);
@@ -226,7 +226,7 @@ initial begin
   @(negedge clock);
   read_ready = 1;
   write_data = write_data+1;
-  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     if (!read_valid ) $error("[%0tns] Read valid is deasserted.", $time, read_data);
     if (!write_ready) $error("[%0tns] Write ready is deasserted.", $time, read_data);

@@ -133,7 +133,7 @@ initial begin
   $display("CHECK 4 : Successive transfers.");
   @(negedge clock);
   write_data = 0;
-  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     // Write
     @(negedge clock);
     if (!empty) $error("[%0tns] Empty flag is deasserted with data '%0h'. The buffer should be empty.", $time, read_data);
@@ -170,7 +170,7 @@ initial begin
   read_enable  = 1;
   write_enable = 1;
   write_data   = 0;
-  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     if ( empty) $error("[%0tns] Empty flag is asserted.", $time, read_data);
     if ( full ) $error("[%0tns] Full flag is asserted.", $time, read_data);
@@ -199,7 +199,7 @@ initial begin
   @(negedge clock);
   read_enable  = 1;
   write_data   = write_data+1;
-  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     if ( empty) $error("[%0tns] Empty flag is asserted.", $time, read_data);
     if ( full ) $error("[%0tns] Full flag is asserted.", $time, read_data);

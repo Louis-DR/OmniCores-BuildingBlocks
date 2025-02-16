@@ -43,7 +43,7 @@ logic [MAX_TEST_STAGES:1] pulse_out_expected;
 
 // Generate device with different parameter values
 generate
-  for (genvar stages=1; stages<=MAX_TEST_STAGES; stages++) begin : gen_stages
+  for (genvar stages = 1; stages <= MAX_TEST_STAGES; stages++) begin : gen_stages
     // Device under test
     pulse_synchronizer #(
       .STAGES            ( stages            )

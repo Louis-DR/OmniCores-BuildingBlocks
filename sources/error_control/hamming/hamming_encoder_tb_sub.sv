@@ -169,7 +169,7 @@ initial begin
   if (DATA_WIDTH_POW2 <= FULL_CHECK_MAX_DURATION) begin
     // Check : full coverage
     $display("CHECK : Full coverage.");
-    for (integer data_index=0 ; data_index<DATA_WIDTH_POW2 ; data_index++) begin
+    for (integer data_index = 0; data_index < DATA_WIDTH_POW2; data_index++) begin
       data = data_index;
       #(1);
       check_code();
@@ -181,7 +181,7 @@ initial begin
   else begin
     // Check : random stimulus
     $display("CHECK : Random stimulus.");
-    for (integer random_iteration=0 ; random_iteration<RANDOM_CHECK_DURATION ; random_iteration++) begin
+    for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
       // std:randomize() isn't supported by every simulator
       // This alternative only works up to 128 bits
       data = {$urandom(), $urandom(), $urandom(), $urandom()};

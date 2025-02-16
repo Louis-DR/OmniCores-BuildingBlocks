@@ -117,7 +117,7 @@ initial begin
   if ( full       ) $error("[%0tns] Full flag is asserted after reset. The FIFO should be empty.", $time);
   if (level != 0) $error("[%0tns] Level '%0d' is not zero after reset. The FIFO should be empty.", $time, level);
   // Writing
-  for (integer write_count=1 ; write_count<=DEPTH ; write_count++) begin
+  for (integer write_count = 1; write_count <= DEPTH; write_count++) begin
     @(negedge clock);
     write_valid = 1;
     write_data  = $urandom_range(WIDTH_POW2);
@@ -164,7 +164,7 @@ initial begin
   // Check 3 : Reading to empty
   $display("CHECK 3 : Reading to empty.");
   // Reading
-  for (integer read_count=1 ; read_count<=DEPTH ; read_count++) begin
+  for (integer read_count = 1; read_count <= DEPTH; read_count++) begin
     @(negedge clock);
     read_ready = 1;
     @(posedge clock);
@@ -215,7 +215,7 @@ initial begin
   // Write
   write_valid = 1;
   write_data  = 0;
-  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     data_expected.push_back(write_data);
     @(negedge clock);

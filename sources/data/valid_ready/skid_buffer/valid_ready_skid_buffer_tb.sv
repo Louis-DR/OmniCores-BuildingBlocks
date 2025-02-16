@@ -147,7 +147,7 @@ initial begin
   // Write
   write_valid = 1;
   write_data  = 0;
-  for (integer iteration=1 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 1; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     data_expected.push_back(write_data);
     @(negedge clock);
     if (!read_valid ) $error("[%0tns] Read valid is deasserted. The buffer should be sending transfers.", $time);

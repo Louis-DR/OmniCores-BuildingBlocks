@@ -37,7 +37,7 @@ logic [MAX_TEST_STAGES:1] data_out_expected;
 
 // Generate device with different parameter values
 generate
-  for (genvar stages=1; stages<=MAX_TEST_STAGES; stages++) begin : gen_stages
+  for (genvar stages = 1; stages <= MAX_TEST_STAGES; stages++) begin : gen_stages
     // Device under test
     fast_synchronizer #(
       .STAGES   ( stages           )

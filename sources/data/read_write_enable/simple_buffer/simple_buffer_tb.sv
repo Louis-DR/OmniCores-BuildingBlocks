@@ -111,7 +111,7 @@ initial begin
   $display("CHECK 3 : Successive transfers.");
   @(negedge clock);
   write_data = 0;
-  for (integer iteration=0 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     // Write
     @(negedge clock);
     if (!empty) $error("[%0tns] Empty flag is deasserted with data '%0h'. The buffer should be empty.", $time, read_data);

@@ -42,7 +42,7 @@ integer depth_index;
 always @(posedge write_clock or negedge write_resetn) begin
   // Reset
   if (!write_resetn) begin
-    for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+    for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       memory[depth_index] <= 0;
     end
   end

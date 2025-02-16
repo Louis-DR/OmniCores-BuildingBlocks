@@ -33,7 +33,7 @@ always @(posedge clock or negedge resetn_in) begin
   if (!resetn_in) stages <= 0;
   else begin
     stages[0] <= 1;
-    for (stage_index=1; stage_index<STAGES; stage_index=stage_index+1) begin
+    for (stage_index = 1; stage_index < STAGES; stage_index = stage_index+1) begin
       stages[stage_index] <= stages[stage_index-1];
     end
   end

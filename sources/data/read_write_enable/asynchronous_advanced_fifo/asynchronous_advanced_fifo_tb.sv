@@ -162,7 +162,7 @@ initial begin
   if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after reset. The FIFO should be empty.", $time, write_level);
   if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after reset. The FIFO should be empty.", $time, read_level);
   // Writing
-  for (integer write_count=1 ; write_count<=DEPTH ; write_count++) begin
+  for (integer write_count = 1; write_count <= DEPTH; write_count++) begin
     @(negedge write_clock);
     write_enable = 1;
     write_data   = $urandom_range(WIDTH_POW2);
@@ -230,7 +230,7 @@ initial begin
   // Check 3 : Reading to empty
   $display("CHECK 3 : Reading to empty.");
   // Reading
-  for (integer read_count=1 ; read_count<=DEPTH ; read_count++) begin
+  for (integer read_count = 1; read_count <= DEPTH; read_count++) begin
     @(negedge read_clock);
     read_enable = 1;
     @(posedge read_clock);
@@ -291,19 +291,19 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Checks 5-7 : Maximal throughput
-  for (integer check=3 ; check<=5 ; check++) begin
+  for (integer check = 5; check <= 7; check++) begin
     case (check)
-      3: begin
+      5: begin
         $display("CHECK 5 : Maximal throughput with same frequencies.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      4: begin
+      6: begin
         $display("CHECK 6 : Maximal throughput with fast write and slow read.");
         WRITE_CLOCK_PERIOD = CLOCK_FAST_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      5: begin
+      7: begin
         $display("CHECK 7 : Maximal throughput with slow write and fast read.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_FAST_PERIOD;
@@ -398,19 +398,19 @@ initial begin
   end
 
   // Checks 8-10 : Random stimulus
-  for (integer check=3 ; check<=5 ; check++) begin
+  for (integer check = 8; check <= 10; check++) begin
     case (check)
-      3: begin
+      8: begin
         $display("CHECK 8 : Random stimulus with same frequencies.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      4: begin
+      9: begin
         $display("CHECK 9 : Random stimulus with fast write and slow read.");
         WRITE_CLOCK_PERIOD = CLOCK_FAST_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      5: begin
+      10: begin
         $display("CHECK 10 : Random stimulus with slow write and fast read.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_FAST_PERIOD;

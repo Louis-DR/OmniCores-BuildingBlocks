@@ -126,7 +126,7 @@ initial begin
   if (!read_empty ) $error("[%0tns] Empty flag is deasserted after reset. The FIFO should be empty.", $time);
   if ( write_full ) $error("[%0tns] Full flag is asserted after reset. The FIFO should be empty.", $time);
   // Writing
-  for (integer write_count=1 ; write_count<=DEPTH ; write_count++) begin
+  for (integer write_count = 1; write_count <= DEPTH; write_count++) begin
     @(negedge write_clock);
     write_valid = 1;
     write_data  = $urandom_range(WIDTH_POW2);
@@ -155,7 +155,7 @@ initial begin
   // Check 2 : Reading to empty
   $display("CHECK 2 : Reading to empty.");
   // Reading
-  for (integer read_count=1 ; read_count<=DEPTH ; read_count++) begin
+  for (integer read_count = 1; read_count <= DEPTH; read_count++) begin
     @(negedge read_clock);
     read_ready = 1;
     @(posedge read_clock);
@@ -181,7 +181,7 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Checks 3-5 : Maximal throughput
-  for (integer check=3 ; check<=5 ; check++) begin
+  for (integer check = 3; check <= 5; check++) begin
     case (check)
       3: begin
         $display("CHECK 3 : Maximal throughput with same frequencies.");
@@ -279,19 +279,19 @@ initial begin
   end
 
   // Checks 6-8 : Random stimulus
-  for (integer check=3 ; check<=5 ; check++) begin
+  for (integer check = 6; check <= 8; check++) begin
     case (check)
-      3: begin
+      6: begin
         $display("CHECK 6 : Random stimulus with same frequencies.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      4: begin
+      7: begin
         $display("CHECK 7 : Random stimulus with fast write and slow read.");
         WRITE_CLOCK_PERIOD = CLOCK_FAST_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      5: begin
+      8: begin
         $display("CHECK 8 : Random stimulus with slow write and fast read.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_FAST_PERIOD;

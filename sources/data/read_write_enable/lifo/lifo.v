@@ -79,7 +79,7 @@ always @(posedge clock or negedge resetn) begin
     stack_pointer <= 0;
     can_write     <= 1;
     can_read      <= 0;
-    for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+    for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       buffer[depth_index] <= 0;
     end
   end else begin

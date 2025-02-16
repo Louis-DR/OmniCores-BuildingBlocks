@@ -133,7 +133,7 @@ initial begin
   // Write
   write_enable = 1;
   write_data   = 0;
-  for (integer iteration=1 ; iteration<THROUGHPUT_CHECK_DURATION ; iteration++) begin
+  for (integer iteration = 1; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     data_expected.push_back(write_data);
     @(negedge clock);
     if ( empty) $error("[%0tns] Empty flag is asserted. The buffer should be sending transfers.", $time);

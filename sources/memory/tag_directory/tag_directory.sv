@@ -65,9 +65,9 @@ logic [INDEX_WIDTH-1:0] first_free_index;
 always_comb begin
   first_free_index = 0;
 `ifdef SIMUMLATOR_NO_BREAK_SUPPORT
-  for (depth_index=DEPTH-1; depth_index>=0; depth_index=depth_index-1) begin
+  for (depth_index = DEPTH-1; depth_index >= 0; depth_index = depth_index-1) begin
 `else
-  for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+  for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
 `endif
     if (!valid[depth_index]) begin
       first_free_index = depth_index;
@@ -80,7 +80,7 @@ end
 
 // Allocation and eviction
 always_comb begin
-  for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+  for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
     buffer_next [depth_index] = buffer [depth_index];
     valid_next  [depth_index] = valid  [depth_index];
   end
@@ -98,9 +98,9 @@ always_comb begin
   search_index = 0;
   search_hit   = 0;
 `ifdef SIMUMLATOR_NO_BREAK_SUPPORT
-  for (depth_index=DEPTH-1; depth_index>=0; depth_index=depth_index-1) begin
+  for (depth_index = DEPTH-1; depth_index >= 0; depth_index = depth_index-1) begin
 `else
-  for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+  for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
 `endif
     if (valid[depth_index] && buffer[depth_index] == search_tag) begin
       search_index = depth_index;
@@ -117,13 +117,13 @@ always_ff @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
     full <= 0;
-    for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+    for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       buffer [depth_index] <= 0;
       valid  [depth_index] <= 0;
     end
   end else begin
     full <= full_next;
-    for (depth_index=0; depth_index<DEPTH; depth_index=depth_index+1) begin
+    for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       buffer [depth_index] <= buffer_next [depth_index];
       valid  [depth_index] <= valid_next  [depth_index];
     end
