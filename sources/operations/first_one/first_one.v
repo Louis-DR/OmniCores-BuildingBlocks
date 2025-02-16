@@ -11,7 +11,7 @@
 
 
 
-`include "hamming.svh"
+`include "common.vh"
 
 
 
