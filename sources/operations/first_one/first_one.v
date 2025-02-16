@@ -24,7 +24,7 @@ module first_one #(
 
 assign first_one[0] = data[0];
 generate
-  for (genvar bit_index = 1; bit_index < WIDTH; bit_index++) begin : gen_bits
+  for (genvar bit_index = 1; bit_index < WIDTH; bit_index = bit_index+1) begin : gen_bits
     assign first_one[bit_index] = ~first_one[0:bit_index-1] & data[bit_index];
   end
 endgenerate

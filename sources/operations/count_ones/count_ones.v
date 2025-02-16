@@ -26,7 +26,7 @@ module count_ones #(
 integer bit_index;
 always @(*) begin
   count = 0;
-  for (bit_index=0 ; bit_index<WIDTH ; bit_index++) begin
+  for (bit_index=0 ; bit_index<WIDTH ; bit_index = bit_index+1) begin
     if (data[bit_index]) begin
       count = count + 1;
     end

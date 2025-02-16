@@ -28,7 +28,7 @@ always @(*) begin
   // Default value
   binary = 0;
   // Check each one-hot encoded value
-  for (bit_index = 0; bit_index < WIDTH_ONEHOT; bit_index++) begin
+  for (bit_index = 0; bit_index < WIDTH_ONEHOT; bit_index = bit_index+1) begin
     if (onehot[bit_index]) begin
       binary = `CLOG2(bit_index);
     end
