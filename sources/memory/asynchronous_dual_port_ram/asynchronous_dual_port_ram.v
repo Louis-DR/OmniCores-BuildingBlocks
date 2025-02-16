@@ -32,7 +32,7 @@ module asynchronous_dual_port_ram #(
   input                      read_resetn,
   input                      read_enable,
   input  [ADDRESS_WIDTH-1:0] read_address,
-  output logic   [WIDTH-1:0] read_data
+  output reg     [WIDTH-1:0] read_data
 );
 
 // Memory array
