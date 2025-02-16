@@ -23,14 +23,19 @@ module count_ones #(
   output [WIDTH_LOG2-1:0] count
 );
 
-integer bit_index;
-always @(*) begin
-  count = 0;
-  for (bit_index=0 ; bit_index<WIDTH ; bit_index = bit_index+1) begin
-    if (data[bit_index]) begin
-      count = count + 1;
+function [WIDTH_LOG2-1:0] count_ones_f;
+  input [WIDTH-1:0] data;
+  integer bit_index;
+  begin
+    count_ones_f = 0;
+    for (bit_index = 0; bit_index < WIDTH; bit_index = bit_index+1) begin
+      if (data[bit_index]) begin
+        count_ones_f = count_ones_f + 1;
+      end
     end
   end
-end
+endfunction
+
+assign count = count_ones_f(data);
 
 endmodule
