@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        repetition_checker.v                                         ║
+// ║ File:        repetition_block_checker.v                                   ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Check replicated data for errors.                            ║
 // ║                                                                           ║
@@ -11,7 +11,7 @@
 
 
 
-module repetition_checker #(
+module repetition_block_checker #(
   parameter DATA_WIDTH = 8,
   parameter REPETITION = 3
 ) (

@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        repetition_corrector.v                                       ║
+// ║ File:        repetition_block_corrector.v                                 ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Corrects errors in replicated data using majority voting.    ║
 // ║                                                                           ║
@@ -11,7 +11,7 @@
 
 
 
-module repetition_corrector #(
+module repetition_block_corrector #(
   parameter DATA_WIDTH = 8,
   parameter REPETITION = 3
 ) (
