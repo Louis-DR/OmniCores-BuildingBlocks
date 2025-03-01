@@ -58,8 +58,8 @@ reg [DEPTH_LOG2:0] write_pointer;
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 
 // Grey-coded pointers in write clock domain
-reg [DEPTH_LOG2:0] write_pointer_grey_w;
-reg [DEPTH_LOG2:0] read_pointer_grey_w;
+reg  [DEPTH_LOG2:0] write_pointer_grey_w;
+wire [DEPTH_LOG2:0] read_pointer_grey_w;
 
 // Write pointer incremented and corresponding grey-code
 wire [DEPTH_LOG2:0] write_pointer_incremented = write_pointer + 1;
@@ -101,8 +101,8 @@ reg [DEPTH_LOG2:0] read_pointer;
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 
 // Grey-coded pointers in read clock domain
-reg [DEPTH_LOG2:0] write_pointer_grey_r;
-reg [DEPTH_LOG2:0] read_pointer_grey_r;
+wire [DEPTH_LOG2:0] write_pointer_grey_r;
+reg  [DEPTH_LOG2:0] read_pointer_grey_r;
 
 // Read pointer incremented and corresponding grey-code
 wire [DEPTH_LOG2:0] read_pointer_incremented = read_pointer + 1;
