@@ -202,6 +202,7 @@ initial begin
 
     transfer_count    = 0;
     outstanding_count = 0;
+    data_expected     = {};
     timeout_countdown = THROUGHPUT_CHECK_TIMEOUT;
     fork
       // Writing
@@ -300,6 +301,7 @@ initial begin
 
     transfer_count    = 0;
     outstanding_count = 0;
+    data_expected     = {};
     timeout_countdown = RANDOM_CHECK_TIMEOUT;
     fork
       // Writing

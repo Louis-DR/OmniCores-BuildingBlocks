@@ -256,6 +256,7 @@ initial begin
   @(negedge clock);
   transfer_count    = 0;
   outstanding_count = 0;
+  data_expected     = {};
   timeout_countdown = RANDOM_CHECK_TIMEOUT;
   threshold_change_countdown = RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD;
   fork
