@@ -367,7 +367,7 @@ initial begin
     // Status check
     begin
       forever begin
-        @(negedge clock);
+        @(negedge clock); #1;
         if (level != outstanding_count) $error("[%0tns] Level '%0d' is not as expected '%0d'.", $time, level, outstanding_count);
         if (outstanding_count == 0) begin
           if (!empty) $error("[%0tns] Empty flag is deasserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
@@ -379,10 +379,10 @@ initial begin
           if ( empty) $error("[%0tns] Empty flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
           if ( full ) $error("[%0tns] Full flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
         end
-        if (lower_threshold_status !== level <= lower_threshold_level) begin
+        if (lower_threshold_status !== (level <= lower_threshold_level)) begin
           $error("[%0tns] Lower threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO level of '%0d'.", $time, lower_threshold_status, lower_threshold_level, level);
         end
-        if (upper_threshold_status !== level >= upper_threshold_level) begin
+        if (upper_threshold_status !== (level >= upper_threshold_level)) begin
           $error("[%0tns] Upper threshold flag '%0b' doesn't match given the threshold value of '%0d' and the FIFO level of '%0d'.", $time, upper_threshold_status, upper_threshold_level, level);
         end
       end
