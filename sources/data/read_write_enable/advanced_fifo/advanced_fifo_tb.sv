@@ -35,6 +35,7 @@ localparam integer RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 // Device ports
 logic                clock;
 logic                resetn;
+logic                flush;
 logic                clear_flags;
 logic                write_enable;
 logic    [WIDTH-1:0] write_data;
@@ -66,6 +67,7 @@ advanced_fifo #(
 ) advanced_fifo_dut (
   .clock                  ( clock                  ),
   .resetn                 ( resetn                 ),
+  .flush                  ( flush                  ),
   .clear_flags            ( clear_flags            ),
   .write_enable           ( write_enable           ),
   .write_data             ( write_data             ),
@@ -97,6 +99,7 @@ initial begin
   $dumpvars(0,advanced_fifo_tb);
 
   // Initialization
+  flush        = 0;
   clear_flags  = 0;
   write_data   = 0;
   write_enable = 0;
@@ -234,8 +237,30 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 5 : Back-to-back transfers for full throughput
-  $display("CHECK 5 : Back-to-back transfers for full throughput.");
+  // Check 5 : Flushing
+  $display("CHECK 5 : Flushing.");
+  // Write
+  @(negedge clock);
+  write_enable = 1;
+  write_data   = $urandom_range(WIDTH_POW2);
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  // Flush
+  @(negedge clock);
+  flush = 1;
+  @(negedge clock);
+  flush = 0;
+  if (!empty     ) $error("[%0tns] Empty flag is deasserted after flushing. The FIFO should be empty.", $time);
+  if ( full      ) $error("[%0tns] Full flag is asserted after flushing. The FIFO should be empty.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted after flushing.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted after flushing.", $time);
+  if (level != 0)  $error("[%0tns] Level '%0d' is not zero after flushing. The FIFO should be empty.", $time, level);
+
+  repeat(10) @(posedge clock);
+
+  // Check 6 : Back-to-back transfers for full throughput
+  $display("CHECK 6 : Back-to-back transfers for full throughput.");
   @(negedge clock);
   // Write
   write_enable = 1;
@@ -269,8 +294,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 6 : Random stimulus
-  $display("CHECK 6 : Random stimulus.");
+  // Check 7 : Random stimulus
+  $display("CHECK 7 : Random stimulus.");
   @(negedge clock);
   transfer_count    = 0;
   outstanding_count = 0;
