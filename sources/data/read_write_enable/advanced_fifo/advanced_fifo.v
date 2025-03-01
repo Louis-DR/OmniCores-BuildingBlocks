@@ -55,7 +55,7 @@ module advanced_fifo #(
 
 
 // Memory array
-reg [WIDTH-1:0] buffer [DEPTH-1:0];
+reg [WIDTH-1:0] memory [DEPTH-1:0];
 
 
 
@@ -66,7 +66,7 @@ reg [WIDTH-1:0] buffer [DEPTH-1:0];
 // Write pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] write_pointer;
 
-// Write address without wrap bit to index the buffer
+// Write address without wrap bit to index the memory
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 
 
@@ -78,11 +78,11 @@ wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 // Read pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] read_pointer;
 
-// Read address without wrap bit to index the buffer
+// Read address without wrap bit to index the memory
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 
 // Value at the read pointer is always on the read data bus
-assign read_data = buffer[read_address];
+assign read_data = memory[read_address];
 
 
 
@@ -117,9 +117,6 @@ always @(posedge clock or negedge resetn) begin
     read_pointer  <= 0;
     write_miss    <= 0;
     read_error    <= 0;
-    for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-      buffer[depth_index] <= 0;
-    end
   end
   // Operation
   else begin

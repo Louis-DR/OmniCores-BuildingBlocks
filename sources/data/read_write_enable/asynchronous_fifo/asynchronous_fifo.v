@@ -43,7 +43,7 @@ module asynchronous_fifo #(
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory array
-reg [WIDTH-1:0] buffer [DEPTH-1:0];
+reg [WIDTH-1:0] memory [DEPTH-1:0];
 
 
 
@@ -54,7 +54,7 @@ reg [WIDTH-1:0] buffer [DEPTH-1:0];
 // Write pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] write_pointer;
 
-// Write address without wrap bit to index the buffer
+// Write address without wrap bit to index the memory
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 
 // Grey-coded pointers in write clock domain
@@ -83,7 +83,7 @@ always @(posedge write_clock or negedge write_resetn) begin
     if (write_enable) begin
       write_pointer         <= write_pointer_incremented;
       write_pointer_grey_w  <= write_pointer_incremented_grey;
-      buffer[write_address] <= write_data;
+      memory[write_address] <= write_data;
     end
   end
 end
@@ -97,7 +97,7 @@ end
 // Read pointer with wrap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] read_pointer;
 
-// Read address without wrap bit to index the buffer
+// Read address without wrap bit to index the memory
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 
 // Grey-coded pointers in read clock domain
@@ -119,7 +119,7 @@ binary_to_grey #(
 assign read_empty = write_pointer_grey_r == read_pointer_grey_r;
 
 // Value at the read pointer is always on the read data bus
-assign read_data = buffer[read_address];
+assign read_data = memory[read_address];
 
 always @(posedge read_clock or negedge read_resetn) begin
   if (!read_resetn) begin

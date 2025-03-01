@@ -46,7 +46,7 @@ module lifo #(
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory array
-reg [WIDTH-1:0] buffer [DEPTH-1:0];
+reg [WIDTH-1:0] memory [DEPTH-1:0];
 
 // Pointer to the last item of the LIFO
 reg [DEPTH_LOG2-1:0] stack_pointer;
@@ -64,7 +64,7 @@ wire do_read = read_enable  & can_read;
 // IO signals
 assign full      = ~can_write;
 assign empty     = ~can_read;
-assign read_data = buffer[stack_pointer];
+assign read_data = memory[stack_pointer];
 
 
 
@@ -80,28 +80,28 @@ always @(posedge clock or negedge resetn) begin
     can_write     <= 1;
     can_read      <= 0;
     for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-      buffer[depth_index] <= 0;
+      memory[depth_index] <= 0;
     end
   end else begin
     // Writing
     if (do_write) begin
-      // Use can_read flag to mark validity of buffer[0]
+      // Use can_read flag to mark validity of memory[0]
       if (can_read) begin
         // Reading and writing in same cycle
         if (do_read) begin
-          buffer[stack_pointer] <= write_data;
+          memory[stack_pointer] <= write_data;
           can_write <= 1;
         end
         // Writing only
         else begin
-          buffer[stack_pointer + 1] <= write_data;
+          memory[stack_pointer + 1] <= write_data;
           stack_pointer             <= stack_pointer + 1;
           can_write                 <= ~(stack_pointer == {{DEPTH_LOG2-2{1'b1}} , 1'b0});
         end
       end
       // Writing to empty stack
       else begin
-        buffer[0]     <= write_data;
+        memory[0]     <= write_data;
         stack_pointer <= 0;
         can_read      <= 1;
       end
