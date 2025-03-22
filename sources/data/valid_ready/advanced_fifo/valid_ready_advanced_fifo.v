@@ -26,6 +26,7 @@ module valid_ready_advanced_fifo #(
 ) (
   input                 clock,
   input                 resetn,
+  input                 flush,
   // Write interface
   input     [WIDTH-1:0] write_data,
   input                 write_valid,
@@ -54,6 +55,7 @@ advanced_fifo #(
 ) advanced_fifo (
   .clock                  ( clock                  ),
   .resetn                 ( resetn                 ),
+  .flush                  ( flush                  ),
   .clear_flags            ( 1'b0                   ),
   // Write interface
   .write_enable           ( write_enable           ),

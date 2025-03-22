@@ -29,6 +29,7 @@ module valid_ready_asynchronous_advanced_fifo #(
   // Write interface
   input                 write_clock,
   input                 write_resetn,
+  input                 write_flush,
   input     [WIDTH-1:0] write_data,
   input                 write_valid,
   output                write_ready,
@@ -42,6 +43,7 @@ module valid_ready_asynchronous_advanced_fifo #(
   // Read interface
   input                 read_clock,
   input                 read_resetn,
+  input                 read_flush,
   output    [WIDTH-1:0] read_data,
   output                read_valid,
   input                 read_ready,
@@ -66,6 +68,7 @@ asynchronous_advanced_fifo #(
   // Write interface
   .write_clock                  ( write_clock                  ),
   .write_resetn                 ( write_resetn                 ),
+  .write_flush                  ( write_flush                  ),
   .write_enable                 ( write_enable                 ),
   .write_data                   ( write_data                   ),
   .write_full                   ( write_full                   ),
@@ -79,6 +82,7 @@ asynchronous_advanced_fifo #(
   // Read interface
   .read_clock                   ( read_clock                   ),
   .read_resetn                  ( read_resetn                  ),
+  .read_flush                   ( read_flush                   ),
   .read_enable                  ( read_enable                  ),
   .read_data                    ( read_data                    ),
   .read_empty                   ( read_empty                   ),
