@@ -38,14 +38,19 @@ module advanced_fifo #(
   input                 write_enable,
   input     [WIDTH-1:0] write_data,
   output reg            write_miss,
-  output                full,
   // Read interface
   input                 read_enable,
   output    [WIDTH-1:0] read_data,
   output reg            read_error,
-  output                empty,
-  // Level and threshold
+  // Level
   output [DEPTH_LOG2:0] level,
+  output                empty;
+  output                not_empty;
+  output                almost_empty;
+  output                full;
+  output                not_full;
+  output                almost_full;
+  // Threshold
   input  [DEPTH_LOG2:0] lower_threshold_level,
   output                lower_threshold_status,
   input  [DEPTH_LOG2:0] upper_threshold_level,
@@ -90,11 +95,15 @@ assign read_data = memory[read_address];
 // │ Status logic │
 // └──────────────┘
 
-// Queue is full if the read and write pointers are the same but the wrap bits are different
-assign full  = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && write_pointer[DEPTH_LOG2] != read_pointer[DEPTH_LOG2];
-
 // Queue is empty if the read and write pointers are the same and the wrap bits are equal
-assign empty = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && write_pointer[DEPTH_LOG2] == read_pointer[DEPTH_LOG2];
+assign empty        = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && write_pointer[DEPTH_LOG2] == read_pointer[DEPTH_LOG2];
+assign not_empty    = ~empty;
+assign almost_empty = level == 1;
+
+// Queue is full if the read and write pointers are the same but the wrap bits are different
+assign full         = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && write_pointer[DEPTH_LOG2] != read_pointer[DEPTH_LOG2];
+assign not_full     = ~full;
+assign almost_full  = level == DEPTH - 1;
 
 // Calculate FIFO level by comparing write and read pointers
 assign level = write_pointer - read_pointer;
