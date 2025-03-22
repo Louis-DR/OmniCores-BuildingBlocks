@@ -39,9 +39,14 @@ module asynchronous_advanced_fifo #(
   input                 write_enable,
   input     [WIDTH-1:0] write_data,
   // Write status
-  output                write_full,
   output reg            write_miss,
   input                 write_clear_miss,
+  output                write_empty,
+  output                write_not_empty,
+  output                write_almost_empty,
+  output                write_full,
+  output                write_not_full,
+  output                write_almost_full,
   output [DEPTH_LOG2:0] write_level,
   input  [DEPTH_LOG2:0] write_lower_threshold_level,
   output                write_lower_threshold_status,
@@ -54,9 +59,14 @@ module asynchronous_advanced_fifo #(
   input                 read_enable,
   output    [WIDTH-1:0] read_data,
   // Read status
-  output                read_empty,
   output reg            read_error,
   input                 read_clear_error,
+  output                read_empty,
+  output                read_not_empty,
+  output                read_almost_empty,
+  output                read_full,
+  output                read_not_full,
+  output                read_almost_full,
   output [DEPTH_LOG2:0] read_level,
   input  [DEPTH_LOG2:0] read_lower_threshold_level,
   output                read_lower_threshold_status,
@@ -104,11 +114,18 @@ grey_to_binary #(
   .binary ( read_pointer_w      )
 );
 
-// Queue is full if the grey-coded pointers match this expression
-assign write_full = write_pointer_grey_w == {~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0]};
-
 // Calculate FIFO level by comparing write and read pointers
 assign write_level = write_pointer - read_pointer_w;
+
+// Queue is empty if the grey-coded read and write pointers are the same
+assign write_empty        = write_pointer_grey_w == read_pointer_grey_w;
+assign write_not_empty    = ~write_empty;
+assign write_almost_empty = write_level == 1;
+
+// Queue is full if the grey-coded pointers match this expression
+assign write_full         = write_pointer_grey_w == {~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0]};
+assign write_not_full     = ~write_full;
+assign write_almost_full  = write_level == DEPTH - 1;
 
 // Thresholds status
 assign write_lower_threshold_status = write_level <= write_lower_threshold_level;
@@ -182,6 +199,16 @@ assign read_empty = write_pointer_grey_r == read_pointer_grey_r;
 
 // Calculate FIFO level by comparing write and read pointers
 assign read_level = write_pointer_r - read_pointer;
+
+// Queue is empty if the grey-coded read and write pointers are the same
+assign read_empty        = write_pointer_grey_r == read_pointer_grey_r;
+assign read_not_empty    = ~read_empty;
+assign read_almost_empty = read_level == 1;
+
+// Queue is full if the grey-coded pointers match this expression
+assign read_full         = write_pointer_grey_r == {~read_pointer_grey_r[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_r[DEPTH_LOG2-2:0]};
+assign read_not_full     = ~read_full;
+assign read_almost_full  = read_level == DEPTH - 1;
 
 // Thresholds status
 assign read_lower_threshold_status = read_level <= read_lower_threshold_level;
