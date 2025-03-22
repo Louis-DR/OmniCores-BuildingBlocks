@@ -119,7 +119,7 @@ initial begin
   if (!write_ready) $error("[%0tns] Write ready is deasserted after reset. The FIFO should be empty.", $time);
   if (!empty      ) $error("[%0tns] Empty flag is deasserted after reset. The FIFO should be empty.", $time);
   if ( full       ) $error("[%0tns] Full flag is asserted after reset. The FIFO should be empty.", $time);
-  if (level != 0) $error("[%0tns] Level '%0d' is not zero after reset. The FIFO should be empty.", $time, level);
+  if ( level != 0 ) $error("[%0tns] Level '%0d' is not zero after reset. The FIFO should be empty.", $time, level);
   // Writing
   for (integer write_count = 1; write_count <= DEPTH; write_count++) begin
     @(negedge clock);
@@ -190,11 +190,11 @@ initial begin
     end
   end
   // Final state
-  if ( read_valid ) $error("[%0tns] Read valid is asserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if (!write_ready) $error("[%0tns] Write ready is deasserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if (!empty      ) $error("[%0tns] Empty flag is deasserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if ( full       ) $error("[%0tns] Full flag is asserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if (level != 0) $error("[%0tns] Level '%0d' is not zero after reading to empty. The FIFO should be empty.", $time, level);
+  if ( read_valid ) $error("[%0tns] Read valid is asserted after reading to empty. The FIFO should be empty.", $time);
+  if (!write_ready) $error("[%0tns] Write ready is deasserted after reading to empty. The FIFO should be empty.", $time);
+  if (!empty      ) $error("[%0tns] Empty flag is deasserted after reading to empty. The FIFO should be empty.", $time);
+  if ( full       ) $error("[%0tns] Full flag is asserted after reading to empty. The FIFO should be empty.", $time);
+  if ( level != 0 ) $error("[%0tns] Level '%0d' is not zero after reading to empty. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
@@ -209,7 +209,7 @@ initial begin
   if (!write_ready) $error("[%0tns] Write ready is deasserted after asserting read valid while empty. The FIFO should be empty.", $time);
   if (!empty      ) $error("[%0tns] Empty flag is deasserted after asserting read valid while empty. The FIFO should be empty.", $time);
   if ( full       ) $error("[%0tns] Full flag is asserted after asserting read valid while empty. The FIFO should be empty.", $time);
-  if (level != 0)  $error("[%0tns] Level '%0d' is not zero after asserting read valid while empty. The FIFO should be empty.", $time, level);
+  if ( level != 0 )  $error("[%0tns] Level '%0d' is not zero after asserting read valid while empty. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
@@ -231,7 +231,7 @@ initial begin
   if (!write_ready) $error("[%0tns] Write ready is deasserted after flushing. The FIFO should be empty.", $time);
   if (!empty      ) $error("[%0tns] Empty flag is deasserted after flushing. The FIFO should be empty.", $time);
   if ( full       ) $error("[%0tns] Full flag is asserted after flushing. The FIFO should be empty.", $time);
-  if (level != 0  ) $error("[%0tns] Level '%0d' is not zero after flushing. The FIFO should be empty.", $time, level);
+  if ( level != 0 ) $error("[%0tns] Level '%0d' is not zero after flushing. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
@@ -272,7 +272,7 @@ initial begin
   if (!write_ready) $error("[%0tns] Write ready is deasserted after check 6. The FIFO should be empty.", $time);
   if (!empty      ) $error("[%0tns] Empty flag is deasserted after check 6. The FIFO should be empty.", $time);
   if ( full       ) $error("[%0tns] Full flag is asserted after check 6. The FIFO should be empty.", $time);
-  if (level != 0) $error("[%0tns] Level '%0d' is not zero after check 6. The FIFO should be empty.", $time, level);
+  if ( level != 0 ) $error("[%0tns] Level '%0d' is not zero after check 6. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
@@ -404,7 +404,7 @@ initial begin
   if (!write_ready) $error("[%0tns] Write ready is deasserted after check 7. The FIFO should be empty.", $time);
   if (!empty      ) $error("[%0tns] Empty flag is deasserted after check 7. The FIFO should be empty.", $time);
   if ( full       ) $error("[%0tns] Full flag is asserted after check 7. The FIFO should be empty.", $time);
-  if (level != 0) $error("[%0tns] Level '%0d' is not zero after check 7. The FIFO should be empty.", $time, level);
+  if ( level != 0 ) $error("[%0tns] Level '%0d' is not zero after check 7. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 

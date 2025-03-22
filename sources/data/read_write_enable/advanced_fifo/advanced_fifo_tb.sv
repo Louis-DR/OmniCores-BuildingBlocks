@@ -201,8 +201,8 @@ initial begin
     end
   end
   // Final state
-  if (!empty) $error("[%0tns] Empty flag is deasserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if ( full ) $error("[%0tns] Full flag is asserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
+  if (!empty) $error("[%0tns] Empty flag is deasserted after reading to empty. The FIFO should be empty.", $time);
+  if ( full ) $error("[%0tns] Full flag is asserted after reading to empty. The FIFO should be empty.", $time);
   if (level != 0) $error("[%0tns] Level '%0d' is not zero after reading to empty. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);

@@ -188,8 +188,8 @@ initial begin
     end
   end
   // Final state
-  if ( read_empty) $error("[%0tns] Empty flag is asserted after writing to full. The FIFO should be full.", $time, DEPTH);
-  if (!write_full) $error("[%0tns] Full flag is deasserted after writing to full. The FIFO should be full.", $time, DEPTH);
+  if ( read_empty) $error("[%0tns] Empty flag is asserted after writing to full. The FIFO should be full.", $time);
+  if (!write_full) $error("[%0tns] Full flag is deasserted after writing to full. The FIFO should be full.", $time);
   if (write_level != DEPTH) $error("[%0tns] Write level '%0d' is not equal to DEPTH='%0d' after writing to full. The FIFO should be full.", $time, write_level, DEPTH);
   if (read_level  != DEPTH) $error("[%0tns] Read level '%0d' is not equal to DEPTH='%0d' after writing to full. The FIFO should be full.", $time, read_level, DEPTH);
 
@@ -321,8 +321,8 @@ initial begin
   // Waiting for propagation of the flush and the pointers
   repeat(2*STAGES_READ) @(posedge read_clock); @(negedge read_clock);
   // Final state
-  if (!read_empty) $error("[%0tns] Empty flag is deasserted after flushing from write port. The FIFO should be empty.", $time, DEPTH);
-  if ( write_full) $error("[%0tns] Full flag is asserted after flushing from write port. The FIFO should be empty.", $time, DEPTH);
+  if (!read_empty) $error("[%0tns] Empty flag is deasserted after flushing from write port. The FIFO should be empty.", $time);
+  if ( write_full) $error("[%0tns] Full flag is asserted after flushing from write port. The FIFO should be empty.", $time);
   if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after flushing from write port. The FIFO should be empty.", $time, write_level);
   if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after flushing from write port. The FIFO should be empty.", $time, read_level);
 
@@ -354,8 +354,8 @@ initial begin
   // Waiting for propagation of the flush and the pointers
   repeat(2*STAGES_WRITE) @(posedge write_clock); @(negedge write_clock);
   // Final state
-  if (!read_empty) $error("[%0tns] Empty flag is deasserted after flushing from read port. The FIFO should be empty.", $time, DEPTH);
-  if ( write_full) $error("[%0tns] Full flag is asserted after flushing from read port. The FIFO should be empty.", $time, DEPTH);
+  if (!read_empty) $error("[%0tns] Empty flag is deasserted after flushing from read port. The FIFO should be empty.", $time);
+  if ( write_full) $error("[%0tns] Full flag is asserted after flushing from read port. The FIFO should be empty.", $time);
   if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after flushing from read port. The FIFO should be empty.", $time, write_level);
   if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after flushing from read port. The FIFO should be empty.", $time, read_level);
 
@@ -460,8 +460,8 @@ initial begin
     join_any
     disable fork;
     // Final state
-    if (!read_empty) $error("[%0tns] Empty flag is deasserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
-    if ( write_full) $error("[%0tns] Full flag is asserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
+    if (!read_empty) $error("[%0tns] Empty flag is deasserted after the maximal throughput check. The FIFO should be empty.", $time);
+    if ( write_full) $error("[%0tns] Full flag is asserted after the maximal throughput check. The FIFO should be empty.", $time);
     if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after the maximal throughput check. The FIFO should be empty.", $time, write_level);
     if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after the maximal throughput check. The FIFO should be empty.", $time, read_level);
 

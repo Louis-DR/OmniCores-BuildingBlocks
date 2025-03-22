@@ -186,10 +186,10 @@ initial begin
     end
   end
   // Final state
-  if (!read_valid ) $error("[%0tns] Read valid is deasserted after writing to full. The FIFO should be full.", $time, DEPTH);
-  if ( write_ready) $error("[%0tns] Write ready is asserted after writing to full. The FIFO should be full.", $time, DEPTH);
-  if ( read_empty ) $error("[%0tns] Empty flag is asserted after writing to full. The FIFO should be full.", $time, DEPTH);
-  if (!write_full ) $error("[%0tns] Full flag is deasserted after writing to full. The FIFO should be full.", $time, DEPTH);
+  if (!read_valid ) $error("[%0tns] Read valid is deasserted after writing to full. The FIFO should be full.", $time);
+  if ( write_ready) $error("[%0tns] Write ready is asserted after writing to full. The FIFO should be full.", $time);
+  if ( read_empty ) $error("[%0tns] Empty flag is asserted after writing to full. The FIFO should be full.", $time);
+  if (!write_full ) $error("[%0tns] Full flag is deasserted after writing to full. The FIFO should be full.", $time);
   if (write_level != DEPTH) $error("[%0tns] Write level '%0d' is not equal to DEPTH='%0d' after writing to full. The FIFO should be full.", $time, write_level, DEPTH);
   if (read_level  != DEPTH) $error("[%0tns] Read level '%0d' is not equal to DEPTH='%0d' after writing to full. The FIFO should be full.", $time, read_level, DEPTH);
 
@@ -236,10 +236,10 @@ initial begin
     end
   end
   // Final state
-  if ( read_valid ) $error("[%0tns] Read valid is asserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if (!write_ready) $error("[%0tns] Write ready is deasserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if (!read_empty ) $error("[%0tns] Empty flag is deasserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
-  if ( write_full ) $error("[%0tns] Full flag is asserted after reading to empty. The FIFO should be empty.", $time, DEPTH);
+  if ( read_valid ) $error("[%0tns] Read valid is asserted after reading to empty. The FIFO should be empty.", $time);
+  if (!write_ready) $error("[%0tns] Write ready is deasserted after reading to empty. The FIFO should be empty.", $time);
+  if (!read_empty ) $error("[%0tns] Empty flag is deasserted after reading to empty. The FIFO should be empty.", $time);
+  if ( write_full ) $error("[%0tns] Full flag is asserted after reading to empty. The FIFO should be empty.", $time);
   if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after reading to empty. The FIFO should be empty.", $time, write_level);
   if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after reading to empty. The FIFO should be empty.", $time, read_level);
 
@@ -430,10 +430,10 @@ initial begin
     write_valid = 0;
     read_ready  = 0;
     // Final state
-    if ( read_valid ) $error("[%0tns] Read valid is asserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
-    if (!write_ready) $error("[%0tns] Write ready is deasserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
-    if (!read_empty ) $error("[%0tns] Empty flag is deasserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
-    if ( write_full ) $error("[%0tns] Full flag is asserted after the maximal throughput check. The FIFO should be empty.", $time, DEPTH);
+    if ( read_valid ) $error("[%0tns] Read valid is asserted after the maximal throughput check. The FIFO should be empty.", $time);
+    if (!write_ready) $error("[%0tns] Write ready is deasserted after the maximal throughput check. The FIFO should be empty.", $time);
+    if (!read_empty ) $error("[%0tns] Empty flag is deasserted after the maximal throughput check. The FIFO should be empty.", $time);
+    if ( write_full ) $error("[%0tns] Full flag is asserted after the maximal throughput check. The FIFO should be empty.", $time);
     if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after the maximal throughput check. The FIFO should be empty.", $time, write_level);
     if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after the maximal throughput check. The FIFO should be empty.", $time, read_level);
 
@@ -600,12 +600,12 @@ initial begin
     write_valid = 0;
     read_ready  = 0;
     // Final state
-    if ( read_valid ) $error("[%0tns] Read valid is asserted after the random stimulus check. The FIFO should be empty.", $time, DEPTH);
-    if (!write_ready) $error("[%0tns] Write ready is deasserted after the random stimulus check. The FIFO should be empty.", $time, DEPTH);
-    if (!read_empty) $error("[%0tns] Empty flag is deasserted after the random stimulus check. The FIFO should be empty.", $time);
-    if ( write_full) $error("[%0tns] Full flag is asserted after the random stimulus check. The FIFO should be empty.", $time);
+    if ( read_valid ) $error("[%0tns] Read valid is asserted after the random stimulus check. The FIFO should be empty.", $time);
+    if (!write_ready) $error("[%0tns] Write ready is deasserted after the random stimulus check. The FIFO should be empty.", $time);
+    if (!read_empty ) $error("[%0tns] Empty flag is deasserted after the random stimulus check. The FIFO should be empty.", $time);
+    if ( write_full ) $error("[%0tns] Full flag is asserted after the random stimulus check. The FIFO should be empty.", $time);
     if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after the random stimulus check. The FIFO should be empty.", $time, write_level);
-    if (read_level != 0) $error("[%0tns] Read level '%0d' is not zero after the random stimulus check. The FIFO should be empty.", $time, read_level);
+    if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after the random stimulus check. The FIFO should be empty.", $time, read_level);
 
     repeat(5) @(posedge write_clock);
     repeat(5) @(posedge read_clock);
