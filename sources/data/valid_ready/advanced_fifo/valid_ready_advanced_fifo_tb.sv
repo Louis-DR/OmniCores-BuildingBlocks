@@ -349,7 +349,7 @@ initial begin
     // Status check
     begin
       forever begin
-        @(negedge clock);
+        @(negedge clock); #1;
         if (level != outstanding_count) $error("[%0tns] Level '%0d' is not as expected '%0d'.", $time, level, outstanding_count);
         if (outstanding_count == 0) begin
           if ( read_valid ) $error("[%0tns] Read valid is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
