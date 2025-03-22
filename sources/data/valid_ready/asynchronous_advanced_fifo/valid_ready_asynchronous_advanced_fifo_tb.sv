@@ -44,6 +44,7 @@ real READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
 // Device ports
 logic                write_clock;
 logic                write_resetn;
+logic                write_flush;
 logic    [WIDTH-1:0] write_data;
 logic                write_valid;
 logic                write_ready;
@@ -55,6 +56,7 @@ logic [DEPTH_LOG2:0] write_upper_threshold_level;
 logic                write_upper_threshold_status;
 logic                read_clock;
 logic                read_resetn;
+logic                read_flush;
 logic    [WIDTH-1:0] read_data;
 logic                read_valid;
 logic                read_ready;
@@ -82,6 +84,7 @@ valid_ready_asynchronous_advanced_fifo #(
 ) valid_ready_asynchronous_advanced_fifo_dut (
   .write_clock                  ( write_clock                  ),
   .write_resetn                 ( write_resetn                 ),
+  .write_flush                  ( write_flush                  ),
   .write_data                   ( write_data                   ),
   .write_valid                  ( write_valid                  ),
   .write_ready                  ( write_ready                  ),
@@ -93,6 +96,7 @@ valid_ready_asynchronous_advanced_fifo #(
   .write_upper_threshold_status ( write_upper_threshold_status ),
   .read_clock                   ( read_clock                   ),
   .read_resetn                  ( read_resetn                  ),
+  .read_flush                   ( read_flush                   ),
   .read_data                    ( read_data                    ),
   .read_valid                   ( read_valid                   ),
   .read_ready                   ( read_ready                   ),
@@ -129,6 +133,8 @@ initial begin
   $dumpvars(0,valid_ready_asynchronous_advanced_fifo_tb);
 
   // Initialization
+  write_flush = 0;
+  read_flush  = 0;
   write_data  = 0;
   write_valid = 0;
   read_ready  = 0;
@@ -257,21 +263,91 @@ initial begin
   repeat(5) @(posedge write_clock);
   repeat(5) @(posedge read_clock);
 
-  // Checks 5-7 : Maximal throughput
-  for (integer check = 5; check <= 7; check++) begin
+  // Check 5 : Flushing from write port
+  $display("CHECK 5 : Flushing from write port.");
+  // Writing once
+  @(negedge write_clock);
+  write_valid = 1;
+  write_data  = $urandom_range(WIDTH_POW2);
+  @(posedge write_clock);
+  data_expected.push_back(write_data);
+  outstanding_count++;
+  @(negedge write_clock);
+  write_valid = 0;
+  write_data  = 0;
+  // Waiting for propagation of the write
+  repeat(STAGES_READ) @(posedge read_clock); @(negedge read_clock);
+  // Flushing from the write port
+  @(negedge write_clock);
+  write_flush = 1;
+  @(posedge write_clock);
+  data_expected = {};
+  outstanding_count = 0;
+  @(negedge write_clock);
+  write_flush = 0;
+  // Waiting for propagation of the flush and the pointers
+  repeat(2*STAGES_READ) @(posedge read_clock); @(negedge read_clock);
+  // Final state
+  if ( read_valid ) $error("[%0tns] Read valid is asserted after flushing from write port. The FIFO should be empty.", $time);
+  if (!write_ready) $error("[%0tns] Write ready is deasserted after flushing from write port. The FIFO should be empty.", $time);
+  if (!read_empty ) $error("[%0tns] Empty flag is deasserted after flushing from write port. The FIFO should be empty.", $time);
+  if ( write_full ) $error("[%0tns] Full flag is asserted after flushing from write port. The FIFO should be empty.", $time);
+  if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after flushing from write port. The FIFO should be empty.", $time, write_level);
+  if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after flushing from write port. The FIFO should be empty.", $time, read_level);
+
+  repeat(5) @(posedge write_clock);
+  repeat(5) @(posedge read_clock);
+
+  // Check 6 : Flushing from read port
+  $display("CHECK 6 : Flushing from read port.");
+  // Writing once
+  @(negedge write_clock);
+  write_valid = 1;
+  write_data  = $urandom_range(WIDTH_POW2);
+  @(posedge write_clock);
+  data_expected.push_back(write_data);
+  outstanding_count++;
+  @(negedge write_clock);
+  write_valid = 0;
+  write_data  = 0;
+  // Waiting for propagation of the write
+  repeat(STAGES_READ) @(posedge read_clock); @(negedge read_clock);
+  // Flushing from the read port
+  @(negedge read_clock);
+  read_flush = 1;
+  @(posedge read_clock);
+  data_expected = {};
+  outstanding_count = 0;
+  @(negedge read_clock);
+  read_flush = 0;
+  // Waiting for propagation of the flush and the pointers
+  repeat(2*STAGES_WRITE) @(posedge write_clock); @(negedge write_clock);
+  // Final state
+  if ( read_valid ) $error("[%0tns] Read valid is asserted after flushing from read port. The FIFO should be empty.", $time);
+  if (!write_ready) $error("[%0tns] Write ready is deasserted after flushing from read port. The FIFO should be empty.", $time);
+  if (!read_empty ) $error("[%0tns] Empty flag is deasserted after flushing from read port. The FIFO should be empty.", $time);
+  if ( write_full ) $error("[%0tns] Full flag is asserted after flushing from read port. The FIFO should be empty.", $time);
+  if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after flushing from read port. The FIFO should be empty.", $time, write_level);
+  if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after flushing from read port. The FIFO should be empty.", $time, read_level);
+
+  repeat(5) @(posedge write_clock);
+  repeat(5) @(posedge read_clock);
+
+  // Checks 7-9 : Maximal throughput
+  for (integer check = 7; check <= 9; check++) begin
     case (check)
-      5: begin
-        $display("CHECK 5 : Maximal throughput with same frequencies.");
+      7: begin
+        $display("CHECK 7 : Maximal throughput with same frequencies.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      6: begin
-        $display("CHECK 6 : Maximal throughput with fast write and slow read.");
+      8: begin
+        $display("CHECK 8 : Maximal throughput with fast write and slow read.");
         WRITE_CLOCK_PERIOD = CLOCK_FAST_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      7: begin
-        $display("CHECK 7 : Maximal throughput with slow write and fast read.");
+      9: begin
+        $display("CHECK 9 : Maximal throughput with slow write and fast read.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_FAST_PERIOD;
       end
@@ -366,21 +442,21 @@ initial begin
 
   end
 
-  // Checks 8-10 : Random stimulus
-  for (integer check = 8; check <= 10; check++) begin
+  // Checks 10-12 : Random stimulus
+  for (integer check = 10; check <= 12; check++) begin
     case (check)
-      8: begin
-        $display("CHECK 8 : Random stimulus with same frequencies.");
+      10: begin
+        $display("CHECK 10 : Random stimulus with same frequencies.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      9: begin
-        $display("CHECK 9 : Random stimulus with fast write and slow read.");
+      11: begin
+        $display("CHECK 11 : Random stimulus with fast write and slow read.");
         WRITE_CLOCK_PERIOD = CLOCK_FAST_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_SLOW_PERIOD;
       end
-      10: begin
-        $display("CHECK 10 : Random stimulus with slow write and fast read.");
+      12: begin
+        $display("CHECK 12 : Random stimulus with slow write and fast read.");
         WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
         READ_CLOCK_PERIOD  = CLOCK_FAST_PERIOD;
       end

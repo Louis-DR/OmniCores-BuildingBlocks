@@ -36,6 +36,7 @@ localparam integer RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 // Device ports
 logic                clock;
 logic                resetn;
+logic                flush;
 logic    [WIDTH-1:0] write_data;
 logic                write_valid;
 logic                write_ready;
@@ -66,6 +67,7 @@ valid_ready_advanced_fifo #(
 ) valid_ready_advanced_fifo_dut (
   .clock                  ( clock                  ),
   .resetn                 ( resetn                 ),
+  .flush                  ( flush                  ),
   .write_data             ( write_data             ),
   .write_valid            ( write_valid            ),
   .write_ready            ( write_ready            ),
@@ -96,6 +98,7 @@ initial begin
   $dumpvars(0,valid_ready_advanced_fifo_tb);
 
   // Initialization
+  flush        = 0;
   write_data   = 0;
   write_valid  = 0;
   read_ready   = 0;
@@ -210,8 +213,30 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 5 : Back-to-back transfers for full throughput
-  $display("CHECK 5 : Back-to-back transfers for full throughput.");
+  // Check 5 : Flushing
+  $display("CHECK 5 : Flushing.");
+  // Write
+  @(negedge clock);
+  write_valid = 1;
+  write_data  = $urandom_range(WIDTH_POW2);
+  @(negedge clock);
+  write_valid = 0;
+  write_data  = 0;
+  // Flush
+  @(negedge clock);
+  flush = 1;
+  @(negedge clock);
+  flush = 0;
+  if ( read_valid ) $error("[%0tns] Read valid is asserted after flushing. The FIFO should be empty.", $time);
+  if (!write_ready) $error("[%0tns] Write ready is deasserted after flushing. The FIFO should be empty.", $time);
+  if (!empty      ) $error("[%0tns] Empty flag is deasserted after flushing. The FIFO should be empty.", $time);
+  if ( full       ) $error("[%0tns] Full flag is asserted after flushing. The FIFO should be empty.", $time);
+  if (level != 0  ) $error("[%0tns] Level '%0d' is not zero after flushing. The FIFO should be empty.", $time, level);
+
+  repeat(10) @(posedge clock);
+
+  // Check 6 : Back-to-back transfers for full throughput
+  $display("CHECK 6 : Back-to-back transfers for full throughput.");
   @(negedge clock);
   // Write
   write_valid = 1;
@@ -243,16 +268,16 @@ initial begin
   // Safety
   write_valid = 0;
   // Final state
-  if ( read_valid ) $error("[%0tns] Read valid is asserted after check 5. The FIFO should be empty.", $time);
-  if (!write_ready) $error("[%0tns] Write ready is deasserted after check 5. The FIFO should be empty.", $time);
-  if (!empty      ) $error("[%0tns] Empty flag is deasserted after check 5. The FIFO should be empty.", $time);
-  if ( full       ) $error("[%0tns] Full flag is asserted after check 5. The FIFO should be empty.", $time);
-  if (level != 0) $error("[%0tns] Level '%0d' is not zero after check 5. The FIFO should be empty.", $time, level);
+  if ( read_valid ) $error("[%0tns] Read valid is asserted after check 6. The FIFO should be empty.", $time);
+  if (!write_ready) $error("[%0tns] Write ready is deasserted after check 6. The FIFO should be empty.", $time);
+  if (!empty      ) $error("[%0tns] Empty flag is deasserted after check 6. The FIFO should be empty.", $time);
+  if ( full       ) $error("[%0tns] Full flag is asserted after check 6. The FIFO should be empty.", $time);
+  if (level != 0) $error("[%0tns] Level '%0d' is not zero after check 6. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
-  // Check 6 : Random stimulus
-  $display("CHECK 6 : Random stimulus.");
+  // Check 7 : Random stimulus
+  $display("CHECK 7 : Random stimulus.");
   @(negedge clock);
   transfer_count    = 0;
   outstanding_count = 0;
@@ -375,11 +400,11 @@ initial begin
   write_valid = 0;
   read_ready  = 0;
   // Final state
-  if ( read_valid ) $error("[%0tns] Read valid is asserted after check 6. The FIFO should be empty.", $time);
-  if (!write_ready) $error("[%0tns] Write ready is deasserted after check 6. The FIFO should be empty.", $time);
-  if (!empty      ) $error("[%0tns] Empty flag is deasserted after check 6. The FIFO should be empty.", $time);
-  if ( full       ) $error("[%0tns] Full flag is asserted after check 6. The FIFO should be empty.", $time);
-  if (level != 0) $error("[%0tns] Level '%0d' is not zero after check 6. The FIFO should be empty.", $time, level);
+  if ( read_valid ) $error("[%0tns] Read valid is asserted after check 7. The FIFO should be empty.", $time);
+  if (!write_ready) $error("[%0tns] Write ready is deasserted after check 7. The FIFO should be empty.", $time);
+  if (!empty      ) $error("[%0tns] Empty flag is deasserted after check 7. The FIFO should be empty.", $time);
+  if ( full       ) $error("[%0tns] Full flag is asserted after check 7. The FIFO should be empty.", $time);
+  if (level != 0) $error("[%0tns] Level '%0d' is not zero after check 7. The FIFO should be empty.", $time, level);
 
   repeat(10) @(posedge clock);
 
