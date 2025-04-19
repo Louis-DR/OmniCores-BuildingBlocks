@@ -89,8 +89,8 @@ binary_to_grey #(
 );
 
 // Grey-coded pointers in write clock domain
-reg [DEPTH_LOG2:0] write_pointer_grey_w;
-reg [DEPTH_LOG2:0] read_pointer_grey_w;
+reg  [DEPTH_LOG2:0] write_pointer_grey_w;
+wire [DEPTH_LOG2:0] read_pointer_grey_w;
 
 // Read pointer in write clock domain
 wire [DEPTH_LOG2:0] read_pointer_w;
@@ -159,8 +159,8 @@ binary_to_grey #(
 );
 
 // Grey-coded pointers in read clock domain
-reg [DEPTH_LOG2:0] write_pointer_grey_r;
-reg [DEPTH_LOG2:0] read_pointer_grey_r;
+wire [DEPTH_LOG2:0] write_pointer_grey_r;
+reg  [DEPTH_LOG2:0] read_pointer_grey_r;
 
 // Write pointer in read clock domain
 wire [DEPTH_LOG2:0] write_pointer_r;
