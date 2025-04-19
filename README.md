@@ -83,8 +83,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `vector_synchronizer`                    | timing         | Vector synchronizer                                            | :green_circle:  :orange_circle: :red_circle: :red_circle:   |
 | `registered_vector_synchronizer`         | timing         | Registered vector synchronizer                                 | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `grey_vector_synchronizer`               | timing         | Registered vector synchronizer with Grey encoding              | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
-| `pulse_synchronizer`                     | timing, pulse  | Pulse synchronizer                                             | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `pulse_synchronizer_with_busy`           | timing, pulse  | Pulse synchronizer with busy signal                            | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `feedback_pulse_synchronizer`            | timing, pulse  | Pulse synchronizer using feedback                              | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 
 *Progress is in order the design, the verification, the documentation, and the constraints.
 

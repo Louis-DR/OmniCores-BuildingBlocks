@@ -1,4 +1,4 @@
-DESIGN_NAME   = pulse_synchronizer
+DESIGN_NAME   = feedback_pulse_synchronizer
 COMPILE_FLAGS_ICARUS = -g2012
 
 ADDITIONAL_RTL_SOURCES  = ../synchronizer/synchronizer.v

@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        pulse_synchronizer_tb.sv                                     ║
+// ║ File:        feedback_pulse_synchronizer_tb.sv                            ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the pulse synchronizer.                        ║
+// ║ Description: Testbench for the feedback pulse synchronizer.               ║
 // ║                                                                           ║
 // ║              It verifies for multiple number of synchronizing stages and  ║
 // ║              different source and destination clock ratios that the pulse ║
@@ -15,15 +15,15 @@
 
 
 
-`timescale 1ns/1fs
+`timescale 1ns/1ps
 
 
 
-module pulse_synchronizer_tb ();
+module feedback_pulse_synchronizer_tb ();
 
 // Test parameters
 localparam real    CLOCK_SLOW_PERIOD = 10;
-localparam real    CLOCK_FAST_PERIOD = CLOCK_SLOW_PERIOD/3.14159265359;
+localparam real    CLOCK_FAST_PERIOD = CLOCK_SLOW_PERIOD/3;
 localparam real    CLOCK_PHASE_SHIFT = CLOCK_FAST_PERIOD*3/2;
 localparam integer MAX_TEST_STAGES   = 5;
 
@@ -38,6 +38,7 @@ logic                     destination_clock;
 logic                     destination_resetn;
 logic                     pulse_in;
 logic [MAX_TEST_STAGES:1] pulse_out;
+logic [MAX_TEST_STAGES:1] busy;
 
 // Test signals
 logic [MAX_TEST_STAGES:1] pulse_out_expected;
@@ -46,15 +47,16 @@ logic [MAX_TEST_STAGES:1] pulse_out_expected;
 generate
   for (genvar stages = 1; stages <= MAX_TEST_STAGES; stages++) begin : gen_stages
     // Device under test
-    pulse_synchronizer #(
+    feedback_pulse_synchronizer #(
       .STAGES             ( stages             )
-    ) pulse_synchronizer_dut (
+    ) feedback_pulse_synchronizer_dut (
       .source_clock       ( source_clock       ),
       .source_resetn      ( source_resetn      ),
       .destination_clock  ( destination_clock  ),
       .destination_resetn ( destination_resetn ),
       .pulse_in           ( pulse_in           ),
-      .pulse_out          ( pulse_out[stages]  )
+      .pulse_out          ( pulse_out[stages]  ),
+      .busy               ( busy[stages]       )
     );
   end
 endgenerate
@@ -87,8 +89,8 @@ endtask
 // Main block
 initial begin
   // Log waves
-  $dumpfile("pulse_synchronizer_tb.vcd");
-  $dumpvars(0,pulse_synchronizer_tb);
+  $dumpfile("feedback_pulse_synchronizer_tb.vcd");
+  $dumpvars(0,feedback_pulse_synchronizer_tb);
 
   // Initialization
   pulse_in = 0;
@@ -123,13 +125,14 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES*2; check_step++) begin
+      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};
       end
     end
   join
+  while (busy[MAX_TEST_STAGES]) @(posedge source_clock);
 
   // Check 2 : Fast to slow
   $display("CHECK 2 : Fast to slow.");
@@ -151,13 +154,14 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES*2; check_step++) begin
+      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};
       end
     end
   join
+  while (busy[MAX_TEST_STAGES]) @(posedge source_clock);
 
   // Check 3 : Slow to fast
   $display("CHECK 3 : Slow to fast.");
@@ -178,13 +182,14 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES*2; check_step++) begin
+      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};
       end
     end
   join
+  while (busy[MAX_TEST_STAGES]) @(posedge source_clock);
 
   // End of test
   $finish;
