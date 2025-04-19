@@ -9,8 +9,10 @@
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
+pulse_synchronizer_tb.source_clock
 pulse_synchronizer_tb.destination_clock
-pulse_synchronizer_tb.resetn
+pulse_synchronizer_tb.source_resetn
+pulse_synchronizer_tb.destination_resetn
 pulse_synchronizer_tb.pulse_in
 pulse_synchronizer_tb.pulse_out[5:1]
 pulse_synchronizer_tb.pulse_out_expected[5:1]
