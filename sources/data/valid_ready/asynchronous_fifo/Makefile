@@ -1,5 +1,5 @@
 DESIGN_NAME   = valid_ready_asynchronous_fifo
-COMPILE_FLAGS = -g2012
+COMPILE_FLAGS_ICARUS = -g2012
 
 RTL_INCLUDES  = ../../../common
 

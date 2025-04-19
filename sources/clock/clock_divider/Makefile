@@ -1,5 +1,5 @@
-DESIGN_NAME   = clock_divider
-COMPILE_FLAGS = -g2012
+DESIGN_NAME = clock_divider
+COMPILE_FLAGS_ICARUS = -g2012
 
 RTL_INCLUDES  = ../../common
 
