@@ -31,16 +31,17 @@ module registered_vector_synchronizer #(
   parameter STAGES = 2
 ) (
   input              source_clock,
+  input              source_resetn,
   input              destination_clock,
-  input              resetn,
+  input              destination_resetn,
   input  [WIDTH-1:0] data_in,
   output [WIDTH-1:0] data_out
 );
 
 reg [WIDTH-1:0] presynchronization_stage;
 
-always @(posedge source_clock or negedge resetn) begin
-  if (!resetn) presynchronization_stage <= 0;
+always @(posedge source_clock or negedge source_resetn) begin
+  if (!source_resetn) presynchronization_stage <= 0;
   else begin
     presynchronization_stage <= data_in;
   end
@@ -51,7 +52,7 @@ vector_synchronizer #(
   .STAGES   ( STAGES )
 ) vector_synchronizer (
   .clock    ( destination_clock        ),
-  .resetn   ( resetn                   ),
+  .resetn   ( destination_resetn       ),
   .data_in  ( presynchronization_stage ),
   .data_out ( data_out                 )
 );

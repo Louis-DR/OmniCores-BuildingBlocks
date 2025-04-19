@@ -33,8 +33,9 @@ real DESTINATION_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
 
 // Device ports
 logic                     source_clock;
+logic                     source_resetn;
 logic                     destination_clock;
-logic                     resetn;
+logic                     destination_resetn;
 logic                     pulse_in;
 logic [MAX_TEST_STAGES:1] pulse_out;
 
@@ -46,13 +47,14 @@ generate
   for (genvar stages = 1; stages <= MAX_TEST_STAGES; stages++) begin : gen_stages
     // Device under test
     pulse_synchronizer #(
-      .STAGES            ( stages            )
+      .STAGES             ( stages             )
     ) pulse_synchronizer_dut (
-      .source_clock      ( source_clock      ),
-      .destination_clock ( destination_clock ),
-      .resetn            ( resetn            ),
-      .pulse_in          ( pulse_in          ),
-      .pulse_out         ( pulse_out[stages] )
+      .source_clock       ( source_clock       ),
+      .source_resetn      ( source_resetn      ),
+      .destination_clock  ( destination_clock  ),
+      .destination_resetn ( destination_resetn ),
+      .pulse_in           ( pulse_in           ),
+      .pulse_out          ( pulse_out[stages]  )
     );
   end
 endgenerate
@@ -92,10 +94,12 @@ initial begin
   pulse_in = 0;
 
   // Reset
-  resetn = 0;
+  source_resetn      = 0;
+  destination_resetn = 0;
   @(posedge source_clock);
   @(posedge destination_clock);
-  resetn = 1;
+  source_resetn      = 1;
+  destination_resetn = 1;
   @(posedge source_clock);
   @(posedge destination_clock);
 

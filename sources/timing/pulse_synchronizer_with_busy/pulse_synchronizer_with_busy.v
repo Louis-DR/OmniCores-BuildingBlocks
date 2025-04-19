@@ -29,8 +29,9 @@ module pulse_synchronizer_with_busy #(
   parameter STAGES = 2
 ) (
   input  source_clock,
+  input  source_resetn,
   input  destination_clock,
-  input  resetn,
+  input  destination_resetn,
   input  pulse_in,
   output pulse_out,
   output busy
@@ -40,7 +41,7 @@ reg  state_source;
 wire state_destination;
 wire feedback;
 
-wire state_resetn = resetn & ~state_destination;
+wire state_resetn = source_resetn & ~state_destination;
 
 always @(posedge source_clock or negedge state_resetn) begin
   if (!state_resetn) state_source <= 0;
@@ -48,28 +49,28 @@ always @(posedge source_clock or negedge state_resetn) begin
 end
 
 synchronizer #(
-  .STAGES   ( STAGES            )
+  .STAGES   ( STAGES )
 ) state_synchronizer (
-  .clock    ( destination_clock ),
-  .resetn   ( resetn            ),
-  .data_in  ( state_source      ),
-  .data_out ( state_destination )
+  .clock    ( destination_clock  ),
+  .resetn   ( destination_resetn ),
+  .data_in  ( state_source       ),
+  .data_out ( state_destination  )
 );
 
 rising_edge_detector pulse_generator (
-  .clock       ( destination_clock ),
-  .resetn      ( resetn            ),
-  .signal      ( state_destination ),
-  .rising_edge ( pulse_out         )
+  .clock       ( destination_clock  ),
+  .resetn      ( destination_resetn ),
+  .signal      ( state_destination  ),
+  .rising_edge ( pulse_out          )
 );
 
 synchronizer #(
-  .STAGES   ( STAGES            )
+  .STAGES   ( STAGES )
 ) feedback_synchronizer (
-  .clock    ( source_clock      ),
-  .resetn   ( resetn            ),
-  .data_in  ( state_destination ),
-  .data_out ( feedback          )
+  .clock    ( source_clock       ),
+  .resetn   ( destination_resetn ),
+  .data_in  ( state_destination  ),
+  .data_out ( feedback           )
 );
 
 assign busy = state_source | feedback;

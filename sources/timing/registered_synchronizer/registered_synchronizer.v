@@ -28,15 +28,16 @@ module registered_synchronizer #(
   parameter STAGES = 2
 ) (
   input  source_clock,
+  input  source_resetn,
   input  destination_clock,
-  input  resetn,
+  input  destination_resetn,
   input  data_in,
   output data_out
 );
 
 reg presynchronization_stage;
 
-always @(posedge source_clock or negedge resetn) begin
+always @(posedge source_clock or negedge source_resetn) begin
   if (!resetn) presynchronization_stage <= 0;
   else begin
     presynchronization_stage <= data_in;
@@ -44,12 +45,12 @@ always @(posedge source_clock or negedge resetn) begin
 end
 
 synchronizer #(
-  .STAGES   ( STAGES            )
+  .STAGES   ( STAGES )
 ) destination_synchronizer (
-  .clock    ( destination_clock ),
-  .resetn   ( resetn            ),
-  .data_in  ( state_source      ),
-  .data_out ( state_destination )
+  .clock    ( destination_clock  ),
+  .resetn   ( destination_resetn ),
+  .data_in  ( state_source       ),
+  .data_out ( state_destination  )
 );
 
 endmodule

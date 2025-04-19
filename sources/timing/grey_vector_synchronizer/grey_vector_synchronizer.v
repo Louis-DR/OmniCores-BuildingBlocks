@@ -33,8 +33,9 @@ module grey_vector_synchronizer #(
   parameter STAGES = 2
 ) (
   input              source_clock,
+  input              source_resetn,
   input              destination_clock,
-  input              resetn,
+  input              destination_resetn,
   input  [WIDTH-1:0] data_in,
   output [WIDTH-1:0] data_out
 );
@@ -53,11 +54,12 @@ registered_vector_synchronizer #(
   .WIDTH  ( WIDTH  ),
   .STAGES ( STAGES )
 ) registered_vector_synchronizer (
-  .source_clock      ( source_clock      ),
-  .destination_clock ( destination_clock ),
-  .resetn            ( resetn            ),
-  .data_in           ( data_grey_in      ),
-  .data_out          ( data_grey_out     )
+  .source_clock       ( source_clock       ),
+  .source_resetn      ( source_resetn      ),
+  .destination_clock  ( destination_clock  ),
+  .destination_resetn ( destination_resetn ),
+  .data_in            ( data_grey_in       ),
+  .data_out           ( data_grey_out      )
 );
 
 grey_to_binary #(
