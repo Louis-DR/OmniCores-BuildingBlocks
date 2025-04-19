@@ -47,10 +47,10 @@ end
 synchronizer #(
   .STAGES   ( STAGES )
 ) destination_synchronizer (
-  .clock    ( destination_clock  ),
-  .resetn   ( destination_resetn ),
-  .data_in  ( state_source       ),
-  .data_out ( state_destination  )
+  .clock    ( destination_clock        ),
+  .resetn   ( destination_resetn       ),
+  .data_in  ( presynchronization_stage ),
+  .data_out ( data_out                 )
 );
 
 endmodule
