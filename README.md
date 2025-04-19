@@ -90,6 +90,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `registered_vector_synchronizer`              | timing         | Registered vector synchronizer                                 | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `grey_vector_synchronizer`                    | timing         | Registered vector synchronizer with Grey encoding              | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `feedback_pulse_synchronizer`                 | timing, pulse  | Pulse synchronizer using feedback                              | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `toggle_pulse_synchronizer`                   | timing, pulse  | Pulse synchronizer using toggle flip flop                      | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 
 *Progress is in order the design, the verification, the documentation, and the constraints.
 

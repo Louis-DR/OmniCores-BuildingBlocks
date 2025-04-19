@@ -1,0 +1,50 @@
+[dumpfile] "toggle_pulse_synchronizer_tb.vcd"
+[savefile] "toggle_pulse_synchronizer_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-16.298571 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+toggle_pulse_synchronizer_tb.source_clock
+toggle_pulse_synchronizer_tb.destination_clock
+toggle_pulse_synchronizer_tb.source_resetn
+toggle_pulse_synchronizer_tb.destination_resetn
+toggle_pulse_synchronizer_tb.pulse_in
+toggle_pulse_synchronizer_tb.pulse_out[5:1]
+toggle_pulse_synchronizer_tb.pulse_out_expected[5:1]
+toggle_pulse_synchronizer_tb.gen_stages[1].toggle_pulse_synchronizer_dut.pulse_out
+toggle_pulse_synchronizer_tb.gen_stages[2].toggle_pulse_synchronizer_dut.pulse_out
+toggle_pulse_synchronizer_tb.gen_stages[3].toggle_pulse_synchronizer_dut.pulse_out
+toggle_pulse_synchronizer_tb.gen_stages[4].toggle_pulse_synchronizer_dut.pulse_out
+toggle_pulse_synchronizer_tb.gen_stages[5].toggle_pulse_synchronizer_dut.pulse_out
+toggle_pulse_synchronizer_tb.gen_stages[1].toggle_pulse_synchronizer_dut.state
+toggle_pulse_synchronizer_tb.gen_stages[2].toggle_pulse_synchronizer_dut.state
+toggle_pulse_synchronizer_tb.gen_stages[3].toggle_pulse_synchronizer_dut.state
+toggle_pulse_synchronizer_tb.gen_stages[4].toggle_pulse_synchronizer_dut.state
+toggle_pulse_synchronizer_tb.gen_stages[5].toggle_pulse_synchronizer_dut.state
+toggle_pulse_synchronizer_tb.gen_stages[1].toggle_pulse_synchronizer_dut.state_resetn
+toggle_pulse_synchronizer_tb.gen_stages[2].toggle_pulse_synchronizer_dut.state_resetn
+toggle_pulse_synchronizer_tb.gen_stages[3].toggle_pulse_synchronizer_dut.state_resetn
+toggle_pulse_synchronizer_tb.gen_stages[4].toggle_pulse_synchronizer_dut.state_resetn
+toggle_pulse_synchronizer_tb.gen_stages[5].toggle_pulse_synchronizer_dut.state_resetn
+toggle_pulse_synchronizer_tb.gen_stages[1].toggle_pulse_synchronizer_dut.stages[1:0]
+toggle_pulse_synchronizer_tb.gen_stages[2].toggle_pulse_synchronizer_dut.stages[2:0]
+toggle_pulse_synchronizer_tb.gen_stages[3].toggle_pulse_synchronizer_dut.stages[3:0]
+toggle_pulse_synchronizer_tb.gen_stages[4].toggle_pulse_synchronizer_dut.stages[4:0]
+toggle_pulse_synchronizer_tb.gen_stages[5].toggle_pulse_synchronizer_dut.stages[5:0]
+toggle_pulse_synchronizer_tb.gen_stages[1].toggle_pulse_synchronizer_dut.feedback
+toggle_pulse_synchronizer_tb.gen_stages[2].toggle_pulse_synchronizer_dut.feedback
+toggle_pulse_synchronizer_tb.gen_stages[3].toggle_pulse_synchronizer_dut.feedback
+toggle_pulse_synchronizer_tb.gen_stages[4].toggle_pulse_synchronizer_dut.feedback
+toggle_pulse_synchronizer_tb.gen_stages[5].toggle_pulse_synchronizer_dut.feedback
+toggle_pulse_synchronizer_tb.gen_stages[1].toggle_pulse_synchronizer_dut.busy
+toggle_pulse_synchronizer_tb.gen_stages[2].toggle_pulse_synchronizer_dut.busy
+toggle_pulse_synchronizer_tb.gen_stages[3].toggle_pulse_synchronizer_dut.busy
+toggle_pulse_synchronizer_tb.gen_stages[4].toggle_pulse_synchronizer_dut.busy
+toggle_pulse_synchronizer_tb.gen_stages[5].toggle_pulse_synchronizer_dut.busy
+[pattern_trace] 1
+[pattern_trace] 0
