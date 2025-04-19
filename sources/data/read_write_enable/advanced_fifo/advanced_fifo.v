@@ -32,6 +32,7 @@ module advanced_fifo #(
 ) (
   input                 clock,
   input                 resetn,
+  input                 flush,
   input                 clear_flags,
   // Write interface
   input                 write_enable,
@@ -122,25 +123,32 @@ always @(posedge clock or negedge resetn) begin
   end
   // Operation
   else begin
-    // Write
-    if (write_enable) begin
-      if (full) begin
-        if (!clear_flags) begin
-          write_miss <= 1;
-        end
-      end else begin
-        write_pointer         <= write_pointer + 1;
-        buffer[write_address] <= write_data;
-      end
+    // Flush
+    if (flush) begin
+      read_pointer <= write_pointer;
     end
-    // Read
-    if (read_enable) begin
-      if (empty) begin
-        if (!clear_flags) begin
-          read_error <= 1;
+    // Not flush
+    else begin
+      // Write
+      if (write_enable) begin
+        if (full) begin
+          if (!clear_flags) begin
+            write_miss <= 1;
+          end
+        end else begin
+          write_pointer         <= write_pointer + 1;
+          memory[write_address] <= write_data;
         end
-      end else begin
-        read_pointer <= read_pointer + 1;
+      end
+      // Read
+      if (read_enable) begin
+        if (empty) begin
+          if (!clear_flags) begin
+            read_error <= 1;
+          end
+        end else begin
+          read_pointer <= read_pointer + 1;
+        end
       end
     end
     // Clear
