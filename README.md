@@ -60,12 +60,12 @@ Below is a list of the modules currently available in this collection. More modu
 | `extended_hamming_block_corrector`            | error control  | Extended Hamming corrector with block input                    | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `extended_hamming_block_packer`               | error control  | Extended Hamming block packer                                  | :orange_circle: :red_circle:    :red_circle: :white_circle: |
 | `extended_hamming_block_extractor`            | error control  | Extended Hamming block extractor                               | :orange_circle: :red_circle:    :red_circle: :white_circle: |
-| `jk_flip_flop`                                | flip_flop      | JK flip flop                                                   | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `jk_flip_flop_with_asynchronous_reset`        | flip_flop      | JK flip flop with asynchronous reset                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `set_reset_flip_flop`                         | flip_flop      | Set-reset flip flop                                            | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `set_reset_flip_flop_with_asynchronous_reset` | flip_flop      | Set-reset flip flop with asynchronous reset                    | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `toggle_flip_flop`                            | flip_flop      | Toggle flip flop                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `toggle_flip_flop_with_asynchronous_reset`    | flip_flop      | Toggle flip flop with asynchronous reset                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `jk_flip_flop`                                | flip_flop      | JK flip-flop                                                   | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `jk_flip_flop_with_asynchronous_reset`        | flip_flop      | JK flip-flop with asynchronous reset                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `set_reset_flip_flop`                         | flip_flop      | Set-reset flip-flop                                            | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `set_reset_flip_flop_with_asynchronous_reset` | flip_flop      | Set-reset flip-flop with asynchronous reset                    | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `toggle_flip_flop`                            | flip_flop      | Toggle flip-flop                                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `toggle_flip_flop_with_asynchronous_reset`    | flip_flop      | Toggle flip-flop with asynchronous reset                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `single_port_ram`                             | memory         | Single-port RAM                                                | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `dual_port_ram`                               | memory         | Dual-port RAM                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `asynchronous_dual_port_ram`                  | memory         | Asynchronous dual-port RAM                                     | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
@@ -90,7 +90,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `registered_vector_synchronizer`              | timing         | Registered vector synchronizer                                 | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `grey_vector_synchronizer`                    | timing         | Registered vector synchronizer with Grey encoding              | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `feedback_pulse_synchronizer`                 | timing, pulse  | Pulse synchronizer using feedback                              | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
-| `toggle_pulse_synchronizer`                   | timing, pulse  | Pulse synchronizer using toggle flip flop                      | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
+| `toggle_pulse_synchronizer`                   | timing, pulse  | Pulse synchronizer using toggle flip-flop                      | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
 
 *Progress is in order the design, the verification, the documentation, and the constraints.
 
