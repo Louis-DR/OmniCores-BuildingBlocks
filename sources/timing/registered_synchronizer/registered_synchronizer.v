@@ -38,7 +38,7 @@ module registered_synchronizer #(
 reg presynchronization_stage;
 
 always @(posedge source_clock or negedge source_resetn) begin
-  if (!resetn) presynchronization_stage <= 0;
+  if (!source_resetn) presynchronization_stage <= 0;
   else begin
     presynchronization_stage <= data_in;
   end
