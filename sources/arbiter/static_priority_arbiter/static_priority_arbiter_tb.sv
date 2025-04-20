@@ -19,19 +19,19 @@
 module static_priority_arbiter_tb ();
 
 // Test parameters
-localparam WIDTH =  4;
+localparam SIZE = 4;
 
 // Device ports
-logic [WIDTH-1:0] requests;
-logic [WIDTH-1:0] grant;
+logic [SIZE-1:0] requests;
+logic [SIZE-1:0] grant;
 
 // Test signals
-logic [WIDTH-1:0] grant_expected;
-bool              found_grant;
+logic [SIZE-1:0] grant_expected;
+bool             found_grant;
 
 // Device under test
 static_priority_arbiter #(
-  .WIDTH    ( WIDTH    )
+  .SIZE     ( SIZE     )
 ) static_priority_arbiter_dut (
   .requests ( requests ),
   .grant    ( grant    )
@@ -51,13 +51,13 @@ initial begin
 
   // Check 1 : Exhaustive test
   $display("CHECK 1 : Exhaustive test.");
-  for (int request_configuration = 0; request_configuration < 2**WIDTH; request_configuration++) begin
+  for (int request_configuration = 0; request_configuration < 2**SIZE; request_configuration++) begin
     requests = request_configuration;
 
     // Calculate expected grant
     grant_expected = '0;
     found_grant    = false;
-    for (int request_index = 0; request_index < WIDTH; request_index++) begin
+    for (int request_index = 0; request_index < SIZE; request_index++) begin
       if (requests[request_index] == 1'b1 && !found_grant) begin
         grant_expected = (1 << request_index);
         found_grant    = true;
