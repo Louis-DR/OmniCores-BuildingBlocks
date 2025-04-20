@@ -1,0 +1,83 @@
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║ Project:     OmniCores-BuildingBlocks                                     ║
+// ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
+// ║ Website:     louis-dr.github.io                                           ║
+// ║ License:     MIT License                                                  ║
+// ║ File:        static_priority_arbiter_tb.sv                                ║
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ Description: Testbench for the static priority arbiter.                   ║
+// ║                                                                           ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+
+`timescale 1ns/1ns
+`include "common.svh"
+
+
+
+module static_priority_arbiter_tb ();
+
+// Test parameters
+localparam WIDTH =  4;
+
+// Device ports
+logic [WIDTH-1:0] requests;
+logic [WIDTH-1:0] grant;
+
+// Test signals
+logic [WIDTH-1:0] grant_expected;
+bool              found_grant;
+
+// Device under test
+static_priority_arbiter #(
+  .WIDTH    ( WIDTH    )
+) static_priority_arbiter_dut (
+  .requests ( requests ),
+  .grant    ( grant    )
+);
+
+// Main block
+initial begin
+  // Log waves
+  $dumpfile("static_priority_arbiter_tb.vcd");
+  $dumpvars(0,static_priority_arbiter_tb);
+
+  // Initialization
+  requests = 0;
+
+  // Small delay after initialization
+  #1;
+
+  // Check 1 : Exhaustive test
+  $display("CHECK 1 : Exhaustive test.");
+  for (int request_configuration = 0; request_configuration < 2**WIDTH; request_configuration++) begin
+    requests = request_configuration;
+
+    // Calculate expected grant
+    grant_expected = '0;
+    found_grant    = false;
+    for (int request_index = 0; request_index < WIDTH; request_index++) begin
+      if (requests[request_index] == 1'b1 && !found_grant) begin
+        grant_expected = (1 << request_index);
+        found_grant    = true;
+      end
+    end
+
+    // Wait for combinatorial logic propagation
+    #1;
+
+    // Check the grant output
+    assert (grant === grant_expected) else begin
+      $error("[%0tns] Incorrect grant for request configuration %b. Expected %b, got %b.", $time, request_configuration, grant_expected, grant);
+    end
+
+    // Small delay before next configuration if desired
+    #1;
+  end
+
+  // End of test
+  $finish;
+end
+
+endmodule
