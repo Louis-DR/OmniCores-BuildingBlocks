@@ -41,15 +41,27 @@ end
 wire [SIZE-1:0] rotated_requests;
 wire [SIZE-1:0] rotated_grants;
 
-assign rotated_requests = (requests << rotating_pointer) | (requests >> SIZE - requests);
+barrel_rotator_left #(
+  .WIDTH    ( SIZE             )
+) request_rotator (
+  .data_in  ( requests         ),
+  .rotation ( rotating_pointer ),
+  .data_out ( rotated_requests )
+);
 
 static_priority_arbiter #(
-  .SIZE ( SIZE )
+  .SIZE     ( SIZE             )
 ) static_priority_arbiter (
   .requests ( rotated_requests ),
   .grant    ( rotated_grants   )
 );
 
-assign grants = (rotated_grants >> rotating_pointer) | (rotated_grants << SIZE - requests);
+barrel_rotator_right #(
+  .WIDTH    ( SIZE             )
+) grant_rotator (
+  .data_in  ( rotated_grants   ),
+  .rotation ( rotating_pointer ),
+  .data_out ( grants           )
+);
 
 endmodule
