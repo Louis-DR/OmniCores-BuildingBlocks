@@ -71,6 +71,10 @@ Below is a list of the modules currently available in this collection. More modu
 | `asynchronous_dual_port_ram`                  | memory         | Asynchronous dual-port RAM                                     | :green_circle:  :red_circle:    :red_circle: :red_circle:   |
 | `tag_directory`                               | memory         | Tag directory with manual eviction                             | :green_circle:  :orange_circle: :red_circle: :white_circle: |
 | `content_addressable_memory`                  | memory         | Content addressable memory                                     | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `barrel_rotator_left`                         | operations     | Rotate a vector left with wrapping                             | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `barrel_rotator_right`                        | operations     | Rotate a vector right with wrapping                            | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `barrel_shifter_left`                         | operations     | Shift a vector left with padding                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `barrel_shifter_right`                        | operations     | Shift a vector right with padding                              | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `count_ones`                                  | operations     | Count the number of ones                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `first_one`                                   | operations     | Determine the position of the first one                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `edge_detector`                               | pulse          | Edge detector                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
