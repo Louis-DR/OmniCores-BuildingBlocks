@@ -8,7 +8,7 @@ Below is a list of the modules currently available in this collection. More modu
 | --------------------------------------------- | -------------- | -------------------------------------------------------------- | ----------------------------------------------------------- |
 | `static_priority_arbiter`                     | arbiter        | Static priority arbiter                                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `dynamic_priority_arbiter`                    | arbiter        | Dynamic priority arbiter                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `round_robin_arbiter`                         | arbiter        | Round-robin arbiter                                            | :orange_circle: :red_circle:    :red_circle: :white_circle: |
+| `round_robin_arbiter`                         | arbiter        | Round-robin arbiter                                            | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `clock_divider`                               | clock          | Static clock divider                                           | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `clock_gater`                                 | clock          | Clock gater behavioral model                                   | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `clock_multiplexer`                           | clock          | Glitch-free clock multiplexer                                  | :green_circle:  :green_circle:  :red_circle: :red_circle:   |
