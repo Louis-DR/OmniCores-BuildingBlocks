@@ -20,18 +20,11 @@ module static_priority_arbiter #(
   output [SIZE-1:0] grant
 );
 
-wire [SIZE-1:0] grant_mask;
-assign grant_mask[0] = 1'b1;
-assign grant[0] = requests[0];
-
-genvar bit_index;
-generate
-  for (bit_index = 1; bit_index < SIZE; bit_index = bit_index+1) begin : gen_bits
-    // Mask is enabled if no higher priority request was asserted
-    assign grant_mask[bit_index] = grant_mask[bit_index-1] & ~grant[bit_index-1];
-    // Grant is given if request is active and mask is enabled
-    assign grant[bit_index] = requests[bit_index] & grant_mask[bit_index];
-  end
-endgenerate
+first_one #(
+  .WIDTH     ( SIZE     )
+) first_one (
+  .data      ( requests ),
+  .first_one ( grant    )
+);
 
 endmodule
