@@ -76,7 +76,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `barrel_shifter_left`                         | operations     | Shift a vector left with padding                               | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `barrel_shifter_right`                        | operations     | Shift a vector right with padding                              | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `count_ones`                                  | operations     | Count the number of ones                                       | :green_circle:  :red_circle:    :red_circle: :white_circle: |
-| `first_one`                                   | operations     | Determine the position of the first one                        | :green_circle:  :red_circle:    :red_circle: :white_circle: |
+| `first_one`                                   | operations     | Determine the position of the first one                        | :green_circle:  :green_circle:  :red_circle: :white_circle: |
 | `edge_detector`                               | pulse          | Edge detector                                                  | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `rising_edge_detector`                        | pulse          | Rising edge detector                                           | :green_circle:  :red_circle:    :red_circle: :white_circle: |
 | `falling_edge_detector`                       | pulse          | Falling edge detector                                          | :green_circle:  :red_circle:    :red_circle: :white_circle: |
