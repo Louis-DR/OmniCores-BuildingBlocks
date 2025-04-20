@@ -22,11 +22,17 @@ module first_one #(
   output [WIDTH-1:0] first_one
 );
 
+wire [WIDTH-1:0] mask;
+assign mask[0] = 1'b1;
 assign first_one[0] = data[0];
+
 genvar bit_index;
 generate
   for (bit_index = 1; bit_index < WIDTH; bit_index = bit_index+1) begin : gen_bits
-    assign first_one[bit_index] = ~first_one[0:bit_index-1] & data[bit_index];
+    // Mask is enabled if no higher priority request was asserted
+    assign mask[bit_index] = mask[bit_index-1] & ~first_one[bit_index-1];
+    // First_one is given if request is active and mask is enabled
+    assign first_one[bit_index] = data[bit_index] & mask[bit_index];
   end
 endgenerate
 
