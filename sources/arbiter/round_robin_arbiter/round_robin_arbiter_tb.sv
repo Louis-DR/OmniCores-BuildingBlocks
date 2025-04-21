@@ -12,7 +12,6 @@
 
 
 `timescale 1ns/1ns
-`include "common.svh"
 
 
 
@@ -77,8 +76,7 @@ assert property (@(posedge clock) (grant !== '0) |-> ((grant & requests) === gra
 assert property (@(posedge clock) resetn |-> (|requests) |-> ($countones(grant) == 1))
   else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
 
-// Procedural Assertions Fallback
-`else
+`else // Procedural Assertions Fallback
 
 initial begin
   $display("Concurrent assertions disabled, using procedural assertions.");
@@ -118,25 +116,8 @@ initial begin
   resetn = 1;
   @(posedge clock);
 
-  // Check 1 : All requests active test
-  $display("CHECK 1 : All requests active test starting.");
-  requests     = '1; // Activate all requests
-  granted_mask = '0; // Reset mask for this check
-  // Repeat to check all positions of the priority pointer
-  repeat (SIZE) begin
-    @(posedge clock);
-    // Mark the granted_mask request
-    granted_mask = granted_mask | grant;
-  end
-  requests = '0;
-  // Verify that all requests received a grant at least once
-  assert (granted_mask === '1)
-    else $error("[%0tns] Not all requests received a grant when all were active (granted_mask=%b).", $time, granted_mask);
-
-  repeat (10) @(posedge clock);
-
-  // Check 2 : Single request active test
-  $display("CHECK 2 : Single request active test.");
+  // Check 1 : Single request active test
+  $display("CHECK 1 : Single request active test.");
   requests = '0;
   // Activate requests one at a time
   for (integer request_index = 0; request_index < SIZE; request_index++) begin
@@ -150,6 +131,23 @@ initial begin
     end
     requests = '0;
   end
+
+  repeat (10) @(posedge clock);
+
+  // Check 2 : All requests active test
+  $display("CHECK 2 : All requests active test starting.");
+  requests     = '1; // Activate all requests
+  granted_mask = '0; // Reset mask for this check
+  // Repeat to check all positions of the priority pointer
+  repeat (SIZE) begin
+    @(posedge clock);
+    // Mark the granted_mask request
+    granted_mask = granted_mask | grant;
+  end
+  requests = '0;
+  // Verify that all requests received a grant at least once
+  assert (granted_mask === '1)
+    else $error("[%0tns] Not all requests received a grant when all were active (granted_mask=%b).", $time, granted_mask);
 
   repeat (10) @(posedge clock);
 
