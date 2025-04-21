@@ -39,7 +39,7 @@ always @(posedge clock or negedge resetn) begin
 end
 
 wire [SIZE-1:0] rotated_requests;
-wire [SIZE-1:0] rotated_grants;
+wire [SIZE-1:0] rotated_grant;
 
 barrel_rotator_left #(
   .WIDTH    ( SIZE             )
@@ -53,15 +53,15 @@ static_priority_arbiter #(
   .SIZE     ( SIZE             )
 ) static_priority_arbiter (
   .requests ( rotated_requests ),
-  .grant    ( rotated_grants   )
+  .grant    ( rotated_grant    )
 );
 
 barrel_rotator_right #(
   .WIDTH    ( SIZE             )
 ) grant_rotator (
-  .data_in  ( rotated_grants   ),
+  .data_in  ( rotated_grant    ),
   .rotation ( rotating_pointer ),
-  .data_out ( grants           )
+  .data_out ( grant            )
 );
 
 endmodule
