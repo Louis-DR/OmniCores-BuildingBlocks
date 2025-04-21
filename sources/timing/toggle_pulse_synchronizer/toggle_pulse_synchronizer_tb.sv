@@ -123,7 +123,7 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
+      for (integer check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};
@@ -151,7 +151,7 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
+      for (integer check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};
@@ -178,7 +178,7 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
+      for (integer check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};

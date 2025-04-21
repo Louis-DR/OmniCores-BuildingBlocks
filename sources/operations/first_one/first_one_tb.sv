@@ -51,13 +51,13 @@ initial begin
 
   // Check 1 : Exhaustive test
   $display("CHECK 1 : Exhaustive test.");
-  for (int data_configuration = 0; data_configuration < 2**WIDTH; data_configuration++) begin
+  for (integer data_configuration = 0; data_configuration < 2**WIDTH; data_configuration++) begin
     data = data_configuration;
 
     // Calculate expected first one position
     first_one_expected = '0;
     found_first_one    = false;
-    for (int data_index = 0; data_index < WIDTH; data_index++) begin
+    for (integer data_index = 0; data_index < WIDTH; data_index++) begin
       if (data[data_index] == 1'b1 && !found_first_one) begin
         first_one_expected = (1 << data_index);
         found_first_one    = true;

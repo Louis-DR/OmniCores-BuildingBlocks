@@ -94,7 +94,7 @@ initial begin
       data_out_expected = MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
       @(posedge clock);
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES/2; check_step++) begin
+      for (integer check_step = 0; check_step <= MAX_TEST_STAGES/2; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-2:1] , 2'b11 };
         check_data_out(data_out_expected);
         @(posedge clock);
@@ -118,7 +118,7 @@ initial begin
       data_out_expected = ~MAX_TEST_STAGES'(0);
       check_data_out(data_out_expected);
       @(posedge clock);
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES/2; check_step++) begin
+      for (integer check_step = 0; check_step <= MAX_TEST_STAGES/2; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-2:1] , 2'b00 };
         check_data_out(data_out_expected);
         @(posedge clock);
@@ -145,7 +145,7 @@ initial begin
       data_out_expected[1] = 1'b1;
       check_data_out(data_out_expected);
       @(posedge clock);
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES/2; check_step++) begin
+      for (integer check_step = 0; check_step <= MAX_TEST_STAGES/2; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-2:1] , 2'b11 };
         check_data_out(data_out_expected);
         @(posedge clock);
@@ -172,7 +172,7 @@ initial begin
       data_out_expected[1] = 1'b0;
       check_data_out(data_out_expected);
       @(posedge clock);
-      for (int check_step = 0; check_step <= MAX_TEST_STAGES/2; check_step++) begin
+      for (integer check_step = 0; check_step <= MAX_TEST_STAGES/2; check_step++) begin
         data_out_expected = { data_out_expected[MAX_TEST_STAGES-2:1] , 2'b00 };
         check_data_out(data_out_expected);
         @(posedge clock);

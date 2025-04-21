@@ -121,7 +121,7 @@ initial begin
 
   // Check 1 : Switching back and forth between clocks
   $display("CHECK 1 : Switching back and forth between clocks.");
-  for (int check_step = 0; check_step <= BACK_AND_FORTH_ITERATIONS; check_step++) begin
+  for (integer check_step = 0; check_step <= BACK_AND_FORTH_ITERATIONS; check_step++) begin
     select = ~select;
     #(DUT_STAGES*(CLOCK_0_PERIOD+CLOCK_1_PERIOD));
     `measure_frequency(clock_out, clock_out_frequency)
