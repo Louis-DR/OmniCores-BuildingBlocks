@@ -5,7 +5,7 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        fast_first_one_tb.sv                                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the fast first one operation.                  ║
+// ║ Description: Testbench for the fast variant of the first one operation.   ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 

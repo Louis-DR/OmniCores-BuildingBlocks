@@ -8,6 +8,9 @@
 // ║ Description: Determine the position of the first one in a vector using a  ║
 // ║              Sklansky-style parallel prefix network.                      ║
 // ║                                                                           ║
+// ║              This variant is fast (O(log2(WIDTH)) delay) but large        ║
+// ║              (O(WIDTH) gates). There is a smaller variant.                ║
+// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 

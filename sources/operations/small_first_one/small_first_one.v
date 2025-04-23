@@ -3,19 +3,19 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        first_one.v                                                  ║
+// ║ File:        small_first_one.v                                            ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Determine the position of the first one in a vector.         ║
+// ║ Description: Determine the position of the first one in a vector using a  ║
+// ║              ripple chain.                                                ║
+// ║                                                                           ║
+// ║              This variant is small (O(log2(WIDTH)) gates) but slow        ║
+// ║              (O(WIDTH) delay). There is a faster variant.                 ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
 
-`include "common.vh"
-
-
-
-module first_one #(
+module small_first_one #(
   parameter WIDTH = 8
 ) (
   input  [WIDTH-1:0] data,

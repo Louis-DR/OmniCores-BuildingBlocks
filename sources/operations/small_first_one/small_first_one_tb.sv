@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        first_one_tb.sv                                              ║
+// ║ File:        small_first_one_tb.sv                                        ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the first one operation.                       ║
+// ║ Description: Testbench for the small variant of the first one operation.  ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -16,7 +16,7 @@
 
 
 
-module first_one_tb ();
+module small_first_one_tb ();
 
 // Test parameters
 localparam WIDTH = 8;
@@ -30,9 +30,9 @@ logic [WIDTH-1:0] first_one_expected;
 bool              found_first_one;
 
 // Device under test
-first_one #(
+small_first_one #(
   .WIDTH    ( WIDTH    )
-) first_one_dut (
+) small_first_one_dut (
   .data     ( data     ),
   .first_one( first_one)
 );
@@ -40,8 +40,8 @@ first_one #(
 // Main block
 initial begin
   // Log waves
-  $dumpfile("first_one_tb.vcd");
-  $dumpvars(0,first_one_tb);
+  $dumpfile("small_first_one_tb.vcd");
+  $dumpvars(0,small_first_one_tb);
 
   // Initialization
   data = 0;
@@ -53,7 +53,6 @@ initial begin
   $display("CHECK 1 : Exhaustive test.");
   for (integer data_configuration = 0; data_configuration < 2**WIDTH; data_configuration++) begin
     data = data_configuration;
-
     // Calculate expected first one position
     first_one_expected = '0;
     found_first_one    = false;
@@ -63,16 +62,13 @@ initial begin
         found_first_one    = true;
       end
     end
-
     // Wait for combinatorial logic propagation
     #1;
-
     // Check the first one output
     assert (first_one === first_one_expected) else begin
       $error("[%0tns] Incorrect first_one for data configuration %b. Expected %b, got %b.", $time, data_configuration, first_one_expected, first_one);
     end
-
-    // Small delay before next configuration if desired
+    // Small delay before next configuration
     #1;
   end
 
