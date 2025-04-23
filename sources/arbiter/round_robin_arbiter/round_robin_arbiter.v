@@ -18,7 +18,8 @@
 
 
 module round_robin_arbiter #(
-  parameter SIZE = 4
+  parameter SIZE    = 4,
+  parameter VARIANT = "fast"
 ) (
   input             clock,
   input             resetn,
@@ -50,7 +51,8 @@ barrel_rotator_left #(
 );
 
 static_priority_arbiter #(
-  .SIZE     ( SIZE             )
+  .SIZE     ( SIZE             ),
+  .VARIANT  ( VARIANT          )
 ) static_priority_arbiter (
   .requests ( rotated_requests ),
   .grant    ( rotated_grant    )

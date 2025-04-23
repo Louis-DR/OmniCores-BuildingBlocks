@@ -31,10 +31,10 @@ bool              found_first_one;
 
 // Device under test
 small_first_one #(
-  .WIDTH    ( WIDTH    )
+  .WIDTH     ( WIDTH     )
 ) small_first_one_dut (
-  .data     ( data     ),
-  .first_one( first_one)
+  .data      ( data      ),
+  .first_one ( first_one )
 );
 
 // Main block

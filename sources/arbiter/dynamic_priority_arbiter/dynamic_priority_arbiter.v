@@ -9,7 +9,7 @@
 // ║              given to the highest priority ready request channel. In case ║
 // ║              multiple channels with the highest priority are ready, the   ║
 // ║              fallback arbiter is used. It can be configured to a static   ║
-// ║              priority arbiter, or round-robin arbiter.                    ║
+// ║              priority arbiter, or a round-robin arbiter.                  ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -23,7 +23,8 @@ module dynamic_priority_arbiter #(
   parameter SIZE                 = 4,
   parameter PRIORITY_WIDTH       = `CLOG2(SIZE),
   parameter PRIORITIES_WIDTH     = PRIORITY_WIDTH * SIZE,
-  parameter FALLBACK_ROUND_ROBIN = 0
+  parameter FALLBACK_ROUND_ROBIN = 0,
+  parameter FALLBACK_VARIANT     = "fast"
 ) (
   input                         clock,
   input                         resetn,
@@ -44,6 +45,13 @@ generate
   for (request_index = 0; request_index < SIZE; request_index = request_index+1) begin : gen_unpack_priorities
     assign priorities_unpacked[request_index] = priorities [ (request_index + 1) * PRIORITY_WIDTH - 1
                                                             : request_index      * PRIORITY_WIDTH ];
+  end
+endgenerate
+
+generate
+  for (request_index = 0; request_index < SIZE; request_index = request_index+1) begin : gen_priorities_signals
+    wire [PRIORITY_WIDTH-1:0] priority_signal;
+    assign priority_signal = priorities_unpacked[request_index];
   end
 endgenerate
 
@@ -109,7 +117,8 @@ generate
   // Round robin between the requests of highest priority
   if (FALLBACK_ROUND_ROBIN) begin
     round_robin_arbiter #(
-      .SIZE ( SIZE )
+      .SIZE     ( SIZE                      ),
+      .VARIANT  ( FALLBACK_VARIANT          )
     ) fallback_arbiter (
       .clock    ( clock                     ),
       .resetn   ( resetn                    ),
@@ -120,7 +129,8 @@ generate
   // Static priority between the requests of highest priority
   else begin
     static_priority_arbiter #(
-      .SIZE ( SIZE )
+      .SIZE     ( SIZE                      ),
+      .VARIANT  ( FALLBACK_VARIANT          )
     ) fallback_arbiter (
       .requests ( highest_priority_requests ),
       .grant    ( grant                     )

@@ -14,14 +14,16 @@
 
 
 module static_priority_arbiter #(
-  parameter SIZE = 4
+  parameter SIZE    = 4,
+  parameter VARIANT = "fast"
 ) (
   input  [SIZE-1:0] requests,
   output [SIZE-1:0] grant
 );
 
 first_one #(
-  .WIDTH     ( SIZE     )
+  .WIDTH     ( SIZE     ),
+  .VARIANT   ( VARIANT  )
 ) first_one (
   .data      ( requests ),
   .first_one ( grant    )
