@@ -147,6 +147,12 @@ initial begin
 
   // Check 3 : Read once and clear
   $display("CHECK 3 : Read once and clear.");
+  // Clear signal high without reading
+  @(negedge clock);
+  read_enable = 0;
+  read_clear  = 1;
+  read_index  = last_written_index;
+  // Actual read operation
   @(negedge clock);
   read_enable = 1;
   read_clear  = 1;
