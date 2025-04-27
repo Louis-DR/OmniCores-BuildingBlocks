@@ -3,7 +3,7 @@
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-9.563104 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-7.850139 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
@@ -19,14 +19,16 @@ out_of_order_buffer_tb.empty
 out_of_order_buffer_tb.write_enable
 @22
 out_of_order_buffer_tb.write_data[7:0]
+@24
 out_of_order_buffer_tb.write_index[2:0]
 @200
 -
 @28
 out_of_order_buffer_tb.read_enable
 out_of_order_buffer_tb.read_clear
-@22
+@24
 out_of_order_buffer_tb.read_index[2:0]
+@22
 out_of_order_buffer_tb.read_data[7:0]
 @28
 out_of_order_buffer_tb.read_error

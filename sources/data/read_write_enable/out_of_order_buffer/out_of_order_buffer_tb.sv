@@ -116,8 +116,8 @@ initial begin
   write_enable = 1;
   write_data   = $urandom_range(WIDTH_POW2);
   @(posedge clock);
-  if (write_index >= DEPTH) $error("[%0tns] Write index %0d out of bounds.", $time, write_index);
-  if (valid_model[write_index]) $error("[%0tns] Write index %0d was already valid in model.", $time, write_index);
+  if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds.", $time, write_index);
+  if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
   memory_model[write_index] = write_data;
   valid_model[write_index]  = 1'b1;
   valid_entries_count++;
@@ -138,8 +138,8 @@ initial begin
   read_clear  = 0;
   read_index  = last_written_index;
   @(posedge clock);
-  if (read_error) $error("[%0tns] Read error asserted for valid index %0d.", $time, read_index);
-  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index %0d differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+  if (read_error) $error("[%0tns] Read error asserted for valid index '%0d'.", $time, read_index);
+  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
   @(negedge clock);
   read_enable = 0;
   read_index  = 0;
@@ -153,12 +153,11 @@ initial begin
   read_clear  = 1;
   read_index  = last_written_index;
   @(posedge clock);
-  if (read_error) $error("[%0tns] Read error asserted for valid index %0d during clear.", $time, read_index);
-  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index %0d differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
-  // Update model
-  valid_model[read_index] = 1'b0;
-  valid_entries_count--;
+  if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during clear.", $time, read_index);
+  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
   memory_model[read_index] = 'x; // Invalidate model data
+  valid_model[read_index]  = 1'b0;
+  valid_entries_count--;
   @(negedge clock);
   read_enable = 0;
   read_clear  = 0;
@@ -191,71 +190,87 @@ initial begin
     write_enable = 1;
     write_data   = $urandom_range(WIDTH_POW2);
     @(posedge clock);
-    if (write_index >= DEPTH) $error("[%0tns] Check 4 Error: Write index %0d out of bounds during fill.", $time, write_index);
-    if (valid_model[write_index]) $error("[%0tns] Check 4 Error: Write index %0d was already valid in model during fill.", $time, write_index);
+    if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds during fill.", $time, write_index);
+    if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model during fill.", $time, write_index);
     memory_model[write_index] = write_data;
     valid_model[write_index]  = 1'b1;
     valid_entries_count++;
     @(negedge clock);
     write_enable = 0;
     write_data   = 0;
-    if (!full && valid_entries_count == DEPTH) $error("[%0tns] Check 4 Error: Full flag not asserted when model is full (%0d/%0d).", $time, valid_entries_count, DEPTH);
-    if (full && valid_entries_count < DEPTH) $error("[%0tns] Check 4 Error: Full flag asserted prematurely (%0d/%0d).", $time, valid_entries_count, DEPTH);
+    if (!full && valid_entries_count == DEPTH) $error("[%0tns] Full flag not asserted when model is full (%0d/%0d).", $time, valid_entries_count, DEPTH);
+    if ( full && valid_entries_count  < DEPTH) $error("[%0tns] Full flag asserted when model is not full (%0d/%0d).", $time, valid_entries_count, DEPTH);
   end
-  // Final state check (should be full)
-  if ( empty) $error("[%0tns] Check 4 Error: Empty flag is asserted after filling. Should be full.", $time);
-  if (!full ) $error("[%0tns] Check 4 Error: Full flag is deasserted after filling. Should be full.", $time);
-  if (valid_entries_count != DEPTH) $error("[%0tns] Check 4 Error: Model count (%0d) is not DEPTH after filling.", $time, valid_entries_count);
+  // Final state
+  if ( empty) $error("[%0tns] Empty flag is asserted after filling. Should be full.", $time);
+  if (!full ) $error("[%0tns] Full flag is deasserted after filling. Should be full.", $time);
+  if (valid_entries_count != DEPTH) $error("[%0tns] Model count '%0d' is not equal to DEPTH '%0d' after filling.", $time, valid_entries_count, DEPTH);
+
+  repeat(10) @(posedge clock);
+
+  // Check 6 : Writing when full
+  $display("CHECK 6 : Writing when full.");
   // Attempt to write when full
   @(negedge clock);
   write_enable = 1;
   write_data   = $urandom_range(WIDTH_POW2);
-  @(posedge clock); // Write should be ignored
+  @(posedge clock);
+  if ( empty) $error("[%0tns] Empty flag is asserted after write attempt when full", $time);
+  if (!full ) $error("[%0tns] Full flag deasserted after write attempt when full.", $time);
   @(negedge clock);
   write_enable = 0;
   write_data   = 0;
-  if (!full) $error("[%0tns] Check 4 Error: Full flag deasserted after write attempt when full.", $time);
 
   repeat(10) @(posedge clock);
 
-  // Check 6 : Clearing to empty
-  $display("CHECK 6 : Clearing to empty.");
-  // Clear all entries
-  for (integer clear_count = 0; clear_count < DEPTH; clear_count++) begin
-    // Find a valid index to clear
-    temp_index = 'x;
-    for (integer i = 0; i < DEPTH; i++) begin
-      if (valid_model[i]) begin
-        temp_index = i;
-`ifndef SIMUMLATOR_NO_BREAK_SUPPORT
-        break;
-`endif
-      end
-    end
-    if (temp_index === 'x) $error("[%0tns] Check 5 Error: Could not find a valid index in model to clear (iteration %0d).", $time, clear_count);
-
+  // Check 7 : Read all without clearing
+  $display("CHECK 7 : Read all without clearing.");
+  read_clear = 0;
+  for (integer read_count = 0; read_count < DEPTH; read_count++) begin
     @(negedge clock);
     read_enable = 1;
-    read_clear  = 1;
-    read_index  = temp_index;
+    read_index  = read_count;
     @(posedge clock);
-    if (read_error) $error("[%0tns] Check 5 Error: Read error asserted for valid index %0d during clear.", $time, read_index);
-    if (read_data !== memory_model[read_index]) $error("[%0tns] Check 5 Error: Read data '%0h' at index %0d differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
-    // Update model
-    valid_model[read_index] = 1'b0;
-    valid_entries_count--;
-    memory_model[read_index] = 'x;
+    if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during read.", $time, read_index);
+    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during read.", $time, read_data, read_index, memory_model[read_index]);
     @(negedge clock);
     read_enable = 0;
-    read_clear  = 0;
     read_index  = 0;
-    if (!empty && valid_entries_count == 0) $error("[%0tns] Check 5 Error: Empty flag not asserted when model is empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
-    if (empty && valid_entries_count > 0) $error("[%0tns] Check 5 Error: Empty flag asserted prematurely (%0d/%0d).", $time, valid_entries_count, DEPTH);
+    if (!empty && valid_entries_count == 0) $error("[%0tns] Empty flag not asserted when model is empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
+    if ( empty && valid_entries_count  > 0) $error("[%0tns] Empty flag asserted when model is not empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
+  end
+  // Final state
+  if ( empty) $error("[%0tns] Empty flag is asserted after reading without clearing. Should be full.", $time);
+  if (!full ) $error("[%0tns] Full flag is deasserted after reading without clearing. Should be full.", $time);
+  if (valid_entries_count != DEPTH) $error("[%0tns] Model count '%0d' is not equal to DEPTH '%0d' after reading without clearing.", $time, valid_entries_count, DEPTH);
+  read_clear = 0;
+
+  repeat(10) @(posedge clock);
+
+  // Check 8 : Read and clear to empty
+  $display("CHECK 8 : Read and clear to empty.");
+  read_clear = 1;
+  for (integer clear_count = 0; clear_count < DEPTH; clear_count++) begin
+    @(negedge clock);
+    read_enable = 1;
+    read_index  = clear_count;
+    @(posedge clock);
+    if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during clear.", $time, read_index);
+    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
+    memory_model[read_index] = 'x;
+    valid_model[read_index]  = 1'b0;
+    valid_entries_count--;
+    @(negedge clock);
+    read_enable = 0;
+    read_index  = 0;
+    if (!empty && valid_entries_count == 0) $error("[%0tns] Empty flag not asserted when model is empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
+    if ( empty && valid_entries_count  > 0) $error("[%0tns] Empty flag asserted when model is not empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
   end
   // Final state check (should be empty)
-  if (!empty) $error("[%0tns] Check 5 Error: Empty flag is deasserted after clearing all. Should be empty.", $time);
-  if ( full ) $error("[%0tns] Check 5 Error: Full flag is asserted after clearing all. Should be empty.", $time);
-  if (valid_entries_count != 0) $error("[%0tns] Check 5 Error: Model count (%0d) is not 0 after clearing all.", $time, valid_entries_count);
+  if (!empty) $error("[%0tns] Empty flag is deasserted after clearing all. Should be empty.", $time);
+  if ( full ) $error("[%0tns] Full flag is asserted after clearing all. Should be empty.", $time);
+  if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0 after clearing all.", $time, valid_entries_count);
+  read_clear = 0;
 
   repeat(10) @(posedge clock);
 
