@@ -204,7 +204,7 @@ initial begin
       forever begin
         // Stimulus
         @(negedge clock);
-        if ($random < RANDOM_CHECK_WRITE_PROBABILITY) begin
+        if ($random < RANDOM_CHECK_WRITE_PROBABILITY && transfer_count < RANDOM_CHECK_DURATION) begin
           write_valid = 1;
           write_data  = $urandom_range(WIDTH_POW2);
         end else begin

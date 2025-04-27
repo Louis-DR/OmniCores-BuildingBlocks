@@ -38,11 +38,11 @@ genvar stage_index;
 genvar bit_index;
 generate
   // Iterate over stages
-  for (stage_index = 0; stage_index < WIDTH_LOG2; stage_index = stage_index + 1) begin : gen_stages
+  for (stage_index = 0; stage_index < WIDTH_LOG2; stage_index = stage_index+1) begin : gen_stages
     // For each stage, we combine prefixes from the previous stage at a distance of 2^stage_index
     localparam distance = 2 ** stage_index;
     // Iterate over all bits
-    for (bit_index = 0; bit_index < WIDTH; bit_index = bit_index + 1) begin : gen_bits
+    for (bit_index = 0; bit_index < WIDTH; bit_index = bit_index+1) begin : gen_bits
       // For bits below the distance, the required left-side prefix doesn't exist at the previous stage,
       if (bit_index < distance) begin
         // So just propagate the prefix from the previous stage
