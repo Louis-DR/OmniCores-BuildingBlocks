@@ -50,10 +50,9 @@ logic                    empty;
 logic [WIDTH-1:0] memory_model [DEPTH-1:0];
 logic             valid_model  [DEPTH-1:0];
 integer           valid_entries_count;
+integer           last_written_index;
 integer           timeout_countdown;
-logic [INDEX_WIDTH-1:0] last_written_index;
-logic [INDEX_WIDTH-1:0] temp_index;
-integer           operation_count;
+integer           transfer_count;
 
 // Device under test
 out_of_order_buffer #(
@@ -155,7 +154,7 @@ initial begin
   @(posedge clock);
   if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during clear.", $time, read_index);
   if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
-  memory_model[read_index] = 'x; // Invalidate model data
+  memory_model[read_index] = 'x;
   valid_model[read_index]  = 1'b0;
   valid_entries_count--;
   @(negedge clock);
@@ -395,6 +394,115 @@ initial begin
   read_clear   = 0;
   read_index   = 0;
   @(posedge clock);
+  // Final state
+  if (!empty) $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
+  if ( full ) $error("[%0tns] Final state is full.", $time);
+  if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
+
+  repeat(10) @(posedge clock);
+
+  // Check 11 : Random stimulus
+  $display("CHECK 11 : Random stimulus.");
+  @(negedge clock);
+  transfer_count    = 0;
+  timeout_countdown = RANDOM_CHECK_TIMEOUT;
+  fork
+    // Writing
+    begin
+      forever begin
+        // Stimulus
+        @(negedge clock);
+        if (!full && $random < RANDOM_CHECK_WRITE_PROBABILITY && transfer_count < RANDOM_CHECK_DURATION) begin
+          write_enable = 1;
+          write_data   = $urandom_range(WIDTH_POW2);
+        end else begin
+          write_enable = 0;
+          write_data   = 0;
+        end
+        // Check
+        @(posedge clock);
+        if (write_enable) begin
+          if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds.", $time, write_index);
+          if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
+          memory_model[write_index] = write_data;
+          valid_model[write_index]  = 1'b1;
+          valid_entries_count++;
+          transfer_count++;
+        end
+      end
+    end
+    // Reading
+    begin
+      forever begin
+        // Stimulus
+        @(negedge clock);
+        if (!empty && $random < RANDOM_CHECK_READ_PROBABILITY) begin
+          foreach (valid_model[index]) begin
+            if (valid_model[index]) begin
+              read_index = index;
+              // break;
+            end
+          end
+          read_enable = 1;
+          if ($random < RANDOM_CHECK_CLEAR_PROBABILITY) begin
+            read_clear = 1;
+          end else begin
+            read_clear = 0;
+          end
+        end else begin
+          read_enable = 0;
+          read_clear  = 0;
+        end
+        // Check
+        @(posedge clock);
+        if (read_enable) begin
+          if (read_error) $error("[%0tns] Read error asserted for valid index '%0d'.", $time, read_index);
+          if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+          if (read_clear) begin
+            memory_model[read_index] = 'x;
+            valid_model[read_index]  = 1'b0;
+            valid_entries_count--;
+          end
+        end
+      end
+    end
+    // Status check
+    begin
+      forever begin
+        @(negedge clock);
+        if (valid_entries_count == 0) begin
+          if (!empty) $error("[%0tns] Empty flag is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+          if ( full ) $error("[%0tns] Full flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+        end else if (valid_entries_count == DEPTH) begin
+          if ( empty) $error("[%0tns] Empty flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+          if (!full ) $error("[%0tns] Full flag is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+        end else begin
+          if ( empty) $error("[%0tns] Empty flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+          if ( full ) $error("[%0tns] Full flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+        end
+      end
+    end
+    // Stop condition
+    begin
+      // Transfer count
+      while (transfer_count < RANDOM_CHECK_DURATION) begin
+        @(negedge clock);
+      end
+      // Read until empty
+      while (!empty) begin
+        @(negedge clock);
+      end
+    end
+    // Timeout
+    begin
+      while (timeout_countdown > 0) begin
+        @(negedge clock);
+        timeout_countdown--;
+      end
+      $error("[%0tns] Timeout.", $time);
+    end
+  join_any
+  disable fork;
   // Final state
   if (!empty) $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
   if ( full ) $error("[%0tns] Final state is full.", $time);
