@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        random_access_memory.v                                       ║
+// ║ File:        out_of_order_buffer.v                                        ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Random access memory.                                        ║
+// ║ Description: Buffer with out-of-order reading.                            ║
 // ║                                                                           ║
 // ║              When writting, the data is stored in the first free slot and ║
 // ║              the corresponding index is returned. The data can then be    ║
@@ -29,7 +29,7 @@
 
 
 
-module random_access_memory #(
+module out_of_order_buffer #(
   parameter WIDTH       = 8,
   parameter DEPTH       = 8,
   parameter INDEX_WIDTH = `CLOG2(DEPTH)
