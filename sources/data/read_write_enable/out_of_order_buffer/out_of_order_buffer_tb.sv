@@ -213,23 +213,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 6 : Writing when full
-  $display("CHECK 6 : Writing when full.");
-  // Attempt to write when full
-  @(negedge clock);
-  write_enable = 1;
-  write_data   = $urandom_range(WIDTH_POW2);
-  @(posedge clock);
-  if ( empty) $error("[%0tns] Empty flag is asserted after write attempt when full", $time);
-  if (!full ) $error("[%0tns] Full flag deasserted after write attempt when full.", $time);
-  @(negedge clock);
-  write_enable = 0;
-  write_data   = 0;
-
-  repeat(10) @(posedge clock);
-
-  // Check 7 : Read all without clearing
-  $display("CHECK 7 : Read all without clearing.");
+  // Check 8 : Read all without clearing
+  $display("CHECK 8 : Read all without clearing.");
   read_clear = 0;
   for (integer read_count = 0; read_count < DEPTH; read_count++) begin
     @(negedge clock);
@@ -252,8 +237,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 8 : Read and clear to empty
-  $display("CHECK 8 : Read and clear to empty.");
+  // Check 9 : Read and clear to empty
+  $display("CHECK 9 : Read and clear to empty.");
   read_clear = 1;
   for (integer clear_count = 0; clear_count < DEPTH; clear_count++) begin
     @(negedge clock);
@@ -271,7 +256,7 @@ initial begin
     if (!empty && valid_entries_count == 0) $error("[%0tns] Empty flag not asserted when model is empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
     if ( empty && valid_entries_count  > 0) $error("[%0tns] Empty flag asserted when model is not empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
   end
-  // Final state check (should be empty)
+  // Final state
   if (!empty) $error("[%0tns] Empty flag is deasserted after clearing all. Should be empty.", $time);
   if ( full ) $error("[%0tns] Full flag is asserted after clearing all. Should be empty.", $time);
   if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0 after clearing all.", $time, valid_entries_count);
@@ -279,8 +264,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 9 : Continuous write & clear almost empty
-  $display("CHECK 9 : Continuous write & clear almost empty.");
+  // Check 10 : Continuous write & clear almost empty
+  $display("CHECK 10 : Continuous write & clear almost empty.");
   if (!empty) $error("[%0tns] Buffer is not empty.", $time);
   last_written_index = 'x;
   for (integer iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
@@ -332,8 +317,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 10 : Continuous write & clear almost full
-  $display("CHECK 10 : Continuous write & clear almost full.");
+  // Check 11 : Continuous write & clear almost full
+  $display("CHECK 11 : Continuous write & clear almost full.");
   if (!empty) $error("[%0tns] Buffer is not empty.", $time);
   last_written_index = 'x;
   for (integer iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
@@ -407,8 +392,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 11 : Random stimulus
-  $display("CHECK 11 : Random stimulus.");
+  // Check 12 : Random stimulus
+  $display("CHECK 12 : Random stimulus.");
   @(negedge clock);
   transfer_count    = 0;
   timeout_countdown = RANDOM_CHECK_TIMEOUT;

@@ -93,7 +93,7 @@ always_comb begin
     valid_next  [depth_index] = valid  [depth_index];
   end
   // Write allocation operation
-  if (write_enable && !full) begin
+  if (write_enable) begin
     buffer_next [first_free_index] = write_data;
     valid_next  [first_free_index] = 1'b1;
   end
