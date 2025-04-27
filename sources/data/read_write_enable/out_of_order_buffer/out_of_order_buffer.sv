@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        out_of_order_buffer.v                                        ║
+// ║ File:        out_of_order_buffer.sv                                       ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Buffer with out-of-order reading.                            ║
 // ║                                                                           ║
@@ -38,11 +38,11 @@ module out_of_order_buffer #(
   input                    resetn,
   output logic             full,
   output logic             empty,
-  // Allocation interface
+  // Write interface
   input                    write_enable,
   input        [WIDTH-1:0] write_data,
   output [INDEX_WIDTH-1:0] write_index,
-  // Search interface
+  // Read interface
   input                    read_enable,
   input                    read_clear,
   input  [INDEX_WIDTH-1:0] read_index,
