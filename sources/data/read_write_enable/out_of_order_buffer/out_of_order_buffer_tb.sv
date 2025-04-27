@@ -25,11 +25,11 @@ localparam integer DEPTH        = 8;
 localparam integer INDEX_WIDTH  = $clog2(DEPTH);
 
 // Check parameters
-localparam integer CONTINUOUS_CHECK_DURATION      = DEPTH * 2; // Number of write/clear cycles
-localparam integer RANDOM_CHECK_DURATION          = 200; // Number of random operations
-localparam real    RANDOM_CHECK_WRITE_PROBABILITY  = 0.4; // Probability of a write attempt
-localparam real    RANDOM_CHECK_READ_PROBABILITY   = 0.4; // Probability of a read (no clear) attempt
-// Probability of read with clear is 1.0 - write_prob - read_prob = 0.2
+localparam integer CONTINUOUS_CHECK_DURATION      = 100;
+localparam integer RANDOM_CHECK_DURATION          = 100;
+localparam real    RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
+localparam real    RANDOM_CHECK_READ_PROBABILITY  = 0.5;
+localparam real    RANDOM_CHECK_CLEAR_PROBABILITY = 0.5;
 localparam integer RANDOM_CHECK_TIMEOUT           = 1000;
 
 // Device ports
@@ -271,6 +271,134 @@ initial begin
   if ( full ) $error("[%0tns] Full flag is asserted after clearing all. Should be empty.", $time);
   if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0 after clearing all.", $time, valid_entries_count);
   read_clear = 0;
+
+  repeat(10) @(posedge clock);
+
+  // Check 9 : Continuous write & clear almost empty
+  $display("CHECK 9 : Continuous write & clear almost empty.");
+  if (!empty) $error("[%0tns] Buffer is not empty.", $time);
+  last_written_index = 'x;
+  for (integer iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
+    @(negedge clock);
+    // Read except for the first iteration
+    if (iteration > 0) begin
+      read_enable = 1;
+      read_clear  = 1;
+      read_index  = last_written_index;
+      #0;
+      if (read_error) $error("[%0tns] Read error asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
+      if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
+      memory_model[read_index] = 'x;
+      valid_model[read_index]  = 1'b0;
+      valid_entries_count--;
+    end else begin
+      read_enable = 0;
+      read_clear  = 0;
+      read_index  = 0;
+    end
+    // Write except for the last iteration
+    if (iteration < CONTINUOUS_CHECK_DURATION-1) begin
+      write_enable       = 1;
+      write_data         = $urandom_range(WIDTH_POW2);
+      last_written_index = write_index;
+      #0;
+      if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds at iteration %0d.", $time, write_index, iteration);
+      if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model at iteration %0d.", $time, write_index, iteration);
+      memory_model[write_index] = write_data;
+      valid_model[write_index]  = 1'b1;
+      valid_entries_count++;
+    end else begin
+      write_enable       = 0;
+      write_data         = 0;
+      last_written_index = 'x;
+    end
+  end
+  // Deassert all signals
+  @(negedge clock);
+  write_enable = 0;
+  read_enable  = 0;
+  read_clear   = 0;
+  read_index   = 0;
+  @(posedge clock);
+  // Final state
+  if (!empty) $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
+  if ( full ) $error("[%0tns] Final state is full.", $time);
+  if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
+
+  repeat(10) @(posedge clock);
+
+  // Check 10 : Continuous write & clear almost full
+  $display("CHECK 10 : Continuous write & clear almost full.");
+  if (!empty) $error("[%0tns] Buffer is not empty.", $time);
+  last_written_index = 'x;
+  for (integer iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
+    @(negedge clock);
+    // Read except for the first few iterations to fill the buffer
+    if (iteration > DEPTH-2) begin
+      read_enable = 1;
+      read_clear  = 1;
+      read_index  = last_written_index;
+      #0;
+      if (read_error) $error("[%0tns] Read error asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
+      if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
+      memory_model[read_index] = 'x;
+      valid_model[read_index]  = 1'b0;
+      valid_entries_count--;
+    end else begin
+      read_enable = 0;
+      read_clear  = 0;
+      read_index  = 0;
+    end
+    // Write except for the last few iterations to empty the buffer
+    if (iteration < CONTINUOUS_CHECK_DURATION-1) begin
+      write_enable       = 1;
+      write_data         = $urandom_range(WIDTH_POW2);
+      last_written_index = write_index;
+      #0;
+      if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds at iteration %0d.", $time, write_index, iteration);
+      if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model at iteration %0d.", $time, write_index, iteration);
+      memory_model[write_index] = write_data;
+      valid_model[write_index]  = 1'b1;
+      valid_entries_count++;
+    end else begin
+      write_enable       = 0;
+      write_data         = 0;
+      last_written_index = 'x;
+    end
+  end
+  // Read and clear remaining valid entries
+  for (integer index = 0; index < DEPTH; index++) begin
+    if (valid_model[index]) begin
+      @(negedge clock);
+      read_enable = 1;
+      read_clear  = 1;
+      read_index  = index;
+      #0;
+      if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during final read pass.", $time, read_index);
+      if (read_data !== memory_model[index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during final read pass.", $time, read_data, read_index, memory_model[index]);
+      memory_model[read_index] = 'x;
+      valid_model[read_index]  = 1'b0;
+      valid_entries_count--;
+      @(posedge clock);
+    end else begin
+      @(negedge clock);
+      read_enable = 0;
+      read_clear  = 0;
+      read_index  = index;
+      @(posedge clock);
+    end
+  end
+  // Deassert all signals
+  @(negedge clock);
+  write_enable = 0;
+  read_enable  = 0;
+  read_clear   = 0;
+  read_index   = 0;
+  @(posedge clock);
+  // Final state
+  if (!empty) $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
+  if ( full ) $error("[%0tns] Final state is full.", $time);
+  if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
 
   repeat(10) @(posedge clock);
 
