@@ -98,7 +98,7 @@ always_comb begin
     valid_next  [first_free_index] = 1'b1;
   end
   // Read clear operation
-  if (read_clear) begin
+  if (read_enable && read_clear) begin
     valid_next[read_index] = 1'b0;
   end
 end
