@@ -1,6 +1,5 @@
 DESIGN_NAME = out_of_order_buffer
 DESIGN_EXTENSION = sv
-COMPILE_FLAGS_ICARUS = -g2012
 
 RTL_INCLUDES  = ../../../common
 

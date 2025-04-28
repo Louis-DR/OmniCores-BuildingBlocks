@@ -1,5 +1,4 @@
 DESIGN_NAME = round_robin_arbiter
-COMPILE_FLAGS_ICARUS = -g2012
 
 RTL_INCLUDES  = ../../common
 ADDITIONAL_RTL_SOURCES  = ../static_priority_arbiter/static_priority_arbiter.v

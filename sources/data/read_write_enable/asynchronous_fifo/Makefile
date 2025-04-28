@@ -1,5 +1,4 @@
 DESIGN_NAME   = asynchronous_fifo
-COMPILE_FLAGS_ICARUS = -g2012
 
 RTL_INCLUDES  = ../../../common
 ADDITIONAL_RTL_SOURCES  = ../../../timing/vector_synchronizer/vector_synchronizer.v

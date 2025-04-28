@@ -1,5 +1,4 @@
 DESIGN_NAME   = valid_ready_advanced_fifo
-COMPILE_FLAGS_ICARUS = -g2012
 
 RTL_INCLUDES  = ../../../common
 
