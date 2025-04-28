@@ -33,7 +33,7 @@ module toggle_pulse_synchronizer #(
   output pulse_out
 );
 
-reg  state_source;
+wire state_source;
 wire state_destination;
 
 toggle_flip_flop_with_asynchronous_reset toggle_flip_flop (
