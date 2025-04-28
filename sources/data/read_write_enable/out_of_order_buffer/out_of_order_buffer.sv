@@ -25,14 +25,10 @@
 
 
 
-`include "common.vh"
-
-
-
 module out_of_order_buffer #(
   parameter WIDTH       = 8,
   parameter DEPTH       = 8,
-  parameter INDEX_WIDTH = `CLOG2(DEPTH)
+  parameter INDEX_WIDTH = $clog2(DEPTH)
 ) (
   input                    clock,
   input                    resetn,

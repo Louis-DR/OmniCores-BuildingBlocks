@@ -22,7 +22,6 @@
 
 
 
-`include "common.vh"
 `define SIMUMLATOR_NO_BREAK_SUPPORT
 
 
@@ -30,7 +29,7 @@
 module tag_directory #(
   parameter WIDTH = 8,
   parameter DEPTH = 16,
-  parameter INDEX_WIDTH = `CLOG2(DEPTH)
+  parameter INDEX_WIDTH = $clog2(DEPTH)
 ) (
   input                         clock,
   input                         resetn,
