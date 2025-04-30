@@ -194,9 +194,6 @@ grey_to_binary #(
   .binary ( write_pointer_r      )
 );
 
-// Queue is empty if the grey-coded read and write pointers are the same
-assign read_empty = write_pointer_grey_r == read_pointer_grey_r;
-
 // Calculate FIFO level by comparing write and read pointers
 assign read_level = write_pointer_r - read_pointer;
 
