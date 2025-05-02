@@ -1,0 +1,14 @@
+Valid-Ready Asynchronous Advanced FIFO
+valid_ready_asynchronous_advanced_fifo
+-> write_clock                                     read_clock <-
+-> write_resetn                                   read_resetn <-
+-> write_flush                                     read_flush <-
+-> write_valid                                     read_valid ->
+<- write_ready                                     read_ready <-
+=> write_data                                       read_data =>
+<- write_full                                      read_empty ->
+<= write_level                                     read_level =>
+=> write_lower_threshold_level     read_lower_threshold_level <=
+<- write_lower_threshold_status   read_lower_threshold_status ->
+=> write_upper_threshold_level     read_upper_threshold_level <=
+<- write_upper_threshold_status   read_upper_threshold_status ->

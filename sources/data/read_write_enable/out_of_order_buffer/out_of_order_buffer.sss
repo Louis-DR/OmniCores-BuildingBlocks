@@ -1,0 +1,10 @@
+Out-of-Order Buffer
+out_of_order_buffer
+-> clock
+-> resetn
+-> write_enable   read_enable <-
+                   read_clear <-
+=> write_data       read_data =>
+<= write_index     read_index <=
+                   read_error ->
+<- full                 empty ->

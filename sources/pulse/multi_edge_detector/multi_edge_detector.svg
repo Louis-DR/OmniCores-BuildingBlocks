@@ -1,0 +1,30 @@
+<svg width="540" height="360" viewBox="0 0 135 90" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="85" height="80" fill="white" stroke="black" stroke-width="1" rx="5"/>
+  <text x="67" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Multi Edge Detector</text>
+  <text x="67" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">multi_edge_detector</text>
+      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
+        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
+        <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">signal</text>
+        <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="108" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">any_edge</text>
+        <line x1="110" y1="55" x2="124" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 130 55 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="108" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">rising_edge</text>
+        <line x1="110" y1="65" x2="124" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 130 65 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="108" y="75" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">falling_edge</text>
+        <line x1="110" y1="75" x2="124" y2="75" stroke="black" stroke-width="1"/>
+        <path d="M 130 75 l -6 +2.0 v -4 z" fill="black"/>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          filter: invert(100%) hue-rotate(180deg);
+        }
+      }
+    </style>
+</svg>

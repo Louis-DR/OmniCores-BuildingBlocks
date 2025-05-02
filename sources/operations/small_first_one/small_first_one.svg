@@ -1,0 +1,20 @@
+<svg width="464" height="200" viewBox="0 0 116 50" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="66" height="40" fill="white" stroke="black" stroke-width="1" rx="5"/>
+  <text x="58" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Small First One</text>
+  <text x="58" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">small_first_one</text>
+      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">data</text>
+        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="33" x2="12" y2="37" stroke="black" stroke-width="1"/>
+      <text x="89" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">first_one</text>
+        <line x1="91" y1="35" x2="105" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 111 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="94" y1="33" x2="98" y2="37" stroke="black" stroke-width="1"/>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          filter: invert(100%) hue-rotate(180deg);
+        }
+      }
+    </style>
+</svg>

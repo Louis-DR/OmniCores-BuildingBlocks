@@ -1,0 +1,20 @@
+Asynchronous Advanced FIFO
+asynchronous_advanced_fifo
+-> write_clock                                     read_clock <-
+-> write_resetn                                   read_resetn <-
+-> write_flush                                     read_flush <-
+-> write_enable                                   read_enable <-
+=> write_data                                       read_data =>
+<- write_miss                                      read_error ->
+-> write_clear_miss                          read_clear_error <-
+<- write_empty                                     read_empty ->
+<- write_not_empty                             read_not_empty ->
+<- write_almost_empty                       read_almost_empty ->
+<- write_full                                       read_full ->
+<- write_not_full                               read_not_full ->
+<- write_almost_full                         read_almost_full ->
+<= write_level                                     read_level =>
+=> write_lower_threshold_level     read_lower_threshold_level <=
+<- write_lower_threshold_status   read_lower_threshold_status ->
+=> write_upper_threshold_level     read_upper_threshold_level <=
+<- write_upper_threshold_status   read_upper_threshold_status ->

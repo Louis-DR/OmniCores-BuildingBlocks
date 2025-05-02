@@ -1,0 +1,11 @@
+Reorder Buffer
+reorder_buffer
+-> clock
+-> resetn
+-> reservation_enable
+<= reservation_index
+<- reservation_error
+-> write_enable         read_enable <-
+=> write_data             read_data =>
+=> write_index           read_error ->
+<- full                       empty ->

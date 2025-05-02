@@ -1,0 +1,15 @@
+Advanced FIFO
+advanced_fifo
+-> clock
+-> resetn
+-> flush
+-> clear_flags
+-> write_enable                        read_enable <-
+=> write_data                            read_data =>
+<- write_miss                           read_error ->
+<- full                                      empty ->
+<- not_full                              not_empty ->
+<- almost_full                        almost_empty ->
+                                             level =>
+=> lower_threshold_level     upper_threshold_level <=
+<- lower_threshold_status   upper_threshold_status ->

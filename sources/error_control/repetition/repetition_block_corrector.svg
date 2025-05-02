@@ -1,0 +1,23 @@
+<svg width="656" height="240" viewBox="0 0 164 60" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="114" height="50" fill="white" stroke="black" stroke-width="1" rx="5"/>
+  <text x="82" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Repetition Block Corrector</text>
+  <text x="82" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">repetition_block_corrector</text>
+      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">block</text>
+        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="33" x2="12" y2="37" stroke="black" stroke-width="1"/>
+      <text x="137" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_data</text>
+        <line x1="139" y1="35" x2="153" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 159 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="142" y1="33" x2="146" y2="37" stroke="black" stroke-width="1"/>
+      <text x="137" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">error</text>
+        <line x1="139" y1="45" x2="153" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 159 45 l -6 +2.0 v -4 z" fill="black"/>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          filter: invert(100%) hue-rotate(180deg);
+        }
+      }
+    </style>
+</svg>

@@ -1,0 +1,24 @@
+<svg width="920" height="280" viewBox="0 0 230 70" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="180" height="60" fill="white" stroke="black" stroke-width="1" rx="5"/>
+  <text x="115" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Toggle Flip-Flop with Asynchronous Reset</text>
+  <text x="115" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">toggle_flip_flop_with_asynchronous_reset</text>
+      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
+        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
+        <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">toggle</text>
+        <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="203" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">state</text>
+        <line x1="205" y1="55" x2="219" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 225 55 l -6 +2.0 v -4 z" fill="black"/>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          filter: invert(100%) hue-rotate(180deg);
+        }
+      }
+    </style>
+</svg>

@@ -1,0 +1,27 @@
+<svg width="472" height="320" viewBox="0 0 118 80" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="68" height="70" fill="white" stroke="black" stroke-width="1" rx="5"/>
+  <text x="59" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Pulse Separator</text>
+  <text x="59" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">pulse_separator</text>
+      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
+        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
+        <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">pulse_in</text>
+        <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="91" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">pulse_out</text>
+        <line x1="93" y1="55" x2="107" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 113 55 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">busy</text>
+        <line x1="25" y1="65" x2="11" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 5 65 l +6 +2.0 v -4 z" fill="black"/>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          filter: invert(100%) hue-rotate(180deg);
+        }
+      }
+    </style>
+</svg>
