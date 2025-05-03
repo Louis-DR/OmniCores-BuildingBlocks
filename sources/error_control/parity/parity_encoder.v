@@ -16,7 +16,7 @@ module parity_encoder #(
 ) (
   input [DATA_WIDTH-1:0] data,
   output                 code,
-  output                 block
+  output  [DATA_WIDTH:0] block
 );
 
 assign code = ^data;
