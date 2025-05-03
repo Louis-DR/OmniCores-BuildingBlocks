@@ -6,8 +6,8 @@
 // ║ File:        static_priority_arbiter.v                                    ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Arbiters between different request channels. The grant is    ║
-// ║              given to the first ready request channel (the least          ║
-// ║              significant one bit).                                        ║
+// ║              given to the first ready request channel. It works by        ║
+// ║              finding the first one in the request bus.                    ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
