@@ -9,9 +9,9 @@
         <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
       <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">requests</text>
-        <line x1="25" y1="55" x2="11" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 5 55 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="18" y1="53" x2="22" y2="57" stroke="black" stroke-width="1"/>
+        <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="53" x2="12" y2="57" stroke="black" stroke-width="1"/>
       <text x="114" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">grant</text>
         <line x1="116" y1="55" x2="130" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 136 55 l -6 +2.0 v -4 z" fill="black"/>
