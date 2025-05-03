@@ -1,4 +1,4 @@
-<svg width="772" height="680" viewBox="0 0 193 170" xmlns="http://www.w3.org/2000/svg">
+<svg width="386" height="340" viewBox="0 0 193 170" xmlns="http://www.w3.org/2000/svg">
   <rect x="25" y="5" width="143" height="160" fill="white" stroke="black" stroke-width="1" rx="5"/>
   <text x="96" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Advanced FIFO</text>
   <text x="96" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">advanced_fifo</text>

@@ -1,4 +1,4 @@
-<svg width="416" height="200" viewBox="0 0 104 50" xmlns="http://www.w3.org/2000/svg">
+<svg width="208" height="100" viewBox="0 0 104 50" xmlns="http://www.w3.org/2000/svg">
   <rect x="25" y="5" width="54" height="40" fill="white" stroke="black" stroke-width="1" rx="5"/>
   <text x="52" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Count Ones</text>
   <text x="52" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">count_ones</text>
