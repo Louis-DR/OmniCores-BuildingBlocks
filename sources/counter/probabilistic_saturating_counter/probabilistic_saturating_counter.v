@@ -6,7 +6,7 @@
 // ║ File:        probabilistic_saturating_counter.v                           ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Counts up and down with overflow and underflow prevention.   ║
-// ║              The transition to the saturated values is probabilistic too  ║
+// ║              The transition to the saturated values is probabilistic to   ║
 // ║              simulate a wider counter.                                    ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
@@ -18,9 +18,9 @@
 
 
 module probabilistic_saturating_counter #(
-  parameter      WIDTH                  = 4,
-  parameter      WIDTH_LOG2             = `CLOG2(WIDTH),
-  parameter      RESET                  = 0,
+  parameter      RANGE                  = 4,
+  parameter      RANGE_LOG2             = `CLOG2(RANGE),
+  parameter      RESET_VALUE            = 0,
   parameter      RANDOM_NUMBER_WIDTH    = 8,
   parameter real SATURATION_PROBABILITY = 0.25
 ) (
@@ -28,26 +28,26 @@ module probabilistic_saturating_counter #(
   input                            resetn,
   input                            increment,
   input                            decrement,
-  input  [RANDOM_NUMBER_WIDTH-1:0] random_numer,
-  output          [WIDTH_LOG2-1:0] count
+  input  [RANDOM_NUMBER_WIDTH-1:0] random_number,
+  output          [RANGE_LOG2-1:0] count
 );
 
 localparam COUNTER_MIN = 0;
-localparam COUNTER_MAX = WIDTH - 1;
+localparam COUNTER_MAX = RANGE - 1;
 
 localparam RANDOM_NUMBER_MAX = 2 ** RANDOM_NUMBER_WIDTH;
 
-reg [WIDTH_LOG2-1:0] counter;
+reg [RANGE_LOG2-1:0] counter;
 wire counter_is_min           = counter == COUNTER_MIN;
 wire counter_is_max           = counter == COUNTER_MAX;
 wire counter_is_min_plus_one  = counter == COUNTER_MIN + 1;
 wire counter_is_max_minus_one = counter == COUNTER_MAX - 1;
 
-wire enable_saturation = random_numer < SATURATION_PROBABILITY * RANDOM_NUMBER_MAX;
+wire enable_saturation = random_number < SATURATION_PROBABILITY * RANDOM_NUMBER_MAX;
 
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
-    counter <= RESET;
+    counter <= RESET_VALUE;
   end else begin
     if (increment && !counter_is_max) begin
       if (!counter_is_max_minus_one || enable_saturation) begin

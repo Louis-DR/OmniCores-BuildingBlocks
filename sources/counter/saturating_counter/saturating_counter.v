@@ -16,27 +16,27 @@
 
 
 module saturating_counter #(
-  parameter WIDTH      = 4,
-  parameter WIDTH_LOG2 = `CLOG2(WIDTH),
-  parameter RESET      = 0
+  parameter RANGE       = 4,
+  parameter RANGE_LOG2  = `CLOG2(RANGE),
+  parameter RESET_VALUE = 0
 ) (
   input                   clock,
   input                   resetn,
   input                   increment,
   input                   decrement,
-  output [WIDTH_LOG2-1:0] count
+  output [RANGE_LOG2-1:0] count
 );
 
 localparam COUNTER_MIN = 0;
-localparam COUNTER_MAX = WIDTH-1;
+localparam COUNTER_MAX = RANGE - 1;
 
-reg [WIDTH_LOG2-1:0] counter;
+reg [RANGE_LOG2-1:0] counter;
 wire counter_is_min = counter == COUNTER_MIN;
 wire counter_is_max = counter == COUNTER_MAX;
 
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
-    counter <= RESET;
+    counter <= RESET_VALUE;
   end else begin
     if (increment && !counter_is_max) begin
       counter <= counter + 1;

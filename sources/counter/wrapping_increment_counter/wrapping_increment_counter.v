@@ -28,6 +28,8 @@ module wrapping_increment_counter #(
 );
 
 localparam RANGE_IS_POW2 = RANGE == 2 ** RANGE_LOG2;
+localparam COUNTER_MIN   = 0;
+localparam COUNTER_MAX   = RANGE - 1;
 
 reg [RANGE_LOG2-1:0] counter;
 
@@ -46,14 +48,14 @@ generate
   end
   // If the range is not a power of 2, we need to handle wrapping manually
   else begin : gen_non_pow2_counter
-    wire counter_is_max = counter == RANGE-1;
+    wire counter_is_max = counter == COUNTER_MAX;
     always @(posedge clock or negedge resetn) begin
       if (!resetn) begin
         counter <= RESET_VALUE;
       end else begin
         if (increment) begin
           if (counter_is_max) begin
-            counter <= '0;
+            counter <= COUNTER_MIN;
           end else begin
             counter <= counter + 1;
           end

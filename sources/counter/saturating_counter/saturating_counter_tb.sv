@@ -19,9 +19,9 @@ module saturating_counter_tb ();
 
 // Test parameters
 localparam real    CLOCK_PERIOD = 10;
-localparam integer WIDTH        = 4;
-localparam integer WIDTH_LOG2   = $clog2(WIDTH);
-localparam integer RESET        = 0;
+localparam integer RANGE        = 4;
+localparam integer RANGE_LOG2   = $clog2(RANGE);
+localparam integer RESET_VALUE  = 0;
 
 // Check parameters
 localparam integer RANDOM_CHECK_DURATION              = 100;
@@ -33,17 +33,17 @@ logic                  clock;
 logic                  resetn;
 logic                  increment;
 logic                  decrement;
-logic [WIDTH_LOG2-1:0] count;
+logic [RANGE_LOG2-1:0] count;
 
 // Test variables
 integer min_count = 0;
-integer max_count = WIDTH - 1;
+integer max_count = RANGE - 1;
 integer expected_count;
 
 // Device under test
 saturating_counter #(
-  .WIDTH ( WIDTH ),
-  .RESET ( RESET )
+  .RANGE ( RANGE       ),
+  .RESET ( RESET_VALUE )
 ) saturating_counter_dut (
   .clock     ( clock     ),
   .resetn    ( resetn    ),
