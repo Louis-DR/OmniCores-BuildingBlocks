@@ -56,7 +56,13 @@ The arbiter first unpacks the priority array and classifies the requests per pri
 
 ## Verification
 
-The arbiter is not verified yet.
+The arbiter is verified using a SystemVerilog testbench with concurrent assertions and three check sequences. It uses a helper function to calculate the mask of active highest priority requests.
+
+| Number | Check                 | Description                                                                                                                    |
+| ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| 1      | Single request active | Activate each request one at a time and check that it is granted over all prority configurations.                              |
+| 2      | All requests active   | Activate all requests and check over all prority configurations that the grant is within the highest priority active requests. |
+| 3      | Random stimulus       | Random value of the request and priorities buses and check that the grant is within the highest priority active requests.      |
 
 ## Constraints
 

@@ -171,9 +171,11 @@ initial begin
   requests = '0;
   // Activate requests one at a time
   for (integer request_index = 0; request_index < SIZE; request_index++) begin
+    @(negedge clock);
     requests = (1 << request_index);
-    // Repeat to check all positions of the priority pointer
-    repeat (SIZE) begin
+    // Check all possible priorities
+    for (integer priorities_configuration = 0; priorities_configuration < PRIORITIES_WIDTH_POW2; priorities_configuration++) begin
+      priorities = priorities_configuration;
       @(posedge clock);
       // Grant should always match the single request
       assert (grant === requests)
