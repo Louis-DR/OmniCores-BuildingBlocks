@@ -43,15 +43,7 @@ genvar priority_class_index;
 wire [PRIORITY_WIDTH-1:0] priorities_unpacked [SIZE-1:0];
 generate
   for (request_index = 0; request_index < SIZE; request_index = request_index+1) begin : gen_unpack_priorities
-    assign priorities_unpacked[request_index] = priorities [ (request_index + 1) * PRIORITY_WIDTH - 1
-                                                            : request_index      * PRIORITY_WIDTH ];
-  end
-endgenerate
-
-generate
-  for (request_index = 0; request_index < SIZE; request_index = request_index+1) begin : gen_priorities_signals
-    wire [PRIORITY_WIDTH-1:0] priority_signal;
-    assign priority_signal = priorities_unpacked[request_index];
+    assign priorities_unpacked[request_index] = priorities [request_index * PRIORITY_WIDTH +: PRIORITY_WIDTH];
   end
 endgenerate
 
@@ -96,25 +88,35 @@ generate
   end
 endgenerate
 
-// Locate the highest active priority class
+// Locate the highest active priority class (one-hot encoding)
 wire [PRIORITY_WIDTH_POW2-1:0] highest_priority_class;
-assign highest_priority_class[0] = active_priority_classes[0];
+// Use downward iteration to find the highest priority index that is active
+assign highest_priority_class[PRIORITY_WIDTH_POW2-1] = active_priority_classes[PRIORITY_WIDTH_POW2-1];
 generate
-  for (priority_class_index = 1; priority_class_index < PRIORITY_WIDTH_POW2; priority_class_index = priority_class_index+1) begin : gen_highest_priority_classes
-    assign highest_priority_class[priority_class_index] = ~highest_priority_class[priority_class_index-1] & active_priority_classes[priority_class_index];
+  for (priority_class_index = PRIORITY_WIDTH_POW2-2; priority_class_index >= 0; priority_class_index = priority_class_index-1) begin : gen_highest_priority_classes
+    // This class is the highest only if it's active and no higher class was active
+    wire higher_priority_active = |(active_priority_classes[PRIORITY_WIDTH_POW2-1:priority_class_index+1]);
+    assign highest_priority_class[priority_class_index] = active_priority_classes[priority_class_index] & ~higher_priority_active;
   end
 endgenerate
 
 // Get the requests with the highest priority
 wire [SIZE-1:0] highest_priority_requests;
+wire [PRIORITY_WIDTH_POW2-1:0] selected_requests [SIZE-1:0];
 generate
-  for (request_index = 0; request_index < PRIORITY_WIDTH_POW2; request_index = request_index+1) begin : gen_highest_priority_requests
-    assign highest_priority_requests[request_index] = highest_priority_class & priority_class_per_requests[request_index];
+  for (request_index = 0; request_index < SIZE; request_index = request_index+1) begin : gen_highest_priority_requests_filter
+    // Check if this request belongs to the highest priority class
+    for (priority_class_index = 0; priority_class_index < PRIORITY_WIDTH_POW2; priority_class_index = priority_class_index+1) begin : gen_highest_priority_requests_mask
+      assign selected_requests[request_index][priority_class_index] = requests_per_priority_class[priority_class_index][request_index] & highest_priority_class[priority_class_index];
+    end
+    // Combine the masked results (only one bit in highest_priority_class is high)
+    assign highest_priority_requests[request_index] = |selected_requests[request_index];
   end
 endgenerate
 
+// Fallback arbiter between the requests of highest priority
 generate
-  // Round robin between the requests of highest priority
+  // Round-robin arbiter
   if (FALLBACK_ARBITER == "static_priority") begin : gen_static_fallback
     static_priority_arbiter #(
       .SIZE     ( SIZE                      ),
@@ -125,7 +127,7 @@ generate
     );
   end
 
-  // Static priority between the requests of highest priority
+  // Static priority arbiter
   else if (FALLBACK_ARBITER == "round_robin") begin : gen_round_robin_fallback
     round_robin_arbiter #(
       .SIZE     ( SIZE                      ),
@@ -136,6 +138,7 @@ generate
       .requests ( highest_priority_requests ),
       .grant    ( grant                     )
     );
+  end
 
   // Invalid fallback arbiter
   else begin : gen_invalid_fallback

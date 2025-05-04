@@ -133,8 +133,8 @@ initial begin
       assert (grant === requests)
         else $error("[%0tns] Grant doesn't match the only active request (requests=%b, grant=%b).", $time, requests, grant);
     end
-    requests = '0;
   end
+  requests = '0;
 
   repeat (10) @(posedge clock);
 

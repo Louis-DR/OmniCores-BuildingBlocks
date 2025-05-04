@@ -1,0 +1,30 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Mon Apr 21 20:36:18 2025
+[*]
+[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/arbiter/dynamic_priority_arbiter/dynamic_priority_arbiter_tb.vcd"
+[dumpfile_mtime] "Mon Apr 21 20:35:23 2025"
+[dumpfile_size] 128611
+[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/arbiter/dynamic_priority_arbiter/dynamic_priority_arbiter_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-11.036118 10270 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] dynamic_priority_arbiter_tb.
+[treeopen] dynamic_priority_arbiter_tb.dynamic_priority_arbiter_dut.
+[sst_width] 255
+[signals_width] 222
+[sst_expanded] 1
+[sst_vpaned_height] 445
+@28
+dynamic_priority_arbiter_tb.clock
+dynamic_priority_arbiter_tb.resetn
+dynamic_priority_arbiter_tb.requests[3:0]
+dynamic_priority_arbiter_tb.grant[3:0]
+@24
+dynamic_priority_arbiter_tb.dynamic_priority_arbiter_dut.gen_priorities_signals[0].priority_signal[1:0]
+dynamic_priority_arbiter_tb.dynamic_priority_arbiter_dut.gen_priorities_signals[1].priority_signal[1:0]
+dynamic_priority_arbiter_tb.dynamic_priority_arbiter_dut.gen_priorities_signals[2].priority_signal[1:0]
+dynamic_priority_arbiter_tb.dynamic_priority_arbiter_dut.gen_priorities_signals[3].priority_signal[1:0]
+[pattern_trace] 1
+[pattern_trace] 0
