@@ -29,15 +29,17 @@ module round_robin_arbiter #(
 
 localparam SIZE_LOG2 = `CLOG2(SIZE);
 
-reg [SIZE_LOG2-1:0] rotating_pointer;
+wire [SIZE_LOG2-1:0] rotating_pointer;
 
-always @(posedge clock or negedge resetn) begin
-  if (!resetn) begin
-    rotating_pointer <= 0;
-  end else begin
-    rotating_pointer <= rotating_pointer + 1;
-  end
-end
+wrapping_increment_counter #(
+  .RANGE       ( SIZE             ),
+  .RESET_VALUE ( '0               )
+) rotating_pointer_counter (
+  .clock       ( clock            ),
+  .resetn      ( resetn           ),
+  .increment   ( 1                ),
+  .count       ( rotating_pointer )
+)
 
 wire [SIZE-1:0] rotated_requests;
 wire [SIZE-1:0] rotated_grant;
