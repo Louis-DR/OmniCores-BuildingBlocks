@@ -23,7 +23,7 @@ module dynamic_priority_arbiter #(
   parameter SIZE             = 4,
   parameter PRIORITY_WIDTH   = `CLOG2(SIZE),
   parameter PRIORITIES_WIDTH = PRIORITY_WIDTH * SIZE,
-  parameter FALLBACK_ARBITER = "static",
+  parameter FALLBACK_ARBITER = "static_priority",
   parameter FALLBACK_VARIANT = "fast"
 ) (
   input                         clock,
@@ -115,7 +115,7 @@ endgenerate
 
 generate
   // Round robin between the requests of highest priority
-  if (FALLBACK_ARBITER == "static") begin : gen_static_fallback
+  if (FALLBACK_ARBITER == "static_priority") begin : gen_static_fallback
     static_priority_arbiter #(
       .SIZE     ( SIZE                      ),
       .VARIANT  ( FALLBACK_VARIANT          )
