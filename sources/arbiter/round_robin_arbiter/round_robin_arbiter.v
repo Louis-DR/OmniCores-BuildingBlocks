@@ -18,8 +18,9 @@
 
 
 module round_robin_arbiter #(
-  parameter SIZE    = 4,
-  parameter VARIANT = "fast"
+  parameter SIZE            = 4,
+  parameter VARIANT         = "fast",
+  parameter ROTATE_ON_GRANT = 0
 ) (
   input             clock,
   input             resetn,
@@ -30,6 +31,7 @@ module round_robin_arbiter #(
 localparam SIZE_LOG2 = `CLOG2(SIZE);
 
 wire [SIZE_LOG2-1:0] rotating_pointer;
+wire rotate_pointer = ROTATE_ON_GRANT ? |grant : 1;
 
 wrapping_increment_counter #(
   .RANGE       ( SIZE             ),
@@ -37,9 +39,9 @@ wrapping_increment_counter #(
 ) rotating_pointer_counter (
   .clock       ( clock            ),
   .resetn      ( resetn           ),
-  .increment   ( 1                ),
+  .increment   ( rotate_pointer   ),
   .count       ( rotating_pointer )
-)
+);
 
 wire [SIZE-1:0] rotated_requests;
 wire [SIZE-1:0] rotated_grant;

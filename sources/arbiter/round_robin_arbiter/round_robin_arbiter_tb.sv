@@ -18,9 +18,11 @@
 module round_robin_arbiter_tb ();
 
 // Test parameters
-localparam real CLOCK_PERIOD = 10;
-localparam      SIZE         = 4;
-localparam      SIZE_POW2    = 2 ** SIZE;
+localparam real CLOCK_PERIOD    = 10;
+localparam      SIZE            = 4;
+localparam      SIZE_POW2       = 2 ** SIZE;
+localparam      VARIANT         = "fast";
+localparam      ROTATE_ON_GRANT = 0;
 
 // Check parameters
 localparam integer RANDOM_CHECK_DURATION    = 1000;
@@ -41,7 +43,9 @@ real             grant_ratio;
 
 // Device under test
 round_robin_arbiter #(
-  .SIZE     ( SIZE     )
+  .SIZE            ( SIZE            ),
+  .VARIANT         ( VARIANT         ),
+  .ROTATE_ON_GRANT ( ROTATE_ON_GRANT )
 ) round_robin_arbiter_dut (
   .clock    ( clock    ),
   .resetn   ( resetn   ),
