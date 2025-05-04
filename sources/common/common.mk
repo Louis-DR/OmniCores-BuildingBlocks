@@ -14,6 +14,7 @@ QWAVE_FILE              ?= $(DESIGN_NAME)_tb.qwave.db
 VCD_FILE                ?= $(DESIGN_NAME)_tb.vcd
 LOG_FILE                ?= $(DESIGN_NAME)_tb.log
 GTKW_FILE               ?= $(DESIGN_NAME)_tb.gtkw
+RON_FILE                ?= $(DESIGN_NAME)_tb.ron
 COMPILE_FLAGS           ?=
 COMPILE_FLAGS_ICARUS    ?=
 COMPILE_FLAGS_ICARUS    += -g2012
@@ -59,6 +60,9 @@ simulate_gui: simulate_gui_visualizer
 
 waves_gtkwave:
 	gtkwave $(GTKW_FILE) &
+
+waves_surfer:
+	surfer $(VCD_FILE) -s $(RON_FILE) &
 
 waves_modelsim:
 	vsim $(WLF_FILE)
