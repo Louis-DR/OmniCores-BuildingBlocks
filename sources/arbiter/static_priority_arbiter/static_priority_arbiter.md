@@ -38,12 +38,12 @@ The arbiter gives the grant to the first ready request channel by detecting the 
 | ---------- | ------- | ------------- | ------- |
 | `requests` | `grant` | combinational |         |
 
-## Variants
+## Complexity
 
-| Name             | Delay          | Gates          | Description                |
-| ---------------- | -------------- | -------------- | -------------------------- |
-| `fast` (default) | `O(log2 SIZE)` | `O(SIZE)`      | Uses prefix-network logic. |
-| `small`          | `O(SIZE)`      | `O(log2 SIZE)` | Uses ripple-chain logic.   |
+| `VARIANT`          | Delay          | Gates          | Description                |
+| ------------------ | -------------- | -------------- | -------------------------- |
+| `"fast"` (default) | `O(log₂ SIZE)` | `O(SIZE)`      | Uses prefix-network logic. |
+| `"small"`          | `O(SIZE)`      | `O(log₂ SIZE)` | Uses ripple-chain logic.   |
 
 ## Verification
 

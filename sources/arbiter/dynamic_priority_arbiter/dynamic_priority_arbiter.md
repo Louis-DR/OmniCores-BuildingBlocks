@@ -45,12 +45,14 @@ The arbiter first unpacks the priority array and classifies the requests per pri
 | `requests`   | `grant` | combinational |         |
 | `priorities` | `grant` | combinational |         |
 
-## Variants
+## Complexity
 
-| Name             | Delay          | Gates          | Description                |
-| ---------------- | -------------- | -------------- | -------------------------- |
-| `fast` (default) | `O(log2 SIZE)` | `O(SIZE)`      | Uses prefix-network logic. |
-| `small`          | `O(SIZE)`      | `O(log2 SIZE)` | Uses ripple-chain logic.   |
+| `FALLBACK_ARBITER`  | `FALLBACK_VARIANT` | Delay | Gates | Description |
+| ------------------- | ------------------ | ----- | ----- | ----------- |
+| `"static_priority"` | `"fast"` (default) |       |       |             |
+| `"static_priority"` | `"small"`          |       |       |             |
+| `"round_robin"`     | `"fast"`           |       |       |             |
+| `"round_robin"`     | `"small"`          |       |       |             |
 
 ## Verification
 

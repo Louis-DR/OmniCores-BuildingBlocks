@@ -41,12 +41,14 @@ The internal pointer `rotating_pointer` is incremented at each cycle and wraps a
 | ---------- | ------- | ------------- | ------- |
 | `requests` | `grant` | combinational |         |
 
-## Variants
+## Complexity
 
-| Name             | Delay          | Gates          | Description                |
-| ---------------- | -------------- | -------------- | -------------------------- |
-| `fast` (default) | `O(log2 SIZE)` | `O(SIZE)`      | Uses prefix-network logic. |
-| `small`          | `O(SIZE)`      | `O(log2 SIZE)` | Uses ripple-chain logic.   |
+| `VARIANT`          | Delay          | Gates               | Description |
+| ------------------ | -------------- | ------------------- | ----------- |
+| `"fast"` (default) | `O(log₂ SIZE)` | `O(SIZE log₂ SIZE)` |             |
+| `"small"`          | `O(SIZE)`      | `O(SIZE log₂ SIZE)` |             |
+
+Note that while the gate-count complexity of the two variants is the same, the `small` variant is still smaller as it uses a smaller implementation of the first-one algorithm which is at the core of the static priority arbiter used in this arbiter. The larger complexity of the two barrel shifters dominate the complexity of either implementations of the static priority arbiter.
 
 ## Verification
 
