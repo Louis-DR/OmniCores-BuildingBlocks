@@ -5,7 +5,7 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        round_robin_arbiter_tb.sv                                    ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the round robin arbiter.                       ║
+// ║ Description: Testbench for the round-robin arbiter.                       ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -120,8 +120,8 @@ initial begin
   resetn = 1;
   @(posedge clock);
 
-  // Check 1 : Single request active test
-  $display("CHECK 1 : Single request active test.");
+  // Check 1 : Single request active
+  $display("CHECK 1 : Single request active.");
   requests = '0;
   // Activate requests one at a time
   for (integer request_index = 0; request_index < SIZE; request_index++) begin
@@ -138,8 +138,8 @@ initial begin
 
   repeat (10) @(posedge clock);
 
-  // Check 2 : All requests active test
-  $display("CHECK 2 : All requests active test starting.");
+  // Check 2 : All requests active
+  $display("CHECK 2 : All requests active.");
   requests     = '1; // Activate all requests
   granted_mask = '0; // Reset mask for this check
   // Repeat to check all positions of the priority pointer
