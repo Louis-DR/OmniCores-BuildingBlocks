@@ -22,31 +22,33 @@ module first_one #(
 );
 
 // Small variant
-if (VARIANT == "small") begin : gen_small
-  small_first_one #(
-    .WIDTH     ( WIDTH     )
-  ) small_first_one (
-    .data      ( data      ),
-    .first_one ( first_one )
-  );
-end : gen_small
-
-// Fast variant
-else if (VARIANT == "fast") begin : gen_fast
-  fast_first_one #(
-    .WIDTH     ( WIDTH     )
-  ) fast_first_one (
-    .data      ( data      ),
-    .first_one ( first_one )
-  );
-end : gen_fast
-
-// Invalid variant
-else begin : gen_invalid
-  initial begin
-    $error("Invalid variant of first_one : %s", VARIANT);
-    $finish;
+generate
+  if (VARIANT == "small") begin : gen_small
+    small_first_one #(
+      .WIDTH     ( WIDTH     )
+    ) small_first_one (
+      .data      ( data      ),
+      .first_one ( first_one )
+    );
   end
-end : gen_invalid
+
+  // Fast variant
+  else if (VARIANT == "fast") begin : gen_fast
+    fast_first_one #(
+      .WIDTH     ( WIDTH     )
+    ) fast_first_one (
+      .data      ( data      ),
+      .first_one ( first_one )
+    );
+  end
+
+  // Invalid variant
+  else begin : gen_invalid
+    initial begin
+      $error("Invalid variant of first_one : %s", VARIANT);
+      $finish;
+    end
+  end
+endgenerate
 
 endmodule
