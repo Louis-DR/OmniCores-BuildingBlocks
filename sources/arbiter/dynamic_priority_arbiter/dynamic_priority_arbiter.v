@@ -20,11 +20,11 @@
 
 
 module dynamic_priority_arbiter #(
-  parameter SIZE                 = 4,
-  parameter PRIORITY_WIDTH       = `CLOG2(SIZE),
-  parameter PRIORITIES_WIDTH     = PRIORITY_WIDTH * SIZE,
-  parameter FALLBACK_ROUND_ROBIN = 0,
-  parameter FALLBACK_VARIANT     = "fast"
+  parameter SIZE             = 4,
+  parameter PRIORITY_WIDTH   = `CLOG2(SIZE),
+  parameter PRIORITIES_WIDTH = PRIORITY_WIDTH * SIZE,
+  parameter FALLBACK_ARBITER = "static",
+  parameter FALLBACK_VARIANT = "fast"
 ) (
   input                         clock,
   input                         resetn,
@@ -33,7 +33,7 @@ module dynamic_priority_arbiter #(
   output             [SIZE-1:0] grant
 );
 
-localparam PRIORITY_WIDTH_POW2 = 2**PRIORITY_WIDTH;
+localparam PRIORITY_WIDTH_POW2 = 2 ** PRIORITY_WIDTH;
 
 genvar request_index;
 genvar priority_index;
@@ -115,7 +115,18 @@ endgenerate
 
 generate
   // Round robin between the requests of highest priority
-  if (FALLBACK_ROUND_ROBIN) begin
+  if (FALLBACK_ARBITER == "static") begin : gen_static_fallback
+    static_priority_arbiter #(
+      .SIZE     ( SIZE                      ),
+      .VARIANT  ( FALLBACK_VARIANT          )
+    ) fallback_arbiter (
+      .requests ( highest_priority_requests ),
+      .grant    ( grant                     )
+    );
+  end
+
+  // Static priority between the requests of highest priority
+  else if (FALLBACK_ARBITER == "round_robin") begin : gen_round_robin_fallback
     round_robin_arbiter #(
       .SIZE     ( SIZE                      ),
       .VARIANT  ( FALLBACK_VARIANT          )
@@ -125,16 +136,13 @@ generate
       .requests ( highest_priority_requests ),
       .grant    ( grant                     )
     );
-  end
-  // Static priority between the requests of highest priority
-  else begin
-    static_priority_arbiter #(
-      .SIZE     ( SIZE                      ),
-      .VARIANT  ( FALLBACK_VARIANT          )
-    ) fallback_arbiter (
-      .requests ( highest_priority_requests ),
-      .grant    ( grant                     )
-    );
+
+  // Invalid fallback arbiter
+  else begin : gen_invalid_fallback
+    initial begin
+      $error("Invalid fallback arbiter : %s", FALLBACK_ARBITER);
+      $finish;
+    end
   end
 endgenerate
 
