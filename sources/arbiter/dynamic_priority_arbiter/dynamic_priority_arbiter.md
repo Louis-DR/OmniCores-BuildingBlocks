@@ -47,12 +47,12 @@ The arbiter first unpacks the priority array and classifies the requests per pri
 
 ## Complexity
 
-| `FALLBACK_ARBITER`  | `FALLBACK_VARIANT` | Delay | Gates | Description |
-| ------------------- | ------------------ | ----- | ----- | ----------- |
-| `"static_priority"` | `"fast"` (default) |       |       |             |
-| `"static_priority"` | `"small"`          |       |       |             |
-| `"round_robin"`     | `"fast"`           |       |       |             |
-| `"round_robin"`     | `"small"`          |       |       |             |
+| `FALLBACK_ARBITER`  | `FALLBACK_VARIANT` | Delay | Gates | Comment |
+| ------------------- | ------------------ | ----- | ----- | ------- |
+| `"static_priority"` | `"fast"` (default) |       |       |         |
+| `"static_priority"` | `"small"`          |       |       |         |
+| `"round_robin"`     | `"fast"`           |       |       |         |
+| `"round_robin"`     | `"small"`          |       |       |         |
 
 ## Verification
 
@@ -63,6 +63,12 @@ The arbiter is verified using a SystemVerilog testbench with concurrent assertio
 | 1      | Single request active | Activate each request one at a time and check that it is granted over all prority configurations.                              |
 | 2      | All requests active   | Activate all requests and check over all prority configurations that the grant is within the highest priority active requests. |
 | 3      | Random stimulus       | Random value of the request and priorities buses and check that the grant is within the highest priority active requests.      |
+
+The folowing table lists the parameter values verified by the testbench.
+
+| `SIZE` |           |
+| ------ | --------- |
+| 4      | (default) |
 
 ## Constraints
 

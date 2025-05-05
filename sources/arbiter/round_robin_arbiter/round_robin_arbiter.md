@@ -43,10 +43,10 @@ The internal pointer `rotating_pointer` is incremented at each cycle and wraps a
 
 ## Complexity
 
-| `VARIANT`          | Delay          | Gates               | Description |
-| ------------------ | -------------- | ------------------- | ----------- |
-| `"fast"` (default) | `O(log₂ SIZE)` | `O(SIZE log₂ SIZE)` |             |
-| `"small"`          | `O(SIZE)`      | `O(SIZE log₂ SIZE)` |             |
+| `VARIANT`          | Delay          | Gates               | Comment |
+| ------------------ | -------------- | ------------------- | ------- |
+| `"fast"` (default) | `O(log₂ SIZE)` | `O(SIZE log₂ SIZE)` |         |
+| `"small"`          | `O(SIZE)`      | `O(SIZE log₂ SIZE)` |         |
 
 Note that while the gate-count complexity of the two variants is the same, the `small` variant is still smaller as it uses a smaller implementation of the first-one algorithm which is at the core of the static priority arbiter used in this arbiter. The larger complexity of the two barrel shifters dominate the complexity of either implementations of the static priority arbiter.
 
@@ -59,6 +59,12 @@ The arbiter is verified using a SystemVerilog testbench with concurrent assertio
 | 1      | Single request active        | Activate each request one at a time and check that it is granted over multiple cycles.  |
 | 2      | All requests active          | Activate all requests and check that after a few cycles they have all been granted.     |
 | 3      | Random stimulus and fairness | Random value of the request vector and check that the arbiter is fair between channels. |
+
+The folowing table lists the parameter values verified by the testbench.
+
+| `SIZE` |           |
+| ------ | --------- |
+| 4      | (default) |
 
 ## Constraints
 

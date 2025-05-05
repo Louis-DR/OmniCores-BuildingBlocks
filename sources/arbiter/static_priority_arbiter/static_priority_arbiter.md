@@ -40,7 +40,7 @@ The arbiter gives the grant to the first ready request channel by detecting the 
 
 ## Complexity
 
-| `VARIANT`          | Delay          | Gates          | Description                |
+| `VARIANT`          | Delay          | Gates          | Comment                    |
 | ------------------ | -------------- | -------------- | -------------------------- |
 | `"fast"` (default) | `O(log₂ SIZE)` | `O(SIZE)`      | Uses prefix-network logic. |
 | `"small"`          | `O(SIZE)`      | `O(log₂ SIZE)` | Uses ripple-chain logic.   |
@@ -52,6 +52,12 @@ The arbiter is verified exhaustively for the default parameter values by iterati
 | Number | Check           | Description                                                                 |
 | ------ | --------------- | --------------------------------------------------------------------------- |
 | 1      | Exhaustive test | Check that the grant is correct for all combinations of the request vector. |
+
+The folowing table lists the parameter values verified by the testbench.
+
+| `SIZE` |           |
+| ------ | --------- |
+| 4      | (default) |
 
 ## Constraints
 
