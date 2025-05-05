@@ -1,0 +1,11 @@
+{"signal": [
+  {"name": "clock_in",             "wave": "p..........."},
+  {"name": "clock_out DIVISION=1", "wave": "p..........."},
+  {"name": "clock_out DIVISION=2", "wave": "hlhlhlhlhlhl"},
+  {"name": "clock_out DIVISION=3", "wave": "h.lh.lh.lh.l"},
+  {"name": "clock_out DIVISION=4", "wave": "h.l.h.l.h.l."},
+  {"name": "clock_out DIVISION=5", "wave": "h..l.h..l.h."},
+  {"name": "clock_out DIVISION=6", "wave": "h..l..h..l.."},
+  {"name": "clock_out DIVISION=7", "wave": "h...l..h...l"},
+  {"name": "clock_out DIVISION=8", "wave": "h...l...h..."}
+]}

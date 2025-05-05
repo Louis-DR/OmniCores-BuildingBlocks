@@ -62,7 +62,7 @@ else begin
         counter       <= 0;
       end
       // Counter half, divided clock falling edge
-      // The modulo part makes the high pulse longer for off division factors
+      // The modulo part makes the high pulse longer for odd division factors
       else if (counter == DIVISION/2 - (1-DIVISION%2)) begin
         clock_divided <= 0;
         counter       <= counter + 1;
