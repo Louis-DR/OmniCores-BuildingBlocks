@@ -78,7 +78,7 @@ There are no synthesis and implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                                            | Path                                                                | Comment                                    |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------ |
-| [`round_robin_arbiter`](sources/arbiter/static_priority_arbiter/round_robin_arbiter.md)           | `omnicores-buildingblocks/sources/arbiter/round_robin_arbiter`      | Fair arbiter.                              |
-| [`dynamic_priority_arbiter`](sources/arbiter/static_priority_arbiter/dynamic_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter` | Arbiter with per-channel dynamic priority. |
+| Module                                                                                | Path                                                                | Comment                                    |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------ |
+| [`round_robin_arbiter`](../round_robin_arbiter/round_robin_arbiter.md)                | `omnicores-buildingblocks/sources/arbiter/round_robin_arbiter`      | Fair arbiter.                              |
+| [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter` | Arbiter with per-channel dynamic priority. |

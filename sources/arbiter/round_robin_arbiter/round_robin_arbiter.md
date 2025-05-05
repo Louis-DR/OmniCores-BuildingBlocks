@@ -77,19 +77,19 @@ There are no synthesis and implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                                                          | Path                                                                  | Comment                         |
-| ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------- |
-| [`static_priority_arbiter`](sources/arbiter/static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |                                 |
-| `first_one`                                                                                     | `omnicores-buildingblocks/sources/operations/first_one`               |                                 |
-| `fast_first_one`                                                                                | `omnicores-buildingblocks/sources/operations/first_one`               | For the default `fast` variant. |
-| `small_first_one`                                                                               | `omnicores-buildingblocks/sources/operations/first_one`               | For the `small` variant.        |
-| `barrel_rotator_left`                                                                           | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     |                                 |
-| `barrel_rotator_right`                                                                          | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    |                                 |
-| `wrapping_increment_counter`                                                                    | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` |                                 |
+| Module                                                                             | Path                                                                  | Comment                         |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------- |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |                                 |
+| `first_one`                                                                        | `omnicores-buildingblocks/sources/operations/first_one`               |                                 |
+| `fast_first_one`                                                                   | `omnicores-buildingblocks/sources/operations/first_one`               | For the default `fast` variant. |
+| `small_first_one`                                                                  | `omnicores-buildingblocks/sources/operations/first_one`               | For the `small` variant.        |
+| `barrel_rotator_left`                                                              | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     |                                 |
+| `barrel_rotator_right`                                                             | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    |                                 |
+| `wrapping_increment_counter`                                                       | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` |                                 |
 
 ## Related modules
 
-| Module                                                                                            | Path                                                                | Comment                                    |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------ |
-| [`static_priority_arbiter`](sources/arbiter/static_priority_arbiter/static_priority_arbiter.md)   | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`  | Simpler but unfair arbiter.                |
-| [`dynamic_priority_arbiter`](sources/arbiter/static_priority_arbiter/dynamic_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter` | Arbiter with per-channel dynamic priority. |
+| Module                                                                                | Path                                                                | Comment                                    |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------ |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)    | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`  | Simpler but unfair arbiter.                |
+| [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter` | Arbiter with per-channel dynamic priority. |
