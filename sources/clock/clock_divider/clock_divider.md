@@ -24,11 +24,11 @@ Divides the frequency of the input clock `clock_in` by the `DIVISION` factor. Th
 
 ## Ports
 
-| Name        | Direction | Width | Clock      | Reset    | Reset value | Description                                                                |
-| ----------- | --------- | ----- | ---------- | -------- | ----------- | -------------------------------------------------------------------------- |
-| `clock_in`  | input     | 1     | self       |          |             | Input clock signal.                                                        |
-| `resetn`    | input     | 1     | `clock_in` | self     | `0`         | Asynchronous active-low reset signal. Resets the counter and output clock. |
-| `clock_out` | output    | 1     | derived    | `resetn` | `0`         | Divided clock output signal.                                               |
+| Name        | Direction | Width | Clock        | Reset    | Reset value | Description                                                                |
+| ----------- | --------- | ----- | ------------ | -------- | ----------- | -------------------------------------------------------------------------- |
+| `clock_in`  | input     | 1     | self         |          |             | Input clock signal.                                                        |
+| `resetn`    | input     | 1     | asynchronous | self     | `0`         | Asynchronous active-low reset signal. Resets the counter and output clock. |
+| `clock_out` | output    | 1     | derived      | `resetn` | `0`         | Divided clock output signal.                                               |
 
 ## Operation
 
@@ -104,6 +104,6 @@ This module has no dependency.
 
 | Module                                                                          | Path                                                            | Comment                               |
 | ------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------- |
-| [`clock_gater`](../clock_gater/clock_gater.md)                                  | `omnicores-buildingblocks/sources/clock/clock_gater`            | Clock gater model.                    |
+| [`clock_gater`](../clock_gater/clock_gater.md)                                  | `omnicores-buildingblocks/sources/clock/clock_gater`            | Clock gater behavioral model.                    |
 | [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                | `omnicores-buildingblocks/sources/clock/clock_multiplexer`      | Multiplexer to select between clocks. |
 | [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer` | Faster clock multiplexer.             |

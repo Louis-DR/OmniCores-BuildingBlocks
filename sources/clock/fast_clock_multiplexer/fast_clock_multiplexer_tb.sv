@@ -20,7 +20,7 @@ module fast_clock_multiplexer_tb ();
 // Test parameters
 localparam integer DUT_STAGES                       = 2;
 localparam real    CLOCK_0_PERIOD                   = 10;
-localparam real    CLOCK_1_PERIOD                   = CLOCK_0_PERIOD/3.14159265359;
+localparam real    CLOCK_1_PERIOD                   = CLOCK_0_PERIOD*2;
 localparam integer FREQUENCY_MEASUREMENT_LENGTH     = 100;
 localparam integer FREQUENCY_MEASUREMENT_MULTIPLIER = 1e3;
 localparam         FREQUENCY_MEASUREMENT_UNIT       = "MHz";
