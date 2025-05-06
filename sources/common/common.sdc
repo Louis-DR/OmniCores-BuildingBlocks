@@ -40,4 +40,31 @@ namespace eval ::omnicores::common {
     return [get_cells -hierarchical -filter "ref_name == $module_name"]
   }
 
+  # Determines the width of a vector register
+  proc get_width { base_object_pattern } {
+    # Use the get_at_index procedure to generate the indexed pattern
+    namespace import ::omnicores::common::get_at_index
+
+    # Safety limit for loop iterations
+    set max_search_depth 1024
+
+    # Iterate over the indexed pattern
+    set width        0
+    set search_index 0
+    while { $search_index < $max_search_depth } {
+      # Generate the indexed pattern
+      set indexed_pattern [get_at_index $base_object_pattern $search_index]
+
+      # Check if the indexed pattern is a valid cell
+      if { [llength [get_cells -quiet $indexed_pattern]] > 0 } {
+        incr width
+        incr search_index
+      } else {
+        # No element found at the search_index, we reached the end of the register.
+        break
+      }
+    }
+    return $width
+  }
+
 }
