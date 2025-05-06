@@ -67,4 +67,43 @@ namespace eval ::omnicores::common {
     return $width
   }
 
+  # Applies a given constraint procedure to all instances of a specified module
+  proc apply_constraints_to_all_module_instances { module_name module_constraints_proc } {
+    puts "Info: Applying constraints procedure '$module_constraints_proc' to all instances of '$module_name' module."
+
+    # Use common helper functions
+    namespace import ::omnicores::common::get_instances
+    namespace import ::omnicores::common::get_path
+
+    # Find all instances of the specified module
+    if {[catch {set module_instances [get_instances $module_name]} exception]} {
+      puts "Error: Failed to get instances of '$module_name' module: $exception."
+      return
+    }
+
+    # Check if no instances were found
+    if { [llength $module_instances] == 0 } {
+      puts "Info: No instances of '$module_name' module found in the design."
+      return
+    }
+    puts "Info: Found [llength $module_instances] instances of '$module_name' module."
+
+    # Apply constraints to each found instance
+    foreach module_instance $module_instances {
+      # Get the hierarchical path of the instance
+      set instance_path ""
+      if {[catch {set instance_path [get_path $module_instance]} exception]} {
+        puts "Warning: Could not get path for instance object '$module_instance': $exception. Skipping."
+        continue
+      }
+
+      # Apply the specified constraint procedure to the instance found
+      puts "Info: Applying constraints procedure '$module_constraints_proc' to instance: '$instance_path'."
+      if {[catch {$module_constraints_proc $instance_path} exception]} {
+        puts "Error: Failed to apply constraints procedure '$module_constraints_proc' to instance '$instance_path': $exception."
+      }
+
+    puts "Info: Finished applying constraints procedure '$module_constraints_proc' to all instances of '$module_name' module."
+  }
+
 }
