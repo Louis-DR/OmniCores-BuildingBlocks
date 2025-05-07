@@ -1,11 +1,12 @@
 # Clock Divider
 
-|         |                                                                          |
-| ------- | ------------------------------------------------------------------------ |
-| Module  | Clock Divider                                                            |
-| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com) |
-| Website | [louis-dr.github.io](https://louis-dr.github.io)                         |
-| License | MIT License - https://mit-license.org/                                   |
+|         |                                                                                  |
+| ------- | -------------------------------------------------------------------------------- |
+| Module  | Clock Divider                                                                    |
+| Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
+| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
+| Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
+| License | MIT License - https://mit-license.org/                                           |
 
 ## Overview
 
@@ -84,16 +85,16 @@ create_generated_clock -name  -source [get_pins clock_divider/clock_in] -edges {
 
 ## Deliverables
 
-| Type                | File                          | Description                                         |
-| ------------------- | ----------------------------- | --------------------------------------------------- |
-| Design              | `clock_divider.v`             | Verilog design.                                     |
-| Testbench           | `clock_divider_tb.sv`         | SystemVerilog verification testbench.               |
-| Waveform script     | `clock_divider_tb.gtkw`       | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor   | `clock_divider.sss`           | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image        | `clock_divider.svg`           | Generated vector image of the symbol.               |
-| Waveform descriptor | `clock_divider.wavedrom.json` | Waveform descriptor for Wavedrom.                   |
-| Waveform image      | `clock_divider.wavedrom.svg`  | Generated image of the waveform.                    |
-| Datasheet           | `clock_divider.md`            | Markdown documentation datasheet.                   |
+| Type                | File                                                         | Description                                         |
+| ------------------- | ------------------------------------------------------------ | --------------------------------------------------- |
+| Design              | [`clock_divider.v`](clock_divider.v)                         | Verilog design.                                     |
+| Testbench           | [`clock_divider_tb.sv`](clock_divider_tb.sv)                 | SystemVerilog verification testbench.               |
+| Waveform script     | [`clock_divider_tb.gtkw`](clock_divider_tb.gtkw)             | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor   | [`clock_divider.sss`](clock_divider.sss)                     | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`clock_divider.svg`](clock_divider.svg)                     | Generated vector image of the symbol.               |
+| Waveform descriptor | [`clock_divider.wavedrom.json`](clock_divider.wavedrom.json) | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`clock_divider.wavedrom.svg`](clock_divider.wavedrom.svg)   | Generated image of the waveform.                    |
+| Datasheet           | [`clock_divider.md`](clock_divider.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

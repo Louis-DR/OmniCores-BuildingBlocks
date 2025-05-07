@@ -1,11 +1,12 @@
 # Round-Robin Arbiter
 
-|         |                                                                          |
-| ------- | ------------------------------------------------------------------------ |
-| Module  | Round-Robin Arbiter                                                      |
-| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com) |
-| Website | [louis-dr.github.io](https://louis-dr.github.io)                         |
-| License | MIT License - https://mit-license.org/                                   |
+|         |                                                                                  |
+| ------- | -------------------------------------------------------------------------------- |
+| Module  | Round-Robin Arbiter                                                              |
+| Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
+| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
+| Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
+| License | MIT License - https://mit-license.org/                                           |
 
 ## Overview
 
@@ -71,14 +72,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                          | Description                                         |
-| ----------------- | ----------------------------- | --------------------------------------------------- |
-| Design            | `round_robin_arbiter.v`       | Verilog design.                                     |
-| Testbench         | `round_robin_arbiter_tb.sv`   | SystemVerilog verification testbench.               |
-| Waveform script   | `round_robin_arbiter_tb.gtkw` | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | `round_robin_arbiter.sss`     | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | `round_robin_arbiter.svg`     | Generated vector image of the symbol.               |
-| Datasheet         | `round_robin_arbiter.md`      | Markdown documentation datasheet.                   |
+| Type              | File                                                         | Description                                         |
+| ----------------- | ------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`round_robin_arbiter.v`](round_robin_arbiter.v)             | Verilog design.                                     |
+| Testbench         | [`round_robin_arbiter_tb.sv`](round_robin_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`round_robin_arbiter_tb.gtkw`](round_robin_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`round_robin_arbiter.sss`](round_robin_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`round_robin_arbiter.svg`](round_robin_arbiter.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`round_robin_arbiter.md`](round_robin_arbiter.md)           | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

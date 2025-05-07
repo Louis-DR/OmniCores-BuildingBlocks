@@ -1,11 +1,12 @@
 # Dynamic Priority Arbiter
 
-|         |                                                                          |
-| ------- | ------------------------------------------------------------------------ |
-| Module  | Dynamic Priority Arbiter                                                 |
-| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com) |
-| Website | [louis-dr.github.io](https://louis-dr.github.io)                         |
-| License | MIT License - https://mit-license.org/                                   |
+|         |                                                                                  |
+| ------- | -------------------------------------------------------------------------------- |
+| Module  | Dynamic Priority Arbiter                                                         |
+| Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
+| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
+| Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
+| License | MIT License - https://mit-license.org/                                           |
 
 ## Overview
 
@@ -75,14 +76,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                               | Description                                         |
-| ----------------- | ---------------------------------- | --------------------------------------------------- |
-| Design            | `dynamic_priority_arbiter.v`       | Verilog design.                                     |
-| Testbench         | `dynamic_priority_arbiter_tb.sv`   | SystemVerilog verification testbench.               |
-| Waveform script   | `dynamic_priority_arbiter_tb.gtkw` | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | `dynamic_priority_arbiter.sss`     | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | `dynamic_priority_arbiter.svg`     | Generated vector image of the symbol.               |
-| Datasheet         | `dynamic_priority_arbiter.md`      | Markdown documentation datasheet.                   |
+| Type              | File                                                                   | Description                                         |
+| ----------------- | ---------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`dynamic_priority_arbiter.v`](dynamic_priority_arbiter.v)             | Verilog design.                                     |
+| Testbench         | [`dynamic_priority_arbiter_tb.sv`](dynamic_priority_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`dynamic_priority_arbiter_tb.gtkw`](dynamic_priority_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`dynamic_priority_arbiter.sss`](dynamic_priority_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`dynamic_priority_arbiter.svg`](dynamic_priority_arbiter.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`dynamic_priority_arbiter.md`](dynamic_priority_arbiter.md)           | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

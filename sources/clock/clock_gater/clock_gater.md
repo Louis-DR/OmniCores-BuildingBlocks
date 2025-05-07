@@ -61,14 +61,14 @@ As this is a behavioral model, the primary constraint is that it should not be s
 
 ## Deliverables
 
-| Type              | File                  | Description                                         |
-| ----------------- | --------------------- | --------------------------------------------------- |
-| Design            | `clock_gater.v`       | Verilog design (behavioral model).                  |
-| Testbench         | `clock_gater_tb.sv`   | SystemVerilog verification testbench.               |
-| Waveform script   | `clock_gater_tb.gtkw` | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | `clock_gater.sss`     | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | `clock_gater.svg`     | Generated vector image of the symbol.               |
-| Datasheet         | `clock_gater.md`      | Markdown documentation datasheet.                   |
+| Type              | File                                         | Description                                         |
+| ----------------- | -------------------------------------------- | --------------------------------------------------- |
+| Design            | [`clock_gater.v`](clock_gater.v)             | Verilog design (behavioral model).                  |
+| Testbench         | [`clock_gater_tb.sv`](clock_gater_tb.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`clock_gater_tb.gtkw`](clock_gater_tb.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`clock_gater.sss`](clock_gater.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`clock_gater.svg`](clock_gater.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`clock_gater.md`](clock_gater.md)           | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

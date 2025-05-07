@@ -1,11 +1,12 @@
 # Fast Clock Multiplexer
 
-|         |                                                                          |
-| ------- | ------------------------------------------------------------------------ |
-| Module  | Fast Clock Multiplexer                                                   |
-| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com) |
-| Website | [louis-dr.github.io](https://louis-dr.github.io)                         |
-| License | MIT License - https://mit-license.org/                                   |
+|         |                                                                                  |
+| ------- | -------------------------------------------------------------------------------- |
+| Module  | Fast Clock Multiplexer                                                           |
+| Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
+| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
+| Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
+| License | MIT License - https://mit-license.org/                                           |
 
 ## Overview
 
@@ -96,14 +97,14 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 
 ## Deliverables
 
-| Type              | File                        | Description                                         |
-| ----------------- | --------------------------- | --------------------------------------------------- |
-| Design            | `clock_multiplexer.v`       | Verilog design.                                     |
-| Testbench         | `clock_multiplexer_tb.sv`   | SystemVerilog verification testbench.               |
-| Waveform script   | `clock_multiplexer_tb.gtkw` | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | `clock_multiplexer.sss`     | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | `clock_multiplexer.svg`     | Generated vector image of the symbol.               |
-| Datasheet         | `clock_multiplexer.md`      | Markdown documentation datasheet.                   |
+| Type              | File                                                     | Description                                         |
+| ----------------- | -------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`clock_multiplexer.v`](clock_multiplexer.v)             | Verilog design.                                     |
+| Testbench         | [`clock_multiplexer_tb.sv`](clock_multiplexer_tb.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`clock_multiplexer_tb.gtkw`](clock_multiplexer_tb.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`clock_multiplexer.sss`](clock_multiplexer.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`clock_multiplexer.svg`](clock_multiplexer.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`clock_multiplexer.md`](clock_multiplexer.md)           | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

@@ -1,11 +1,12 @@
 # Static Priority Arbiter
 
-|         |                                                                          |
-| ------- | ------------------------------------------------------------------------ |
-| Module  | Static Priority Arbiter                                                  |
-| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com) |
-| Website | [louis-dr.github.io](https://louis-dr.github.io)                         |
-| License | MIT License - https://mit-license.org/                                   |
+|         |                                                                                  |
+| ------- | -------------------------------------------------------------------------------- |
+| Module  | Static Priority Arbiter                                                          |
+| Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
+| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
+| Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
+| License | MIT License - https://mit-license.org/                                           |
 
 ## Overview
 
@@ -64,14 +65,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                              | Description                                         |
-| ----------------- | --------------------------------- | --------------------------------------------------- |
-| Design            | `static_priority_arbiter.v`       | Verilog design.                                     |
-| Testbench         | `static_priority_arbiter_tb.sv`   | SystemVerilog verification testbench.               |
-| Waveform script   | `static_priority_arbiter_tb.gtkw` | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | `static_priority_arbiter.sss`     | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | `static_priority_arbiter.svg`     | Generated vector image of the symbol.               |
-| Datasheet         | `static_priority_arbiter.md`      | Markdown documentation datasheet.                   |
+| Type              | File                                                                 | Description                                         |
+| ----------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`static_priority_arbiter.v`](static_priority_arbiter.v)             | Verilog design.                                     |
+| Testbench         | [`static_priority_arbiter_tb.sv`](static_priority_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`static_priority_arbiter_tb.gtkw`](static_priority_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`static_priority_arbiter.sss`](static_priority_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`static_priority_arbiter.svg`](static_priority_arbiter.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`static_priority_arbiter.md`](static_priority_arbiter.md)           | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
