@@ -102,6 +102,7 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 | Design              | [`clock_multiplexer.v`](clock_multiplexer.v)                                 | Verilog design.                                                 |
 | Testbench           | [`clock_multiplexer_tb.sv`](clock_multiplexer_tb.sv)                         | SystemVerilog verification testbench.                           |
 | Waveform script     | [`clock_multiplexer_tb.gtkw`](clock_multiplexer_tb.gtkw)                     | Script to load the waveforms in GTKWave.                        |
+| Constraint script   | [`clock_multiplexer.sdc`](clock_multiplexer.sdc)                             | Tickle SDC constraint script for synthesis.                     |
 | Symbol descriptor   | [`clock_multiplexer.sss`](clock_multiplexer.sss)                             | Symbol descriptor for SiliconSuite-SymbolGenerator.             |
 | Symbol image        | [`clock_multiplexer.svg`](clock_multiplexer.svg)                             | Generated vector image of the symbol.                           |
 | Waveform descriptor | [`clock_multiplexer_f2s.wavedrom.json`](clock_multiplexer_f2s.wavedrom.json) | Waveform descriptor for Wavedrom of the fast-to-slow switching. |
