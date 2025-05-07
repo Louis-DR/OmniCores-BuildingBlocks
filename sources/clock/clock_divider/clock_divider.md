@@ -1,12 +1,11 @@
 # Clock Divider
 
-|         |                                           |
-| ------- | ----------------------------------------- |
-| Module  | Clock Divider                             |
-| Project | OmniCores-BuildingBlocks                  |
-| Author  | Louis Duret-Robert - louisduret@gmail.com |
-| Website | louis-dr.github.io                        |
-| License | MIT License - https://mit-license.org/    |
+|         |                                                                          |
+| ------- | ------------------------------------------------------------------------ |
+| Module  | Clock Divider                                                            |
+| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com) |
+| Website | [louis-dr.github.io](https://louis-dr.github.io)                         |
+| License | MIT License - https://mit-license.org/                                   |
 
 ## Overview
 
@@ -104,6 +103,6 @@ This module has no dependency.
 
 | Module                                                                          | Path                                                            | Comment                               |
 | ------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------- |
-| [`clock_gater`](../clock_gater/clock_gater.md)                                  | `omnicores-buildingblocks/sources/clock/clock_gater`            | Clock gater behavioral model.                    |
+| [`clock_gater`](../clock_gater/clock_gater.md)                                  | `omnicores-buildingblocks/sources/clock/clock_gater`            | Clock gater behavioral model.         |
 | [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                | `omnicores-buildingblocks/sources/clock/clock_multiplexer`      | Multiplexer to select between clocks. |
 | [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer` | Faster clock multiplexer.             |

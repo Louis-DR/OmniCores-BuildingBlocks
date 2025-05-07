@@ -1,12 +1,12 @@
 # Clock Gater
 
-|         |                                           |
-| ------- | ----------------------------------------- |
-| Module  | Clock Gater                               |
-| Project | OmniCores-BuildingBlocks                  |
-| Author  | Louis Duret-Robert - louisduret@gmail.com |
-| Website | louis-dr.github.io                        |
-| License | MIT License - https://mit-license.org/    |
+|         |                                                                                  |
+| ------- | -------------------------------------------------------------------------------- |
+| Module  | Clock Gater                                                                      |
+| Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
+| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
+| Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
+| License | MIT License - https://mit-license.org/                                           |
 
 ## Overview
 

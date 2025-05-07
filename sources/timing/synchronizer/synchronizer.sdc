@@ -7,11 +7,6 @@
 # ╟───────────────────────────────────────────────────────────────────────────╢
 # ║ Description: SDC constraints for the synchronizer module.                 ║
 # ║                                                                           ║
-# ║              This script defines procedures to apply timing constraints   ║
-# ║              to instances of the synchronizer module, ensuring correct    ║
-# ║              timing analysis by specifying false paths and max delays     ║
-# ║              for the synchronizer stages.                                 ║
-# ║                                                                           ║
 # ╚═══════════════════════════════════════════════════════════════════════════╝
 
 

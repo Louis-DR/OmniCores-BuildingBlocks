@@ -1,12 +1,11 @@
 # Fast Clock Multiplexer
 
-|         |                                           |
-| ------- | ----------------------------------------- |
-| Module  | Fast Clock Multiplexer                    |
-| Project | OmniCores-BuildingBlocks                  |
-| Author  | Louis Duret-Robert - louisduret@gmail.com |
-| Website | louis-dr.github.io                        |
-| License | MIT License - https://mit-license.org/    |
+|         |                                                                          |
+| ------- | ------------------------------------------------------------------------ |
+| Module  | Fast Clock Multiplexer                                                   |
+| Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com) |
+| Website | [louis-dr.github.io](https://louis-dr.github.io)                         |
+| License | MIT License - https://mit-license.org/                                   |
 
 ## Overview
 
