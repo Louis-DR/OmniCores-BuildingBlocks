@@ -22,11 +22,11 @@ Slow to fast switching :
 
 ![clock_divider](clock_multiplexer_s2f.wavedrom.svg)
 
-The formula for the average switching time between the edge of the `select` to the first rising edge of the new frequency on the `clock_out` port noted $T_{switch\_avg}$, and for the average downtime being the duration for which `clock_out` is low between the last pulse at the old frequency and the first pulse at the new frequency noted $T_{downtime\_avg}$ are given below. They both depend on $STAGES$ the number of stages of the synchronizers, and $T_{from}$ and $T_{to}$ the periods of the old and new clocks. The formula are also given with the frequencies $f_{from}$ and $f_{to}$.
+The formula for the average switching time between the edge of the `select` to the first rising edge of the new frequency on the `clock_out` port noted $T_{\text{switch}\_\text{avg}}$, and for the average downtime being the duration for which `clock_out` is low between the last pulse at the old frequency and the first pulse at the new frequency noted $T_{\text{downtime}\_\text{avg}}$ are given below. They both depend on $STAGES$ the number of stages of the synchronizers, and $T_{from}$ and $T_{to}$ the periods of the old and new clocks. The formula are also given with the frequencies $f_{from}$ and $f_{to}$.
 
-$$T_{switch\_avg} = (STAGES - 0.5) \times T_{from} + STAGES \times T_{to} = \frac{STAGES - 0.5}{f_{from}} + \frac{STAGES}{f_{to}} $$
+$$T_{\text{switch}\_\text{avg}} = (STAGES - 0.5) \times T_{from} + STAGES \times T_{to} = \frac{STAGES - 0.5}{f_{from}} + \frac{STAGES}{f_{to}} $$
 
-$$T_{downtime\_avg} = STAGES \times T_{to} = \frac{STAGES}{f_{to}} $$
+$$T_{\text{downtime}\_\text{avg}} = STAGES \times T_{to} = \frac{STAGES}{f_{to}} $$
 
 ## Parameters
 
