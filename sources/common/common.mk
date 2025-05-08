@@ -25,10 +25,12 @@ COMPILE_FLAGS_ICARUS    += -D SIMUMLATOR_NO_RANDOMIZE
 COMPILE_FLAGS_ICARUS    += -D SIMUMLATOR_NO_CONCURRENT_ASSERTION
 COMPILE_FLAGS_MODELSIM  ?= +define+SIMUMLATOR_NO_BOOL
 
-compile_icarus:
+preprocess:
+
+compile_icarus: preprocess
 	iverilog $(COMPILE_FLAGS_ICARUS) -o $(VVP_FILE) $(RTL_INCLUDES_ICARUS) $(RTL_SOURCES)
 
-compile_modelsim:
+compile_modelsim: preprocess
 	vlog -work $(WORK_LIBRARY) +acc $(COMPILE_FLAGS_MODELSIM) $(RTL_INCLUDES_MODELSIM) $(RTL_SOURCES)
 
 compile: compile_icarus
