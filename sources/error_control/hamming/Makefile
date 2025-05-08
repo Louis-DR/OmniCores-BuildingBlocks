@@ -1,5 +1,5 @@
-DESIGN_NAME   = hamming_encoder
-TOP_TESTBENCH = $(DESIGN_NAME)_tb_top
+DESIGN_NAME    = hamming_encoder
+TESTBENCH_NAME = $(DESIGN_NAME)_tb_top
 
 RTL_SOURCES  = $(DESIGN_NAME).sv
 RTL_SOURCES += hamming_block_packager.sv
