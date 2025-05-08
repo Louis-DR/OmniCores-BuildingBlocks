@@ -16,11 +16,11 @@ Multiplexes between two input clocks, `clock_0` and `clock_1`, based on the `sel
 
 Fast to slow switching :
 
-![clock_divider](clock_multiplexer_f2s.wavedrom.svg)
+![clock_multiplexer](clock_multiplexer_f2s.wavedrom.svg)
 
 Slow to fast switching :
 
-![clock_divider](clock_multiplexer_s2f.wavedrom.svg)
+![clock_multiplexer](clock_multiplexer_s2f.wavedrom.svg)
 
 The formula for the average switching time between the edge of the `select` to the first rising edge of the new frequency on the `clock_out` port noted $T_{switch\ avg}$, and for the average downtime being the duration for which `clock_out` is low between the last pulse at the old frequency and the first pulse at the new frequency noted $T_{downtime\ avg}$ are given below. They both depend on $STAGES$ the number of stages of the synchronizers, and $T_{from}$ and $T_{to}$ the periods of the old and new clocks. The formula are also given with the frequencies $f_{from}$ and $f_{to}$.
 
