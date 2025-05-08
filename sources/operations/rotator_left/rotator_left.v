@@ -19,10 +19,12 @@ module rotator_left #(
   output [WIDTH-1:0] data_out
 );
 
-function [WIDTH-1:0] rotator_left_f;
+function automatic [WIDTH-1:0] rotator_left_f;
   input [WIDTH-1:0] data;
+  reg [2*WIDTH-1:0] data_extended; // Red because inside a function
   begin
-    rotator_left_f = {data, data}[WIDTH - ROTATION +: WIDTH];
+    data_extended = {data, data};
+    rotator_left_f = data_extended[WIDTH - ROTATION +: WIDTH];
   end
 endfunction
 
