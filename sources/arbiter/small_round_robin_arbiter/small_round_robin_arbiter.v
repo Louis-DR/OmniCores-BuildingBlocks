@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        round_robin_arbiter.v                                        ║
+// ║ File:        small_round_robin_arbiter.v                                  ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Arbiters between different request channels. The priority of ║
 // ║              the request channels shifts each cycle to ensure fairness of ║
@@ -17,7 +17,7 @@
 
 
 
-module round_robin_arbiter #(
+module small_round_robin_arbiter #(
   parameter SIZE            = 4,
   parameter VARIANT         = "fast",
   parameter ROTATE_ON_GRANT = 0

@@ -1,4 +1,4 @@
-DESIGN_NAME = round_robin_arbiter
+DESIGN_NAME = small_round_robin_arbiter
 
 RTL_INCLUDES  = ../../common
 ADDITIONAL_RTL_SOURCES  = ../static_priority_arbiter/static_priority_arbiter.v

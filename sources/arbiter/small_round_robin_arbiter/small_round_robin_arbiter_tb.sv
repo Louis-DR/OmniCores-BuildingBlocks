@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        round_robin_arbiter_tb.sv                                    ║
+// ║ File:        small_round_robin_arbiter_tb.sv                              ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the round-robin arbiter.                       ║
 // ║                                                                           ║
@@ -15,7 +15,7 @@
 
 
 
-module round_robin_arbiter_tb ();
+module small_round_robin_arbiter_tb ();
 
 // Test parameters
 localparam real CLOCK_PERIOD    = 10;
@@ -42,11 +42,11 @@ integer unsigned grant_counts   [SIZE];
 real             grant_ratio;
 
 // Device under test
-round_robin_arbiter #(
+small_round_robin_arbiter #(
   .SIZE            ( SIZE            ),
   .VARIANT         ( VARIANT         ),
   .ROTATE_ON_GRANT ( ROTATE_ON_GRANT )
-) round_robin_arbiter_dut (
+) small_round_robin_arbiter_dut (
   .clock    ( clock    ),
   .resetn   ( resetn   ),
   .requests ( requests ),
@@ -108,8 +108,8 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("round_robin_arbiter_tb.vcd");
-  $dumpvars(0,round_robin_arbiter_tb);
+  $dumpfile("small_round_robin_arbiter_tb.vcd");
+  $dumpvars(0,small_round_robin_arbiter_tb);
 
   // Initialization
   requests = 0;
