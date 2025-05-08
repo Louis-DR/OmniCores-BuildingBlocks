@@ -1,0 +1,69 @@
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║ Project:     OmniCores-BuildingBlocks                                     ║
+// ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
+// ║ Website:     louis-dr.github.io                                           ║
+// ║ License:     MIT License                                                  ║
+// ║ File:        rotator_left.tb.sv                                           ║
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ This file is generated from the template rotator_left.tb.sv.j2 by J2GPP.  ║ {#- This file is the actual template #}
+// ║ Do not edit it directly.                                                  ║ {#- This file is the actual template #}
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ Description: Top-level testbench for the static left rotator.             ║
+// ║                                                                           ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+
+{%- set test_widths = range(2, 13)|list + [16, 24, 32, 48, 64, 128, 256, 512, 1024] %}
+
+
+
+`timescale 1ns/1ns
+
+
+
+module rotator_left_tb ();
+
+{% for width in test_widths %}
+{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
+logic start__rotator_left_tc__width_{{width}}__rotation_{{rotation}};
+{%- endfor %}
+{% endfor %}
+
+{%- for width in test_widths %}
+{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
+rotator_left_tc #(.WIDTH({{width}}), .ROTATION({{rotation}})) rotator_left_tc__width_{{width}}__rotation_{{rotation}} (.start(start__rotator_left_tc__width_{{width}}__rotation_{{rotation}}));
+{%- endfor %}
+{% endfor %}
+
+initial begin
+  // Log waves
+  $dumpfile("rotator_left.tb.vcd");
+
+{%- for width in test_widths %}
+{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
+  $dumpvars(0,rotator_left_tc__width_{{width}}__rotation_{{rotation}});
+{%- endfor %}
+{% endfor %}
+
+  // Initialization
+
+{%- for width in test_widths %}
+{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
+  start__rotator_left_tc__width_{{width}}__rotation_{{rotation}} = 0;
+{%- endfor %}
+{% endfor %}
+
+  // Start testbenches
+{%- for width in test_widths %}
+{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
+  start__rotator_left_tc__width_{{width}}__rotation_{{rotation}} = 1;
+  while(!rotator_left_tc__width_{{width}}__rotation_{{rotation}}.finished) #(1);
+{%- endfor %}
+{% endfor %}
+
+  // Finish
+  $finish();
+end
+
+endmodule
