@@ -89,9 +89,23 @@ The folowing table lists the clock frequencies verified by the testbench.
 
 ## Constraints
 
-Two `generated_clock` should be created on the output pin of the OR gate driving `clock_out`, corresponding to the two input clocks. They should be defined as logically exclusive.
+The constraints file `clock_multiplexer.sdc` contains the procedure `::omnicores::buildingblocks::timing::clock_multiplexer::apply_constraints_to_instance`. It takes as parameter the hierarchical path to the instance of the clock multiplexer and applies constraints to it.
 
-The constraints of the `synchronizer` should be applied to both instances internal to the multiplexer (see documentation of the `synchronizer` module).
+```tcl
+set clock_multiplexer_path "path/to/clock_multiplexer"
+
+::omnicores::buildingblocks::timing::clock_multiplexer::apply_constraints_to_instance $clock_multiplexer_path
+```
+
+The procedure fetches all the clocks defined on the input clock pins, and creates a generated clock on the output clock pin for each of them. The generated clocks are considered logically exclusive using a clock group. The procedure then calls the constraints procedure for the two synchronizers.
+
+To call the procedure automatically on all instances of the clock multiplexer, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `clock_multiplexer` and the constraints procedure `::omnicores::buildingblocks::timing::clock_multiplexer::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
+
+```tcl
+::omnicores::common::apply_constraints_to_all_module_instances "clock_multiplexer" "::omnicores::buildingblocks::timing::clock_multiplexer::apply_constraints_to_instance"
+```
+
+**Important:** the constraints procedure should be called after all clocks on the input pins have been declared. If the input clocks are defined by other OmniCores procedures, they should be called in order of the clock tree. The procedure will print a warning if no clocks are defined on an input clock pin, but it cannot detect if other clocks are added after the procedure is called. This is especially important when applying the constraints automatically on all instances as the order cannot be controlled.
 
 Special gates (AND, OR, NOT) made for clock paths can be used for better results if they are available in the technology node.
 
