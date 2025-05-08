@@ -3,9 +3,9 @@
 # ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 # ║ Website:     louis-dr.github.io                                           ║
 # ║ License:     MIT License                                                  ║
-# ║ File:        clock_multiplexer.sdc                                        ║
+# ║ File:        fast_clock_multiplexer.sdc                                   ║
 # ╟───────────────────────────────────────────────────────────────────────────╢
-# ║ Description: SDC constraints for the clock multiplexer module.            ║
+# ║ Description: SDC constraints for the fast clock multiplexer module.       ║
 # ║                                                                           ║
 # ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -14,13 +14,13 @@
 # Source common helper functions
 source [file join [file dirname [info script]] "../../common/common.sdc"]
 # Source the synchronizer constraints
-source [file join [file dirname [info script]] "../../timing/synchronizer/synchronizer.sdc"]
+source [file join [file dirname [info script]] "../../timing/fast_synchronizer/fast_synchronizer.sdc"]
 
 
 
-namespace eval ::omnicores::buildingblocks::timing::clock_multiplexer {
+namespace eval ::omnicores::buildingblocks::timing::fast_clock_multiplexer {
 
-  # Apply timing constraints to a specific instance of the clock multiplexer module
+  # Apply timing constraints to a specific instance of the fast clock multiplexer module
   proc apply_constraints_to_instance { instance_path } {
     # Use common helper functions
     namespace import ::omnicores::common::get_registers
@@ -120,12 +120,12 @@ namespace eval ::omnicores::buildingblocks::timing::clock_multiplexer {
       puts "Warning: No generated clocks defined for instance '$instance_path'. Cannot set clock group."
     }
 
-    # Call the synchronizer constraints procedure on both synchronizers
-    puts "Info: Applying synchronizer constraints to 'enable_clock_0_synchronizer' in instance '$instance_path'."
-    ::omnicores::buildingblocks::timing::synchronizer::apply_constraints_to_instance "${instance_path}/enable_clock_0_synchronizer"
+    # Call the fast synchronizer constraints procedure on both synchronizers
+    puts "Info: Applying fast synchronizer constraints to 'enable_clock_0_synchronizer' in instance '$instance_path'."
+    ::omnicores::buildingblocks::timing::fast_synchronizer::apply_constraints_to_instance "${instance_path}/enable_clock_0_synchronizer"
 
-    puts "Info: Applying synchronizer constraints to 'enable_clock_1_synchronizer' in instance '$instance_path'."
-    ::omnicores::buildingblocks::timing::synchronizer::apply_constraints_to_instance "${instance_path}/enable_clock_1_synchronizer"
+    puts "Info: Applying fast synchronizer constraints to 'enable_clock_1_synchronizer' in instance '$instance_path'."
+    ::omnicores::buildingblocks::timing::fast_synchronizer::apply_constraints_to_instance "${instance_path}/enable_clock_1_synchronizer"
   }
 
 }
