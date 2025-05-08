@@ -3,7 +3,7 @@
 `define INFINITE (1/0)
 `endif
 
-`ifdef SIMUMLATOR_NO_BOOL_SUPPORT
+`ifdef SIMUMLATOR_NO_BOOL
 typedef bit bool;
 `endif
 

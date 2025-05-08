@@ -182,9 +182,12 @@ initial begin
     // Check : random stimulus
     $display("CHECK : Random stimulus.");
     for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
-      // std:randomize() isn't supported by every simulator
-      // This alternative only works up to 128 bits
+`ifdef SIMUMLATOR_NO_RANDOMIZE
+      // Alternative to std:randomize() up to 128 bits
       data = {$urandom(), $urandom(), $urandom(), $urandom()};
+`else
+      std:randomize(data);
+`endif
       #(1);
       check_code();
       check_block();
