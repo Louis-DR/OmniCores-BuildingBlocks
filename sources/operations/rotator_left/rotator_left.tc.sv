@@ -24,7 +24,8 @@ module rotator_left_tc #(
 );
 
 // Test parameters
-localparam WIDTH_POW2 = 2**WIDTH;
+localparam WIDTH_POW2   = 2**WIDTH;
+localparam ROTATION_MOD = ROTATION % WIDTH;
 
 // Check parameters
 localparam integer FULL_CHECK_MAX_DURATION = 2**10;
@@ -48,7 +49,8 @@ rotator_left #(
 
 // Checker task for the code
 task automatic check_data_out();
-  data_out_expected = (data_in << ROTATION) | (data_in >> (WIDTH - ROTATION));
+  // Use a different method than the DUT to compute the expected output
+  data_out_expected = (data_in << ROTATION_MOD) | (data_in >> (WIDTH - ROTATION_MOD));
   if (data_out !== data_out_expected) begin
     $error("[%0tns] Incorrect data_out for data_in '%b' : expected '%b' but got '%b'.", $time, data_in, data_out_expected, data_out);
   end
