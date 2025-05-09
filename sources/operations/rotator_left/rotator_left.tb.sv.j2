@@ -14,7 +14,16 @@
 
 
 
-{%- set test_widths = range(2, 13)|list + [16, 24, 32, 48, 64, 128, 256, 512, 1024] %}
+{%- set test_widths = range(1, 13)|list + [16, 24, 32, 48, 64, 128, 256, 512, 1024] %}
+{%- set test_cases = [] %}
+{%- for width_val in test_widths %}
+{%-   if width_val < 16 %}
+{%-     set rotations_val = range(2*width_val) %}
+{%-   else %}
+{%-     set rotations_val = range(8)|list + [(width_val/2)|int, width_val-1, width_val, width_val+1, (width_val*3/2)|int, 2*width_val-1, 2*width_val] %}
+{%-   endif %}
+{%-   do test_cases.append({'width': width_val, 'rotations': rotations_val}) %}
+{%- endfor %}
 
 
 
@@ -24,15 +33,15 @@
 
 module rotator_left_tb ();
 
-{% for width in test_widths %}
-{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
-logic start__rotator_left_tc__width_{{width}}__rotation_{{rotation}};
+{% for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+logic start__rotator_left_tc__width_{{test_case.width}}__rotation_{{rotation}};
 {%- endfor %}
 {% endfor %}
 
-{%- for width in test_widths %}
-{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
-rotator_left_tc #(.WIDTH({{width}}), .ROTATION({{rotation}})) rotator_left_tc__width_{{width}}__rotation_{{rotation}} (.start(start__rotator_left_tc__width_{{width}}__rotation_{{rotation}}));
+{%- for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+rotator_left_tc #(.WIDTH({{test_case.width}}), .ROTATION({{rotation}})) rotator_left_tc__width_{{test_case.width}}__rotation_{{rotation}} (.start(start__rotator_left_tc__width_{{test_case.width}}__rotation_{{rotation}}));
 {%- endfor %}
 {% endfor %}
 
@@ -40,25 +49,25 @@ initial begin
   // Log waves
   $dumpfile("rotator_left.tb.vcd");
 
-{%- for width in test_widths %}
-{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
-  $dumpvars(0,rotator_left_tc__width_{{width}}__rotation_{{rotation}});
+{%- for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+  $dumpvars(0,rotator_left_tc__width_{{test_case.width}}__rotation_{{rotation}});
 {%- endfor %}
 {% endfor %}
 
   // Initialization
 
-{%- for width in test_widths %}
-{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
-  start__rotator_left_tc__width_{{width}}__rotation_{{rotation}} = 0;
+{%- for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+  start__rotator_left_tc__width_{{test_case.width}}__rotation_{{rotation}} = 0;
 {%- endfor %}
 {% endfor %}
 
   // Start testbenches
-{%- for width in test_widths %}
-{%- for rotation in (range(width+1) if width < 16 else (range(8)|list + [(width/2)|int, width-1, width])) %}
-  start__rotator_left_tc__width_{{width}}__rotation_{{rotation}} = 1;
-  while(!rotator_left_tc__width_{{width}}__rotation_{{rotation}}.finished) #(1);
+{%- for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+  start__rotator_left_tc__width_{{test_case.width}}__rotation_{{rotation}} = 1;
+  while(!rotator_left_tc__width_{{test_case.width}}__rotation_{{rotation}}.finished) #(1);
 {%- endfor %}
 {% endfor %}
 
