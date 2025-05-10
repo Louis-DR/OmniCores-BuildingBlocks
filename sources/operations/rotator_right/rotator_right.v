@@ -25,7 +25,7 @@ function automatic [WIDTH-1:0] rotator_right_f;
   input [WIDTH-1:0] data;
   reg [2*WIDTH-1:0] data_extended; // Reg because inside a function
   begin
-    data_extended = {data, data};
+    data_extended   = {data, data};
     rotator_right_f = data_extended[(ROTATION_MOD) +: WIDTH];
   end
 endfunction
