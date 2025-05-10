@@ -16,11 +16,11 @@ Arbiters between different request channels using a round-robin scheme. The gran
 
 ## Parameters
 
-| Name              | Type    | Allowed Values     | Default  | Description                                         |
-| ----------------- | ------- | ------------------ | -------- | --------------------------------------------------- |
-| `SIZE`            | integer | `>1`               | `4`      | Number of channels.                                 |
-| `ROTATE_ON_GRANT` | integer | `0`,`1`            | `0`      | `0`: rotate every cycles.<br/>`1`: rotate on grant. |
-| `VARIANT`         | string  | `"small"`,`"fast"` | `"fast"` | Implementation variant.                             |
+| Name              | Type    | Allowed Values                   | Default      | Description                                         |
+| ----------------- | ------- | -------------------------------- | ------------ | --------------------------------------------------- |
+| `SIZE`            | integer | `>1`                             | `4`          | Number of channels.                                 |
+| `ROTATE_ON_GRANT` | integer | `0`,`1`                          | `0`          | `0`: rotate every cycles.<br/>`1`: rotate on grant. |
+| `VARIANT`         | string  | `"small"`,`"balanced"`, `"fast"` | `"balanced"` | Implementation variant.                             |
 
 ## Ports
 
@@ -33,11 +33,7 @@ Arbiters between different request channels using a round-robin scheme. The gran
 
 ## Operation
 
-The internal pointer `rotating_pointer` is incremented at each cycle and wraps around. If the parameter `ROTATE_ON_GRANT` is set to `1`, the pointer is incremented only when a grant is given.
-
-The `requests` vector is rotated by the `rotating_pointer`, then passed to a `static_priority_arbiter`, and the `grant` vector is rotated back the other direction.
-
-This variant of the arbiter uses a single `static_priority_arbiter` and two barrel rotators, making it small at the cost of a deeper slower logic path. It also uses the `"small"` variant of the `static_priority_arbiter`.
+This module is a wrapper between the different implementation variants of the round-robin arbiter. The details about the operation of each variant is available in their datasheets.
 
 ## Paths
 
@@ -47,10 +43,13 @@ This variant of the arbiter uses a single `static_priority_arbiter` and two barr
 
 ## Complexity
 
-| Variant            | Delay          | Gates               | Comment |
-| ------------------ | -------------- | ------------------- | ------- |
-| `"fast"` (default) | `O(log₂ SIZE)` | `O(SIZE²)`          |         |
-| `"small"`          | `O(SIZE)`      | `O(SIZE log₂ SIZE)` |         |
+| Variant                | Delay          | Gates               | Comment |
+| ---------------------- | -------------- | ------------------- | ------- |
+| `"small"`              | `O(SIZE)`      | `O(SIZE log₂ SIZE)` |         |
+| `"balanced"` (default) | `O(log₂ SIZE)` | `O(SIZE)`           |         |
+| `"fast"`               | `O(log₂ SIZE)` | `O(SIZE²)`          |         |
+
+Note that the `fast` variant is sligthly faster than the `balanced` variant, but only by a stage of AND gates.
 
 ## Verification
 
@@ -87,25 +86,28 @@ There are no synthesis and implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                                                      | Path                                                                  | Comment                         |
-| ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------- |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |                                 |
-| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter` | For the `small` variant.        |
-| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)    | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`  | For the default `fast` variant. |
-| `first_one`                                                                                 | `omnicores-buildingblocks/sources/operations/first_one`               |                                 |
-| `small_first_one`                                                                           | `omnicores-buildingblocks/sources/operations/small_first_one`         | For the `small` variant.        |
-| `fast_first_one`                                                                            | `omnicores-buildingblocks/sources/operations/fast_first_one`          | For the default `fast` variant. |
-| `barrel_rotator_left`                                                                       | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     | For the `small` variant.        |
-| `barrel_rotator_right`                                                                      | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    | For the `small` variant.        |
-| [`rotate_left`](../../operations/rotate_left/rotate_left.md)                                | `omnicores-buildingblocks/sources/operations/rotate_left`             | For the default `fast` variant. |
-| [`rotate_right`](../../operations/rotate_right/rotate_right.md)                             | `omnicores-buildingblocks/sources/operations/rotate_right`            | For the default `fast` variant. |
-| `wrapping_increment_counter`                                                                | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` |                                 |
+| Module                                                                                               | Path                                                                     | Comment                             |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------- |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`       |                                     |
+| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter`    | For the `small` variant.            |
+| [`balanced_round_robing_arbiter`](../balanced_round_robing_arbiter/balanced_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/balanced_round_robing_arbiter` | For the default `balanced` variant. |
+| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)             | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`     | For the `fast` variant.             |
+| `first_one`                                                                                          | `omnicores-buildingblocks/sources/operations/first_one`                  |                                     |
+| `small_first_one`                                                                                    | `omnicores-buildingblocks/sources/operations/small_first_one`            | For the `small` variant.            |
+| `fast_first_one`                                                                                     | `omnicores-buildingblocks/sources/operations/fast_first_one`             | For the `fast` variant.             |
+| `barrel_rotator_left`                                                                                | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`        | For the `small` variant.            |
+| `barrel_rotator_right`                                                                               | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`       | For the `small` variant.            |
+| [`shift_left`](../../operations/shift_left/shift_left.md)                                            | `omnicores-buildingblocks/sources/operations/shift_left`                 | For the default `balanced` variant. |
+| [`rotate_left`](../../operations/rotate_left/rotate_left.md)                                         | `omnicores-buildingblocks/sources/operations/rotate_left`                | For the `fast` variant.             |
+| [`rotate_right`](../../operations/rotate_right/rotate_right.md)                                      | `omnicores-buildingblocks/sources/operations/rotate_right`               | For the `fast` variant.             |
+| `wrapping_increment_counter`                                                                         | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter`    |                                     |
 
 ## Related modules
 
-| Module                                                                                      | Path                                                                  | Comment                                             |
-| ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------- |
-| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter` | Small but slow variant of the round-robing arbiter. |
-| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)    | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`  | Fast but big variant of the round-robing arbiter.   |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    | Simpler but unfair arbiter.                         |
-| [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)       | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`   | Arbiter with per-channel dynamic priority.          |
+| Module                                                                                               | Path                                                                     | Comment                                             |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------- |
+| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter`    | Small but slow variant of the round-robing arbiter. |
+| [`balanced_round_robing_arbiter`](../balanced_round_robing_arbiter/balanced_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/balanced_round_robing_arbiter` | Balanced variant of the round-robing arbiter.       |
+| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)             | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`     | Fast but big variant of the round-robing arbiter.   |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`       | Simpler but unfair arbiter.                         |
+| [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)                | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`      | Arbiter with per-channel dynamic priority.          |

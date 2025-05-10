@@ -1,8 +1,8 @@
-# Fast Round-Robin Arbiter
+# Balanced Round-Robin Arbiter
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Fast Round-Robin Arbiter                                                         |
+| Module  | Balanced Round-Robin Arbiter                                                     |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,9 +10,9 @@
 
 ## Overview
 
-![fast_round_robin_arbiter](fast_round_robin_arbiter.svg)
+![balanced_round_robin_arbiter](balanced_round_robin_arbiter.svg)
 
-Arbiters between different request channels using a round-robin scheme. The grant priority rotates among the requesting channels at each cycle, ensuring fairness. This is the faster but bigger variant of the round-robing arbiter.
+Arbiters between different request channels using a round-robin scheme. The grant priority rotates among the requesting channels at each cycle, ensuring fairness. This is the balanced variant of the round-robing arbiter, between the fast and the small.
 
 ## Parameters
 
@@ -32,11 +32,13 @@ Arbiters between different request channels using a round-robin scheme. The gran
 
 ## Operation
 
-The internal pointer `rotating_pointer` is incremented at each cycle and wraps around. If the parameter `ROTATE_ON_GRANT` is set to `1`, the pointer is incremented only when a grant is given.
+An internal mask separates the channels in two regions, high and low priority. The mask is updated at each cycle (or only when a grant is given if the parameter `ROTATE_ON_GRANT` is set to `1`). When updated, the mask is shifted to the left. When the mask is only a single one at the MSB, it wraps back to being all ones.
 
-This variant uses one `static_priority_arbiter` for each request channel. Each `static_priority_arbiter` computes the priority with the `requests` vector rotated to a different value between 0 and `SIZE` and its `grant` vector is rotated back, then the expected `grant` vector is selected by a multiplexer using the `rotating_pointer`.
+The `requests` vector is masked to get the high priority request. The low priority requests vector is just the `requests` vector. We don't need to mask off the high priority channels for the low priority `requests` vector. The grant for each region is calculated by a pair of static priority arbiters.
 
-The faster operation of this variant is obtained by the parallel computation of the core arbitration, but at the cost of more logic. It also uses the `"fast"` variant of the `static_priority_arbiter`.
+If a grant is given in the high priority region, then it is the final `grant`. Else, the `grant` is given to the low priority region (if any grant is given there as well).
+
+This variant is a balanced option between the small and fast variants. It uses a pair of static priority arbiters compared to one per channel for the fast variant, and it doesn't require the pair of barrel rotators of the small variant (replaced by an AND and MUX stages).
 
 ## Paths
 
@@ -46,9 +48,11 @@ The faster operation of this variant is obtained by the parallel computation of 
 
 ## Complexity
 
-| Delay          | Gates      | Comment |
-| -------------- | ---------- | ------- |
-| `O(log₂ SIZE)` | `O(SIZE²)` |         |
+| Delay          | Gates     | Comment |
+| -------------- | --------- | ------- |
+| `O(log₂ SIZE)` | `O(SIZE)` |         |
+
+Note that this variant uses the fast variant of the static priority arbiter.
 
 ## Verification
 
@@ -74,25 +78,23 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                   | Description                                         |
-| ----------------- | ---------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`fast_round_robin_arbiter.v`](fast_round_robin_arbiter.v)             | Verilog design.                                     |
-| Testbench         | [`fast_round_robin_arbiter_tb.sv`](fast_round_robin_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`fast_round_robin_arbiter_tb.gtkw`](fast_round_robin_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`fast_round_robin_arbiter.sss`](fast_round_robin_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`fast_round_robin_arbiter.svg`](fast_round_robin_arbiter.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`fast_round_robin_arbiter.md`](fast_round_robin_arbiter.md)           | Markdown documentation datasheet.                   |
+| Type              | File                                                                           | Description                                         |
+| ----------------- | ------------------------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`balanced_round_robin_arbiter.v`](balanced_round_robin_arbiter.v)             | Verilog design.                                     |
+| Testbench         | [`balanced_round_robin_arbiter_tb.sv`](balanced_round_robin_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`balanced_round_robin_arbiter_tb.gtkw`](balanced_round_robin_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`balanced_round_robin_arbiter.sss`](balanced_round_robin_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`balanced_round_robin_arbiter.svg`](balanced_round_robin_arbiter.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`balanced_round_robin_arbiter.md`](balanced_round_robin_arbiter.md)           | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
-| Module                                                                             | Path                                                                  | Comment |
-| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------- |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |         |
-| `first_one`                                                                        | `omnicores-buildingblocks/sources/operations/first_one`               |         |
-| `fast_first_one`                                                                   | `omnicores-buildingblocks/sources/operations/fast_first_one`          |         |
-| [`rotate_left`](../../operations/rotate_left/rotate_left.md)                       | `omnicores-buildingblocks/sources/operations/rotate_left`             |         |
-| [`rotate_right`](../../operations/rotate_right/rotate_right.md)                    | `omnicores-buildingblocks/sources/operations/rotate_right`            |         |
-| `wrapping_increment_counter`                                                       | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` |         |
+| Module                                                                             | Path                                                               | Comment |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ------- |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter` |         |
+| `first_one`                                                                        | `omnicores-buildingblocks/sources/operations/first_one`            |         |
+| `fast_first_one`                                                                   | `omnicores-buildingblocks/sources/operations/fast_first_one`       |         |
+| [`shift_left`](../../operations/shift_left/shift_left.md)                          | `omnicores-buildingblocks/sources/operations/shift_left`           |         |
 
 ## Related modules
 
@@ -100,5 +102,6 @@ There are no synthesis and implementation constraints for this block.
 | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------- |
 | [`round_robing_arbiter`](../round_robing_arbiter/round_robing_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/round_robing_arbiter`       | Variant wrapper of the round-robing arbiter.            |
 | [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter` | Smaller but slower variant of the round-robing arbiter. |
+| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)    | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`  | Faster but bigger variant of the round-robing arbiter.  |
 | [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    | Simpler but unfair arbiter.                             |
 | [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)       | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`   | Arbiter with per-channel dynamic priority.              |

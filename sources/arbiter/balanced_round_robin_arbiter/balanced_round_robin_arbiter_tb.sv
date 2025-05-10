@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        round_robin_arbiter_tb.sv                                    ║
+// ║ File:        balanced_round_robin_arbiter_tb.sv                           ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the variant wrapper of the round-robin         ║
+// ║ Description: Testbench for the balanced variant of the round-robin        ║
 // ║              arbiter.                                                     ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
@@ -16,14 +16,14 @@
 
 
 
-module round_robin_arbiter_tb ();
+module balanced_round_robin_arbiter_tb ();
 
 // Test parameters
 localparam real CLOCK_PERIOD    = 10;
 localparam      SIZE            = 4;
 localparam      SIZE_POW2       = 2 ** SIZE;
 localparam      ROTATE_ON_GRANT = 0;
-localparam      VARIANT         = "balanced";
+
 // Check parameters
 localparam integer RANDOM_CHECK_DURATION    = 1000;
 localparam real    FAIRNESS_THRESHOLD_LOWER = 1 / SIZE;
@@ -42,11 +42,10 @@ integer unsigned grant_counts   [SIZE];
 real             grant_ratio;
 
 // Device under test
-round_robin_arbiter #(
+balanced_round_robin_arbiter #(
   .SIZE            ( SIZE            ),
-  .ROTATE_ON_GRANT ( ROTATE_ON_GRANT ),
-  .VARIANT         ( VARIANT         )
-) round_robin_arbiter_dut (
+  .ROTATE_ON_GRANT ( ROTATE_ON_GRANT )
+) balanced_round_robin_arbiter_dut (
   .clock    ( clock    ),
   .resetn   ( resetn   ),
   .requests ( requests ),
@@ -108,8 +107,8 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("round_robin_arbiter_tb.vcd");
-  $dumpvars(0,round_robin_arbiter_tb);
+  $dumpfile("balanced_round_robin_arbiter_tb.vcd");
+  $dumpvars(0,balanced_round_robin_arbiter_tb);
 
   // Initialization
   requests = 0;

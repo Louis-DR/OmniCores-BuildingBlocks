@@ -20,7 +20,7 @@
 module round_robin_arbiter #(
   parameter SIZE            = 4,
   parameter ROTATE_ON_GRANT = 0,
-  parameter VARIANT         = "fast"
+  parameter VARIANT         = "balanced"
 ) (
   input             clock,
   input             resetn,
@@ -28,13 +28,26 @@ module round_robin_arbiter #(
   output [SIZE-1:0] grant
 );
 
-// Small variant
 generate
+  // Small variant
   if (VARIANT == "small") begin : gen_small
     small_round_robin_arbiter #(
       .SIZE            ( SIZE            ),
       .ROTATE_ON_GRANT ( ROTATE_ON_GRANT )
     ) small_round_robin_arbiter (
+      .clock    ( clock    ),
+      .resetn   ( resetn   ),
+      .requests ( requests ),
+      .grant    ( grant    )
+    );
+  end
+
+  // Balanced variant (default)
+  else if (VARIANT == "balanced") begin : gen_balanced
+    balanced_round_robin_arbiter #(
+      .SIZE            ( SIZE            ),
+      .ROTATE_ON_GRANT ( ROTATE_ON_GRANT )
+    ) balanced_round_robin_arbiter (
       .clock    ( clock    ),
       .resetn   ( resetn   ),
       .requests ( requests ),
