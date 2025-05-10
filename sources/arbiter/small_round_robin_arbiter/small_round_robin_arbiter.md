@@ -89,7 +89,7 @@ There are no synthesis and implementation constraints for this block.
 | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------- |
 | [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |         |
 | `first_one`                                                                        | `omnicores-buildingblocks/sources/operations/first_one`               |         |
-| `small_first_one`                                                                  | `omnicores-buildingblocks/sources/operations/first_one`               |         |
+| `small_first_one`                                                                  | `omnicores-buildingblocks/sources/operations/small_first_one`         |         |
 | `barrel_rotator_left`                                                              | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     |         |
 | `barrel_rotator_right`                                                             | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    |         |
 | `wrapping_increment_counter`                                                       | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` |         |
@@ -98,6 +98,7 @@ There are no synthesis and implementation constraints for this block.
 
 | Module                                                                                   | Path                                                                 | Comment                                                |
 | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------ |
+| [`round_robing_arbiter`](../round_robing_arbiter/round_robing_arbiter.md)                | `omnicores-buildingblocks/sources/arbiter/round_robing_arbiter`      | Variant wrapper of the round-robing arbiter.           |
 | [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter` | Faster but bigger variant of the round-robing arbiter. |
 | [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)       | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`   | Simpler but unfair arbiter.                            |
 | [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)    | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`  | Arbiter with per-channel dynamic priority.             |

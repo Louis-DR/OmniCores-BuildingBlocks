@@ -102,7 +102,7 @@ There are no synthesis and implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                                   | Path                                                                 | Comment                             |
-| ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------- |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)       | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`   | Arbiter with static priority order. |
-| [`small_round_robin_arbiter`](../small_round_robin_arbiter/small_round_robin_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/small_round_robin_arbiter` | Simpler fair arbiter.               |
+| Module                                                                             | Path                                                               | Comment                             |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------- |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter` | Arbiter with static priority order. |
+| [`round_robin_arbiter`](../round_robin_arbiter/round_robin_arbiter.md)             | `omnicores-buildingblocks/sources/arbiter/round_robin_arbiter`     | Fair arbiter.                       |
