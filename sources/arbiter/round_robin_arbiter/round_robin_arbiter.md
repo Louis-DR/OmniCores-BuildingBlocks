@@ -51,6 +51,8 @@ This module is a wrapper between the different implementation variants of the ro
 
 Note that the `fast` variant is sligthly faster than the `balanced` variant, but only by a stage of AND gates.
 
+Note that even though the `small` variant has worse gate count complexity than the `balanced` variant, for small number of channels, it might still be smaller as the size of the core static priority arbiter might dominate over the barrel rotators. The `small` variant is also simpler and can be easily pipelined.
+
 ## Verification
 
 The arbiter is verified using a SystemVerilog testbench with concurrent assertions and three check sequences.
