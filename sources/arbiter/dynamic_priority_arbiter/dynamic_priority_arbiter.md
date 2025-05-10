@@ -58,6 +58,8 @@ The arbiter first unpacks the priority array and classifies the requests per pri
 
 The arbiter is verified using a SystemVerilog testbench with concurrent assertions and three check sequences. It uses a helper function to calculate the mask of active highest priority requests.
 
+The folowing table lists the checks performed by the testbench.
+
 | Number | Check                 | Description                                                                                                                    |
 | ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | 1      | Single request active | Activate each request one at a time and check that it is granted over all prority configurations.                              |

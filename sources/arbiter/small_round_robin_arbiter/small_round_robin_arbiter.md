@@ -54,6 +54,8 @@ Note that while the gate-count complexity of the two variants is the same, the `
 
 The arbiter is verified using a SystemVerilog testbench with concurrent assertions and three check sequences.
 
+The folowing table lists the checks performed by the testbench.
+
 | Number | Check                        | Description                                                                             |
 | ------ | ---------------------------- | --------------------------------------------------------------------------------------- |
 | 1      | Single request active        | Activate each request one at a time and check that it is granted over multiple cycles.  |

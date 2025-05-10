@@ -49,6 +49,8 @@ The arbiter gives the grant to the first ready request channel by detecting the 
 
 The arbiter is verified exhaustively for the default parameter values by iterating over all the request combinations and checking the grant.
 
+The folowing table lists the checks performed by the testbench.
+
 | Number | Check           | Description                                                                 |
 | ------ | --------------- | --------------------------------------------------------------------------- |
 | 1      | Exhaustive test | Check that the grant is correct for all combinations of the request vector. |
