@@ -19,7 +19,6 @@
 
 module small_round_robin_arbiter #(
   parameter SIZE            = 4,
-  parameter VARIANT         = "fast",
   parameter ROTATE_ON_GRANT = 0
 ) (
   input             clock,
@@ -34,8 +33,8 @@ wire [SIZE_LOG2-1:0] rotating_pointer;
 wire rotate_pointer = ROTATE_ON_GRANT ? |grant : 1;
 
 wrapping_increment_counter #(
-  .RANGE       ( SIZE             ),
-  .RESET_VALUE ( '0               )
+  .RANGE       ( SIZE ),
+  .RESET_VALUE ( '0   )
 ) rotating_pointer_counter (
   .clock       ( clock            ),
   .resetn      ( resetn           ),
@@ -47,23 +46,23 @@ wire [SIZE-1:0] rotated_requests;
 wire [SIZE-1:0] rotated_grant;
 
 barrel_rotator_left #(
-  .WIDTH    ( SIZE             )
-) request_rotator (
+  .WIDTH    ( SIZE )
+) requests_rotator (
   .data_in  ( requests         ),
   .rotation ( rotating_pointer ),
   .data_out ( rotated_requests )
 );
 
 static_priority_arbiter #(
-  .SIZE     ( SIZE             ),
-  .VARIANT  ( VARIANT          )
+  .SIZE     ( SIZE    ),
+  .VARIANT  ( "small" )
 ) static_priority_arbiter (
   .requests ( rotated_requests ),
   .grant    ( rotated_grant    )
 );
 
 barrel_rotator_right #(
-  .WIDTH    ( SIZE             )
+  .WIDTH    ( SIZE )
 ) grant_rotator (
   .data_in  ( rotated_grant    ),
   .rotation ( rotating_pointer ),

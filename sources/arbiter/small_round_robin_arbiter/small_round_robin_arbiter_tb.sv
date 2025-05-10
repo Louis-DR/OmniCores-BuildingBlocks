@@ -5,7 +5,7 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        small_round_robin_arbiter_tb.sv                              ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the round-robin arbiter.                       ║
+// ║ Description: Testbench for the small variant of the round-robin arbiter.  ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -21,7 +21,6 @@ module small_round_robin_arbiter_tb ();
 localparam real CLOCK_PERIOD    = 10;
 localparam      SIZE            = 4;
 localparam      SIZE_POW2       = 2 ** SIZE;
-localparam      VARIANT         = "fast";
 localparam      ROTATE_ON_GRANT = 0;
 
 // Check parameters
@@ -44,7 +43,6 @@ real             grant_ratio;
 // Device under test
 small_round_robin_arbiter #(
   .SIZE            ( SIZE            ),
-  .VARIANT         ( VARIANT         ),
   .ROTATE_ON_GRANT ( ROTATE_ON_GRANT )
 ) small_round_robin_arbiter_dut (
   .clock    ( clock    ),

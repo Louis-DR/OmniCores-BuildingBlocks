@@ -16,11 +16,10 @@ Arbiters between different request channels using a round-robin scheme. The gran
 
 ## Parameters
 
-| Name              | Type    | Allowed Values      | Default  | Description                                         |
-| ----------------- | ------- | ------------------- | -------- | --------------------------------------------------- |
-| `SIZE`            | integer | `>1`                | `4`      | Number of channels.                                 |
-| `VARIANT`         | string  | `"fast"`, `"small"` | `"fast"` | Implementation variant.                             |
-| `ROTATE_ON_GRANT` | integer | `0`,`1`             | `0`      | `0`: rotate every cycles.<br/>`1`: rotate on grant. |
+| Name              | Type    | Allowed Values | Default | Description                                         |
+| ----------------- | ------- | -------------- | ------- | --------------------------------------------------- |
+| `SIZE`            | integer | `>1`           | `4`     | Number of channels.                                 |
+| `ROTATE_ON_GRANT` | integer | `0`,`1`        | `0`     | `0`: rotate every cycles.<br/>`1`: rotate on grant. |
 
 ## Ports
 
@@ -33,7 +32,11 @@ Arbiters between different request channels using a round-robin scheme. The gran
 
 ## Operation
 
-The internal pointer `rotating_pointer` is incremented at each cycle and wraps around. If the parameter `ROTATE_ON_GRANT` is set to `1`, the pointer is incremented only when a grant is given. The `requests` vector is rotated by the `rotating_pointer`, then passed to a `static_priority_arbiter`, and the `grant` vector is rotated back the other direction.
+The internal pointer `rotating_pointer` is incremented at each cycle and wraps around. If the parameter `ROTATE_ON_GRANT` is set to `1`, the pointer is incremented only when a grant is given.
+
+The `requests` vector is rotated by the `rotating_pointer`, then passed to a `static_priority_arbiter`, and the `grant` vector is rotated back the other direction.
+
+This variant of the arbiter uses a single `static_priority_arbiter` and two barrel rotators, making it small at the cost of a deeper slower logic path. It also uses the `"small"` variant of the `static_priority_arbiter`.
 
 ## Paths
 
@@ -43,12 +46,9 @@ The internal pointer `rotating_pointer` is incremented at each cycle and wraps a
 
 ## Complexity
 
-| `VARIANT`          | Delay          | Gates               | Comment |
-| ------------------ | -------------- | ------------------- | ------- |
-| `"fast"` (default) | `O(log₂ SIZE)` | `O(SIZE log₂ SIZE)` |         |
-| `"small"`          | `O(SIZE)`      | `O(SIZE log₂ SIZE)` |         |
-
-Note that while the gate-count complexity of the two variants is the same, the `small` variant is still smaller as it uses a smaller implementation of the first-one algorithm which is at the core of the static priority arbiter used in this arbiter. The larger complexity of the two barrel shifters dominate the complexity of either implementations of the static priority arbiter.
+| Delay     | Gates               | Comment |
+| --------- | ------------------- | ------- |
+| `O(SIZE)` | `O(SIZE log₂ SIZE)` |         |
 
 ## Verification
 
@@ -89,7 +89,6 @@ There are no synthesis and implementation constraints for this block.
 | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------- |
 | [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |                                 |
 | `first_one`                                                                        | `omnicores-buildingblocks/sources/operations/first_one`               |                                 |
-| `fast_first_one`                                                                   | `omnicores-buildingblocks/sources/operations/first_one`               | For the default `fast` variant. |
 | `small_first_one`                                                                  | `omnicores-buildingblocks/sources/operations/first_one`               | For the `small` variant.        |
 | `barrel_rotator_left`                                                              | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     |                                 |
 | `barrel_rotator_right`                                                             | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    |                                 |
