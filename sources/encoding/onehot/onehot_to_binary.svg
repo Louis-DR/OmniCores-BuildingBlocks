@@ -3,9 +3,9 @@
   <text x="63" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Onehot-to-Binary</text>
   <text x="63" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">onehot_to_binary</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">onehot</text>
-        <line x1="25" y1="35" x2="11" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 5 35 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="18" y1="33" x2="22" y2="37" stroke="black" stroke-width="1"/>
+        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="33" x2="12" y2="37" stroke="black" stroke-width="1"/>
       <text x="100" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">binary</text>
         <line x1="102" y1="35" x2="116" y2="35" stroke="black" stroke-width="1"/>
         <path d="M 122 35 l -6 +2.0 v -4 z" fill="black"/>
