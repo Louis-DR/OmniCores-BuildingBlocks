@@ -89,16 +89,21 @@ There are no synthesis and implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                                                   | Path                                                                  | Comment                                 |
-| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------- |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)       | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |                                         |
-| `first_one`                                                                              | `omnicores-buildingblocks/sources/operations/first_one`               |                                         |
-| `fast_first_one`                                                                         | `omnicores-buildingblocks/sources/operations/first_one`               | For the default `fast` variant.         |
-| `small_first_one`                                                                        | `omnicores-buildingblocks/sources/operations/first_one`               | For the `small` variant.                |
-| [`small_round_robin_arbiter`](../small_round_robin_arbiter/small_round_robin_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/small_round_robin_arbiter`  | For the `round_robin` fallback arbiter. |
-| `barrel_rotator_left`                                                                    | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     | For the `round_robin` fallback arbiter. |
-| `barrel_rotator_right`                                                                   | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    | For the `round_robin` fallback arbiter. |
-| `wrapping_increment_counter`                                                             | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` | For the `round_robin` fallback arbiter. |
+| Module                                                                                      | Path                                                                  | Comment                                                         |
+| ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |                                                                 |
+| [`round_robing_arbiter`](../round_robing_arbiter/round_robing_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/round_robing_arbiter`       | For the `round_robin` fallback arbiter.                         |
+| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter` | For the `round_robin` fallback arbiter and `small` variant.     |
+| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)    | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`  | For the `round_robin` fallback arbiter and `fast` variant.      |
+| `first_one`                                                                                 | `omnicores-buildingblocks/sources/operations/first_one`               |                                                                 |
+| `small_first_one`                                                                           | `omnicores-buildingblocks/sources/operations/small_first_one`         | For the `small` variant.                                        |
+| `fast_first_one`                                                                            | `omnicores-buildingblocks/sources/operations/fast_first_one`          | For the default `fast` variant.                                 |
+| `barrel_rotator_left`                                                                       | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     | For the `round_robin` fallback arbiter and the `small` variant. |
+| `barrel_rotator_right`                                                                      | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    | For the `round_robin` fallback arbiter and the `small` variant. |
+| [`rotate_left`](../../operations/rotate_left/rotate_left.md)                                | `omnicores-buildingblocks/sources/operations/rotate_left`             | For the `round_robin` fallback arbiter and the `fast` variant.  |
+| [`rotate_right`](../../operations/rotate_right/rotate_right.md)                             | `omnicores-buildingblocks/sources/operations/rotate_right`            | For the `round_robin` fallback arbiter and the `fast` variant.  |
+| `wrapping_increment_counter`                                                                | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` | For the `round_robin` fallback arbiter.                         |
+| `binary_to_onehot`                                                                          | `omnicores-buildingblocks/sources/encoding/onehot/binary_to_onehot`   |                                                                 |
 
 ## Related modules
 

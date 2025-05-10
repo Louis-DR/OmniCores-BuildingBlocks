@@ -129,7 +129,7 @@ generate
 
   // Static priority arbiter
   else if (FALLBACK_ARBITER == "round_robin") begin : gen_round_robin_fallback
-    small_round_robin_arbiter #(
+    round_robin_arbiter #(
       .SIZE     ( SIZE                      ),
       .VARIANT  ( FALLBACK_VARIANT          )
     ) fallback_arbiter (
