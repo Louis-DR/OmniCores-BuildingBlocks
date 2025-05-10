@@ -97,8 +97,8 @@ There are no synthesis and implementation constraints for this block.
 | `fast_first_one`                                                                            | `omnicores-buildingblocks/sources/operations/fast_first_one`          | For the default `fast` variant. |
 | `barrel_rotator_left`                                                                       | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     | For the `small` variant.        |
 | `barrel_rotator_right`                                                                      | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    | For the `small` variant.        |
-| `rotate_left`                                                                               | `omnicores-buildingblocks/sources/operations/rotate_left`             | For the default `fast` variant. |
-| `rotate_right`                                                                              | `omnicores-buildingblocks/sources/operations/rotate_right`            | For the default `fast` variant. |
+| [`rotate_left`](../../operations/rotate_left/rotate_left.md)                                | `omnicores-buildingblocks/sources/operations/rotate_left`             | For the default `fast` variant. |
+| [`rotate_right`](../../operations/rotate_right/rotate_right.md)                             | `omnicores-buildingblocks/sources/operations/rotate_right`            | For the default `fast` variant. |
 | `wrapping_increment_counter`                                                                | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` |                                 |
 
 ## Related modules
