@@ -75,13 +75,13 @@ The clock divider is verified using a SystemVerilog testbench with multiple DUTs
 | 1      | Switching back and forth | Toggle the `select` input and check the frequency of the `output_clock`.                                  |
 | 2      | Glitch-free output clock | Toggle the `select` randomly and check that the output pulses duration correspond to either input clocks. |
 
-The folowing table lists the parameter values verified by the testbench.
+The following table lists the parameter values verified by the testbench.
 
 | `STAGES` |           |
 | -------- | --------- |
 | 2        | (default) |
 
-The folowing table lists the clock frequencies verified by the testbench.
+The following table lists the clock frequencies verified by the testbench.
 
 | `clock_0` | `clock_1` | Ratio |
 | --------- | --------- | ----- |

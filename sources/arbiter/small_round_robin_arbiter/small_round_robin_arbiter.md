@@ -54,7 +54,7 @@ Note that while the gate-count complexity of the two variants is the same, the `
 
 The arbiter is verified using a SystemVerilog testbench with concurrent assertions and three check sequences.
 
-The folowing table lists the checks performed by the testbench.
+The following table lists the checks performed by the testbench.
 
 | Number | Check                        | Description                                                                             |
 | ------ | ---------------------------- | --------------------------------------------------------------------------------------- |
@@ -62,7 +62,7 @@ The folowing table lists the checks performed by the testbench.
 | 2      | All requests active          | Activate all requests and check that after a few cycles they have all been granted.     |
 | 3      | Random stimulus and fairness | Random value of the request vector and check that the arbiter is fair between channels. |
 
-The folowing table lists the parameter values verified by the testbench.
+The following table lists the parameter values verified by the testbench.
 
 | `SIZE` |           |
 | ------ | --------- |

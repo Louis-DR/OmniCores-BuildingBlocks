@@ -52,13 +52,13 @@ If `DIVISION < 2`, `clock_out` is directly assigned to `clock_in`. Else, the mod
 
 The clock divider is verified using a SystemVerilog testbench with multiple DUTs with different parameters, and a single common check sequence. It uses a helper macro to measure the frequency of the output clock.
 
-The folowing table lists the checks performed by the testbench.
+The following table lists the checks performed by the testbench.
 
 | Number | Check                    | Description                               |
 | ------ | ------------------------ | ----------------------------------------- |
 | 1      | Output divided frequency | Checks the frequency of the output clock. |
 
-The folowing table lists the parameter values verified by the testbench.
+The following table lists the parameter values verified by the testbench.
 
 | `DIVISION` |           |
 | ---------- | --------- |

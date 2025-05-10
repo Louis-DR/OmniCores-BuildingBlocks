@@ -23,7 +23,7 @@ localparam ROTATION_MOD = ROTATION % WIDTH;
 
 function automatic [WIDTH-1:0] rotator_left_f;
   input [WIDTH-1:0] data;
-  reg [2*WIDTH-1:0] data_extended; // Red because inside a function
+  reg [2*WIDTH-1:0] data_extended; // Reg because inside a function
   begin
     data_extended = {data, data};
     rotator_left_f = data_extended[WIDTH - ROTATION_MOD +: WIDTH];
