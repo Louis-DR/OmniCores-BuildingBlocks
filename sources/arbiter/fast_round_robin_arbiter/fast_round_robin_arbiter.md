@@ -1,8 +1,8 @@
-# Small Round-Robin Arbiter
+# Fast Round-Robin Arbiter
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Small Round-Robin Arbiter                                                        |
+| Module  | Fast Round-Robin Arbiter                                                         |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,9 +10,9 @@
 
 ## Overview
 
-![small_round_robin_arbiter](small_round_robin_arbiter.svg)
+![fast_round_robin_arbiter](fast_round_robin_arbiter.svg)
 
-Arbiters between different request channels using a round-robin scheme. The grant priority rotates among the requesting channels at each cycle, ensuring fairness. This is the smaller but slower variant of the round-robing arbiter.
+Arbiters between different request channels using a round-robin scheme. The grant priority rotates among the requesting channels at each cycle, ensuring fairness. This is the faster but bigger variant of the round-robing arbiter.
 
 ## Parameters
 
@@ -34,9 +34,9 @@ Arbiters between different request channels using a round-robin scheme. The gran
 
 The internal pointer `rotating_pointer` is incremented at each cycle and wraps around. If the parameter `ROTATE_ON_GRANT` is set to `1`, the pointer is incremented only when a grant is given.
 
-The `requests` vector is rotated by the `rotating_pointer`, then passed to a `static_priority_arbiter`, and the `grant` vector is rotated back the other direction.
+This variant uses one `static_priority_arbiter` for each request channel. Each `static_priority_arbiter` computes the priority with the `requests` vector rotated to a different value between 0 and `SIZE` and its `grant` vector is rotated back, then the expected `grant` vector is selected by a demultiplexer using the `rotating_pointer`.
 
-This variant of the arbiter uses a single `static_priority_arbiter` and two barrel rotators, making it small at the cost of a deeper slower logic path. It also uses the `"small"` variant of the `static_priority_arbiter`.
+The faster operation of this variant is obtained by the parallel computation of the core arbitration, but at the cost of more logic. It also uses the `"fast"` variant of the `static_priority_arbiter`.
 
 ## Paths
 
@@ -46,9 +46,9 @@ This variant of the arbiter uses a single `static_priority_arbiter` and two barr
 
 ## Complexity
 
-| Delay     | Gates               | Comment |
-| --------- | ------------------- | ------- |
-| `O(SIZE)` | `O(SIZE log₂ SIZE)` |         |
+| Delay          | Gates      | Comment |
+| -------------- | ---------- | ------- |
+| `O(log₂ SIZE)` | `O(SIZE²)` |         |
 
 ## Verification
 
@@ -74,14 +74,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                     | Description                                         |
-| ----------------- | ------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`small_round_robin_arbiter.v`](small_round_robin_arbiter.v)             | Verilog design.                                     |
-| Testbench         | [`small_round_robin_arbiter_tb.sv`](small_round_robin_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`small_round_robin_arbiter_tb.gtkw`](small_round_robin_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`small_round_robin_arbiter.sss`](small_round_robin_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`small_round_robin_arbiter.svg`](small_round_robin_arbiter.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`small_round_robin_arbiter.md`](small_round_robin_arbiter.md)           | Markdown documentation datasheet.                   |
+| Type              | File                                                                   | Description                                         |
+| ----------------- | ---------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`fast_round_robin_arbiter.v`](fast_round_robin_arbiter.v)             | Verilog design.                                     |
+| Testbench         | [`fast_round_robin_arbiter_tb.sv`](fast_round_robin_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`fast_round_robin_arbiter_tb.gtkw`](fast_round_robin_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`fast_round_robin_arbiter.sss`](fast_round_robin_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`fast_round_robin_arbiter.svg`](fast_round_robin_arbiter.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`fast_round_robin_arbiter.md`](fast_round_robin_arbiter.md)           | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
@@ -89,15 +89,15 @@ There are no synthesis and implementation constraints for this block.
 | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------- |
 | [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |         |
 | `first_one`                                                                        | `omnicores-buildingblocks/sources/operations/first_one`               |         |
-| `small_first_one`                                                                  | `omnicores-buildingblocks/sources/operations/first_one`               |         |
-| `barrel_rotator_left`                                                              | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     |         |
-| `barrel_rotator_right`                                                             | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    |         |
+| `fast_first_one`                                                                   | `omnicores-buildingblocks/sources/operations/first_one`               |         |
+| `rotate_left`                                                                      | `omnicores-buildingblocks/sources/operations/rotate_left`             |         |
+| `rotate_right`                                                                     | `omnicores-buildingblocks/sources/operations/rotate_right`            |         |
 | `wrapping_increment_counter`                                                       | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` |         |
 
 ## Related modules
 
-| Module                                                                                   | Path                                                                 | Comment                                                |
-| ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------ |
-| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter` | Faster but bigger variant of the round-robing arbiter. |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)       | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`   | Simpler but unfair arbiter.                            |
-| [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)    | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`  | Arbiter with per-channel dynamic priority.             |
+| Module                                                                                      | Path                                                                  | Comment                                                 |
+| ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------- |
+| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter` | Smaller but slower variant of the round-robing arbiter. |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    | Simpler but unfair arbiter.                             |
+| [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)       | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`   | Arbiter with per-channel dynamic priority.              |
