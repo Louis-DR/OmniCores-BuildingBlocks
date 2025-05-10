@@ -1,0 +1,78 @@
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║ Project:     OmniCores-BuildingBlocks                                     ║
+// ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
+// ║ Website:     louis-dr.github.io                                           ║
+// ║ License:     MIT License                                                  ║
+// ║ File:        rotate_right.tb.sv                                           ║
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ This file is generated from the template rotate_right.tb.sv.j2 by J2GPP.  ║ {#- This file is the actual template #}
+// ║ Do not edit it directly.                                                  ║ {#- This file is the actual template #}
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ Description: Top-level testbench for the static right rotate.             ║
+// ║                                                                           ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+
+{%- set test_widths = range(1, 13)|list + [16, 24, 32, 48, 64, 128, 256, 512, 1024] %}
+{%- set test_cases = [] %}
+{%- for width_val in test_widths %}
+{%-   if width_val < 16 %}
+{%-     set rotations_val = range(2*width_val) %}
+{%-   else %}
+{%-     set rotations_val = range(8)|list + [(width_val/2)|int, width_val-1, width_val, width_val+1, (width_val*3/2)|int, 2*width_val-1, 2*width_val] %}
+{%-   endif %}
+{%-   do test_cases.append({'width': width_val, 'rotations': rotations_val}) %}
+{%- endfor %}
+
+
+
+`timescale 1ns/1ns
+
+
+
+module rotate_right_tb ();
+
+{% for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+logic start__rotate_right_tc__width_{{test_case.width}}__rotation_{{rotation}};
+{%- endfor %}
+{% endfor %}
+
+{%- for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+rotate_right_tc #(.WIDTH({{test_case.width}}), .ROTATION({{rotation}})) rotate_right_tc__width_{{test_case.width}}__rotation_{{rotation}} (.start(start__rotate_right_tc__width_{{test_case.width}}__rotation_{{rotation}}));
+{%- endfor %}
+{% endfor %}
+
+initial begin
+  // Log waves
+  $dumpfile("rotate_right.tb.vcd");
+
+{%- for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+  $dumpvars(0,rotate_right_tc__width_{{test_case.width}}__rotation_{{rotation}});
+{%- endfor %}
+{% endfor %}
+
+  // Initialization
+
+{%- for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+  start__rotate_right_tc__width_{{test_case.width}}__rotation_{{rotation}} = 0;
+{%- endfor %}
+{% endfor %}
+
+  // Start testbenches
+{%- for test_case in test_cases %}
+{%- for rotation in test_case.rotations %}
+  start__rotate_right_tc__width_{{test_case.width}}__rotation_{{rotation}} = 1;
+  while(!rotate_right_tc__width_{{test_case.width}}__rotation_{{rotation}}.finished) #(1);
+{%- endfor %}
+{% endfor %}
+
+  // Finish
+  $finish();
+end
+
+endmodule
