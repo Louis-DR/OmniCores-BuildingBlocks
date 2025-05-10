@@ -1,0 +1,71 @@
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║ Project:     OmniCores-BuildingBlocks                                     ║
+// ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
+// ║ Website:     louis-dr.github.io                                           ║
+// ║ License:     MIT License                                                  ║
+// ║ File:        shifter_right.tb.sv                                          ║
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ This file is generated from the template shifter_right.tb.sv.j2 by J2GPP. ║ {#- This file is the actual template #}
+// ║ Do not edit it directly.                                                  ║ {#- This file is the actual template #}
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ Description: Top-level testbench for the static right shifter.            ║
+// ║                                                                           ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+
+{%- set test_cases = [] %}
+{%- for width_val in range(1, 13)|list + [16, 24, 32, 48, 64, 128, 256, 512, 1024] %}
+{%-   if width_val < 16 %}
+{%-     set shifts_val = range(2*width_val) %}
+{%-   else %}
+{%-     set shifts_val = range(8)|list + [(width_val/2)|int, width_val-1, width_val, width_val+1, (width_val*3/2)|int, 2*width_val-1, 2*width_val] %}
+{%-   endif %}
+{%-   for pad_val in [0, 1] %}
+{%-     for shift_val in shifts_val %}
+{%-       do test_cases.append({'width': width_val, 'shift': shift_val, 'pad': pad_val}) %}
+{%-     endfor %}
+{%-   endfor %}
+{%- endfor %}
+
+
+
+`timescale 1ns/1ns
+
+
+
+module shifter_right_tb ();
+
+{% for test_case in test_cases %}
+logic start__shifter_right_tc__width_{{test_case.width}}__shift_{{test_case.shift}}__pad_{{test_case.pad}};
+{% endfor %}
+
+{% for test_case in test_cases %}
+shifter_right_tc #(.WIDTH({{test_case.width}}), .SHIFT({{test_case.shift}}), .PAD_VALUE({{test_case.pad}})) shifter_right_tc__width_{{test_case.width}}__shift_{{test_case.shift}}__pad_{{test_case.pad}} (.start(start__shifter_right_tc__width_{{test_case.width}}__shift_{{test_case.shift}}__pad_{{test_case.pad}}));
+{% endfor %}
+
+initial begin
+  // Log waves
+  $dumpfile("shifter_right.tb.vcd");
+
+{% for test_case in test_cases %}
+  $dumpvars(0,shifter_right_tc__width_{{test_case.width}}__shift_{{test_case.shift}}__pad_{{test_case.pad}});
+{% endfor %}
+
+  // Initialization
+
+{% for test_case in test_cases %}
+  start__shifter_right_tc__width_{{test_case.width}}__shift_{{test_case.shift}}__pad_{{test_case.pad}} = 0;
+{% endfor %}
+
+  // Start testbenches
+{% for test_case in test_cases %}
+  start__shifter_right_tc__width_{{test_case.width}}__shift_{{test_case.shift}}__pad_{{test_case.pad}} = 1;
+  while(!shifter_right_tc__width_{{test_case.width}}__shift_{{test_case.shift}}__pad_{{test_case.pad}}.finished) #(1);
+{% endfor %}
+
+  // Finish
+  $finish();
+end
+
+endmodule
