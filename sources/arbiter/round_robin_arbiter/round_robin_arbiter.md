@@ -113,3 +113,8 @@ There are no synthesis and implementation constraints for this block.
 | [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)             | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`     | Fast but big variant of the round-robing arbiter.   |
 | [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`       | Simpler but unfair arbiter.                         |
 | [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)                | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`      | Arbiter with per-channel dynamic priority.          |
+
+## References
+
+- [Wikipedia, “Round-robin scheduling”.](https://en.wikipedia.org/wiki/Round-robin_scheduling)
+- [M. Weber, “Arbiters: design ideas and coding styles”, SNUG Boston, 2001.](https://abdullahyildiz.github.io/files/Arbiters-Design_Ideas_and_Coding_Styles.pdf)

@@ -138,3 +138,7 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 | [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer` | Variant with slightly faster switching time. |
 | [`clock_gater`](../clock_gater/clock_gater.md)                                  | `omnicores-buildingblocks/sources/clock/clock_gater`            | Clock gater behavioral model.                |
 | [`clock_divider`](../clock_divider/clock_divider.md)                            | `omnicores-buildingblocks/sources/clock/clock_divider`          | Static clock divider.                        |
+
+## References
+
+- [B. S. Haroun, H.-C. Lin, and T. Foo, “Glitch free clock multiplexing circuit with asynchronous switch control and minimum switch over time”, US Patent 6,600,345 B1, 2003.](https://patents.google.com/patent/US6600345B1)
