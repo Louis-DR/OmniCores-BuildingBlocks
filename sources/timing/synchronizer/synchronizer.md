@@ -16,6 +16,8 @@ Resynchronizes a single-bit signal `data_in` from an asynchronous or different c
 
 To prevent glitches at the capture stage, there should be no combinational logic between the last flop in the source domain and the capture flop in the capture domain. The variant `registered_synchrnoizer` add a built-in flop stage in the source domain to ensure this.
 
+![synchronizer](synchronizer.wavedrom.svg)
+
 ## Parameters
 
 | Name     | Type    | Allowed Values | Default | Description                                     |
