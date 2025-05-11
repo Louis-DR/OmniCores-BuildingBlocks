@@ -3,7 +3,7 @@
   {"name": "data_in",           "wave": "l.1...0......", "phase": 0.5},
   {"name": "data_out STAGES=1", "wave": "l.1...0....."},
   {"name": "data_out STAGES=2", "wave": "l..1...0...."},
-  {"name": "data_out STAGES=3", "wave": "l...1...0..."},
-  {"name": "data_out STAGES=4", "wave": "l....1...0.."},
-  {"name": "data_out STAGES=5", "wave": "l.....1...0."}
+  {"name": "data_out STAGES=3", "wave": "l..1...0...."},
+  {"name": "data_out STAGES=4", "wave": "l...1...0..."},
+  {"name": "data_out STAGES=5", "wave": "l...1...0..."}
 ], "config": {"hbounds":[0,11]}}

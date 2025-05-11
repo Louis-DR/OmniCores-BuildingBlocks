@@ -1,8 +1,8 @@
-# Synchronizer
+# Fast Synchronizer
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Synchronizer                                                                     |
+| Module  | Fast Synchronizer                                                                |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,13 +10,15 @@
 
 ## Overview
 
-![synchronizer](synchronizer.svg)
+![fast_synchronizer](fast_synchronizer.svg)
 
 Resynchronizes a single-bit signal `data_in` from an asynchronous or different clock domain to the destination `clock` domain using a chain of flip-flops. This helps prevent metastability issues when crossing clock domains. The number of flip-flop stages can be increased from the default two to three or more for even better MTBF. The synchronized signal must remain stable for at least one cycle of the destination `clock` to be correctly captured.
 
+This variant is slightly faster than the standard `synchronizer` because it leverages both the rising and falling edges of the destination clock.
+
 To prevent glitches at the capture stage, there should be no combinational logic between the last flop in the source domain and the capture flop in the capture domain. The variant `registered_synchrnoizer` add a built-in flop stage in the source domain to ensure this.
 
-![synchronizer](synchronizer.wavedrom.svg)
+![fast_synchronizer](fast_synchronizer.wavedrom.svg)
 
 ## Parameters
 
@@ -35,7 +37,9 @@ To prevent glitches at the capture stage, there should be no combinational logic
 
 ## Operation
 
-The `synchronizer` module consists of a chain of `STAGES` D-type flip-flops. On each rising edge of `clock`, the value of `data_in` is captured by the first flip-flop in the chain (called the capture stage). Subsequent flip-flops (called synchronization stages) capture the output of the preceding flip-flop in the chain. The `data_out` signal is the output of the last flip-flop in the chain.
+The `fast_synchronizer` module consists of a chain of `STAGES` D-type flip-flops. On each rising edge of `clock`, the value of `data_in` is captured by the first flip-flop in the chain (called the capture stage). Subsequent flip-flops (called synchronization stages) capture the output of the preceding flip-flop in the chain. The `data_out` signal is the output of the last flip-flop in the chain.
+
+The last flop in the destination domain captures on the rising edge, and the previous flops alternate between capturating on the negative and positive edges. This reduces the latency of the synchronizer, but degrades MTBF. It can also confuse the tools that recognize typical synchronizer structures.
 
 ## Paths
 
@@ -43,7 +47,7 @@ The `synchronizer` module consists of a chain of `STAGES` D-type flip-flops. On 
 | --------- | ---------- | ---------- | -------------------------------------------------- |
 | `data_in` | `data_out` | sequential | The signal propagates through `STAGES` flip-flops. |
 
-The latency from `data_in` to `data_out` is `STAGES` clock cycles of the `clock` domain.
+The latency from `data_in` to `data_out` is `STAGES/2` clock cycles of the `clock` domain.
 
 ## Complexity
 
@@ -53,7 +57,7 @@ The latency from `data_in` to `data_out` is `STAGES` clock cycles of the `clock`
 
 ## Verification
 
-The `synchronizer` module is verified using a SystemVerilog testbench. The testbench instantiates multiple `synchronizer` DUTs with the `STAGES` parameter ranging from 1 to `MAX_TEST_STAGES` (set to 5). It provides the same stimulus to all DUTs and checks their output in parallel.
+The `fast_synchronizer` module is verified using a SystemVerilog testbench. The testbench instantiates multiple `fast_synchronizer` DUTs with the `STAGES` parameter ranging from 1 to `MAX_TEST_STAGES` (set to 5). It provides the same stimulus to all DUTs and checks their output in parallel.
 
 The following table lists the checks performed by the testbench.
 
@@ -76,35 +80,35 @@ The following table lists the parameter values verified by the testbench.
 
 ## Constraints
 
-The constraints file `synchronizer.sdc` contains the procedure `::omnicores::buildingblocks::timing::synchronizer::apply_constraints_to_instance`. It takes as parameter the hierarchical path to the instance of the synchronizer and applies constraints to it.
+The constraints file `fast_synchronizer.sdc` contains the procedure `::omnicores::buildingblocks::timing::fast_synchronizer::apply_constraints_to_instance`. It takes as parameter the hierarchical path to the instance of the synchronizer and applies constraints to it.
 
 ```tcl
-set synchronizer_path "path/to/synchronizer"
+set fast_synchronizer_path "path/to/fast_synchronizer"
 
-::omnicores::buildingblocks::timing::synchronizer::apply_constraints_to_instance $synchronizer_path
+::omnicores::buildingblocks::timing::fast_synchronizer::apply_constraints_to_instance $fast_synchronizer_path
 ```
 
 The procedure applies a false-path to the input of the capture flop and a max-delay of 0 between the synchronization flops. The false-path tells the tool to not consider this timing path as this is clock-domain-crossing. The max-delay forces the tool to place the synchronization flops as close as possible to each other to minimize metastability. This max-delay of 0 will necessarily violate as it is impossible to meet, so the violation should be waived. Alternatively, the max-delay can be removed and replaced by special instructions for the place-ant-route tool.
 
-To call the procedure automatically on all instances of the synchronizer, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `synchronizer` and the constraints procedure `::omnicores::buildingblocks::timing::synchronizer::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
+To call the procedure automatically on all instances of the synchronizer, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `fast_synchronizer` and the constraints procedure `::omnicores::buildingblocks::timing::fast_synchronizer::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
 
 ```tcl
-::omnicores::common::apply_constraints_to_all_module_instances "synchronizer" "::omnicores::buildingblocks::timing::synchronizer::apply_constraints_to_instance"
+::omnicores::common::apply_constraints_to_all_module_instances "fast_synchronizer" "::omnicores::buildingblocks::timing::fast_synchronizer::apply_constraints_to_instance"
 ```
 
 ## Deliverables
 
-| Type                | File                                                       | Description                                    |
-| ------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
-| Design              | [`synchronizer.v`](synchronizer.v)                         | Verilog design file.                           |
-| Testbench           | [`synchronizer_tb.sv`](synchronizer_tb.sv)                 | SystemVerilog verification testbench.          |
-| Waveform script     | [`synchronizer_tb.gtkw`](synchronizer_tb.gtkw)             | Script to load waveforms in GTKWave (assumed). |
-| Constraint script   | [`synchronizer.sdc`](synchronizer.sdc)                     | Tickle SDC constraint script for synthesis.    |
-| Symbol descriptor   | [`synchronizer.sss`](synchronizer.sss)                     | Symbol descriptor (assumed).                   |
-| Symbol image        | [`synchronizer.svg`](synchronizer.svg)                     | Generated vector image of the symbol (TODO).   |
-| Waveform descriptor | [`synchronizer.wavedrom.json`](synchronizer.wavedrom.json) | Waveform descriptor for Wavedrom.              |
-| Waveform image      | [`synchronizer.wavedrom.svg`](synchronizer.wavedrom.svg)   | Generated image of the waveform.               |
-| Datasheet           | [`synchronizer.md`](synchronizer.md)                       | Markdown documentation datasheet.              |
+| Type                | File                                                                 | Description                                    |
+| ------------------- | -------------------------------------------------------------------- | ---------------------------------------------- |
+| Design              | [`fast_synchronizer.v`](fast_synchronizer.v)                         | Verilog design file.                           |
+| Testbench           | [`fast_synchronizer_tb.sv`](fast_synchronizer_tb.sv)                 | SystemVerilog verification testbench.          |
+| Waveform script     | [`fast_synchronizer_tb.gtkw`](fast_synchronizer_tb.gtkw)             | Script to load waveforms in GTKWave (assumed). |
+| Constraint script   | [`fast_synchronizer.sdc`](fast_synchronizer.sdc)                     | Tickle SDC constraint script for synthesis.    |
+| Symbol descriptor   | [`fast_synchronizer.sss`](fast_synchronizer.sss)                     | Symbol descriptor (assumed).                   |
+| Symbol image        | [`fast_synchronizer.svg`](fast_synchronizer.svg)                     | Generated vector image of the symbol (TODO).   |
+| Waveform descriptor | [`fast_synchronizer.wavedrom.json`](fast_synchronizer.wavedrom.json) | Waveform descriptor for Wavedrom.              |
+| Waveform image      | [`fast_synchronizer.wavedrom.svg`](fast_synchronizer.wavedrom.svg)   | Generated image of the waveform.               |
+| Datasheet           | [`fast_synchronizer.md`](fast_synchronizer.md)                       | Markdown documentation datasheet.              |
 
 ## Dependencies
 
@@ -114,7 +118,7 @@ This module has no external module dependencies.
 
 | Module                                                                                         | Path                                                                  | Comment                                                                           |
 | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [`fast_synchronizer`](../fast_synchronizer/fast_synchronizer.md)                               | `omnicores-buildingblocks/sources/timing/fast_synchronizer`           | A slightly faster synchronizer.                                                   |
+| [`synchronizer`](../synchronizer/synchronizer.md)                                              | `omnicores-buildingblocks/sources/timing/synchronizer`                | More standard slower synchronizer.                                                |
 | [`registered_synchronizer`](../registered_synchronizer/registered_synchronizer.md)             | `omnicores-buildingblocks/sources/timing/registered_synchronizer`     | Synchronizer variant with a final stage in the source domain to prevent glitches. |
 | [`vector_synchronizer`](../vector_synchronizer/vector_synchronizer.md)                         | `omnicores-buildingblocks/sources/timing/vector_synchronizer`         | Synchronizer for multi-bit data vectors.                                          |
 | [`reset_synchronizer`](../reset_synchronizer/reset_synchronizer.md)                            | `omnicores-buildingblocks/sources/timing/reset_synchronizer`          | Synchronizer specifically for reset signals.                                      |
