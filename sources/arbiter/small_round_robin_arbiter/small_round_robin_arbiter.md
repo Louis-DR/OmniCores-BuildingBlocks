@@ -88,8 +88,8 @@ There are no synthesis and implementation constraints for this block.
 | Module                                                                             | Path                                                                  | Comment |
 | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------- |
 | [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |         |
-| `first_one`                                                                        | `omnicores-buildingblocks/sources/operations/first_one`               |         |
-| `small_first_one`                                                                  | `omnicores-buildingblocks/sources/operations/small_first_one`         |         |
+| [`first_one`](../../operations/first_one/first_one.md)                             | `omnicores-buildingblocks/sources/operations/first_one`               |         |
+| [`small_first_one`](../../operations/first_one/small_first_one.md)                 | `omnicores-buildingblocks/sources/operations/small_first_one`         |         |
 | `barrel_rotator_left`                                                              | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     |         |
 | `barrel_rotator_right`                                                             | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    |         |
 | `wrapping_increment_counter`                                                       | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` |         |
