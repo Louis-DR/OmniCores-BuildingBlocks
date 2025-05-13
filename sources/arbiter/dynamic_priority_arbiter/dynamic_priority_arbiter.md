@@ -22,7 +22,7 @@ Arbiters between different request channels based on externally supplied priorit
 | `PRIORITY_WIDTH`   | integer | `>0`                                 | `log2(SIZE)=2`          | Bit width of the priority value for each channel.        |
 | `PRIORITIES_WIDTH` | integer | `>1`                                 | `PRIORITY_WIDTH*SIZE=8` | Bit width of the combined priority array.                |
 | `FALLBACK_ARBITER` | string  | `"static_priority"`, `"round_robin"` | `"static_priority"`     | Fallback arbiter for multiple highest priority requests. |
-| `FALLBACK_VARIANT` | string  | `"fast"`, `"small"`                  | `"fast"`                | Variant for the fallback arbiter.                        |
+| `FALLBACK_VARIANT` | string  | `"fast"`, `"balanced"`, `"small"`    | `"fast"`                | Variant for the fallback arbiter.                        |
 
 ## Ports
 
@@ -52,7 +52,10 @@ The arbiter first unpacks the priority array and classifies the requests per pri
 | `"static_priority"` | `"fast"` (default) |       |       |         |
 | `"static_priority"` | `"small"`          |       |       |         |
 | `"round_robin"`     | `"fast"`           |       |       |         |
+| `"round_robin"`     | `"balanced"`       |       |       |         |
 | `"round_robin"`     | `"small"`          |       |       |         |
+
+Note that the default fallback arbiter variant (`FALLBACK_VARIANT`) is `"fast"` because it is the default fallback arbiter is the static priority arbiter (`FALLBACK_ARBITER="static_priority"`). If the round-robin arbiter fallback variant is selected instead (`FALLBACK_ARBITER="round_robin"`), the `"balanced"` variant is preferable.
 
 ## Verification
 
@@ -89,21 +92,23 @@ There are no synthesis and implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                                                      | Path                                                                  | Comment                                                         |
-| ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`    |                                                                 |
-| [`round_robing_arbiter`](../round_robing_arbiter/round_robing_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/round_robing_arbiter`       | For the `round_robin` fallback arbiter.                         |
-| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter` | For the `round_robin` fallback arbiter and `small` variant.     |
-| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)    | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`  | For the `round_robin` fallback arbiter and `fast` variant.      |
-| [`first_one`](../../operations/first_one/first_one.md)                                      | `omnicores-buildingblocks/sources/operations/first_one`               |                                                                 |
-| [`small_first_one`](../../operations/first_one/small_first_one.md)                          | `omnicores-buildingblocks/sources/operations/small_first_one`         | For the `small` variant.                                        |
-| [`fast_first_one`](../../operations/first_one/fast_first_one.md)                            | `omnicores-buildingblocks/sources/operations/fast_first_one`          | For the default `fast` variant.                                 |
-| `barrel_rotator_left`                                                                       | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`     | For the `round_robin` fallback arbiter and the `small` variant. |
-| `barrel_rotator_right`                                                                      | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`    | For the `round_robin` fallback arbiter and the `small` variant. |
-| [`rotate_left`](../../operations/rotate_left/rotate_left.md)                                | `omnicores-buildingblocks/sources/operations/rotate_left`             | For the `round_robin` fallback arbiter and the `fast` variant.  |
-| [`rotate_right`](../../operations/rotate_right/rotate_right.md)                             | `omnicores-buildingblocks/sources/operations/rotate_right`            | For the `round_robin` fallback arbiter and the `fast` variant.  |
-| `wrapping_increment_counter`                                                                | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter` | For the `round_robin` fallback arbiter.                         |
-| `binary_to_onehot`                                                                          | `omnicores-buildingblocks/sources/encoding/onehot/binary_to_onehot`   |                                                                 |
+| Module                                                                                               | Path                                                                     | Comment                                                           |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`       |                                                                   |
+| [`round_robing_arbiter`](../round_robing_arbiter/round_robing_arbiter.md)                            | `omnicores-buildingblocks/sources/arbiter/round_robing_arbiter`          | For the `round_robin` fallback arbiter.                           |
+| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter`    | For the `small` variant of the `round_robin` fallback arbiter.    |
+| [`balanced_round_robing_arbiter`](../balanced_round_robing_arbiter/balanced_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/balanced_round_robing_arbiter` | For the `balanced` variant of the `round_robin` fallback arbiter. |
+| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)             | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`     | For the `fast` variant of the `round_robin` fallback arbiter.     |
+| [`first_one`](../../operations/first_one/first_one.md)                                               | `omnicores-buildingblocks/sources/operations/first_one`                  |                                                                   |
+| [`small_first_one`](../../operations/first_one/small_first_one.md)                                   | `omnicores-buildingblocks/sources/operations/small_first_one`            | For the `small` variant.                                          |
+| [`fast_first_one`](../../operations/first_one/fast_first_one.md)                                     | `omnicores-buildingblocks/sources/operations/fast_first_one`             | For the `fast` variant.                                           |
+| `barrel_rotator_left`                                                                                | `omnicores-buildingblocks/sources/operations/barrel_rotator_left`        | For the `small` variant of the `round_robin` fallback arbiter.    |
+| `barrel_rotator_right`                                                                               | `omnicores-buildingblocks/sources/operations/barrel_rotator_right`       | For the `small` variant of the `round_robin` fallback arbiter.    |
+| [`shift_left`](../../operations/shift_left/shift_left.md)                                            | `omnicores-buildingblocks/sources/operations/shift_left`                 | For the default `balanced` variant.                               |
+| [`rotate_left`](../../operations/rotate_left/rotate_left.md)                                         | `omnicores-buildingblocks/sources/operations/rotate_left`                | For the `fast` variant of the `round_robin` fallback arbiter.     |
+| [`rotate_right`](../../operations/rotate_right/rotate_right.md)                                      | `omnicores-buildingblocks/sources/operations/rotate_right`               | For the `fast` variant of the `round_robin` fallback arbiter.     |
+| `wrapping_increment_counter`                                                                         | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter`    | For the `round_robin` fallback arbiter.                           |
+| `binary_to_onehot`                                                                                   | `omnicores-buildingblocks/sources/encoding/onehot/binary_to_onehot`      |                                                                   |
 
 ## Related modules
 
