@@ -6,6 +6,8 @@ reorder_buffer
 <= reservation_index
 <- reservation_error
 -> write_enable         read_enable <-
+=> write_index           read_valid ->
 => write_data             read_data =>
-=> write_index           read_error ->
+<- write_error           read_error ->
 <- full                       empty ->
+<- data_full             data_empty ->
