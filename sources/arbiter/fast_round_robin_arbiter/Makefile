@@ -7,5 +7,6 @@ ADDITIONAL_RTL_SOURCES += ../../operations/fast_first_one/fast_first_one.v
 ADDITIONAL_RTL_SOURCES += ../../operations/rotate_left/rotate_left.v
 ADDITIONAL_RTL_SOURCES += ../../operations/rotate_right/rotate_right.v
 ADDITIONAL_RTL_SOURCES += ../../counter/wrapping_increment_counter/wrapping_increment_counter.v
+ADDITIONAL_RTL_SOURCES += ../../operations/shift_left/shift_left.v
 
 include ../../common/common.mk
