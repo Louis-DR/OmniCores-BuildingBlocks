@@ -48,7 +48,7 @@ shift_left #(
 assign region_mask_next = reset_mask ? '1 : region_mask_shifted;
 
 // Update the mask
-always_ff @(posedge clock or negedge resetn) begin
+always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
     region_mask <= '1;
   end
