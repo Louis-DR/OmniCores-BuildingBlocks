@@ -82,7 +82,11 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-This module has no external module dependencies.
+| Module                                                                   | Path                                                          | Comment                         |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------- |
+| [`fast_first_one`](../../operations/fast_first_one/fast_first_one.md)    | `omnicores-buildingblocks/sources/operations/fast_first_one`  | For the default `fast` variant. |
+| [`small_first_one`](../../operations/small_first_one/small_first_one.md) | `omnicores-buildingblocks/sources/operations/small_first_one` | For the `small` variant.        |
+| [`shift_left`](../../operations/shift_left/shift_left.md)                | `omnicores-buildingblocks/sources/operations/shift_left`      | For the default `fast` variant. |
 
 ## Related modules
 

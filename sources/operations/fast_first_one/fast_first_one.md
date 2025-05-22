@@ -76,7 +76,9 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-This module has no external module dependencies.
+| Module                                                    | Path                                                     | Comment |
+| --------------------------------------------------------- | -------------------------------------------------------- | ------- |
+| [`shift_left`](../../operations/shift_left/shift_left.md) | `omnicores-buildingblocks/sources/operations/shift_left` |         |
 
 ## Related modules
 

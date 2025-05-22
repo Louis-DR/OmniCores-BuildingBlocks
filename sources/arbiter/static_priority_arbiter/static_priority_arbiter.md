@@ -78,11 +78,12 @@ There are no synthesis and implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                             | Path                                                    | Comment                         |
-| ------------------------------------------------------------------ | ------------------------------------------------------- | ------------------------------- |
-| [`first_one`](../../operations/first_one/first_one.md)             | `omnicores-buildingblocks/sources/operations/first_one` |                                 |
-| [`small_first_one`](../../operations/first_one/small_first_one.md) | `omnicores-buildingblocks/sources/operations/first_one` | For the default `fast` variant. |
-| [`fast_first_one`](../../operations/first_one/fast_first_one.md)   | `omnicores-buildingblocks/sources/operations/first_one` | For the `small` variant.        |
+| Module                                                                   | Path                                                          | Comment                         |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------- |
+| [`first_one`](../../operations/first_one/first_one.md)                   | `omnicores-buildingblocks/sources/operations/first_one`       |                                 |
+| [`fast_first_one`](../../operations/fast_first_one/fast_first_one.md)    | `omnicores-buildingblocks/sources/operations/fast_first_one`  | For the default `fast` variant. |
+| [`small_first_one`](../../operations/small_first_one/small_first_one.md) | `omnicores-buildingblocks/sources/operations/small_first_one` | For the `small` variant.        |
+| [`shift_left`](../../operations/shift_left/shift_left.md)                | `omnicores-buildingblocks/sources/operations/shift_left`      | For the default `fast` variant. |
 
 ## Related modules
 
