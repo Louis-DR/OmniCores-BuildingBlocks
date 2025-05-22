@@ -61,7 +61,18 @@ endgenerate
 // The final prefix OR vector where prefix_or_vector[i] = data[i] | ... | data[0]
 wire [WIDTH-1:0] prefix_or_vector = prefix_or_stages[WIDTH_LOG2];
 
-// Detect the first one by ANDing the original data with the complement of the prefix OR vector
-assign first_one = data & ~prefix_or_vector;
+// Shift the prefix OR vector once to the left
+wire [WIDTH-1:0] prefix_or_vector_shifted;
+shift_left #(
+  .WIDTH     ( WIDTH ),
+  .SHIFT     ( 1     ),
+  .PAD_VALUE ( 1'b0  )
+) shift_prefix_or_vector (
+  .data_in   ( prefix_or_vector         ),
+  .data_out  ( prefix_or_vector_shifted )
+);
+
+// Detect the first one by ANDing the original data with the complement of the prefix OR vector shifted once to the left
+assign first_one = data & ~prefix_or_vector_shifted;
 
 endmodule
