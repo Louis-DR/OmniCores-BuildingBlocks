@@ -42,8 +42,8 @@ integer expected_count;
 
 // Device under test
 saturating_counter #(
-  .RANGE ( RANGE       ),
-  .RESET ( RESET_VALUE )
+  .RANGE       ( RANGE       ),
+  .RESET_VALUE ( RESET_VALUE )
 ) saturating_counter_dut (
   .clock     ( clock     ),
   .resetn    ( resetn    ),
@@ -78,8 +78,8 @@ initial begin
 
   // Check 1 : Reset value
   $display("CHECK 1 : Reset value.");
-  if (count != RESET) begin
-    $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count, RESET);
+  if (count != RESET_VALUE) begin
+    $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count, RESET_VALUE);
   end
 
   // Check 2 : Increment
@@ -120,7 +120,7 @@ initial begin
   decrement = 0;
   increment = 0;
   resetn    = 0;
-  expected_count = RESET;
+  expected_count = RESET_VALUE;
   @(negedge clock);
   resetn = 1;
   @(negedge clock);
