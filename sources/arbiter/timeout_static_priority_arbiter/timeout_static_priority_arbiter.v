@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        timout_static_priority_arbiter.v                             ║
+// ║ File:        timeout_static_priority_arbiter.v                            ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Arbiters between different request channels. The grant is    ║
 // ║              given to the first ready request channel. If a request is    ║
@@ -17,7 +17,7 @@
 
 
 
-module timout_static_priority_arbiter #(
+module timeout_static_priority_arbiter #(
   parameter SIZE    = 4,
   parameter VARIANT = "fast",
   parameter TIMEOUT = 8
@@ -34,30 +34,37 @@ localparam TIMEOUT_LOG2 = `CLOG2(TIMEOUT);
 // The first channel cannot timeout as it is the highest priority
 reg [TIMEOUT_LOG2-1:0] timeout_countdowns [SIZE-1:1];
 
-// Requests that are not granted this cycle
-wire [SIZE-1:1] requests_not_granted = requests[SIZE-1:1] & ~grant[SIZE-1:1];
+// Requests that were not granted last cycle
+reg [SIZE-1:1] requests_not_granted;
 
 // Requests that have timed out
-wire [SIZE-1:1] requests_timeout = requests_not_granted & (timeout_countdowns[SIZE-1:1] == 0);
+wire [SIZE-1:1] requests_timeout;
+genvar request_index;
+generate
+  for (request_index = 1; request_index < SIZE; request_index = request_index+1) begin : gen_requests_timeout
+    assign requests_timeout[request_index] = requests_not_granted[request_index] & (timeout_countdowns[request_index] == 0);
+  end
+endgenerate
 
 // Timeout countdowns sequential logic
-always_ff @(posedge clock or negedge resetn) begin
+always @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
-    for (int channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
-      timeout_countdowns[channel_index] <= TIMEOUT;
+    for (integer channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
+      timeout_countdowns[channel_index] <= TIMEOUT - 1;
     end
   end
   // Operation
   else begin
-    for (int channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
+    requests_not_granted <= requests[SIZE-1:1] & ~grant[SIZE-1:1];
+    for (integer channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
       // If the channel is not granted and is not already timed out, decrement the timeout countdown
       if (requests_not_granted[channel_index] && !requests_timeout[channel_index]) begin
         timeout_countdowns[channel_index] <= timeout_countdowns[channel_index] - 1;
       end
       // If the request has been granted, or the channel is not requesting, reset the timeout countdown
       else begin
-        timeout_countdowns[channel_index] <= TIMEOUT;
+        timeout_countdowns[channel_index] <= TIMEOUT - 1;
       end
     end
   end
