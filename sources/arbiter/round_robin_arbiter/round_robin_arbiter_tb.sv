@@ -24,6 +24,7 @@ localparam      SIZE            = 4;
 localparam      SIZE_POW2       = 2 ** SIZE;
 localparam      ROTATE_ON_GRANT = 0;
 localparam      VARIANT         = "balanced";
+
 // Check parameters
 localparam integer RANDOM_CHECK_DURATION    = 1000;
 localparam real    FAIRNESS_THRESHOLD_LOWER = 1 / SIZE;
@@ -125,6 +126,7 @@ initial begin
   requests = '0;
   // Activate requests one at a time
   for (integer request_index = 0; request_index < SIZE; request_index++) begin
+    @(negedge clock);
     requests = (1 << request_index);
     // Repeat to check all positions of the priority pointer
     repeat (SIZE) begin
@@ -134,12 +136,14 @@ initial begin
         else $error("[%0tns] Grant doesn't match the only active request (requests=%b, grant=%b).", $time, requests, grant);
     end
   end
+  @(negedge clock);
   requests = '0;
 
   repeat (10) @(posedge clock);
 
   // Check 2 : All requests active
   $display("CHECK 2 : All requests active.");
+  @(negedge clock);
   requests     = '1; // Activate all requests
   granted_mask = '0; // Reset mask for this check
   // Repeat to check all positions of the priority pointer
@@ -148,6 +152,7 @@ initial begin
     // Mark the granted_mask request
     granted_mask = granted_mask | grant;
   end
+  @(negedge clock);
   requests = '0;
   // Verify that all requests received a grant at least once
   assert (granted_mask === '1)
