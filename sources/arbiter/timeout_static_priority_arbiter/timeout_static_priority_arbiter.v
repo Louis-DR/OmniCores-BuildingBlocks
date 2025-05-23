@@ -46,6 +46,9 @@ generate
   end
 endgenerate
 
+// Decrement the timeout countdowns for the requests that were not granted last cycle and are still requesting, except if they already timedout
+wire [SIZE-1:1] decrement_timeout_countdowns = requests_not_granted[SIZE-1:1] & requests[SIZE-1:1] & ~requests_timeout[SIZE-1:1];
+
 // Timeout countdowns sequential logic
 always @(posedge clock or negedge resetn) begin
   // Reset
@@ -59,7 +62,7 @@ always @(posedge clock or negedge resetn) begin
     requests_not_granted <= requests[SIZE-1:1] & ~grant[SIZE-1:1];
     for (integer channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
       // If the channel is not granted and is not already timed out, decrement the timeout countdown
-      if (requests_not_granted[channel_index] && !requests_timeout[channel_index]) begin
+      if (decrement_timeout_countdowns[channel_index]) begin
         timeout_countdowns[channel_index] <= timeout_countdowns[channel_index] - 1;
       end
       // If the request has been granted, or the channel is not requesting, reset the timeout countdown
