@@ -1,0 +1,17 @@
+[dumpfile] "timeout_static_priority_arbiter_tb.vcd"
+[savefile] "timeout_static_priority_arbiter_tb.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-5.264091 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+timeout_static_priority_arbiter_tb.clock
+timeout_static_priority_arbiter_tb.resetn
+timeout_static_priority_arbiter_tb.requests[3:0]
+timeout_static_priority_arbiter_tb.grant[3:0]
+[pattern_trace] 1
+[pattern_trace] 0

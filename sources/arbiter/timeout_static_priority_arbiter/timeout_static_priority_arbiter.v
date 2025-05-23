@@ -77,6 +77,7 @@ end
 wire any_request_timeout = |requests_timeout;
 wire [SIZE-1:0] priority_requests = any_request_timeout ? {requests_timeout, 1'b0} : requests;
 
+// Standard static priority arbiter at the core of the module
 static_priority_arbiter #(
   .SIZE     ( SIZE    ),
   .VARIANT  ( VARIANT )
