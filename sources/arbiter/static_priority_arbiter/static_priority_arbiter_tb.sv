@@ -70,7 +70,7 @@ initial begin
 
     // Check the grant output
     assert (grant === grant_expected) else begin
-      $error("[%0tns] Incorrect grant for request configuration %b. Expected %b, got %b.", $time, request_configuration, grant_expected, grant);
+      $error("[%0tns] Incorrect grant for request configuration %b. Expected %b, got %b.", $time, requests, grant_expected, grant);
     end
 
     // Small delay before next configuration if desired
