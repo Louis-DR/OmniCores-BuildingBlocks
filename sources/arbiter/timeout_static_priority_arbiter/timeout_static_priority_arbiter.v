@@ -48,7 +48,7 @@ generate
   end
 endgenerate
 
-// Decrement the timeout countdowns for the requests that were not granted last cycle and are still requesting, except if they already timedout
+// Decrement the timeout countdowns for the requests that are requested but not granted, except if they already timedout
 wire [SIZE-1:1] decrement_timeout_countdowns =  requests_not_granted [SIZE-1:1]
                                              & ~requests_timeout     [SIZE-1:1];
 

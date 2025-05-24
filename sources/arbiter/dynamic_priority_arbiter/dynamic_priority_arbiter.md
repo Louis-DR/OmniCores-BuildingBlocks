@@ -112,7 +112,8 @@ There are no synthesis and implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                             | Path                                                               | Comment                             |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------- |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter` | Arbiter with static priority order. |
-| [`round_robin_arbiter`](../round_robin_arbiter/round_robin_arbiter.md)             | `omnicores-buildingblocks/sources/arbiter/round_robin_arbiter`     | Fair arbiter.                       |
+| Module                                                                                                     | Path                                                                       | Comment                                     |
+| ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)                         | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`         | Arbiter with static priority order.         |
+| [`timeout_static_priority_arbiter`](../timeout_static_priority_arbiter/timeout_static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/timeout_static_priority_arbiter` | Simpler and unfair but avoiding starvation. |
+| [`round_robin_arbiter`](../round_robin_arbiter/round_robin_arbiter.md)                                     | `omnicores-buildingblocks/sources/arbiter/round_robin_arbiter`             | Fair arbiter.                               |

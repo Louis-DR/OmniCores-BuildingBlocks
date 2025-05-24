@@ -106,13 +106,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                                               | Path                                                                     | Comment                                             |
-| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------- |
-| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md)          | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter`    | Small but slow variant of the round-robing arbiter. |
-| [`balanced_round_robing_arbiter`](../balanced_round_robing_arbiter/balanced_round_robing_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/balanced_round_robing_arbiter` | Balanced variant of the round-robing arbiter.       |
-| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)             | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`     | Fast but big variant of the round-robing arbiter.   |
-| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`       | Simpler but unfair arbiter.                         |
-| [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)                | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`      | Arbiter with per-channel dynamic priority.          |
+| Module                                                                                                     | Path                                                                       | Comment                                             |
+| ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------- |
+| [`small_round_robing_arbiter`](../small_round_robing_arbiter/small_round_robing_arbiter.md)                | `omnicores-buildingblocks/sources/arbiter/small_round_robing_arbiter`      | Small but slow variant of the round-robing arbiter. |
+| [`balanced_round_robing_arbiter`](../balanced_round_robing_arbiter/balanced_round_robing_arbiter.md)       | `omnicores-buildingblocks/sources/arbiter/balanced_round_robing_arbiter`   | Balanced variant of the round-robing arbiter.       |
+| [`fast_round_robing_arbiter`](../fast_round_robing_arbiter/fast_round_robing_arbiter.md)                   | `omnicores-buildingblocks/sources/arbiter/fast_round_robing_arbiter`       | Fast but big variant of the round-robing arbiter.   |
+| [`static_priority_arbiter`](../static_priority_arbiter/static_priority_arbiter.md)                         | `omnicores-buildingblocks/sources/arbiter/static_priority_arbiter`         | Simpler but unfair arbiter.                         |
+| [`timeout_static_priority_arbiter`](../timeout_static_priority_arbiter/timeout_static_priority_arbiter.md) | `omnicores-buildingblocks/sources/arbiter/timeout_static_priority_arbiter` | Simpler and unfair but avoiding starvation.         |
+| [`dynamic_priority_arbiter`](../dynamic_priority_arbiter/dynamic_priority_arbiter.md)                      | `omnicores-buildingblocks/sources/arbiter/dynamic_priority_arbiter`        | Arbiter with per-channel dynamic priority.          |
 
 ## References
 
