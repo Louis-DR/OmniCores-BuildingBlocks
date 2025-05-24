@@ -26,6 +26,7 @@ localparam      TIMEOUT      = 8;
 localparam      VARIANT      = "fast";
 
 // Check parameters
+localparam integer TIMEOUT_CHECK_DURATION   = 1000;
 localparam integer RANDOM_CHECK_DURATION    = 1000;
 localparam real    FAIRNESS_THRESHOLD_LOWER = 1 / SIZE;
 localparam real    FAIRNESS_THRESHOLD_UPPER = 1 - FAIRNESS_THRESHOLD_LOWER;
@@ -125,8 +126,8 @@ initial begin
   resetn = 1;
   @(posedge clock);
 
-  // Check 1 : Exhaustive test
-  $display("CHECK 1 : Exhaustive test.");
+  // Check 1 : Exhaustive test without timeout
+  $display("CHECK 1 : Exhaustive test without timeout.");
   for (integer request_configuration = 0; request_configuration < SIZE_POW2; request_configuration++) begin
     @(negedge clock);
     requests = request_configuration;
@@ -165,14 +166,14 @@ initial begin
     grant_expected = 1;
     #1; // Propagate the requests to the grant
     // Keep the requests stable and check the grant over multiple timeout periods
-    for (integer timeout_index = 0; timeout_index < 5*TIMEOUT; timeout_index++) begin
+    for (integer wait_cycles = 0; wait_cycles < TIMEOUT_CHECK_DURATION; wait_cycles++) begin
       // Check the grant output
       assert (grant === grant_expected) else begin
-        $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, timeout_index, TIMEOUT, request_index, grant_expected, grant);
+        $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, wait_cycles, TIMEOUT, request_index, grant_expected, grant);
       end
       // Update the expected grant when the timeout countdowns are updated
       @(posedge clock);
-      if (timeout_index > 0 && (timeout_index+2) % (TIMEOUT+1) == 0) begin
+      if (wait_cycles > 0 && (wait_cycles + 2) % TIMEOUT == 0) begin
         grant_expected = 1 << request_index;
       end else begin
         grant_expected = 1;
@@ -197,18 +198,18 @@ initial begin
   // Enable the all requests
   requests         = '1;
   grant_expected   = 1;
-  pattern_position = 1 - TIMEOUT;
+  pattern_position = 2 - TIMEOUT;
   #1; // Propagate the requests to the grant
   // Keep the requests stable and check the grant over multiple timeout periods
-  for (integer timeout_index = 0; timeout_index < 5*TIMEOUT; timeout_index++) begin
+  for (integer wait_cycles = 0; wait_cycles < TIMEOUT_CHECK_DURATION; wait_cycles++) begin
     // Check the grant output
     assert (grant === grant_expected) else begin
-      $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, timeout_index, TIMEOUT, 0, grant_expected, grant);
+      $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, wait_cycles, TIMEOUT, 0, grant_expected, grant);
     end
     @(posedge clock);
     // Update the pattern position
     if (pattern_position == SIZE - 1) begin
-      pattern_position = SIZE - TIMEOUT - 1;
+      pattern_position = SIZE - TIMEOUT;
     end else begin
       pattern_position = pattern_position + 1;
     end
@@ -233,8 +234,48 @@ initial begin
 
   repeat (10) @(posedge clock);
 
-  // Check 4 : First channel requesting, other channels random and fairness between them
-  $display("CHECK 4 : First channel requesting, other channels random and fairness between them.");
+  // Check 4 : Single request timeout by pulses
+  $display("CHECK 4 : Single request timeout by pulses.");
+  for (integer request_index = 1; request_index < SIZE; request_index++) begin
+    pattern_position = - 2 * TIMEOUT + 1;
+    for (integer wait_cycles = 0; wait_cycles < TIMEOUT_CHECK_DURATION; wait_cycles++) begin
+      @(negedge clock);
+      // Keep the first channel requesting and one other channel requesting once every two cycles
+      if (wait_cycles % 2 == 0) begin
+        requests = 1;
+      end else begin
+        requests = (1 << request_index) | 1;
+      end
+      // Update the pattern position and calculate the expected grant based on the pattern position
+      if (pattern_position == 0) begin
+        // Other channel
+        grant_expected   = 1 << request_index;
+        pattern_position = - 2 * TIMEOUT + 1;
+      end else begin
+        // Channel 0
+        grant_expected   = 1;
+        pattern_position = pattern_position + 1;
+      end
+      #1; // Propagate the requests to the grant
+      // Check the grant output
+      assert (grant === grant_expected) else begin
+        $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, wait_cycles, TIMEOUT, request_index, grant_expected, grant);
+      end
+    end
+    // Reset the timeout countdowns
+    @(negedge clock);
+    requests       = 0;
+    grant_expected = 0;
+    @(negedge clock);
+    resetn = 0;
+    @(negedge clock);
+    resetn = 1;
+  end
+
+  repeat (10) @(posedge clock);
+
+  // Check 5 : First channel requesting, other channels random and fairness between them
+  $display("CHECK 5 : First channel requesting, other channels random and fairness between them.");
   foreach (grant_counts   [grant_index])   grant_counts   [grant_index]   = 0;
   foreach (request_counts [request_index]) request_counts [request_index] = 0;
   repeat (RANDOM_CHECK_DURATION) begin
@@ -266,8 +307,8 @@ initial begin
 
   repeat (10) @(posedge clock);
 
-  // Check 5 : Random stimulus
-  $display("CHECK 5 : Random stimulus.");
+  // Check 6 : Random stimulus
+  $display("CHECK 6 : Random stimulus.");
   repeat (RANDOM_CHECK_DURATION) begin
     @(negedge clock);
     // Random requests
