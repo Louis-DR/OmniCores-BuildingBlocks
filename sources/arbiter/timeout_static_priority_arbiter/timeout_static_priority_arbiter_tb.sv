@@ -58,6 +58,50 @@ initial begin
   end
 end
 
+// Concurrent Assertions
+`ifdef SIMULATION_SUPPORT_CONCURRENT_ASSERTION
+
+initial begin
+  $display("Concurrent assertions enabled.");
+end
+
+// Assertion 1: At most one grant
+assert property (@(posedge clock) $countones(grant) <= 1)
+  else $error("[%0tns] More than one grant asserted : %b", $time, grant);
+
+// Assertion 2: Grant implies request
+assert property (@(posedge clock) (grant !== '0) |-> ((grant & requests) === grant))
+  else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
+
+// Assertion 3: Requests implies exactly one grant
+assert property (@(posedge clock) resetn |-> (|requests) |-> ($countones(grant) == 1))
+  else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
+
+`else // Procedural Assertions Fallback
+
+initial begin
+  $display("Concurrent assertions disabled, using procedural assertions.");
+end
+
+always @(posedge clock) begin
+  // Only perform checks after reset is deasserted
+  if (resetn) begin
+    // Assertion 1: At most one grant
+    assert ($countones(grant) <= 1)
+      else $error("[%0tns] More than one grant asserted : %b", $time, grant);
+
+    // Assertion 2: Grant implies request
+    assert ((grant === '0) || ((grant & requests) === grant))
+      else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
+
+    // Assertion 3: Requests implies exactly one grant
+    assert (!(|requests) || ($countones(grant) == 1))
+      else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
+  end
+end
+
+`endif // SIMULATION_SUPPORT_CONCURRENT_ASSERTION
+
 // Main block
 initial begin
   // Log waves
