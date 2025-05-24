@@ -231,6 +231,8 @@ initial begin
   @(negedge clock);
   resetn = 1;
 
+  repeat (10) @(posedge clock);
+
   // Check 4 : First channel requesting, other channels random and fairness between them
   $display("CHECK 4 : First channel requesting, other channels random and fairness between them.");
   foreach (grant_counts   [grant_index])   grant_counts   [grant_index]   = 0;
@@ -260,6 +262,16 @@ initial begin
       else $error("[%0tns] Channel %0d made %0d requests but only got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
     assert (grant_ratio <= FAIRNESS_THRESHOLD_UPPER)
       else $error("[%0tns] Channel %0d made only %0d requests but got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
+  end
+
+  repeat (10) @(posedge clock);
+
+  // Check 5 : Random stimulus
+  $display("CHECK 5 : Random stimulus.");
+  repeat (RANDOM_CHECK_DURATION) begin
+    @(negedge clock);
+    // Random requests
+    requests = $urandom_range(0, SIZE_POW2 - 1);
   end
 
   // End of test
