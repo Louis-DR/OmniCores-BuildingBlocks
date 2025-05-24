@@ -22,7 +22,7 @@ module timeout_static_priority_arbiter_tb ();
 localparam real CLOCK_PERIOD = 10;
 localparam      SIZE         = 4;
 localparam      SIZE_POW2    = 2 ** SIZE;
-localparam      TIMEOUT      = 16;
+localparam      TIMEOUT      = 8;
 localparam      VARIANT      = "fast";
 
 // Device ports
@@ -34,6 +34,9 @@ logic [SIZE-1:0] grant;
 // Test signals
 logic [SIZE-1:0] grant_expected;
 bool             found_grant;
+
+// Test variables
+integer pattern_position;
 
 // Device under test
 timeout_static_priority_arbiter #(
@@ -138,6 +141,48 @@ initial begin
     @(negedge clock);
     resetn = 1;
   end
+
+  repeat (10) @(posedge clock);
+
+  // Check 3 : All requests timeout
+  $display("CHECK 3 : All requests timeout.");
+  @(negedge clock);
+  // Enable the all requests
+  requests         = '1;
+  grant_expected   = 1;
+  pattern_position = 1 - TIMEOUT;
+  #1; // Propagate the requests to the grant
+  // Keep the requests stable and check the grant over multiple timeout periods
+  for (integer timeout_index = 0; timeout_index < 5*TIMEOUT; timeout_index++) begin
+    // Check the grant output
+    assert (grant === grant_expected) else begin
+      $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, timeout_index, TIMEOUT, 0, grant_expected, grant);
+    end
+    @(posedge clock);
+    // Update the pattern position
+    if (pattern_position == SIZE - 1) begin
+      pattern_position = SIZE - TIMEOUT - 1;
+    end else begin
+      pattern_position = pattern_position + 1;
+    end
+    // Calculate the expected grant based on the pattern position
+    if (pattern_position <= 0) begin
+       // Channel 0
+      grant_expected = 1;
+    end else begin
+      // Channels 1 to SIZE-1
+      grant_expected = 1 << pattern_position;
+    end
+    @(negedge clock);
+  end
+  // Reset the timeout countdowns
+  @(negedge clock);
+  requests       = 0;
+  grant_expected = 0;
+  @(negedge clock);
+  resetn = 0;
+  @(negedge clock);
+  resetn = 1;
 
   // End of test
   $finish;
