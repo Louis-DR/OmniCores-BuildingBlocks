@@ -35,23 +35,23 @@ localparam TIMEOUT_LOG2 = `CLOG2(TIMEOUT);
 reg [TIMEOUT_LOG2-1:0] timeout_countdowns [SIZE-1:1];
 
 // Requests that were not granted last cycle
-reg [SIZE-1:1] requests_not_granted_last_cycle;
+reg  [SIZE-1:1] requests_not_granted_last_cycle;
+wire [SIZE-1:1] requests_not_granted =  requests [SIZE-1:1]
+                                     & ~grant    [SIZE-1:1];
 
 // Requests that have timed out
 wire [SIZE-1:1] requests_timeout;
 genvar request_index;
 generate
   for (request_index = 1; request_index < SIZE; request_index = request_index+1) begin : gen_requests_timeout
-    assign requests_timeout[request_index] = requests                        [request_index]
-                                           & requests_not_granted_last_cycle [request_index]
-                                           & timeout_countdowns              [request_index] == 0;
+    assign requests_timeout[request_index] = requests           [request_index]
+                                           & timeout_countdowns [request_index] == 0;
   end
 endgenerate
 
 // Decrement the timeout countdowns for the requests that were not granted last cycle and are still requesting, except if they already timedout
-wire [SIZE-1:1] decrement_timeout_countdowns =  requests                       [SIZE-1:1]
-                                             & requests_not_granted_last_cycle [SIZE-1:1]
-                                             & ~requests_timeout               [SIZE-1:1];
+wire [SIZE-1:1] decrement_timeout_countdowns =  requests_not_granted [SIZE-1:1]
+                                             & ~requests_timeout     [SIZE-1:1];
 
 // Reset the timeout countdown when a request is granted
 wire [SIZE-1:1] reset_timeout_countdowns = grant[SIZE-1:1];
