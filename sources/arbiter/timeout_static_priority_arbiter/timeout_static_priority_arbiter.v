@@ -35,7 +35,6 @@ localparam TIMEOUT_LOG2 = `CLOG2(TIMEOUT);
 reg [TIMEOUT_LOG2-1:0] timeout_countdowns [SIZE-1:1];
 
 // Requests that were not granted last cycle
-reg  [SIZE-1:1] requests_not_granted_last_cycle;
 wire [SIZE-1:1] requests_not_granted =  requests [SIZE-1:1]
                                      & ~grant    [SIZE-1:1];
 
@@ -66,7 +65,6 @@ always @(posedge clock or negedge resetn) begin
   end
   // Operation
   else begin
-    requests_not_granted_last_cycle <= requests[SIZE-1:1] & ~grant[SIZE-1:1];
     for (integer channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
       // Decrement the timeout countdown
       if (decrement_timeout_countdowns[channel_index]) begin
