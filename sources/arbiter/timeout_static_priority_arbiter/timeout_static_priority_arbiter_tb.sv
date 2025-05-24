@@ -49,8 +49,8 @@ real             grant_ratio;
 // Device under test
 timeout_static_priority_arbiter #(
   .SIZE     ( SIZE     ),
-  .VARIANT  ( VARIANT  ),
-  .TIMEOUT  ( TIMEOUT  )
+  .TIMEOUT  ( TIMEOUT  ),
+  .VARIANT  ( VARIANT  )
 ) timeout_static_priority_arbiter_dut (
   .clock    ( clock    ),
   .resetn   ( resetn   ),

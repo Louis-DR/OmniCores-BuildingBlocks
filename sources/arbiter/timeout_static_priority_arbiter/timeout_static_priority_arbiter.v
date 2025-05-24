@@ -19,8 +19,8 @@
 
 module timeout_static_priority_arbiter #(
   parameter SIZE    = 4,
-  parameter VARIANT = "fast",
-  parameter TIMEOUT = 8
+  parameter TIMEOUT = 8,
+  parameter VARIANT = "fast"
 ) (
   input             clock,
   input             resetn,
@@ -53,9 +53,8 @@ wire [SIZE-1:1] decrement_timeout_countdowns =  requests                       [
                                              & requests_not_granted_last_cycle [SIZE-1:1]
                                              & ~requests_timeout               [SIZE-1:1];
 
-// Reset the timeout countdown for the requests that timedout and have been granted
-wire [SIZE-1:1] reset_timeout_countdowns = requests_timeout [SIZE-1:1]
-                                         & grant            [SIZE-1:1];
+// Reset the timeout countdown when a request is granted
+wire [SIZE-1:1] reset_timeout_countdowns = grant[SIZE-1:1];
 
 // Timeout countdowns sequential logic
 always @(posedge clock or negedge resetn) begin
