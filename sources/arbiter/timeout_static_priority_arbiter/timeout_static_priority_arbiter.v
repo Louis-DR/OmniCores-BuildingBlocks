@@ -35,22 +35,27 @@ localparam TIMEOUT_LOG2 = `CLOG2(TIMEOUT);
 reg [TIMEOUT_LOG2-1:0] timeout_countdowns [SIZE-1:1];
 
 // Requests that were not granted last cycle
-reg [SIZE-1:1] requests_not_granted;
+reg [SIZE-1:1] requests_not_granted_last_cycle;
 
 // Requests that have timed out
 wire [SIZE-1:1] requests_timeout;
 genvar request_index;
 generate
   for (request_index = 1; request_index < SIZE; request_index = request_index+1) begin : gen_requests_timeout
-    assign requests_timeout[request_index] = requests_not_granted[request_index] & (timeout_countdowns[request_index] == 0);
+    assign requests_timeout[request_index] = requests                        [request_index]
+                                           & requests_not_granted_last_cycle [request_index]
+                                           & timeout_countdowns              [request_index] == 0;
   end
 endgenerate
 
 // Decrement the timeout countdowns for the requests that were not granted last cycle and are still requesting, except if they already timedout
-wire [SIZE-1:1] decrement_timeout_countdowns = requests_not_granted[SIZE-1:1] & requests[SIZE-1:1] & ~requests_timeout[SIZE-1:1];
+wire [SIZE-1:1] decrement_timeout_countdowns =  requests                       [SIZE-1:1]
+                                             & requests_not_granted_last_cycle [SIZE-1:1]
+                                             & ~requests_timeout               [SIZE-1:1];
 
 // Reset the timeout countdown for the requests that timedout and have been granted
-wire [SIZE-1:1] reset_timeout_countdowns = requests_timeout[SIZE-1:1] & grant[SIZE-1:1];
+wire [SIZE-1:1] reset_timeout_countdowns = requests_timeout [SIZE-1:1]
+                                         & grant            [SIZE-1:1];
 
 // Timeout countdowns sequential logic
 always @(posedge clock or negedge resetn) begin
@@ -62,7 +67,7 @@ always @(posedge clock or negedge resetn) begin
   end
   // Operation
   else begin
-    requests_not_granted <= requests[SIZE-1:1] & ~grant[SIZE-1:1];
+    requests_not_granted_last_cycle <= requests[SIZE-1:1] & ~grant[SIZE-1:1];
     for (integer channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
       // Decrement the timeout countdown
       if (decrement_timeout_countdowns[channel_index]) begin
