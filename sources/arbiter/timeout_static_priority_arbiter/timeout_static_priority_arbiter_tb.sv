@@ -50,11 +50,6 @@ timeout_static_priority_arbiter #(
   .grant    ( grant    )
 );
 
-localparam TIMEOUT_LOG2 = $clog2(TIMEOUT);
-wire [TIMEOUT_LOG2-1:0] timeout_countdowns_1 = timeout_static_priority_arbiter_dut.timeout_countdowns[1];
-wire [TIMEOUT_LOG2-1:0] timeout_countdowns_2 = timeout_static_priority_arbiter_dut.timeout_countdowns[2];
-wire [TIMEOUT_LOG2-1:0] timeout_countdowns_3 = timeout_static_priority_arbiter_dut.timeout_countdowns[3];
-
 // Source clock generation
 initial begin
   clock = 1;
