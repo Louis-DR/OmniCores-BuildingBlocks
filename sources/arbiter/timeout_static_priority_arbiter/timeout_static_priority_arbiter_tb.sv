@@ -25,6 +25,11 @@ localparam      SIZE_POW2    = 2 ** SIZE;
 localparam      TIMEOUT      = 8;
 localparam      VARIANT      = "fast";
 
+// Check parameters
+localparam integer RANDOM_CHECK_DURATION    = 1000;
+localparam real    FAIRNESS_THRESHOLD_LOWER = 1 / SIZE;
+localparam real    FAIRNESS_THRESHOLD_UPPER = 1 - FAIRNESS_THRESHOLD_LOWER;
+
 // Device ports
 logic            clock;
 logic            resetn;
@@ -36,7 +41,10 @@ logic [SIZE-1:0] grant_expected;
 bool             found_grant;
 
 // Test variables
-integer pattern_position;
+integer          pattern_position;
+integer unsigned request_counts [SIZE];
+integer unsigned grant_counts   [SIZE];
+real             grant_ratio;
 
 // Device under test
 timeout_static_priority_arbiter #(
@@ -66,15 +74,15 @@ initial begin
 end
 
 // Assertion 1: At most one grant
-assert property (@(posedge clock) $countones(grant) <= 1)
+assert property (@(negedge clock) #1 $countones(grant) <= 1)
   else $error("[%0tns] More than one grant asserted : %b", $time, grant);
 
 // Assertion 2: Grant implies request
-assert property (@(posedge clock) (grant !== '0) |-> ((grant & requests) === grant))
+assert property (@(negedge clock) #1 (grant !== '0) |-> ((grant & requests) === grant))
   else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
 
 // Assertion 3: Requests implies exactly one grant
-assert property (@(posedge clock) resetn |-> (|requests) |-> ($countones(grant) == 1))
+assert property (@(negedge clock) #1 resetn |-> (|requests) |-> ($countones(grant) == 1))
   else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
 
 `else // Procedural Assertions Fallback
@@ -222,6 +230,37 @@ initial begin
   resetn = 0;
   @(negedge clock);
   resetn = 1;
+
+  // Check 4 : First channel requesting, other channels random and fairness between them
+  $display("CHECK 4 : First channel requesting, other channels random and fairness between them.");
+  foreach (grant_counts   [grant_index])   grant_counts   [grant_index]   = 0;
+  foreach (request_counts [request_index]) request_counts [request_index] = 0;
+  repeat (RANDOM_CHECK_DURATION) begin
+    @(negedge clock);
+    // Random requests
+    requests = $urandom_range(0, SIZE_POW2 - 1) | 1;
+    // Find which requests are active and increment their count
+    for (integer request_index = 1; request_index < SIZE; request_index++) begin
+      if (requests[request_index]) begin
+        request_counts[request_index]++;
+      end
+    end
+    @(posedge clock);
+    // Find which grant is active and increment its count
+    for (integer grant_index = 1; grant_index < SIZE; grant_index++) begin
+      if (grant[grant_index]) begin
+        grant_counts[grant_index]++;
+      end
+    end
+  end
+  // Check fairness
+  for (integer channel_index = 1; channel_index < SIZE; channel_index++) begin
+    grant_ratio = real'(grant_counts[channel_index]) / real'(request_counts[channel_index]);
+    assert (grant_ratio >= FAIRNESS_THRESHOLD_LOWER)
+      else $error("[%0tns] Channel %0d made %0d requests but only got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
+    assert (grant_ratio <= FAIRNESS_THRESHOLD_UPPER)
+      else $error("[%0tns] Channel %0d made only %0d requests but got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
+  end
 
   // End of test
   $finish;
