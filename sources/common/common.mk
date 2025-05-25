@@ -6,11 +6,15 @@ VERIFICATION_FILES      ?= $(TESTBENCH_NAME).$(TESTBENCH_EXTENSION)
 RTL_SOURCES             ?= $(DESIGN_FILES) $(VERIFICATION_FILES)
 RTL_SOURCES             := $(RTL_SOURCES) $(ADDITIONAL_RTL_SOURCES)
 RTL_INCLUDES            ?=
+RTL_INCLUDES_VERILATOR  := $(addprefix +incdir+,$(RTL_INCLUDES))
 RTL_INCLUDES_ICARUS     := $(addprefix -I ,$(RTL_INCLUDES))
 RTL_INCLUDES_MODELSIM   := $(addprefix +incdir+,$(RTL_INCLUDES))
 RTL_DEFINES             ?=
+RTL_DEFINES_VERILATOR   := $(addprefix +define+,$(RTL_DEFINES))
 RTL_DEFINES_ICARUS      := $(addprefix -D ,$(RTL_DEFINES))
 RTL_DEFINES_MODELSIM    := $(addprefix +define+,$(RTL_DEFINES))
+OBJ_DIRECTORY           ?= obj_dir/
+EXE_FILE                ?= $(OBJ_DIRECTORY)/V$(DESIGN_NAME)
 OPTIMIZED_TOP           ?= $(TESTBENCH_NAME)_opt
 WORK_LIBRARY            ?= $(TESTBENCH_NAME).lib
 VVP_FILE                ?= $(TESTBENCH_NAME).vvp
@@ -22,6 +26,11 @@ LOG_FILE                ?= $(TESTBENCH_NAME).log
 GTKW_FILE               ?= $(TESTBENCH_NAME).gtkw
 RON_FILE                ?= $(TESTBENCH_NAME).ron
 COMPILE_FLAGS           ?=
+COMPILE_FLAGS_VERILATOR ?=
+COMPILE_FLAGS_VERILATOR += --trace
+COMPILE_FLAGS_VERILATOR += --timescale 1ns/1ns
+COMPILE_FLAGS_VERILATOR += -Wno-fatal
+COMPILE_FLAGS_VERILATOR += +define+SIMUMLATOR_NO_BOOL
 COMPILE_FLAGS_ICARUS    ?=
 COMPILE_FLAGS_ICARUS    += -g2012
 COMPILE_FLAGS_ICARUS    += -D SIMUMLATOR_NO_BREAK
@@ -32,6 +41,9 @@ COMPILE_FLAGS_MODELSIM  += +define+SIMUMLATOR_NO_BOOL
 
 preprocess:
 
+compile_verilator: preprocess
+	verilator $(COMPILE_FLAGS_VERILATOR) --binary $(RTL_INCLUDES_VERILATOR) $(RTL_DEFINES_VERILATOR) $(RTL_SOURCES)
+
 compile_icarus: preprocess
 	iverilog $(COMPILE_FLAGS_ICARUS) -o $(VVP_FILE) $(RTL_INCLUDES_ICARUS) $(RTL_DEFINES_ICARUS) $(RTL_SOURCES)
 
@@ -40,12 +52,17 @@ compile_modelsim: preprocess
 
 compile: compile_icarus
 
+optimize_verilator: compile_verilator
+
 optimize_icarus: compile_icarus
 
 optimize_modelsim: compile_modelsim
 	vopt -work $(WORK_LIBRARY) -designfile $(DESIGN_FILE) -o $(OPTIMIZED_TOP) $(TOP_TESTBENCH)
 
 optimize: optimize_icarus
+
+simulate_verilator: optimize_verilator
+	$(EXE_FILE) | tee $(LOG_FILE)
 
 simulate_icarus: optimize_icarus
 	vvp -l $(LOG_FILE) $(VVP_FILE)
@@ -84,6 +101,7 @@ waves_visualizer:
 waves: waves_gtkwave
 
 clean:
+	rm -rf ./$(OBJ_DIRECTORY)
 	rm -rf ./$(WORK_LIBRARY)
 	rm -f ./$(VVP_FILE)
 	rm -f ./$(DESIGN_FILE)

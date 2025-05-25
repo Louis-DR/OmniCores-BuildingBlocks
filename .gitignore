@@ -1,4 +1,11 @@
 .vscode/
-*.vcd
+*obj_dir/
+*.lib/
 *.vvp
+*.wlf
+*.vcd
 *.log
+*.qwave.db
+*.design.bin
+transcript
+.visualizer
