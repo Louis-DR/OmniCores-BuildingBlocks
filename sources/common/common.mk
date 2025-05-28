@@ -1,18 +1,58 @@
 DESIGN_EXTENSION        ?= v
 TESTBENCH_EXTENSION     ?= sv
 TESTBENCH_NAME          ?= $(DESIGN_NAME)_tb
+
+# Filelist and include list file paths
+DESIGN_FILELIST         ?= $(DESIGN_NAME).design.filelist
+DESIGN_INCLIST          ?= $(DESIGN_NAME).design.inclist
+TESTBENCH_FILELIST      ?= $(DESIGN_NAME).testbench.filelist
+TESTBENCH_INCLIST       ?= $(DESIGN_NAME).testbench.inclist
+
+# Read design files from filelist if it exists, otherwise use default pattern
+ifneq (,$(wildcard $(DESIGN_FILELIST)))
+DESIGN_FILES            := $(shell cat $(DESIGN_FILELIST))
+else
 DESIGN_FILES            ?= $(DESIGN_NAME).$(DESIGN_EXTENSION)
-VERIFICATION_FILES      ?= $(TESTBENCH_NAME).$(TESTBENCH_EXTENSION)
-RTL_SOURCES             ?= $(DESIGN_FILES) $(VERIFICATION_FILES)
-RTL_SOURCES             := $(RTL_SOURCES) $(ADDITIONAL_RTL_SOURCES)
-RTL_INCLUDES            ?=
-RTL_INCLUDES_VERILATOR  := $(addprefix +incdir+,$(RTL_INCLUDES))
-RTL_INCLUDES_ICARUS     := $(addprefix -I ,$(RTL_INCLUDES))
-RTL_INCLUDES_MODELSIM   := $(addprefix +incdir+,$(RTL_INCLUDES))
-RTL_DEFINES             ?=
-RTL_DEFINES_VERILATOR   := $(addprefix +define+,$(RTL_DEFINES))
-RTL_DEFINES_ICARUS      := $(addprefix -D ,$(RTL_DEFINES))
-RTL_DEFINES_MODELSIM    := $(addprefix +define+,$(RTL_DEFINES))
+endif
+
+# Read testbench files from filelist if it exists, otherwise use default pattern
+ifneq (,$(wildcard $(TESTBENCH_FILELIST)))
+TESTBENCH_FILES         := $(shell cat $(TESTBENCH_FILELIST))
+else
+TESTBENCH_FILES         ?= $(TESTBENCH_NAME).$(TESTBENCH_EXTENSION)
+endif
+
+# Combine design and testbench files for verification
+VERIFICATION_FILES      := $(DESIGN_FILES) $(TESTBENCH_FILES)
+
+# Read design include directories from inclist if it exists
+DESIGN_INCLUDES         ?=
+ifneq (,$(wildcard $(DESIGN_INCLIST)))
+DESIGN_INCLUDES         += $(shell cat $(DESIGN_INCLIST))
+endif
+
+# Read testbench include directories from inclist if it exists
+TESTBENCH_INCLUDES      ?=
+ifneq (,$(wildcard $(TESTBENCH_INCLIST)))
+TESTBENCH_INCLUDES      += $(shell cat $(TESTBENCH_INCLIST))
+endif
+
+# Combine design and testbench include directories for verification, and remove duplicates
+VERIFICATION_INCLUDES   := $(DESIGN_INCLUDES) $(TESTBENCH_INCLUDES)
+VERIFICATION_INCLUDES   := $(sort $(VERIFICATION_INCLUDES))
+
+# Include directories for each tool
+INCLUDES_VERILATOR      := $(addprefix +incdir+,$(VERIFICATION_INCLUDES))
+INCLUDES_ICARUS         := $(addprefix -I ,$(VERIFICATION_INCLUDES))
+INCLUDES_MODELSIM       := $(addprefix +incdir+,$(VERIFICATION_INCLUDES))
+
+# Macro definitions for each tool
+DEFINES                 ?=
+DEFINES_VERILATOR       := $(addprefix +define+,$(DEFINES))
+DEFINES_ICARUS          := $(addprefix -D ,$(DEFINES))
+DEFINES_MODELSIM        := $(addprefix +define+,$(DEFINES))
+
+# Output files for each tool
 OBJ_DIRECTORY           ?= obj_dir/
 EXE_FILE                ?= $(OBJ_DIRECTORY)/V$(DESIGN_NAME)
 OPTIMIZED_TOP           ?= $(TESTBENCH_NAME)_opt
@@ -25,6 +65,8 @@ VCD_FILE                ?= $(TESTBENCH_NAME).vcd
 LOG_FILE                ?= $(TESTBENCH_NAME).log
 GTKW_FILE               ?= $(TESTBENCH_NAME).gtkw
 RON_FILE                ?= $(TESTBENCH_NAME).ron
+
+# Compilation flags for each tool
 COMPILE_FLAGS           ?=
 COMPILE_FLAGS_VERILATOR ?=
 COMPILE_FLAGS_VERILATOR += --trace
@@ -42,13 +84,13 @@ COMPILE_FLAGS_MODELSIM  += +define+SIMUMLATOR_NO_BOOL
 preprocess:
 
 compile_verilator: preprocess
-	verilator $(COMPILE_FLAGS_VERILATOR) --binary $(RTL_INCLUDES_VERILATOR) $(RTL_DEFINES_VERILATOR) $(RTL_SOURCES)
+	verilator $(COMPILE_FLAGS_VERILATOR) --binary $(INCLUDES_VERILATOR) $(DEFINES_VERILATOR) $(VERIFICATION_FILES)
 
 compile_icarus: preprocess
-	iverilog $(COMPILE_FLAGS_ICARUS) -o $(VVP_FILE) $(RTL_INCLUDES_ICARUS) $(RTL_DEFINES_ICARUS) $(RTL_SOURCES)
+	iverilog $(COMPILE_FLAGS_ICARUS) -o $(VVP_FILE) $(INCLUDES_ICARUS) $(DEFINES_ICARUS) $(VERIFICATION_FILES)
 
 compile_modelsim: preprocess
-	vlog -work $(WORK_LIBRARY) +acc $(COMPILE_FLAGS_MODELSIM) $(RTL_INCLUDES_MODELSIM) $(RTL_DEFINES_MODELSIM) $(RTL_SOURCES)
+	vlog -work $(WORK_LIBRARY) +acc $(COMPILE_FLAGS_MODELSIM) $(INCLUDES_MODELSIM) $(DEFINES_MODELSIM) $(VERIFICATION_FILES)
 
 compile: compile_icarus
 

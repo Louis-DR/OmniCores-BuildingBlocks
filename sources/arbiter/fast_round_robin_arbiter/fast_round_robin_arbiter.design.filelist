@@ -1,0 +1,8 @@
+fast_round_robin_arbiter.v
+../static_priority_arbiter/static_priority_arbiter.v
+../../operations/first_one/first_one.v
+../../operations/fast_first_one/fast_first_one.v
+../../operations/rotate_left/rotate_left.v
+../../operations/rotate_right/rotate_right.v
+../../counter/wrapping_increment_counter/wrapping_increment_counter.v
+../../operations/shift_left/shift_left.v

@@ -1,0 +1,7 @@
+small_round_robin_arbiter.v
+../static_priority_arbiter/static_priority_arbiter.v
+../../operations/first_one/first_one.v
+../../operations/small_first_one/small_first_one.v
+../../operations/barrel_rotator_left/barrel_rotator_left.v
+../../operations/barrel_rotator_right/barrel_rotator_right.v
+../../counter/wrapping_increment_counter/wrapping_increment_counter.v

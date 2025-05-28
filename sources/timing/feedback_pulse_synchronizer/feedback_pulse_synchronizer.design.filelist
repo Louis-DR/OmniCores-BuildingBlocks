@@ -1,0 +1,3 @@
+feedback_pulse_synchronizer.v
+../synchronizer/synchronizer.v
+../../pulse/rising_edge_detector/rising_edge_detector.v
