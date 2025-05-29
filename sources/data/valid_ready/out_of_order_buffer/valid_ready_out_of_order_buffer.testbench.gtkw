@@ -1,0 +1,44 @@
+[dumpfile] "valid_ready_out_of_order_buffer__testbench.vcd"
+[savefile] "valid_ready_out_of_order_buffer__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-7.850139 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+valid_ready_out_of_order_buffer__testbench.clock
+valid_ready_out_of_order_buffer__testbench.resetn
+valid_ready_out_of_order_buffer__testbench.full
+valid_ready_out_of_order_buffer__testbench.empty
+@200
+-
+@28
+valid_ready_out_of_order_buffer__testbench.write_valid
+valid_ready_out_of_order_buffer__testbench.write_ready
+@22
+valid_ready_out_of_order_buffer__testbench.write_data[7:0]
+@24
+valid_ready_out_of_order_buffer__testbench.write_index[2:0]
+@200
+-
+@28
+valid_ready_out_of_order_buffer__testbench.read_valid
+valid_ready_out_of_order_buffer__testbench.read_ready
+valid_ready_out_of_order_buffer__testbench.read_clear
+@24
+valid_ready_out_of_order_buffer__testbench.read_index[2:0]
+@22
+valid_ready_out_of_order_buffer__testbench.read_data[7:0]
+@200
+-
+@28
+valid_ready_out_of_order_buffer__testbench.valid_ready_out_of_order_buffer_dut.valid[7:0]
+valid_ready_out_of_order_buffer__testbench.valid_ready_out_of_order_buffer_dut.first_free_onehot[7:0]
+@24
+valid_ready_out_of_order_buffer__testbench.valid_ready_out_of_order_buffer_dut.first_free_index[2:0]
+
+[pattern_trace] 1
+[pattern_trace] 0

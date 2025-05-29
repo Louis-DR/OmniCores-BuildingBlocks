@@ -1,0 +1,31 @@
+[dumpfile] "valid_ready_bypass_buffer__testbench.vcd"
+[savefile] "valid_ready_bypass_buffer__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-10.358756 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+valid_ready_bypass_buffer__testbench.clock
+valid_ready_bypass_buffer__testbench.resetn
+@200
+-
+@22
+valid_ready_bypass_buffer__testbench.write_data[7:0]
+@28
+valid_ready_bypass_buffer__testbench.write_valid
+valid_ready_bypass_buffer__testbench.write_ready
+valid_ready_bypass_buffer__testbench.full
+@200
+-
+@22
+valid_ready_bypass_buffer__testbench.read_data[7:0]
+@28
+valid_ready_bypass_buffer__testbench.read_valid
+valid_ready_bypass_buffer__testbench.read_ready
+valid_ready_bypass_buffer__testbench.empty
+[pattern_trace] 1
+[pattern_trace] 0

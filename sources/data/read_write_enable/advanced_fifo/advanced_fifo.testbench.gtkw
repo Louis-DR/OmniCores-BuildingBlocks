@@ -1,0 +1,45 @@
+[dumpfile] "advanced_fifo__testbench.vcd"
+[savefile] "advanced_fifo__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-11.158537 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+advanced_fifo__testbench.clock
+advanced_fifo__testbench.resetn
+advanced_fifo__testbench.clear_flags
+@200
+-
+@28
+advanced_fifo__testbench.write_enable
+@22
+advanced_fifo__testbench.write_data[7:0]
+@28
+advanced_fifo__testbench.write_miss
+advanced_fifo__testbench.full
+@200
+-
+@28
+advanced_fifo__testbench.read_enable
+@22
+advanced_fifo__testbench.read_data[7:0]
+@28
+advanced_fifo__testbench.read_error
+advanced_fifo__testbench.empty
+@200
+-
+@24
+advanced_fifo__testbench.level[2:0]
+advanced_fifo__testbench.lower_threshold_level[2:0]
+@28
+advanced_fifo__testbench.lower_threshold_status
+@24
+advanced_fifo__testbench.upper_threshold_level[2:0]
+@28
+advanced_fifo__testbench.upper_threshold_status
+[pattern_trace] 1
+[pattern_trace] 0

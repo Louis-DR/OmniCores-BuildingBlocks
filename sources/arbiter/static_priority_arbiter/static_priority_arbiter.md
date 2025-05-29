@@ -10,7 +10,7 @@
 
 ## Overview
 
-![static_priority_arbiter](static_priority_arbiter.svg)
+![static_priority_arbiter](static_priority_arbiter.symbol.svg)
 
 Arbiters between different request channels. The grant is given to the first ready request channel. It is not fair.
 
@@ -67,14 +67,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                 | Description                                         |
-| ----------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`static_priority_arbiter.v`](static_priority_arbiter.v)             | Verilog design.                                     |
-| Testbench         | [`static_priority_arbiter_tb.sv`](static_priority_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`static_priority_arbiter_tb.gtkw`](static_priority_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`static_priority_arbiter.sss`](static_priority_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`static_priority_arbiter.svg`](static_priority_arbiter.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`static_priority_arbiter.md`](static_priority_arbiter.md)           | Markdown documentation datasheet.                   |
+| Type              | File                                                                               | Description                                         |
+| ----------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`static_priority_arbiter.v`](static_priority_arbiter.v)                           | Verilog design.                                     |
+| Testbench         | [`static_priority_arbiter.testbench.sv`](static_priority_arbiter.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`static_priority_arbiter.testbench.gtkw`](static_priority_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`static_priority_arbiter.symbol.sss`](static_priority_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`static_priority_arbiter.symbol.svg`](static_priority_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`static_priority_arbiter.md`](static_priority_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

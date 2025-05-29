@@ -10,7 +10,7 @@
 
 ## Overview
 
-![clock_divider](clock_divider.svg)
+![clock_divider](clock_divider.symbol.svg)
 
 Divides the frequency of the input clock `clock_in` by the `DIVISION` factor. The output clock `clock_out` runs `DIVISION` times slower than the input clock. If `DIVISION` is 1 or less, `clock_in` is directly passed through to `clock_out` without any logic. If `DIVISION` is 2 or more, a counter is used. For odd `DIVISION` values greater than 1, the high pulse of `clock_out` is one `clock_in` cycle longer than the low pulse, resulting in a duty cycle slightly greater than 50%. For even `DIVISION` values greater than 1, the duty cycle is exactly 50%.
 
@@ -87,16 +87,16 @@ create_generated_clock -name  -source [get_pins clock_divider/clock_in] -edges {
 
 ## Deliverables
 
-| Type                | File                                                         | Description                                         |
-| ------------------- | ------------------------------------------------------------ | --------------------------------------------------- |
-| Design              | [`clock_divider.v`](clock_divider.v)                         | Verilog design.                                     |
-| Testbench           | [`clock_divider_tb.sv`](clock_divider_tb.sv)                 | SystemVerilog verification testbench.               |
-| Waveform script     | [`clock_divider_tb.gtkw`](clock_divider_tb.gtkw)             | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor   | [`clock_divider.sss`](clock_divider.sss)                     | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image        | [`clock_divider.svg`](clock_divider.svg)                     | Generated vector image of the symbol.               |
-| Waveform descriptor | [`clock_divider.wavedrom.json`](clock_divider.wavedrom.json) | Waveform descriptor for Wavedrom.                   |
-| Waveform image      | [`clock_divider.wavedrom.svg`](clock_divider.wavedrom.svg)   | Generated image of the waveform.                    |
-| Datasheet           | [`clock_divider.md`](clock_divider.md)                       | Markdown documentation datasheet.                   |
+| Type                | File                                                           | Description                                         |
+| ------------------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| Design              | [`clock_divider.v`](clock_divider.v)                           | Verilog design.                                     |
+| Testbench           | [`clock_divider.testbench.sv`](clock_divider.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`clock_divider.testbench.gtkw`](clock_divider.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor   | [`clock_divider.symbol.sss`](clock_divider.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`clock_divider.symbol.svg`](clock_divider.symbol.svg)         | Generated vector image of the symbol.               |
+| Waveform descriptor | [`clock_divider.wavedrom.json`](clock_divider.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`clock_divider.wavedrom.svg`](clock_divider.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`clock_divider.md`](clock_divider.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

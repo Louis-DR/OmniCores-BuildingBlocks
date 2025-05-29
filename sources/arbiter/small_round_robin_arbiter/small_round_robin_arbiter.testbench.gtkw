@@ -1,0 +1,17 @@
+[dumpfile] "small_round_robin_arbiter__testbench.vcd"
+[savefile] "small_round_robin_arbiter__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-10.711452 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 202
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+small_round_robin_arbiter__testbench.clock
+small_round_robin_arbiter__testbench.resetn
+small_round_robin_arbiter__testbench.requests[3:0]
+small_round_robin_arbiter__testbench.grant[3:0]
+[pattern_trace] 1
+[pattern_trace] 0

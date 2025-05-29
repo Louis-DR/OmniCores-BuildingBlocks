@@ -1,1 +1,1 @@
-skid_buffer_tb.sv
+skid_buffer.testbench.sv

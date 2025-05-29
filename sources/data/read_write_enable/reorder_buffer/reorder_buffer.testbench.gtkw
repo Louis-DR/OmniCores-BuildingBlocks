@@ -1,0 +1,44 @@
+[dumpfile] "reorder_buffer__testbench.vcd"
+[savefile] "reorder_buffer__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-7.850139 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+reorder_buffer__testbench.clock
+reorder_buffer__testbench.resetn
+reorder_buffer__testbench.full
+reorder_buffer__testbench.empty
+@200
+-
+@28
+reorder_buffer__testbench.write_enable
+@22
+reorder_buffer__testbench.write_data[7:0]
+@24
+reorder_buffer__testbench.write_index[2:0]
+@200
+-
+@28
+reorder_buffer__testbench.read_enable
+reorder_buffer__testbench.read_clear
+@24
+reorder_buffer__testbench.read_index[2:0]
+@22
+reorder_buffer__testbench.read_data[7:0]
+@28
+reorder_buffer__testbench.read_error
+@200
+-
+@28
+reorder_buffer__testbench.reorder_buffer_dut.valid[7:0]
+reorder_buffer__testbench.reorder_buffer_dut.first_free_onehot[7:0]
+@24
+reorder_buffer__testbench.reorder_buffer_dut.first_free_index[2:0]
+
+[pattern_trace] 1
+[pattern_trace] 0

@@ -1,6 +1,7 @@
 DESIGN_EXTENSION        ?= v
 TESTBENCH_EXTENSION     ?= sv
-TESTBENCH_NAME          ?= $(DESIGN_NAME)_tb
+TESTBENCH_MODULE        ?= $(DESIGN_NAME)__testbench
+TESTBENCH_BASENAME      ?= $(DESIGN_NAME).testbench
 
 # Filelist and include list file paths
 DESIGN_FILELIST         ?= $(DESIGN_NAME).design.filelist
@@ -19,7 +20,7 @@ endif
 ifneq (,$(wildcard $(TESTBENCH_FILELIST)))
 TESTBENCH_FILES         := $(shell cat $(TESTBENCH_FILELIST))
 else
-TESTBENCH_FILES         ?= $(TESTBENCH_NAME).$(TESTBENCH_EXTENSION)
+TESTBENCH_FILES         ?= $(TESTBENCH_BASENAME).$(TESTBENCH_EXTENSION)
 endif
 
 # Combine design and testbench files for verification
@@ -55,16 +56,16 @@ DEFINES_MODELSIM        := $(addprefix +define+,$(DEFINES))
 # Output files for each tool
 OBJ_DIRECTORY           ?= obj_dir/
 EXE_FILE                ?= $(OBJ_DIRECTORY)/V$(DESIGN_NAME)
-OPTIMIZED_TOP           ?= $(TESTBENCH_NAME)_opt
-WORK_LIBRARY            ?= $(TESTBENCH_NAME).lib
-VVP_FILE                ?= $(TESTBENCH_NAME).vvp
-DESIGN_FILE             ?= $(TESTBENCH_NAME).design.bin
-WLF_FILE                ?= $(TESTBENCH_NAME).wlf
-QWAVE_FILE              ?= $(TESTBENCH_NAME).qwave.db
-VCD_FILE                ?= $(TESTBENCH_NAME).vcd
-LOG_FILE                ?= $(TESTBENCH_NAME).log
-GTKW_FILE               ?= $(TESTBENCH_NAME).gtkw
-RON_FILE                ?= $(TESTBENCH_NAME).ron
+OPTIMIZED_TOP           ?= $(TESTBENCH_MODULE)_opt
+WORK_LIBRARY            ?= $(TESTBENCH_BASENAME).lib
+VVP_FILE                ?= $(TESTBENCH_BASENAME).vvp
+DESIGN_FILE             ?= $(TESTBENCH_BASENAME).design.bin
+WLF_FILE                ?= $(TESTBENCH_BASENAME).wlf
+QWAVE_FILE              ?= $(TESTBENCH_BASENAME).qwave.db
+VCD_FILE                ?= $(TESTBENCH_BASENAME).vcd
+LOG_FILE                ?= $(TESTBENCH_BASENAME).log
+GTKW_FILE               ?= $(TESTBENCH_BASENAME).gtkw
+RON_FILE                ?= $(TESTBENCH_BASENAME).ron
 
 # Compilation flags for each tool
 COMPILE_FLAGS           ?=

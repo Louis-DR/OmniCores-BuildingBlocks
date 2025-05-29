@@ -1,1 +1,1 @@
-clock_divider_tb.sv
+clock_divider.testbench.sv

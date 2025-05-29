@@ -1,1 +1,1 @@
-fast_round_robin_arbiter_tb.sv
+fast_round_robin_arbiter.testbench.sv

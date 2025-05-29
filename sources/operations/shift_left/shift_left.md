@@ -10,7 +10,7 @@
 
 ## Overview
 
-![shift_left](shift_left.svg)
+![shift_left](shift_left.symbol.svg)
 
 Shits an input vector `data_in` to the left by a static number of bits specified by the `SHIFT` parameter and pad the right side with the value `PAD_VALUE`.
 
@@ -88,16 +88,16 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type               | File                                         | Description                                         |
-| ------------------ | -------------------------------------------- | --------------------------------------------------- |
-| Design             | [`shift_left.v`](shift_left.v)               | Verilog design file.                                |
-| Testbench template | [`shift_left.tb.sv.j2`](shift_left.tb.sv.j2) | Template of the top-level SystemVerilog testbench.  |
-| Testbench          | [`shift_left.tb.sv`](shift_left.tb.sv)       | Generated gop-level SystemVerilog testbench.        |
-| Testcase           | [`shift_left.tc.sv`](shift_left.tc.sv)       | SystemVerilog testcase.                             |
-| Waveform script    | [`shift_left.tb.gtkw`](shift_left.tb.gtkw)   | Script to load waveforms in GTKWave (assumed).      |
-| Symbol descriptor  | [`shift_left.sss`](shift_left.sss)           | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image       | [`shift_left.svg`](shift_left.svg)           | Generated vector image of the symbol.               |
-| Datasheet          | [`shift_left.md`](shift_left.md)             | Markdown documentation datasheet.                   |
+| Type               | File                                             | Description                                         |
+| ------------------ | ------------------------------------------------ | --------------------------------------------------- |
+| Design             | [`shift_left.v`](shift_left.v)                   | Verilog design file.                                |
+| Testbench template | [`shift_left.tb.sv.j2`](shift_left.tb.sv.j2)     | Template of the top-level SystemVerilog testbench.  |
+| Testbench          | [`shift_left.tb.sv`](shift_left.tb.sv)           | Generated gop-level SystemVerilog testbench.        |
+| Testcase           | [`shift_left.tc.sv`](shift_left.tc.sv)           | SystemVerilog testcase.                             |
+| Waveform script    | [`shift_left.tb.gtkw`](shift_left.tb.gtkw)       | Script to load waveforms in GTKWave (assumed).      |
+| Symbol descriptor  | [`shift_left.symbol.sss`](shift_left.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image       | [`shift_left.symbol.svg`](shift_left.symbol.svg) | Generated vector image of the symbol.               |
+| Datasheet          | [`shift_left.md`](shift_left.md)                 | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

@@ -1,1 +1,1 @@
-feedback_pulse_synchronizer_tb.sv
+feedback_pulse_synchronizer.testbench.sv

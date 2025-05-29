@@ -1,1 +1,1 @@
-small_round_robin_arbiter_tb.sv
+small_round_robin_arbiter.testbench.sv

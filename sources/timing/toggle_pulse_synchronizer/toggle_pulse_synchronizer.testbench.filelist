@@ -1,1 +1,1 @@
-toggle_pulse_synchronizer_tb.sv
+toggle_pulse_synchronizer.testbench.sv

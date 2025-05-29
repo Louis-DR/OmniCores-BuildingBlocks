@@ -10,7 +10,7 @@
 
 ## Overview
 
-![clock_multiplexer](clock_multiplexer.svg)
+![clock_multiplexer](clock_multiplexer.symbol.svg)
 
 Multiplexes between two input clocks, `clock_0` and `clock_1`, based on the `select` signal, with a glitch-free transition on the output clock `clock_out`.
 
@@ -114,11 +114,11 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 | Type                | File                                                                         | Description                                                     |
 | ------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------- |
 | Design              | [`clock_multiplexer.v`](clock_multiplexer.v)                                 | Verilog design.                                                 |
-| Testbench           | [`clock_multiplexer_tb.sv`](clock_multiplexer_tb.sv)                         | SystemVerilog verification testbench.                           |
-| Waveform script     | [`clock_multiplexer_tb.gtkw`](clock_multiplexer_tb.gtkw)                     | Script to load the waveforms in GTKWave.                        |
+| Testbench           | [`clock_multiplexer.testbench.sv`](clock_multiplexer.testbench.sv)           | SystemVerilog verification testbench.                           |
+| Waveform script     | [`clock_multiplexer.testbench.gtkw`](clock_multiplexer.testbench.gtkw)       | Script to load the waveforms in GTKWave.                        |
 | Constraint script   | [`clock_multiplexer.sdc`](clock_multiplexer.sdc)                             | Tickle SDC constraint script for synthesis.                     |
-| Symbol descriptor   | [`clock_multiplexer.sss`](clock_multiplexer.sss)                             | Symbol descriptor for SiliconSuite-SymbolGenerator.             |
-| Symbol image        | [`clock_multiplexer.svg`](clock_multiplexer.svg)                             | Generated vector image of the symbol.                           |
+| Symbol descriptor   | [`clock_multiplexer.symbol.sss`](clock_multiplexer.symbol.sss)               | Symbol descriptor for SiliconSuite-SymbolGenerator.             |
+| Symbol image        | [`clock_multiplexer.symbol.svg`](clock_multiplexer.symbol.svg)               | Generated vector image of the symbol.                           |
 | Waveform descriptor | [`clock_multiplexer_f2s.wavedrom.json`](clock_multiplexer_f2s.wavedrom.json) | Waveform descriptor for Wavedrom of the fast-to-slow switching. |
 | Waveform descriptor | [`clock_multiplexer_s2f.wavedrom.json`](clock_multiplexer_s2f.wavedrom.json) | Waveform descriptor for Wavedrom of the slow-to-fast switching. |
 | Waveform image      | [`clock_multiplexer_f2s.wavedrom.svg`](clock_multiplexer_f2s.wavedrom.svg)   | Generated image of the waveform of the fast-to-slow switching.  |

@@ -1,1 +1,1 @@
-fifo_tb.sv
+fifo.testbench.sv

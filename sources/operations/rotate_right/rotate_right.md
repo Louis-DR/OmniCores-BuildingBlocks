@@ -10,7 +10,7 @@
 
 ## Overview
 
-![rotate_right](rotate_right.svg)
+![rotate_right](rotate_right.symbol.svg)
 
 Rotates an input vector `data_in` to the right by a static number of bits specified by the `ROTATION` parameter. The bits shifted out from the least significant bit (LSB) are wrapped around to the most significant bit (MSB).
 
@@ -87,16 +87,16 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type               | File                                             | Description                                         |
-| ------------------ | ------------------------------------------------ | --------------------------------------------------- |
-| Design             | [`rotate_right.v`](rotate_right.v)               | Verilog design file.                                |
-| Testbench template | [`rotate_right.tb.sv.j2`](rotate_right.tb.sv.j2) | Template of the top-level SystemVerilog testbench.  |
-| Testbench          | [`rotate_right.tb.sv`](rotate_right.tb.sv)       | Generated top-level SystemVerilog testbench.        |
-| Testcase           | [`rotate_right.tc.sv`](rotate_right.tc.sv)       | SystemVerilog testcase.                             |
-| Waveform script    | [`rotate_right.tb.gtkw`](rotate_right.tb.gtkw)   | Script to load waveforms in GTKWave (assumed).      |
-| Symbol descriptor  | [`rotate_right.sss`](rotate_right.sss)           | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image       | [`rotate_right.svg`](rotate_right.svg)           | Generated vector image of the symbol.               |
-| Datasheet          | [`rotate_right.md`](rotate_right.md)             | Markdown documentation datasheet.                   |
+| Type               | File                                                 | Description                                         |
+| ------------------ | ---------------------------------------------------- | --------------------------------------------------- |
+| Design             | [`rotate_right.v`](rotate_right.v)                   | Verilog design file.                                |
+| Testbench template | [`rotate_right.tb.sv.j2`](rotate_right.tb.sv.j2)     | Template of the top-level SystemVerilog testbench.  |
+| Testbench          | [`rotate_right.tb.sv`](rotate_right.tb.sv)           | Generated top-level SystemVerilog testbench.        |
+| Testcase           | [`rotate_right.tc.sv`](rotate_right.tc.sv)           | SystemVerilog testcase.                             |
+| Waveform script    | [`rotate_right.tb.gtkw`](rotate_right.tb.gtkw)       | Script to load waveforms in GTKWave (assumed).      |
+| Symbol descriptor  | [`rotate_right.symbol.sss`](rotate_right.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image       | [`rotate_right.symbol.svg`](rotate_right.symbol.svg) | Generated vector image of the symbol.               |
+| Datasheet          | [`rotate_right.md`](rotate_right.md)                 | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

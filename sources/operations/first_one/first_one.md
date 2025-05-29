@@ -10,7 +10,7 @@
 
 ## Overview
 
-![first_one](first_one.svg)
+![first_one](first_one.symbol.svg)
 
 Determines the position of the first '1' (least significant bit set) in an input vector `data`. This is the wrapper between the different variants of the round-robin arbiter.
 
@@ -71,14 +71,14 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                     | Description                                         |
-| ----------------- | ---------------------------------------- | --------------------------------------------------- |
-| Design            | [`first_one.v`](first_one.v)             | Verilog design.                                     |
-| Testbench         | [`first_one_tb.sv`](first_one_tb.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`first_one_tb.gtkw`](first_one_tb.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`first_one.sss`](first_one.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`first_one.svg`](first_one.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`first_one.md`](first_one.md)           | Markdown documentation datasheet.                   |
+| Type              | File                                                   | Description                                         |
+| ----------------- | ------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`first_one.v`](first_one.v)                           | Verilog design.                                     |
+| Testbench         | [`first_one.testbench.sv`](first_one.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`first_one.testbench.gtkw`](first_one.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`first_one.symbol.sss`](first_one.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`first_one.symbol.svg`](first_one.symbol.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`first_one.md`](first_one.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

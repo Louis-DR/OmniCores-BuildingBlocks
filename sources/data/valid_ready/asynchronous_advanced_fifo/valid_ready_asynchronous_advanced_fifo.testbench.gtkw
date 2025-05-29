@@ -1,0 +1,50 @@
+[dumpfile] "valid_ready_asynchronous_advanced_fifo__testbench.vcd"
+[savefile] "valid_ready_asynchronous_advanced_fifo__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-11.009110 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+valid_ready_asynchronous_advanced_fifo__testbench.write_clock
+valid_ready_asynchronous_advanced_fifo__testbench.write_resetn
+@22
+valid_ready_asynchronous_advanced_fifo__testbench.write_data[7:0]
+@28
+valid_ready_asynchronous_advanced_fifo__testbench.write_valid
+valid_ready_asynchronous_advanced_fifo__testbench.write_ready
+valid_ready_asynchronous_advanced_fifo__testbench.write_full
+@24
+valid_ready_asynchronous_advanced_fifo__testbench.write_level[2:0]
+valid_ready_asynchronous_advanced_fifo__testbench.write_lower_threshold_level[2:0]
+@28
+valid_ready_asynchronous_advanced_fifo__testbench.write_lower_threshold_status
+@24
+valid_ready_asynchronous_advanced_fifo__testbench.write_upper_threshold_level[2:0]
+@28
+valid_ready_asynchronous_advanced_fifo__testbench.write_upper_threshold_status
+@200
+-
+@28
+valid_ready_asynchronous_advanced_fifo__testbench.read_clock
+valid_ready_asynchronous_advanced_fifo__testbench.read_resetn
+@22
+valid_ready_asynchronous_advanced_fifo__testbench.read_data[7:0]
+@28
+valid_ready_asynchronous_advanced_fifo__testbench.read_valid
+valid_ready_asynchronous_advanced_fifo__testbench.read_ready
+valid_ready_asynchronous_advanced_fifo__testbench.read_empty
+@24
+valid_ready_asynchronous_advanced_fifo__testbench.read_level[2:0]
+valid_ready_asynchronous_advanced_fifo__testbench.read_lower_threshold_level[2:0]
+@28
+valid_ready_asynchronous_advanced_fifo__testbench.read_lower_threshold_status
+@24
+valid_ready_asynchronous_advanced_fifo__testbench.read_upper_threshold_level[2:0]
+@28
+valid_ready_asynchronous_advanced_fifo__testbench.read_upper_threshold_status
+[pattern_trace] 1
+[pattern_trace] 0

@@ -10,7 +10,7 @@
 
 ## Overview
 
-![fast_clock_multiplexer](fast_clock_multiplexer.svg)
+![fast_clock_multiplexer](fast_clock_multiplexer.symbol.svg)
 
 Multiplexes between two input clocks, `clock_0` and `clock_1`, based on the `select` signal, with a glitch-free transition on the output clock `clock_out`. It has slightly faster switching time than the normal clock multiplexer as it uses faster synchronizers that work on both edges.
 
@@ -114,11 +114,11 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 | Type                | File                                                                                   | Description                                                     |
 | ------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
 | Design              | [`fast_clock_multiplexer.v`](fast_clock_multiplexer.v)                                 | Verilog design.                                                 |
-| Testbench           | [`fast_clock_multiplexer_tb.sv`](fast_clock_multiplexer_tb.sv)                         | SystemVerilog verification testbench.                           |
-| Waveform script     | [`fast_clock_multiplexer_tb.gtkw`](fast_clock_multiplexer_tb.gtkw)                     | Script to load the waveforms in GTKWave.                        |
+| Testbench           | [`fast_clock_multiplexer.testbench.sv`](fast_clock_multiplexer.testbench.sv)           | SystemVerilog verification testbench.                           |
+| Waveform script     | [`fast_clock_multiplexer.testbench.gtkw`](fast_clock_multiplexer.testbench.gtkw)       | Script to load the waveforms in GTKWave.                        |
 | Constraint script   | [`fast_clock_multiplexer.sdc`](fast_clock_multiplexer.sdc)                             | Tickle SDC constraint script for synthesis.                     |
-| Symbol descriptor   | [`fast_clock_multiplexer.sss`](fast_clock_multiplexer.sss)                             | Symbol descriptor for SiliconSuite-SymbolGenerator.             |
-| Symbol image        | [`fast_clock_multiplexer.svg`](fast_clock_multiplexer.svg)                             | Generated vector image of the symbol.                           |
+| Symbol descriptor   | [`fast_clock_multiplexer.symbol.sss`](fast_clock_multiplexer.symbol.sss)               | Symbol descriptor for SiliconSuite-SymbolGenerator.             |
+| Symbol image        | [`fast_clock_multiplexer.symbol.svg`](fast_clock_multiplexer.symbol.svg)               | Generated vector image of the symbol.                           |
 | Waveform descriptor | [`fast_clock_multiplexer_f2s.wavedrom.json`](fast_clock_multiplexer_f2s.wavedrom.json) | Waveform descriptor for Wavedrom of the fast-to-slow switching. |
 | Waveform descriptor | [`fast_clock_multiplexer_s2f.wavedrom.json`](fast_clock_multiplexer_s2f.wavedrom.json) | Waveform descriptor for Wavedrom of the slow-to-fast switching. |
 | Waveform image      | [`fast_clock_multiplexer_f2s.wavedrom.svg`](fast_clock_multiplexer_f2s.wavedrom.svg)   | Generated image of the waveform of the fast-to-slow switching.  |

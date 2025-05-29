@@ -1,1 +1,1 @@
-timeout_static_priority_arbiter_tb.sv
+timeout_static_priority_arbiter.testbench.sv

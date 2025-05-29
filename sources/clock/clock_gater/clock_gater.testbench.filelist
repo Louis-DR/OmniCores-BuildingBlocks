@@ -1,1 +1,1 @@
-clock_gater_tb.sv
+clock_gater.testbench.sv

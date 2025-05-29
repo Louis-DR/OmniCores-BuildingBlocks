@@ -1,1 +1,1 @@
-clock_multiplexer_tb.sv
+clock_multiplexer.testbench.sv

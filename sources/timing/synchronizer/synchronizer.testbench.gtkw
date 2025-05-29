@@ -1,0 +1,22 @@
+[dumpfile] "synchronizer__testbench.vcd"
+[savefile] "synchronizer__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-5.734429 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 202
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+synchronizer__testbench.clock
+synchronizer__testbench.resetn
+synchronizer__testbench.data_in
+synchronizer__testbench.data_out[5:1]
+synchronizer__testbench.gen_stages[1].synchronizer_dut.data_out
+synchronizer__testbench.gen_stages[2].synchronizer_dut.data_out
+synchronizer__testbench.gen_stages[3].synchronizer_dut.data_out
+synchronizer__testbench.gen_stages[4].synchronizer_dut.data_out
+synchronizer__testbench.gen_stages[5].synchronizer_dut.data_out
+[pattern_trace] 1
+[pattern_trace] 0

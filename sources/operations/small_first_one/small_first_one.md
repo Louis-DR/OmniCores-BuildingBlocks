@@ -10,7 +10,7 @@
 
 ## Overview
 
-![small_first_one](small_first_one.svg)
+![small_first_one](small_first_one.symbol.svg)
 
 Determines the position of the first '1' (least significant bit set) in an input vector `data`. This implementation uses a ripple-chain structure, resulting in a small area footprint but a propagation delay that scales linearly with the input width. A faster variant, `fast_first_one`, is available.
 
@@ -65,14 +65,14 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                 | Description                                         |
-| ----------------- | ---------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`small_first_one.v`](small_first_one.v)             | Verilog design.                                     |
-| Testbench         | [`small_first_one_tb.sv`](small_first_one_tb.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`small_first_one_tb.gtkw`](small_first_one_tb.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`small_first_one.sss`](small_first_one.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`small_first_one.svg`](small_first_one.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`small_first_one.md`](small_first_one.md)           | Markdown documentation datasheet.                   |
+| Type              | File                                                               | Description                                         |
+| ----------------- | ------------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`small_first_one.v`](small_first_one.v)                           | Verilog design.                                     |
+| Testbench         | [`small_first_one.testbench.sv`](small_first_one.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`small_first_one.testbench.gtkw`](small_first_one.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`small_first_one.symbol.sss`](small_first_one.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`small_first_one.symbol.svg`](small_first_one.symbol.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`small_first_one.md`](small_first_one.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

@@ -10,7 +10,7 @@
 
 ## Overview
 
-![fast_round_robin_arbiter](fast_round_robin_arbiter.svg)
+![fast_round_robin_arbiter](fast_round_robin_arbiter.symbol.svg)
 
 Arbiters between different request channels using a round-robin scheme. The grant priority rotates among the requesting channels at each cycle, ensuring fairness. This is the faster but bigger variant of the round-robing arbiter.
 
@@ -74,14 +74,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                   | Description                                         |
-| ----------------- | ---------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`fast_round_robin_arbiter.v`](fast_round_robin_arbiter.v)             | Verilog design.                                     |
-| Testbench         | [`fast_round_robin_arbiter_tb.sv`](fast_round_robin_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`fast_round_robin_arbiter_tb.gtkw`](fast_round_robin_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`fast_round_robin_arbiter.sss`](fast_round_robin_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`fast_round_robin_arbiter.svg`](fast_round_robin_arbiter.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`fast_round_robin_arbiter.md`](fast_round_robin_arbiter.md)           | Markdown documentation datasheet.                   |
+| Type              | File                                                                                 | Description                                         |
+| ----------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`fast_round_robin_arbiter.v`](fast_round_robin_arbiter.v)                           | Verilog design.                                     |
+| Testbench         | [`fast_round_robin_arbiter.testbench.sv`](fast_round_robin_arbiter.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`fast_round_robin_arbiter.testbench.gtkw`](fast_round_robin_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`fast_round_robin_arbiter.symbol.sss`](fast_round_robin_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`fast_round_robin_arbiter.symbol.svg`](fast_round_robin_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`fast_round_robin_arbiter.md`](fast_round_robin_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

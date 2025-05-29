@@ -10,7 +10,7 @@
 
 ## Overview
 
-![timeout_static_priority_arbiter](timeout_static_priority_arbiter.svg)
+![timeout_static_priority_arbiter](timeout_static_priority_arbiter.symbol.svg)
 
 Arbiters between different request channels. The grant is given to the first ready request channel, except if a channel has not been granted its requests `TIMEOUT` times, then it becomes prioritized until granted once. This avoids starvations but the arbiter is not fair.
 
@@ -81,14 +81,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                                 | Description                                         |
-| ----------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`timeout_static_priority_arbiter.v`](timeout_static_priority_arbiter.v)             | Verilog design.                                     |
-| Testbench         | [`timeout_static_priority_arbiter_tb.sv`](timeout_static_priority_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`timeout_static_priority_arbiter_tb.gtkw`](timeout_static_priority_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`timeout_static_priority_arbiter.sss`](timeout_static_priority_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`timeout_static_priority_arbiter.svg`](timeout_static_priority_arbiter.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`timeout_static_priority_arbiter.md`](timeout_static_priority_arbiter.md)           | Markdown documentation datasheet.                   |
+| Type              | File                                                                                               | Description                                         |
+| ----------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`timeout_static_priority_arbiter.v`](timeout_static_priority_arbiter.v)                           | Verilog design.                                     |
+| Testbench         | [`timeout_static_priority_arbiter.testbench.sv`](timeout_static_priority_arbiter.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`timeout_static_priority_arbiter.testbench.gtkw`](timeout_static_priority_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`timeout_static_priority_arbiter.symbol.sss`](timeout_static_priority_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`timeout_static_priority_arbiter.symbol.svg`](timeout_static_priority_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`timeout_static_priority_arbiter.md`](timeout_static_priority_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

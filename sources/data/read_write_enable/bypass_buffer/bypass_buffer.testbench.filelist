@@ -1,1 +1,1 @@
-bypass_buffer_tb.sv
+bypass_buffer.testbench.sv

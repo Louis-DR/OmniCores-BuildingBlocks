@@ -1,1 +1,1 @@
-static_priority_arbiter_tb.sv
+static_priority_arbiter.testbench.sv

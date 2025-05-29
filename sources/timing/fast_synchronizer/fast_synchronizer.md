@@ -10,7 +10,7 @@
 
 ## Overview
 
-![fast_synchronizer](fast_synchronizer.svg)
+![fast_synchronizer](fast_synchronizer.symbol.svg)
 
 Resynchronizes a single-bit signal `data_in` from an asynchronous or different clock domain to the destination `clock` domain using a chain of flip-flops. This helps prevent metastability issues when crossing clock domains. The number of flip-flop stages can be increased from the default two to three or more for even better MTBF. The synchronized signal must remain stable for at least one cycle of the destination `clock` to be correctly captured.
 
@@ -98,17 +98,17 @@ To call the procedure automatically on all instances of the synchronizer, use th
 
 ## Deliverables
 
-| Type                | File                                                                 | Description                                    |
-| ------------------- | -------------------------------------------------------------------- | ---------------------------------------------- |
-| Design              | [`fast_synchronizer.v`](fast_synchronizer.v)                         | Verilog design file.                           |
-| Testbench           | [`fast_synchronizer_tb.sv`](fast_synchronizer_tb.sv)                 | SystemVerilog verification testbench.          |
-| Waveform script     | [`fast_synchronizer_tb.gtkw`](fast_synchronizer_tb.gtkw)             | Script to load waveforms in GTKWave (assumed). |
-| Constraint script   | [`fast_synchronizer.sdc`](fast_synchronizer.sdc)                     | Tickle SDC constraint script for synthesis.    |
-| Symbol descriptor   | [`fast_synchronizer.sss`](fast_synchronizer.sss)                     | Symbol descriptor (assumed).                   |
-| Symbol image        | [`fast_synchronizer.svg`](fast_synchronizer.svg)                     | Generated vector image of the symbol (TODO).   |
-| Waveform descriptor | [`fast_synchronizer.wavedrom.json`](fast_synchronizer.wavedrom.json) | Waveform descriptor for Wavedrom.              |
-| Waveform image      | [`fast_synchronizer.wavedrom.svg`](fast_synchronizer.wavedrom.svg)   | Generated image of the waveform.               |
-| Datasheet           | [`fast_synchronizer.md`](fast_synchronizer.md)                       | Markdown documentation datasheet.              |
+| Type                | File                                                                   | Description                                         |
+| ------------------- | ---------------------------------------------------------------------- | --------------------------------------------------- |
+| Design              | [`fast_synchronizer.v`](fast_synchronizer.v)                           | Verilog design file.                                |
+| Testbench           | [`fast_synchronizer.testbench.sv`](fast_synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`fast_synchronizer.testbench.gtkw`](fast_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script   | [`fast_synchronizer.sdc`](fast_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
+| Symbol descriptor   | [`fast_synchronizer.symbol.sss`](fast_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`fast_synchronizer.symbol.svg`](fast_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Waveform descriptor | [`fast_synchronizer.wavedrom.json`](fast_synchronizer.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`fast_synchronizer.wavedrom.svg`](fast_synchronizer.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`fast_synchronizer.md`](fast_synchronizer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

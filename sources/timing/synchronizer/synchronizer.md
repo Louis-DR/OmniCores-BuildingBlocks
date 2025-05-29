@@ -10,7 +10,7 @@
 
 ## Overview
 
-![synchronizer](synchronizer.svg)
+![synchronizer](synchronizer.symbol.svg)
 
 Resynchronizes a single-bit signal `data_in` from an asynchronous or different clock domain to the destination `clock` domain using a chain of flip-flops. This helps prevent metastability issues when crossing clock domains. The number of flip-flop stages can be increased from the default two to three or more for even better MTBF. The synchronized signal must remain stable for at least one cycle of the destination `clock` to be correctly captured.
 
@@ -94,17 +94,17 @@ To call the procedure automatically on all instances of the synchronizer, use th
 
 ## Deliverables
 
-| Type                | File                                                       | Description                                    |
-| ------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
-| Design              | [`synchronizer.v`](synchronizer.v)                         | Verilog design file.                           |
-| Testbench           | [`synchronizer_tb.sv`](synchronizer_tb.sv)                 | SystemVerilog verification testbench.          |
-| Waveform script     | [`synchronizer_tb.gtkw`](synchronizer_tb.gtkw)             | Script to load waveforms in GTKWave (assumed). |
-| Constraint script   | [`synchronizer.sdc`](synchronizer.sdc)                     | Tickle SDC constraint script for synthesis.    |
-| Symbol descriptor   | [`synchronizer.sss`](synchronizer.sss)                     | Symbol descriptor (assumed).                   |
-| Symbol image        | [`synchronizer.svg`](synchronizer.svg)                     | Generated vector image of the symbol (TODO).   |
-| Waveform descriptor | [`synchronizer.wavedrom.json`](synchronizer.wavedrom.json) | Waveform descriptor for Wavedrom.              |
-| Waveform image      | [`synchronizer.wavedrom.svg`](synchronizer.wavedrom.svg)   | Generated image of the waveform.               |
-| Datasheet           | [`synchronizer.md`](synchronizer.md)                       | Markdown documentation datasheet.              |
+| Type                | File                                                         | Description                                         |
+| ------------------- | ------------------------------------------------------------ | --------------------------------------------------- |
+| Design              | [`synchronizer.v`](synchronizer.v)                           | Verilog design file.                                |
+| Testbench           | [`synchronizer.testbench.sv`](synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`synchronizer.testbench.gtkw`](synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script   | [`synchronizer.sdc`](synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
+| Symbol descriptor   | [`synchronizer.symbol.sss`](synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`synchronizer.symbol.svg`](synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Waveform descriptor | [`synchronizer.wavedrom.json`](synchronizer.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`synchronizer.wavedrom.svg`](synchronizer.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`synchronizer.md`](synchronizer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

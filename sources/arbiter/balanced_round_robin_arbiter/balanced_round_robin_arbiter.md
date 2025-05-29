@@ -10,7 +10,7 @@
 
 ## Overview
 
-![balanced_round_robin_arbiter](balanced_round_robin_arbiter.svg)
+![balanced_round_robin_arbiter](balanced_round_robin_arbiter.symbol.svg)
 
 Arbiters between different request channels using a round-robin scheme. The grant priority rotates among the requesting channels at each cycle, ensuring fairness. This is the balanced variant of the round-robing arbiter, between the fast and the small.
 
@@ -78,14 +78,14 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                           | Description                                         |
-| ----------------- | ------------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`balanced_round_robin_arbiter.v`](balanced_round_robin_arbiter.v)             | Verilog design.                                     |
-| Testbench         | [`balanced_round_robin_arbiter_tb.sv`](balanced_round_robin_arbiter_tb.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`balanced_round_robin_arbiter_tb.gtkw`](balanced_round_robin_arbiter_tb.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`balanced_round_robin_arbiter.sss`](balanced_round_robin_arbiter.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`balanced_round_robin_arbiter.svg`](balanced_round_robin_arbiter.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`balanced_round_robin_arbiter.md`](balanced_round_robin_arbiter.md)           | Markdown documentation datasheet.                   |
+| Type              | File                                                                                         | Description                                         |
+| ----------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`balanced_round_robin_arbiter.v`](balanced_round_robin_arbiter.v)                           | Verilog design.                                     |
+| Testbench         | [`balanced_round_robin_arbiter.testbench.sv`](balanced_round_robin_arbiter.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`balanced_round_robin_arbiter.testbench.gtkw`](balanced_round_robin_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`balanced_round_robin_arbiter.symbol.sss`](balanced_round_robin_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`balanced_round_robin_arbiter.symbol.svg`](balanced_round_robin_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`balanced_round_robin_arbiter.md`](balanced_round_robin_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
