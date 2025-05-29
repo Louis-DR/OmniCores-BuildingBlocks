@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        advanced_fifo__testbench.sv                                          ║
+// ║ File:        advanced_fifo.testbench.sv                                   ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the advanced FIFO queue.                       ║
 // ║                                                                           ║

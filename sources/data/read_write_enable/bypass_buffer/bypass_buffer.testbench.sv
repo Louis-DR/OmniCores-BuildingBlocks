@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        bypass_buffer__testbench.sv                                          ║
+// ║ File:        bypass_buffer.testbench.sv                                   ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the bypass buffer.                             ║
 // ║                                                                           ║

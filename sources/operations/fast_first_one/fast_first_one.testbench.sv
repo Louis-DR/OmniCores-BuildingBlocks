@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        fast_first_one__testbench.sv                                         ║
+// ║ File:        fast_first_one.testbench.sv                                  ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the fast variant of the first one operation.   ║
 // ║                                                                           ║

@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_gater__testbench.sv                                            ║
+// ║ File:        clock_gater.testbench.sv                                     ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the clock gater behavioral model.              ║
 // ║                                                                           ║

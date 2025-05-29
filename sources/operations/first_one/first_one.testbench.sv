@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        first_one__testbench.sv                                              ║
+// ║ File:        first_one.testbench.sv                                       ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the first one operation wrapper.               ║
 // ║                                                                           ║

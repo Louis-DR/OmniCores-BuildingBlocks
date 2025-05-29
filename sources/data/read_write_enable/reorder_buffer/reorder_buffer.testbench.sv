@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        reorder_buffer__testbench.sv                                         ║
+// ║ File:        reorder_buffer.testbench.sv                                  ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the out-of-order buffer.                       ║
 // ║                                                                           ║

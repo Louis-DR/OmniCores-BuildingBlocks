@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        round_robin_arbiter__testbench.sv                                    ║
+// ║ File:        round_robin_arbiter.testbench.sv                             ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the variant wrapper of the round-robin         ║
 // ║              arbiter.                                                     ║

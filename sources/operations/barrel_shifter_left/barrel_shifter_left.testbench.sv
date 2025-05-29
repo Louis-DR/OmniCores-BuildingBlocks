@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        barrel_shifter_left__testbench.sv                                    ║
+// ║ File:        barrel_shifter_left.testbench.sv                             ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the barrel left shifter.                       ║
 // ║                                                                           ║

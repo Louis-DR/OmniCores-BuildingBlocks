@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        synchronizer__testbench.sv                                           ║
+// ║ File:        synchronizer.testbench.sv                                    ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the regular flip-flop synchronizer.            ║
 // ║                                                                           ║

@@ -1,2 +1,2 @@
-hamming_encoder_tb_sub.sv
-hamming_encoder_tb_top.sv
+hamming_encoder.testcase.sv
+hamming_encoder.testbench.sv

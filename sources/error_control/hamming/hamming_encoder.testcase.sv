@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        hamming_encoder_tb_sub.sv                                    ║
+// ║ File:        hamming_encoder.testcase.sv                                  ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Sub-level testbench for the Hamming encoder.                 ║
 // ║                                                                           ║
@@ -16,7 +16,7 @@
 
 
 
-module hamming_encoder_tb_sub #(
+module hamming_encoder__testcase #(
   parameter DATA_WIDTH = 4
 ) (
   input  logic start,

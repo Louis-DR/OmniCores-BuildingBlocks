@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        valid_ready_asynchronous_fifo__testbench.sv                          ║
+// ║ File:        valid_ready_asynchronous_fifo.testbench.sv                   ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the FIFO queue.                                ║
 // ║                                                                           ║

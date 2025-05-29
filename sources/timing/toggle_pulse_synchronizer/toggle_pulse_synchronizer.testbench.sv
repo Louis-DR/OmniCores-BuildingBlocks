@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        toggle_pulse_synchronizer__testbench.sv                              ║
+// ║ File:        toggle_pulse_synchronizer.testbench.sv                       ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the toggle pulse synchronizer.                 ║
 // ║                                                                           ║

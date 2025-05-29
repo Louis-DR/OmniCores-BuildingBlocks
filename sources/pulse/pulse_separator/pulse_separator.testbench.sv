@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        pulse_separator__testbench.sv                                        ║
+// ║ File:        pulse_separator.testbench.sv                                 ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the pulse separator.                           ║
 // ║                                                                           ║

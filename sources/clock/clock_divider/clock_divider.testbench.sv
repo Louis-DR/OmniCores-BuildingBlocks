@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_divider__testbench.sv                                          ║
+// ║ File:        clock_divider.testbench.sv                                   ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the clock divider.                             ║
 // ║                                                                           ║

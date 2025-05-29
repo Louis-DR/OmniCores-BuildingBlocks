@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_multiplexer__testbench.sv                                      ║
+// ║ File:        clock_multiplexer.testbench.sv                               ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the glitch-free clock multiplexer.             ║
 // ║                                                                           ║

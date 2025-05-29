@@ -82,8 +82,10 @@ COMPILE_FLAGS_ICARUS    += -D SIMUMLATOR_NO_CONCURRENT_ASSERTION
 COMPILE_FLAGS_MODELSIM  ?=
 COMPILE_FLAGS_MODELSIM  += +define+SIMUMLATOR_NO_BOOL
 
+# Preprocessing operations
 preprocess:
 
+# Compilation of the testbench
 compile_verilator: preprocess
 	verilator $(COMPILE_FLAGS_VERILATOR) --binary $(INCLUDES_VERILATOR) $(DEFINES_VERILATOR) $(VERIFICATION_FILES)
 
@@ -95,6 +97,7 @@ compile_modelsim: preprocess
 
 compile: compile_icarus
 
+# Optimization of the testbench
 optimize_verilator: compile_verilator
 
 optimize_icarus: compile_icarus
@@ -104,6 +107,7 @@ optimize_modelsim: compile_modelsim
 
 optimize: optimize_icarus
 
+# Simulation of the testbench
 simulate_verilator: optimize_verilator
 	$(EXE_FILE) | tee $(LOG_FILE)
 
@@ -118,6 +122,7 @@ simulate_visualizer: optimize_modelsim
 
 simulate: simulate_icarus
 
+# Simulation of the testbench with GUI
 simulate_gui_icarus:
 	echo "Icarus simulator does't have a GUI mode."
 
@@ -129,6 +134,7 @@ simulate_gui_visualizer: optimize_modelsim
 
 simulate_gui: simulate_gui_visualizer
 
+# Visualization of the testbench waveforms
 waves_gtkwave:
 	gtkwave $(GTKW_FILE) &
 
@@ -143,6 +149,7 @@ waves_visualizer:
 
 waves: waves_gtkwave
 
+# Clean-up the generated files
 clean:
 	rm -rf ./$(OBJ_DIRECTORY)
 	rm -rf ./$(WORK_LIBRARY)

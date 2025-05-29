@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        dynamic_priority_arbiter__testbench.sv                               ║
+// ║ File:        dynamic_priority_arbiter.testbench.sv                        ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the dynamic priority arbiter.                  ║
 // ║                                                                           ║

@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        static_priority_arbiter__testbench.sv                                ║
+// ║ File:        static_priority_arbiter.testbench.sv                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the static priority arbiter.                   ║
 // ║                                                                           ║

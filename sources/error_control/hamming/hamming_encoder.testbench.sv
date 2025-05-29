@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        hamming_encoder_tb_top.sv                                    ║
+// ║ File:        hamming_encoder.testbench.sv                                 ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Top-level testbench for the Hamming encoder. It instantiates ║
 // ║              and runs the sub-level testbench for multiple data widths.   ║
@@ -16,7 +16,7 @@
 
 
 
-module hamming_encoder_tb_top ();
+module hamming_encoder__testbench ();
 
 logic start__hamming_encoder_tb__data_width_4;
 logic start__hamming_encoder_tb__data_width_11;
@@ -24,11 +24,11 @@ logic start__hamming_encoder_tb__data_width_26;
 logic start__hamming_encoder_tb__data_width_57;
 logic start__hamming_encoder_tb__data_width_120;
 
-hamming_encoder_tb_sub #(.DATA_WIDTH(  4)) hamming_encoder_tb__data_width_4   (.start(start__hamming_encoder_tb__data_width_4));
-hamming_encoder_tb_sub #(.DATA_WIDTH( 11)) hamming_encoder_tb__data_width_11  (.start(start__hamming_encoder_tb__data_width_11));
-hamming_encoder_tb_sub #(.DATA_WIDTH( 26)) hamming_encoder_tb__data_width_26  (.start(start__hamming_encoder_tb__data_width_26));
-hamming_encoder_tb_sub #(.DATA_WIDTH( 57)) hamming_encoder_tb__data_width_57  (.start(start__hamming_encoder_tb__data_width_57));
-hamming_encoder_tb_sub #(.DATA_WIDTH(120)) hamming_encoder_tb__data_width_120 (.start(start__hamming_encoder_tb__data_width_120));
+hamming_encoder__testcase #(.DATA_WIDTH(  4)) hamming_encoder_tb__data_width_4   (.start(start__hamming_encoder_tb__data_width_4));
+hamming_encoder__testcase #(.DATA_WIDTH( 11)) hamming_encoder_tb__data_width_11  (.start(start__hamming_encoder_tb__data_width_11));
+hamming_encoder__testcase #(.DATA_WIDTH( 26)) hamming_encoder_tb__data_width_26  (.start(start__hamming_encoder_tb__data_width_26));
+hamming_encoder__testcase #(.DATA_WIDTH( 57)) hamming_encoder_tb__data_width_57  (.start(start__hamming_encoder_tb__data_width_57));
+hamming_encoder__testcase #(.DATA_WIDTH(120)) hamming_encoder_tb__data_width_120 (.start(start__hamming_encoder_tb__data_width_120));
 
 initial begin
   // Log waves

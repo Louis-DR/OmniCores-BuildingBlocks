@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        small_first_one__testbench.sv                                        ║
+// ║ File:        small_first_one.testbench.sv                                 ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the small variant of the first one operation.  ║
 // ║                                                                           ║
