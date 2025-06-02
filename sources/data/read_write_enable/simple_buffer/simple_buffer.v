@@ -5,9 +5,9 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        simple_buffer.v                                              ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Single-entry data buffer that doesn't support reading and    ║
-// ║              writing in the same cycle. It breaks the timing path for     ║
-// ║              both the data and the control signals.                       ║
+// ║ Description: Single-entry data buffer for storage with write/read-enable  ║
+// ║              flow control, full and empty status flags, and no safety     ║
+// ║              mechanism for writing when full or reading when empty.       ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 

@@ -5,9 +5,10 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        skid_buffer.v                                                ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Two-entry data buffer that supports reading and writing in   ║
-// ║              the same cycle and allows back-to-back transfers. It breaks  ║
-// ║              the timing path for both the data and the control signals.   ║
+// ║ Description: Two-entry data buffer for bus pipelining with write/read-    ║
+// ║              enable flow control, full and empty status flags, and no     ║
+// ║              safety mechanism for writing when full or reading when       ║
+// ║              empty.                                                       ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
