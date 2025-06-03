@@ -6,7 +6,7 @@
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
-| License | MIT License - https://mit-license.org/                                           |
+| License | MIT License - [mit-license.org](https://mit-license.org)                         |
 
 ## Overview
 
@@ -116,7 +116,7 @@ This module has no external module dependencies.
 
 | Module                                                           | Path                                                                        | Comment                                                         |
 | ---------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [`fifo`](../../valid_ready/fifo/fifo.md)                         | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                    | Variant of this module with valid-ready handshake flow control. |
+| [`valid_ready_fifo`](../../valid_ready/fifo/fifo.md)             | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                    | Variant of this module with valid-ready handshake flow control. |
 | [`asynchronous_fifo`](../asynchronous_fifo/asynchronous_fifo.md) | `omnicores-buildingblocks/sources/data/read_write_enable/asynchronous_fifo` | Asynchronous FIFO for crossing clock domains.                   |
 | [`advanced_fifo`](../advanced_fifo/advanced_fifo.md)             | `omnicores-buildingblocks/sources/data/read_write_enable/advanced_fifo`     | FIFO with additional features and protection mechanisms.        |
 | [`simple_buffer`](../simple_buffer/simple_buffer.md)             | `omnicores-buildingblocks/sources/data/read_write_enable/simple_buffer`     | Single-entry buffer for storage.                                |
