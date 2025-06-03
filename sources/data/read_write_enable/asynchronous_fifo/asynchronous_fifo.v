@@ -72,8 +72,9 @@ binary_to_grey #(
   .grey   ( write_pointer_incremented_grey )
 );
 
-// Queue is full if the grey-coded pointers match this expression
-assign write_full = write_pointer_grey_w == {~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0]};
+// The queue is full if the grey-coded read and write pointers differ only in their two most significant bits
+assign write_full =  write_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1] == ~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1]
+                  && write_pointer_grey_w[DEPTH_LOG2-2:0]          ==  read_pointer_grey_w[DEPTH_LOG2-2:0];
 
 always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
