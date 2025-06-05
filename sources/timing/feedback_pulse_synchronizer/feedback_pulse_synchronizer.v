@@ -38,16 +38,19 @@ module feedback_pulse_synchronizer #(
   output busy
 );
 
-reg  state_source;
+wire state_source;
 wire state_destination;
 wire feedback;
 
-wire state_resetn = source_resetn & ~feedback;
-
-always @(posedge source_clock or negedge state_resetn) begin
-  if (!state_resetn) state_source <= 0;
-  else if (pulse_in) state_source <= 1;
-end
+set_reset_flip_flop_with_asynchronous_reset #(
+  .RESET_VALUE ( 0 )
+) state_flip_flop (
+  .clock  ( source_clock  ),
+  .resetn ( source_resetn ),
+  .set    ( pulse_in      ),
+  .reset  ( feedback      ),
+  .state  ( state_source  )
+);
 
 synchronizer #(
   .STAGES   ( STAGES )
