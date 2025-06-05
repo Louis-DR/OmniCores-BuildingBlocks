@@ -3,10 +3,10 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        feedback_vector_synchronizer.v                               ║
+// ║ File:        closed_loop_vector_synchronizer.v                            ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Resynchronize a vector of signals to a clock with flip-flop  ║
-// ║              stages.                                                      ║
+// ║              stages. All bits are transmitted at once.                    ║
 // ║                                                                           ║
 // ║              If the default two stages of flip-flops are not enough to    ║
 // ║              prevent metastable outputs, three or more stages can be      ║
@@ -32,7 +32,7 @@
 
 
 
-module feedback_vector_synchronizer #(
+module closed_loop_vector_synchronizer #(
   parameter WIDTH  = 8,
   parameter STAGES = 2
 ) (
