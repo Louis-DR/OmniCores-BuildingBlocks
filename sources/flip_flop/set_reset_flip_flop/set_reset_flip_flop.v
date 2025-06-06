@@ -7,6 +7,9 @@
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Set-reset (SR) flip flop.                                    ║
 // ║                                                                           ║
+// ║              This variant doesn't have a reset, so the initial state will ║
+// ║              be random in real silicon, but is set to 0 for simulation.   ║
+// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
@@ -15,7 +18,7 @@ module set_reset_flip_flop (
   input      clock,
   input      set,
   input      reset,
-  output reg state
+  output reg state = 0
 );
 
 always @(posedge clock) begin

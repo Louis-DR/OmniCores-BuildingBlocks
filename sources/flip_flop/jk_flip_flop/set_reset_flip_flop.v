@@ -7,6 +7,9 @@
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: JK flip flop.                                                ║
 // ║                                                                           ║
+// ║              This variant doesn't have a reset, so the initial state will ║
+// ║              be random in real silicon, but is set to 0 for simulation.   ║
+// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
@@ -15,7 +18,7 @@ module jk_flip_flop (
   input      clock,
   input      j,
   input      k,
-  output reg state
+  output reg state = 0
 );
 
 always @(posedge clock) begin
