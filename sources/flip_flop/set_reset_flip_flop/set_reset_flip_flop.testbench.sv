@@ -64,18 +64,9 @@ initial begin
   repeat (RANDOM_CHECK_DURATION) begin
     @(negedge clock);
     case ($urandom_range(0, 2))
-      0: begin
-        set   = 1;
-        reset = 0;
-      end
-      1: begin
-        set   = 0;
-        reset = 1;
-      end
-      default: begin
-        set   = 0;
-        reset = 0;
-      end
+      0: begin set = 0; reset = 0; end
+      1: begin set = 1; reset = 0; end
+      2: begin set = 0; reset = 1; end
     endcase
     @(posedge clock);
     if      (set)   state_expected = 1;
