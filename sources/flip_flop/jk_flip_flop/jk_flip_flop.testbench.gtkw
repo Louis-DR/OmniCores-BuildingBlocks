@@ -1,0 +1,17 @@
+[dumpfile] "jk_flip_flop.testbench.vcd"
+[savefile] "jk_flip_flop__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-10.652246 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 202
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+jk_flip_flop__testbench.clock
+jk_flip_flop__testbench.j
+jk_flip_flop__testbench.k
+jk_flip_flop__testbench.state
+[pattern_trace] 1
+[pattern_trace] 0
