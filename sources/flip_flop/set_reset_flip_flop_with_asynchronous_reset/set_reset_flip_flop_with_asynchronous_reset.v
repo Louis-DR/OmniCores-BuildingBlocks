@@ -25,6 +25,7 @@ always @(posedge clock or negedge resetn) begin
   if      (!resetn) state <= RESET_VALUE;
   else if (set)     state <= 1;
   else if (reset)   state <= 0;
+  end
 end
 
 endmodule
