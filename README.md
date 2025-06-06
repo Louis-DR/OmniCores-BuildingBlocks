@@ -154,6 +154,10 @@ Modules planned or in development :
   - Staged adder
   - Multiplier
   - Staged multiplier
+  - Divider
+  - Staged divider
+  - Modulo
+  - Constant modulo
 - Transformation
   - Interleaver
   - Deinterleaver
@@ -176,7 +180,7 @@ Modules planned or in development :
   - AES128, AES256
   - ShangMi 2, SM3, SM4
 - Arbiters
-  - Random arbiter
+  - Timeout dynamic priority arbiter
   - Weighted round robin arbiter
 - Predictors
   - Bimodal predictor
