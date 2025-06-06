@@ -1,4 +1,4 @@
-[dumpfile] "asynchronous_fifo__testbench.vcd"
+[dumpfile] "asynchronous_fifo.testbench.vcd"
 [savefile] "asynchronous_fifo__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

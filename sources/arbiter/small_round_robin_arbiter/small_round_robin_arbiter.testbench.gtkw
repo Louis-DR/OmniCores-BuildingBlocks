@@ -1,4 +1,4 @@
-[dumpfile] "small_round_robin_arbiter__testbench.vcd"
+[dumpfile] "small_round_robin_arbiter.testbench.vcd"
 [savefile] "small_round_robin_arbiter__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

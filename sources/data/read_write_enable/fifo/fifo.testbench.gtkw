@@ -1,4 +1,4 @@
-[dumpfile] "fifo__testbench.vcd"
+[dumpfile] "fifo.testbench.vcd"
 [savefile] "fifo__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

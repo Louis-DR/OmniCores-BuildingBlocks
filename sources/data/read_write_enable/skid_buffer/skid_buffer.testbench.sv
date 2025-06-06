@@ -70,7 +70,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("skid_buffer__testbench.vcd");
+  $dumpfile("skid_buffer.testbench.vcd");
   $dumpvars(0,skid_buffer__testbench);
 
   // Initialization

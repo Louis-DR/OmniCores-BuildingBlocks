@@ -40,7 +40,7 @@ fast_first_one #(
 // Main block
 initial begin
   // Log waves
-  $dumpfile("fast_first_one__testbench.vcd");
+  $dumpfile("fast_first_one.testbench.vcd");
   $dumpvars(0,fast_first_one__testbench);
 
   // Initialization

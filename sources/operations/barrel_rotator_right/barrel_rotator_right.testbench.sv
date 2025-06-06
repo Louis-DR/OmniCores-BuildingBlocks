@@ -51,7 +51,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("barrel_rotator_right__testbench.vcd");
+  $dumpfile("barrel_rotator_right.testbench.vcd");
   $dumpvars(0,barrel_rotator_right__testbench);
 
   // Initialization

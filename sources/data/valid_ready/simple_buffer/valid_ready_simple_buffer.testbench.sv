@@ -73,7 +73,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("valid_ready_simple_buffer__testbench.vcd");
+  $dumpfile("valid_ready_simple_buffer.testbench.vcd");
   $dumpvars(0,valid_ready_simple_buffer__testbench);
 
   // Initialization

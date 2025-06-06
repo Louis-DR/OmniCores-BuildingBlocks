@@ -1,4 +1,4 @@
-[dumpfile] "barrel_rotator_right__testbench.vcd"
+[dumpfile] "barrel_rotator_right.testbench.vcd"
 [savefile] "barrel_rotator_right__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

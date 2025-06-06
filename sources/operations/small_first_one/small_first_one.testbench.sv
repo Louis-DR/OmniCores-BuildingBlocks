@@ -40,7 +40,7 @@ small_first_one #(
 // Main block
 initial begin
   // Log waves
-  $dumpfile("small_first_one__testbench.vcd");
+  $dumpfile("small_first_one.testbench.vcd");
   $dumpvars(0,small_first_one__testbench);
 
   // Initialization

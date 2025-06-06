@@ -114,7 +114,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("timeout_static_priority_arbiter__testbench.vcd");
+  $dumpfile("timeout_static_priority_arbiter.testbench.vcd");
   $dumpvars(0,timeout_static_priority_arbiter__testbench);
 
   // Initialization

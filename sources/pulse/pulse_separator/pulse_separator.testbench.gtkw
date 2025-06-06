@@ -1,4 +1,4 @@
-[dumpfile] "pulse_separator__testbench.vcd"
+[dumpfile] "pulse_separator.testbench.vcd"
 [savefile] "pulse_separator__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

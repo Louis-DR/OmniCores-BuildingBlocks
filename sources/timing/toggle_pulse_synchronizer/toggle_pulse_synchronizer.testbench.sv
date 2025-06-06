@@ -87,7 +87,7 @@ endtask
 // Main block
 initial begin
   // Log waves
-  $dumpfile("toggle_pulse_synchronizer__testbench.vcd");
+  $dumpfile("toggle_pulse_synchronizer.testbench.vcd");
   $dumpvars(0,toggle_pulse_synchronizer__testbench);
 
   // Initialization

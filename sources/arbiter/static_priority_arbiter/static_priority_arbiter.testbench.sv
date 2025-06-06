@@ -41,7 +41,7 @@ static_priority_arbiter #(
 // Main block
 initial begin
   // Log waves
-  $dumpfile("static_priority_arbiter__testbench.vcd");
+  $dumpfile("static_priority_arbiter.testbench.vcd");
   $dumpvars(0,static_priority_arbiter__testbench);
 
   // Initialization

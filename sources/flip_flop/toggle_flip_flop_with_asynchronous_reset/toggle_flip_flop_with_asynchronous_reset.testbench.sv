@@ -51,7 +51,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("toggle_flip_flop_with_asynchronous_reset__testbench.vcd");
+  $dumpfile("toggle_flip_flop_with_asynchronous_reset.testbench.vcd");
   $dumpvars(0,toggle_flip_flop_with_asynchronous_reset__testbench);
 
   // Initialization

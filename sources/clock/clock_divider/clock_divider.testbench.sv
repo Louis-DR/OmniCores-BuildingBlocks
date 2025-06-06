@@ -78,7 +78,7 @@ real time_stop;
 // Main block
 initial begin
   // Log waves
-  $dumpfile("clock_divider__testbench.vcd");
+  $dumpfile("clock_divider.testbench.vcd");
   $dumpvars(0,clock_divider__testbench);
 
   // Reset

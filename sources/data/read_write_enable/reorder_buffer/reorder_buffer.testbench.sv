@@ -84,7 +84,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("reorder_buffer__testbench.vcd");
+  $dumpfile("reorder_buffer.testbench.vcd");
   $dumpvars(0,reorder_buffer__testbench);
 
   // Initialization

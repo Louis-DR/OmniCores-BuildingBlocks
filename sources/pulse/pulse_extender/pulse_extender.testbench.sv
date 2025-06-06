@@ -87,7 +87,7 @@ endtask
 // Main block
 initial begin
   // Log waves
-  $dumpfile("pulse_extender__testbench.vcd");
+  $dumpfile("pulse_extender.testbench.vcd");
   $dumpvars(0,pulse_extender__testbench);
 
   // Initialization

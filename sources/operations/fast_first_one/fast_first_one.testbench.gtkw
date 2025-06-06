@@ -1,4 +1,4 @@
-[dumpfile] "fast_first_one__testbench.vcd"
+[dumpfile] "fast_first_one.testbench.vcd"
 [savefile] "fast_first_one__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

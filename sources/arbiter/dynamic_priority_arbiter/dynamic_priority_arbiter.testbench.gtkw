@@ -2,7 +2,7 @@
 [*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
 [*] Mon Apr 21 20:36:18 2025
 [*]
-[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/arbiter/dynamic_priority_arbiter/dynamic_priority_arbiter__testbench.vcd"
+[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/arbiter/dynamic_priority_arbiter/dynamic_priority_arbiter.testbench.vcd"
 [dumpfile_mtime] "Mon Apr 21 20:35:23 2025"
 [dumpfile_size] 128611
 [savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/arbiter/dynamic_priority_arbiter/dynamic_priority_arbiter__testbench.gtkw"

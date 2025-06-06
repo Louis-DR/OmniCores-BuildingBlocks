@@ -1,4 +1,4 @@
-[dumpfile] "bypass_buffer__testbench.vcd"
+[dumpfile] "bypass_buffer.testbench.vcd"
 [savefile] "bypass_buffer__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

@@ -1,4 +1,4 @@
-[dumpfile] "timeout_static_priority_arbiter__testbench.vcd"
+[dumpfile] "timeout_static_priority_arbiter.testbench.vcd"
 [savefile] "timeout_static_priority_arbiter__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

@@ -1,4 +1,4 @@
-[dumpfile] "fast_clock_multiplexer__testbench.vcd"
+[dumpfile] "fast_clock_multiplexer.testbench.vcd"
 [savefile] "fast_clock_multiplexer__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

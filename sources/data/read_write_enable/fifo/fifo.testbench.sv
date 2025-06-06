@@ -73,7 +73,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("fifo__testbench.vcd");
+  $dumpfile("fifo.testbench.vcd");
   $dumpvars(0,fifo__testbench);
 
   // Initialization

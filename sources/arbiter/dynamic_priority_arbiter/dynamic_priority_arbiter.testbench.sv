@@ -153,7 +153,7 @@ endfunction
 // Main block
 initial begin
   // Log waves
-  $dumpfile("dynamic_priority_arbiter__testbench.vcd");
+  $dumpfile("dynamic_priority_arbiter.testbench.vcd");
   $dumpvars(0,dynamic_priority_arbiter__testbench);
 
   // Initialization

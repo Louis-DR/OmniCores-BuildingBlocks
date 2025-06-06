@@ -1,4 +1,4 @@
-[dumpfile] "toggle_flip_flop__testbench.vcd"
+[dumpfile] "toggle_flip_flop.testbench.vcd"
 [savefile] "toggle_flip_flop__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

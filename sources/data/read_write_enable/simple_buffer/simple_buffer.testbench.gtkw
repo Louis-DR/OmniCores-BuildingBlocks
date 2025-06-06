@@ -1,4 +1,4 @@
-[dumpfile] "simple_buffer__testbench.vcd"
+[dumpfile] "simple_buffer.testbench.vcd"
 [savefile] "simple_buffer__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

@@ -96,7 +96,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("advanced_fifo__testbench.vcd");
+  $dumpfile("advanced_fifo.testbench.vcd");
   $dumpvars(0,advanced_fifo__testbench);
 
   // Initialization

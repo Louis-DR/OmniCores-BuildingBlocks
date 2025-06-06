@@ -75,7 +75,7 @@ real time_stop;
 // Main block
 initial begin
   // Log waves
-  $dumpfile("clock_gater__testbench.vcd");
+  $dumpfile("clock_gater.testbench.vcd");
   $dumpvars(0,clock_gater__testbench);
 
   // Initialization

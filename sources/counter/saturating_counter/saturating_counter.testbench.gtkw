@@ -1,4 +1,4 @@
-[dumpfile] "saturating_counter__testbench.vcd"
+[dumpfile] "saturating_counter.testbench.vcd"
 [savefile] "saturating_counter__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

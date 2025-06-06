@@ -63,7 +63,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("saturating_counter__testbench.vcd");
+  $dumpfile("saturating_counter.testbench.vcd");
   $dumpvars(0,saturating_counter__testbench);
 
   // Initialization

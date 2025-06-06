@@ -109,7 +109,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("round_robin_arbiter__testbench.vcd");
+  $dumpfile("round_robin_arbiter.testbench.vcd");
   $dumpvars(0,round_robin_arbiter__testbench);
 
   // Initialization

@@ -115,7 +115,7 @@ endtask
 // Main block
 initial begin
   // Log waves
-  $dumpfile("pulse_separator__testbench.vcd");
+  $dumpfile("pulse_separator.testbench.vcd");
   $dumpvars(0,pulse_separator__testbench);
 
   // Initialization

@@ -53,7 +53,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("barrel_shifter_left__testbench.vcd");
+  $dumpfile("barrel_shifter_left.testbench.vcd");
   $dumpvars(0,barrel_shifter_left__testbench);
 
   // Initialization

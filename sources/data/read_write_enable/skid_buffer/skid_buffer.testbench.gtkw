@@ -1,4 +1,4 @@
-[dumpfile] "skid_buffer__testbench.vcd"
+[dumpfile] "skid_buffer.testbench.vcd"
 [savefile] "skid_buffer__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

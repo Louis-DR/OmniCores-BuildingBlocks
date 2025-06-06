@@ -84,7 +84,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("out_of_order_buffer__testbench.vcd");
+  $dumpfile("out_of_order_buffer.testbench.vcd");
   $dumpvars(0,out_of_order_buffer__testbench);
 
   // Initialization

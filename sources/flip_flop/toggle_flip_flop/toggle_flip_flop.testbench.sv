@@ -49,7 +49,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("toggle_flip_flop__testbench.vcd");
+  $dumpfile("toggle_flip_flop.testbench.vcd");
   $dumpvars(0,toggle_flip_flop__testbench);
 
   // Initialization

@@ -99,7 +99,7 @@ endfunction
 // Main block
 initial begin
   // Log waves
-  $dumpfile("fast_clock_multiplexer__testbench.vcd");
+  $dumpfile("fast_clock_multiplexer.testbench.vcd");
   $dumpvars(0,fast_clock_multiplexer__testbench);
 
   // Initialization

@@ -69,7 +69,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("simple_buffer__testbench.vcd");
+  $dumpfile("simple_buffer.testbench.vcd");
   $dumpvars(0,simple_buffer__testbench);
 
   // Initialization

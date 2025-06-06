@@ -68,7 +68,7 @@ endtask
 // Main block
 initial begin
   // Log waves
-  $dumpfile("fast_synchronizer__testbench.vcd");
+  $dumpfile("fast_synchronizer.testbench.vcd");
   $dumpvars(0,fast_synchronizer__testbench);
 
   // Initialization

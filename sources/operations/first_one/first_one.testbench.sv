@@ -50,7 +50,7 @@ first_one #(
 // Main block
 initial begin
   // Log waves
-  $dumpfile("first_one__testbench.vcd");
+  $dumpfile("first_one.testbench.vcd");
   $dumpvars(0,first_one__testbench);
 
   // Initialization

@@ -1,4 +1,4 @@
-[dumpfile] "clock_divider__testbench.vcd"
+[dumpfile] "clock_divider.testbench.vcd"
 [savefile] "clock_divider__testbench.gtkw"
 [timestart] 0
 [size] 1728 1051

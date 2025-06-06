@@ -133,7 +133,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("asynchronous_advanced_fifo__testbench.vcd");
+  $dumpfile("asynchronous_advanced_fifo.testbench.vcd");
   $dumpvars(0,asynchronous_advanced_fifo__testbench);
 
   // Initialization
