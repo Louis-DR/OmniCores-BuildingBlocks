@@ -35,7 +35,7 @@ wire disable_clock_0_synchronized;
 wire disable_clock_1_synchronized;
 
 synchronizer #(
-  .STAGES   ( STAGES+2 )
+  .STAGES   ( STAGES )
 ) disable_clock_0_synchronizer (
   .clock    ( clock_1                      ),
   .resetn   ( clock_0_inverted             ),
@@ -44,7 +44,7 @@ synchronizer #(
 );
 
 synchronizer #(
-  .STAGES   ( STAGES+2 )
+  .STAGES   ( STAGES )
 ) disable_clock_1_synchronizer (
   .clock    ( clock_0                      ),
   .resetn   ( clock_1_inverted             ),
