@@ -1,5 +1,5 @@
 <svg width="200" height="100" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="50" height="40" fill="white" stroke="black" stroke-width="1" rx="5"/>
+  <rect x="25" y="5" width="50" height="40" fill="none" stroke="black" stroke-width="1" rx="5"/>
   <text x="50" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">First One</text>
   <text x="50" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">first_one</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">data</text>

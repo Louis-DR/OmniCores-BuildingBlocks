@@ -1,5 +1,5 @@
 <svg width="244" height="120" viewBox="0 0 122 60" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="72" height="50" fill="white" stroke="black" stroke-width="1" rx="5"/>
+  <rect x="25" y="5" width="72" height="50" fill="none" stroke="black" stroke-width="1" rx="5"/>
   <text x="61" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Toggle Flip-Flop</text>
   <text x="61" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">toggle_flip_flop</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>

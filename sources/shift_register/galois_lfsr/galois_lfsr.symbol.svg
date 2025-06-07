@@ -1,5 +1,5 @@
 <svg width="210" height="140" viewBox="0 0 105 70" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="55" height="60" fill="white" stroke="black" stroke-width="1" rx="5"/>
+  <rect x="25" y="5" width="55" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
   <text x="52" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Galois LFSR</text>
   <text x="52" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">galois_lfsr</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
