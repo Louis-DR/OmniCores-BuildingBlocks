@@ -1,0 +1,3 @@
+nonstop_clock_multiplexer.v
+../../timing/synchronizer/synchronizer.v
+../../timing/fast_synchronizer/fast_synchronizer.v
