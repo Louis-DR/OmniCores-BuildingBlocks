@@ -16,11 +16,11 @@ Multiplexes between two input clocks, `clock_0` and `clock_1`, based on the `sel
 
 Fast to slow switching :
 
-![fast_clock_multiplexer](fast_clock_multiplexer_f2s.wavedrom.svg)
+![fast_clock_multiplexer](fast_clock_multiplexer_fast2slow.wavedrom.svg)
 
 Slow to fast switching :
 
-![fast_clock_multiplexer](fast_clock_multiplexer_s2f.wavedrom.svg)
+![fast_clock_multiplexer](fast_clock_multiplexer_slow2fast.wavedrom.svg)
 
 The formula for the average switching time between the edge of the `select` to the first rising edge of the new frequency on the `clock_out` port noted $T_{switch\ avg}$, and for the average downtime being the duration for which `clock_out` is low between the last pulse at the old frequency and the first pulse at the new frequency noted $T_{downtime\ avg}$ are given below. They both depend on $STAGES$ the number of stages of the synchronizers, and $T_{from}$ and $T_{to}$ the periods of the old and new clocks. The formula are also given with the frequencies $f_{from}$ and $f_{to}$.
 
@@ -111,19 +111,19 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 
 ## Deliverables
 
-| Type                | File                                                                                   | Description                                                     |
-| ------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Design              | [`fast_clock_multiplexer.v`](fast_clock_multiplexer.v)                                 | Verilog design.                                                 |
-| Testbench           | [`fast_clock_multiplexer.testbench.sv`](fast_clock_multiplexer.testbench.sv)           | SystemVerilog verification testbench.                           |
-| Waveform script     | [`fast_clock_multiplexer.testbench.gtkw`](fast_clock_multiplexer.testbench.gtkw)       | Script to load the waveforms in GTKWave.                        |
-| Constraint script   | [`fast_clock_multiplexer.sdc`](fast_clock_multiplexer.sdc)                             | Tickle SDC constraint script for synthesis.                     |
-| Symbol descriptor   | [`fast_clock_multiplexer.symbol.sss`](fast_clock_multiplexer.symbol.sss)               | Symbol descriptor for SiliconSuite-SymbolGenerator.             |
-| Symbol image        | [`fast_clock_multiplexer.symbol.svg`](fast_clock_multiplexer.symbol.svg)               | Generated vector image of the symbol.                           |
-| Waveform descriptor | [`fast_clock_multiplexer_f2s.wavedrom.json`](fast_clock_multiplexer_f2s.wavedrom.json) | Waveform descriptor for Wavedrom of the fast-to-slow switching. |
-| Waveform descriptor | [`fast_clock_multiplexer_s2f.wavedrom.json`](fast_clock_multiplexer_s2f.wavedrom.json) | Waveform descriptor for Wavedrom of the slow-to-fast switching. |
-| Waveform image      | [`fast_clock_multiplexer_f2s.wavedrom.svg`](fast_clock_multiplexer_f2s.wavedrom.svg)   | Generated image of the waveform of the fast-to-slow switching.  |
-| Waveform image      | [`fast_clock_multiplexer_s2f.wavedrom.svg`](fast_clock_multiplexer_s2f.wavedrom.svg)   | Generated image of the waveform of the slow-to-fast switching.  |
-| Datasheet           | [`fast_clock_multiplexer.md`](fast_clock_multiplexer.md)                               | Markdown documentation datasheet.                               |
+| Type                | File                                                                                               | Description                                                     |
+| ------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Design              | [`fast_clock_multiplexer.v`](fast_clock_multiplexer.v)                                             | Verilog design.                                                 |
+| Testbench           | [`fast_clock_multiplexer.testbench.sv`](fast_clock_multiplexer.testbench.sv)                       | SystemVerilog verification testbench.                           |
+| Waveform script     | [`fast_clock_multiplexer.testbench.gtkw`](fast_clock_multiplexer.testbench.gtkw)                   | Script to load the waveforms in GTKWave.                        |
+| Constraint script   | [`fast_clock_multiplexer.sdc`](fast_clock_multiplexer.sdc)                                         | Tickle SDC constraint script for synthesis.                     |
+| Symbol descriptor   | [`fast_clock_multiplexer.symbol.sss`](fast_clock_multiplexer.symbol.sss)                           | Symbol descriptor for SiliconSuite-SymbolGenerator.             |
+| Symbol image        | [`fast_clock_multiplexer.symbol.svg`](fast_clock_multiplexer.symbol.svg)                           | Generated vector image of the symbol.                           |
+| Waveform descriptor | [`fast_clock_multiplexer_fast2slow.wavedrom.json`](fast_clock_multiplexer_fast2slow.wavedrom.json) | Waveform descriptor for Wavedrom of the fast-to-slow switching. |
+| Waveform descriptor | [`fast_clock_multiplexer_slow2fast.wavedrom.json`](fast_clock_multiplexer_slow2fast.wavedrom.json) | Waveform descriptor for Wavedrom of the slow-to-fast switching. |
+| Waveform image      | [`fast_clock_multiplexer_fast2slow.wavedrom.svg`](fast_clock_multiplexer_fast2slow.wavedrom.svg)   | Generated image of the waveform of the fast-to-slow switching.  |
+| Waveform image      | [`fast_clock_multiplexer_slow2fast.wavedrom.svg`](fast_clock_multiplexer_slow2fast.wavedrom.svg)   | Generated image of the waveform of the slow-to-fast switching.  |
+| Datasheet           | [`fast_clock_multiplexer.md`](fast_clock_multiplexer.md)                                           | Markdown documentation datasheet.                               |
 
 ## Dependencies
 
