@@ -58,22 +58,25 @@ wire enable_clock_1_synchronized;
 wire enable_clock_0 = ~select & ~enable_clock_1_synchronized;
 wire enable_clock_1 =  select & ~enable_clock_0_synchronized;
 
+wire resetn_0 = ~disable_clock_0_synchronized;
+wire resetn_1 = ~disable_clock_1_synchronized;
+
 fast_synchronizer #(
   .STAGES   ( STAGES )
 ) enable_clock_0_synchronizer (
-  .clock    ( clock_0_inverted              ),
-  .resetn   ( ~disable_clock_0_synchronized ),
-  .data_in  ( enable_clock_0                ),
-  .data_out ( enable_clock_0_synchronized   )
+  .clock    ( clock_0_inverted            ),
+  .resetn   ( resetn_0                    ),
+  .data_in  ( enable_clock_0              ),
+  .data_out ( enable_clock_0_synchronized )
 );
 
 fast_synchronizer #(
   .STAGES   ( STAGES )
 ) enable_clock_1_synchronizer (
-  .clock    ( clock_1_inverted              ),
-  .resetn   ( ~disable_clock_1_synchronized ),
-  .data_in  ( enable_clock_1                ),
-  .data_out ( enable_clock_1_synchronized   )
+  .clock    ( clock_1_inverted            ),
+  .resetn   ( resetn_1                    ),
+  .data_in  ( enable_clock_1              ),
+  .data_out ( enable_clock_1_synchronized )
 );
 
 wire clock_0_gated = clock_0 & enable_clock_0_synchronized;
