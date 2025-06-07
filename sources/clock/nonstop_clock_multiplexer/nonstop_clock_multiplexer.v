@@ -21,7 +21,6 @@ module nonstop_clock_multiplexer #(
 ) (
   input  clock_0,
   input  clock_1,
-  input  resetn,
   input  select,
   output clock_out
 );
