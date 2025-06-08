@@ -48,7 +48,7 @@ $$T_{downtime\ avg} = (STAGES/2 + 0.25) \times T_{to} = \frac{STAGES/2 + 0.25}{f
 
 The multiplexer uses a cross-coupled enable scheme to ensure glitch-free switching. When the `select` is low, it enables `clock_0` to drive `clock_out`. When the `select` is high, it enables `clock_1` to drive `clock_out`.
 
-The enable signals for both clocks, `enable_clock_0` and `enable_clock_1`, are synchronized to the inversion of their respective clocks. This ensures that the clocks are not enabled or disabled during their high pulse. The synchronizer uses both rising and falling edges, which makes the switching time shorter but at the cost of some risk of instability.
+The enable signals for both clocks, `enable_clock_0` and `enable_clock_1`, are synchronized to the inversion of their respective clocks. This ensures that the clocks are not enabled or disabled during their high pulse. The synchronizers use both rising and falling edges, which makes the switching time shorter but at the cost of some risk of instability.
 
 The enable signals are driven by the correct value of `select` (`0` for `enable_clock_0` and `1` for `enable_clock_1`), but only when the synchronized enable signal of the other clock is low. This ensures that both clocks cannot be enabled at once.
 
@@ -68,7 +68,7 @@ The module instantiates two `fast_synchronizer` modules with `STAGES` number of 
 
 ## Verification
 
-The clock divider is verified using a SystemVerilog testbench with multiple DUTs with different parameters, and a single common check sequence. It uses a helper macro to measure the frequency of the output clock.
+The clock multiplexer is verified using a SystemVerilog testbench with two check sequences. It uses a helper macro to measure the frequency of the output clock.
 
 | Number | Check                    | Description                                                                                               |
 | ------ | ------------------------ | --------------------------------------------------------------------------------------------------------- |
@@ -83,9 +83,9 @@ The following table lists the parameter values verified by the testbench.
 
 The following table lists the clock frequencies verified by the testbench.
 
-| `clock_0` | `clock_1` | Ratio |
-| --------- | --------- | ----- |
-| 10MHz     | 3.1831MHz | 1/π   |
+| `clock_0` | `clock_1`   | Ratio |
+| --------- | ----------- | ----- |
+| 10MHz     | 314.1593MHz | π     |
 
 ## Constraints
 

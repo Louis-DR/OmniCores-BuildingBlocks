@@ -68,7 +68,7 @@ The module instantiates two `synchronizer` modules with `STAGES` number of flip-
 
 ## Verification
 
-The clock divider is verified using a SystemVerilog testbench with multiple DUTs with different parameters, and a single common check sequence. It uses a helper macro to measure the frequency of the output clock.
+The clock multiplexer is verified using a SystemVerilog testbench with two check sequences. It uses a helper macro to measure the frequency of the output clock.
 
 | Number | Check                    | Description                                                                                               |
 | ------ | ------------------------ | --------------------------------------------------------------------------------------------------------- |
@@ -83,9 +83,9 @@ The following table lists the parameter values verified by the testbench.
 
 The following table lists the clock frequencies verified by the testbench.
 
-| `clock_0` | `clock_1` | Ratio |
-| --------- | --------- | ----- |
-| 10MHz     | 3.1831MHz | 1/π   |
+| `clock_0` | `clock_1`   | Ratio |
+| --------- | ----------- | ----- |
+| 10MHz     | 314.1593MHz | π     |
 
 ## Constraints
 
