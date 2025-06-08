@@ -52,36 +52,18 @@ synchronizer #(
   .data_out ( disable_clock_1  )
 );
 
-wire enable_clock_0_synchronized;
-wire enable_clock_1_synchronized;
+wire core_resetn_0 = ~disable_clock_0;
+wire core_resetn_1 = ~disable_clock_1;
 
-wire enable_clock_0 = select_clock_0 & ~enable_clock_1_synchronized;
-wire enable_clock_1 = select_clock_1 & ~enable_clock_0_synchronized;
-
-wire resetn_0 = ~disable_clock_0;
-wire resetn_1 = ~disable_clock_1;
-
-fast_synchronizer #(
-  .STAGES   ( STAGES )
-) enable_clock_0_synchronizer (
-  .clock    ( clock_0_inverted            ),
-  .resetn   ( resetn_0                    ),
-  .data_in  ( enable_clock_0              ),
-  .data_out ( enable_clock_0_synchronized )
+fast_clock_multiplexer #(
+  .STAGES    ( STAGES )
+) core_clock_multiplexer (
+  .clock_0   ( clock_0       ),
+  .clock_1   ( clock_1       ),
+  .resetn_0  ( core_resetn_0 ),
+  .resetn_1  ( core_resetn_1 ),
+  .select    ( select        ),
+  .clock_out ( clock_out     )
 );
-
-fast_synchronizer #(
-  .STAGES   ( STAGES )
-) enable_clock_1_synchronizer (
-  .clock    ( clock_1_inverted            ),
-  .resetn   ( resetn_1                    ),
-  .data_in  ( enable_clock_1              ),
-  .data_out ( enable_clock_1_synchronized )
-);
-
-wire clock_0_gated = clock_0 & enable_clock_0_synchronized;
-wire clock_1_gated = clock_1 & enable_clock_1_synchronized;
-
-assign clock_out = clock_0_gated | clock_1_gated;
 
 endmodule

@@ -50,12 +50,12 @@ $$T_{stop\ avg} = \frac{T_{on}}{2} = \frac{1}{2 \times f_{on}} $$
 
 ## Ports
 
-| Name        | Direction | Width | Clock        | Reset    | Reset value | Description                                                                                    |
-| ----------- | --------- | ----- | ------------ | -------- | ----------- | ---------------------------------------------------------------------------------------------- |
-| `clock_0`   | input     | 1     | self         |          |             | Input clock 0.                                                                                 |
-| `clock_1`   | input     | 1     | self         |          |             | Input clock 1.                                                                                 |
-| `select`    | input     | 1     | asynchronous |          |             | Select which clock drives `clock_out`.<br/>`0`: selects `clock_0`.<br/>`1`: selects `clock_1`. |
-| `clock_out` | output    | 1     | derived      | `resetn` | `0`         | Glitch-free multiplexed output clock.                                                          |
+| Name        | Direction | Width | Clock        | Reset | Reset value | Description                                                                                    |
+| ----------- | --------- | ----- | ------------ | ----- | ----------- | ---------------------------------------------------------------------------------------------- |
+| `clock_0`   | input     | 1     | self         |       |             | Input clock 0.                                                                                 |
+| `clock_1`   | input     | 1     | self         |       |             | Input clock 1.                                                                                 |
+| `select`    | input     | 1     | asynchronous |       |             | Select which clock drives `clock_out`.<br/>`0`: selects `clock_0`.<br/>`1`: selects `clock_1`. |
+| `clock_out` | output    | 1     | derived      |       |             | Glitch-free multiplexed output clock.                                                          |
 
 Note that there is no reset pin, as the flip-flops of the module are reset by the low pulses or stopped low clocks.
 
@@ -63,15 +63,9 @@ Note that there is no reset pin, as the flip-flops of the module are reset by th
 
 This clock multiplexer is made of a core clock multiplexer with extra logic to allow switching when either of the clocks is stopped.
 
-The core multiplexer uses a cross-coupled enable scheme to ensure glitch-free switching. When the `select` is low, it enables `clock_0` to drive `clock_out`. When the `select` is high, it enables `clock_1` to drive `clock_out`.
+The operation of the core clock multiplexer is explained in the datasheet of the `fast_clock_multiplexer` module.
 
-The enable signals for both clocks, `enable_clock_0` and `enable_clock_1`, are synchronized to the inversion of their respective clocks. This ensures that the clocks are not enabled or disabled during their high pulse. The synchronizers for the enable signals use both rising and falling edges, which makes the switching time shorter but at the cost of some risk of instability.
-
-The enable signals are driven by the correct value of `select` (`0` for `enable_clock_0` and `1` for `enable_clock_1`), but only when the synchronized enable signal of the other clock is low. This ensures that both clocks cannot be enabled at once.
-
-Those two mecanisms ensure the glitch-free operation of the multiplexer. The clocks are gated by their enable signal using a simple AND gate, and are then ORed together to get `clock_out`.
-
-To enable switching when either of the clocks is stopped, a pair of timers is used. Each timer drives a clock disable signal - `disable_clock_0_synchronized` and `disable_clock_1_synchronized` - that resets the synchronizer of the enable signal of is respective clock. Those timers are implemented using standard synchronizers. Those synchronizers are reset by the high level of the clock they are responsible for disabling, clocked by the other clock, and driven by the select polarity of the other clock.
+To enable switching when either of the clocks is stopped, a pair of timers is used. Each timer drives a clock disable signal - `disable_clock_0_synchronized` and `disable_clock_1_synchronized` - that enable logic of is respective clock in the core clock multiplexer. Those timers are implemented using standard synchronizers. Those synchronizers are reset by the high level of the clock they are responsible for disabling, clocked by the other clock, and driven by the select polarity of the other clock.
 
 If both clocks are running, then the timers are constantly reset, the clock disable signals stay low, and the whole multiplexer acts as a standard clock multiplexer. If one clock is stopped, then its disable timer is not reset, and when the select signal is toggled to the other clock, the disable signal will be driven, which will reset the enable signal, and finally allow switching to the running clock.
 
@@ -120,7 +114,7 @@ set nonstop_clock_multiplexer_path "path/to/nonstop_clock_multiplexer"
 ::omnicores::buildingblocks::timing::nonstop_clock_multiplexer::apply_constraints_to_instance $nonstop_clock_multiplexer_path
 ```
 
-The procedure fetches all the clocks defined on the input clock pins, and creates a generated clock on the output clock pin for each of them. The generated clocks are considered logically exclusive using a clock group. The procedure then calls the constraints procedure for the two synchronizers and the two fast synchronizers.
+The procedure calls the constraints procedures for the core clock multiplexer and for the two fast synchronizers.
 
 To call the procedure automatically on all instances of the clock multiplexer, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `nonstop_clock_multiplexer` and the constraints procedure `::omnicores::buildingblocks::timing::nonstop_clock_multiplexer::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
 
@@ -154,10 +148,11 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 
 ## Dependencies
 
-| Module              | Path                                                        | Comment                                  |
-| ------------------- | ----------------------------------------------------------- | ---------------------------------------- |
-| `synchronizer`      | `omnicores-buildingblocks/sources/timing/synchronizer`      | Used for disable signal synchronization. |
-| `fast_synchronizer` | `omnicores-buildingblocks/sources/timing/fast_synchronizer` | Used for enable signal synchronization.  |
+| Module                   | Path                                                            | Comment                                  |
+| ------------------------ | --------------------------------------------------------------- | ---------------------------------------- |
+| `fast_clock_multiplexer` | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer` | Core clock multiplexer.                  |
+| `synchronizer`           | `omnicores-buildingblocks/sources/timing/synchronizer`          | Used for disable signal synchronization. |
+| `fast_synchronizer`      | `omnicores-buildingblocks/sources/timing/fast_synchronizer`     | Used for enable signal synchronization.  |
 
 ## Related modules
 
