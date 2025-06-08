@@ -9,7 +9,8 @@
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
-fast_clock_multiplexer__testbench.resetn
+fast_clock_multiplexer__testbench.resetn_0
+fast_clock_multiplexer__testbench.resetn_1
 fast_clock_multiplexer__testbench.clock_0
 fast_clock_multiplexer__testbench.clock_1
 fast_clock_multiplexer__testbench.select

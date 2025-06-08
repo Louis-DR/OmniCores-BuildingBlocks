@@ -36,13 +36,14 @@ $$T_{downtime\ avg} = (STAGES/2 + 0.25) \times T_{to} = \frac{STAGES/2 + 0.25}{f
 
 ## Ports
 
-| Name        | Direction | Width | Clock        | Reset    | Reset value | Description                                                                                    |
-| ----------- | --------- | ----- | ------------ | -------- | ----------- | ---------------------------------------------------------------------------------------------- |
-| `clock_0`   | input     | 1     | self         |          |             | Input clock 0.                                                                                 |
-| `clock_1`   | input     | 1     | self         |          |             | Input clock 1.                                                                                 |
-| `resetn`    | input     | 1     | asynchronous | self     | `0`         | Asynchronous active-low reset for the internal synchronizers.                                  |
-| `select`    | input     | 1     | asynchronous |          |             | Select which clock drives `clock_out`.<br/>`0`: selects `clock_0`.<br/>`1`: selects `clock_1`. |
-| `clock_out` | output    | 1     | derived      | `resetn` | `0`         | Glitch-free multiplexed output clock.                                                          |
+| Name        | Direction | Width | Clock        | Reset                     | Reset value | Description                                                                                    |
+| ----------- | --------- | ----- | ------------ | ------------------------- | ----------- | ---------------------------------------------------------------------------------------------- |
+| `clock_0`   | input     | 1     | self         |                           |             | Input clock 0.                                                                                 |
+| `clock_1`   | input     | 1     | self         |                           |             | Input clock 1.                                                                                 |
+| `resetn_0`  | input     | 1     | asynchronous | self                      | `0`         | Asynchronous active-low reset for the internal synchronizer for `clock_0`.                     |
+| `resetn_1`  | input     | 1     | asynchronous | self                      | `0`         | Asynchronous active-low reset for the internal synchronizer for `clock_1`.                     |
+| `select`    | input     | 1     | asynchronous |                           |             | Select which clock drives `clock_out`.<br/>`0`: selects `clock_0`.<br/>`1`: selects `clock_1`. |
+| `clock_out` | output    | 1     | derived      | `resetn_0` and `resetn_1` | `0`         | Glitch-free multiplexed output clock.                                                          |
 
 ## Operation
 

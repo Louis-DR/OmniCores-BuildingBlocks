@@ -19,7 +19,8 @@ module fast_clock_multiplexer #(
 ) (
   input  clock_0,
   input  clock_1,
-  input  resetn,
+  input  resetn_0,
+  input  resetn_1,
   input  select,
   output clock_out
 );
@@ -40,7 +41,7 @@ fast_synchronizer #(
   .STAGES   ( STAGES                      )
 ) enable_clock_0_synchronizer (
   .clock    ( clock_0_inverted            ),
-  .resetn   ( resetn                      ),
+  .resetn   ( resetn_0                    ),
   .data_in  ( enable_clock_0              ),
   .data_out ( enable_clock_0_synchronized )
 );
@@ -49,7 +50,7 @@ fast_synchronizer #(
   .STAGES   ( STAGES                      )
 ) enable_clock_1_synchronizer (
   .clock    ( clock_1_inverted            ),
-  .resetn   ( resetn                      ),
+  .resetn   ( resetn_1                    ),
   .data_in  ( enable_clock_1              ),
   .data_out ( enable_clock_1_synchronized )
 );
