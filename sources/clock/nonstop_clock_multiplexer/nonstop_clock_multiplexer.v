@@ -28,38 +28,38 @@ module nonstop_clock_multiplexer #(
 wire clock_0_inverted = ~clock_0;
 wire clock_1_inverted = ~clock_1;
 
-wire disable_clock_0 =  select;
-wire disable_clock_1 = ~select;
+wire select_clock_0 = ~select;
+wire select_clock_1 =  select;
 
-wire disable_clock_0_synchronized;
-wire disable_clock_1_synchronized;
+wire disable_clock_0;
+wire disable_clock_1;
 
 synchronizer #(
   .STAGES   ( STAGES )
 ) disable_clock_0_synchronizer (
-  .clock    ( clock_1                      ),
-  .resetn   ( clock_0_inverted             ),
-  .data_in  ( disable_clock_0              ),
-  .data_out ( disable_clock_0_synchronized )
+  .clock    ( clock_1          ),
+  .resetn   ( clock_0_inverted ),
+  .data_in  ( select_clock_1   ),
+  .data_out ( disable_clock_0  )
 );
 
 synchronizer #(
   .STAGES   ( STAGES )
 ) disable_clock_1_synchronizer (
-  .clock    ( clock_0                      ),
-  .resetn   ( clock_1_inverted             ),
-  .data_in  ( disable_clock_1              ),
-  .data_out ( disable_clock_1_synchronized )
+  .clock    ( clock_0          ),
+  .resetn   ( clock_1_inverted ),
+  .data_in  ( select_clock_0   ),
+  .data_out ( disable_clock_1  )
 );
 
 wire enable_clock_0_synchronized;
 wire enable_clock_1_synchronized;
 
-wire enable_clock_0 = ~select & ~enable_clock_1_synchronized;
-wire enable_clock_1 =  select & ~enable_clock_0_synchronized;
+wire enable_clock_0 = select_clock_0 & ~enable_clock_1_synchronized;
+wire enable_clock_1 = select_clock_1 & ~enable_clock_0_synchronized;
 
-wire resetn_0 = ~disable_clock_0_synchronized;
-wire resetn_1 = ~disable_clock_1_synchronized;
+wire resetn_0 = ~disable_clock_0;
+wire resetn_1 = ~disable_clock_1;
 
 fast_synchronizer #(
   .STAGES   ( STAGES )
