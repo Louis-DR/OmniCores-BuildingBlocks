@@ -34,6 +34,8 @@ localparam integer RANDOM_GLITCH_CHECK_ITERATIONS   = 100;
 // Device ports
 logic clock_0;
 logic clock_1;
+logic resetn_0;
+logic resetn_1;
 logic select;
 logic clock_out;
 
@@ -53,6 +55,8 @@ nonstop_clock_multiplexer #(
 ) nonstop_clock_multiplexer_dut (
   .clock_0   ( clock_0    ),
   .clock_1   ( clock_1    ),
+  .resetn_0  ( resetn_0   ),
+  .resetn_1  ( resetn_1   ),
   .select    ( select     ),
   .clock_out ( clock_out  )
 );
@@ -113,6 +117,16 @@ initial begin
 
   // Initialization
   select = 0;
+
+  // Reset
+  resetn_0 = 0;
+  resetn_1 = 0;
+  @(posedge clock_0);
+  @(posedge clock_1);
+  resetn_0 = 1;
+  resetn_1 = 1;
+  @(posedge clock_0);
+  @(posedge clock_1);
 
   // Measure the input clocks frequency
   @(posedge clock_0);

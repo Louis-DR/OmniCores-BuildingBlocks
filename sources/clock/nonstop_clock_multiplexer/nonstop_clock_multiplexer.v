@@ -21,6 +21,8 @@ module nonstop_clock_multiplexer #(
 ) (
   input  clock_0,
   input  clock_1,
+  input  resetn_0,
+  input  resetn_1,
   input  select,
   output clock_out
 );
@@ -34,22 +36,25 @@ wire select_clock_1 =  select;
 wire disable_clock_0;
 wire disable_clock_1;
 
+wire timer_0_resetn = clock_0_inverted & resetn_0;
+wire timer_1_resetn = clock_1_inverted & resetn_1;
+
 synchronizer #(
   .STAGES   ( STAGES )
 ) disable_clock_0_synchronizer (
-  .clock    ( clock_1          ),
-  .resetn   ( clock_0_inverted ),
-  .data_in  ( select_clock_1   ),
-  .data_out ( disable_clock_0  )
+  .clock    ( clock_1         ),
+  .resetn   ( timer_0_resetn  ),
+  .data_in  ( select_clock_1  ),
+  .data_out ( disable_clock_0 )
 );
 
 synchronizer #(
   .STAGES   ( STAGES )
 ) disable_clock_1_synchronizer (
-  .clock    ( clock_0          ),
-  .resetn   ( clock_1_inverted ),
-  .data_in  ( select_clock_0   ),
-  .data_out ( disable_clock_1  )
+  .clock    ( clock_0         ),
+  .resetn   ( timer_1_resetn  ),
+  .data_in  ( select_clock_0  ),
+  .data_out ( disable_clock_1 )
 );
 
 wire core_resetn_0 = ~disable_clock_0;

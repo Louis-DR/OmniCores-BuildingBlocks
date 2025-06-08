@@ -50,14 +50,14 @@ $$T_{stop\ avg} = \frac{T_{on}}{2} = \frac{1}{2 \times f_{on}} $$
 
 ## Ports
 
-| Name        | Direction | Width | Clock        | Reset | Reset value | Description                                                                                    |
-| ----------- | --------- | ----- | ------------ | ----- | ----------- | ---------------------------------------------------------------------------------------------- |
-| `clock_0`   | input     | 1     | self         |       |             | Input clock 0.                                                                                 |
-| `clock_1`   | input     | 1     | self         |       |             | Input clock 1.                                                                                 |
-| `select`    | input     | 1     | asynchronous |       |             | Select which clock drives `clock_out`.<br/>`0`: selects `clock_0`.<br/>`1`: selects `clock_1`. |
-| `clock_out` | output    | 1     | derived      |       |             | Glitch-free multiplexed output clock.                                                          |
-
-Note that there is no reset pin, as the flip-flops of the module are reset by the low pulses or stopped low clocks.
+| Name        | Direction | Width | Clock        | Reset                     | Reset value | Description                                                                                    |
+| ----------- | --------- | ----- | ------------ | ------------------------- | ----------- | ---------------------------------------------------------------------------------------------- |
+| `clock_0`   | input     | 1     | self         |                           |             | Input clock 0.                                                                                 |
+| `clock_1`   | input     | 1     | self         |                           |             | Input clock 1.                                                                                 |
+| `resetn_0`  | input     | 1     | asynchronous | self                      | `0`         | Asynchronous active-low reset for the internal logic for `clock_0`.                            |
+| `resetn_1`  | input     | 1     | asynchronous | self                      | `0`         | Asynchronous active-low reset for the internal logic for `clock_1`.                            |
+| `select`    | input     | 1     | asynchronous |                           |             | Select which clock drives `clock_out`.<br/>`0`: selects `clock_0`.<br/>`1`: selects `clock_1`. |
+| `clock_out` | output    | 1     | derived      | `resetn_0` and `resetn_1` | `0`         | Glitch-free multiplexed output clock.                                                          |
 
 ## Operation
 
