@@ -33,18 +33,18 @@ localparam real    RANDOM_CHECK_CLEAR_PROBABILITY = 0.5;
 localparam integer RANDOM_CHECK_TIMEOUT           = 1000;
 
 // Device ports
-logic                    clock;
-logic                    resetn;
-logic                    write_enable;
-logic [WIDTH-1:0]        write_data;
-logic [INDEX_WIDTH-1:0]  write_index;
-logic                    full;
-logic                    read_enable;
-logic                    read_clear;
-logic [INDEX_WIDTH-1:0]  read_index;
-logic [WIDTH-1:0]        read_data;
-logic                    read_error;
-logic                    empty;
+logic                   clock;
+logic                   resetn;
+logic                   full;
+logic                   empty;
+logic                   write_enable;
+logic       [WIDTH-1:0] write_data;
+logic [INDEX_WIDTH-1:0] write_index;
+logic                   read_enable;
+logic                   read_clear;
+logic [INDEX_WIDTH-1:0] read_index;
+logic       [WIDTH-1:0] read_data;
+logic                   read_error;
 
 // Test variables
 logic [WIDTH-1:0] memory_model [DEPTH-1:0];
@@ -61,11 +61,11 @@ out_of_order_buffer #(
 ) out_of_order_buffer_dut (
   .clock        ( clock        ),
   .resetn       ( resetn       ),
+  .full         ( full         ),
   .empty        ( empty        ),
   .write_enable ( write_enable ),
   .write_data   ( write_data   ),
   .write_index  ( write_index  ),
-  .full         ( full         ),
   .read_enable  ( read_enable  ),
   .read_clear   ( read_clear   ),
   .read_index   ( read_index   ),
@@ -96,7 +96,7 @@ initial begin
   valid_entries_count = 0;
   for (integer index = 0; index < DEPTH; index++) begin
     memory_model[index] = '0;
-    valid_model[index]  = 1'b0;
+    valid_model[index]  = 0;
   end
 
   // Reset
@@ -118,7 +118,7 @@ initial begin
   if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds.", $time, write_index);
   if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
   memory_model[write_index] = write_data;
-  valid_model[write_index]  = 1'b1;
+  valid_model[write_index]  = 1;
   valid_entries_count++;
   last_written_index = write_index;
   @(negedge clock);
@@ -161,7 +161,7 @@ initial begin
   if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during clear.", $time, read_index);
   if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
   memory_model[read_index] = 'x;
-  valid_model[read_index]  = 1'b0;
+  valid_model[read_index]  = 0;
   valid_entries_count--;
   @(negedge clock);
   read_enable = 0;
@@ -198,7 +198,7 @@ initial begin
     if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds during fill.", $time, write_index);
     if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model during fill.", $time, write_index);
     memory_model[write_index] = write_data;
-    valid_model[write_index]  = 1'b1;
+    valid_model[write_index]  = 1;
     valid_entries_count++;
     @(negedge clock);
     write_enable = 0;
@@ -248,7 +248,7 @@ initial begin
     if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during clear.", $time, read_index);
     if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
     memory_model[read_index] = 'x;
-    valid_model[read_index]  = 1'b0;
+    valid_model[read_index]  = 0;
     valid_entries_count--;
     @(negedge clock);
     read_enable = 0;
@@ -279,7 +279,7 @@ initial begin
       if (read_error) $error("[%0tns] Read error asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
       if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
       memory_model[read_index] = 'x;
-      valid_model[read_index]  = 1'b0;
+      valid_model[read_index]  = 0;
       valid_entries_count--;
     end else begin
       read_enable = 0;
@@ -295,7 +295,7 @@ initial begin
       if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds at iteration %0d.", $time, write_index, iteration);
       if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model at iteration %0d.", $time, write_index, iteration);
       memory_model[write_index] = write_data;
-      valid_model[write_index]  = 1'b1;
+      valid_model[write_index]  = 1;
       valid_entries_count++;
     end else begin
       write_enable       = 0;
@@ -332,7 +332,7 @@ initial begin
       if (read_error) $error("[%0tns] Read error asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
       if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
       memory_model[read_index] = 'x;
-      valid_model[read_index]  = 1'b0;
+      valid_model[read_index]  = 0;
       valid_entries_count--;
     end else begin
       read_enable = 0;
@@ -348,7 +348,7 @@ initial begin
       if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds at iteration %0d.", $time, write_index, iteration);
       if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model at iteration %0d.", $time, write_index, iteration);
       memory_model[write_index] = write_data;
-      valid_model[write_index]  = 1'b1;
+      valid_model[write_index]  = 1;
       valid_entries_count++;
     end else begin
       write_enable       = 0;
@@ -367,7 +367,7 @@ initial begin
       if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during final read pass.", $time, read_index);
       if (read_data !== memory_model[index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during final read pass.", $time, read_data, read_index, memory_model[index]);
       memory_model[read_index] = 'x;
-      valid_model[read_index]  = 1'b0;
+      valid_model[read_index]  = 0;
       valid_entries_count--;
       @(posedge clock);
     end else begin
@@ -416,7 +416,7 @@ initial begin
           if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds.", $time, write_index);
           if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
           memory_model[write_index] = write_data;
-          valid_model[write_index]  = 1'b1;
+          valid_model[write_index]  = 1;
           valid_entries_count++;
           transfer_count++;
         end
@@ -451,7 +451,7 @@ initial begin
           if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
           if (read_clear) begin
             memory_model[read_index] = 'x;
-            valid_model[read_index]  = 1'b0;
+            valid_model[read_index]  = 0;
             valid_entries_count--;
           end
         end
