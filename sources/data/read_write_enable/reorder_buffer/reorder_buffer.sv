@@ -48,13 +48,13 @@ module reorder_buffer #(
 logic [WIDTH-1:0] buffer      [DEPTH-1:0];
 logic [WIDTH-1:0] buffer_next [DEPTH-1:0];
 
-// Valid entries
-logic [DEPTH-1:0] valid;
-logic [DEPTH-1:0] valid_next;
-
 // Reserved entries
 logic [DEPTH-1:0] reserved;
 logic [DEPTH-1:0] reserved_next;
+
+// Valid entries
+logic [DEPTH-1:0] valid;
+logic [DEPTH-1:0] valid_next;
 
 // Head and tail pointers
 logic [INDEX_WIDTH-1:0] reserve_pointer;
@@ -95,11 +95,12 @@ onehot_to_binary #(
 // Reservation, write, and read logic
 always_comb begin
   // Default assignments
-  read_pointer_next    = read_pointer;
   reserve_pointer_next = reserve_pointer;
+  read_pointer_next    = read_pointer;
   for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-    buffer_next [depth_index] = buffer [depth_index];
-    valid_next  [depth_index] = valid  [depth_index];
+    buffer_next   [depth_index] = buffer   [depth_index];
+    reserved_next [depth_index] = reserved [depth_index];
+    valid_next    [depth_index] = valid    [depth_index];
   end
   // Reservation operation
   if (reserve_enable) begin
@@ -113,8 +114,8 @@ always_comb begin
   end
   // Read operation
   if (read_enable) begin
-    valid_next    [read_index] = 1'b0;
-    reserved_next [read_index] = 1'b0;
+    valid_next    [read_pointer] = 1'b0;
+    reserved_next [read_pointer] = 1'b0;
     read_pointer_next = read_pointer + 1;
   end
 end
@@ -128,8 +129,8 @@ assign reserve_error = reserve_enable && reserved[reserve_index];
 assign write_error = write_enable && (valid[write_index] || !reserved[write_index]);
 
 // Read logic
-assign read_valid = valid[read_index];
-assign read_data  = buffer[read_index];
+assign read_valid = valid[read_pointer];
+assign read_data  = buffer[read_pointer];
 // Read error if not valid
 assign read_error = read_enable && !read_valid;
 
@@ -137,24 +138,30 @@ assign read_error = read_enable && !read_valid;
 always_ff @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
-    full       <= 0;
-    empty      <= 1;
-    data_full  <= 0;
-    data_empty <= 1;
+    full            <= 0;
+    empty           <= 1;
+    data_full       <= 0;
+    data_empty      <= 1;
+    reserve_pointer <= 0;
+    read_pointer    <= 0;
     for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-      buffer [depth_index] <= 0;
-      valid  [depth_index] <= 0;
+      buffer   [depth_index] <= 0;
+      reserved [depth_index] <= 0;
+      valid    [depth_index] <= 0;
     end
   end
   // Operation
   else begin
-    full       <= full_next;
-    empty      <= empty_next;
-    data_full  <= data_full_next;
-    data_empty <= data_empty_next;
+    full            <= full_next;
+    empty           <= empty_next;
+    data_full       <= data_full_next;
+    data_empty      <= data_empty_next;
+    reserve_pointer <= reserve_pointer_next;
+    read_pointer    <= read_pointer_next;
     for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-      buffer [depth_index] <= buffer_next [depth_index];
-      valid  [depth_index] <= valid_next  [depth_index];
+      buffer   [depth_index] <= buffer_next   [depth_index];
+      reserved [depth_index] <= reserved_next [depth_index];
+      valid    [depth_index] <= valid_next    [depth_index];
     end
   end
 end
