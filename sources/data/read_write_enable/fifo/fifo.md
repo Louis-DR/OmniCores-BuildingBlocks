@@ -40,13 +40,13 @@ The read data output continuously shows the value at the head of the queue when 
 
 The FIFO maintains an internal memory array indexed by separate read and write pointers, each with an additional wrap bit for correct full/empty detection.
 
-For **write operation**, when `write_enable` is asserted, `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented. Writing when full is ignored and the data is lost.
+For **write operation**, when `write_enable` is asserted, `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented.
 
-There is no safety mechanism against writing when full ; the write pointer will be incremented and surpass the read pointer, overwriting the data at the head, corrupting the full and empty flags, and breaking the FIFO.
+There is no safety mechanism against writing when full. The write pointer will be incremented and surpass the read pointer, overwriting the data at the head, corrupting the full and empty flags, and breaking the FIFO.
 
 For **read operation**, the `read_data` output continuously provides the data at the read pointer location. When `read_enable` is asserted, only the read pointer is incremented to advance to the next entry.
 
-There is no safety mechanism against reading when empty ; the read pointer will be incremented and surpass the write pointer, causing the next data written to be lost, corrupting the full and empty flags, and breaking the FIFO.
+There is no safety mechanism against reading when empty. The read pointer will be incremented and surpass the write pointer, causing the next data written to be lost, corrupting the full and empty flags, and breaking the FIFO.
 
 If the queue is empty, data written can be read in the next cycle. When the queue is not empty nor full, it can be written to and read from at the same time with back-to-back transactions at full throughput.
 
@@ -116,7 +116,7 @@ This module has no external module dependencies.
 
 | Module                                                           | Path                                                                        | Comment                                                         |
 | ---------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [`valid_ready_fifo`](../../valid_ready/fifo/fifo.md)             | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                    | Variant of this module with valid-ready handshake flow control. |
+| [`valid_ready_fifo`](../../valid_ready/fifo/valid_ready_fifo.md) | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                    | Variant of this module with valid-ready handshake flow control. |
 | [`asynchronous_fifo`](../asynchronous_fifo/asynchronous_fifo.md) | `omnicores-buildingblocks/sources/data/read_write_enable/asynchronous_fifo` | Asynchronous FIFO for crossing clock domains.                   |
 | [`advanced_fifo`](../advanced_fifo/advanced_fifo.md)             | `omnicores-buildingblocks/sources/data/read_write_enable/advanced_fifo`     | FIFO with additional features and protection mechanisms.        |
 | [`simple_buffer`](../simple_buffer/simple_buffer.md)             | `omnicores-buildingblocks/sources/data/read_write_enable/simple_buffer`     | Single-entry buffer for storage.                                |
