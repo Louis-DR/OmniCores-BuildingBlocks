@@ -1,4 +1,4 @@
 feedback_pulse_synchronizer.v
 ../synchronizer/synchronizer.v
 ../../pulse/rising_edge_detector/rising_edge_detector.v
-../../flip_flop/set_reset_flip_flop_with_asynchronous_reset/set_reset_flip_flop_with_asynchronous_reset.v
+../../flip_flop/set_reset_flip_flop_with_reset/set_reset_flip_flop_with_reset.v

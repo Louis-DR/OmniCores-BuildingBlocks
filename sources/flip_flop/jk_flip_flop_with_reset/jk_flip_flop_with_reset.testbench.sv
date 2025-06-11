@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        toggle_flip_flop_with_asynchronous_reset.testbench.sv        ║
+// ║ File:        jk_flip_flop_with_reset.testbench.sv                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the toggle flip-flop with asynchronous reset.  ║
+// ║ Description: Testbench for the JK flip-flop with asynchronous reset.      ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -15,7 +15,7 @@
 
 
 
-module toggle_flip_flop_with_asynchronous_reset__testbench ();
+module jk_flip_flop_with_reset__testbench ();
 
 // Test parameters
 localparam CLOCK_PERIOD = 10;
@@ -26,17 +26,19 @@ localparam integer RANDOM_CHECK_DURATION = 1000;
 // Device ports
 logic clock;
 logic resetn;
-logic toggle;
+logic j;
+logic k;
 logic state;
 
 // Test signals
 logic state_expected;
 
 // Device under test
-toggle_flip_flop_with_asynchronous_reset toggle_flip_flop_with_asynchronous_reset_dut (
+jk_flip_flop_with_reset jk_flip_flop_with_reset_dut (
   .clock  ( clock  ),
   .resetn ( resetn ),
-  .toggle ( toggle ),
+  .j      ( j      ),
+  .k      ( k      ),
   .state  ( state  )
 );
 
@@ -51,11 +53,12 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("toggle_flip_flop_with_asynchronous_reset.testbench.vcd");
-  $dumpvars(0,toggle_flip_flop_with_asynchronous_reset__testbench);
+  $dumpfile("jk_flip_flop_with_reset.testbench.vcd");
+  $dumpvars(0,jk_flip_flop_with_reset__testbench);
 
   // Initialization
-  toggle = 0;
+  j = 0;
+  k = 0;
 
   // Reset
   resetn = 0;
@@ -68,9 +71,16 @@ initial begin
   state_expected = 0;
   repeat (RANDOM_CHECK_DURATION) begin
     @(negedge clock);
-    toggle = $random;
+    case ($urandom_range(0, 3))
+      0: begin j = 0; k = 0; end
+      1: begin j = 1; k = 0; end
+      2: begin j = 0; k = 1; end
+      3: begin j = 1; k = 1; end
+    endcase
     @(posedge clock);
-    if (toggle) state_expected = ~state_expected;
+    if (j && k) state_expected = ~state_expected;
+    else if (j) state_expected = 1;
+    else if (k) state_expected = 0;
     #1;
     assert (state === state_expected)
       else $error("[%0tns] State output value differs from the expected value (%b != %b).", $time, state, state_expected);

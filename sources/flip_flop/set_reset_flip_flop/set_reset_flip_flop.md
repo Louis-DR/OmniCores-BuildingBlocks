@@ -80,8 +80,8 @@ This module has no dependency.
 
 ## Related modules
 
-| Module                                                                                                                                         | Path                                                                                     | Comment                                                     |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [`set_reset_flip_flop_with_asynchronous_reset`](../set_reset_flip_flop_with_asynchronous_reset/set_reset_flip_flop_with_asynchronous_reset.md) | `omnicores-buildingblocks/sources/flip_flop/set_reset_flip_flop_with_asynchronous_reset` | Variant of the set-reset flip-flop with asynchronous reset. |
-| [`toggle_flip_flop`](../toggle_flip_flop/toggle_flip_flop.md)                                                                                  | `omnicores-buildingblocks/sources/flip_flop/toggle_flip_flop`                            | Toggle flip-flop.                                           |
-| [`jk_flip_flop`](../jk_flip_flop/jk_flip_flop.md)                                                                                              | `omnicores-buildingblocks/sources/flip_flop/jk_flip_flop`                                | JK flip-flop.                                               |
+| Module                                                                                                  | Path                                                                        | Comment                                        |
+| ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------- |
+| [`set_reset_flip_flop_with_reset`](../set_reset_flip_flop_with_reset/set_reset_flip_flop_with_reset.md) | `omnicores-buildingblocks/sources/flip_flop/set_reset_flip_flop_with_reset` | Variant of the set-reset flip-flop with reset. |
+| [`toggle_flip_flop`](../toggle_flip_flop/toggle_flip_flop.md)                                           | `omnicores-buildingblocks/sources/flip_flop/toggle_flip_flop`               | Toggle flip-flop.                              |
+| [`jk_flip_flop`](../jk_flip_flop/jk_flip_flop.md)                                                       | `omnicores-buildingblocks/sources/flip_flop/jk_flip_flop`                   | JK flip-flop.                                  |

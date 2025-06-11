@@ -3,10 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        set_reset_flip_flop_with_asynchronous_reset.testbench.sv     ║
+// ║ File:        toggle_flip_flop_with_reset.testbench.sv                     ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the set-reset flip-flop with asynchronous      ║
-// ║              reset.                                                       ║
+// ║ Description: Testbench for the toggle flip-flop with asynchronous reset.  ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -16,7 +15,7 @@
 
 
 
-module set_reset_flip_flop_with_asynchronous_reset__testbench ();
+module toggle_flip_flop_with_reset__testbench ();
 
 // Test parameters
 localparam CLOCK_PERIOD = 10;
@@ -27,19 +26,17 @@ localparam integer RANDOM_CHECK_DURATION = 1000;
 // Device ports
 logic clock;
 logic resetn;
-logic set;
-logic reset;
+logic toggle;
 logic state;
 
 // Test signals
 logic state_expected;
 
 // Device under test
-set_reset_flip_flop_with_asynchronous_reset set_reset_flip_flop_with_asynchronous_reset_dut (
+toggle_flip_flop_with_reset toggle_flip_flop_with_reset_dut (
   .clock  ( clock  ),
   .resetn ( resetn ),
-  .set    ( set    ),
-  .reset  ( reset  ),
+  .toggle ( toggle ),
   .state  ( state  )
 );
 
@@ -54,12 +51,11 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("set_reset_flip_flop_with_asynchronous_reset.testbench.vcd");
-  $dumpvars(0,set_reset_flip_flop_with_asynchronous_reset__testbench);
+  $dumpfile("toggle_flip_flop_with_reset.testbench.vcd");
+  $dumpvars(0,toggle_flip_flop_with_reset__testbench);
 
   // Initialization
-  set   = 0;
-  reset = 0;
+  toggle = 0;
 
   // Reset
   resetn = 0;
@@ -72,14 +68,9 @@ initial begin
   state_expected = 0;
   repeat (RANDOM_CHECK_DURATION) begin
     @(negedge clock);
-    case ($urandom_range(0, 2))
-      0: begin set = 0; reset = 0; end
-      1: begin set = 1; reset = 0; end
-      2: begin set = 0; reset = 1; end
-    endcase
+    toggle = $random;
     @(posedge clock);
-    if      (set)   state_expected = 1;
-    else if (reset) state_expected = 0;
+    if (toggle) state_expected = ~state_expected;
     #1;
     assert (state === state_expected)
       else $error("[%0tns] State output value differs from the expected value (%b != %b).", $time, state, state_expected);

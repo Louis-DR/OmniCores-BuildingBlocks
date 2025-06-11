@@ -36,7 +36,7 @@ module toggle_pulse_synchronizer #(
 wire state_source;
 wire state_destination;
 
-toggle_flip_flop_with_asynchronous_reset toggle_flip_flop (
+toggle_flip_flop_with_reset toggle_flip_flop (
   .clock  ( source_clock  ),
   .resetn ( source_resetn ),
   .toggle ( pulse_in      ),

@@ -1,0 +1,18 @@
+[dumpfile] "set_reset_flip_flop_with_reset.testbench.vcd"
+[savefile] "set_reset_flip_flop_with_reset__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-10.655128 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 202
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+set_reset_flip_flop_with_reset__testbench.clock
+set_reset_flip_flop_with_reset__testbench.resetn
+set_reset_flip_flop_with_reset__testbench.set
+set_reset_flip_flop_with_reset__testbench.reset
+set_reset_flip_flop_with_reset__testbench.state
+[pattern_trace] 1
+[pattern_trace] 0

@@ -3,26 +3,29 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        toggle_flip_flop_with_asynchronous_reset.v                   ║
+// ║ File:        jk_flip_flop_with_reset.v                                    ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Toggle (T) flip flop with asynchronous reset.                ║
+// ║ Description: JK flip flop with asynchronous reset.                        ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
 
-module toggle_flip_flop_with_asynchronous_reset #(
+module jk_flip_flop_with_reset #(
   parameter RESET_VALUE = 0
 ) (
   input      clock,
   input      resetn,
-  input      toggle,
+  input      j,
+  input      k,
   output reg state
 );
 
 always @(posedge clock or negedge resetn) begin
   if      (!resetn) state <= RESET_VALUE;
-  else if (toggle)  state <= ~state;
+  else if (j && k)  state <= ~state;
+  else if (j)       state <= 1;
+  else if (k)       state <= 0;
 end
 
 endmodule

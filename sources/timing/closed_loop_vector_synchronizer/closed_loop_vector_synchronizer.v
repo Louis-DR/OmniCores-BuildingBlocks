@@ -52,7 +52,7 @@ wire update_pulse = data_in != source_stage;
 wire capture_pulse;
 wire feedback_pulse;
 
-set_reset_flip_flop_with_asynchronous_reset #(
+set_reset_flip_flop_with_reset #(
   .RESET_VALUE ( 0 )
 ) busy_flip_flop (
   .clock  ( source_clock   ),

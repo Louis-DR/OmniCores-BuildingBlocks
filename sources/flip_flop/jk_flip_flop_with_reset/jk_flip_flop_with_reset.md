@@ -1,8 +1,8 @@
-# JK Flip-Flop with Asynchronous Reset
+# JK Flip-Flop with Reset
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | JK Flip-Flop with Asynchronous Reset                                             |
+| Module  | JK Flip-Flop with Reset                                                          |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,7 +10,7 @@
 
 ## Overview
 
-![jk_flip_flop_with_asynchronous_reset](jk_flip_flop_with_asynchronous_reset.symbol.svg)
+![jk_flip_flop_with_reset](jk_flip_flop_with_reset.symbol.svg)
 
 The JK flip-flop with asynchronous reset is a sequential logic element that combines the functionality of set-reset and toggle operations. When `j` is high and `k` is low, the state is set to 1. When `j` is low and `k` is high, the state is reset to 0. When both `j` and `k` are high, the state toggles. This implementation includes an active-low asynchronous reset functionality, allowing the flip-flop to be reset to a configurable value independent of the clock signal.
 
@@ -75,14 +75,14 @@ If the technology node provides a dedicated JK flip-flop cell with asynchronous 
 
 ## Deliverables
 
-| Type              | File                                                                                                         | Description                                         |
-| ----------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`jk_flip_flop_with_asynchronous_reset.v`](jk_flip_flop_with_asynchronous_reset.v)                           | Verilog design.                                     |
-| Testbench         | [`jk_flip_flop_with_asynchronous_reset.testbench.sv`](jk_flip_flop_with_asynchronous_reset.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`jk_flip_flop_with_asynchronous_reset.testbench.gtkw`](jk_flip_flop_with_asynchronous_reset.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`jk_flip_flop_with_asynchronous_reset.symbol.sss`](jk_flip_flop_with_asynchronous_reset.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`jk_flip_flop_with_asynchronous_reset.symbol.svg`](jk_flip_flop_with_asynchronous_reset.symbol.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`jk_flip_flop_with_asynchronous_reset.md`](jk_flip_flop_with_asynchronous_reset.md)                         | Markdown documentation datasheet.                   |
+| Type              | File                                                                               | Description                                         |
+| ----------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`jk_flip_flop_with_reset.v`](jk_flip_flop_with_reset.v)                           | Verilog design.                                     |
+| Testbench         | [`jk_flip_flop_with_reset.testbench.sv`](jk_flip_flop_with_reset.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`jk_flip_flop_with_reset.testbench.gtkw`](jk_flip_flop_with_reset.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`jk_flip_flop_with_reset.symbol.sss`](jk_flip_flop_with_reset.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`jk_flip_flop_with_reset.symbol.svg`](jk_flip_flop_with_reset.symbol.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`jk_flip_flop_with_reset.md`](jk_flip_flop_with_reset.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
@@ -90,8 +90,8 @@ This module has no dependency.
 
 ## Related modules
 
-| Module                                                                                                                                         | Path                                                                                     | Comment                                      |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [`jk_flip_flop`](../jk_flip_flop/jk_flip_flop.md)                                                                                              | `omnicores-buildingblocks/sources/flip_flop/jk_flip_flop`                                | Variant of the JK flip-flop without reset.   |
-| [`toggle_flip_flop_with_asynchronous_reset`](../toggle_flip_flop_with_asynchronous_reset/toggle_flip_flop_with_asynchronous_reset.md)          | `omnicores-buildingblocks/sources/flip_flop/toggle_flip_flop_with_asynchronous_reset`    | Toggle flip-flop with asynchronous reset.    |
-| [`set_reset_flip_flop_with_asynchronous_reset`](../set_reset_flip_flop_with_asynchronous_reset/set_reset_flip_flop_with_asynchronous_reset.md) | `omnicores-buildingblocks/sources/flip_flop/set_reset_flip_flop_with_asynchronous_reset` | Set-reset flip-flop with asynchronous reset. |
+| Module                                                                                                  | Path                                                                        | Comment                                    |
+| ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------ |
+| [`jk_flip_flop`](../jk_flip_flop/jk_flip_flop.md)                                                       | `omnicores-buildingblocks/sources/flip_flop/jk_flip_flop`                   | Variant of the JK flip-flop without reset. |
+| [`toggle_flip_flop_with_reset`](../toggle_flip_flop_with_reset/toggle_flip_flop_with_reset.md)          | `omnicores-buildingblocks/sources/flip_flop/toggle_flip_flop_with_reset`    | Toggle flip-flop with reset.               |
+| [`set_reset_flip_flop_with_reset`](../set_reset_flip_flop_with_reset/set_reset_flip_flop_with_reset.md) | `omnicores-buildingblocks/sources/flip_flop/set_reset_flip_flop_with_reset` | Set-reset flip-flop with reset.            |

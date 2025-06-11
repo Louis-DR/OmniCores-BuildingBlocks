@@ -42,7 +42,7 @@ wire state_source;
 wire state_destination;
 wire feedback;
 
-set_reset_flip_flop_with_asynchronous_reset #(
+set_reset_flip_flop_with_reset #(
   .RESET_VALUE ( 0 )
 ) state_flip_flop (
   .clock  ( source_clock  ),

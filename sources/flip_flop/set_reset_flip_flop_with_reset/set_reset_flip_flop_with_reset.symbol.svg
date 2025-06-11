@@ -1,7 +1,7 @@
-<svg width="482" height="160" viewBox="0 0 241 80" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="191" height="70" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="120" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Set-Reset Flip-Flop with Asynchronous Reset</text>
-  <text x="120" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">set_reset_flip_flop_with_asynchronous_reset</text>
+<svg width="356" height="160" viewBox="0 0 178 80" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="128" height="70" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="89" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Set-Reset Flip-Flop with Reset</text>
+  <text x="89" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">set_reset_flip_flop_with_reset</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
         <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
         <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
@@ -14,9 +14,9 @@
       <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">reset</text>
         <line x1="19" y1="65" x2="5" y2="65" stroke="black" stroke-width="1"/>
         <path d="M 25 65 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="214" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">state</text>
-        <line x1="216" y1="65" x2="230" y2="65" stroke="black" stroke-width="1"/>
-        <path d="M 236 65 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="151" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">state</text>
+        <line x1="153" y1="65" x2="167" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 173 65 l -6 +2.0 v -4 z" fill="black"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {
