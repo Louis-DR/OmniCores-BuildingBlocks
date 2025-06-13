@@ -9,11 +9,17 @@ DESIGN_INCLIST          ?= $(DESIGN_NAME).design.inclist
 TESTBENCH_FILELIST      ?= $(DESIGN_NAME).testbench.filelist
 TESTBENCH_INCLIST       ?= $(DESIGN_NAME).testbench.inclist
 
-# Read design files from filelist if it exists, otherwise use default pattern
+# Read design files from filelist(s)
+ifdef DESIGN_FILELISTS
+# Multiple design filelists provided - combine them
+DESIGN_FILES            := $(foreach filelist,$(DESIGN_FILELISTS),$(shell cat $(filelist)))
+else
+# Single design filelist or default pattern
 ifneq (,$(wildcard $(DESIGN_FILELIST)))
 DESIGN_FILES            := $(shell cat $(DESIGN_FILELIST))
 else
 DESIGN_FILES            ?= $(DESIGN_NAME).$(DESIGN_EXTENSION)
+endif
 endif
 
 # Read testbench files from filelist if it exists, otherwise use default pattern
@@ -26,10 +32,16 @@ endif
 # Combine design and testbench files for verification
 VERIFICATION_FILES      := $(DESIGN_FILES) $(TESTBENCH_FILES)
 
-# Read design include directories from inclist if it exists
+# Read design include directories from inclist(s)
 DESIGN_INCLUDES         ?=
+ifdef DESIGN_INCLISTS
+# Multiple design inclists provided - combine them
+DESIGN_INCLUDES         += $(foreach inclist,$(DESIGN_INCLISTS),$(shell cat $(inclist)))
+else
+# Single design inclist
 ifneq (,$(wildcard $(DESIGN_INCLIST)))
 DESIGN_INCLUDES         += $(shell cat $(DESIGN_INCLIST))
+endif
 endif
 
 # Read testbench include directories from inclist if it exists
