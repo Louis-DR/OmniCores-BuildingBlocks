@@ -20,7 +20,7 @@ module repetition_checker #(
   output                                error
 );
 
-wire [REPETITION*DATA_WIDTH-1:0] block = {data, code};
+wire [REPETITION*DATA_WIDTH-1:0] block = {code, data};
 
 repetition_block_checker #(
   .DATA_WIDTH ( DATA_WIDTH ),

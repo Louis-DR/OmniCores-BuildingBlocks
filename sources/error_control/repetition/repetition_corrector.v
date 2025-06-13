@@ -21,7 +21,7 @@ module repetition_corrector #(
   output               [DATA_WIDTH-1:0] corrected_data
 );
 
-wire [REPETITION*DATA_WIDTH-1:0] block = {data, code};
+wire [REPETITION*DATA_WIDTH-1:0] block = {code, data};
 
 repetition_block_corrector #(
   .DATA_WIDTH ( DATA_WIDTH ),
