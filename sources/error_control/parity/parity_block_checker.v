@@ -31,6 +31,6 @@ parity_encoder #(
   .block  (            )
 );
 
-assign error = code == check_code;
+assign error = code != check_code;
 
 endmodule

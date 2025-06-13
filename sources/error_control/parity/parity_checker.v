@@ -19,7 +19,7 @@ module parity_checker #(
   output                 error
 );
 
-wire [DATA_WIDTH:0] block = {data, code};
+wire [DATA_WIDTH:0] block = {code, data};
 
 parity_block_checker #(
   .DATA_WIDTH ( DATA_WIDTH )

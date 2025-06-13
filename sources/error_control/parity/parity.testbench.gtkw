@@ -1,0 +1,27 @@
+[dumpfile] "parity.testbench.vcd"
+[savefile] "parity__testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-10.784960 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 202
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+parity__testbench.encoder_data[7:0]
+parity__testbench.encoder_code
+parity__testbench.encoder_block[8:0]
+@200
+-
+@28
+parity__testbench.checker_data[7:0]
+parity__testbench.checker_code
+parity__testbench.checker_error
+@200
+-
+@28
+parity__testbench.block_checker_block[8:0]
+parity__testbench.block_checker_error
+[pattern_trace] 1
+[pattern_trace] 0
