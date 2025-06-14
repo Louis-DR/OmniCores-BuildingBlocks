@@ -21,6 +21,8 @@ else
 DESIGN_FILES            ?= $(DESIGN_NAME).$(DESIGN_EXTENSION)
 endif
 endif
+# Remove duplicates and sort
+DESIGN_FILES            := $(sort $(DESIGN_FILES))
 
 # Read testbench files from filelist if it exists, otherwise use default pattern
 ifneq (,$(wildcard $(TESTBENCH_FILELIST)))
@@ -28,9 +30,13 @@ TESTBENCH_FILES         := $(shell cat $(TESTBENCH_FILELIST))
 else
 TESTBENCH_FILES         ?= $(TESTBENCH_BASENAME).$(TESTBENCH_EXTENSION)
 endif
+# Remove duplicates and sort
+TESTBENCH_FILES         := $(sort $(TESTBENCH_FILES))
 
 # Combine design and testbench files for verification
 VERIFICATION_FILES      := $(DESIGN_FILES) $(TESTBENCH_FILES)
+# Remove duplicates and sort
+VERIFICATION_FILES      := $(sort $(VERIFICATION_FILES))
 
 # Read design include directories from inclist(s)
 DESIGN_INCLUDES         ?=
@@ -43,12 +49,16 @@ ifneq (,$(wildcard $(DESIGN_INCLIST)))
 DESIGN_INCLUDES         += $(shell cat $(DESIGN_INCLIST))
 endif
 endif
+# Remove duplicates and sort
+DESIGN_INCLUDES         := $(sort $(DESIGN_INCLUDES))
 
 # Read testbench include directories from inclist if it exists
 TESTBENCH_INCLUDES      ?=
 ifneq (,$(wildcard $(TESTBENCH_INCLIST)))
 TESTBENCH_INCLUDES      += $(shell cat $(TESTBENCH_INCLIST))
 endif
+# Remove duplicates and sort
+TESTBENCH_INCLUDES      := $(sort $(TESTBENCH_INCLUDES))
 
 # Combine design and testbench include directories for verification, and remove duplicates
 VERIFICATION_INCLUDES   := $(DESIGN_INCLUDES) $(TESTBENCH_INCLUDES)
