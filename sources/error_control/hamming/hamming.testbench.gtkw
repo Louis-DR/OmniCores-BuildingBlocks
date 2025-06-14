@@ -1,0 +1,59 @@
+[dumpfile] "hamming.testbench.vcd"
+[savefile] "hamming.testbench.gtkw"
+[timestart] 3
+[size] 1728 1051
+[pos] -1 -1
+*-7.178984 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 202
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+hamming__testbench.encoder_data[3:0]
+hamming__testbench.encoder_code[2:0]
+hamming__testbench.encoder_block[6:0]
+@200
+-
+@28
+hamming__testbench.packager_data[3:0]
+hamming__testbench.packager_code[2:0]
+hamming__testbench.packager_block[6:0]
+@200
+-
+@28
+hamming__testbench.extractor_block[6:0]
+hamming__testbench.extractor_data[3:0]
+hamming__testbench.extractor_code[2:0]
+@200
+-
+@28
+hamming__testbench.checker_data[3:0]
+hamming__testbench.checker_code[2:0]
+hamming__testbench.checker_error
+@200
+-
+@28
+hamming__testbench.block_checker_block[6:0]
+hamming__testbench.block_checker_error
+@200
+-
+@28
+hamming__testbench.corrector_data[3:0]
+hamming__testbench.corrector_code[2:0]
+hamming__testbench.corrector_error
+hamming__testbench.corrector_corrected_data[3:0]
+@200
+-
+@28
+hamming__testbench.block_corrector_block[6:0]
+hamming__testbench.block_corrector_error
+hamming__testbench.block_corrector_corrected_data[3:0]
+@200
+-
+@24
+hamming__testbench.error_position
+@28
+hamming__testbench.expected_code[2:0]
+hamming__testbench.expected_block[6:0]
+[pattern_trace] 1
+[pattern_trace] 0
