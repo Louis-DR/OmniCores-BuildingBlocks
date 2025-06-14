@@ -26,22 +26,33 @@ module hamming_corrector #(
   output  [DATA_WIDTH-1:0] corrected_data
 );
 
-logic [BLOCK_WIDTH-1:0] block;
+// Pad the data to the message length corresponding to the number of parity bits
+localparam PADDED_DATA_WIDTH = `GET_HAMMING_DATA_WIDTH(PARITY_WIDTH);
+logic [PADDED_DATA_WIDTH-1:0] data_padded;
+assign data_padded = {{(PADDED_DATA_WIDTH - DATA_WIDTH){1'b0}}, data};
+
+// Pad the block
+localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH + PARITY_WIDTH;
+logic [PADDED_BLOCK_WIDTH-1:0] block_padded;
+logic [PADDED_DATA_WIDTH-1:0] corrected_data_padded;
 
 hamming_block_packager #(
-  .DATA_WIDTH ( DATA_WIDTH )
+  .DATA_WIDTH ( PADDED_DATA_WIDTH )
 ) packager (
-  .data  ( data  ),
-  .code  ( code  ),
-  .block ( block )
+  .data  ( data_padded  ),
+  .code  ( code         ),
+  .block ( block_padded )
 );
 
 hamming_block_corrector #(
-  .BLOCK_WIDTH ( BLOCK_WIDTH )
+  .BLOCK_WIDTH ( PADDED_BLOCK_WIDTH )
 ) block_corrector (
-  .block          ( block          ),
-  .error          ( error          ),
-  .corrected_data ( corrected_data )
+  .block          ( block_padded           ),
+  .error          ( error                  ),
+  .corrected_data ( corrected_data_padded  )
 );
+
+// Extract the original data width from the padded corrected data
+assign corrected_data = corrected_data_padded[DATA_WIDTH-1:0];
 
 endmodule
