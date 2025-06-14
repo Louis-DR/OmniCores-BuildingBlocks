@@ -34,7 +34,8 @@ assign data_padded = {{(PADDED_DATA_WIDTH - DATA_WIDTH){1'b0}}, data};
 // Pad the block
 localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH + PARITY_WIDTH;
 logic [PADDED_BLOCK_WIDTH-1:0] block_padded;
-logic [PADDED_DATA_WIDTH-1:0] corrected_data_padded;
+logic [PADDED_BLOCK_WIDTH-1:0] corrected_block_padded;
+logic  [PADDED_DATA_WIDTH-1:0] corrected_data_padded;
 
 hamming_block_packer #(
   .DATA_WIDTH ( PADDED_DATA_WIDTH )
@@ -47,9 +48,17 @@ hamming_block_packer #(
 hamming_block_corrector #(
   .BLOCK_WIDTH ( PADDED_BLOCK_WIDTH )
 ) block_corrector (
-  .block          ( block_padded           ),
-  .error          ( error                  ),
-  .corrected_data ( corrected_data_padded  )
+  .block           ( block_padded           ),
+  .error           ( error                  ),
+  .corrected_block ( corrected_block_padded )
+);
+
+hamming_block_unpacker #(
+  .BLOCK_WIDTH ( PADDED_BLOCK_WIDTH )
+) unpacker (
+  .block ( corrected_block_padded ),
+  .data  ( corrected_data_padded  ),
+  .code  (                        )
 );
 
 // Extract the original data width from the padded corrected data

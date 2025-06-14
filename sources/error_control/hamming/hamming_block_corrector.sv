@@ -20,9 +20,9 @@ module hamming_block_corrector #(
   localparam DATA_WIDTH   = `GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH),
   localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH)
 ) (
-  input [BLOCK_WIDTH-1:0] block,
-  output                  error,
-  output [DATA_WIDTH-1:0] corrected_data
+  input  [BLOCK_WIDTH-1:0] block,
+  output                   error,
+  output [BLOCK_WIDTH-1:0] corrected_block
 );
 
 // Extract the data and code from the block
@@ -56,7 +56,6 @@ assign syndrome = received_code ^ expected_code;
 assign error = |syndrome;
 
 // Correct the error if the syndrome points to a data bit position
-logic [BLOCK_WIDTH-1:0] corrected_block;
 logic [BLOCK_WIDTH-1:0] error_mask;
 
 // Generate the error mask based on the syndrome
@@ -71,14 +70,5 @@ end
 
 // Correct the block by XORing with the error mask
 assign corrected_block = block ^ error_mask;
-
-// Extract the corrected data
-hamming_block_unpacker #(
-  .BLOCK_WIDTH ( BLOCK_WIDTH )
-) corrected_extractor (
-  .block ( corrected_block ),
-  .data  ( corrected_data  ),
-  .code  (                 )
-);
 
 endmodule

@@ -6,7 +6,7 @@
         <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
         <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="33" x2="12" y2="37" stroke="black" stroke-width="1"/>
-      <text x="134" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_data</text>
+      <text x="134" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_block</text>
         <line x1="136" y1="35" x2="150" y2="35" stroke="black" stroke-width="1"/>
         <path d="M 156 35 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="139" y1="33" x2="143" y2="37" stroke="black" stroke-width="1"/>

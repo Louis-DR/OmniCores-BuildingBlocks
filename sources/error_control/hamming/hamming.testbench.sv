@@ -55,7 +55,7 @@ logic                    block_checker_error;
 
 logic  [BLOCK_WIDTH-1:0] block_corrector_block;
 logic                    block_corrector_error;
-logic   [DATA_WIDTH-1:0] block_corrector_corrected_data;
+logic  [BLOCK_WIDTH-1:0] block_corrector_corrected_block;
 
 // Test signals
 logic   [DATA_WIDTH-1:0] test_data;
@@ -120,9 +120,9 @@ hamming_corrector #(
 hamming_block_corrector #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
 ) hamming_block_corrector_dut (
-  .block          ( block_corrector_block          ),
-  .error          ( block_corrector_error          ),
-  .corrected_data ( block_corrector_corrected_data )
+  .block           ( block_corrector_block           ),
+  .error           ( block_corrector_error           ),
+  .corrected_block ( block_corrector_corrected_block )
 );
 
 // Reference function for the Hamming(7,4) encoding
@@ -297,9 +297,9 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
   assert (block_corrector_error === 1'b0)
     else $error("[%0tns] False error detected by block corrector for block '%b'.",
                 $time, expected_block);
-  assert (block_corrector_corrected_data === test_data)
-    else $error("[%0tns] Incorrect corrected data by block corrector for block '%b'. Expected '%b', got '%b'.",
-                $time, expected_block, test_data, block_corrector_corrected_data);
+  assert (block_corrector_corrected_block === expected_block)
+    else $error("[%0tns] Incorrect corrected block by block corrector for block '%b'. Expected '%b', got '%b'.",
+                $time, expected_block, expected_block, block_corrector_corrected_block);
 endtask
 
 // Task to check the outputs of the checker and corrector modules for a given data with a single bit error
@@ -350,9 +350,9 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   assert (block_corrector_error === 1'b1)
     else $error("[%0tns] Single-bit error not detected by block corrector for poisoned block '%b'.",
                 $time, poisoned_block);
-  assert (block_corrector_corrected_data === test_data)
+  assert (block_corrector_corrected_block === expected_block)
     else $error("[%0tns] Single-bit error not corrected by block corrector for poisoned block '%b'. Expected '%b', got '%b'.",
-                $time, poisoned_block, test_data, block_corrector_corrected_data);
+                $time, poisoned_block, expected_block, block_corrector_corrected_block);
 endtask
 
 // Main test block
