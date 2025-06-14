@@ -25,6 +25,7 @@ module hamming_block_corrector #(
   output [DATA_WIDTH-1:0] corrected_data
 );
 
+// Extract the data and code from the block
 logic   [DATA_WIDTH-1:0] data;
 logic [PARITY_WIDTH-1:0] received_code;
 
@@ -36,6 +37,7 @@ hamming_block_extractor #(
   .code  ( received_code )
 );
 
+// Calculate the expected code
 logic [PARITY_WIDTH-1:0] expected_code;
 
 hamming_encoder #(
@@ -46,18 +48,18 @@ hamming_encoder #(
   .block (               )
 );
 
-// Calculate syndrome
+// Calculate the syndrome
 logic [PARITY_WIDTH-1:0] syndrome;
 assign syndrome = received_code ^ expected_code;
 
-// Error detected if syndrome is non-zero
+// Error detected if the syndrome is non-zero
 assign error = |syndrome;
 
-// Correct the error if syndrome points to a data bit position
+// Correct the error if the syndrome points to a data bit position
 logic [BLOCK_WIDTH-1:0] corrected_block;
 logic [BLOCK_WIDTH-1:0] error_mask;
 
-// Generate error mask based on syndrome
+// Generate the error mask based on the syndrome
 integer syndrome_value;
 always_comb begin
   syndrome_value = syndrome;
@@ -67,10 +69,10 @@ always_comb begin
   end
 end
 
-// Correct the block by XORing with error mask
+// Correct the block by XORing with the error mask
 assign corrected_block = block ^ error_mask;
 
-// Extract corrected data
+// Extract the corrected data
 hamming_block_extractor #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
 ) corrected_extractor (

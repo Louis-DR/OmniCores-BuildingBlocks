@@ -24,6 +24,7 @@ module hamming_block_checker #(
   output                  error
 );
 
+// Extract the data and code from the block
 logic   [DATA_WIDTH-1:0] data;
 logic [PARITY_WIDTH-1:0] received_code;
 
@@ -35,6 +36,7 @@ hamming_block_extractor #(
   .code  ( received_code )
 );
 
+// Calculate the expected code
 logic [PARITY_WIDTH-1:0] expected_code;
 
 hamming_encoder #(
@@ -45,11 +47,11 @@ hamming_encoder #(
   .block (               )
 );
 
-// Calculate syndrome
+// Calculate the syndrome
 logic [PARITY_WIDTH-1:0] syndrome;
 assign syndrome = received_code ^ expected_code;
 
-// Error detected if syndrome is non-zero
+// Error detected if the syndrome is non-zero
 assign error = |syndrome;
 
 endmodule
