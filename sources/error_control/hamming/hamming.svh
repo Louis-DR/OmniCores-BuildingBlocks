@@ -78,3 +78,23 @@
   (BLOCK_WIDTH <= 65535) ? (BLOCK_WIDTH - 16) : \
   -1
 `endif
+
+`ifndef GET_HAMMING_UPPER_BLOCK_WIDTH
+`define GET_HAMMING_UPPER_BLOCK_WIDTH(BLOCK_WIDTH) \
+  (BLOCK_WIDTH <=     3) ?     3 : \
+  (BLOCK_WIDTH <=     7) ?     7 : \
+  (BLOCK_WIDTH <=    15) ?    15 : \
+  (BLOCK_WIDTH <=    31) ?    31 : \
+  (BLOCK_WIDTH <=    63) ?    63 : \
+  (BLOCK_WIDTH <=   127) ?   127 : \
+  (BLOCK_WIDTH <=   255) ?   255 : \
+  (BLOCK_WIDTH <=   511) ?   511 : \
+  (BLOCK_WIDTH <=  1023) ?  1023 : \
+  (BLOCK_WIDTH <=  2047) ?  2047 : \
+  (BLOCK_WIDTH <=  4095) ?  4095 : \
+  (BLOCK_WIDTH <=  8191) ?  8191 : \
+  (BLOCK_WIDTH <= 16383) ? 16383 : \
+  (BLOCK_WIDTH <= 32767) ? 32767 : \
+  (BLOCK_WIDTH <= 65535) ? 65535 : \
+  -1
+`endif
