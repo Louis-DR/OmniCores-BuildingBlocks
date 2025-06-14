@@ -12,10 +12,10 @@
 *-11.036118 10270 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] dynamic_priority_arbiter__testbench.
 [treeopen] dynamic_priority_arbiter__testbench.dynamic_priority_arbiter_dut.
-[sst_width] 255
-[signals_width] 222
+[sst_width] 200
+[signals_width] 300
 [sst_expanded] 1
-[sst_vpaned_height] 445
+[sst_vpaned_height] 300
 @28
 dynamic_priority_arbiter__testbench.clock
 dynamic_priority_arbiter__testbench.resetn

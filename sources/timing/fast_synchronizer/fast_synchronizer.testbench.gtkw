@@ -5,7 +5,7 @@
 [pos] -1 -1
 *-5.455228 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 200
-[signals_width] 202
+[signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
