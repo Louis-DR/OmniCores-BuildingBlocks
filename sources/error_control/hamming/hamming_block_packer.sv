@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        hamming_block_packager.v                                     ║
+// ║ File:        hamming_block_packer.v                                       ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Package data and Hamming parity code into a block.           ║
+// ║ Description: Pack data and Hamming parity code into a block.              ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -15,7 +15,7 @@
 
 
 
-module hamming_block_packager #(
+module hamming_block_packer #(
   parameter  DATA_WIDTH   = 8,
   localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH(DATA_WIDTH),
   localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH

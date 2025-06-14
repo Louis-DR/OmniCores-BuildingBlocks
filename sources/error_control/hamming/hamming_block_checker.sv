@@ -28,7 +28,7 @@ module hamming_block_checker #(
 logic   [DATA_WIDTH-1:0] data;
 logic [PARITY_WIDTH-1:0] received_code;
 
-hamming_block_extractor #(
+hamming_block_unpacker #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
 ) extractor (
   .block ( block        ),

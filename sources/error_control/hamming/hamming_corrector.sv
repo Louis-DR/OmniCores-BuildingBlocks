@@ -36,7 +36,7 @@ localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH + PARITY_WIDTH;
 logic [PADDED_BLOCK_WIDTH-1:0] block_padded;
 logic [PADDED_DATA_WIDTH-1:0] corrected_data_padded;
 
-hamming_block_packager #(
+hamming_block_packer #(
   .DATA_WIDTH ( PADDED_DATA_WIDTH )
 ) packager (
   .data  ( data_padded  ),

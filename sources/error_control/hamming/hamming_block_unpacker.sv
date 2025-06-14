@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        hamming_block_extractor.v                                    ║
+// ║ File:        hamming_block_unpacker.v                                     ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Extract data and Hamming parity code from a block.           ║
+// ║ Description: Unpack data and Hamming parity code from a block.            ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -15,7 +15,7 @@
 
 
 
-module hamming_block_extractor #(
+module hamming_block_unpacker #(
   parameter  BLOCK_WIDTH  = 8,
   localparam DATA_WIDTH   = `GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH),
   localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH)

@@ -34,7 +34,7 @@ assign data_padded = {{(PADDED_DATA_WIDTH - DATA_WIDTH){1'b0}}, data};
 localparam PADDED_BLOCK_WIDTH = PADDED_DATA_WIDTH + PARITY_WIDTH;
 logic [PADDED_BLOCK_WIDTH-1:0] block_padded;
 
-hamming_block_packager #(
+hamming_block_packer #(
   .DATA_WIDTH ( PADDED_DATA_WIDTH )
 ) packager (
   .data  ( data_padded  ),

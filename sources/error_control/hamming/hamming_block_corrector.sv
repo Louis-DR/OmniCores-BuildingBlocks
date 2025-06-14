@@ -29,7 +29,7 @@ module hamming_block_corrector #(
 logic   [DATA_WIDTH-1:0] data;
 logic [PARITY_WIDTH-1:0] received_code;
 
-hamming_block_extractor #(
+hamming_block_unpacker #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
 ) extractor (
   .block ( block         ),
@@ -73,7 +73,7 @@ end
 assign corrected_block = block ^ error_mask;
 
 // Extract the corrected data
-hamming_block_extractor #(
+hamming_block_unpacker #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
 ) corrected_extractor (
   .block ( corrected_block ),

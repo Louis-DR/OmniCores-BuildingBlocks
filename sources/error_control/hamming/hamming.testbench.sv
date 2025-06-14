@@ -33,13 +33,13 @@ logic   [DATA_WIDTH-1:0] encoder_data;
 logic [PARITY_WIDTH-1:0] encoder_code;
 logic  [BLOCK_WIDTH-1:0] encoder_block;
 
-logic   [DATA_WIDTH-1:0] packager_data;
-logic [PARITY_WIDTH-1:0] packager_code;
-logic  [BLOCK_WIDTH-1:0] packager_block;
+logic   [DATA_WIDTH-1:0] packer_data;
+logic [PARITY_WIDTH-1:0] packer_code;
+logic  [BLOCK_WIDTH-1:0] packer_block;
 
-logic  [BLOCK_WIDTH-1:0] extractor_block;
-logic   [DATA_WIDTH-1:0] extractor_data;
-logic [PARITY_WIDTH-1:0] extractor_code;
+logic  [BLOCK_WIDTH-1:0] unpacker_block;
+logic   [DATA_WIDTH-1:0] unpacker_data;
+logic [PARITY_WIDTH-1:0] unpacker_code;
 
 logic   [DATA_WIDTH-1:0] checker_data;
 logic [PARITY_WIDTH-1:0] checker_code;
@@ -77,20 +77,20 @@ hamming_encoder #(
   .block ( encoder_block )
 );
 
-hamming_block_packager #(
+hamming_block_packer #(
   .DATA_WIDTH ( DATA_WIDTH )
-) hamming_block_packager_dut (
-  .data  ( packager_data  ),
-  .code  ( packager_code  ),
-  .block ( packager_block )
+) hamming_block_packer_dut (
+  .data  ( packer_data  ),
+  .code  ( packer_code  ),
+  .block ( packer_block )
 );
 
-hamming_block_extractor #(
+hamming_block_unpacker #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
-) hamming_block_extractor_dut (
-  .block ( extractor_block ),
-  .data  ( extractor_data  ),
-  .code  ( extractor_code  )
+) hamming_block_unpacker_dut (
+  .block ( unpacker_block ),
+  .data  ( unpacker_data  ),
+  .code  ( unpacker_code  )
 );
 
 hamming_checker #(
@@ -247,23 +247,23 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
     else $error("[%0tns] Incorrect block from encoder for data '%b'. Expected '%b', got '%b'.",
                 $time, test_data, expected_block, encoder_block);
 
-  // Check the packager
-  packager_data = test_data;
-  packager_code = expected_code;
+  // Check the packer
+  packer_data = test_data;
+  packer_code = expected_code;
   #1;
-  assert (packager_block === expected_block)
-    else $error("[%0tns] Incorrect block from packager for data '%b' and code '%b'. Expected '%b', got '%b'.",
-                $time, test_data, expected_code, expected_block, packager_block);
+  assert (packer_block === expected_block)
+    else $error("[%0tns] Incorrect block from packer for data '%b' and code '%b'. Expected '%b', got '%b'.",
+                $time, test_data, expected_code, expected_block, packer_block);
 
-  // Check the extractor
-  extractor_block = packager_block;
+  // Check the unpacker
+  unpacker_block = packer_block;
   #1;
-  assert (extractor_data === test_data)
-    else $error("[%0tns] Incorrect data from extractor for block '%b'. Expected '%b', got '%b'.",
-                $time, packager_block, test_data, extractor_data);
-  assert (extractor_code === expected_code)
-    else $error("[%0tns] Incorrect code from extractor for block '%b'. Expected '%b', got '%b'.",
-                $time, packager_block, expected_code, extractor_code);
+  assert (unpacker_data === test_data)
+    else $error("[%0tns] Incorrect data from unpacker for block '%b'. Expected '%b', got '%b'.",
+                $time, packer_block, test_data, unpacker_data);
+  assert (unpacker_code === expected_code)
+    else $error("[%0tns] Incorrect code from unpacker for block '%b'. Expected '%b', got '%b'.",
+                $time, packer_block, expected_code, unpacker_code);
 
   // Check the checker
   checker_data = test_data;
@@ -312,11 +312,11 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   // Poison block with single bit error
   poisoned_block = inject_single_bit_error(error_position, expected_block);
 
-  // Use the extractor to get the data and code from the poisoned block
-  extractor_block = poisoned_block;
+  // Use the unpacker to get the data and code from the poisoned block
+  unpacker_block = poisoned_block;
   #1;
-  poisoned_data = extractor_data;
-  poisoned_code = extractor_code;
+  poisoned_data = unpacker_data;
+  poisoned_code = unpacker_code;
 
   // Check the checker
   checker_data = poisoned_data;
@@ -363,9 +363,9 @@ initial begin
 
   // Initialization
   encoder_data          = 0;
-  packager_data         = 0;
-  packager_code         = 0;
-  extractor_block       = 0;
+  packer_data           = 0;
+  packer_code           = 0;
+  unpacker_block        = 0;
   checker_data          = 0;
   checker_code          = 0;
   corrector_data        = 0;
