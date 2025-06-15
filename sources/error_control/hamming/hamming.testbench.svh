@@ -1,5 +1,5 @@
-`ifndef __HAMMING_TESTBENCH_SVH__
-`define __HAMMING_TESTBENCH_SVH__
+`ifndef __HAMMING_TESTBENCH_HEADER__
+`define __HAMMING_TESTBENCH_HEADER__
 
 // Reference function for the Hamming(7,4) encoding
 function logic [2:0] hamming_7_4(input logic [3:0] data);

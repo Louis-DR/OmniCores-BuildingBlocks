@@ -145,26 +145,27 @@ endfunction
 // Reference function for Hamming block packing
 function logic [BLOCK_WIDTH-1:0] hamming_block_pack(input logic [DATA_WIDTH-1:0] data, input logic [PARITY_WIDTH-1:0] code);
   logic [BLOCK_WIDTH-1:0] expected_block;
-  expected_block[    0] = code[    0];
-  expected_block[    1] = code[    1];
-  expected_block[    2] = data[    0];
+  expected_block[     0] = code[    0];
+  expected_block[     1] = code[    1];
+  expected_block[     2] = data[    0];
   if (PARITY_WIDTH < 3) return expected_block;
-  expected_block[    3] = code[    2];
-  expected_block[  6:4] = data[  3:1];
+  expected_block[     3] = code[    2];
+  expected_block[   6:4] = data[  3:1];
   if (PARITY_WIDTH < 4) return expected_block;
-  expected_block[    7] = code[    3];
-  expected_block[ 14:8] = data[ 10:4];
+  expected_block[     7] = code[    3];
+  expected_block[  14:8] = data[ 10:4];
   if (PARITY_WIDTH < 5) return expected_block;
-  expected_block[   15] = code[    4];
-  expected_block[30:16] = data[25:11];
+  expected_block[    15] = code[    4];
+  expected_block[ 30:16] = data[25:11];
   if (PARITY_WIDTH < 6) return expected_block;
-  expected_block[   31] = code[    5];
-  expected_block[62:32] = data[56:26];
+  expected_block[    31] = code[    5];
+  expected_block[ 62:32] = data[56:26];
   if (PARITY_WIDTH < 7) return expected_block;
-  expected_block[   63] = code[    6];
+  expected_block[    63] = code[    6];
   expected_block[126:64] = data[119:57];
   if (PARITY_WIDTH < 8) return expected_block;
-  return expected_block;
+  $fatal(1, "[%0tns] Unsupported parity width '%0d' for reference Hamming block packing function.", $time, PARITY_WIDTH);
+  return 0;
 endfunction
 
 // Function to inject a single bit error in a block
