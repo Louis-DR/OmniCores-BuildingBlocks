@@ -41,7 +41,7 @@ assign code = parity;
 // Package the data and parity code into a block
 hamming_block_packer #(
   .DATA_WIDTH ( PADDED_DATA_WIDTH )
-) packager (
+) packer (
   .data  ( data_padded  ),
   .code  ( parity       ),
   .block ( block_padded )

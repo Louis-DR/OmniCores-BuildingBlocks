@@ -30,7 +30,7 @@ logic [PARITY_WIDTH-1:0] received_code;
 
 hamming_block_unpacker #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
-) extractor (
+) unpacker (
   .block ( block        ),
   .data  ( data         ),
   .code  ( received_code )

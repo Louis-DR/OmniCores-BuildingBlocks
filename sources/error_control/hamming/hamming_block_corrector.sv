@@ -31,7 +31,7 @@ logic [PARITY_WIDTH-1:0] received_code;
 
 hamming_block_unpacker #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
-) extractor (
+) unpacker (
   .block ( block         ),
   .data  ( data          ),
   .code  ( received_code )
@@ -63,7 +63,9 @@ integer syndrome_value;
 always_comb begin
   syndrome_value = syndrome;
   error_mask = 0;
+  // Bounds checking
   if (syndrome_value > 0 && syndrome_value < BLOCK_WIDTH + 1) begin
+    // The syndrome points to the position of the error in the block
     error_mask[syndrome_value - 1] = 1'b1;
   end
 end

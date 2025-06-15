@@ -36,7 +36,7 @@ logic [PADDED_BLOCK_WIDTH-1:0] block_padded;
 
 hamming_block_packer #(
   .DATA_WIDTH ( PADDED_DATA_WIDTH )
-) packager (
+) packer (
   .data  ( data_padded  ),
   .code  ( code         ),
   .block ( block_padded )
