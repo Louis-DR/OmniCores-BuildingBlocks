@@ -5,7 +5,7 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        hamming_checker.sv                                           ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Check the data with its Hamming parity code.                 ║
+// ║ Description: Detects single-bit errors in data with Hamming code.         ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 

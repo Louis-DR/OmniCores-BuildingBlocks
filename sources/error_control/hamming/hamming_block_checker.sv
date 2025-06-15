@@ -5,7 +5,7 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        hamming_block_checker.sv                                     ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Check a Hamming block for errors using syndrome calculation. ║
+// ║ Description: Detects single-bit errors in Hamming block.                  ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 

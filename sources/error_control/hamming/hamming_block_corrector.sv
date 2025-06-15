@@ -5,7 +5,7 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        hamming_block_corrector.sv                                   ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Corrects single-bit errors in Hamming blocks using syndrome. ║
+// ║ Description: Corrects single-bit errors in Hamming block.                 ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 

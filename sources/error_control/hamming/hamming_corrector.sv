@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        hamming_corrector.sv                                          ║
+// ║ File:        hamming_corrector.sv                                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Corrects single-bit errors in Hamming encoded data.          ║
+// ║ Description: Corrects single-bit errors in data with Hamming code.        ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
