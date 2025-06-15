@@ -34,7 +34,7 @@ assign hamming_block = block[PARITY_WIDTH-1:1];
 // Unpack the data and the standard Hamming code
 logic [PARITY_WIDTH-2:0] hamming_code;
 hamming_block_unpacker #(
-  .BLOCK_WIDTH ( BLOCK_WIDTH-1 ),
+  .BLOCK_WIDTH ( BLOCK_WIDTH-1 )
 ) hamming_block_unpacker (
   .block ( hamming_block ),
   .data  ( data          ),
