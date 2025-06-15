@@ -1,6 +1,6 @@
 
 `ifndef GET_HAMMING_PARITY_WIDTH
-`define GET_HAMMING_PARITY_WIDTH(DATA_WIDTH) \
+`define GET_HAMMING_PARITY_WIDTH(DATA_WIDTH) ( \
   (DATA_WIDTH <=     1) ?  2 : \
   (DATA_WIDTH <=     4) ?  3 : \
   (DATA_WIDTH <=    11) ?  4 : \
@@ -16,11 +16,11 @@
   (DATA_WIDTH <= 16369) ? 14 : \
   (DATA_WIDTH <= 32752) ? 15 : \
   (DATA_WIDTH <= 65519) ? 16 : \
-  -1
+  -1)
 `endif
 
 `ifndef GET_HAMMING_DATA_WIDTH
-`define GET_HAMMING_DATA_WIDTH(PARITY_WIDTH) \
+`define GET_HAMMING_DATA_WIDTH(PARITY_WIDTH) ( \
   (PARITY_WIDTH ==  2) ?     1 : \
   (PARITY_WIDTH ==  3) ?     4 : \
   (PARITY_WIDTH ==  4) ?    11 : \
@@ -36,11 +36,11 @@
   (PARITY_WIDTH == 14) ? 16369 : \
   (PARITY_WIDTH == 15) ? 32752 : \
   (PARITY_WIDTH == 16) ? 65519 : \
-  -1
+  -1)
 `endif
 
 `ifndef GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH
-`define GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH) \
+`define GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH) ( \
   (BLOCK_WIDTH <=     3) ?  2 : \
   (BLOCK_WIDTH <=     7) ?  3 : \
   (BLOCK_WIDTH <=    15) ?  4 : \
@@ -56,11 +56,11 @@
   (BLOCK_WIDTH <= 16383) ? 14 : \
   (BLOCK_WIDTH <= 32767) ? 15 : \
   (BLOCK_WIDTH <= 65535) ? 16 : \
-  -1
+  -1)
 `endif
 
 `ifndef GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH
-`define GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH) \
+`define GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH) ( \
   (BLOCK_WIDTH <=     3) ? (BLOCK_WIDTH -  2) : \
   (BLOCK_WIDTH <=     7) ? (BLOCK_WIDTH -  3) : \
   (BLOCK_WIDTH <=    15) ? (BLOCK_WIDTH -  4) : \
@@ -76,11 +76,11 @@
   (BLOCK_WIDTH <= 16383) ? (BLOCK_WIDTH - 14) : \
   (BLOCK_WIDTH <= 32767) ? (BLOCK_WIDTH - 15) : \
   (BLOCK_WIDTH <= 65535) ? (BLOCK_WIDTH - 16) : \
-  -1
+  -1)
 `endif
 
 `ifndef GET_HAMMING_UPPER_BLOCK_WIDTH
-`define GET_HAMMING_UPPER_BLOCK_WIDTH(BLOCK_WIDTH) \
+`define GET_HAMMING_UPPER_BLOCK_WIDTH(BLOCK_WIDTH) ( \
   (BLOCK_WIDTH <=     3) ?     3 : \
   (BLOCK_WIDTH <=     7) ?     7 : \
   (BLOCK_WIDTH <=    15) ?    15 : \
@@ -96,5 +96,5 @@
   (BLOCK_WIDTH <= 16383) ? 16383 : \
   (BLOCK_WIDTH <= 32767) ? 32767 : \
   (BLOCK_WIDTH <= 65535) ? 65535 : \
-  -1
+  -1)
 `endif
