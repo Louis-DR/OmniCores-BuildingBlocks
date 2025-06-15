@@ -13,6 +13,7 @@
 
 `timescale 1ns/1ns
 `include "extended_hamming.svh"
+`include "extended_hamming.testbench.svh"
 
 
 
