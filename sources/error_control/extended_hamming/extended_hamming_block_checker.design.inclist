@@ -1,2 +1,2 @@
-extended_hamming.svh
-../hamming/hamming.svh
+./
+../hamming/
