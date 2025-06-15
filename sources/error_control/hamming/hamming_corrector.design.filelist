@@ -1,1 +1,5 @@
 hamming_corrector.sv
+hamming_block_packer.sv
+hamming_block_corrector.sv
+hamming_block_unpacker.sv
+hamming_encoder.sv

@@ -1,4 +1,2 @@
 hamming_encoder.sv
 hamming_block_packer.sv
-hamming_block_unpacker.sv
-hamming.svh
