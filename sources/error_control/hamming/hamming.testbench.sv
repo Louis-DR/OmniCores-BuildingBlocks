@@ -331,8 +331,8 @@ initial begin
       check_all_modules_no_error(test_data);
     end
 
-    // Check 2: Exhaustive test with single bit flip error
-    $display("CHECK 2: Exhaustive test with single bit flip error.");
+    // Check 2: Exhaustive test with single-bit flip error
+    $display("CHECK 2: Exhaustive test with single-bit flip error.");
     for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
       test_data = data_configuration;
       for (integer error_position = 0; error_position < BLOCK_WIDTH; error_position++) begin
@@ -352,10 +352,10 @@ initial begin
       check_all_modules_no_error(test_data);
     end
 
-    // Check 2: Random test with single bit flip error
-    $display("CHECK 2: Random test with single bit flip error.");
+    // Check 2: Random test with single-bit flip error
+    $display("CHECK 2: Random test with single-bit flip error.");
     for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
-      test_data = $urandom_range(0, DATA_WIDTH_POW2-1);
+      test_data      = $urandom_range(0, DATA_WIDTH_POW2-1);
       error_position = $urandom_range(0, BLOCK_WIDTH-1);
       check_checker_and_corrector_single_bit_error(test_data, error_position);
     end
