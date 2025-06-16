@@ -63,7 +63,11 @@ assign correctable_error = extra_parity_error;
 // Uncorrectable error if the Hamming code is incorrect and the extra parity is correct
 assign uncorrectable_error = hamming_error && !extra_parity_error;
 
-// Assemble the corrected extended block with the corrected Hamming block and the expected extra parity
-assign corrected_block = {corrected_hamming_block, expected_extra_parity};
+// Correct the extra parity
+logic corrected_extra_parity;
+assign corrected_extra_parity = hamming_error ? !expected_extra_parity : expected_extra_parity;
+
+// Assemble the corrected extended block with the corrected Hamming block and the corrected extra parity
+assign corrected_block = {corrected_hamming_block, corrected_extra_parity};
 
 endmodule
