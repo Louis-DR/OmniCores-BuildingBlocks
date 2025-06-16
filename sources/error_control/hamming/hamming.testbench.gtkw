@@ -1,9 +1,9 @@
 [dumpfile] "hamming.testbench.vcd"
 [savefile] "hamming.testbench.gtkw"
-[timestart] 3
+[timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-7.178984 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-6.879329 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
@@ -15,15 +15,15 @@ hamming__testbench.encoder_block[6:0]
 @200
 -
 @28
-hamming__testbench.packager_data[3:0]
-hamming__testbench.packager_code[2:0]
-hamming__testbench.packager_block[6:0]
+hamming__testbench.packer_data[3:0]
+hamming__testbench.packer_code[2:0]
+hamming__testbench.packer_block[6:0]
 @200
 -
 @28
-hamming__testbench.extractor_block[6:0]
-hamming__testbench.extractor_data[3:0]
-hamming__testbench.extractor_code[2:0]
+hamming__testbench.unpacker_block[6:0]
+hamming__testbench.unpacker_data[3:0]
+hamming__testbench.unpacker_code[2:0]
 @200
 -
 @28

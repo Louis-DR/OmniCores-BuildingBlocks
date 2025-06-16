@@ -20,7 +20,7 @@
 module extended_hamming__testbench ();
 
 // Device parameters
-localparam DATA_WIDTH   = 8;
+localparam DATA_WIDTH   = 4;
 localparam PARITY_WIDTH = `GET_EXTENDED_HAMMING_PARITY_WIDTH(DATA_WIDTH);
 localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH;
 

@@ -1,18 +1,11 @@
-[*]
-[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
-[*] Mon Jun 16 17:37:50 2025
-[*]
-[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/error_control/extended_hamming/extended_hamming.testbench.vcd"
-[dumpfile_mtime] "Mon Jun 16 17:34:42 2025"
-[dumpfile_size] 272294
-[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/error_control/extended_hamming/extended_hamming.testbench.gtkw"
-[timestart] 95
+[dumpfile] "extended_hamming.testbench.vcd"
+[savefile] "extended_hamming.testbench.gtkw"
+[timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-3.178984 120 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[treeopen] extended_hamming__testbench.
-[sst_width] 255
-[signals_width] 324
+*-9.061144 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
@@ -44,10 +37,6 @@ extended_hamming__testbench.checker_uncorrectable_error
 extended_hamming__testbench.block_checker_block[7:0]
 extended_hamming__testbench.block_checker_correctable_error
 extended_hamming__testbench.block_checker_uncorrectable_error
-extended_hamming__testbench.extended_hamming_block_checker_dut.expected_code[3:0]
-extended_hamming__testbench.extended_hamming_block_checker_dut.syndrome[3:0]
-extended_hamming__testbench.extended_hamming_block_checker_dut.extra_parity_syndrome
-extended_hamming__testbench.extended_hamming_block_checker_dut.hamming_syndrome[2:0]
 @200
 -
 @28
@@ -65,6 +54,9 @@ extended_hamming__testbench.block_corrector_correctable_error
 extended_hamming__testbench.block_corrector_uncorrectable_error
 @200
 -
+@24
+hamming__testbench.error_position_0
+hamming__testbench.error_position_1
 @28
 extended_hamming__testbench.test_data[3:0]
 extended_hamming__testbench.expected_code[3:0]
