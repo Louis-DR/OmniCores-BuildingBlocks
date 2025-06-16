@@ -22,9 +22,9 @@ module extended_hamming_block_corrector #(
   localparam PARITY_WIDTH = `GET_EXTENDED_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH)
 ) (
   input  [BLOCK_WIDTH-1:0] block,
+  output [BLOCK_WIDTH-1:0] corrected_block,
   output                   correctable_error,
-  output                   uncorrectable_error,
-  output [BLOCK_WIDTH-1:0] corrected_block
+  output                   uncorrectable_error
 );
 
 // Separate the extra parity and the Hamming block

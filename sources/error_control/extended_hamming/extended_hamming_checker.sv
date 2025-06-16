@@ -23,8 +23,8 @@ module extended_hamming_checker #(
 ) (
   input   [DATA_WIDTH-1:0] data,
   input [PARITY_WIDTH-1:0] code,
-  output                   uncorrectable_error,
-  output                   correctable_error
+  output                   correctable_error,
+  output                   uncorrectable_error
 );
 
 // Pad the data to the message length corresponding to the number of parity bits
@@ -48,8 +48,8 @@ extended_hamming_block_checker #(
   .BLOCK_WIDTH ( PADDED_BLOCK_WIDTH )
 ) block_checker (
   .block               ( block_padded        ),
-  .uncorrectable_error ( uncorrectable_error ),
-  .correctable_error   ( correctable_error   )
+  .correctable_error   ( correctable_error   ),
+  .uncorrectable_error ( uncorrectable_error )
 );
 
 endmodule

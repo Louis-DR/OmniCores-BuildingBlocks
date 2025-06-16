@@ -14,10 +14,10 @@
         <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="43" x2="12" y2="47" stroke="black" stroke-width="1"/>
-      <text x="147" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">uncorrectable_error</text>
+      <text x="147" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">correctable_error</text>
         <line x1="149" y1="45" x2="163" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 169 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="147" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">correctable_error</text>
+      <text x="147" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">uncorrectable_error</text>
         <line x1="149" y1="55" x2="163" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 169 55 l -6 +2.0 v -4 z" fill="black"/>
     <style>

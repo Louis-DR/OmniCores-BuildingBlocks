@@ -23,9 +23,9 @@ module extended_hamming_corrector #(
 ) (
   input   [DATA_WIDTH-1:0] data,
   input [PARITY_WIDTH-1:0] code,
-  output                   uncorrectable_error,
+  output  [DATA_WIDTH-1:0] corrected_data,
   output                   correctable_error,
-  output  [DATA_WIDTH-1:0] corrected_data
+  output                   uncorrectable_error
 );
 
 // Pad the data to the message length corresponding to the number of parity bits
