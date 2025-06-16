@@ -20,7 +20,7 @@
 module extended_hamming__testbench ();
 
 // Device parameters
-localparam DATA_WIDTH   = 8;
+localparam DATA_WIDTH   = 4;
 localparam PARITY_WIDTH = `GET_EXTENDED_HAMMING_PARITY_WIDTH(DATA_WIDTH);
 localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH;
 
@@ -158,19 +158,19 @@ function logic [BLOCK_WIDTH-1:0] extended_hamming_block_pack(input logic [DATA_W
   expected_block[     2] = code[    2];
   expected_block[     3] = data[    0];
   if (PARITY_WIDTH < 4) return expected_block;
-  expected_block[     4] = code[    2];
+  expected_block[     4] = code[    3];
   expected_block[   7:5] = data[  3:1];
   if (PARITY_WIDTH < 5) return expected_block;
-  expected_block[     8] = code[    3];
+  expected_block[     8] = code[    4];
   expected_block[  15:9] = data[ 10:4];
   if (PARITY_WIDTH < 6) return expected_block;
-  expected_block[    16] = code[    4];
+  expected_block[    16] = code[    5];
   expected_block[ 31:17] = data[25:11];
   if (PARITY_WIDTH < 7) return expected_block;
-  expected_block[    32] = code[    5];
+  expected_block[    32] = code[    6];
   expected_block[ 63:33] = data[56:26];
   if (PARITY_WIDTH < 8) return expected_block;
-  expected_block[    64] = code[    6];
+  expected_block[    64] = code[    7];
   expected_block[127:65] = data[119:57];
   if (PARITY_WIDTH < 9) return expected_block;
   $fatal(1, "[%0tns] Unsupported parity width '%0d' for reference extended Hamming block packing function.", $time, PARITY_WIDTH);
