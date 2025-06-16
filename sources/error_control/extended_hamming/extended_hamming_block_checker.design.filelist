@@ -1,6 +1,6 @@
 extended_hamming_block_checker.sv
-extended_hamming_block_unpacker.sv
-extended_hamming_encoder.sv
+../hamming/hamming_block_checker.sv
+../hamming/hamming_block_unpacker.sv
 ../hamming/hamming_encoder.sv
 ../hamming/hamming_block_packer.sv
 ../parity/parity_encoder.v

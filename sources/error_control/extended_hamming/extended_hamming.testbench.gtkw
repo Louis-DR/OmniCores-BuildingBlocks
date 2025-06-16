@@ -1,59 +1,76 @@
-[dumpfile] "extended_hamming.testbench.vcd"
-[savefile] "extended_hamming.testbench.gtkw"
-[timestart] 3
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Mon Jun 16 17:37:50 2025
+[*]
+[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/error_control/extended_hamming/extended_hamming.testbench.vcd"
+[dumpfile_mtime] "Mon Jun 16 17:34:42 2025"
+[dumpfile_size] 272294
+[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/error_control/extended_hamming/extended_hamming.testbench.gtkw"
+[timestart] 95
 [size] 1728 1051
 [pos] -1 -1
-*-7.178984 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[sst_width] 200
-[signals_width] 300
+*-3.178984 120 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] extended_hamming__testbench.
+[sst_width] 255
+[signals_width] 324
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
 extended_hamming__testbench.encoder_data[3:0]
-extended_hamming__testbench.encoder_code[2:0]
-extended_hamming__testbench.encoder_block[6:0]
+extended_hamming__testbench.encoder_code[3:0]
+extended_hamming__testbench.encoder_block[7:0]
 @200
 -
 @28
-extended_hamming__testbench.packager_data[3:0]
-extended_hamming__testbench.packager_code[2:0]
-extended_hamming__testbench.packager_block[6:0]
+extended_hamming__testbench.packer_data[3:0]
+extended_hamming__testbench.packer_code[3:0]
+extended_hamming__testbench.packer_block[7:0]
 @200
 -
 @28
-extended_hamming__testbench.extractor_block[6:0]
-extended_hamming__testbench.extractor_data[3:0]
-extended_hamming__testbench.extractor_code[2:0]
+extended_hamming__testbench.unpacker_data[3:0]
+extended_hamming__testbench.unpacker_code[3:0]
+extended_hamming__testbench.unpacker_block[7:0]
 @200
 -
 @28
 extended_hamming__testbench.checker_data[3:0]
-extended_hamming__testbench.checker_code[2:0]
-extended_hamming__testbench.checker_error
+extended_hamming__testbench.checker_code[3:0]
+extended_hamming__testbench.checker_correctable_error
+extended_hamming__testbench.checker_uncorrectable_error
 @200
 -
 @28
-extended_hamming__testbench.block_checker_block[6:0]
-extended_hamming__testbench.block_checker_error
+extended_hamming__testbench.block_checker_block[7:0]
+extended_hamming__testbench.block_checker_correctable_error
+extended_hamming__testbench.block_checker_uncorrectable_error
+extended_hamming__testbench.extended_hamming_block_checker_dut.expected_code[3:0]
+extended_hamming__testbench.extended_hamming_block_checker_dut.syndrome[3:0]
+extended_hamming__testbench.extended_hamming_block_checker_dut.extra_parity_syndrome
+extended_hamming__testbench.extended_hamming_block_checker_dut.hamming_syndrome[2:0]
 @200
 -
 @28
 extended_hamming__testbench.corrector_data[3:0]
-extended_hamming__testbench.corrector_code[2:0]
-extended_hamming__testbench.corrector_error
+extended_hamming__testbench.corrector_code[3:0]
 extended_hamming__testbench.corrector_corrected_data[3:0]
+extended_hamming__testbench.corrector_correctable_error
+extended_hamming__testbench.corrector_uncorrectable_error
 @200
 -
 @28
-extended_hamming__testbench.block_corrector_block[6:0]
-extended_hamming__testbench.block_corrector_error
-extended_hamming__testbench.block_corrector_corrected_data[3:0]
+extended_hamming__testbench.block_corrector_block[7:0]
+extended_hamming__testbench.block_corrector_corrected_block[7:0]
+extended_hamming__testbench.block_corrector_correctable_error
+extended_hamming__testbench.block_corrector_uncorrectable_error
 @200
 -
-@24
-extended_hamming__testbench.error_position
 @28
-extended_hamming__testbench.expected_code[2:0]
-extended_hamming__testbench.expected_block[6:0]
+extended_hamming__testbench.test_data[3:0]
+extended_hamming__testbench.expected_code[3:0]
+extended_hamming__testbench.expected_block[7:0]
+extended_hamming__testbench.poisoned_block[7:0]
+extended_hamming__testbench.poisoned_code[3:0]
+extended_hamming__testbench.poisoned_data[3:0]
 [pattern_trace] 1
 [pattern_trace] 0

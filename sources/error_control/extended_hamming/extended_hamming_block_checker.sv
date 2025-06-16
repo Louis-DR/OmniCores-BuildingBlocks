@@ -26,43 +26,38 @@ module extended_hamming_block_checker #(
   output                  uncorrectable_error
 );
 
-// Extract the data and code from the block
-logic   [DATA_WIDTH-1:0] data;
-logic [PARITY_WIDTH-1:0] received_code;
+// Separate the extra parity and the Hamming block
+logic [BLOCK_WIDTH-2:0] hamming_block;
+logic                    extra_parity;
+assign hamming_block = block[BLOCK_WIDTH-1:1];
+assign extra_parity  = block[0];
 
-extended_hamming_block_unpacker #(
-  .BLOCK_WIDTH ( BLOCK_WIDTH )
-) extractor (
-  .block ( block         ),
-  .data  ( data          ),
-  .code  ( received_code )
+// Calculate the expected extra parity
+logic expected_extra_parity;
+parity_encoder #(
+  .DATA_WIDTH ( BLOCK_WIDTH-1 )
+) parity_encoder (
+  .data ( hamming_block         ),
+  .code ( expected_extra_parity )
 );
 
-// Calculate the expected code
-logic [PARITY_WIDTH-1:0] expected_code;
+// Check extra parity
+logic extra_parity_error;
+assign extra_parity_error = extra_parity ^ expected_extra_parity;
 
-extended_hamming_encoder #(
-  .DATA_WIDTH ( DATA_WIDTH )
-) encoder (
-  .data  ( data          ),
-  .code  ( expected_code ),
-  .block (               )
+// Check Hamming code
+logic hamming_error;
+hamming_block_checker #(
+  .BLOCK_WIDTH ( BLOCK_WIDTH-1 )
+) hamming_checker (
+  .block ( hamming_block ),
+  .error ( hamming_error )
 );
-
-// Calculate the syndrome
-logic [PARITY_WIDTH-1:0] syndrome;
-assign syndrome = received_code ^ expected_code;
-
-// Separate the extra parity syndrome and standard Hamming syndrome
-logic                    extra_parity_syndrome;
-logic [PARITY_WIDTH-2:0] hamming_syndrome;
-assign extra_parity_syndrome = syndrome[0];
-assign hamming_syndrome      = syndrome[PARITY_WIDTH-1:1];
 
 // Correctable error if the extra parity is incorrect
-assign correctable_error = extra_parity_syndrome;
+assign correctable_error = extra_parity_error;
 
-// Uncorrectable error if the Hamming syndrome is non-zero and the extra parity is correct
-assign uncorrectable_error = |hamming_syndrome && !extra_parity_syndrome;
+// Uncorrectable error if the Hamming code is incorrect and the extra parity is correct
+assign uncorrectable_error = hamming_error && !extra_parity_error;
 
 endmodule
