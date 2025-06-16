@@ -16,7 +16,7 @@
 
 
 module hamming_block_unpacker #(
-  parameter  BLOCK_WIDTH  = 8,
+  parameter  BLOCK_WIDTH  = 7,
   localparam DATA_WIDTH   = `GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH),
   localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH)
 ) (

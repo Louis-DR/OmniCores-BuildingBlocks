@@ -16,7 +16,7 @@
 
 
 module hamming_encoder #(
-  parameter  DATA_WIDTH   = 8,
+  parameter  DATA_WIDTH   = 4,
   localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH(DATA_WIDTH),
   localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH
 ) (
