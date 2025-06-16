@@ -13,8 +13,8 @@ localparam bool true  = 1'b1;
 localparam bool false = 1'b0;
 
 // Function to sample N elements from range [0, M-1] without replacement
-function automatic integer random_range_sample #(parameter int N) (input integer M);
-  integer sample[N];
+function automatic integer random_range_sample_2 (input integer M);
+  integer sample[2];
   integer range[];
   integer temporary;
 
@@ -25,7 +25,7 @@ function automatic integer random_range_sample #(parameter int N) (input integer
   end
 
   // Partial Fisher-Yates shuffle - only shuffle first N elements
-  for (int shuffle_index = 0; shuffle_index < N; shuffle_index++) begin
+  for (int shuffle_index = 0; shuffle_index < 2; shuffle_index++) begin
     int random_index = $urandom_range(shuffle_index, M-1);
 
     // Swap range[shuffle_index] with range[random_index]
