@@ -42,6 +42,6 @@ hamming_block_unpacker #(
 );
 
 // Append the extra parity bit to the Hamming code
-assign code = {extra_parity, hamming_code};
+assign code = {hamming_code, extra_parity};
 
 endmodule
