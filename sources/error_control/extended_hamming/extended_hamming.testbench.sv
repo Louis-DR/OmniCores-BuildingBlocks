@@ -334,15 +334,15 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
 endtask
 
 // Task to check the outputs of the checker and corrector modules for a given data with a double-bit error
-task check_checker_and_corrector_double_bit_error(input logic [DATA_WIDTH-1:0] test_data, input integer error_positions[2]);
+task check_checker_and_corrector_double_bit_error(input logic [DATA_WIDTH-1:0] test_data, input integer error_position_0, input integer error_position_1);
 
   // Calculate the expected Hamming code and block
   expected_code  = extended_hamming_code(test_data);
   expected_block = extended_hamming_block_pack(test_data, expected_code);
 
   // Poison block with double-bit error
-  poisoned_block = inject_single_bit_error(error_positions[0], expected_block);
-  poisoned_block = inject_single_bit_error(error_positions[1], poisoned_block);
+  poisoned_block = inject_single_bit_error(error_position_0, expected_block);
+  poisoned_block = inject_single_bit_error(error_position_1, poisoned_block);
 
   // Use the unpacker to get the data and code from the poisoned block
   unpacker_block = poisoned_block;
@@ -439,7 +439,7 @@ initial begin
       test_data = data_configuration;
       for (integer error_position_0 = 0; error_position_0 < BLOCK_WIDTH; error_position_0++) begin
         for (integer error_position_1 = error_position_0 + 1; error_position_1 < BLOCK_WIDTH; error_position_1++) begin
-          check_checker_and_corrector_double_bit_error(test_data, error_positions);
+          check_checker_and_corrector_double_bit_error(test_data, error_position_0, error_position_1);
         end
       end
     end
@@ -469,7 +469,7 @@ initial begin
     for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
       test_data       = $urandom_range(0, DATA_WIDTH_POW2-1);
       error_positions = random_range_sample_2(BLOCK_WIDTH);
-      check_checker_and_corrector_double_bit_error(test_data, error_positions);
+      check_checker_and_corrector_double_bit_error(test_data, error_positions[0], error_positions[1]);
     end
 
   end
