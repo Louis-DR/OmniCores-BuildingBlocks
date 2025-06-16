@@ -26,7 +26,7 @@ localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH;
 
 // Test parameters
 localparam DATA_WIDTH_POW2         = 2**DATA_WIDTH;
-localparam FULL_CHECK_MAX_DURATION = 512;  // Exhaustive up to 2^9
+localparam FULL_CHECK_MAX_DURATION = 256;  // Exhaustive up to 2^8
 localparam RANDOM_CHECK_DURATION   = 1024;
 
 // Device ports
@@ -71,7 +71,7 @@ logic   [DATA_WIDTH-1:0] poisoned_data;
 logic [PARITY_WIDTH-1:0] poisoned_code;
 
 // Test variables
-integer error_position;
+integer error_positions [2];
 
 // Devices under test
 extended_hamming_encoder #(
@@ -268,7 +268,7 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
                 $time, expected_block, expected_block, block_corrector_corrected_block);
 endtask
 
-// Task to check the outputs of the checker and corrector modules for a given data with a single bit error
+// Task to check the outputs of the checker and corrector modules for a given data with a single-bit error
 task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] test_data, input integer error_position);
 
   // Calculate the expected Hamming code and block
@@ -333,6 +333,66 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
                 $time, poisoned_block, expected_block, block_corrector_corrected_block);
 endtask
 
+// Task to check the outputs of the checker and corrector modules for a given data with a double-bit error
+task check_checker_and_corrector_double_bit_error(input logic [DATA_WIDTH-1:0] test_data, input integer error_positions[2]);
+
+  // Calculate the expected Hamming code and block
+  expected_code  = extended_hamming_code(test_data);
+  expected_block = extended_hamming_block_pack(test_data, expected_code);
+
+  // Poison block with double-bit error
+  poisoned_block = inject_single_bit_error(error_positions[0], expected_block);
+  poisoned_block = inject_single_bit_error(error_positions[1], poisoned_block);
+
+  // Use the unpacker to get the data and code from the poisoned block
+  unpacker_block = poisoned_block;
+  #1;
+  poisoned_data = unpacker_data;
+  poisoned_code = unpacker_code;
+
+  // Check the checker
+  checker_data = poisoned_data;
+  checker_code = poisoned_code;
+  #1;
+  assert (checker_correctable_error === 1'b0)
+    else $error("[%0tns] Double-bit error incorrectly marked as correctable by checker for data '%b' and code '%b'.",
+                $time, poisoned_data, poisoned_code);
+  assert (checker_uncorrectable_error === 1'b1)
+    else $error("[%0tns] Double-bit error not detected by checker for data '%b' and code '%b'.",
+                $time, poisoned_data, poisoned_code);
+
+  // Check the corrector
+  corrector_data = poisoned_data;
+  corrector_code = poisoned_code;
+  #1;
+  assert (corrector_correctable_error === 1'b0)
+    else $error("[%0tns] Double-bit error incorrectly marked as correctable by corrector for poisoned data '%b' and code '%b'.",
+                $time, poisoned_data, poisoned_code);
+  assert (corrector_uncorrectable_error === 1'b1)
+    else $error("[%0tns] Double-bit error not detected by corrector for poisoned data '%b' and code '%b'.",
+                $time, poisoned_data, poisoned_code);
+
+  // Check the block checker
+  block_checker_block = poisoned_block;
+  #1;
+  assert (block_checker_correctable_error === 1'b0)
+    else $error("[%0tns] Double-bit error incorrectly marked as correctable by block checker for poisoned block '%b'.",
+                $time, poisoned_block);
+  assert (block_checker_uncorrectable_error === 1'b1)
+    else $error("[%0tns] Double-bit error not detected by block checker for poisoned block '%b'.",
+                $time, poisoned_block);
+
+  // Check the block corrector
+  block_corrector_block = poisoned_block;
+  #1;
+  assert (block_corrector_correctable_error === 1'b0)
+    else $error("[%0tns] Double-bit error incorrectly marked as correctable by block corrector for poisoned block '%b'.",
+                $time, poisoned_block);
+  assert (block_corrector_uncorrectable_error === 1'b1)
+    else $error("[%0tns] Double-bit error not detected by block corrector for poisoned block '%b'.",
+                $time, poisoned_block);
+endtask
+
 // Main test block
 initial begin
   // Log waves
@@ -373,6 +433,17 @@ initial begin
       end
     end
 
+    // Check 3: Exhaustive test with double bit flip error
+    $display("CHECK 3: Exhaustive test with double bit flip error.");
+    for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+      test_data = data_configuration;
+      for (integer error_position_0 = 0; error_position_0 < BLOCK_WIDTH; error_position_0++) begin
+        for (integer error_position_1 = error_position_0 + 1; error_position_1 < BLOCK_WIDTH; error_position_1++) begin
+          check_checker_and_corrector_double_bit_error(test_data, error_positions);
+        end
+      end
+    end
+
   end
 
   // If the data width is large, we perform random testing
@@ -388,9 +459,17 @@ initial begin
     // Check 2: Random test with single bit flip error
     $display("CHECK 2: Random test with single bit flip error.");
     for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
-      test_data = $urandom_range(0, DATA_WIDTH_POW2-1);
-      error_position = $urandom_range(0, BLOCK_WIDTH-1);
-      check_checker_and_corrector_single_bit_error(test_data, error_position);
+      test_data          = $urandom_range(0, DATA_WIDTH_POW2-1);
+      error_positions[0] = $urandom_range(0, BLOCK_WIDTH-1);
+      check_checker_and_corrector_single_bit_error(test_data, error_positions[0]);
+    end
+
+    // Check 3: Random test with double bit flip error
+    $display("CHECK 3: Random test with double bit flip error.");
+    for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
+      test_data       = $urandom_range(0, DATA_WIDTH_POW2-1);
+      error_positions = random_range_sample_2(BLOCK_WIDTH);
+      check_checker_and_corrector_double_bit_error(test_data, error_positions);
     end
 
   end
