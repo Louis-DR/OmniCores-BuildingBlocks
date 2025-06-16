@@ -20,7 +20,7 @@
 module extended_hamming__testbench ();
 
 // Device parameters
-localparam DATA_WIDTH   = 4;
+localparam DATA_WIDTH   = 9;
 localparam PARITY_WIDTH = `GET_EXTENDED_HAMMING_PARITY_WIDTH(DATA_WIDTH);
 localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH;
 
@@ -71,7 +71,8 @@ logic   [DATA_WIDTH-1:0] poisoned_data;
 logic [PARITY_WIDTH-1:0] poisoned_code;
 
 // Test variables
-integer error_positions [2];
+integer error_position_0;
+integer error_position_1;
 
 // Devices under test
 extended_hamming_encoder #(
@@ -459,17 +460,19 @@ initial begin
     // Check 2: Random test with single bit flip error
     $display("CHECK 2: Random test with single bit flip error.");
     for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
-      test_data          = $urandom_range(0, DATA_WIDTH_POW2-1);
-      error_positions[0] = $urandom_range(0, BLOCK_WIDTH-1);
-      check_checker_and_corrector_single_bit_error(test_data, error_positions[0]);
+      test_data        = $urandom_range(0, DATA_WIDTH_POW2-1);
+      error_position_0 = $urandom_range(0, BLOCK_WIDTH-1);
+      check_checker_and_corrector_single_bit_error(test_data, error_position_0);
     end
 
     // Check 3: Random test with double bit flip error
     $display("CHECK 3: Random test with double bit flip error.");
     for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
-      test_data       = $urandom_range(0, DATA_WIDTH_POW2-1);
-      error_positions = random_range_sample_2(BLOCK_WIDTH);
-      check_checker_and_corrector_double_bit_error(test_data, error_positions[0], error_positions[1]);
+      test_data           = $urandom_range(0, DATA_WIDTH_POW2-1);
+      error_position_0    = $urandom_range(0, BLOCK_WIDTH-1);
+      do error_position_1 = $urandom_range(0, BLOCK_WIDTH-1);
+      while (error_position_0 == error_position_1);
+      check_checker_and_corrector_double_bit_error(test_data, error_position_0, error_position_1);
     end
 
   end
