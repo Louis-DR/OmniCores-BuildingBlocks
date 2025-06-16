@@ -29,7 +29,7 @@ module extended_hamming_block_unpacker #(
 logic                   extra_parity;
 logic [BLOCK_WIDTH-2:0] hamming_block;
 assign extra_parity  = block[0];
-assign hamming_block = block[PARITY_WIDTH-1:1];
+assign hamming_block = block[BLOCK_WIDTH-1:1];
 
 // Unpack the data and the standard Hamming code
 logic [PARITY_WIDTH-2:0] hamming_code;
