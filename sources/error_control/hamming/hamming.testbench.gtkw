@@ -40,20 +40,30 @@ hamming__testbench.block_checker_error
 @28
 hamming__testbench.corrector_data[3:0]
 hamming__testbench.corrector_code[2:0]
-hamming__testbench.corrector_error
 hamming__testbench.corrector_corrected_data[3:0]
+@24
+hamming__testbench.corrector_corrected_error_position[2:0]
+@28
+hamming__testbench.corrector_error
 @200
 -
 @28
 hamming__testbench.block_corrector_block[6:0]
+hamming__testbench.block_corrector_corrected_block[6:0]
+@24
+hamming__testbench.block_corrector_corrected_error_position[2:0]
+@28
 hamming__testbench.block_corrector_error
-hamming__testbench.block_corrector_corrected_data[3:0]
 @200
 -
-@24
-hamming__testbench.error_position
+@420
+hamming__testbench.check_checker_and_corrector_single_bit_error.error_position
 @28
+hamming__testbench.test_data[3:0]
 hamming__testbench.expected_code[2:0]
-hamming__testbench.expected_block[6:0]
+hamming__testbench.expected_block[7:0]
+hamming__testbench.poisoned_block[7:0]
+hamming__testbench.poisoned_code[2:0]
+hamming__testbench.poisoned_data[3:0]
 [pattern_trace] 1
 [pattern_trace] 0
