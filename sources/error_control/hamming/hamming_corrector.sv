@@ -51,9 +51,9 @@ hamming_block_corrector #(
   .BLOCK_WIDTH ( PADDED_BLOCK_WIDTH )
 ) block_corrector (
   .block                    ( block_padded             ),
-  .error                    ( error                    ),
   .corrected_block          ( corrected_block_padded   ),
-  .corrected_error_position ( corrected_error_position )
+  .corrected_error_position ( corrected_error_position ),
+  .error                    ( error                    )
 );
 
 hamming_block_unpacker #(

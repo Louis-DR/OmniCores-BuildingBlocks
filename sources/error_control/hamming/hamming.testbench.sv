@@ -105,6 +105,16 @@ hamming_checker #(
   .error ( checker_error )
 );
 
+hamming_corrector #(
+  .DATA_WIDTH ( DATA_WIDTH )
+) hamming_corrector_dut (
+  .data                     ( corrector_data                     ),
+  .code                     ( corrector_code                     ),
+  .corrected_data           ( corrector_corrected_data           ),
+  .corrected_error_position ( corrector_corrected_error_position ),
+  .error                    ( corrector_error                    )
+);
+
 hamming_block_checker #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
 ) hamming_block_checker_dut (
@@ -112,23 +122,13 @@ hamming_block_checker #(
   .error ( block_checker_error )
 );
 
-hamming_corrector #(
-  .DATA_WIDTH ( DATA_WIDTH )
-) hamming_corrector_dut (
-  .data                     ( corrector_data                     ),
-  .code                     ( corrector_code                     ),
-  .error                    ( corrector_error                    ),
-  .corrected_data           ( corrector_corrected_data           ),
-  .corrected_error_position ( corrector_corrected_error_position )
-);
-
 hamming_block_corrector #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
 ) hamming_block_corrector_dut (
   .block                    ( block_corrector_block                    ),
-  .error                    ( block_corrector_error                    ),
   .corrected_block          ( block_corrector_corrected_block          ),
-  .corrected_error_position ( block_corrector_corrected_error_position )
+  .corrected_error_position ( block_corrector_corrected_error_position ),
+  .error                    ( block_corrector_error                    )
 );
 
 // Reference function for calculating Hamming code
@@ -287,7 +287,7 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
     else $error("[%0tns] Single-bit error not corrected by corrector for poisoned data '%b' and code '%b'. Expected '%b', got '%b'.",
                 $time, poisoned_data, poisoned_code, test_data, corrector_corrected_data);
   assert (corrector_corrected_error_position === error_position)
-    else $error("[%0tns] Incorrect single-bit error position returned by corrector for poisoned data '%b' and code '%b'. Expected '%b', got '%b'.",
+    else $error("[%0tns] Incorrect single-bit error position returned by corrector for poisoned data '%b' and code '%b'. Expected '%0d', got '%0d'.",
                 $time, poisoned_data, poisoned_code, error_position, corrector_corrected_error_position);
 
   // Check the block checker
@@ -307,7 +307,7 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
     else $error("[%0tns] Single-bit error not corrected by block corrector for poisoned block '%b'. Expected '%b', got '%b'.",
                 $time, poisoned_block, expected_block, block_corrector_corrected_block);
   assert (block_corrector_corrected_error_position === error_position)
-    else $error("[%0tns] Incorrect single-bit error position returned by block corrector for poisoned block '%b'. Expected '%b', got '%b'.",
+    else $error("[%0tns] Incorrect single-bit error position returned by block corrector for poisoned block '%b'. Expected '%0d', got '%0d'.",
                 $time, poisoned_block, error_position, block_corrector_corrected_error_position);
 endtask
 
