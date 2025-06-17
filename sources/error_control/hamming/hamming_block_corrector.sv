@@ -16,13 +16,15 @@
 
 
 module hamming_block_corrector #(
-  parameter  BLOCK_WIDTH  = 7,
-  localparam DATA_WIDTH   = `GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH),
-  localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH)
+  parameter  BLOCK_WIDTH      = 7,
+  localparam DATA_WIDTH       = `GET_HAMMING_DATA_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH),
+  localparam PARITY_WIDTH     = `GET_HAMMING_PARITY_WIDTH_FROM_BLOCK_WIDTH(BLOCK_WIDTH),
+  localparam BLOCK_WIDTH_LOG2 = $clog2(BLOCK_WIDTH)
 ) (
-  input  [BLOCK_WIDTH-1:0] block,
-  output                   error,
-  output [BLOCK_WIDTH-1:0] corrected_block
+  input             [BLOCK_WIDTH-1:0] block,
+  output                              error,
+  output            [BLOCK_WIDTH-1:0] corrected_block,
+  output logic [BLOCK_WIDTH_LOG2-1:0] corrected_error_position
 );
 
 // Extract the data and code from the block
@@ -62,11 +64,13 @@ logic [BLOCK_WIDTH-1:0] error_mask;
 integer syndrome_value;
 always_comb begin
   syndrome_value = syndrome;
+  corrected_error_position = 0;
   error_mask = 0;
   // Bounds checking
   if (syndrome_value > 0 && syndrome_value < BLOCK_WIDTH + 1) begin
     // The syndrome points to the position of the error in the block
-    error_mask[syndrome_value - 1] = 1'b1;
+    corrected_error_position = syndrome_value - 1;
+    error_mask[corrected_error_position] = 1'b1;
   end
 end
 

@@ -26,37 +26,40 @@ localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH;
 
 // Test parameters
 localparam DATA_WIDTH_POW2         = 2**DATA_WIDTH;
+localparam BLOCK_WIDTH_LOG2        = $clog2(BLOCK_WIDTH);
 localparam FULL_CHECK_MAX_DURATION = 512;  // Exhaustive up to 2^9
 localparam RANDOM_CHECK_DURATION   = 1024;
 
 // Device ports
-logic   [DATA_WIDTH-1:0] encoder_data;
-logic [PARITY_WIDTH-1:0] encoder_code;
-logic  [BLOCK_WIDTH-1:0] encoder_block;
+logic       [DATA_WIDTH-1:0] encoder_data;
+logic     [PARITY_WIDTH-1:0] encoder_code;
+logic      [BLOCK_WIDTH-1:0] encoder_block;
 
-logic   [DATA_WIDTH-1:0] packer_data;
-logic [PARITY_WIDTH-1:0] packer_code;
-logic  [BLOCK_WIDTH-1:0] packer_block;
+logic       [DATA_WIDTH-1:0] packer_data;
+logic     [PARITY_WIDTH-1:0] packer_code;
+logic      [BLOCK_WIDTH-1:0] packer_block;
 
-logic  [BLOCK_WIDTH-1:0] unpacker_block;
-logic   [DATA_WIDTH-1:0] unpacker_data;
-logic [PARITY_WIDTH-1:0] unpacker_code;
+logic      [BLOCK_WIDTH-1:0] unpacker_block;
+logic       [DATA_WIDTH-1:0] unpacker_data;
+logic     [PARITY_WIDTH-1:0] unpacker_code;
 
-logic   [DATA_WIDTH-1:0] checker_data;
-logic [PARITY_WIDTH-1:0] checker_code;
-logic                    checker_error;
+logic       [DATA_WIDTH-1:0] checker_data;
+logic     [PARITY_WIDTH-1:0] checker_code;
+logic                        checker_error;
 
-logic   [DATA_WIDTH-1:0] corrector_data;
-logic [PARITY_WIDTH-1:0] corrector_code;
-logic                    corrector_error;
-logic   [DATA_WIDTH-1:0] corrector_corrected_data;
+logic       [DATA_WIDTH-1:0] corrector_data;
+logic     [PARITY_WIDTH-1:0] corrector_code;
+logic                        corrector_error;
+logic       [DATA_WIDTH-1:0] corrector_corrected_data;
+logic [BLOCK_WIDTH_LOG2-1:0] corrector_corrected_error_position;
 
-logic  [BLOCK_WIDTH-1:0] block_checker_block;
-logic                    block_checker_error;
+logic      [BLOCK_WIDTH-1:0] block_checker_block;
+logic                        block_checker_error;
 
-logic  [BLOCK_WIDTH-1:0] block_corrector_block;
-logic                    block_corrector_error;
-logic  [BLOCK_WIDTH-1:0] block_corrector_corrected_block;
+logic      [BLOCK_WIDTH-1:0] block_corrector_block;
+logic                        block_corrector_error;
+logic      [BLOCK_WIDTH-1:0] block_corrector_corrected_block;
+logic [BLOCK_WIDTH_LOG2-1:0] block_corrector_corrected_error_position;
 
 // Test signals
 logic   [DATA_WIDTH-1:0] test_data;
@@ -112,18 +115,20 @@ hamming_block_checker #(
 hamming_corrector #(
   .DATA_WIDTH ( DATA_WIDTH )
 ) hamming_corrector_dut (
-  .data           ( corrector_data           ),
-  .code           ( corrector_code           ),
-  .error          ( corrector_error          ),
-  .corrected_data ( corrector_corrected_data )
+  .data                     ( corrector_data                     ),
+  .code                     ( corrector_code                     ),
+  .error                    ( corrector_error                    ),
+  .corrected_data           ( corrector_corrected_data           ),
+  .corrected_error_position ( corrector_corrected_error_position )
 );
 
 hamming_block_corrector #(
   .BLOCK_WIDTH ( BLOCK_WIDTH )
 ) hamming_block_corrector_dut (
-  .block           ( block_corrector_block           ),
-  .error           ( block_corrector_error           ),
-  .corrected_block ( block_corrector_corrected_block )
+  .block                    ( block_corrector_block                    ),
+  .error                    ( block_corrector_error                    ),
+  .corrected_block          ( block_corrector_corrected_block          ),
+  .corrected_error_position ( block_corrector_corrected_error_position )
 );
 
 // Reference function for calculating Hamming code
@@ -281,6 +286,9 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   assert (corrector_corrected_data === test_data)
     else $error("[%0tns] Single-bit error not corrected by corrector for poisoned data '%b' and code '%b'. Expected '%b', got '%b'.",
                 $time, poisoned_data, poisoned_code, test_data, corrector_corrected_data);
+  assert (corrector_corrected_error_position === error_position)
+    else $error("[%0tns] Incorrect single-bit error position returned by corrector for poisoned data '%b' and code '%b'. Expected '%b', got '%b'.",
+                $time, poisoned_data, poisoned_code, error_position, corrector_corrected_error_position);
 
   // Check the block checker
   block_checker_block = poisoned_block;
@@ -298,6 +306,9 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   assert (block_corrector_corrected_block === expected_block)
     else $error("[%0tns] Single-bit error not corrected by block corrector for poisoned block '%b'. Expected '%b', got '%b'.",
                 $time, poisoned_block, expected_block, block_corrector_corrected_block);
+  assert (block_corrector_corrected_error_position === error_position)
+    else $error("[%0tns] Incorrect single-bit error position returned by block corrector for poisoned block '%b'. Expected '%b', got '%b'.",
+                $time, poisoned_block, error_position, block_corrector_corrected_error_position);
 endtask
 
 // Main test block
