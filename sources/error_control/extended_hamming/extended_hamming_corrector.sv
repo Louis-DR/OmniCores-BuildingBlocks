@@ -17,15 +17,17 @@
 
 
 module extended_hamming_corrector #(
-  parameter  DATA_WIDTH   = 4,
-  localparam PARITY_WIDTH = `GET_EXTENDED_HAMMING_PARITY_WIDTH(DATA_WIDTH),
-  localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH
+  parameter  DATA_WIDTH       = 4,
+  localparam PARITY_WIDTH     = `GET_EXTENDED_HAMMING_PARITY_WIDTH(DATA_WIDTH),
+  localparam BLOCK_WIDTH      = DATA_WIDTH + PARITY_WIDTH,
+  localparam BLOCK_WIDTH_LOG2 = $clog2(BLOCK_WIDTH)
 ) (
-  input   [DATA_WIDTH-1:0] data,
-  input [PARITY_WIDTH-1:0] code,
-  output  [DATA_WIDTH-1:0] corrected_data,
-  output                   correctable_error,
-  output                   uncorrectable_error
+  input        [DATA_WIDTH-1:0] data,
+  input      [PARITY_WIDTH-1:0] code,
+  output       [DATA_WIDTH-1:0] corrected_data,
+  output [BLOCK_WIDTH_LOG2-1:0] corrected_error_position,
+  output                        correctable_error,
+  output                        uncorrectable_error
 );
 
 // Pad the data to the message length corresponding to the number of parity bits
@@ -50,10 +52,11 @@ extended_hamming_block_packer #(
 extended_hamming_block_corrector #(
   .BLOCK_WIDTH ( PADDED_BLOCK_WIDTH )
 ) block_corrector (
-  .block               ( block_padded           ),
-  .uncorrectable_error ( uncorrectable_error    ),
-  .correctable_error   ( correctable_error      ),
-  .corrected_block     ( corrected_block_padded )
+  .block                    ( block_padded             ),
+  .corrected_block          ( corrected_block_padded   ),
+  .corrected_error_position ( corrected_error_position ),
+  .uncorrectable_error      ( uncorrectable_error      ),
+  .correctable_error        ( correctable_error        )
 );
 
 extended_hamming_block_unpacker #(
