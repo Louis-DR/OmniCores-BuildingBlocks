@@ -65,6 +65,7 @@ wire [DEPTH_LOG2:0] read_pointer_grey_w;
 wire [DEPTH_LOG2:0] write_pointer_incremented = write_pointer + 1;
 wire [DEPTH_LOG2:0] write_pointer_incremented_grey;
 
+// Write pointer grey-code encoder
 binary_to_grey #(
   .WIDTH  ( DEPTH_LOG2+1 )
 ) write_pointer_incremented_grey_encoder (
@@ -76,16 +77,23 @@ binary_to_grey #(
 assign write_full =  write_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1] == ~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1]
                   && write_pointer_grey_w[DEPTH_LOG2-2:0]          ==  read_pointer_grey_w[DEPTH_LOG2-2:0];
 
+// Write pointer sequential logic
 always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
     write_pointer        <= 0;
     write_pointer_grey_w <= 0;
   end else begin
     if (write_enable) begin
-      write_pointer         <= write_pointer_incremented;
-      write_pointer_grey_w  <= write_pointer_incremented_grey;
-      memory[write_address] <= write_data;
+      write_pointer        <= write_pointer_incremented;
+      write_pointer_grey_w <= write_pointer_incremented_grey;
     end
+  end
+end
+
+// Write to memory without reset
+always @(posedge write_clock) begin
+  if (write_enable) begin
+    memory[write_address] <= write_data;
   end
 end
 
@@ -109,6 +117,7 @@ reg  [DEPTH_LOG2:0] read_pointer_grey_r;
 wire [DEPTH_LOG2:0] read_pointer_incremented = read_pointer + 1;
 wire [DEPTH_LOG2:0] read_pointer_incremented_grey;
 
+// Read pointer grey-code encoder
 binary_to_grey #(
   .WIDTH  ( DEPTH_LOG2+1 )
 ) read_pointer_incremented_grey_encoder (
@@ -122,6 +131,7 @@ assign read_empty = write_pointer_grey_r == read_pointer_grey_r;
 // Value at the read pointer is always on the read data bus
 assign read_data = memory[read_address];
 
+// Read pointer sequential logic
 always @(posedge read_clock or negedge read_resetn) begin
   if (!read_resetn) begin
     read_pointer        <= 0;
@@ -140,6 +150,7 @@ end
 // │ Clock domain crossing │
 // └───────────────────────┘
 
+// Grey-coded read pointer synchronizer
 vector_synchronizer #(
   .WIDTH    ( DEPTH_LOG2+1        ),
   .STAGES   ( STAGES              )
@@ -150,6 +161,7 @@ vector_synchronizer #(
   .data_out ( read_pointer_grey_w )
 );
 
+// Grey-coded write pointer synchronizer
 vector_synchronizer #(
   .WIDTH    ( DEPTH_LOG2+1         ),
   .STAGES   ( STAGES               )

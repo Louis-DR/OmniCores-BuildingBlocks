@@ -87,7 +87,7 @@ assign empty = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && 
 // │ Synchronous logic │
 // └───────────────────┘
 
-integer depth_index;
+// Write and read pointers sequential logic
 always @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
@@ -98,13 +98,19 @@ always @(posedge clock or negedge resetn) begin
   else begin
     // Write
     if (write_enable) begin
-      write_pointer         <= write_pointer + 1;
-      memory[write_address] <= write_data;
+      write_pointer <= write_pointer + 1;
     end
     // Read
     if (read_enable) begin
       read_pointer <= read_pointer + 1;
     end
+  end
+end
+
+// Write to memory without reset
+always @(posedge clock) begin
+  if (write_enable) begin
+    memory[write_address] <= write_data;
   end
 end
 

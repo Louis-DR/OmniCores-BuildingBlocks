@@ -118,7 +118,7 @@ assign upper_threshold_status = level >= upper_threshold_level;
 // │ Synchronous logic │
 // └───────────────────┘
 
-integer depth_index;
+// Pointer and flags sequential logic
 always @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
@@ -142,8 +142,7 @@ always @(posedge clock or negedge resetn) begin
             write_miss <= 1;
           end
         end else begin
-          write_pointer         <= write_pointer + 1;
-          memory[write_address] <= write_data;
+          write_pointer <= write_pointer + 1;
         end
       end
       // Read
@@ -162,6 +161,13 @@ always @(posedge clock or negedge resetn) begin
       write_miss <= 0;
       read_error <= 0;
     end
+  end
+end
+
+// Write to memory without reset
+always @(posedge clock) begin
+  if (write_enable && !full) begin
+    memory[write_address] <= write_data;
   end
 end
 

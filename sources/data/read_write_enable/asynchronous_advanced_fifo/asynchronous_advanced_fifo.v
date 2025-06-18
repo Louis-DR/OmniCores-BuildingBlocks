@@ -93,6 +93,7 @@ wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 wire [DEPTH_LOG2:0] write_pointer_incremented = write_pointer + 1;
 wire [DEPTH_LOG2:0] write_pointer_incremented_grey;
 
+// Write pointer grey-code encoder
 binary_to_grey #(
   .WIDTH  ( DEPTH_LOG2+1 )
 ) write_pointer_incremented_grey_encoder (
@@ -107,6 +108,7 @@ wire [DEPTH_LOG2:0] read_pointer_grey_w;
 // Read pointer in write clock domain
 wire [DEPTH_LOG2:0] read_pointer_w;
 
+// Read pointer grey-code decoder
 grey_to_binary #(
   .WIDTH  ( DEPTH_LOG2+1 )
 ) read_pointer_grey_decoder (
@@ -131,6 +133,7 @@ assign write_almost_full  = write_level == DEPTH - 1;
 assign write_lower_threshold_status = write_level <= write_lower_threshold_level;
 assign write_upper_threshold_status = write_level >= write_upper_threshold_level;
 
+// Write pointer and flag sequential logic
 always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
     write_pointer        <= 0;
@@ -146,14 +149,20 @@ always @(posedge write_clock or negedge write_resetn) begin
           write_miss <= 1;
         end
       end else begin
-        write_pointer         <= write_pointer_incremented;
-        write_pointer_grey_w  <= write_pointer_incremented_grey;
-        memory[write_address] <= write_data;
+        write_pointer        <= write_pointer_incremented;
+        write_pointer_grey_w <= write_pointer_incremented_grey;
       end
     end
     if (write_clear_miss) begin
       write_miss <= 0;
     end
+  end
+end
+
+// Write to memory without reset
+always @(posedge write_clock) begin
+  if (write_enable && !write_full) begin
+    memory[write_address] <= write_data;
   end
 end
 
@@ -173,6 +182,7 @@ wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 wire [DEPTH_LOG2:0] read_pointer_incremented = read_pointer + 1;
 wire [DEPTH_LOG2:0] read_pointer_incremented_grey;
 
+// Read pointer grey-code encoder
 binary_to_grey #(
   .WIDTH  ( DEPTH_LOG2+1 )
 ) read_pointer_incremented_grey_encoder (
@@ -187,6 +197,7 @@ reg  [DEPTH_LOG2:0] read_pointer_grey_r;
 // Write pointer in read clock domain
 wire [DEPTH_LOG2:0] write_pointer_r;
 
+// Write pointer grey-code decoder
 grey_to_binary #(
   .WIDTH  ( DEPTH_LOG2+1 )
 ) write_pointer_grey_decoder (
@@ -214,6 +225,7 @@ assign read_upper_threshold_status = read_level >= read_upper_threshold_level;
 // Value at the read pointer is always on the read data bus
 assign read_data = memory[read_address];
 
+// Read pointer and flag sequential logic
 always @(posedge read_clock or negedge read_resetn) begin
   if (!read_resetn) begin
     read_pointer        <= 0;
@@ -245,6 +257,7 @@ end
 // │ Clock domain crossing │
 // └───────────────────────┘
 
+// Grey-coded read pointer synchronizer
 vector_synchronizer #(
   .WIDTH    ( DEPTH_LOG2+1 ),
   .STAGES   ( STAGES_WRITE )
@@ -255,6 +268,7 @@ vector_synchronizer #(
   .data_out ( read_pointer_grey_w )
 );
 
+// Grey-coded write pointer synchronizer
 vector_synchronizer #(
   .WIDTH    ( DEPTH_LOG2+1 ),
   .STAGES   ( STAGES_READ  )
