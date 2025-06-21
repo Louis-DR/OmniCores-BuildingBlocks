@@ -41,7 +41,6 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-
 The asynchronous FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointer each have an additional wrap bit for correct full/empty detection. Data integrity and stability is ensured through careful synchronization using Grey-coding of the pointers.
 
 The **write clock domain** contains a write pointer that indexes the shared memory array. When `write_enable` is asserted, `write_data` is stored at the write pointer location, and both the binary and Gray-coded write pointers are incremented. The Gray-coded write pointer is synchronized to the read domain for empty status generation.
@@ -61,6 +60,7 @@ The status flags are calculated based on the Grey-coded read and write pointers 
 | From           | To           | Type           | Comment                                      |
 | -------------- | ------------ | -------------- | -------------------------------------------- |
 | `write_data`   | `read_data`  | sequential CDC | Data path through shared memory array.       |
+| `write_enable` | `read_data`  | sequential CDC | Data path through shared memory array.       |
 | `write_enable` | `write_full` | sequential     | Control path through internal write pointer. |
 | `write_enable` | `read_empty` | sequential CDC | Control path through internal write pointer. |
 | `read_enable`  | `write_full` | sequential     | Control path through internal read pointer.  |
@@ -124,10 +124,10 @@ Clock domain crossing constraints should be applied to the Gray pointer synchron
 
 ## Dependencies
 
-| Module                                                                              | Path                                                            | Comment                                 |
-| ----------------------------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------- |
-| [`vector_synchronizer`](../../../timing/vector_synchronizer/vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/vector_synchronizer`   | For Gray pointer clock domain crossing. |
-| [`binary_to_grey`](../../../encoding/grey/binary_to_grey/binary_to_grey.md)         | `omnicores-buildingblocks/sources/encoding/grey/binary_to_grey` | For converting binary pointers to Gray. |
+| Module                                                                              | Path                                                          | Comment                                 |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------- |
+| [`vector_synchronizer`](../../../timing/vector_synchronizer/vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/vector_synchronizer` | For Gray pointer clock domain crossing. |
+| [`binary_to_grey`](../../../encoding/grey/binary_to_grey.md)                        | `omnicores-buildingblocks/sources/encoding/grey`              | For converting binary pointers to Gray. |
 
 ## Related modules
 

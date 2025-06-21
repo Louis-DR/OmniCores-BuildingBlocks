@@ -57,6 +57,7 @@ The status flags are calculated based on the read and write pointers. The queue 
 | From           | To          | Type       | Comment                                               |
 | -------------- | ----------- | ---------- | ----------------------------------------------------- |
 | `write_data`   | `read_data` | sequential | Data path through internal memory array and pointers. |
+| `write_enable` | `read_data` | sequential | Data path through internal memory array and pointers. |
 | `write_enable` | `full`      | sequential | Control path through internal write pointer.          |
 | `write_enable` | `empty`     | sequential | Control path through internal write pointer.          |
 | `read_enable`  | `full`      | sequential | Control path through internal read pointer.           |
