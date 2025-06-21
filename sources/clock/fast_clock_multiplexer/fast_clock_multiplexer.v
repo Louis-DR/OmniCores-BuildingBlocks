@@ -28,14 +28,11 @@ module fast_clock_multiplexer #(
 wire clock_0_inverted = ~clock_0;
 wire clock_1_inverted = ~clock_1;
 
-wire enable_clock_0;
-wire enable_clock_1;
-
 wire enable_clock_0_synchronized;
 wire enable_clock_1_synchronized;
 
-assign enable_clock_0 = ~select & ~enable_clock_1_synchronized;
-assign enable_clock_1 =  select & ~enable_clock_0_synchronized;
+wire enable_clock_0 = ~select & ~enable_clock_1_synchronized;
+wire enable_clock_1 =  select & ~enable_clock_0_synchronized;
 
 fast_synchronizer #(
   .STAGES   ( STAGES                      )
@@ -55,11 +52,8 @@ fast_synchronizer #(
   .data_out ( enable_clock_1_synchronized )
 );
 
-wire clock_0_gated;
-wire clock_1_gated;
-
-assign clock_0_gated = clock_0 & enable_clock_0_synchronized;
-assign clock_1_gated = clock_1 & enable_clock_1_synchronized;
+wire clock_0_gated = clock_0 & enable_clock_0_synchronized;
+wire clock_1_gated = clock_1 & enable_clock_1_synchronized;
 
 assign clock_out = clock_0_gated | clock_1_gated;
 
