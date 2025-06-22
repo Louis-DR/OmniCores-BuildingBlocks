@@ -27,8 +27,6 @@ localparam real    SECOND_CLOCK_PERIOD              = FIRST_CLOCK_PERIOD/3.14159
 localparam         FREQUENCY_UNIT                   = "MHz";
 localparam real    FREQUENCY_MEASUREMENT_TOLERANCE  = 0.05;
 localparam real    GLITCH_PERIOD_TOLERANCE          = 0.05;
-localparam integer BACK_AND_FORTH_ITERATIONS        = 10;
-localparam integer RANDOM_GLITCH_CHECK_ITERATIONS   = 100;
 
 // Device ports
 logic first_clock;
@@ -76,6 +74,20 @@ initial begin
       #(SECOND_CLOCK_PERIOD/2) second_clock = ~second_clock;
     end else begin
       #(SECOND_CLOCK_PERIOD/2) second_clock = 0;
+    end
+  end
+end
+
+// Passive check for glitches
+initial begin
+  forever begin
+    @(posedge clock_out);
+    time_posedge_clock_out = $realtime;
+    @(negedge clock_out);
+    time_negedge_clock_out = $realtime;
+    if (   absolute(time_negedge_clock_out-time_posedge_clock_out -  FIRST_CLOCK_PERIOD/2) > GLITCH_PERIOD_TOLERANCE *  FIRST_CLOCK_PERIOD/2
+        && absolute(time_negedge_clock_out-time_posedge_clock_out - SECOND_CLOCK_PERIOD/2) > GLITCH_PERIOD_TOLERANCE * SECOND_CLOCK_PERIOD/2) begin
+      $error("[%t] Glitch detected on the output clock.", $time);
     end
   end
 end
