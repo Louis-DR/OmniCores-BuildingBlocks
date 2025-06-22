@@ -1,4 +1,3 @@
-
 `ifndef CLOG2
 `define CLOG2(x)            \
    (x <=          2) ?  1 : \

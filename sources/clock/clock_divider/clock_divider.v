@@ -18,7 +18,7 @@
 
 
 
-`include "common.vh"
+`include "clog2.vh"
 
 
 
