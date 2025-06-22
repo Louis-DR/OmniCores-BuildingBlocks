@@ -14,6 +14,10 @@
 
 Clock switchover mechanism that starts on the first clock, then switches to the second clock once it is running. It doesn't switch back to the first clock even if the second clock stops running. However, it can be reset to restart the sequence with the first clock.
 
+This module is useful for automatic startup sequences for a system that starts with a slow clock like the crystal clock or a board clock, and then must switch to a fast clock.
+
+![switchover_clock_selector](switchover_clock_selector.wavedrom.svg)
+
 ## Parameters
 
 | Name     | Type    | Allowed Values | Default | Description                                              |
@@ -63,14 +67,16 @@ The following table lists the parameter values verified by the testbench.
 
 ## Deliverables
 
-| Type              | File                                                                                   | Description                                         |
-| ----------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`switchover_clock_selector.v`](switchover_clock_selector.v)                           | Verilog design.                                     |
-| Testbench         | [`switchover_clock_selector.testbench.sv`](switchover_clock_selector.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`switchover_clock_selector.testbench.gtkw`](switchover_clock_selector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`switchover_clock_selector.symbol.sss`](switchover_clock_selector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`switchover_clock_selector.symbol.svg`](switchover_clock_selector.symbol.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`switchover_clock_selector.md`](switchover_clock_selector.md)                         | Markdown documentation datasheet.                   |
+| Type                | File                                                                                   | Description                                         |
+| ------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design              | [`switchover_clock_selector.v`](switchover_clock_selector.v)                           | Verilog design.                                     |
+| Testbench           | [`switchover_clock_selector.testbench.sv`](switchover_clock_selector.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`switchover_clock_selector.testbench.gtkw`](switchover_clock_selector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor   | [`switchover_clock_selector.symbol.sss`](switchover_clock_selector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`switchover_clock_selector.symbol.svg`](switchover_clock_selector.symbol.svg)         | Generated vector image of the symbol.               |
+| Waveform descriptor | [`switchover_clock_selector.wavedrom.json`](switchover_clock_selector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`switchover_clock_selector.wavedrom.svg`](switchover_clock_selector.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`switchover_clock_selector.md`](switchover_clock_selector.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

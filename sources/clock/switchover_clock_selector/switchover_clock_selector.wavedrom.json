@@ -1,0 +1,6 @@
+{"signal": [
+  {"name": "resetn",       "wave": "10................."},
+  {"name": "first_clock",  "wave": "l.hlhlhlhlhlhlhl..."},
+  {"name": "second_clock", "wave": "l.....p............"},
+  {"name": "clock_out",    "wave": "l.hlhlhlhl.p......."}
+], "config":{"skin": "narrow"}}
