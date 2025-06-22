@@ -23,7 +23,7 @@ text{font-size:11pt;
 .muted{fill:#aaa}
 .warning{fill:#f6b900}
 .error{fill:#f60000}
-.info{fill:#0041c4}
+.info{fill:#000}
 .success{fill:#00ab00}
 .s1{fill:none;
     stroke:#000;
