@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_switchover.testbench.sv                                ║
+// ║ File:        switchover_clock_selector.testbench.sv                       ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the clock switchover.                          ║
+// ║ Description: Testbench for the switchover clock selector.                 ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -18,7 +18,7 @@
 
 
 
-module clock_switchover__testbench ();
+module switchover_clock_selector__testbench ();
 
 // Test parameters
 localparam integer STAGES                           = 2;
@@ -45,9 +45,9 @@ real time_posedge_clock_out;
 real time_negedge_clock_out;
 
 // Device under test
-clock_switchover #(
+switchover_clock_selector #(
   .STAGES       ( STAGES       )
-) clock_switchover_dut (
+) switchover_clock_selector_dut (
   .first_clock  ( first_clock  ),
   .second_clock ( second_clock ),
   .resetn       ( resetn       ),
@@ -97,8 +97,8 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("clock_switchover.testbench.vcd");
-  $dumpvars(0,clock_switchover__testbench);
+  $dumpfile("switchover_clock_selector.testbench.vcd");
+  $dumpvars(0,switchover_clock_selector__testbench);
 
   // Reset assertion
   resetn = 0;

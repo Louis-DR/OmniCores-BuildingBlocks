@@ -1,0 +1,18 @@
+[dumpfile] "priority_clock_selector.testbench.vcd"
+[savefile] "priority_clock_selector__testbench.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-17.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] priority_clock_selector__testbench.
+[sst_width] 197
+[signals_width] 78
+[sst_expanded] 1
+[sst_vpaned] 280
+@28
+priority_clock_selector__testbench.resetn
+priority_clock_selector__testbench.priority_clock
+priority_clock_selector__testbench.fallback_clock
+priority_clock_selector__testbench.clock_out
+[pattern_trace] 1
+[pattern_trace] 0

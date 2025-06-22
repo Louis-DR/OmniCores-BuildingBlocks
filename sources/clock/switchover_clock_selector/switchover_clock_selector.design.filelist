@@ -1,2 +1,2 @@
-clock_switchover.v
+switchover_clock_selector.v
 ../../timing/synchronizer/synchronizer.v

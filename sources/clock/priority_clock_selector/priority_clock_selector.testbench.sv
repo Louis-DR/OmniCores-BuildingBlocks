@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_fallback.testbench.sv                                  ║
+// ║ File:        priority_clock_selector.testbench.sv                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the clock fallback.                            ║
+// ║ Description: Testbench for the priority clock selector.                   ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -18,7 +18,7 @@
 
 
 
-module clock_fallback__testbench ();
+module priority_clock_selector__testbench ();
 
 // Test parameters
 localparam integer STAGES                           = 2;
@@ -45,9 +45,9 @@ real time_posedge_clock_out;
 real time_negedge_clock_out;
 
 // Device under test
-clock_fallback #(
+priority_clock_selector #(
   .STAGES         ( STAGES          )
-) clock_fallback_dut (
+) priority_clock_selector_dut (
   .priority_clock ( priority_clock  ),
   .fallback_clock ( fallback_clock  ),
   .resetn         ( resetn          ),
@@ -97,8 +97,8 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("clock_fallback.testbench.vcd");
-  $dumpvars(0,clock_fallback__testbench);
+  $dumpfile("priority_clock_selector.testbench.vcd");
+  $dumpvars(0,priority_clock_selector__testbench);
 
   // Reset assertion
   resetn = 0;

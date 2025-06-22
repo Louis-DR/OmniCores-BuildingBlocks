@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_switchover.v                                           ║
+// ║ File:        switchover_clock_selector.v                                  ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Starts on the first clock, then it switches to the second    ║
 // ║              clock once it is running.                                    ║
@@ -12,7 +12,7 @@
 
 
 
-module clock_switchover #(
+module switchover_clock_selector #(
   parameter STAGES = 2
 ) (
   input  first_clock,

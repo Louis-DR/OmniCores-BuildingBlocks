@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_fallback.v                                             ║
+// ║ File:        priority_clock_selector.v                                    ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Switches to the primary clock if it is running, else it      ║
 // ║              switches to the fallback clock.                              ║
@@ -12,7 +12,7 @@
 
 
 
-module clock_fallback #(
+module priority_clock_selector #(
   parameter STAGES = 2
 ) (
   input  priority_clock,

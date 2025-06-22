@@ -1,4 +1,4 @@
-clock_fallback.v
+priority_clock_selector.v
 ../nonstop_clock_multiplexer/nonstop_clock_multiplexer.v
 ../fast_clock_multiplexer/fast_clock_multiplexer.v
 ../../timing/synchronizer/synchronizer.v

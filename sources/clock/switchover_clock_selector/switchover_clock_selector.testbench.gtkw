@@ -1,0 +1,18 @@
+[dumpfile] "switchover_clock_selector.testbench.vcd"
+[savefile] "switchover_clock_selector__testbench.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-17.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] switchover_clock_selector__testbench.
+[sst_width] 197
+[signals_width] 78
+[sst_expanded] 1
+[sst_vpaned] 280
+@28
+switchover_clock_selector__testbench.resetn
+switchover_clock_selector__testbench.first_clock
+switchover_clock_selector__testbench.second_clock
+switchover_clock_selector__testbench.clock_out
+[pattern_trace] 1
+[pattern_trace] 0

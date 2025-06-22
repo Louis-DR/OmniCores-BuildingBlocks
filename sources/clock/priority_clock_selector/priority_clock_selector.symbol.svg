@@ -1,16 +1,16 @@
-<svg width="252" height="140" viewBox="0 0 126 70" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="76" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="63" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Clock Fallback</text>
-  <text x="63" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock_fallback</text>
+<svg width="288" height="140" viewBox="0 0 144 70" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="94" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="72" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Priority Clock Selector</text>
+  <text x="72" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">priority_clock_selector</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
         <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
         <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
       <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">priority_clock</text>
         <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="99" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock_out</text>
-        <line x1="101" y1="45" x2="115" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 121 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="117" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock_out</text>
+        <line x1="119" y1="45" x2="133" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 139 45 l -6 +2.0 v -4 z" fill="black"/>
       <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">fallback_clock</text>
         <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>

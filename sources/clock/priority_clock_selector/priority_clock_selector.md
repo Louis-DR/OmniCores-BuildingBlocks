@@ -1,8 +1,8 @@
-# Clock Fallback
+# Priority Clock Selector
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Clock Fallback                                                                   |
+| Module  | Priority Clock Selector                                                          |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,7 +10,7 @@
 
 ## Overview
 
-![clock_fallback](clock_fallback.symbol.svg)
+![priority_clock_selector](priority_clock_selector.symbol.svg)
 
 Automatic clock selector between a priority clock and a fallback clock. When the priority clock is running, it is selected, else it is the fallback clock.
 
@@ -73,22 +73,22 @@ A `generated_clock` should be created on the output pin of the `clock_divided` f
 
 ```tcl
 # For an even division factor, the -divide_by argument can be used as the duty cycles is 50%
-create_generated_clock -name  -source [get_pins clock_fallback/clock_in] -divide_by 2 [get_pins clock_fallback/clock_fallback_reg/Q]
+create_generated_clock -name  -source [get_pins priority_clock_selector/clock_in] -divide_by 2 [get_pins priority_clock_selector/priority_clock_selector_reg/Q]
 
 # For an odd division factor, the -edges argument should be used instead
-create_generated_clock -name  -source [get_pins clock_fallback/clock_in] -edges {0 4 6} [get_pins clock_fallback/clock_fallback_reg/Q]
+create_generated_clock -name  -source [get_pins priority_clock_selector/clock_in] -edges {0 4 6} [get_pins priority_clock_selector/priority_clock_selector_reg/Q]
 ```
 
 ## Deliverables
 
-| Type              | File                                                             | Description                                         |
-| ----------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`clock_fallback.v`](clock_fallback.v)                           | Verilog design.                                     |
-| Testbench         | [`clock_fallback.testbench.sv`](clock_fallback.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`clock_fallback.testbench.gtkw`](clock_fallback.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`clock_fallback.symbol.sss`](clock_fallback.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`clock_fallback.symbol.svg`](clock_fallback.symbol.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`clock_fallback.md`](clock_fallback.md)                         | Markdown documentation datasheet.                   |
+| Type              | File                                                                                             | Description                                         |
+| ----------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`priority_clock_selector.v`](priority_clock_selector.v)                                         | Verilog design.                                     |
+| Testbench         | [`priority_clock_selector.testbench.sv`](priority_clock_selector.testbench.sv)                   | SystemVerilog verification testbench.               |
+| Waveform script   | [`priority_clock_selector.testbench.gtkw`](priority_clock_selector.testbench.gtkw)               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`priority_clock_selector.symbol.sss`](priority_clock_selector.symbol.sss)                       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`priority_clock_selector.symbol.svg`](priority_clock_selector.symbol.svg)                       | Generated vector image of the symbol.               |
+| Datasheet         | [`priority_clock_selector.md`](priority_clock_selector.md)                                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
