@@ -12,6 +12,7 @@
 
 
 `timescale 1ns/1fs
+`include "measure_frequency.svh"
 
 
 
@@ -21,10 +22,7 @@ module clock_multiplexer__testbench ();
 localparam integer DUT_STAGES                       = 2;
 localparam real    CLOCK_0_PERIOD                   = 10;
 localparam real    CLOCK_1_PERIOD                   = CLOCK_0_PERIOD*2;
-localparam integer FREQUENCY_MEASUREMENT_LENGTH     = 100;
-localparam integer FREQUENCY_MEASUREMENT_MULTIPLIER = 1e3;
-localparam         FREQUENCY_MEASUREMENT_UNIT       = "MHz";
-localparam integer FREQUENCY_MEASUREMENT_TIMEOUT    = FREQUENCY_MEASUREMENT_LENGTH * CLOCK_0_PERIOD * 100;
+localparam         FREQUENCY_UNIT                   = "MHz";
 localparam real    FREQUENCY_MEASUREMENT_TOLERANCE  = 0.05;
 localparam real    GLITCH_PERIOD_TOLERANCE          = 0.05;
 localparam integer BACK_AND_FORTH_ITERATIONS        = 10;
@@ -74,25 +72,6 @@ initial begin
   end
 end
 
-// Macro to measure the frequency of a clock
-real time_start;
-real time_stop;
-`define measure_frequency(clock, frequency, length=FREQUENCY_MEASUREMENT_LENGTH)        \
-  fork                                                                                  \
-    begin                                                                               \
-      @(posedge clock)                                                                  \
-      time_start = $time;                                                               \
-      repeat(length) @(posedge clock)                                                   \
-      time_stop = $time;                                                                \
-      frequency = FREQUENCY_MEASUREMENT_MULTIPLIER * length / (time_stop - time_start); \
-    end                                                                                 \
-    begin                                                                               \
-      #(FREQUENCY_MEASUREMENT_TIMEOUT);                                                 \
-      frequency = 0;                                                                    \
-    end                                                                                 \
-  join_any                                                                              \
-  disable fork;
-
 // Absolute value of real number
 function real absolute(input real x);
   return (x >= 0.0) ? x : -x;
@@ -133,7 +112,7 @@ initial begin
     if      (clock_out_frequency == 0) $error("[%t] Output clock is not running with select at %0d.", $time, select);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
       $error("[%t] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) with select at %0d.",
-             $time, clock_out_frequency, FREQUENCY_MEASUREMENT_UNIT, select, expected_clock_out_frequency, FREQUENCY_MEASUREMENT_UNIT, select);
+             $time, clock_out_frequency, FREQUENCY_UNIT, select, expected_clock_out_frequency, FREQUENCY_UNIT, select);
     end
   end
 

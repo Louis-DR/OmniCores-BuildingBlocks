@@ -12,17 +12,15 @@
 
 
 `timescale 1ns/1ns
+`include "measure_frequency.svh"
 
 
 
 module clock_divider__testbench ();
 
 // Test parameters
-localparam CLOCK_PERIOD = 10;
-localparam FREQUENCY_MEASUREMENT_LENGTH     = 10;
-localparam FREQUENCY_MEASUREMENT_MULTIPLIER = 1e3;
-localparam FREQUENCY_MEASUREMENT_UNIT       = "MHz";
-localparam FREQUENCY_MEASUREMENT_TIMEOUT    = FREQUENCY_MEASUREMENT_LENGTH * CLOCK_PERIOD * 100;
+localparam CLOCK_PERIOD      = 10;
+localparam FREQUENCY_UNIT    = "MHz";
 localparam MAX_TEST_DIVISION = 10;
 
 // Device ports
@@ -56,25 +54,6 @@ initial begin
   end
 end
 
-// Macro to measure the frequency of a clock
-real time_start;
-real time_stop;
-`define measure_frequency(clock, frequency, length=FREQUENCY_MEASUREMENT_LENGTH)        \
-  fork                                                                                  \
-    begin                                                                               \
-      @(posedge clock)                                                                  \
-      time_start = $time;                                                               \
-      repeat(length) @(posedge clock)                                                   \
-      time_stop = $time;                                                                \
-      frequency = FREQUENCY_MEASUREMENT_MULTIPLIER * length / (time_stop - time_start); \
-    end                                                                                 \
-    begin                                                                               \
-      #(FREQUENCY_MEASUREMENT_TIMEOUT);                                                 \
-      frequency = 0;                                                                    \
-    end                                                                                 \
-  join_any                                                                              \
-  disable fork;
-
 // Main block
 initial begin
   // Log waves
@@ -91,14 +70,13 @@ initial begin
   @(posedge clock_in);
   `measure_frequency(clock_in, clock_in_frequency)
 
-
   // Check 1 : Output divided frequency
   $display("CHECK 1 : Output divided frequency.");
   for (integer division = 1; division <= MAX_TEST_DIVISION; division++) begin
     `measure_frequency(clock_out[division], clock_out_frequency)
     if      (clock_out_frequency == 0) $error("[%t] Output clock with division factor of %0d is not running.", $time,  division);
     else if (clock_out_frequency != clock_in_frequency/division) $error("[%t] Output clock frequency (%d%s) with division factor of %0d doesn't match the expected clock frequency (%d%s).",
-                                                                        $time, clock_out_frequency, FREQUENCY_MEASUREMENT_UNIT, division, clock_in_frequency/division, FREQUENCY_MEASUREMENT_UNIT);
+                                                                        $time, clock_out_frequency, FREQUENCY_UNIT, division, clock_in_frequency/division, FREQUENCY_UNIT);
   end
 
   // End of test

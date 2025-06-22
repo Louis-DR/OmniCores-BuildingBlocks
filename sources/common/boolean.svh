@@ -1,9 +1,5 @@
-`ifndef __OMNICORES_COMMON_HEADER__
-`define __OMNICORES_COMMON_HEADER__
-
-`ifndef INFINITE
-`define INFINITE (1/0)
-`endif
+`ifndef __OMNICORES_BOOLEAN__
+`define __OMNICORES_BOOLEAN__
 
 `ifdef SIMUMLATOR_NO_BOOL
 typedef bit bool;

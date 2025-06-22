@@ -12,7 +12,7 @@
 
 
 `timescale 1ns/1ns
-`include "common.svh"
+`include "boolean.svh"
 
 
 
@@ -292,7 +292,7 @@ initial begin
         @(negedge clock);
         if (!write_outstanding) begin
           if ($random < RANDOM_CHECK_WRITE_PROBABILITY && transfer_count < RANDOM_CHECK_DURATION) begin
-            write_outstanding = 1;
+            write_outstanding = true;
             write_valid = 1;
             write_data  = $urandom_range(WIDTH_POW2);
           end else begin
@@ -306,7 +306,7 @@ initial begin
           data_expected.push_back(write_data);
           transfer_count++;
           outstanding_count++;
-          write_outstanding = 0;
+          write_outstanding = false;
         end
       end
     end

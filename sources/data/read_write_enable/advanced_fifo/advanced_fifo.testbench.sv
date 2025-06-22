@@ -12,7 +12,7 @@
 
 
 `timescale 1ns/1ns
-`include "common.svh"
+`include "boolean.svh"
 
 
 

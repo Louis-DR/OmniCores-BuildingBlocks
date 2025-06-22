@@ -12,18 +12,16 @@
 
 
 `timescale 1ns/1ns
+`include "measure_frequency.svh"
 
 
 
 module clock_gater__testbench ();
 
 // Test parameters
-localparam CLOCK_PERIOD = 10;
-localparam FREQUENCY_MEASUREMENT_LENGTH     = 10;
-localparam FREQUENCY_MEASUREMENT_MULTIPLIER = 1e3;
-localparam FREQUENCY_MEASUREMENT_UNIT       = "MHz";
-localparam FREQUENCY_MEASUREMENT_TIMEOUT    = FREQUENCY_MEASUREMENT_LENGTH * CLOCK_PERIOD * 100;
-localparam RANDOM_GLITCH_CHECK_ITERATIONS   = 1000;
+localparam CLOCK_PERIOD                   = 10;
+localparam FREQUENCY_UNIT                 = "MHz";
+localparam RANDOM_GLITCH_CHECK_ITERATIONS = 1000;
 
 // Device ports
 logic clock_in;
@@ -53,25 +51,6 @@ initial begin
   end
 end
 
-// Macro to measure the frequency of a clock
-real time_start;
-real time_stop;
-`define measure_frequency(clock, frequency, length=FREQUENCY_MEASUREMENT_LENGTH)        \
-  fork                                                                                  \
-    begin                                                                               \
-      @(posedge clock)                                                                  \
-      time_start = $time;                                                               \
-      repeat(length) @(posedge clock)                                                   \
-      time_stop = $time;                                                                \
-      frequency = FREQUENCY_MEASUREMENT_MULTIPLIER * length / (time_stop - time_start); \
-    end                                                                                 \
-    begin                                                                               \
-      #(FREQUENCY_MEASUREMENT_TIMEOUT);                                                 \
-      frequency = 0;                                                                    \
-    end                                                                                 \
-  join_any                                                                              \
-  disable fork;
-
 // Main block
 initial begin
   // Log waves
@@ -96,7 +75,7 @@ initial begin
   enable = 1;
   `measure_frequency(clock_out, clock_out_frequency)
   if (clock_out_frequency == 0) $error("[%t] Output clock is gated but should be running.", $time);
-  if (clock_out_frequency != clock_in_frequency) $error("[%t] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_MEASUREMENT_UNIT, clock_in_frequency, FREQUENCY_MEASUREMENT_UNIT);
+  if (clock_out_frequency != clock_in_frequency) $error("[%t] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency, FREQUENCY_UNIT);
   @(posedge clock_in);
   enable = 0;
   `measure_frequency(clock_out, clock_out_frequency)
@@ -112,7 +91,7 @@ initial begin
   test_enable = 1;
   `measure_frequency(clock_out, clock_out_frequency)
   if (clock_out_frequency == 0) $error("[%t] Output clock is gated but should be running.", $time);
-  if (clock_out_frequency != clock_in_frequency) $error("[%t] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_MEASUREMENT_UNIT, clock_in_frequency, FREQUENCY_MEASUREMENT_UNIT);
+  if (clock_out_frequency != clock_in_frequency) $error("[%t] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency, FREQUENCY_UNIT);
   @(posedge clock_in);
   test_enable = 0;
   `measure_frequency(clock_out, clock_out_frequency)
@@ -131,8 +110,8 @@ initial begin
     end
     // Check
     begin
-      `measure_frequency(clock_out, clock_out_frequency, FREQUENCY_MEASUREMENT_LENGTH*10)
-      if (clock_out_frequency != clock_in_frequency/2) $error("[%t] Output clock frequency (%d%s) isn't equal to the input clock frequency divided by two (%d%s).", $time, clock_out_frequency, FREQUENCY_MEASUREMENT_UNIT, clock_in_frequency/2, FREQUENCY_MEASUREMENT_UNIT);
+      `measure_frequency(clock_out, clock_out_frequency)
+      if (clock_out_frequency != clock_in_frequency/2) $error("[%t] Output clock frequency (%d%s) isn't equal to the input clock frequency divided by two (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency/2, FREQUENCY_UNIT);
     end
   join_any
   disable fork;
