@@ -13,6 +13,7 @@
 
 `timescale 1ns/1fs
 `include "measure_frequency.svh"
+`include "absolute.svh"
 
 
 
@@ -71,11 +72,6 @@ initial begin
     #(CLOCK_1_PERIOD/2) clock_1 = ~clock_1;
   end
 end
-
-// Absolute value of real number
-function real absolute(input real x);
-  return (x >= 0.0) ? x : -x;
-endfunction
 
 // Main block
 initial begin

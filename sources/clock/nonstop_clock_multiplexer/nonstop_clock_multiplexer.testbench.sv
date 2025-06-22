@@ -14,6 +14,7 @@
 `timescale 1ns/1fs
 `include "measure_frequency.svh"
 `include "boolean.svh"
+`include "absolute.svh"
 
 
 
@@ -82,11 +83,6 @@ initial begin
     end
   end
 end
-
-// Absolute value of real number
-function real absolute(input real x);
-  return (x >= 0.0) ? x : -x;
-endfunction
 
 // Main block
 initial begin

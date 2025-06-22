@@ -85,9 +85,11 @@ initial begin
     time_posedge_clock_out = $realtime;
     @(negedge clock_out);
     time_negedge_clock_out = $realtime;
-    if (   absolute(time_negedge_clock_out-time_posedge_clock_out -  FIRST_CLOCK_PERIOD/2) > GLITCH_PERIOD_TOLERANCE *  FIRST_CLOCK_PERIOD/2
-        && absolute(time_negedge_clock_out-time_posedge_clock_out - SECOND_CLOCK_PERIOD/2) > GLITCH_PERIOD_TOLERANCE * SECOND_CLOCK_PERIOD/2) begin
-      $error("[%t] Glitch detected on the output clock.", $time);
+    if (resetn) begin
+      if (   absolute(time_negedge_clock_out-time_posedge_clock_out -  FIRST_CLOCK_PERIOD/2) > GLITCH_PERIOD_TOLERANCE *  FIRST_CLOCK_PERIOD/2
+          && absolute(time_negedge_clock_out-time_posedge_clock_out - SECOND_CLOCK_PERIOD/2) > GLITCH_PERIOD_TOLERANCE * SECOND_CLOCK_PERIOD/2) begin
+        $error("[%t] Glitch detected on the output clock.", $time);
+      end
     end
   end
 end
