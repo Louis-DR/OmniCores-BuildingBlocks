@@ -134,8 +134,10 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 
 ## Related modules
 
-| Module                                                                     | Path                                                       | Comment                                      |
-| -------------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------- |
-| [`clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/clock_multiplexer` | Variant with slightly slower switching time. |
-| [`clock_gater`](../clock_gater/clock_gater.md)                             | `omnicores-buildingblocks/sources/clock/clock_gater`       | Clock gater behavioral model.                |
-| [`clock_divider`](../clock_divider/clock_divider.md)                       | `omnicores-buildingblocks/sources/clock/clock_divider`     | Static clock divider.                        |
+| Module                                                                                   | Path                                                               | Comment                                                   |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------- |
+| [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                         | `omnicores-buildingblocks/sources/clock/clock_multiplexer`         | Variant with slightly slower switching time.              |
+| [`nonstop_clock_multiplexer`](../nonstop_clock_multiplexer/nonstop_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/nonstop_clock_multiplexer` | Variant working when one clock is not running.            |
+| [`switchover_clock_selector`](../switchover_clock_selector/switchover_clock_selector.md) | `omnicores-buildingblocks/sources/clock/switchover_clock_selector` | Selector that switches to a second clock onces it starts. |
+| [`priority_clock_selector`](../priority_clock_selector/priority_clock_selector.md)       | `omnicores-buildingblocks/sources/clock/priority_clock_selector`   | Selector that switches to a priority clock automatically. |
+| [`clock_gater`](../clock_gater/clock_gater.md)                                           | `omnicores-buildingblocks/sources/clock/clock_gater`               | Clock gater behavioral model.                             |

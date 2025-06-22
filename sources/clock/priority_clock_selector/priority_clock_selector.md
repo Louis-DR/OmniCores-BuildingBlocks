@@ -81,14 +81,14 @@ create_generated_clock -name  -source [get_pins priority_clock_selector/clock_in
 
 ## Deliverables
 
-| Type              | File                                                                                             | Description                                         |
-| ----------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`priority_clock_selector.v`](priority_clock_selector.v)                                         | Verilog design.                                     |
-| Testbench         | [`priority_clock_selector.testbench.sv`](priority_clock_selector.testbench.sv)                   | SystemVerilog verification testbench.               |
-| Waveform script   | [`priority_clock_selector.testbench.gtkw`](priority_clock_selector.testbench.gtkw)               | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`priority_clock_selector.symbol.sss`](priority_clock_selector.symbol.sss)                       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`priority_clock_selector.symbol.svg`](priority_clock_selector.symbol.svg)                       | Generated vector image of the symbol.               |
-| Datasheet         | [`priority_clock_selector.md`](priority_clock_selector.md)                                       | Markdown documentation datasheet.                   |
+| Type              | File                                                                               | Description                                         |
+| ----------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`priority_clock_selector.v`](priority_clock_selector.v)                           | Verilog design.                                     |
+| Testbench         | [`priority_clock_selector.testbench.sv`](priority_clock_selector.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`priority_clock_selector.testbench.gtkw`](priority_clock_selector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`priority_clock_selector.symbol.sss`](priority_clock_selector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`priority_clock_selector.symbol.svg`](priority_clock_selector.symbol.svg)         | Generated vector image of the symbol.               |
+| Datasheet         | [`priority_clock_selector.md`](priority_clock_selector.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
@@ -101,9 +101,10 @@ create_generated_clock -name  -source [get_pins priority_clock_selector/clock_in
 
 ## Related modules
 
-| Module                                                                                   | Path                                                               | Comment                                                  |
-| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------- |
-| [`clock_gater`](../clock_gater/clock_gater.md)                                           | `omnicores-buildingblocks/sources/clock/clock_gater`               | Clock gater behavioral model.                            |
-| [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                         | `omnicores-buildingblocks/sources/clock/clock_multiplexer`         | Multiplexer to select between clocks.                    |
-| [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md)          | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer`    | Faster clock multiplexer.                                |
-| [`nonstop_clock_multiplexer`](../nonstop_clock_multiplexer/nonstop_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/nonstop_clock_multiplexer` | Clock multiplexer working when one clock is not running. |
+| Module                                                                                   | Path                                                               | Comment                                                   |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------- |
+| [`switchover_clock_selector`](../switchover_clock_selector/switchover_clock_selector.md) | `omnicores-buildingblocks/sources/clock/switchover_clock_selector` | Selector that switches to a second clock onces it starts. |
+| [`clock_gater`](../clock_gater/clock_gater.md)                                           | `omnicores-buildingblocks/sources/clock/clock_gater`               | Clock gater behavioral model.                             |
+| [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                         | `omnicores-buildingblocks/sources/clock/clock_multiplexer`         | Multiplexer to select between clocks.                     |
+| [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md)          | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer`    | Faster clock multiplexer.                                 |
+| [`nonstop_clock_multiplexer`](../nonstop_clock_multiplexer/nonstop_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/nonstop_clock_multiplexer` | Clock multiplexer working when one clock is not running.  |

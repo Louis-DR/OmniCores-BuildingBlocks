@@ -76,8 +76,11 @@ This module has no dependency.
 
 ## Related modules
 
-| Module                                                                          | Path                                                            | Comment                               |
-| ------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------- |
-| [`clock_divider`](../clock_divider/clock_divider.md)                            | `omnicores-buildingblocks/sources/clock/clock_divider`          | Static clock divider.                 |
-| [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                | `omnicores-buildingblocks/sources/clock/clock_multiplexer`      | Multiplexer to select between clocks. |
-| [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer` | Faster clock multiplexer.             |
+| Module                                                                                   | Path                                                               | Comment                                                   |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------- |
+| [`clock_divider`](../clock_divider/clock_divider.md)                                     | `omnicores-buildingblocks/sources/clock/clock_divider`             | Static clock divider.                                     |
+| [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                         | `omnicores-buildingblocks/sources/clock/clock_multiplexer`         | Multiplexer to select between clocks.                     |
+| [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md)          | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer`    | Faster clock multiplexer.                                 |
+| [`nonstop_clock_multiplexer`](../nonstop_clock_multiplexer/nonstop_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/nonstop_clock_multiplexer` | Clock multiplexer working when one clock is not running.  |
+| [`switchover_clock_selector`](../switchover_clock_selector/switchover_clock_selector.md) | `omnicores-buildingblocks/sources/clock/switchover_clock_selector` | Selector that switches to a second clock onces it starts. |
+| [`priority_clock_selector`](../priority_clock_selector/priority_clock_selector.md)       | `omnicores-buildingblocks/sources/clock/priority_clock_selector`   | Selector that switches to a priority clock automatically. |
