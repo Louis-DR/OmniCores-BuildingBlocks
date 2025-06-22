@@ -14,6 +14,14 @@
 
 Automatic clock selector between a priority clock and a fallback clock. When the priority clock is running, it is selected, else it is the fallback clock.
 
+Fallback to priority clock switching :
+
+![priority_clock_selector](priority_clock_selector_fallback2priority.wavedrom.svg)
+
+Priority to fallback clock switching :
+
+![priority_clock_selector](priority_clock_selector_priority2fallback.wavedrom.svg)
+
 ## Parameters
 
 | Name     | Type    | Allowed Values | Default | Description                                              |
@@ -81,14 +89,18 @@ create_generated_clock -name  -source [get_pins priority_clock_selector/clock_in
 
 ## Deliverables
 
-| Type              | File                                                                               | Description                                         |
-| ----------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`priority_clock_selector.v`](priority_clock_selector.v)                           | Verilog design.                                     |
-| Testbench         | [`priority_clock_selector.testbench.sv`](priority_clock_selector.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`priority_clock_selector.testbench.gtkw`](priority_clock_selector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`priority_clock_selector.symbol.sss`](priority_clock_selector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`priority_clock_selector.symbol.svg`](priority_clock_selector.symbol.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`priority_clock_selector.md`](priority_clock_selector.md)                         | Markdown documentation datasheet.                   |
+| Type                | File                                                                                                                 | Description                                                             |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Design              | [`priority_clock_selector.v`](priority_clock_selector.v)                                                             | Verilog design.                                                         |
+| Testbench           | [`priority_clock_selector.testbench.sv`](priority_clock_selector.testbench.sv)                                       | SystemVerilog verification testbench.                                   |
+| Waveform script     | [`priority_clock_selector.testbench.gtkw`](priority_clock_selector.testbench.gtkw)                                   | Script to load the waveforms in GTKWave.                                |
+| Symbol descriptor   | [`priority_clock_selector.symbol.sss`](priority_clock_selector.symbol.sss)                                           | Symbol descriptor for SiliconSuite-SymbolGenerator.                     |
+| Symbol image        | [`priority_clock_selector.symbol.svg`](priority_clock_selector.symbol.svg)                                           | Generated vector image of the symbol.                                   |
+| Waveform descriptor | [`priority_clock_selector_fallback2priority.wavedrom.json`](priority_clock_selector_fallback2priority.wavedrom.json) | Waveform descriptor for Wavedrom of the fallback-to-priority switching. |
+| Waveform image      | [`priority_clock_selector_fallback2priority.wavedrom.svg`](priority_clock_selector_fallback2priority.wavedrom.svg)   | Generated image of the waveform of the fallback-to-priority switching.  |
+| Waveform descriptor | [`priority_clock_selector_priority2fallback.wavedrom.json`](priority_clock_selector_priority2fallback.wavedrom.json) | Waveform descriptor for Wavedrom of the priority-to-fallback switching. |
+| Waveform image      | [`priority_clock_selector_priority2fallback.wavedrom.svg`](priority_clock_selector_priority2fallback.wavedrom.svg)   | Generated image of the waveform of the priority-to-fallback switching.  |
+| Datasheet           | [`priority_clock_selector.md`](priority_clock_selector.md)                                                           | Markdown documentation datasheet.                                       |
 
 ## Dependencies
 

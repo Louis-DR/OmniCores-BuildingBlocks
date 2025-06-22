@@ -1,0 +1,5 @@
+{"signal": [
+  {"name": "fallback_clock", "wave": "hlhlhlhlhlhlhlhlhlh"},
+  {"name": "priority_clock", "wave": "p...l.............."},
+  {"name": "clock_out",      "wave": "p...l.........hlhlh"}
+], "config":{"skin": "narrow"}}
