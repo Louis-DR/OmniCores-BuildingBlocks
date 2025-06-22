@@ -33,7 +33,7 @@ synchronizer #(
   .data_out ( priority_clock_not_running )
 );
 
-clock_multiplexer #(
+nonstop_clock_multiplexer #(
   .STAGES    ( STAGES )
 ) core_clock_multiplexer (
   .clock_0   ( priority_clock             ),
