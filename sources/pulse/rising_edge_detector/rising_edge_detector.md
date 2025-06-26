@@ -72,14 +72,16 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                         | Description                                         |
-| ----------------- | ---------------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`rising_edge_detector.v`](rising_edge_detector.v)                           | Verilog design.                                     |
-| Testbench         | [`rising_edge_detector.testbench.sv`](rising_edge_detector.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`rising_edge_detector.testbench.gtkw`](rising_edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`rising_edge_detector.symbol.sss`](rising_edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`rising_edge_detector.symbol.svg`](rising_edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`rising_edge_detector.md`](rising_edge_detector.md)                         | Markdown documentation datasheet.                   |
+| Type                | File                                                                         | Description                                         |
+| ------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design              | [`rising_edge_detector.v`](rising_edge_detector.v)                           | Verilog design.                                     |
+| Testbench           | [`rising_edge_detector.testbench.sv`](rising_edge_detector.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`rising_edge_detector.testbench.gtkw`](rising_edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor   | [`rising_edge_detector.symbol.sss`](rising_edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`rising_edge_detector.symbol.svg`](rising_edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
+| Waveform descriptor | [`rising_edge_detector.wavedrom.json`](rising_edge_detector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`rising_edge_detector.wavedrom.svg`](rising_edge_detector.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`rising_edge_detector.md`](rising_edge_detector.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

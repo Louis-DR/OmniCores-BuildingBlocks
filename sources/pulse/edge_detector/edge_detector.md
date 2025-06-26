@@ -72,14 +72,16 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                           | Description                                         |
-| ----------------- | -------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`edge_detector.v`](edge_detector.v)                           | Verilog design.                                     |
-| Testbench         | [`edge_detector.testbench.sv`](edge_detector.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`edge_detector.testbench.gtkw`](edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`edge_detector.symbol.sss`](edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`edge_detector.symbol.svg`](edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`edge_detector.md`](edge_detector.md)                         | Markdown documentation datasheet.                   |
+| Type                | File                                                           | Description                                         |
+| ------------------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| Design              | [`edge_detector.v`](edge_detector.v)                           | Verilog design.                                     |
+| Testbench           | [`edge_detector.testbench.sv`](edge_detector.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`edge_detector.testbench.gtkw`](edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor   | [`edge_detector.symbol.sss`](edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`edge_detector.symbol.svg`](edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
+| Waveform descriptor | [`edge_detector.wavedrom.json`](edge_detector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`edge_detector.wavedrom.svg`](edge_detector.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`edge_detector.md`](edge_detector.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

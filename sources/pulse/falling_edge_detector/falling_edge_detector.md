@@ -72,14 +72,16 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                           | Description                                         |
-| ----------------- | ------------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`falling_edge_detector.v`](falling_edge_detector.v)                           | Verilog design.                                     |
-| Testbench         | [`falling_edge_detector.testbench.sv`](falling_edge_detector.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`falling_edge_detector.testbench.gtkw`](falling_edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`falling_edge_detector.symbol.sss`](falling_edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`falling_edge_detector.symbol.svg`](falling_edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
-| Datasheet         | [`falling_edge_detector.md`](falling_edge_detector.md)                         | Markdown documentation datasheet.                   |
+| Type                | File                                                                           | Description                                         |
+| ------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------- |
+| Design              | [`falling_edge_detector.v`](falling_edge_detector.v)                           | Verilog design.                                     |
+| Testbench           | [`falling_edge_detector.testbench.sv`](falling_edge_detector.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`falling_edge_detector.testbench.gtkw`](falling_edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor   | [`falling_edge_detector.symbol.sss`](falling_edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`falling_edge_detector.symbol.svg`](falling_edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
+| Waveform descriptor | [`falling_edge_detector.wavedrom.json`](falling_edge_detector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`falling_edge_detector.wavedrom.svg`](falling_edge_detector.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`falling_edge_detector.md`](falling_edge_detector.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
