@@ -1,0 +1,5 @@
+{"signal": [
+  {"name": "clock",       "wave": "p..........."},
+  {"name": "signal",      "wave": "0..1....0..."},
+  {"name": "rising_edge", "wave": "0..10......."}
+]}
