@@ -1,0 +1,8 @@
+{"signal": [
+  {"name": "clock",                    "wave": "p............."},
+  {"name": "pulse_in",                 "wave": "010...10......"},
+  {"name": "pulse_out PULSE_LENGTH=2", "wave": "0.1.0..1.0...."},
+  {"name": "pulse_out PULSE_LENGTH=3", "wave": "0.1..0.1..0..."},
+  {"name": "pulse_out PULSE_LENGTH=4", "wave": "0.1...01...0.."},
+  {"name": "pulse_out PULSE_LENGTH=5", "wave": "0.1.........0."}
+]}
