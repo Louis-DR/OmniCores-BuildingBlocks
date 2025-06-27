@@ -31,8 +31,8 @@ localparam integer STAGES            = 2;
 localparam integer THROUGHPUT_CHECK_DURATION      = 100;
 localparam integer THROUGHPUT_CHECK_TIMEOUT       = 1000;
 localparam integer RANDOM_CHECK_DURATION          = 100;
-localparam integer RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
-localparam integer RANDOM_CHECK_READ_PROBABILITY  = 0.5;
+localparam real    RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
+localparam real    RANDOM_CHECK_READ_PROBABILITY  = 0.5;
 localparam integer RANDOM_CHECK_TIMEOUT           = 1000;
 
 // Variable frequency test clocks

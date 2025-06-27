@@ -26,8 +26,8 @@ localparam integer WIDTH_POW2   = 2**WIDTH;
 // Check parameters
 localparam integer THROUGHPUT_CHECK_DURATION          = 100;
 localparam integer RANDOM_CHECK_DURATION              = 100;
-localparam integer RANDOM_CHECK_INJECTION_PROBABILITY = 0.5;
-localparam integer RANDOM_CHECK_RECEPTION_PROBABILITY = 0.5;
+localparam real    RANDOM_CHECK_INJECTION_PROBABILITY = 0.5;
+localparam real    RANDOM_CHECK_RECEPTION_PROBABILITY = 0.5;
 localparam integer RANDOM_CHECK_TIMEOUT               = 1000;
 
 // Device ports

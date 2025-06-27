@@ -26,8 +26,8 @@ localparam integer RESET_VALUE  = 0;
 
 // Check parameters
 localparam integer RANDOM_CHECK_DURATION              = 100;
-localparam integer RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
-localparam integer RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
+localparam real    RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
+localparam real    RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 
 // Device ports
 logic                  clock;
