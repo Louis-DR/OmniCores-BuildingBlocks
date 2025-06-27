@@ -12,6 +12,7 @@
 
 
 `timescale 1ns/1ns
+`include "random.svh"
 
 
 
@@ -60,7 +61,7 @@ initial begin
   state_expected = 0;
   repeat (RANDOM_CHECK_DURATION) begin
     @(negedge clock);
-    toggle = $random;
+    toggle = random_boolean(0.5);
     @(posedge clock);
     if (toggle) state_expected = ~state_expected;
     #1;

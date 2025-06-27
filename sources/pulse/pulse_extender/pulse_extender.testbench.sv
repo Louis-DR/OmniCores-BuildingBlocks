@@ -166,7 +166,7 @@ initial begin
       pulse_in = 1;
       @(posedge clock);
       repeat(RANDOM_CHECK_DURATION) begin
-        // Random pulse in with low being twice as likely
+        // Random pulse
         pulse_in = random_boolean(RANDOM_CHECK_PULSE_PROBABILITY);
         test_pulse_count += pulse_in;
         @(posedge clock);

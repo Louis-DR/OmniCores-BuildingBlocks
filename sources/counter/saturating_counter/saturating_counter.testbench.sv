@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        saturating_counter.testbench.sv                                      ║
+// ║ File:        saturating_counter.testbench.sv                              ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the saturating counter.                        ║
 // ║                                                                           ║
@@ -12,6 +12,7 @@
 
 
 `timescale 1ns/1ns
+`include "random.svh"
 
 
 
@@ -125,12 +126,12 @@ initial begin
   resetn = 1;
   @(negedge clock);
   repeat(RANDOM_CHECK_DURATION) begin
-    if (count != max_count && $random < RANDOM_CHECK_INCREMENT_PROBABILITY) begin
+    if (count != max_count && random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY)) begin
       decrement = 0;
       increment = 1;
       @(posedge clock);
       expected_count += 1;
-    end else if (count != min_count && $random < RANDOM_CHECK_DECREMENT_PROBABILITY) begin
+    end else if (count != min_count && random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY)) begin
       decrement = 1;
       increment = 0;
       @(posedge clock);

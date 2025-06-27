@@ -13,6 +13,7 @@
 
 `timescale 1ns/1ns
 `include "boolean.svh"
+`include "random.svh"
 
 
 
@@ -310,7 +311,7 @@ initial begin
         // Stimulus
         @(negedge clock);
         if (!write_outstanding) begin
-          if ($random < RANDOM_CHECK_WRITE_PROBABILITY && transfer_count < RANDOM_CHECK_DURATION) begin
+          if (random_boolean(RANDOM_CHECK_WRITE_PROBABILITY) && transfer_count < RANDOM_CHECK_DURATION) begin
             write_outstanding = 1;
             write_enable = 1;
             write_data   = $urandom_range(WIDTH_POW2);
@@ -334,7 +335,7 @@ initial begin
       forever begin
         // Stimulus
         @(negedge clock);
-        if (!empty && $random < RANDOM_CHECK_READ_PROBABILITY) begin
+        if (!empty && random_boolean(RANDOM_CHECK_READ_PROBABILITY)) begin
           read_enable = 1;
         end else begin
           read_enable = 0;

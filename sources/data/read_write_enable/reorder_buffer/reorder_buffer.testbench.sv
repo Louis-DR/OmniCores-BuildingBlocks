@@ -12,6 +12,7 @@
 
 
 `timescale 1ns/1ns
+`include "random.svh"
 
 
 
@@ -416,7 +417,7 @@ initial begin
   //     forever begin
   //       // Stimulus
   //       @(negedge clock);
-  //       if (!full && $random < RANDOM_CHECK_WRITE_PROBABILITY && transfer_count < RANDOM_CHECK_DURATION) begin
+  //       if (!full && random_boolean(RANDOM_CHECK_WRITE_PROBABILITY) && transfer_count < RANDOM_CHECK_DURATION) begin
   //         write_enable = 1;
   //         write_data   = $urandom_range(WIDTH_POW2);
   //       end else begin
@@ -440,7 +441,7 @@ initial begin
   //     forever begin
   //       // Stimulus
   //       @(negedge clock);
-  //       if (!empty && $random < RANDOM_CHECK_READ_PROBABILITY) begin
+  //       if (!empty && random_boolean(RANDOM_CHECK_READ_PROBABILITY)) begin
   //         foreach (valid_model[index]) begin
   //           if (valid_model[index]) begin
   //             read_index = index;
@@ -448,7 +449,7 @@ initial begin
   //           end
   //         end
   //         read_enable = 1;
-  //         if ($random < RANDOM_CHECK_CLEAR_PROBABILITY) begin
+  //         if (random_boolean(RANDOM_CHECK_CLEAR_PROBABILITY)) begin
   //           read_clear = 1;
   //         end else begin
   //           read_clear = 0;

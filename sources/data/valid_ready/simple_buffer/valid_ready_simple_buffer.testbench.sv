@@ -12,6 +12,7 @@
 
 
 `timescale 1ns/1ns
+`include "random.svh"
 
 
 
@@ -170,7 +171,7 @@ initial begin
       forever begin
         // Stimulus
         @(negedge clock);
-        if ($random < RANDOM_CHECK_INJECTION_PROBABILITY) begin
+        if (random_boolean(RANDOM_CHECK_INJECTION_PROBABILITY)) begin
           write_valid = 1;
           write_data  = $urandom_range(WIDTH_POW2);
         end else begin
@@ -190,7 +191,7 @@ initial begin
       forever begin
         // Stimulus
         @(negedge clock);
-        if ($random < RANDOM_CHECK_RECEPTION_PROBABILITY) begin
+        if (random_boolean(RANDOM_CHECK_RECEPTION_PROBABILITY)) begin
           read_ready = 1;
         end else begin
           read_ready = 0;
