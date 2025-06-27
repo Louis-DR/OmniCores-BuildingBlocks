@@ -103,32 +103,32 @@ initial begin
   // Check 1 : Single one-cycle pulse
   $display("CHECK 1 : Single one-cycle pulse.");
   test_pulse_count = 1;
-  @(posedge clock);
   fork
     // Stimulus
     begin
+      @(negedge clock);
       pulse_in = 1;
-      @(posedge clock);
+      @(negedge clock);
       pulse_in = 0;
-      @(posedge clock);
     end
     // Check
     begin
       check_pulse_out(test_pulse_count*4+PULSE_LENGTH);
     end
   join
+
+  repeat(10) @(posedge clock);
 
   // Check 2 : Single multi-cycle pulse
   $display("CHECK 2 : Single multi-cycle pulse.");
   test_pulse_count = LONG_PULSE_CHECK_LENGTH;
-  @(posedge clock);
   fork
     // Stimulus
     begin
+      @(negedge clock);
       pulse_in = 1;
-      repeat (test_pulse_count) @(posedge clock);
+      repeat (test_pulse_count) @(negedge clock);
       pulse_in = 0;
-      @(posedge clock);
     end
     // Check
     begin
@@ -136,18 +136,19 @@ initial begin
     end
   join
 
+  repeat(10) @(posedge clock);
+
   // Check 3 : Multiple single-cycle pulses
   $display("CHECK 3 : Multiple single-cycle pulses.");
   test_pulse_count = MULTI_PULSE_CHECK_LENGTH;
-  @(posedge clock);
   fork
     // Stimulus
     begin
       repeat (test_pulse_count) begin
+        @(negedge clock);
         pulse_in = 1;
-        @(posedge clock);
+        @(negedge clock);
         pulse_in = 0;
-        @(posedge clock);
       end
     end
     // Check
@@ -156,20 +157,21 @@ initial begin
     end
   join
 
+  repeat(10) @(posedge clock);
+
   // Check 4 : Random stimulus
   $display("CHECK 4 : Random stimulus.");
   test_pulse_count = 1;
-  @(posedge clock);
   fork
     // Stimulus
     begin
       pulse_in = 1;
-      @(posedge clock);
+      @(negedge clock);
       repeat(RANDOM_CHECK_DURATION) begin
         // Random pulse
         pulse_in = random_boolean(RANDOM_CHECK_PULSE_PROBABILITY);
         test_pulse_count += pulse_in;
-        @(posedge clock);
+        @(negedge clock);
       end
       pulse_in = 0;
     end
