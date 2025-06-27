@@ -27,7 +27,7 @@ localparam integer PULSE_COUNTER_WIDTH = 3;
 localparam integer LONG_PULSE_CHECK_LENGTH        = 4;
 localparam integer MULTI_PULSE_CHECK_LENGTH       = 4;
 localparam integer RANDOM_CHECK_DURATION          = 100;
-localparam integer RANDOM_CHECK_PULSE_PROBABILITY = 0.3;
+localparam real    RANDOM_CHECK_PULSE_PROBABILITY = 0.3;
 
 // Check value
 localparam integer SEPARATOR_LATENCY = 1;
@@ -76,13 +76,12 @@ task automatic check_pulse_out(integer duration, bool check_low_time = true);
   waiting_first_pulse    = true;
   repeat (duration) begin
     @(posedge clock);
-    current_pulse_length += 1;
     if (pulse_out != current_pulse_polarity) begin
       if (pulse_out) begin
         pulse_count += 1;
       end
       if (waiting_first_pulse) begin
-        if (current_pulse_length > SEPARATOR_LATENCY+1) begin
+        if (current_pulse_length > SEPARATOR_LATENCY + 1) begin
           $error("[%0tns] Latency of the first pulse is too high.", $time);
         end
       end else if (current_pulse_length > 1) begin
@@ -96,6 +95,7 @@ task automatic check_pulse_out(integer duration, bool check_low_time = true);
       current_pulse_length   = 0;
       waiting_first_pulse    = false;
     end
+    current_pulse_length += 1;
   end
   if (pulse_out) begin
     $error("[%0tns] Output is still high at the end of the check.", $time);
@@ -131,14 +131,13 @@ initial begin
   // Check 1 : Single one-cycle pulse
   $display("CHECK 1 : Single one-cycle pulse.");
   test_pulse_count = 1;
-  @(posedge clock);
   fork
     // Stimulus
     begin
+      @(negedge clock);
       pulse_in = 1;
-      @(posedge clock);
+      @(negedge clock);
       pulse_in = 0;
-      @(posedge clock);
     end
     // Check
     begin
@@ -146,18 +145,19 @@ initial begin
     end
   join
   check_pulse_count(test_pulse_count);
+
+  repeat(10) @(posedge clock);
 
   // Check 2 : Single multi-cycle pulse
   $display("CHECK 2 : Single multi-cycle pulse.");
   test_pulse_count = LONG_PULSE_CHECK_LENGTH;
-  @(posedge clock);
   fork
     // Stimulus
     begin
+      @(negedge clock);
       pulse_in = 1;
-      repeat (test_pulse_count) @(posedge clock);
+      repeat (test_pulse_count) @(negedge clock);
       pulse_in = 0;
-      @(posedge clock);
     end
     // Check
     begin
@@ -165,19 +165,20 @@ initial begin
     end
   join
   check_pulse_count(test_pulse_count);
+
+  repeat(10) @(posedge clock);
 
   // Check 3 : Multiple single-cycle pulses
   $display("CHECK 3 : Multiple single-cycle pulses.");
   test_pulse_count = MULTI_PULSE_CHECK_LENGTH;
-  @(posedge clock);
   fork
     // Stimulus
     begin
       repeat (test_pulse_count) begin
+        @(negedge clock);
         pulse_in = 1;
-        @(posedge clock);
+        @(negedge clock);
         pulse_in = 0;
-        @(posedge clock);
       end
     end
     // Check
@@ -186,17 +187,19 @@ initial begin
     end
   join
   check_pulse_count(test_pulse_count);
+
+  repeat(10) @(posedge clock);
 
   // Check 4 : Saturating pulse
   $display("CHECK 4 : Saturating pulse.");
   test_pulse_count = 2 ** (PULSE_COUNTER_WIDTH + 1) - 4;
-  @(posedge clock);
   fork
     // Stimulus
     begin
+      @(negedge clock);
       pulse_in = 1;
       while (!busy) begin
-        @(posedge clock);
+        @(negedge clock);
       end
       pulse_in = 0;
     end
@@ -207,26 +210,27 @@ initial begin
   join
   check_pulse_count(test_pulse_count);
 
+  repeat(10) @(posedge clock);
+
   // Check 5 : Random stimulus
   $display("CHECK 5 : Random stimulus.");
   test_pulse_count = 1;
-  @(posedge clock);
   fork
     // Stimulus
     begin
+      @(negedge clock);
       pulse_in = 1;
-      @(posedge clock);
       repeat(RANDOM_CHECK_DURATION) begin
+        @(negedge clock);
         // Random pulse if not busy
         pulse_in = random_boolean(RANDOM_CHECK_PULSE_PROBABILITY) & ~busy;
         test_pulse_count += pulse_in;
-        @(posedge clock);
       end
       pulse_in = 0;
     end
     // Check
     begin
-      check_pulse_out(100*2, false);
+      check_pulse_out(RANDOM_CHECK_DURATION*2, false);
     end
   join
   check_pulse_count(test_pulse_count);
