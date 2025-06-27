@@ -13,6 +13,7 @@
 
 `timescale 1ns/1ns
 `include "boolean.svh"
+`include "random.svh"
 
 
 
@@ -25,8 +26,8 @@ localparam integer PULSE_LENGTH = 2;
 // Check parameters
 localparam integer LONG_PULSE_CHECK_LENGTH        = 4;
 localparam integer MULTI_PULSE_CHECK_LENGTH       = 4;
-localparam integer RANDOM_CHECK_DURATION          = 100;
-localparam integer RANDOM_CHECK_PULSE_PROBABILITY = 0.3;
+localparam integer RANDOM_CHECK_DURATION          = 1000;
+localparam real    RANDOM_CHECK_PULSE_PROBABILITY = 1/(real'(PULSE_LENGTH));
 
 // Device ports
 logic clock;
@@ -113,7 +114,7 @@ initial begin
     end
     // Check
     begin
-      check_pulse_out(test_pulse_count*4);
+      check_pulse_out(test_pulse_count*4+PULSE_LENGTH);
     end
   join
 
@@ -131,7 +132,7 @@ initial begin
     end
     // Check
     begin
-      check_pulse_out(test_pulse_count*4);
+      check_pulse_out(test_pulse_count*4+PULSE_LENGTH);
     end
   join
 
@@ -151,12 +152,12 @@ initial begin
     end
     // Check
     begin
-      check_pulse_out(test_pulse_count*4);
+      check_pulse_out(test_pulse_count*4+PULSE_LENGTH);
     end
   join
 
-  // Check 5 : Random stimulus
-  $display("CHECK 5 : Random stimulus.");
+  // Check 4 : Random stimulus
+  $display("CHECK 4 : Random stimulus.");
   test_pulse_count = 1;
   @(posedge clock);
   fork
@@ -166,7 +167,7 @@ initial begin
       @(posedge clock);
       repeat(RANDOM_CHECK_DURATION) begin
         // Random pulse in with low being twice as likely
-        pulse_in = $random < RANDOM_CHECK_PULSE_PROBABILITY;
+        pulse_in = random_boolean(RANDOM_CHECK_PULSE_PROBABILITY);
         test_pulse_count += pulse_in;
         @(posedge clock);
       end
@@ -174,7 +175,7 @@ initial begin
     end
     // Check
     begin
-      check_pulse_out(100*2);
+      check_pulse_out(RANDOM_CHECK_DURATION*2);
     end
   join
 
