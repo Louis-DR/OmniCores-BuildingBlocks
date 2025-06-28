@@ -97,6 +97,7 @@ There are no specific synthesis or implementation constraints for this block.
 
 | Module                                                                                         | Path                                                                 | Comment                                                          |
 | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`fast_pulse_extended`](../fast_pulse_extended/fast_pulse_extended.md)                         | `omnicores-buildingblocks/sources/pulse/fast_pulse_extended`         | Fast variant of pulse extender with immediate response.          |
 | [`edge_detector`](../edge_detector/edge_detector.md)                                           | `omnicores-buildingblocks/sources/pulse/edge_detector`               | Edge detector for both rising and falling edges combined.        |
 | [`pulse_separator`](../pulse_separator/pulse_separator.md)                                     | `omnicores-buildingblocks/sources/pulse/pulse_separator`             | Separates consecutive pulses with minimum gap.                   |
 | [`toggle_pulse_synchronizer`](../toggle_pulse_synchronizer/toggle_pulse_synchronizer.md)       | `omnicores-buildingblocks/sources/pulse/toggle_pulse_synchronizer`   | Synchronizes pulses across clock domains using toggle flip-flop. |
