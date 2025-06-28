@@ -70,14 +70,14 @@ initial begin
 end
 
 // Function to predict next count value with hysteresis
-function integer predict_next_count(input integer current_count, input logic inc, input logic dec);
-  if (inc && !dec && current_count != max_count) begin
+function integer predict_next_count(input integer current_count, input logic increment, input logic decrement);
+  if (increment && !decrement && current_count != max_count) begin
     if (current_count == half_low_count) begin
       return jump_high_count;
     end else begin
       return current_count + 1;
     end
-  end else if (dec && !inc && current_count != min_count) begin
+  end else if (decrement && !increment && current_count != min_count) begin
     if (current_count == half_high_count) begin
       return jump_low_count;
     end else begin
@@ -118,8 +118,9 @@ initial begin
   @(negedge clock);
   increment = 1;
   while (count != half_low_count) begin
-    @(negedge clock);
+    @(posedge clock);
     expected_count += 1;
+    @(negedge clock);
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
@@ -149,8 +150,9 @@ initial begin
   @(negedge clock);
   increment = 1;
   while (count != max_count) begin
-    @(negedge clock);
+    @(posedge clock);
     expected_count += 1;
+    @(negedge clock);
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
@@ -165,8 +167,9 @@ initial begin
   @(negedge clock);
   decrement = 1;
   while (count != half_high_count) begin
-    @(negedge clock);
+    @(posedge clock);
     expected_count -= 1;
+    @(negedge clock);
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
@@ -196,8 +199,9 @@ initial begin
   @(negedge clock);
   decrement = 1;
   while (count != min_count) begin
-    @(negedge clock);
+    @(posedge clock);
     expected_count -= 1;
+    @(negedge clock);
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
@@ -222,24 +226,20 @@ initial begin
     if (try_increment && !try_decrement && count != max_count) begin
       decrement = 0;
       increment = 1;
-      expected_count = predict_next_count(count, 1, 0);
-      @(posedge clock);
     end else if (try_decrement && !try_increment && count != min_count) begin
       decrement = 1;
       increment = 0;
-      expected_count = predict_next_count(count, 0, 1);
-      @(posedge clock);
     end else begin
       decrement = 0;
       increment = 0;
-      expected_count = count;
-      @(posedge clock);
     end
+    @(posedge clock);
+    expected_count = predict_next_count(count, increment, decrement);
+    @(negedge clock);
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
   end
-  @(negedge clock);
   increment = 0;
   decrement = 0;
 

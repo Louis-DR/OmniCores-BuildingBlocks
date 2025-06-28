@@ -91,8 +91,9 @@ initial begin
   @(negedge clock);
   increment = 1;
   while (count != max_count) begin
-    @(negedge clock);
+    @(posedge clock);
     expected_count += 1;
+    @(negedge clock);
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
@@ -107,8 +108,9 @@ initial begin
   @(negedge clock);
   decrement = 1;
   while (count != min_count) begin
-    @(negedge clock);
+    @(posedge clock);
     expected_count -= 1;
+    @(negedge clock);
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
