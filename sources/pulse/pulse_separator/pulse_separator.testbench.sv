@@ -26,7 +26,7 @@ localparam integer PULSE_COUNTER_WIDTH = 3;
 // Check parameters
 localparam integer LONG_PULSE_CHECK_LENGTH        = 4;
 localparam integer MULTI_PULSE_CHECK_LENGTH       = 4;
-localparam integer RANDOM_CHECK_DURATION          = 100;
+localparam integer RANDOM_CHECK_DURATION          = 1000;
 localparam real    RANDOM_CHECK_PULSE_PROBABILITY = 0.3;
 
 // Check value
