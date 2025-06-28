@@ -83,21 +83,23 @@ initial begin
     $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count, RESET_VALUE);
   end
 
+  repeat(10) @(posedge clock);
+
   // Check 2 : Increment
   $display("CHECK 2 : Increment.");
   expected_count = min_count;
   @(negedge clock);
   increment = 1;
   while (count != max_count) begin
-    @(posedge clock);
-    expected_count += 1;
     @(negedge clock);
+    expected_count += 1;
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
   end
   increment = 0;
-  @(posedge clock);
+
+  repeat(10) @(posedge clock);
 
   // Check 3 : Decrement
   $display("CHECK 3 : Decrement.");
@@ -105,15 +107,15 @@ initial begin
   @(negedge clock);
   decrement = 1;
   while (count != min_count) begin
-    @(posedge clock);
-    expected_count -= 1;
     @(negedge clock);
+    expected_count -= 1;
     if (count != expected_count) begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
   end
   decrement = 0;
-  @(posedge clock);
+
+  repeat(10) @(posedge clock);
 
   // Check 4 : Random
   $display("CHECK 4 : Random.");
@@ -147,7 +149,6 @@ initial begin
   end
   increment = 0;
   decrement = 0;
-  @(posedge clock);
 
   // End of test
   $finish;
