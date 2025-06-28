@@ -117,7 +117,7 @@ initial begin
     #1;
 
     // Should not detect any error with correct parity
-    assert (checker_error === 1'b0)
+    assert (!checker_error)
       else $error("[%0tns] False error detected for correct parity. Data: %b, Code: %b",
                   $time, test_data, test_code);
 
@@ -138,7 +138,7 @@ initial begin
     #1;
 
     // Should detect error with incorrect parity
-    assert (checker_error === 1'b1)
+    assert (checker_error)
       else $error("[%0tns] Failed to detect error for incorrect parity. Data: %b, Code: %b",
                   $time, test_data, test_code);
 
@@ -159,7 +159,7 @@ initial begin
     #1;
 
     // Should not detect any error with correct parity block
-    assert (block_checker_error === 1'b0)
+    assert (!block_checker_error)
       else $error("[%0tns] False error detected for correct parity block. Block: %b",
                   $time, test_block);
 
@@ -180,7 +180,7 @@ initial begin
     #1;
 
     // Should detect error with incorrect parity block
-    assert (block_checker_error === 1'b1)
+    assert (block_checker_error)
       else $error("[%0tns] Failed to detect error for incorrect parity block. Block: %b",
                   $time, test_block);
 
@@ -200,7 +200,7 @@ initial begin
     #1;
 
     // Should not detect any error in the complete cycle
-    assert (block_checker_error === 1'b0)
+    assert (!block_checker_error)
       else $error("[%0tns] Error detected in complete encode-decode cycle for data %b.",
                   $time, data_configuration);
 
@@ -210,7 +210,7 @@ initial begin
     #1;
 
     // Should not detect any error in the complete cycle
-    assert (checker_error === 1'b0)
+    assert (!checker_error)
       else $error("[%0tns] Error detected in complete encode-check cycle for data %b.",
                   $time, data_configuration);
 
@@ -235,7 +235,7 @@ initial begin
       #1;
 
       // Should detect the single bit error
-      assert (block_checker_error === 1'b1)
+      assert (block_checker_error)
         else $error("[%0tns] Failed to detect single bit error at position %0d for data %b.",
                     $time, error_position, data_configuration);
 
@@ -245,7 +245,7 @@ initial begin
         checker_code = test_block[DATA_WIDTH];
         #1;
 
-        assert (checker_error === 1'b1)
+        assert (checker_error)
           else $error("[%0tns] Failed to detect single bit data error at position %0d for data %b.",
                       $time, error_position, data_configuration);
       end

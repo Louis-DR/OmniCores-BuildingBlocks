@@ -155,7 +155,7 @@ initial begin
     #1;
 
     // Should not detect any error with correct repetition
-    assert (checker_error === 1'b0)
+    assert (!checker_error)
       else $error("[%0tns] False error detected for correct repetition. Data: %b, Code: %b",
                   $time, test_data, test_code);
 
@@ -176,7 +176,7 @@ initial begin
     #1;
 
     // Should detect error with incorrect repetition
-    assert (checker_error === 1'b1)
+    assert (checker_error)
       else $error("[%0tns] Failed to detect error for incorrect repetition. Data: %b, Code: %b",
                   $time, test_data, test_code);
 
@@ -197,7 +197,7 @@ initial begin
     #1;
 
     // Should not detect any error with correct repetition block
-    assert (block_checker_error === 1'b0)
+    assert (!block_checker_error)
       else $error("[%0tns] False error detected for correct repetition block. Block: %b",
                   $time, test_block);
 
@@ -218,7 +218,7 @@ initial begin
     #1;
 
     // Should detect error with incorrect repetition block
-    assert (block_checker_error === 1'b1)
+    assert (block_checker_error)
       else $error("[%0tns] Failed to detect error for incorrect repetition block. Block: %b",
                   $time, test_block);
 
@@ -238,7 +238,7 @@ initial begin
     #1;
 
     // Should not detect any error in the complete cycle
-    assert (block_checker_error === 1'b0)
+    assert (!block_checker_error)
       else $error("[%0tns] Error detected in complete encode-decode cycle for data %b.",
                   $time, data_configuration);
 
@@ -248,7 +248,7 @@ initial begin
     #1;
 
     // Should not detect any error in the complete cycle
-    assert (checker_error === 1'b0)
+    assert (!checker_error)
       else $error("[%0tns] Error detected in complete encode-check cycle for data %b.",
                   $time, data_configuration);
 
@@ -273,7 +273,7 @@ initial begin
       #1;
 
       // Should detect the single bit error
-      assert (block_checker_error === 1'b1)
+      assert (block_checker_error)
         else $error("[%0tns] Failed to detect single bit error at position %0d for data %b.",
                     $time, error_position, data_configuration);
 
@@ -282,7 +282,7 @@ initial begin
       #1;
 
       // Should detect the error and correct the data
-      assert (block_corrector_error === 1'b1)
+      assert (block_corrector_error)
         else $error("[%0tns] Failed to detect single bit error at position %0d for data %b.",
                     $time, error_position, data_configuration);
       assert (block_corrector_corrected_data === encoder_data)
@@ -310,7 +310,7 @@ initial begin
     #1;
 
     // Should not detect any error and output the original data
-    assert (corrector_error === 1'b0)
+    assert (!corrector_error)
       else $error("[%0tns] False error detected for correct repetition. Data: %b, Code: %b",
                   $time, test_data, test_code);
     assert (corrector_corrected_data === test_data)
@@ -336,7 +336,7 @@ initial begin
       #1;
 
       // Should detect error and correct the data
-      assert (corrector_error === 1'b1)
+      assert (corrector_error)
         else $error("[%0tns] Failed to detect single bit data error at position %0d for data %b.",
                     $time, error_position, data_configuration);
       assert (corrector_corrected_data === encoder_data)
@@ -368,7 +368,7 @@ initial begin
     #1;
 
     // Should detect the error
-    assert (block_checker_error === 1'b1)
+    assert (block_checker_error)
       else $error("[%0tns] Failed to detect double bit error for data %b.",
                   $time, data_configuration);
 
@@ -377,7 +377,7 @@ initial begin
     #1;
 
     // Should detect the error
-    assert (block_corrector_error === 1'b1)
+    assert (block_corrector_error)
       else $error("[%0tns] Failed to detect double bit error for data %b.",
                   $time, data_configuration);
 

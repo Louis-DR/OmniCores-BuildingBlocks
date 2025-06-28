@@ -229,10 +229,10 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
   checker_data = test_data;
   checker_code = expected_code;
   #1;
-  assert (checker_correctable_error === 1'b0)
+  assert (!checker_correctable_error)
     else $error("[%0tns] False correctable error detected by checker for data '%b' and code '%b'.",
                 $time, test_data, expected_code);
-  assert (checker_uncorrectable_error === 1'b0)
+  assert (!checker_uncorrectable_error)
     else $error("[%0tns] False uncorrectable error detected by checker for data '%b' and code '%b'.",
                 $time, test_data, expected_code);
 
@@ -240,10 +240,10 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
   corrector_data = test_data;
   corrector_code = expected_code;
   #1;
-  assert (corrector_correctable_error === 1'b0)
+  assert (!corrector_correctable_error)
     else $error("[%0tns] False correctable error detected by corrector for data '%b' and code '%b'.",
                 $time, test_data, expected_code);
-  assert (corrector_uncorrectable_error === 1'b0)
+  assert (!corrector_uncorrectable_error)
     else $error("[%0tns] False uncorrectable error detected by corrector for data '%b' and code '%b'.",
                 $time, test_data, expected_code);
   assert (corrector_corrected_data === test_data)
@@ -253,20 +253,20 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
   // Check the block checker
   block_checker_block = expected_block;
   #1;
-  assert (block_checker_correctable_error === 1'b0)
+  assert (!block_checker_correctable_error)
     else $error("[%0tns] False correctable error detected by block checker for block '%b'.",
                 $time, expected_block);
-  assert (block_checker_uncorrectable_error === 1'b0)
+  assert (!block_checker_uncorrectable_error)
     else $error("[%0tns] False uncorrectable error detected by block checker for block '%b'.",
                 $time, expected_block);
 
   // Check the block corrector
   block_corrector_block = expected_block;
   #1;
-  assert (block_corrector_correctable_error === 1'b0)
+  assert (!block_corrector_correctable_error)
     else $error("[%0tns] False correctable error detected by block corrector for block '%b'.",
                 $time, expected_block);
-  assert (block_corrector_uncorrectable_error === 1'b0)
+  assert (!block_corrector_uncorrectable_error)
     else $error("[%0tns] False uncorrectable error detected by block corrector for block '%b'.",
                 $time, expected_block);
   assert (block_corrector_corrected_block === expected_block)
@@ -294,10 +294,10 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   checker_data = poisoned_data;
   checker_code = poisoned_code;
   #1;
-  assert (checker_correctable_error === 1'b1)
+  assert (checker_correctable_error)
     else $error("[%0tns] Single-bit correctable error not detected by checker for data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
-  assert (checker_uncorrectable_error === 1'b0)
+  assert (!checker_uncorrectable_error)
     else $error("[%0tns] Single-bit incorrectly marked as uncorrectable by checker for data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
 
@@ -305,10 +305,10 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   corrector_data = poisoned_data;
   corrector_code = poisoned_code;
   #1;
-  assert (corrector_correctable_error === 1'b1)
+  assert (corrector_correctable_error)
     else $error("[%0tns] Single-bit correctable error not detected by corrector for poisoned data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
-  assert (corrector_uncorrectable_error === 1'b0)
+  assert (!corrector_uncorrectable_error)
     else $error("[%0tns] Single-bit incorrectly marked as uncorrectable by corrector for poisoned data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
   assert (corrector_corrected_data === test_data)
@@ -321,20 +321,20 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   // Check the block checker
   block_checker_block = poisoned_block;
   #1;
-  assert (block_checker_correctable_error === 1'b1)
+  assert (block_checker_correctable_error)
     else $error("[%0tns] Single-bit correctable error not detected by block checker for poisoned block '%b'.",
                 $time, poisoned_block);
-  assert (block_checker_uncorrectable_error === 1'b0)
+  assert (!block_checker_uncorrectable_error)
     else $error("[%0tns] Single-bit incorrectly marked as uncorrectable by block checker for poisoned block '%b'.",
                 $time, poisoned_block);
 
   // Check the block corrector
   block_corrector_block = poisoned_block;
   #1;
-  assert (block_corrector_correctable_error === 1'b1)
+  assert (block_corrector_correctable_error)
     else $error("[%0tns] Single-bit correctable error not detected by block corrector for poisoned block '%b'.",
                 $time, poisoned_block);
-  assert (block_corrector_uncorrectable_error === 1'b0)
+  assert (!block_corrector_uncorrectable_error)
     else $error("[%0tns] Single-bit incorrectly marked as uncorrectable by block corrector for poisoned block '%b'.",
                 $time, poisoned_block);
   assert (block_corrector_corrected_block === expected_block)
@@ -366,10 +366,10 @@ task check_checker_and_corrector_double_bit_error(input logic [DATA_WIDTH-1:0] t
   checker_data = poisoned_data;
   checker_code = poisoned_code;
   #1;
-  assert (checker_correctable_error === 1'b0)
+  assert (!checker_correctable_error)
     else $error("[%0tns] Double-bit error incorrectly marked as correctable by checker for data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
-  assert (checker_uncorrectable_error === 1'b1)
+  assert (checker_uncorrectable_error)
     else $error("[%0tns] Double-bit error not detected by checker for data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
 
@@ -377,30 +377,30 @@ task check_checker_and_corrector_double_bit_error(input logic [DATA_WIDTH-1:0] t
   corrector_data = poisoned_data;
   corrector_code = poisoned_code;
   #1;
-  assert (corrector_correctable_error === 1'b0)
+  assert (!corrector_correctable_error)
     else $error("[%0tns] Double-bit error incorrectly marked as correctable by corrector for poisoned data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
-  assert (corrector_uncorrectable_error === 1'b1)
+  assert (corrector_uncorrectable_error)
     else $error("[%0tns] Double-bit error not detected by corrector for poisoned data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
 
   // Check the block checker
   block_checker_block = poisoned_block;
   #1;
-  assert (block_checker_correctable_error === 1'b0)
+  assert (!block_checker_correctable_error)
     else $error("[%0tns] Double-bit error incorrectly marked as correctable by block checker for poisoned block '%b'.",
                 $time, poisoned_block);
-  assert (block_checker_uncorrectable_error === 1'b1)
+  assert (block_checker_uncorrectable_error)
     else $error("[%0tns] Double-bit error not detected by block checker for poisoned block '%b'.",
                 $time, poisoned_block);
 
   // Check the block corrector
   block_corrector_block = poisoned_block;
   #1;
-  assert (block_corrector_correctable_error === 1'b0)
+  assert (!block_corrector_correctable_error)
     else $error("[%0tns] Double-bit error incorrectly marked as correctable by block corrector for poisoned block '%b'.",
                 $time, poisoned_block);
-  assert (block_corrector_uncorrectable_error === 1'b1)
+  assert (block_corrector_uncorrectable_error)
     else $error("[%0tns] Double-bit error not detected by block corrector for poisoned block '%b'.",
                 $time, poisoned_block);
 endtask

@@ -67,7 +67,7 @@ initial begin
     first_one_expected = '0;
     found_first_one    = false;
     for (integer data_index = 0; data_index < WIDTH; data_index++) begin
-      if (data[data_index] == 1'b1 && !found_first_one) begin
+      if (data[data_index] && !found_first_one) begin
         first_one_expected = (1 << data_index);
         found_first_one    = true;
       end

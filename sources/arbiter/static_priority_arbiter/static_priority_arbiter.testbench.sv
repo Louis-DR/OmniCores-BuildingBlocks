@@ -59,7 +59,7 @@ initial begin
     grant_expected = '0;
     found_grant    = false;
     for (integer request_index = 0; request_index < SIZE; request_index++) begin
-      if (requests[request_index] == 1'b1 && !found_grant) begin
+      if (requests[request_index] && !found_grant) begin
         grant_expected = (1 << request_index);
         found_grant    = true;
       end
