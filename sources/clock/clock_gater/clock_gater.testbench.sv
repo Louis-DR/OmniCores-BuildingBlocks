@@ -123,7 +123,7 @@ initial begin
   fork
     // Stimulus
     begin
-      repeat(RANDOM_GLITCH_CHECK_ITERATIONS) begin
+      repeat (RANDOM_GLITCH_CHECK_ITERATIONS) begin
         @(posedge clock_in or negedge clock_in);
         #($urandom_range(CLOCK_PERIOD));
         enable = ~enable;

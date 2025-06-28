@@ -143,8 +143,8 @@ initial begin
   $display("CHECK 3 : Start second clock.");
   second_clock_active = true;
   @(posedge second_clock);
-  repeat(STAGES) @(posedge first_clock);
-  repeat(STAGES) @(posedge second_clock);
+  repeat (STAGES) @(posedge first_clock);
+  repeat (STAGES) @(posedge second_clock);
   `measure_frequency(clock_out, clock_out_frequency)
   expected_clock_out_frequency = second_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%t] Output clock is not running after the second clock has started.", $time);
@@ -156,7 +156,7 @@ initial begin
   // Check 4 : Stop first clock
   $display("CHECK 4 : Stop first clock.");
   first_clock_active = false;
-  repeat(STAGES) @(posedge second_clock);
+  repeat (STAGES) @(posedge second_clock);
   `measure_frequency(clock_out, clock_out_frequency)
   expected_clock_out_frequency = second_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%t] Output clock is not running after the first clock has stopped.", $time);

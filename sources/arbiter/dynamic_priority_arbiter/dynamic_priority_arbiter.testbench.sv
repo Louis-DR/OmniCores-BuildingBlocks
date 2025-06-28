@@ -184,7 +184,7 @@ initial begin
   end
   requests = '0;
 
-  repeat (10) @(posedge clock);
+  repeat(10) @(posedge clock);
 
   // Check 2 : All requests active, exaustive priorities
   $display("CHECK 2 : All requests active, exaustive priorities.");
@@ -204,7 +204,7 @@ initial begin
   requests   = '0;
   priorities = '0;
 
-  repeat (10) @(posedge clock);
+  repeat(10) @(posedge clock);
 
   // Check 3 : Random stimulus
   $display("CHECK 3 : Random stimulus.");

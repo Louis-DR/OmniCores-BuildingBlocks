@@ -167,7 +167,7 @@ initial begin
     begin
       pulse_in = 1;
       @(negedge clock);
-      repeat(RANDOM_CHECK_DURATION) begin
+      repeat (RANDOM_CHECK_DURATION) begin
         // Random pulse
         pulse_in = random_boolean(RANDOM_CHECK_PULSE_PROBABILITY);
         test_pulse_count += pulse_in;

@@ -180,7 +180,7 @@ initial begin
       if (!write_ready) $error("[%0tns] Write ready is asserted after %0d writes.", $time, write_count);
       if ( write_full ) $error("[%0tns] Full flag is asserted after %0d writes.", $time, write_count);
     end
-    repeat(STAGES_READ) @(posedge read_clock); @(negedge read_clock);
+    repeat (STAGES_READ) @(posedge read_clock); @(negedge read_clock);
     if (write_count != DEPTH) begin
       if (!read_valid) $error("[%0tns] Read valid is deasserted after %0d writes.", $time, write_count);
       if ( read_empty) $error("[%0tns] Empty flag is asserted after %0d writes.", $time, write_count);
@@ -230,7 +230,7 @@ initial begin
       if (!read_valid) $error("[%0tns] Read valid is asserted after %0d reads.", $time, read_count);
       if ( read_empty) $error("[%0tns] Empty flag is asserted after %0d reads.", $time, read_count);
     end
-    repeat(STAGES_WRITE) @(posedge write_clock); @(negedge write_clock);
+    repeat (STAGES_WRITE) @(posedge write_clock); @(negedge write_clock);
     if (read_count != DEPTH) begin
       if (!write_ready) $error("[%0tns] Write ready is deasserted after %0d reads.", $time, read_count);
       if ( write_full ) $error("[%0tns] Full flag is asserted after %0d reads.", $time, read_count);
@@ -277,7 +277,7 @@ initial begin
   write_valid = 0;
   write_data  = 0;
   // Waiting for propagation of the write
-  repeat(STAGES_READ) @(posedge read_clock); @(negedge read_clock);
+  repeat (STAGES_READ) @(posedge read_clock); @(negedge read_clock);
   // Flushing from the write port
   @(negedge write_clock);
   write_flush = 1;
@@ -287,7 +287,7 @@ initial begin
   @(negedge write_clock);
   write_flush = 0;
   // Waiting for propagation of the flush and the pointers
-  repeat(2*STAGES_READ) @(posedge read_clock); @(negedge read_clock);
+  repeat (2*STAGES_READ) @(posedge read_clock); @(negedge read_clock);
   // Final state
   if ( read_valid ) $error("[%0tns] Read valid is asserted after flushing from write port. The FIFO should be empty.", $time);
   if (!write_ready) $error("[%0tns] Write ready is deasserted after flushing from write port. The FIFO should be empty.", $time);
@@ -312,7 +312,7 @@ initial begin
   write_valid = 0;
   write_data  = 0;
   // Waiting for propagation of the write
-  repeat(STAGES_READ) @(posedge read_clock); @(negedge read_clock);
+  repeat (STAGES_READ) @(posedge read_clock); @(negedge read_clock);
   // Flushing from the read port
   @(negedge read_clock);
   read_flush = 1;
@@ -322,7 +322,7 @@ initial begin
   @(negedge read_clock);
   read_flush = 0;
   // Waiting for propagation of the flush and the pointers
-  repeat(2*STAGES_WRITE) @(posedge write_clock); @(negedge write_clock);
+  repeat (2*STAGES_WRITE) @(posedge write_clock); @(negedge write_clock);
   // Final state
   if ( read_valid ) $error("[%0tns] Read valid is asserted after flushing from read port. The FIFO should be empty.", $time);
   if (!write_ready) $error("[%0tns] Write ready is deasserted after flushing from read port. The FIFO should be empty.", $time);
@@ -406,15 +406,15 @@ initial begin
           @(negedge write_clock);
         end
         // Let the write propagate
-        repeat(DEPTH) @(negedge write_clock);
-        repeat(DEPTH) @(negedge read_clock);
+        repeat (DEPTH) @(negedge write_clock);
+        repeat (DEPTH) @(negedge read_clock);
         // Read until empty
         while (!read_empty) begin
           @(negedge read_clock);
         end
         // Let the status stabilize
-        repeat(DEPTH) @(negedge write_clock);
-        repeat(DEPTH) @(negedge read_clock);
+        repeat (DEPTH) @(negedge write_clock);
+        repeat (DEPTH) @(negedge read_clock);
       end
       // Timeout
       begin
@@ -576,15 +576,15 @@ initial begin
           @(negedge write_clock);
         end
         // Let any remaining write propagate
-        repeat(DEPTH) @(negedge write_clock);
-        repeat(DEPTH) @(negedge read_clock);
+        repeat (DEPTH) @(negedge write_clock);
+        repeat (DEPTH) @(negedge read_clock);
         // Read until empty
         while (!read_empty) begin
           @(negedge read_clock);
         end
         // Let the status stabilize
-        repeat(DEPTH) @(negedge write_clock);
-        repeat(DEPTH) @(negedge read_clock);
+        repeat (DEPTH) @(negedge write_clock);
+        repeat (DEPTH) @(negedge read_clock);
       end
       // Timeout
       begin

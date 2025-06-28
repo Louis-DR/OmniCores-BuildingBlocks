@@ -117,7 +117,7 @@ initial begin
   fork
     // Stimulus
     begin
-      repeat(RANDOM_GLITCH_CHECK_ITERATIONS) begin
+      repeat (RANDOM_GLITCH_CHECK_ITERATIONS) begin
         #($urandom_range(10*DUT_STAGES*(CLOCK_0_PERIOD+CLOCK_1_PERIOD)));
         select = ~select;
       end

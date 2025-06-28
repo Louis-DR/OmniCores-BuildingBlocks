@@ -13,7 +13,7 @@ real __measure_frequenc_time_stop__;
     begin                                                \
       @(posedge clock)                                   \
       __measure_frequenc_time_start__ = $time;           \
-      repeat(duration) @(posedge clock)                  \
+      repeat (duration) @(posedge clock)                  \
       __measure_frequenc_time_stop__ = $time;            \
       frequency = multiplier * duration                  \
                   / (  __measure_frequenc_time_stop__    \

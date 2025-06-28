@@ -135,7 +135,7 @@ initial begin
   end
   requests = '0;
 
-  repeat (10) @(posedge clock);
+  repeat(10) @(posedge clock);
 
   // Check 2 : All requests active
   $display("CHECK 2 : All requests active.");
@@ -152,7 +152,7 @@ initial begin
   assert (granted_mask === '1)
     else $error("[%0tns] Not all requests received a grant when all were active (granted_mask=%b).", $time, granted_mask);
 
-  repeat (10) @(posedge clock);
+  repeat(10) @(posedge clock);
 
   // Check 3 : Random stimulus and fairness
   $display("CHECK 3 : Random stimulus and fairness.");

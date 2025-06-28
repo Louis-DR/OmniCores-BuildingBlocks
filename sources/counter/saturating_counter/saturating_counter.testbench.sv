@@ -125,7 +125,7 @@ initial begin
   @(negedge clock);
   resetn = 1;
   @(negedge clock);
-  repeat(RANDOM_CHECK_DURATION) begin
+  repeat (RANDOM_CHECK_DURATION) begin
     if (count != max_count && random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY)) begin
       decrement = 0;
       increment = 1;

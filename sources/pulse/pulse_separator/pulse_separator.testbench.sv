@@ -220,7 +220,7 @@ initial begin
     begin
       @(negedge clock);
       pulse_in = 1;
-      repeat(RANDOM_CHECK_DURATION) begin
+      repeat (RANDOM_CHECK_DURATION) begin
         @(negedge clock);
         // Random pulse if not busy
         pulse_in = random_boolean(RANDOM_CHECK_PULSE_PROBABILITY) & ~busy;

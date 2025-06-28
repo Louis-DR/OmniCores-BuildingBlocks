@@ -133,7 +133,7 @@ initial begin
     if (write_count != DEPTH) begin
       if ( write_full) $error("[%0tns] Full flag is asserted after %0d writes.", $time, write_count);
     end
-    repeat(STAGES) @(posedge read_clock); @(negedge read_clock);
+    repeat (STAGES) @(posedge read_clock); @(negedge read_clock);
     if (write_count != DEPTH) begin
       if ( read_empty) $error("[%0tns] Empty flag is asserted after %0d writes.", $time, write_count);
     end
@@ -159,7 +159,7 @@ initial begin
     if (read_count != DEPTH) begin
       if ( read_empty) $error("[%0tns] Empty flag is asserted after %0d reads.", $time, read_count);
     end
-    repeat(STAGES) @(posedge write_clock); @(negedge write_clock);
+    repeat (STAGES) @(posedge write_clock); @(negedge write_clock);
     if (read_count != DEPTH) begin
       if ( write_full) $error("[%0tns] Full flag is asserted after %0d reads.", $time, read_count);
     end
@@ -247,8 +247,8 @@ initial begin
           @(negedge write_clock);
         end
         // Let the write propagate
-        repeat(DEPTH) @(negedge write_clock);
-        repeat(DEPTH) @(negedge read_clock);
+        repeat (DEPTH) @(negedge write_clock);
+        repeat (DEPTH) @(negedge read_clock);
         // Read until empty
         while (!read_empty) begin
           @(negedge read_clock);
