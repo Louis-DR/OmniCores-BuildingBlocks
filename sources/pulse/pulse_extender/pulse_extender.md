@@ -33,7 +33,9 @@ Pulse extender that forwards input pulses and extends their duration to a config
 
 ## Operation
 
-The pulse extender operates using an internal countdown that tracks the remaining duration of the current output pulse. When an input pulse is detected (transition to high), the counter is loaded with the `PULSE_LENGTH` parameter value, and the output pulse becomes active. The counter decrements on each clock cycle while non-zero, keeping the output pulse active. When the counter reaches zero, the output pulse goes inactive. If a new input pulse arrives while the output is already active, the counter is reloaded, effectively extending or restarting the output pulse duration.
+The pulse extender operates using an internal countdown that tracks the remaining duration of the current output pulse. When an input pulse is detected (transition to high), the counter is loaded with the `PULSE_LENGTH` parameter value, and the output pulse becomes active. The counter decrements on each clock cycle while non-zero, keeping the output pulse active. When the counter reaches zero, the output pulse goes inactive.
+
+If a new input pulse arrives while the output is already active, the counter is reloaded, effectively extending or restarting the output pulse duration.
 
 ## Paths
 
@@ -93,9 +95,9 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                                           | Path                                                                  | Comment                                                          |
-| ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| [`edge_detector`](../edge_detector/edge_detector.md)                                             | `omnicores-buildingblocks/sources/pulse/edge_detector`                | Edge detector for both rising and falling edges combined.        |
-| [`pulse_separator`](../pulse_separator/pulse_separator.md)                                       | `omnicores-buildingblocks/sources/pulse/pulse_separator`              | Separates consecutive pulses with minimum gap.                   |
-| [`toggle_pulse_synchronizer`](../toggle_pulse_synchronizer/toggle_pulse_synchronizer.md)         | `omnicores-buildingblocks/sources/pulse/toggle_pulse_synchronizer`    | Synchronizes pulses across clock domains using toggle flip-flop. |
-| [`feedback_pulse_synchronizer`](../tfeedback_pulse_synchronizer/tfeedback_pulse_synchronizer.md) | `omnicores-buildingblocks/sources/pulse/tfeedback_pulse_synchronizer` | Synchronizes pulses across clock domains using feedback.         |
+| Module                                                                                         | Path                                                                 | Comment                                                          |
+| ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`edge_detector`](../edge_detector/edge_detector.md)                                           | `omnicores-buildingblocks/sources/pulse/edge_detector`               | Edge detector for both rising and falling edges combined.        |
+| [`pulse_separator`](../pulse_separator/pulse_separator.md)                                     | `omnicores-buildingblocks/sources/pulse/pulse_separator`             | Separates consecutive pulses with minimum gap.                   |
+| [`toggle_pulse_synchronizer`](../toggle_pulse_synchronizer/toggle_pulse_synchronizer.md)       | `omnicores-buildingblocks/sources/pulse/toggle_pulse_synchronizer`   | Synchronizes pulses across clock domains using toggle flip-flop. |
+| [`feedback_pulse_synchronizer`](../feedback_pulse_synchronizer/feedback_pulse_synchronizer.md) | `omnicores-buildingblocks/sources/pulse/feedback_pulse_synchronizer` | Synchronizes pulses across clock domains using feedback.         |
