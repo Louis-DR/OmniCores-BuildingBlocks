@@ -12,7 +12,7 @@
 
 ![saturating_counter](saturating_counter.symbol.svg)
 
-Synchronous counter that increments and decrements within a configurable range with saturation behavior. The counter prevents overflow and underflow by saturating at the minimum and maximum values instead of wrapping around, making it ideal for applications requiring bounded counting such as credit counters, buffer level indicators, or state machines with limited ranges.
+Synchronous counter that increments and decrements within a configurable range with saturation behavior. The counter prevents overflow and underflow by saturating at the minimum and maximum values instead of wrapping around, making it ideal for applications requiring bounded counting such as credit counters, buffer level indicators, branch prediction systems, or state machines with limited ranges.
 
 The counter supports non-power-of-two range. Trying to increment and decrement within the same cycle is ignored and the count doesn't change.
 
