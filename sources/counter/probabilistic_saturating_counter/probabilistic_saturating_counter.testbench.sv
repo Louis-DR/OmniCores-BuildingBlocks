@@ -51,8 +51,6 @@ integer max_count           = RANGE - 1;
 integer min_plus_one_count  = 1;
 integer max_minus_one_count = RANGE - 2;
 integer expected_count;
-logic   try_increment;
-logic   try_decrement;
 bool    force_saturation;
 integer timeout_countdown;
 
@@ -309,21 +307,15 @@ initial begin
   resetn = 1;
   @(negedge clock);
   repeat (RANDOM_CHECK_DURATION) begin
-    try_increment = random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY);
-    try_decrement = random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY);
-    if (try_increment && !try_decrement && count != max_count) begin
-      decrement = 0;
-      increment = 1;
-      @(posedge clock);
-      expected_count += 1;
-    end else if (try_decrement && !try_increment && count != min_count) begin
-      decrement = 1;
-      increment = 0;
-      @(posedge clock);
-      expected_count -= 1;
-    end else begin
-      decrement = 0;
-      increment = 0;
+    increment = random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY);
+    decrement = random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY);
+    @(posedge clock);
+    if (!(increment && decrement)) begin
+      if (increment && count != max_count) begin
+        expected_count += 1;
+      end else if (decrement && count != min_count) begin
+        expected_count -= 1;
+      end
     end
     @(negedge clock);
     // If we tried to increment to saturation, but the counter is not saturated, it is fine

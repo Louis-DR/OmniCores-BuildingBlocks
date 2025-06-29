@@ -45,8 +45,6 @@ integer half_high_count = RANGE/2;
 integer jump_low_count  = half_low_count - COERCIVITY;
 integer jump_high_count = half_high_count + COERCIVITY;
 integer expected_count;
-logic   try_increment;
-logic   try_decrement;
 
 // Device under test
 hysteresis_saturating_counter #(
@@ -221,18 +219,8 @@ initial begin
   resetn = 1;
   @(negedge clock);
   repeat (RANDOM_CHECK_DURATION) begin
-    try_increment = random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY);
-    try_decrement = random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY);
-    if (try_increment && !try_decrement && count != max_count) begin
-      decrement = 0;
-      increment = 1;
-    end else if (try_decrement && !try_increment && count != min_count) begin
-      decrement = 1;
-      increment = 0;
-    end else begin
-      decrement = 0;
-      increment = 0;
-    end
+    increment = random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY);
+    decrement = random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY);
     @(posedge clock);
     expected_count = predict_next_count(count, increment, decrement);
     @(negedge clock);

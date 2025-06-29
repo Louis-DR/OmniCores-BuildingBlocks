@@ -130,19 +130,15 @@ initial begin
   resetn = 1;
   @(negedge clock);
   repeat (RANDOM_CHECK_DURATION) begin
-    if (count != max_count && random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY)) begin
-      decrement = 0;
-      increment = 1;
-      @(posedge clock);
-      expected_count += 1;
-    end else if (count != min_count && random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY)) begin
-      decrement = 1;
-      increment = 0;
-      @(posedge clock);
-      expected_count -= 1;
-    end else begin
-      decrement = 0;
-      increment = 0;
+    increment = random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY);
+    decrement = random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY);
+    @(posedge clock);
+    if (!(increment && decrement)) begin
+      if (increment && count != max_count) begin
+        expected_count += 1;
+      end else if (decrement && count != min_count) begin
+        expected_count -= 1;
+      end
     end
     @(negedge clock);
     if (count != expected_count) begin
