@@ -122,7 +122,6 @@ Below is a list of the modules currently available in this collection. More modu
 Modules planned or in development :
 
 - Data structures
-  - RAM-based FIFOs
   - Advanced LIFO queue
   - Credit-based structures
   - On-off based structures
@@ -144,7 +143,8 @@ Modules planned or in development :
   - Pulse filter
   - Pulse separator with different high and low time
 - Clock logic
-  - Programmable clock gater
+  - Programmable clock pulse filter
+  - Programmable clock divider
   - Programmable clock shaper
 - Shift registers
   - Programmable LFSR
@@ -188,3 +188,6 @@ Modules planned or in development :
 - Predictors
   - Bimodal predictor
   - Two-level predictor
+- Counters
+  - Asynchronous saturating counter
+  - Asynchronous wrapping counter
