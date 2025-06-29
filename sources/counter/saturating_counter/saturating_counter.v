@@ -38,9 +38,9 @@ always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
     counter <= RESET_VALUE;
   end else begin
-    if (increment && !counter_is_max) begin
+    if (increment && !counter_is_max && !decrement) begin
       counter <= counter + 1;
-    end else if (decrement && !counter_is_min) begin
+    end else if (decrement && !counter_is_min && !increment) begin
       counter <= counter - 1;
     end
   end

@@ -47,13 +47,13 @@ always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
     counter <= RESET_VALUE;
   end else begin
-    if (increment && !counter_is_max) begin
+    if (increment && !counter_is_max && !decrement) begin
       if (counter_is_half_low) begin
         counter <= COUNTER_JUMP_HIGH;
       end else begin
         counter <= counter + 1;
       end
-    end else if (decrement && !counter_is_min) begin
+    end else if (decrement && !counter_is_min && !increment) begin
       if (counter_is_half_high) begin
         counter <= COUNTER_JUMP_LOW;
       end else begin
