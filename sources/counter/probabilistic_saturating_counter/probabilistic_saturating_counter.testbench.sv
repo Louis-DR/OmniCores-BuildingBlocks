@@ -29,8 +29,10 @@ localparam integer RANDOM_NUMBER_WIDTH    = 8;
 localparam real    SATURATION_PROBABILITY = 0.25;
 
 // Check parameters
+localparam integer CHECK_TIMEOUT                      = 1000;
 localparam integer PROBABILITY_MEASUREMENT_DURATION   = 1000;
 localparam real    PROBABILITY_MEASUREMENT_TOLERANCE  = 0.05;
+localparam integer PROBABILITY_MEASUREMENT_TIMEOUT    = PROBABILITY_MEASUREMENT_DURATION * CHECK_TIMEOUT;
 localparam integer RANDOM_CHECK_DURATION              = 1000;
 localparam real    RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
 localparam real    RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
@@ -52,6 +54,7 @@ integer expected_count;
 logic   try_increment;
 logic   try_decrement;
 bool    force_saturation;
+integer timeout_countdown;
 
 // Probability measurement variables
 integer saturation_attempts;
@@ -120,16 +123,31 @@ initial begin
   // Check 2 : Increment and force saturation
   $display("CHECK 2 : Increment and force saturation.");
   @(negedge clock);
-  increment = 1;
-  force_saturation = true;
-  while (count != max_count) begin
-    @(posedge clock);
-    expected_count += 1;
-    @(negedge clock);
-    if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+  increment         = 1;
+  force_saturation  = true;
+  timeout_countdown = CHECK_TIMEOUT;
+  fork
+    // Check
+    begin
+      while (count != max_count) begin
+        @(posedge clock);
+        expected_count += 1;
+        @(negedge clock);
+      end
+      if (count != expected_count) begin
+        $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      end
     end
-  end
+    // Timeout
+    begin
+      while (timeout_countdown > 0) begin
+        @(posedge clock);
+        timeout_countdown--;
+      end
+      $error("[%0tns] Timeout, could not reach max count.", $time);
+    end
+  join_any
+  disable fork;
   increment = 0;
   force_saturation = false;
 
@@ -138,16 +156,31 @@ initial begin
   // Check 3 : Decrement and force saturation
   $display("CHECK 3 : Decrement and force saturation.");
   @(negedge clock);
-  decrement = 1;
-  force_saturation = true;
-  while (count != min_count) begin
-    @(posedge clock);
-    expected_count -= 1;
-    @(negedge clock);
-    if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+  decrement         = 1;
+  force_saturation  = true;
+  timeout_countdown = CHECK_TIMEOUT;
+  fork
+    // Check
+    begin
+      while (count != min_count) begin
+        @(posedge clock);
+        expected_count -= 1;
+        @(negedge clock);
+        if (count != expected_count) begin
+          $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+        end
+      end
     end
-  end
+    // Timeout
+    begin
+      while (timeout_countdown > 0) begin
+        @(posedge clock);
+        timeout_countdown--;
+      end
+      $error("[%0tns] Timeout, could not reach min count.", $time);
+    end
+  join_any
+  disable fork;
   decrement = 0;
   force_saturation = false;
 
@@ -157,40 +190,55 @@ initial begin
   $display("CHECK 4 : Measure max saturation probability.");
   saturation_attempts  = 0;
   saturation_successes = 0;
-  // First, get to max-1
-  @(negedge clock);
-  increment = 1;
-  while (count != max_minus_one_count) begin
-    @(negedge clock);
-  end
-  increment = 0;
-  @(posedge clock);
-  // Now measure saturation probability
-  repeat (PROBABILITY_MEASUREMENT_DURATION) begin
-    if (count != max_minus_one_count) begin
-      $error("[%0tns] Counter should be at max-1 ('%0d') but is at '%0d'.", $time, max_minus_one_count, count);
-    end
-    // Increment to try saturating
-    @(negedge clock);
-    increment = 1;
-    saturation_attempts += 1;
-    @(negedge clock);
-    increment = 0;
-    // Check if the counter has saturated
-    if (count == max_count) begin
-      saturation_successes += 1;
-      // Reset back to max-1 for next attempt
+  timeout_countdown    = PROBABILITY_MEASUREMENT_TIMEOUT;
+  fork
+    // Check
+    begin
+      // First, get to max-1
       @(negedge clock);
-      decrement = 1;
-      @(negedge clock);
-      decrement = 0;
+      increment = 1;
+      while (count != max_minus_one_count) begin
+        @(negedge clock);
+      end
+      increment = 0;
+      @(posedge clock);
+      // Now measure saturation probability
+      repeat (PROBABILITY_MEASUREMENT_DURATION) begin
+        if (count != max_minus_one_count) begin
+          $error("[%0tns] Counter should be at max-1 ('%0d') but is at '%0d'.", $time, max_minus_one_count, count);
+        end
+        // Increment to try saturating
+        @(negedge clock);
+        increment = 1;
+        saturation_attempts += 1;
+        @(negedge clock);
+        increment = 0;
+        // Check if the counter has saturated
+        if (count == max_count) begin
+          saturation_successes += 1;
+          // Reset back to max-1 for next attempt
+          @(negedge clock);
+          decrement = 1;
+          @(negedge clock);
+          decrement = 0;
+        end
+      end
+      measured_probability = real'(saturation_successes) / real'(saturation_attempts);
+      if (absolute(measured_probability - SATURATION_PROBABILITY) > PROBABILITY_MEASUREMENT_TOLERANCE) begin
+        $error("[%0tns] Measured max saturation probability %.3f%% is outside tolerance of expected %.3f%% ± %.3f%%",
+              $time, measured_probability*100, SATURATION_PROBABILITY*100, PROBABILITY_MEASUREMENT_TOLERANCE*100);
+      end
     end
-  end
-  measured_probability = real'(saturation_successes) / real'(saturation_attempts);
-  if (absolute(measured_probability - SATURATION_PROBABILITY) > PROBABILITY_MEASUREMENT_TOLERANCE) begin
-    $error("[%0tns] Measured max saturation probability %.3f%% is outside tolerance of expected %.3f%% ± %.3f%%",
-           $time, measured_probability*100, SATURATION_PROBABILITY*100, PROBABILITY_MEASUREMENT_TOLERANCE*100);
-  end
+    // Timeout
+    begin
+      while (timeout_countdown > 0) begin
+        @(posedge clock);
+        timeout_countdown--;
+      end
+      $error("[%0tns] Timeout, could not measure max saturation probability.", $time);
+    end
+  join_any
+  disable fork;
 
   repeat(10) @(posedge clock);
 
@@ -198,40 +246,55 @@ initial begin
   $display("CHECK 5 : Measure min saturation probability.");
   saturation_attempts  = 0;
   saturation_successes = 0;
-  // First, get to min+1
-  @(negedge clock);
-  decrement = 1;
-  while (count != min_plus_one_count) begin
-    @(negedge clock);
-  end
-  decrement = 0;
-  @(posedge clock);
-  // Now measure saturation probability
-  repeat (PROBABILITY_MEASUREMENT_DURATION) begin
-    if (count != min_plus_one_count) begin
-      $error("[%0tns] Counter should be at min+1 ('%0d') but is at '%0d'.", $time, min_plus_one_count, count);
-    end
-    // Decrement to try saturating
-    @(negedge clock);
-    decrement = 1;
-    saturation_attempts += 1;
-    @(negedge clock);
-    decrement = 0;
-    // Check if the counter has saturated
-    if (count == min_count) begin
-      saturation_successes += 1;
-      // Reset back to min+1 for next attempt
+  timeout_countdown    = PROBABILITY_MEASUREMENT_TIMEOUT;
+  fork
+    // Check
+    begin
+      // First, get to min+1
       @(negedge clock);
-      increment = 1;
-      @(negedge clock);
-      increment = 0;
+      decrement = 1;
+      while (count != min_plus_one_count) begin
+        @(negedge clock);
+      end
+      decrement = 0;
+      @(posedge clock);
+      // Now measure saturation probability
+      repeat (PROBABILITY_MEASUREMENT_DURATION) begin
+        if (count != min_plus_one_count) begin
+          $error("[%0tns] Counter should be at min+1 ('%0d') but is at '%0d'.", $time, min_plus_one_count, count);
+        end
+        // Decrement to try saturating
+        @(negedge clock);
+        decrement = 1;
+        saturation_attempts += 1;
+        @(negedge clock);
+        decrement = 0;
+        // Check if the counter has saturated
+        if (count == min_count) begin
+          saturation_successes += 1;
+          // Reset back to min+1 for next attempt
+          @(negedge clock);
+          increment = 1;
+          @(negedge clock);
+          increment = 0;
+        end
+      end
+      measured_probability = real'(saturation_successes) / real'(saturation_attempts);
+      if (absolute(measured_probability - SATURATION_PROBABILITY) > PROBABILITY_MEASUREMENT_TOLERANCE) begin
+        $error("[%0tns] Measured min saturation probability %.3f%% is outside tolerance of expected %.3f%% ± %.3f%%",
+              $time, measured_probability*100, SATURATION_PROBABILITY*100, PROBABILITY_MEASUREMENT_TOLERANCE*100);
+      end
     end
-  end
-  measured_probability = real'(saturation_successes) / real'(saturation_attempts);
-  if (absolute(measured_probability - SATURATION_PROBABILITY) > PROBABILITY_MEASUREMENT_TOLERANCE) begin
-    $error("[%0tns] Measured min saturation probability %.3f%% is outside tolerance of expected %.3f%% ± %.3f%%",
-           $time, measured_probability*100, SATURATION_PROBABILITY*100, PROBABILITY_MEASUREMENT_TOLERANCE*100);
-  end
+    // Timeout
+    begin
+      while (timeout_countdown > 0) begin
+        @(posedge clock);
+        timeout_countdown--;
+      end
+      $error("[%0tns] Timeout, could not measure min saturation probability.", $time);
+    end
+  join_any
+  disable fork;
 
   repeat(10) @(posedge clock);
 
