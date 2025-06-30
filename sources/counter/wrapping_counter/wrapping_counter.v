@@ -41,9 +41,9 @@ generate
       if (!resetn) begin
         counter <= RESET_VALUE;
       end else begin
-        if (increment) begin
+        if (increment && !decrement) begin
           counter <= counter + 1;
-        end else if (decrement) begin
+        end else if (decrement && !increment) begin
           counter <= counter - 1;
         end
       end
@@ -57,13 +57,13 @@ generate
       if (!resetn) begin
         counter <= RESET_VALUE;
       end else begin
-        if (increment) begin
+        if (increment && !decrement) begin
           if (counter_is_max) begin
             counter <= COUNTER_MIN;
           end else begin
             counter <= counter + 1;
           end
-        end else if (decrement) begin
+        end else if (decrement && !increment) begin
           if (counter_is_min) begin
             counter <= COUNTER_MAX;
           end else begin
