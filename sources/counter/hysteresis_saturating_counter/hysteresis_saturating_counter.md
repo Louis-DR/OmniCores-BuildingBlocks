@@ -20,9 +20,9 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 
 | Name          | Type    | Allowed Values | Default | Description                                                                          |
 | ------------- | ------- | -------------- | ------- | ------------------------------------------------------------------------------------ |
-| `RANGE`       | integer | `≥4`           | `4`     | Counter range. Counter counts from 0 to RANGE-1.                                     |
-| `RANGE_LOG2`  | integer | `≥2`           | `2`     | Bit width of the counter. Automatically calculated as log₂(RANGE).                   |
-| `RESET_VALUE` | integer | `0 to RANGE-1` | `0`     | Initial counter value after reset. Must be within the valid range [0, RANGE-1].      |
+| `RANGE`       | integer | `≥4`           | `4`     | Counter range. Counter counts from `0` to `RANGE-1`.                                 |
+| `RANGE_LOG2`  | integer | `≥2`           | `2`     | Bit width of the counter. Automatically calculated as `log₂(RANGE)`.                 |
+| `RESET_VALUE` | integer | `0 to RANGE-1` | `0`     | Initial counter value after reset. Must be within the valid range `[0, RANGE-1]`.    |
 | `COERCIVITY`  | integer | `≥1`           | `1`     | Jump width of the hysteresis loop. Determines the magnitude of the transition jumps. |
 
 ## Ports

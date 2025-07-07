@@ -18,11 +18,11 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 
 ## Parameters
 
-| Name          | Type    | Allowed Values | Default | Description                                                                     |
-| ------------- | ------- | -------------- | ------- | ------------------------------------------------------------------------------- |
-| `RANGE`       | integer | `≥2`           | `4`     | Counter range. Counter counts from 0 to RANGE-1.                                |
-| `RANGE_LOG2`  | integer | `≥1`           | `2`     | Bit width of the counter. Automatically calculated as log₂(RANGE).              |
-| `RESET_VALUE` | integer | `0 to RANGE-1` | `0`     | Initial counter value after reset. Must be within the valid range [0, RANGE-1]. |
+| Name          | Type    | Allowed Values | Default | Description                                                                       |
+| ------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------- |
+| `RANGE`       | integer | `≥2`           | `4`     | Counter range. Counter counts from `0` to `RANGE-1`.                              |
+| `RANGE_LOG2`  | integer | `≥1`           | `2`     | Bit width of the counter. Automatically calculated as `log₂(RANGE)`.              |
+| `RESET_VALUE` | integer | `0 to RANGE-1` | `0`     | Initial counter value after reset. Must be within the valid range `[0, RANGE-1]`. |
 
 ## Ports
 
