@@ -72,6 +72,7 @@ The following table lists the parameter values verified by the testbench.
 | Design              | [`switchover_clock_selector.v`](switchover_clock_selector.v)                           | Verilog design.                                     |
 | Testbench           | [`switchover_clock_selector.testbench.sv`](switchover_clock_selector.testbench.sv)     | SystemVerilog verification testbench.               |
 | Waveform script     | [`switchover_clock_selector.testbench.gtkw`](switchover_clock_selector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script   | [`switchover_clock_selector.sdc`](switchover_clock_selector.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor   | [`switchover_clock_selector.symbol.sss`](switchover_clock_selector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`switchover_clock_selector.symbol.svg`](switchover_clock_selector.symbol.svg)         | Generated vector image of the symbol.               |
 | Waveform descriptor | [`switchover_clock_selector.wavedrom.json`](switchover_clock_selector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
