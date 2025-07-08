@@ -75,7 +75,7 @@ There are no synthesis and implementation constraints for this block.
 | Type              | File                                                     | Description                                         |
 | ----------------- | -------------------------------------------------------- | --------------------------------------------------- |
 | Design            | [`binary_to_grey.v`](binary_to_grey.v)                   | Verilog design.                                     |
-| Testbench         | [`grey.testbench.sv`](grey.testbench.sv)                 | SystemVerilog verification testbench (shared).      |
+| Testbench         | [`grey.testbench.sv`](grey.testbench.sv)                 | SystemVerilog verification shared testbench.        |
 | Waveform script   | [`grey.testbench.gtkw`](grey.testbench.gtkw)             | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`binary_to_grey.symbol.sss`](binary_to_grey.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`binary_to_grey.symbol.svg`](binary_to_grey.symbol.svg) | Generated vector image of the symbol.               |

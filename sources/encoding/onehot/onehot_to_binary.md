@@ -83,7 +83,7 @@ There are no synthesis and implementation constraints for this block.
 | Type              | File                                                         | Description                                         |
 | ----------------- | ------------------------------------------------------------ | --------------------------------------------------- |
 | Design            | [`onehot_to_binary.v`](onehot_to_binary.v)                   | Verilog design.                                     |
-| Testbench         | [`onehot.testbench.sv`](onehot.testbench.sv)                 | SystemVerilog verification testbench (shared).      |
+| Testbench         | [`onehot.testbench.sv`](onehot.testbench.sv)                 | SystemVerilog verification shared testbench.        |
 | Waveform script   | [`onehot.testbench.gtkw`](onehot.testbench.gtkw)             | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`onehot_to_binary.symbol.sss`](onehot_to_binary.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`onehot_to_binary.symbol.svg`](onehot_to_binary.symbol.svg) | Generated vector image of the symbol.               |
