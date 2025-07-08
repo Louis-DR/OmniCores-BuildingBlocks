@@ -1,5 +1,5 @@
 [dumpfile] "valid_ready_asynchronous_advanced_fifo.testbench.vcd"
-[savefile] "valid_ready_asynchronous_advanced_fifo__testbench.gtkw"
+[savefile] "valid_ready_asynchronous_advanced_fifo.testbench.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1

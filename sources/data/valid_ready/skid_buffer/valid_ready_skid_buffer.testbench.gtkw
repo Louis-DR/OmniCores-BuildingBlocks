@@ -1,5 +1,5 @@
 [dumpfile] "valid_ready_skid_buffer.testbench.vcd"
-[savefile] "valid_ready_skid_buffer__testbench.gtkw"
+[savefile] "valid_ready_skid_buffer.testbench.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
