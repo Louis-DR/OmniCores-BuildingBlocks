@@ -76,7 +76,7 @@ task check_conversion(input logic [WIDTH-1:0] binary_value);
   binary_to_grey_binary = binary_value;
   #1;
   assert (binary_to_grey_grey === expected_grey)
-    else $error("[%0tns] Binary-to-grey conversion failed for input '%b'. Expected '%b', got '%b'.",
+    else $error("[%0tns] Incorrect binary-to-grey conversion for input '%b'. Expected '%b', got '%b'.",
                 $time, binary_value, expected_grey, binary_to_grey_grey);
 
   // Test grey-to-binary conversion (round-trip test)
@@ -84,10 +84,10 @@ task check_conversion(input logic [WIDTH-1:0] binary_value);
   #1;
   expected_binary = reference_grey_to_binary(binary_to_grey_grey);
   assert (grey_to_binary_binary === binary_value)
-    else $error("[%0tns] Round-trip conversion failed. Original binary '%b' -> Grey '%b' -> Decoded binary '%b'.",
+    else $error("[%0tns] Incorrect round-trip conversion. Original binary '%b' -> Grey '%b' -> Decoded binary '%b'.",
                 $time, binary_value, binary_to_grey_grey, grey_to_binary_binary);
   assert (grey_to_binary_binary === expected_binary)
-    else $error("[%0tns] Grey-to-binary conversion failed for input '%b'. Expected '%b', got '%b'.",
+    else $error("[%0tns] Incorrect grey-to-binary conversion for input '%b'. Expected '%b', got '%b'.",
                 $time, binary_to_grey_grey, expected_binary, grey_to_binary_binary);
 endtask
 
