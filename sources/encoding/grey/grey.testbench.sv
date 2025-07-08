@@ -21,7 +21,7 @@
 module grey__testbench ();
 
 // Device parameters
-localparam WIDTH = 4;
+localparam WIDTH = 8;
 
 // Test parameters
 localparam WIDTH_POW2              = 2**WIDTH;
