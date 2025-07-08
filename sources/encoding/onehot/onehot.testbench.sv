@@ -21,7 +21,7 @@
 module onehot__testbench ();
 
 // Device parameters
-localparam WIDTH_BINARY = 4;
+localparam WIDTH_BINARY = 8;
 localparam WIDTH_ONEHOT = 2**WIDTH_BINARY;
 
 // Test parameters
