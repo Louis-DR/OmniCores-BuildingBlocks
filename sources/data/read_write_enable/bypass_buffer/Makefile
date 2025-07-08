@@ -1,3 +1,3 @@
-DESIGN_NAME   = bypass_buffer
+DESIGN_NAME = bypass_buffer
 
 include ../../../common/common.mk

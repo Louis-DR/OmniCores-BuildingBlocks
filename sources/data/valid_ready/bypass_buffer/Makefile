@@ -1,3 +1,3 @@
-DESIGN_NAME   = valid_ready_bypass_buffer
+DESIGN_NAME = valid_ready_bypass_buffer
 
 include ../../../common/common.mk

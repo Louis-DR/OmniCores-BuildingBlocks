@@ -1,3 +1,3 @@
-DESIGN_NAME   = fast_pulse_separator
+DESIGN_NAME = fast_pulse_separator
 
 include ../../common/common.mk

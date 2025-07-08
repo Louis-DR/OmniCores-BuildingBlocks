@@ -1,3 +1,3 @@
-DESIGN_NAME   = fifo
+DESIGN_NAME = fifo
 
 include ../../../common/common.mk

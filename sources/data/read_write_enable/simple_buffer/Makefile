@@ -1,3 +1,3 @@
-DESIGN_NAME   = simple_buffer
+DESIGN_NAME = simple_buffer
 
 include ../../../common/common.mk

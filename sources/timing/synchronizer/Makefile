@@ -1,3 +1,3 @@
-DESIGN_NAME   = synchronizer
+DESIGN_NAME = synchronizer
 
 include ../../common/common.mk

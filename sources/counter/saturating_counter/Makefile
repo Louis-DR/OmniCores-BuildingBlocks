@@ -1,3 +1,3 @@
-DESIGN_NAME   = saturating_counter
+DESIGN_NAME = saturating_counter
 
 include ../../common/common.mk
