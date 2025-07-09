@@ -1,0 +1,31 @@
+[dumpfile] "lifo.testbench.vcd"
+[savefile] "lifo.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-9.563104 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+lifo__testbench.clock
+lifo__testbench.resetn
+@200
+-
+@28
+lifo__testbench.write_enable
+@22
+lifo__testbench.write_data[7:0]
+@28
+lifo__testbench.full
+@200
+-
+@28
+lifo__testbench.read_enable
+@22
+lifo__testbench.read_data[7:0]
+@28
+lifo__testbench.empty
+[pattern_trace] 1
+[pattern_trace] 0
