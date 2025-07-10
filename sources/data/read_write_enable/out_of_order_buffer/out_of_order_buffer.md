@@ -20,11 +20,11 @@ The buffer provides error detection for invalid read operations (reading from in
 
 ## Parameters
 
-| Name          | Type    | Allowed Values | Default        | Description                                        |
-| ------------- | ------- | -------------- | -------------- | -------------------------------------------------- |
-| `WIDTH`       | integer | `≥1`           | `8`            | Bit width of the data vector.                      |
-| `DEPTH`       | integer | `≥2`           | `8`            | Number of entries in the buffer.                   |
-| `INDEX_WIDTH` | integer | `≥1`           | `CLOG2(DEPTH)` | Bit width of the index (automatically calculated). |
+| Name          | Type    | Allowed Values | Default       | Description                                        |
+| ------------- | ------- | -------------- | ------------- | -------------------------------------------------- |
+| `WIDTH`       | integer | `≥1`           | `8`           | Bit width of the data vector.                      |
+| `DEPTH`       | integer | `≥2`           | `8`           | Number of entries in the buffer.                   |
+| `INDEX_WIDTH` | integer | `≥1`           | `log₂(DEPTH)` | Bit width of the index (automatically calculated). |
 
 ## Ports
 
