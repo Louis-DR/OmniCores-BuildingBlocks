@@ -19,8 +19,8 @@ Arbiters between different request channels based on externally supplied priorit
 | Name               | Type    | Allowed Values                       | Default                 | Description                                              |
 | ------------------ | ------- | ------------------------------------ | ----------------------- | -------------------------------------------------------- |
 | `SIZE`             | integer | `>1`                                 | `4`                     | Number of channels.                                      |
-| `PRIORITY_WIDTH`   | integer | `>0`                                 | `log2(SIZE)=2`          | Bit width of the priority value for each channel.        |
-| `PRIORITIES_WIDTH` | integer | `>1`                                 | `PRIORITY_WIDTH*SIZE=8` | Bit width of the combined priority array.                |
+| `PRIORITY_WIDTH`   | integer | `>0`                                 | `log₂(SIZE)=2`          | Bit width of the priority value for each channel.        |
+| `PRIORITIES_WIDTH` | integer | `>1`                                 | `PRIORITY_WIDTH×SIZE=8` | Bit width of the combined priority array.                |
 | `FALLBACK_ARBITER` | string  | `"static_priority"`, `"round_robin"` | `"static_priority"`     | Fallback arbiter for multiple highest priority requests. |
 | `FALLBACK_VARIANT` | string  | `"fast"`, `"balanced"`, `"small"`    | `"fast"`                | Variant for the fallback arbiter.                        |
 
@@ -31,7 +31,7 @@ Arbiters between different request channels based on externally supplied priorit
 | `clock`      | input     | 1                       | self         |          |             | Clock signal.                                                                                                                                 |
 | `resetn`     | input     | 1                       | asynchronous | self     | `0`         | Asynchronous reset signal. Resets the priority pointer.                                                                                       |
 | `requests`   | input     | `SIZE`                  | `clock`      |          |             | Request channels.<br/>`1`: requesting a grant.<br/>`0`: idle.                                                                                 |
-| `priorities` | input     | `SIZE * PRIORITY_WIDTH` | `clock`      |          |             | Priority values for each channel.<br/>Packed array: `{priority[N-1], ..., priority[1], priority[0]}`.<br/>Higher value means higher priority. |
+| `priorities` | input     | `SIZE × PRIORITY_WIDTH` | `clock`      |          |             | Priority values for each channel.<br/>Packed array: `{priority[N-1], ..., priority[1], priority[0]}`.<br/>Higher value means higher priority. |
 | `grant`      | output    | `SIZE`                  | `clock`      | `resetn` |             | Channel receiving the grant. One-hot encoding.<br/>`1`: grant given.<br/>`0`: no grant.                                                       |
 
 ## Operation

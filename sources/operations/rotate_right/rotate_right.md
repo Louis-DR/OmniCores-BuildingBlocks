@@ -30,7 +30,7 @@ Rotates an input vector `data_in` to the right by a static number of bits specif
 
 ## Operation
 
-The module performs a right circular rotation of the `data_in` vector by `ROTATION` bit positions. This is implemented within a Verilog function by first creating a `2*WIDTH`-bit temporary vector, `data_extended`, by concatenating `data_in` with itself (`{data_in, data_in}`). The final `data_out` is then obtained by selecting `WIDTH` bits from `data_extended` starting at bit position `ROTATION % WIDTH`.
+The module performs a right circular rotation of the `data_in` vector by `ROTATION` bit positions. This is implemented within a Verilog function by first creating a `2×WIDTH`-bit temporary vector, `data_extended`, by concatenating `data_in` with itself (`{data_in, data_in}`). The final `data_out` is then obtained by selecting `WIDTH` bits from `data_extended` starting at bit position `ROTATION % WIDTH`.
 
 ## Paths
 

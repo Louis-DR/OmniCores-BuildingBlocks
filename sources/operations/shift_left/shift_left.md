@@ -31,7 +31,7 @@ Shits an input vector `data_in` to the left by a static number of bits specified
 
 ## Operation
 
-The module performs a left shift of the `data_in` vector by `SHIFT` bit positions. This is implemented within a Verilog function by first creating a `2*WIDTH`-bit temporary vector, `data_extended`, by concatenating `data_in` with the padding value. The final `data_out` is then obtained by selecting `WIDTH` bits from `data_extended`.
+The module performs a left shift of the `data_in` vector by `SHIFT` bit positions. This is implemented within a Verilog function by first creating a `2×WIDTH`-bit temporary vector, `data_extended`, by concatenating `data_in` with the padding value. The final `data_out` is then obtained by selecting `WIDTH` bits from `data_extended`.
 
 ## Paths
 

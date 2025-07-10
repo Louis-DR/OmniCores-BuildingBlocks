@@ -26,8 +26,8 @@ Duplicates input data according to the repetition parameter to create redundancy
 | Name    | Direction | Width                       | Clock | Reset | Reset value | Description                              |
 | ------- | --------- | --------------------------- | ----- | ----- | ----------- | ---------------------------------------- |
 | `data`  | input     | `DATA_WIDTH`                |       |       |             | Input data to be repetition encoded.     |
-| `code`  | output    | `(REPETITION-1)*DATA_WIDTH` |       |       |             | Repetition code (additional copies).     |
-| `block` | output    | `REPETITION*DATA_WIDTH`     |       |       |             | Complete repetition block (code + data). |
+| `code`  | output    | `(REPETITION-1)×DATA_WIDTH` |       |       |             | Repetition code (additional copies).     |
+| `block` | output    | `REPETITION×DATA_WIDTH`     |       |       |             | Complete repetition block (code + data). |
 
 ## Operation
 

@@ -57,11 +57,11 @@ The `full` flag is asserted when the current write buffer entry already contains
 
 ## Complexity
 
-| Delay  | Gates          | Comment |
-| ------ | -------------- | ------- |
-| `O(1)` | `O(2*WIDTH+4)` |         |
+| Delay  | Gates      | Comment |
+| ------ | ---------- | ------- |
+| `O(1)` | `O(WIDTH)` |         |
 
-The module requires `2*WIDTH` flip-flops for the dual data buffers, 2 flip-flops for the `buffer_valid` flags, and 2 flip-flops for the buffer selectors.
+The module requires `2×WIDTH` flip-flops for the dual data buffers, 2 flip-flops for the `buffer_valid` flags, and 2 flip-flops for the buffer selectors.
 
 ## Verification
 
