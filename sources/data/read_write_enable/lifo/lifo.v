@@ -91,15 +91,15 @@ always @(posedge clock or negedge resetn) begin
   // Operation
   else begin
     // Simultaneous read and write - stack pointer doesn't change
-    if (write_enable && read_enable && !empty && !full) begin
+    if (write_enable && read_enable) begin
       // Stack pointer stays the same, just replace top item
     end
     // Write only, push to stack
-    else if (write_enable && !full) begin
+    else if (write_enable) begin
       stack_pointer <= stack_pointer + 1;
     end
     // Read only, pop from stack
-    else if (read_enable && !empty) begin
+    else if (read_enable) begin
       stack_pointer <= stack_pointer - 1;
     end
   end
@@ -107,9 +107,9 @@ end
 
 // Write to memory without reset
 always @(posedge clock) begin
-  if (write_enable && !full) begin
+  if (write_enable) begin
     // Simultaneous read/write
-    if (read_enable && !empty) begin
+    if (read_enable) begin
       // Replace top item
       memory[read_address] <= write_data;
     end
