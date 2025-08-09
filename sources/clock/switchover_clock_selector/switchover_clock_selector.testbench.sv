@@ -21,12 +21,12 @@
 module switchover_clock_selector__testbench ();
 
 // Test parameters
-localparam integer STAGES                           = 2;
-localparam real    FIRST_CLOCK_PERIOD               = 10;
-localparam real    SECOND_CLOCK_PERIOD              = FIRST_CLOCK_PERIOD/3.14159265359;
-localparam         FREQUENCY_UNIT                   = "MHz";
-localparam real    FREQUENCY_MEASUREMENT_TOLERANCE  = 0.05;
-localparam real    GLITCH_PERIOD_TOLERANCE          = 0.05;
+localparam int     STAGES                          = 2;
+localparam real    FIRST_CLOCK_PERIOD              = 10;
+localparam real    SECOND_CLOCK_PERIOD             = FIRST_CLOCK_PERIOD/3.14159265359;
+localparam string  FREQUENCY_UNIT                  = "MHz";
+localparam real    FREQUENCY_MEASUREMENT_TOLERANCE = 0.05;
+localparam real    GLITCH_PERIOD_TOLERANCE         = 0.05;
 
 // Device ports
 logic first_clock;

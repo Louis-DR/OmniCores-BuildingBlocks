@@ -21,14 +21,14 @@
 module nonstop_clock_multiplexer__testbench ();
 
 // Test parameters
-localparam integer DUT_STAGES                       = 2;
-localparam real    CLOCK_0_PERIOD                   = 10;
-localparam real    CLOCK_1_PERIOD                   = CLOCK_0_PERIOD/3.14159265359;
-localparam         FREQUENCY_UNIT                   = "MHz";
-localparam real    FREQUENCY_MEASUREMENT_TOLERANCE  = 0.05;
-localparam real    GLITCH_PERIOD_TOLERANCE          = 0.05;
-localparam integer BACK_AND_FORTH_ITERATIONS        = 10;
-localparam integer RANDOM_GLITCH_CHECK_ITERATIONS   = 100;
+localparam int     DUT_STAGES                      = 2;
+localparam real    CLOCK_0_PERIOD                  = 10;
+localparam real    CLOCK_1_PERIOD                  = CLOCK_0_PERIOD/3.14159265359;
+localparam string  FREQUENCY_UNIT                  = "MHz";
+localparam real    FREQUENCY_MEASUREMENT_TOLERANCE = 0.05;
+localparam real    GLITCH_PERIOD_TOLERANCE         = 0.05;
+localparam int     BACK_AND_FORTH_ITERATIONS       = 10;
+localparam int     RANDOM_GLITCH_CHECK_ITERATIONS  = 100;
 
 // Device ports
 logic clock_0;

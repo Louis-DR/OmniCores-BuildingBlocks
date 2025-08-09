@@ -22,10 +22,10 @@
 module feedback_pulse_synchronizer__testbench ();
 
 // Test parameters
-localparam real    CLOCK_SLOW_PERIOD = 10;
-localparam real    CLOCK_FAST_PERIOD = CLOCK_SLOW_PERIOD/3;
-localparam real    CLOCK_PHASE_SHIFT = CLOCK_FAST_PERIOD*3/2;
-localparam integer MAX_TEST_STAGES   = 5;
+localparam real CLOCK_SLOW_PERIOD = 10;
+localparam real CLOCK_FAST_PERIOD = CLOCK_SLOW_PERIOD/3;
+localparam real CLOCK_PHASE_SHIFT = CLOCK_FAST_PERIOD*3/2;
+localparam int  MAX_TEST_STAGES   = 5;
 
 // Variable frequency test clocks
 real SOURCE_CLOCK_PERIOD      = CLOCK_SLOW_PERIOD;
@@ -125,7 +125,7 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (integer check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
+      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};
@@ -154,7 +154,7 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (integer check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
+      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};
@@ -182,7 +182,7 @@ initial begin
       check_pulse_out(pulse_out_expected);
       @(posedge destination_clock);
       pulse_out_expected = { (MAX_TEST_STAGES-1)'(0) , 1'b1 };
-      for (integer check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
+      for (int check_step = 0; check_step <= MAX_TEST_STAGES*3; check_step++) begin
         @(posedge destination_clock);
         check_pulse_out(pulse_out_expected);
         pulse_out_expected = { pulse_out_expected[MAX_TEST_STAGES-1:1] , 1'b0};

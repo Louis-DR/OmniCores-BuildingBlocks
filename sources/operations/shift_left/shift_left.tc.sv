@@ -25,11 +25,11 @@ module shift_left_tc #(
 );
 
 // Test parameters
-localparam WIDTH_POW2 = 2**WIDTH;
+localparam int WIDTH_POW2 = 2**WIDTH;
 
 // Check parameters
-localparam integer FULL_CHECK_MAX_DURATION = 2**10;
-localparam integer RANDOM_CHECK_DURATION   = 1024;
+localparam int FULL_CHECK_MAX_DURATION = 2**10;
+localparam int RANDOM_CHECK_DURATION   = 1024;
 
 // Device ports
 logic [WIDTH-1:0] data_in;
@@ -79,7 +79,7 @@ initial begin
   if (WIDTH_POW2 <= FULL_CHECK_MAX_DURATION) begin
     // Check : full coverage
     $display("CHECK : Full coverage.");
-    for (integer data_index = 0; data_index < WIDTH_POW2; data_index++) begin
+    for (int data_index = 0; data_index < WIDTH_POW2; data_index++) begin
       data_in = data_index;
       #(1);
       check_data_out();
@@ -90,7 +90,7 @@ initial begin
   else begin
     // Check : random stimulus
     $display("CHECK : Random stimulus.");
-    for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
+    for (int random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
 `ifdef SIMUMLATOR_NO_RANDOMIZE
       // Alternative to std:randomize() up to 1024 bits
       data_in = {$urandom(), $urandom(), $urandom(), $urandom(),

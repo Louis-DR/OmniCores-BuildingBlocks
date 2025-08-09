@@ -19,16 +19,16 @@
 module skid_buffer__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD = 10;
-localparam integer WIDTH        = 8;
-localparam integer WIDTH_POW2   = 2**WIDTH;
+localparam real CLOCK_PERIOD = 10;
+localparam int  WIDTH        = 8;
+localparam int  WIDTH_POW2   = 2**WIDTH;
 
 // Check parameters
-localparam integer THROUGHPUT_CHECK_DURATION      = 100;
-localparam integer RANDOM_CHECK_DURATION          = 100;
-localparam real    RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_READ_PROBABILITY  = 0.5;
-localparam integer RANDOM_CHECK_TIMEOUT           = 1000;
+localparam int  THROUGHPUT_CHECK_DURATION      = 100;
+localparam int  RANDOM_CHECK_DURATION          = 100;
+localparam real RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_READ_PROBABILITY  = 0.5;
+localparam int  RANDOM_CHECK_TIMEOUT           = 1000;
 
 // Device ports
 logic             clock;
@@ -41,10 +41,10 @@ logic [WIDTH-1:0] read_data;
 logic             empty;
 
 // Test variables
-integer data_expected[$];
-integer pop_trash;
-integer transfer_count;
-integer timeout_countdown;
+int data_expected[$];
+int pop_trash;
+int transfer_count;
+int timeout_countdown;
 
 // Device under test
 skid_buffer #(
@@ -134,7 +134,7 @@ initial begin
   // Write
   write_enable = 1;
   write_data   = 0;
-  for (integer iteration = 1; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
+  for (int iteration = 1; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     data_expected.push_back(write_data);
     @(negedge clock);
     if ( empty) $error("[%0tns] Empty flag is asserted. The buffer should be sending transfers.", $time);

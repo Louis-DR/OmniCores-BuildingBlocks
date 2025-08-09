@@ -21,21 +21,21 @@
 module probabilistic_saturating_counter__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD           = 10;
-localparam integer RANGE                  = 4;
-localparam integer RANGE_LOG2             = $clog2(RANGE);
-localparam integer RESET_VALUE            = 0;
-localparam integer RANDOM_NUMBER_WIDTH    = 8;
-localparam real    SATURATION_PROBABILITY = 0.25;
+localparam real CLOCK_PERIOD           = 10;
+localparam int  RANGE                  = 4;
+localparam int  RANGE_LOG2             = $clog2(RANGE);
+localparam int  RESET_VALUE            = 0;
+localparam int  RANDOM_NUMBER_WIDTH    = 8;
+localparam real SATURATION_PROBABILITY = 0.25;
 
 // Check parameters
-localparam integer CHECK_TIMEOUT                      = 1000;
-localparam integer PROBABILITY_MEASUREMENT_DURATION   = 1000;
-localparam real    PROBABILITY_MEASUREMENT_TOLERANCE  = 0.05;
-localparam integer PROBABILITY_MEASUREMENT_TIMEOUT    = PROBABILITY_MEASUREMENT_DURATION * CHECK_TIMEOUT;
-localparam integer RANDOM_CHECK_DURATION              = 1000;
-localparam real    RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
+localparam int  CHECK_TIMEOUT                      = 1000;
+localparam int  PROBABILITY_MEASUREMENT_DURATION   = 1000;
+localparam real PROBABILITY_MEASUREMENT_TOLERANCE  = 0.05;
+localparam int  PROBABILITY_MEASUREMENT_TIMEOUT    = PROBABILITY_MEASUREMENT_DURATION * CHECK_TIMEOUT;
+localparam int  RANDOM_CHECK_DURATION              = 1000;
+localparam real RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 
 // Device ports
 logic                           clock;
@@ -46,18 +46,18 @@ logic [RANDOM_NUMBER_WIDTH-1:0] random_number;
 logic          [RANGE_LOG2-1:0] count;
 
 // Test variables
-integer min_count           = 0;
-integer max_count           = RANGE - 1;
-integer min_plus_one_count  = 1;
-integer max_minus_one_count = RANGE - 2;
-integer expected_count;
-bool    force_saturation;
-integer timeout_countdown;
+int  min_count           = 0;
+int  max_count           = RANGE - 1;
+int  min_plus_one_count  = 1;
+int  max_minus_one_count = RANGE - 2;
+int  expected_count;
+bool force_saturation;
+int  timeout_countdown;
 
 // Probability measurement variables
-integer saturation_attempts;
-integer saturation_successes;
-real    measured_probability;
+int  saturation_attempts;
+int  saturation_successes;
+real measured_probability;
 
 // Device under test
 probabilistic_saturating_counter #(

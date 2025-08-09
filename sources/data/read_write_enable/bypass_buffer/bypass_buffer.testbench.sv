@@ -19,16 +19,16 @@
 module bypass_buffer__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD = 10;
-localparam integer WIDTH        = 8;
-localparam integer WIDTH_POW2   = 2**WIDTH;
+localparam real CLOCK_PERIOD = 10;
+localparam int  WIDTH        = 8;
+localparam int  WIDTH_POW2   = 2**WIDTH;
 
 // Check parameters
-localparam integer THROUGHPUT_CHECK_DURATION          = 100;
-localparam integer RANDOM_CHECK_DURATION              = 100;
-localparam real    RANDOM_CHECK_INJECTION_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_RECEPTION_PROBABILITY = 0.5;
-localparam integer RANDOM_CHECK_TIMEOUT               = 1000;
+localparam int  THROUGHPUT_CHECK_DURATION          = 100;
+localparam int  RANDOM_CHECK_DURATION              = 100;
+localparam real RANDOM_CHECK_INJECTION_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_RECEPTION_PROBABILITY = 0.5;
+localparam int  RANDOM_CHECK_TIMEOUT               = 1000;
 
 // Device ports
 logic             clock;
@@ -41,9 +41,9 @@ logic [WIDTH-1:0] read_data;
 logic             empty;
 
 // Test variables
-integer data_expected;
-integer transfer_count;
-integer timeout_countdown;
+int data_expected;
+int transfer_count;
+int timeout_countdown;
 
 // Device under test
 bypass_buffer #(
@@ -134,7 +134,7 @@ initial begin
   $display("CHECK 4 : Successive transfers.");
   @(negedge clock);
   write_data = 0;
-  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
+  for (int iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     // Write
     @(negedge clock);
     if (!empty) $error("[%0tns] Empty flag is deasserted with data '%0h'. The buffer should be empty.", $time, read_data);
@@ -171,7 +171,7 @@ initial begin
   read_enable  = 1;
   write_enable = 1;
   write_data   = 0;
-  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
+  for (int iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     if ( empty) $error("[%0tns] Empty flag is asserted.", $time, read_data);
     if ( full ) $error("[%0tns] Full flag is asserted.", $time, read_data);
@@ -200,7 +200,7 @@ initial begin
   @(negedge clock);
   read_enable  = 1;
   write_data   = write_data+1;
-  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
+  for (int iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     if ( empty) $error("[%0tns] Empty flag is asserted.", $time, read_data);
     if ( full ) $error("[%0tns] Full flag is asserted.", $time, read_data);

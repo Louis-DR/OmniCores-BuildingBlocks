@@ -19,17 +19,17 @@
 module dynamic_priority_arbiter__testbench ();
 
 // Test parameters
-localparam real CLOCK_PERIOD          = 10;
-localparam      SIZE                  = 4;
-localparam      SIZE_POW2             = 2 ** SIZE;
-localparam      PRIORITY_WIDTH        = $clog2(SIZE);
-localparam      PRIORITIES_WIDTH      = PRIORITY_WIDTH * SIZE;
-localparam      PRIORITIES_WIDTH_POW2 = 2 ** PRIORITIES_WIDTH;
-localparam      FALLBACK_ARBITER      = "static_priority";
-localparam      FALLBACK_VARIANT      = "fast";
+localparam real   CLOCK_PERIOD          = 10;
+localparam int    SIZE                  = 4;
+localparam int    SIZE_POW2             = 2 ** SIZE;
+localparam int    PRIORITY_WIDTH        = $clog2(SIZE);
+localparam int    PRIORITIES_WIDTH      = PRIORITY_WIDTH * SIZE;
+localparam int    PRIORITIES_WIDTH_POW2 = 2 ** PRIORITIES_WIDTH;
+localparam string FALLBACK_ARBITER      = "static_priority";
+localparam string FALLBACK_VARIANT      = "fast";
 
 // Check parameters
-localparam integer RANDOM_CHECK_DURATION = 1000;
+localparam int RANDOM_CHECK_DURATION = 1000;
 
 // Device ports
 logic                        clock;
@@ -120,14 +120,14 @@ function automatic logic [SIZE-1:0] get_highest_priority_active_requests (
   logic           [SIZE-1:0] highest_priority_active_requests;
 
   // Unpack priorities
-  for (integer request_index = 0; request_index < SIZE; request_index++) begin
+  for (int request_index = 0; request_index < SIZE; request_index++) begin
     priorities_unpacked[request_index] = priorities[request_index * PRIORITY_WIDTH +: PRIORITY_WIDTH];
   end
 
   // Find highest priority level among the active requests
   highest_priority_level = '0; // Initialize to lowest possible priority
   highest_priority_found = false;
-  for (integer request_index = 0; request_index < SIZE; request_index++) begin
+  for (int request_index = 0; request_index < SIZE; request_index++) begin
     if (requests[request_index]) begin
       // If this is the first found or its priority is higher than the current highest
       if (!highest_priority_found || priorities_unpacked[request_index] > highest_priority_level) begin
@@ -140,7 +140,7 @@ function automatic logic [SIZE-1:0] get_highest_priority_active_requests (
   // Generate mask of active requests matching the highest priority level
   highest_priority_active_requests = '0;
   if (highest_priority_found) begin
-    for (integer request_index = 0; request_index < SIZE; request_index++) begin
+    for (int request_index = 0; request_index < SIZE; request_index++) begin
       if (requests[request_index] && (priorities_unpacked[request_index] == highest_priority_level)) begin
         highest_priority_active_requests[request_index] = 1'b1;
       end
@@ -170,11 +170,11 @@ initial begin
   $display("CHECK 1 : Single request active.");
   requests = '0;
   // Activate requests one at a time
-  for (integer request_index = 0; request_index < SIZE; request_index++) begin
+  for (int request_index = 0; request_index < SIZE; request_index++) begin
     @(negedge clock);
     requests = (1 << request_index);
     // Check all possible priorities
-    for (integer priorities_configuration = 0; priorities_configuration < PRIORITIES_WIDTH_POW2; priorities_configuration++) begin
+    for (int priorities_configuration = 0; priorities_configuration < PRIORITIES_WIDTH_POW2; priorities_configuration++) begin
       priorities = priorities_configuration;
       @(posedge clock);
       // Grant should always match the single request
@@ -191,7 +191,7 @@ initial begin
   // Activate all requests
   requests = '1;
   // Check all possible priorities
-  for (integer priorities_configuration = 0; priorities_configuration < PRIORITIES_WIDTH_POW2; priorities_configuration++) begin
+  for (int priorities_configuration = 0; priorities_configuration < PRIORITIES_WIDTH_POW2; priorities_configuration++) begin
     priorities = priorities_configuration;
     // Get the mask of expected possible grants
     highest_priority_requests = get_highest_priority_active_requests(requests, priorities);

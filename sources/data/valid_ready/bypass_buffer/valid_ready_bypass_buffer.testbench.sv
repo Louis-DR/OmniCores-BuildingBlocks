@@ -19,17 +19,17 @@
 module valid_ready_bypass_buffer__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD = 10;
-localparam integer WIDTH        = 8;
-localparam integer WIDTH_POW2   = 2**WIDTH;
+localparam real CLOCK_PERIOD = 10;
+localparam int  WIDTH        = 8;
+localparam int  WIDTH_POW2   = 2**WIDTH;
 
 // Check parameters
-localparam real    ASYNC_WAIT_TIME                    = 1;
-localparam integer THROUGHPUT_CHECK_DURATION          = 100;
-localparam integer RANDOM_CHECK_DURATION              = 100;
-localparam real    RANDOM_CHECK_INJECTION_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_RECEPTION_PROBABILITY = 0.5;
-localparam integer RANDOM_CHECK_TIMEOUT               = 1000;
+localparam real ASYNC_WAIT_TIME                    = 1;
+localparam int  THROUGHPUT_CHECK_DURATION          = 100;
+localparam int  RANDOM_CHECK_DURATION              = 100;
+localparam real RANDOM_CHECK_INJECTION_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_RECEPTION_PROBABILITY = 0.5;
+localparam int  RANDOM_CHECK_TIMEOUT               = 1000;
 
 // Device ports
 logic             clock;
@@ -44,9 +44,9 @@ logic             read_ready;
 logic             empty;
 
 // Test variables
-integer data_expected;
-integer transfer_count;
-integer timeout_countdown;
+int data_expected;
+int transfer_count;
+int timeout_countdown;
 
 // Device under test
 valid_ready_bypass_buffer #(
@@ -149,7 +149,7 @@ initial begin
   $display("CHECK 4 : Successive transfers.");
   @(negedge clock);
   write_data = 0;
-  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
+  for (int iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     // Write
     @(negedge clock);
     if ( read_valid ) $error("[%0tns] Read valid is asserted with data '%0h'. The buffer should be empty.", $time, read_data);
@@ -193,7 +193,7 @@ initial begin
   read_ready  = 1;
   write_valid = 1;
   write_data  = 0;
-  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
+  for (int iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     if (!read_valid ) $error("[%0tns] Read valid is deasserted.", $time, read_data);
     if (!write_ready) $error("[%0tns] Write ready is deasserted.", $time, read_data);
@@ -227,7 +227,7 @@ initial begin
   @(negedge clock);
   read_ready = 1;
   write_data = write_data+1;
-  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
+  for (int iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     if (!read_valid ) $error("[%0tns] Read valid is deasserted.", $time, read_data);
     if (!write_ready) $error("[%0tns] Write ready is deasserted.", $time, read_data);

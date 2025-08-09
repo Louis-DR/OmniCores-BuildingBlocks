@@ -20,19 +20,19 @@
 module advanced_fifo__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD = 10;
-localparam integer WIDTH        = 8;
-localparam integer WIDTH_POW2   = 2**WIDTH;
-localparam integer DEPTH        = 4;
-localparam integer DEPTH_LOG2   = `CLOG2(DEPTH);
+localparam real CLOCK_PERIOD = 10;
+localparam int  WIDTH        = 8;
+localparam int  WIDTH_POW2   = 2**WIDTH;
+localparam int  DEPTH        = 4;
+localparam int  DEPTH_LOG2   = `CLOG2(DEPTH);
 
 // Check parameters
-localparam integer THROUGHPUT_CHECK_DURATION      = 100;
-localparam integer RANDOM_CHECK_DURATION          = 500;
-localparam real    RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_READ_PROBABILITY  = 0.5;
-localparam integer RANDOM_CHECK_TIMEOUT           = 5000;
-localparam integer RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
+localparam int  THROUGHPUT_CHECK_DURATION      = 100;
+localparam int  RANDOM_CHECK_DURATION          = 500;
+localparam real RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_READ_PROBABILITY  = 0.5;
+localparam int  RANDOM_CHECK_TIMEOUT           = 5000;
+localparam int  RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 
 // Device ports
 logic                clock;
@@ -54,13 +54,13 @@ logic [DEPTH_LOG2:0] upper_threshold_level;
 logic                upper_threshold_status;
 
 // Test variables
-integer data_expected[$];
-integer pop_trash;
-integer transfer_count;
-integer outstanding_count;
-integer timeout_countdown;
-integer threshold_change_countdown;
-bool    write_outstanding;
+int  data_expected[$];
+int  pop_trash;
+int  transfer_count;
+int  outstanding_count;
+int  timeout_countdown;
+int  threshold_change_countdown;
+bool write_outstanding;
 
 // Device under test
 advanced_fifo #(
@@ -123,7 +123,7 @@ initial begin
   if ( full ) $error("[%0tns] Full flag is asserted after reset. The FIFO should be empty.", $time);
   if (level != 0) $error("[%0tns] Level '%0d' is not zero after reset. The FIFO should be empty.", $time, level);
   // Writing
-  for (integer write_count = 1; write_count <= DEPTH; write_count++) begin
+  for (int write_count = 1; write_count <= DEPTH; write_count++) begin
     @(negedge clock);
     write_enable = 1;
     write_data   = $urandom_range(WIDTH_POW2);
@@ -182,7 +182,7 @@ initial begin
   // Check 3 : Reading to empty
   $display("CHECK 3 : Reading to empty.");
   // Reading
-  for (integer read_count = 1; read_count <= DEPTH; read_count++) begin
+  for (int read_count = 1; read_count <= DEPTH; read_count++) begin
     @(negedge clock);
     read_enable = 1;
     @(posedge clock);
@@ -267,7 +267,7 @@ initial begin
   // Write
   write_enable = 1;
   write_data   = 0;
-  for (integer iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
+  for (int iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     @(posedge clock);
     data_expected.push_back(write_data);
     @(negedge clock);

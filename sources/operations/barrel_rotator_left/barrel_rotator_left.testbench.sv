@@ -18,9 +18,9 @@
 module barrel_rotator_left__testbench ();
 
 // Test parameters
-localparam CLOCK_PERIOD = 10;
-localparam WIDTH        =  8;
-localparam WIDTH_LOG2   = $clog2(WIDTH);
+localparam real CLOCK_PERIOD = 10;
+localparam int  WIDTH        =  8;
+localparam int  WIDTH_LOG2   = $clog2(WIDTH);
 
 // Device ports
 logic                  clock;
@@ -60,7 +60,7 @@ initial begin
 
   #(CLOCK_PERIOD);
 
-  for (integer rotation_index = 0; rotation_index < WIDTH; rotation_index++) begin
+  for (int rotation_index = 0; rotation_index < WIDTH; rotation_index++) begin
     rotation = rotation_index;
     data_in  = 8'b10011001;
     #(CLOCK_PERIOD);
@@ -80,7 +80,7 @@ initial begin
   //     data_out_expected = MAX_TEST_STAGES'(0);
   //     check_data_out(data_out_expected);
   //     @(posedge clock);
-  //     for (integer check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
+  //     for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
   //       data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b1 };
   //       check_data_out(data_out_expected);
   //       @(posedge clock);

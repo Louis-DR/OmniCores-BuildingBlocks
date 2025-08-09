@@ -19,9 +19,9 @@
 module clock_gater__testbench ();
 
 // Test parameters
-localparam CLOCK_PERIOD                   = 10;
-localparam FREQUENCY_UNIT                 = "MHz";
-localparam RANDOM_GLITCH_CHECK_ITERATIONS = 1000;
+localparam real   CLOCK_PERIOD                   = 10;
+localparam string FREQUENCY_UNIT                 = "MHz";
+localparam int    RANDOM_GLITCH_CHECK_ITERATIONS = 1000;
 
 // Device ports
 logic clock_in;

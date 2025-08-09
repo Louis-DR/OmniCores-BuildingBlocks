@@ -20,14 +20,14 @@
 module fast_clock_multiplexer__testbench ();
 
 // Test parameters
-localparam integer DUT_STAGES                       = 2;
-localparam real    CLOCK_0_PERIOD                   = 10;
-localparam real    CLOCK_1_PERIOD                   = CLOCK_0_PERIOD*2;
-localparam         FREQUENCY_UNIT                   = "MHz";
-localparam real    FREQUENCY_MEASUREMENT_TOLERANCE  = 0.05;
-localparam real    GLITCH_PERIOD_TOLERANCE          = 0.05;
-localparam integer BACK_AND_FORTH_ITERATIONS        = 10;
-localparam integer RANDOM_GLITCH_CHECK_ITERATIONS   = 100;
+localparam int    DUT_STAGES                      = 2;
+localparam real   CLOCK_0_PERIOD                  = 10;
+localparam real   CLOCK_1_PERIOD                  = CLOCK_0_PERIOD*2;
+localparam string FREQUENCY_UNIT                  = "MHz";
+localparam real   FREQUENCY_MEASUREMENT_TOLERANCE = 0.05;
+localparam real   GLITCH_PERIOD_TOLERANCE         = 0.05;
+localparam int    BACK_AND_FORTH_ITERATIONS       = 10;
+localparam int    RANDOM_GLITCH_CHECK_ITERATIONS  = 100;
 
 // Device ports
 logic clock_0;
@@ -100,7 +100,7 @@ initial begin
 
   // Check 1 : Switching back and forth between clocks
   $display("CHECK 1 : Switching back and forth between clocks.");
-  for (integer check_step = 0; check_step <= BACK_AND_FORTH_ITERATIONS; check_step++) begin
+  for (int check_step = 0; check_step <= BACK_AND_FORTH_ITERATIONS; check_step++) begin
     select = ~select;
     #(DUT_STAGES*(CLOCK_0_PERIOD+CLOCK_1_PERIOD));
     `measure_frequency(clock_out, clock_out_frequency)

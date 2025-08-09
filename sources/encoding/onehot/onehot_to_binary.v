@@ -25,10 +25,9 @@ module onehot_to_binary #(
 
 function [WIDTH_BINARY-1:0] onehot_to_binary_f;
   input [WIDTH_ONEHOT-1:0] onehot;
-  integer bit_index;
   begin
     onehot_to_binary_f = 0;
-    for (bit_index = 0; bit_index < WIDTH_ONEHOT; bit_index = bit_index+1) begin
+    for (int bit_index = 0; bit_index < WIDTH_ONEHOT; bit_index = bit_index+1) begin
       if (onehot[bit_index]) onehot_to_binary_f = bit_index;
     end
   end

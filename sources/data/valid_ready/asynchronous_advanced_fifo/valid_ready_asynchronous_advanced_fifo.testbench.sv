@@ -19,24 +19,24 @@
 module valid_ready_asynchronous_advanced_fifo__testbench ();
 
 // Test parameters
-localparam real    CLOCK_SLOW_PERIOD = 10;
-localparam real    CLOCK_FAST_PERIOD = CLOCK_SLOW_PERIOD/3.14159265359;
-localparam real    CLOCK_PHASE_SHIFT = CLOCK_FAST_PERIOD*3/2;
-localparam integer WIDTH             = 8;
-localparam integer WIDTH_POW2        = 2**WIDTH;
-localparam integer DEPTH             = 4;
-localparam integer DEPTH_LOG2        = $clog2(DEPTH);
-localparam integer STAGES_WRITE      = 2;
-localparam integer STAGES_READ       = 2;
+localparam real CLOCK_SLOW_PERIOD = 10;
+localparam real CLOCK_FAST_PERIOD = CLOCK_SLOW_PERIOD/3.14159265359;
+localparam real CLOCK_PHASE_SHIFT = CLOCK_FAST_PERIOD*3/2;
+localparam int  WIDTH             = 8;
+localparam int  WIDTH_POW2        = 2**WIDTH;
+localparam int  DEPTH             = 4;
+localparam int  DEPTH_LOG2        = $clog2(DEPTH);
+localparam int  STAGES_WRITE      = 2;
+localparam int  STAGES_READ       = 2;
 
 // Check parameters
-localparam integer THROUGHPUT_CHECK_DURATION      = 100;
-localparam integer THROUGHPUT_CHECK_TIMEOUT       = 1000;
-localparam integer RANDOM_CHECK_DURATION          = 100;
-localparam real    RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_READ_PROBABILITY  = 0.5;
-localparam integer RANDOM_CHECK_TIMEOUT           = 1000;
-localparam integer RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
+localparam int  THROUGHPUT_CHECK_DURATION      = 100;
+localparam int  THROUGHPUT_CHECK_TIMEOUT       = 1000;
+localparam int  RANDOM_CHECK_DURATION          = 100;
+localparam real RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_READ_PROBABILITY  = 0.5;
+localparam int  RANDOM_CHECK_TIMEOUT           = 1000;
+localparam int  RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 
 // Variable frequency test clocks
 real WRITE_CLOCK_PERIOD = CLOCK_SLOW_PERIOD;
@@ -69,12 +69,12 @@ logic [DEPTH_LOG2:0] read_upper_threshold_level;
 logic                read_upper_threshold_status;
 
 // Test variables
-integer data_expected[$];
-integer pop_trash;
-integer transfer_count;
-integer outstanding_count;
-integer timeout_countdown;
-integer threshold_change_countdown;
+int data_expected[$];
+int pop_trash;
+int transfer_count;
+int outstanding_count;
+int timeout_countdown;
+int threshold_change_countdown;
 
 // Device under test
 valid_ready_asynchronous_advanced_fifo #(
@@ -165,7 +165,7 @@ initial begin
   if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after reset. The FIFO should be empty.", $time, write_level);
   if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after reset. The FIFO should be empty.", $time, read_level);
   // Writing
-  for (integer write_count = 1; write_count <= DEPTH; write_count++) begin
+  for (int write_count = 1; write_count <= DEPTH; write_count++) begin
     @(negedge write_clock);
     write_valid = 1;
     write_data  = $urandom_range(WIDTH_POW2);
@@ -218,7 +218,7 @@ initial begin
   // Check 3 : Reading to empty
   $display("CHECK 3 : Reading to empty.");
   // Reading
-  for (integer read_count = 1; read_count <= DEPTH; read_count++) begin
+  for (int read_count = 1; read_count <= DEPTH; read_count++) begin
     @(negedge read_clock);
     read_ready = 1;
     @(posedge read_clock);
@@ -335,7 +335,7 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Checks 7-9 : Maximal throughput
-  for (integer check = 7; check <= 9; check++) begin
+  for (int check = 7; check <= 9; check++) begin
     case (check)
       7: begin
         $display("CHECK 7 : Maximal throughput with same frequencies.");
@@ -444,7 +444,7 @@ initial begin
   end
 
   // Checks 10-12 : Random stimulus
-  for (integer check = 10; check <= 12; check++) begin
+  for (int check = 10; check <= 12; check++) begin
     case (check)
       10: begin
         $display("CHECK 10 : Random stimulus with same frequencies.");

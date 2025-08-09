@@ -19,16 +19,16 @@
 module round_robin_arbiter__testbench ();
 
 // Test parameters
-localparam real CLOCK_PERIOD    = 10;
-localparam      SIZE            = 4;
-localparam      SIZE_POW2       = 2 ** SIZE;
-localparam      ROTATE_ON_GRANT = 0;
-localparam      VARIANT         = "balanced";
+localparam real   CLOCK_PERIOD    = 10;
+localparam int    SIZE            = 4;
+localparam int    SIZE_POW2       = 2 ** SIZE;
+localparam int    ROTATE_ON_GRANT = 0;
+localparam string VARIANT         = "balanced";
 
 // Check parameters
-localparam integer RANDOM_CHECK_DURATION    = 1000;
-localparam real    FAIRNESS_THRESHOLD_LOWER = 1 / SIZE;
-localparam real    FAIRNESS_THRESHOLD_UPPER = 1 - FAIRNESS_THRESHOLD_LOWER;
+localparam int  RANDOM_CHECK_DURATION    = 1000;
+localparam real FAIRNESS_THRESHOLD_LOWER = 1 / SIZE;
+localparam real FAIRNESS_THRESHOLD_UPPER = 1 - FAIRNESS_THRESHOLD_LOWER;
 
 // Device ports
 logic            clock;
@@ -38,8 +38,8 @@ logic [SIZE-1:0] grant;
 
 // Test variables
 logic [SIZE-1:0] granted_mask;
-integer unsigned request_counts [SIZE];
-integer unsigned grant_counts   [SIZE];
+int unsigned     request_counts [SIZE];
+int unsigned     grant_counts   [SIZE];
 real             grant_ratio;
 
 // Device under test
@@ -125,7 +125,7 @@ initial begin
   $display("CHECK 1 : Single request active.");
   requests = '0;
   // Activate requests one at a time
-  for (integer request_index = 0; request_index < SIZE; request_index++) begin
+  for (int request_index = 0; request_index < SIZE; request_index++) begin
     @(negedge clock);
     requests = (1 << request_index);
     // Repeat to check all positions of the priority pointer
@@ -169,21 +169,21 @@ initial begin
     // Random requests
     requests = $urandom_range(0, SIZE_POW2 - 1);
     // Find which requests are active and increment their count
-    for (integer request_index = 0; request_index < SIZE; request_index++) begin
+    for (int request_index = 0; request_index < SIZE; request_index++) begin
       if (requests[request_index]) begin
         request_counts[request_index]++;
       end
     end
     @(posedge clock);
     // Find which grant is active and increment its count
-    for (integer grant_index = 0; grant_index < SIZE; grant_index++) begin
+    for (int grant_index = 0; grant_index < SIZE; grant_index++) begin
       if (grant[grant_index]) begin
         grant_counts[grant_index]++;
       end
     end
   end
   // Check fairness
-  for (integer channel_index = 0; channel_index < SIZE; channel_index++) begin
+  for (int channel_index = 0; channel_index < SIZE; channel_index++) begin
     grant_ratio = real'(grant_counts[channel_index]) / real'(request_counts[channel_index]);
     assert (grant_ratio >= FAIRNESS_THRESHOLD_LOWER)
       else $error("[%0tns] Channel %0d made %0d requests but only got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);

@@ -21,8 +21,8 @@ module edge_detector__testbench ();
 localparam real CLOCK_PERIOD = 10;
 
 // Check parameters
-localparam integer CONSECUTIVE_CHECK_DURATION = 100;
-localparam integer RANDOM_CHECK_DURATION      = 100;
+localparam int CONSECUTIVE_CHECK_DURATION = 100;
+localparam int RANDOM_CHECK_DURATION      = 100;
 
 // Device ports
 logic clock;

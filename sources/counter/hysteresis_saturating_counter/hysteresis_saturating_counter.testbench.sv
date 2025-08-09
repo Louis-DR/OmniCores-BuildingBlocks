@@ -19,16 +19,16 @@
 module hysteresis_saturating_counter__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD = 10;
-localparam integer RANGE        = 4;
-localparam integer RANGE_LOG2   = $clog2(RANGE);
-localparam integer RESET_VALUE  = 0;
-localparam integer COERCIVITY   = 1;
+localparam real CLOCK_PERIOD = 10;
+localparam int  RANGE        = 4;
+localparam int  RANGE_LOG2   = $clog2(RANGE);
+localparam int  RESET_VALUE  = 0;
+localparam int  COERCIVITY   = 1;
 
 // Check parameters
-localparam integer RANDOM_CHECK_DURATION              = 100;
-localparam real    RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
+localparam int  RANDOM_CHECK_DURATION              = 100;
+localparam real RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 
 // Device ports
 logic                  clock;
@@ -38,13 +38,13 @@ logic                  decrement;
 logic [RANGE_LOG2-1:0] count;
 
 // Test variables
-integer min_count       = 0;
-integer max_count       = RANGE - 1;
-integer half_low_count  = RANGE/2 - 1;
-integer half_high_count = RANGE/2;
-integer jump_low_count  = half_low_count - COERCIVITY;
-integer jump_high_count = half_high_count + COERCIVITY;
-integer expected_count;
+int min_count       = 0;
+int max_count       = RANGE - 1;
+int half_low_count  = RANGE/2 - 1;
+int half_high_count = RANGE/2;
+int jump_low_count  = half_low_count - COERCIVITY;
+int jump_high_count = half_high_count + COERCIVITY;
+int expected_count;
 
 // Device under test
 hysteresis_saturating_counter #(
@@ -68,7 +68,7 @@ initial begin
 end
 
 // Function to predict next count value with hysteresis
-function integer predict_next_count(input integer current_count, input logic increment, input logic decrement);
+function int predict_next_count(input int current_count, input logic increment, input logic decrement);
   if (increment && !decrement && current_count != max_count) begin
     if (current_count == half_low_count) begin
       return jump_high_count;

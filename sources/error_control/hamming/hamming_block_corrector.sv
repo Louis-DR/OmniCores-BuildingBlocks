@@ -61,7 +61,7 @@ assign error = |syndrome;
 logic [BLOCK_WIDTH-1:0] error_mask;
 
 // Generate the error mask based on the syndrome
-integer syndrome_value;
+int syndrome_value;
 always_comb begin
   syndrome_value = syndrome;
   corrected_error_position = 0;

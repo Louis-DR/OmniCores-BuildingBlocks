@@ -18,13 +18,13 @@
 module repetition__testbench ();
 
 // Devices parameters
-localparam DATA_WIDTH = 8;
-localparam REPETITION = 3;
+localparam int DATA_WIDTH = 8;
+localparam int REPETITION = 3;
 
 // Devices constants
-localparam DATA_WIDTH_POW2 = 2 ** DATA_WIDTH;
-localparam CODE_WIDTH      = (REPETITION-1) * DATA_WIDTH;
-localparam BLOCK_WIDTH     = CODE_WIDTH + DATA_WIDTH;
+localparam int DATA_WIDTH_POW2 = 2 ** DATA_WIDTH;
+localparam int CODE_WIDTH      = (REPETITION-1) * DATA_WIDTH;
+localparam int BLOCK_WIDTH     = CODE_WIDTH + DATA_WIDTH;
 
 // Device ports
 logic  [DATA_WIDTH-1:0] encoder_data;
@@ -120,7 +120,7 @@ initial begin
 
   // Check 1: Repetition encoder exhaustive test
   $display("CHECK 1: Repetition encoder exhaustive test.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     encoder_data = data_configuration;
 
     // Calculate expected repetition code
@@ -144,7 +144,7 @@ initial begin
 
   // Check 2: Repetition checker with correct repetition
   $display("CHECK 2: Repetition checker with correct repetition.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data = data_configuration;
     test_code = {CODE_WIDTH{test_data}};
 
@@ -165,7 +165,7 @@ initial begin
 
   // Check 3: Repetition checker with incorrect repetition
   $display("CHECK 3: Repetition checker with incorrect repetition.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data = data_configuration;
     test_code = {CODE_WIDTH{~test_data}}; // Incorrect repetition
 
@@ -186,7 +186,7 @@ initial begin
 
   // Check 4: Block checker with correct repetition blocks
   $display("CHECK 4: Block checker with correct repetition blocks.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data  = data_configuration;
     test_code  = {CODE_WIDTH{test_data}};
     test_block = {test_code, test_data};
@@ -207,7 +207,7 @@ initial begin
 
   // Check 5: Block checker with incorrect repetition blocks
   $display("CHECK 5: Block checker with incorrect repetition blocks.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data  = data_configuration;
     test_code  = {CODE_WIDTH{~test_data}}; // Incorrect repetition
     test_block = {test_code, test_data};
@@ -228,7 +228,7 @@ initial begin
 
   // Check 6: Complete encode-decode cycle
   $display("CHECK 6: Complete encode-decode cycle.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     // Step 1: Encode the data
     encoder_data = data_configuration;
     #1;
@@ -258,13 +258,13 @@ initial begin
 
   // Check 7: Single bit error detection and correction
   $display("CHECK 7: Single bit error detection and correction.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     // Encode the original data
     encoder_data = data_configuration;
     #1;
 
     // Introduce single bit errors in each position of the block
-    for (integer error_position = 0; error_position < BLOCK_WIDTH; error_position++) begin
+    for (int error_position = 0; error_position < BLOCK_WIDTH; error_position++) begin
       // Create corrupted block with single bit error
       test_block = encoder_block ^ (1 << error_position);
 
@@ -299,7 +299,7 @@ initial begin
 
   // Check 8: Corrector with correct data
   $display("CHECK 8: Corrector with correct data.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data = data_configuration;
     test_code = {CODE_WIDTH{test_data}};
 
@@ -323,13 +323,13 @@ initial begin
 
   // Check 9: Corrector with single bit errors
   $display("CHECK 9: Corrector with single bit errors.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     // Encode the original data
     encoder_data = data_configuration;
     #1;
 
     // Test single bit errors in the data part only (correctable)
-    for (integer error_position = 0; error_position < DATA_WIDTH; error_position++) begin
+    for (int error_position = 0; error_position < DATA_WIDTH; error_position++) begin
       // Create corrupted data with single bit error
       corrector_data = encoder_data ^ (1 << error_position);
       corrector_code = encoder_code;
@@ -353,7 +353,7 @@ initial begin
 
   // Check 10: Double bit error detection (uncorrectable)
   $display("CHECK 10: Double bit error detection (uncorrectable).");
-  for (integer data_configuration = 0; data_configuration < 16; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < 16; data_configuration++) begin
     // Encode the original data
     encoder_data = data_configuration;
     #1;

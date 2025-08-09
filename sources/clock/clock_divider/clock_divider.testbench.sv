@@ -19,9 +19,9 @@
 module clock_divider__testbench ();
 
 // Test parameters
-localparam CLOCK_PERIOD      = 10;
-localparam FREQUENCY_UNIT    = "MHz";
-localparam MAX_TEST_DIVISION = 10;
+localparam real   CLOCK_PERIOD      = 10;
+localparam string FREQUENCY_UNIT    = "MHz";
+localparam int    MAX_TEST_DIVISION = 10;
 
 // Device ports
 logic                       clock_in;
@@ -72,7 +72,7 @@ initial begin
 
   // Check 1 : Output divided frequency
   $display("CHECK 1 : Output divided frequency.");
-  for (integer division = 1; division <= MAX_TEST_DIVISION; division++) begin
+  for (int division = 1; division <= MAX_TEST_DIVISION; division++) begin
     `measure_frequency(clock_out[division], clock_out_frequency)
     if      (clock_out_frequency == 0) $error("[%t] Output clock with division factor of %0d is not running.", $time,  division);
     else if (clock_out_frequency != clock_in_frequency/division) $error("[%t] Output clock frequency (%d%s) with division factor of %0d doesn't match the expected clock frequency (%d%s).",

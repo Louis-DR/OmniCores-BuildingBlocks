@@ -19,8 +19,8 @@
 module static_priority_arbiter__testbench ();
 
 // Test parameters
-localparam SIZE      = 4;
-localparam SIZE_POW2 = 2 ** SIZE;
+localparam int SIZE      = 4;
+localparam int SIZE_POW2 = 2 ** SIZE;
 
 // Device ports
 logic [SIZE-1:0] requests;
@@ -52,13 +52,13 @@ initial begin
 
   // Check 1 : Exhaustive test
   $display("CHECK 1 : Exhaustive test.");
-  for (integer request_configuration = 0; request_configuration < SIZE_POW2; request_configuration++) begin
+  for (int request_configuration = 0; request_configuration < SIZE_POW2; request_configuration++) begin
     requests = request_configuration;
 
     // Calculate expected grant
     grant_expected = '0;
     found_grant    = false;
-    for (integer request_index = 0; request_index < SIZE; request_index++) begin
+    for (int request_index = 0; request_index < SIZE; request_index++) begin
       if (requests[request_index] && !found_grant) begin
         grant_expected = (1 << request_index);
         found_grant    = true;

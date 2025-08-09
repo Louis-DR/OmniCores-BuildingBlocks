@@ -20,14 +20,14 @@
 module fast_pulse_extender__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD = 10;
-localparam integer PULSE_LENGTH = 2;
+localparam real CLOCK_PERIOD = 10;
+localparam int  PULSE_LENGTH = 2;
 
 // Check parameters
-localparam integer LONG_PULSE_CHECK_LENGTH        = 4;
-localparam integer MULTI_PULSE_CHECK_LENGTH       = 4;
-localparam integer RANDOM_CHECK_DURATION          = 1000;
-localparam real    RANDOM_CHECK_PULSE_PROBABILITY = 1/(real'(PULSE_LENGTH));
+localparam int  LONG_PULSE_CHECK_LENGTH        = 4;
+localparam int  MULTI_PULSE_CHECK_LENGTH       = 4;
+localparam int  RANDOM_CHECK_DURATION          = 1000;
+localparam real RANDOM_CHECK_PULSE_PROBABILITY = 1/(real'(PULSE_LENGTH));
 
 // Device ports
 logic clock;
@@ -36,11 +36,11 @@ logic pulse_in;
 logic pulse_out;
 
 // Test variables
-integer test_pulse_count;
-integer pulse_count;
-integer current_pulse_length;
-integer current_pulse_polarity;
-bool    waiting_first_pulse;
+int  test_pulse_count;
+int  pulse_count;
+int  current_pulse_length;
+int  current_pulse_polarity;
+bool waiting_first_pulse;
 
 // Device under test
 fast_pulse_extender #(
@@ -61,7 +61,7 @@ initial begin
 end
 
 // Checker task for output pulse
-task automatic check_pulse_out(integer duration);
+task automatic check_pulse_out(int duration);
   if (pulse_out) begin
     $error("[%0tns] Output is already high at the start of the check.", $time);
   end

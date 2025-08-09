@@ -20,17 +20,17 @@
 module pulse_separator__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD        = 10;
-localparam integer PULSE_COUNTER_WIDTH = 3;
+localparam real CLOCK_PERIOD        = 10;
+localparam int  PULSE_COUNTER_WIDTH = 3;
 
 // Check parameters
-localparam integer LONG_PULSE_CHECK_LENGTH        = 4;
-localparam integer MULTI_PULSE_CHECK_LENGTH       = 4;
-localparam integer RANDOM_CHECK_DURATION          = 1000;
-localparam real    RANDOM_CHECK_PULSE_PROBABILITY = 0.3;
+localparam int  LONG_PULSE_CHECK_LENGTH        = 4;
+localparam int  MULTI_PULSE_CHECK_LENGTH       = 4;
+localparam int  RANDOM_CHECK_DURATION          = 1000;
+localparam real RANDOM_CHECK_PULSE_PROBABILITY = 0.3;
 
 // Check value
-localparam integer SEPARATOR_LATENCY = 1;
+localparam int SEPARATOR_LATENCY = 1;
 
 // Device ports
 logic clock;
@@ -40,11 +40,11 @@ logic pulse_out;
 logic busy;
 
 // Test variables
-integer test_pulse_count;
-integer pulse_count;
-integer current_pulse_length;
-integer current_pulse_polarity;
-bool    waiting_first_pulse;
+int  test_pulse_count;
+int  pulse_count;
+int  current_pulse_length;
+int  current_pulse_polarity;
+bool waiting_first_pulse;
 
 // Device under test
 pulse_separator #(
@@ -66,7 +66,7 @@ initial begin
 end
 
 // Checker task for output pulse
-task automatic check_pulse_out(integer duration, bool check_low_time = true);
+task automatic check_pulse_out(int duration, bool check_low_time = true);
   if (pulse_out) begin
     $error("[%0tns] Output is already high at the start of the check.", $time);
   end
@@ -103,7 +103,7 @@ task automatic check_pulse_out(integer duration, bool check_low_time = true);
 endtask
 
 // Checker task for output pulse
-task automatic check_pulse_count(integer expected_pulse_count);
+task automatic check_pulse_count(int expected_pulse_count);
   if (pulse_count == 0) begin
     $error("[%0tns] No output pulse.", $time);
   end else if (pulse_count > expected_pulse_count) begin

@@ -59,13 +59,13 @@ wire [SIZE-1:1] reset_timeout_countdowns = grant[SIZE-1:1];
 always @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
-    for (integer channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
+    for (int channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
       timeout_countdowns[channel_index] <= TIMEOUT - 1;
     end
   end
   // Operation
   else begin
-    for (integer channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
+    for (int channel_index = 1; channel_index < SIZE; channel_index = channel_index+1) begin
       // Decrement the timeout countdown
       if (decrement_timeout_countdowns[channel_index]) begin
         timeout_countdowns[channel_index] <= timeout_countdowns[channel_index] - 1;

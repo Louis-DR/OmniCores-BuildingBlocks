@@ -84,7 +84,7 @@ onehot_to_binary #(
 // Allocation and clear logic
 always_comb begin
   // Default assignments
-  for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+  for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
     buffer_next [depth_index] = buffer [depth_index];
     valid_next  [depth_index] = valid  [depth_index];
   end
@@ -109,7 +109,7 @@ always_ff @(posedge clock or negedge resetn) begin
   if (!resetn) begin
     full  <= 0;
     empty <= 1;
-    for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       buffer [depth_index] <= 0;
       valid  [depth_index] <= 0;
     end
@@ -118,7 +118,7 @@ always_ff @(posedge clock or negedge resetn) begin
   else begin
     full  <= full_next;
     empty <= empty_next;
-    for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       buffer [depth_index] <= buffer_next [depth_index];
       valid  [depth_index] <= valid_next  [depth_index];
     end

@@ -21,13 +21,13 @@
 module grey__testbench ();
 
 // Device parameters
-localparam WIDTH = 8;
+localparam int WIDTH = 8;
 
 // Test parameters
-localparam WIDTH_POW2              = 2**WIDTH;
-localparam FULL_CHECK_MAX_DURATION = 1024; // Exhaustive up to 2^10
-localparam RANDOM_SEQUENCE_COUNT   = 32;   // Number of random sequences
-localparam RANDOM_SEQUENCE_LENGTH  = 32;   // Length of each random sequence
+localparam int WIDTH_POW2              = 2**WIDTH;
+localparam int FULL_CHECK_MAX_DURATION = 1024; // Exhaustive up to 2^10
+localparam int RANDOM_SEQUENCE_COUNT   = 32;   // Number of random sequences
+localparam int RANDOM_SEQUENCE_LENGTH  = 32;   // Length of each random sequence
 
 // Device ports
 logic [WIDTH-1:0] binary_to_grey_binary;
@@ -60,7 +60,7 @@ endfunction
 function logic [WIDTH-1:0] reference_grey_to_binary(input logic [WIDTH-1:0] grey);
   logic [WIDTH-1:0] binary;
   binary[WIDTH-1] = grey[WIDTH-1];
-  for (integer bit_index = WIDTH-2; bit_index >= 0; bit_index--) begin
+  for (int bit_index = WIDTH-2; bit_index >= 0; bit_index--) begin
     binary[bit_index] = binary[bit_index+1] ^ grey[bit_index];
   end
   return binary;
@@ -93,7 +93,7 @@ endtask
 
 // Task to check single-bit difference between two successive grey codes
 task check_bit_difference(input logic [WIDTH-1:0] grey1, input logic [WIDTH-1:0] grey2);
-  integer bit_differences;
+  int bit_differences;
 
   `COUNT_BIT_DIFFERENCES(WIDTH, grey1, grey2, bit_differences)
 
@@ -114,7 +114,7 @@ task check_sequence(input logic [WIDTH-1:0] start_value, input logic [WIDTH-1:0]
              ? stop_value - start_value + 1
              : WIDTH_POW2 - start_value + stop_value + 1;
 
-  for (integer step = 0; step < iterations; step++) begin
+  for (int step = 0; step < iterations; step++) begin
     current_binary = (start_value + step) % WIDTH_POW2;
 
     // Check conversion correctness
@@ -148,7 +148,7 @@ initial begin
 
     // Check 1: Exhaustive test
     $display("CHECK 1: Exhaustive test.");
-    for (integer step = 0; step <= WIDTH_POW2; step++) begin
+    for (int step = 0; step <= WIDTH_POW2; step++) begin
       logic [WIDTH-1:0] current_binary;
       logic [WIDTH-1:0] current_grey;
       logic [WIDTH-1:0] previous_grey;
@@ -174,7 +174,7 @@ initial begin
 
     // Check 1: Random test
     $display("CHECK 1: Random test.");
-    for (integer sequence_index = 0; sequence_index < RANDOM_SEQUENCE_COUNT; sequence_index++) begin
+    for (int sequence_index = 0; sequence_index < RANDOM_SEQUENCE_COUNT; sequence_index++) begin
       logic [WIDTH-1:0] start_value;
       logic [WIDTH-1:0] stop_value;
       start_value = $urandom_range(0, WIDTH_POW2-1);

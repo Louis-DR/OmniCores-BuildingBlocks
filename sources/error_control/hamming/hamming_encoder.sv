@@ -48,16 +48,16 @@ hamming_block_packer #(
 );
 
 // Generate the parity bits
-integer parity_block_index;
+int parity_block_index;
 always_comb begin
   // Initial value of 0
   parity = 0;
   // Iterate over parity bits
-  for (integer parity_index = 0; parity_index < PARITY_WIDTH; parity_index++) begin
+  for (int parity_index = 0; parity_index < PARITY_WIDTH; parity_index++) begin
     // Index of the parity bit in the block
     parity_block_index = 2**parity_index-1;
     // Iterate over block bits
-    for (integer bit_index = 0; bit_index < PADDED_BLOCK_WIDTH; bit_index++) begin
+    for (int bit_index = 0; bit_index < PADDED_BLOCK_WIDTH; bit_index++) begin
       // The parity bit doesn't depend on itself
       if (bit_index != parity_block_index) begin
         // This formula detects the block bits that match the pattern

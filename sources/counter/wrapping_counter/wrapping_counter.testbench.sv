@@ -20,16 +20,16 @@
 module wrapping_counter__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD = 10;
-localparam integer RANGE        = 4;
-localparam integer RANGE_LOG2   = $clog2(RANGE);
-localparam integer RESET_VALUE  = 0;
+localparam real CLOCK_PERIOD = 10;
+localparam int  RANGE        = 4;
+localparam int  RANGE_LOG2   = $clog2(RANGE);
+localparam int  RESET_VALUE  = 0;
 
 // Check parameters
-localparam integer CHECK_TIMEOUT                      = 1000;
-localparam integer RANDOM_CHECK_DURATION              = 1000;
-localparam real    RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
+localparam int  CHECK_TIMEOUT                      = 1000;
+localparam int  RANDOM_CHECK_DURATION              = 1000;
+localparam real RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 
 // Device ports
 logic                  clock;
@@ -39,10 +39,10 @@ logic                  decrement;
 logic [RANGE_LOG2-1:0] count;
 
 // Test variables
-integer min_count = 0;
-integer max_count = RANGE - 1;
-integer expected_count;
-integer timeout_countdown;
+int min_count = 0;
+int max_count = RANGE - 1;
+int expected_count;
+int timeout_countdown;
 
 // Device under test
 wrapping_counter #(
@@ -65,7 +65,7 @@ initial begin
 end
 
 // Function to predict next count value with wrapping
-function integer predict_next_count(input integer current_count, input logic increment_signal, input logic decrement_signal);
+function int predict_next_count(input int current_count, input logic increment_signal, input logic decrement_signal);
   if (increment_signal && !decrement_signal) begin
     if (current_count == max_count) begin
       return min_count; // Wrap to min

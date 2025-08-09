@@ -97,7 +97,7 @@ always_comb begin
   // Default assignments
   reserve_pointer_next = reserve_pointer;
   read_pointer_next    = read_pointer;
-  for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+  for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
     buffer_next   [depth_index] = buffer   [depth_index];
     reserved_next [depth_index] = reserved [depth_index];
     valid_next    [depth_index] = valid    [depth_index];
@@ -144,7 +144,7 @@ always_ff @(posedge clock or negedge resetn) begin
     data_empty      <= 1;
     reserve_pointer <= 0;
     read_pointer    <= 0;
-    for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       buffer   [depth_index] <= 0;
       reserved [depth_index] <= 0;
       valid    [depth_index] <= 0;
@@ -158,7 +158,7 @@ always_ff @(posedge clock or negedge resetn) begin
     data_empty      <= data_empty_next;
     reserve_pointer <= reserve_pointer_next;
     read_pointer    <= read_pointer_next;
-    for (integer depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       buffer   [depth_index] <= buffer_next   [depth_index];
       reserved [depth_index] <= reserved_next [depth_index];
       valid    [depth_index] <= valid_next    [depth_index];

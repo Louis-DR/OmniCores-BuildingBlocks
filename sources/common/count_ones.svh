@@ -5,7 +5,7 @@
 `define COUNT_ONES(width, value, result) \
   begin \
     result = 0; \
-    for (integer bit_index_temp = 0; bit_index_temp < width; bit_index_temp++) begin \
+    for (int bit_index_temp = 0; bit_index_temp < width; bit_index_temp++) begin \
       if (value[bit_index_temp]) begin \
         result++; \
       end \

@@ -19,10 +19,10 @@
 module toggle_flip_flop__testbench ();
 
 // Test parameters
-localparam CLOCK_PERIOD = 10;
+localparam real CLOCK_PERIOD = 10;
 
 // Check parameters
-localparam integer RANDOM_CHECK_DURATION = 1000;
+localparam int RANDOM_CHECK_DURATION = 1000;
 
 // Device ports
 logic clock;

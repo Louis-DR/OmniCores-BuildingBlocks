@@ -28,12 +28,11 @@ module reset_synchronizer #(
 
 reg [STAGES-1:0] stages;
 
-integer stage_index;
 always @(posedge clock or negedge resetn_in) begin
   if (!resetn_in) stages <= 0;
   else begin
     stages[0] <= 1;
-    for (stage_index = 1; stage_index < STAGES; stage_index = stage_index+1) begin
+    for (int stage_index = 1; stage_index < STAGES; stage_index = stage_index+1) begin
       stages[stage_index] <= stages[stage_index-1];
     end
   end

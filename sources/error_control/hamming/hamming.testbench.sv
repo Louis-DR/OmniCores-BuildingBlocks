@@ -20,15 +20,15 @@
 module hamming__testbench ();
 
 // Device parameters
-localparam DATA_WIDTH   = 4;
-localparam PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH(DATA_WIDTH);
-localparam BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH;
+localparam int DATA_WIDTH   = 4;
+localparam int PARITY_WIDTH = `GET_HAMMING_PARITY_WIDTH(DATA_WIDTH);
+localparam int BLOCK_WIDTH  = DATA_WIDTH + PARITY_WIDTH;
 
 // Test parameters
-localparam DATA_WIDTH_POW2         = 2**DATA_WIDTH;
-localparam BLOCK_WIDTH_LOG2        = $clog2(BLOCK_WIDTH);
-localparam FULL_CHECK_MAX_DURATION = 512;  // Exhaustive up to 2^9
-localparam RANDOM_CHECK_DURATION   = 1024;
+localparam int DATA_WIDTH_POW2         = 2**DATA_WIDTH;
+localparam int BLOCK_WIDTH_LOG2        = $clog2(BLOCK_WIDTH);
+localparam int FULL_CHECK_MAX_DURATION = 512;  // Exhaustive up to 2^9
+localparam int RANDOM_CHECK_DURATION   = 1024;
 
 // Device ports
 logic       [DATA_WIDTH-1:0] encoder_data;
@@ -70,7 +70,7 @@ logic   [DATA_WIDTH-1:0] poisoned_data;
 logic [PARITY_WIDTH-1:0] poisoned_code;
 
 // Test variables
-integer error_position;
+int error_position;
 
 // Devices under test
 hamming_encoder #(
@@ -174,7 +174,7 @@ function logic [BLOCK_WIDTH-1:0] hamming_block_pack(input logic [DATA_WIDTH-1:0]
 endfunction
 
 // Function to inject a single bit error in a block
-function automatic logic [BLOCK_WIDTH-1:0] inject_single_bit_error(input integer error_position, input logic [BLOCK_WIDTH-1:0] original_block);
+function automatic logic [BLOCK_WIDTH-1:0] inject_single_bit_error(input int error_position, input logic [BLOCK_WIDTH-1:0] original_block);
   logic [BLOCK_WIDTH-1:0] poisoned_block;
   poisoned_block = original_block ^ (1 << error_position);
   return poisoned_block;
@@ -253,7 +253,7 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
 endtask
 
 // Task to check the outputs of the checker and corrector modules for a given data with a single bit error
-task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] test_data, input integer error_position);
+task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] test_data, input int error_position);
 
   // Calculate the expected Hamming code and block
   expected_code  = hamming_code(test_data);
@@ -337,16 +337,16 @@ initial begin
 
     // Check 1: Exhaustive test without error
     $display("CHECK 1: Exhaustive test without error.");
-    for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+    for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
       test_data = data_configuration;
       check_all_modules_no_error(test_data);
     end
 
     // Check 2: Exhaustive test with single-bit flip error
     $display("CHECK 2: Exhaustive test with single-bit flip error.");
-    for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+    for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
       test_data = data_configuration;
-      for (integer error_position = 0; error_position < BLOCK_WIDTH; error_position++) begin
+      for (int error_position = 0; error_position < BLOCK_WIDTH; error_position++) begin
         check_checker_and_corrector_single_bit_error(test_data, error_position);
       end
     end
@@ -358,14 +358,14 @@ initial begin
 
     // Check 1: Random test without error
     $display("CHECK 1: Random test without error.");
-    for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
+    for (int random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
       test_data = $urandom_range(0, DATA_WIDTH_POW2-1);
       check_all_modules_no_error(test_data);
     end
 
     // Check 2: Random test with single-bit flip error
     $display("CHECK 2: Random test with single-bit flip error.");
-    for (integer random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
+    for (int random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
       test_data      = $urandom_range(0, DATA_WIDTH_POW2-1);
       error_position = $urandom_range(0, BLOCK_WIDTH-1);
       check_checker_and_corrector_single_bit_error(test_data, error_position);

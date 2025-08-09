@@ -19,7 +19,7 @@
 module small_first_one__testbench ();
 
 // Test parameters
-localparam WIDTH = 8;
+localparam int WIDTH = 8;
 
 // Device ports
 logic [WIDTH-1:0] data;
@@ -51,12 +51,12 @@ initial begin
 
   // Check 1 : Exhaustive test
   $display("CHECK 1 : Exhaustive test.");
-  for (integer data_configuration = 0; data_configuration < 2**WIDTH; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < 2**WIDTH; data_configuration++) begin
     data = data_configuration;
     // Calculate expected first one position
     first_one_expected = '0;
     found_first_one    = false;
-    for (integer data_index = 0; data_index < WIDTH; data_index++) begin
+    for (int data_index = 0; data_index < WIDTH; data_index++) begin
       if (data[data_index] && !found_first_one) begin
         first_one_expected = (1 << data_index);
         found_first_one    = true;

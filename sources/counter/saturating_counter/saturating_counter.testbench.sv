@@ -19,15 +19,15 @@
 module saturating_counter__testbench ();
 
 // Test parameters
-localparam real    CLOCK_PERIOD = 10;
-localparam integer RANGE        = 4;
-localparam integer RANGE_LOG2   = $clog2(RANGE);
-localparam integer RESET_VALUE  = 0;
+localparam real CLOCK_PERIOD = 10;
+localparam int  RANGE        = 4;
+localparam int  RANGE_LOG2   = $clog2(RANGE);
+localparam int  RESET_VALUE  = 0;
 
 // Check parameters
-localparam integer RANDOM_CHECK_DURATION              = 100;
-localparam real    RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
-localparam real    RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
+localparam int  RANDOM_CHECK_DURATION              = 100;
+localparam real RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 
 // Device ports
 logic                  clock;
@@ -37,9 +37,9 @@ logic                  decrement;
 logic [RANGE_LOG2-1:0] count;
 
 // Test variables
-integer min_count = 0;
-integer max_count = RANGE - 1;
-integer expected_count;
+int min_count = 0;
+int max_count = RANGE - 1;
+int expected_count;
 
 // Device under test
 saturating_counter #(

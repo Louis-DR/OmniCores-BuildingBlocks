@@ -21,14 +21,14 @@
 module onehot__testbench ();
 
 // Device parameters
-localparam WIDTH_BINARY = 8;
-localparam WIDTH_ONEHOT = 2**WIDTH_BINARY;
+localparam int WIDTH_BINARY = 8;
+localparam int WIDTH_ONEHOT = 2**WIDTH_BINARY;
 
 // Test parameters
-localparam WIDTH_BINARY_POW2         = 2**WIDTH_BINARY;
-localparam FULL_CHECK_MAX_DURATION   = 1024; // Exhaustive up to 2^10
-localparam RANDOM_SEQUENCE_COUNT     = 32;   // Number of random sequences
-localparam RANDOM_SEQUENCE_LENGTH    = 32;   // Length of each random sequence
+localparam int WIDTH_BINARY_POW2         = 2**WIDTH_BINARY;
+localparam int FULL_CHECK_MAX_DURATION   = 1024; // Exhaustive up to 2^10
+localparam int RANDOM_SEQUENCE_COUNT     = 32;   // Number of random sequences
+localparam int RANDOM_SEQUENCE_LENGTH    = 32;   // Length of each random sequence
 
 // Device ports
 logic [WIDTH_BINARY-1:0] binary_to_onehot_binary;
@@ -63,7 +63,7 @@ endfunction
 function logic [WIDTH_BINARY-1:0] reference_onehot_to_binary(input logic [WIDTH_ONEHOT-1:0] onehot);
   logic [WIDTH_BINARY-1:0] binary;
   binary = 0;
-  for (integer bit_index = 0; bit_index < WIDTH_ONEHOT; bit_index++) begin
+  for (int bit_index = 0; bit_index < WIDTH_ONEHOT; bit_index++) begin
     if (onehot[bit_index]) binary = bit_index;
   end
   return binary;
@@ -96,7 +96,7 @@ endtask
 
 // Task to check one-hot property (exactly one bit set)
 task check_onehot_property(input logic [WIDTH_ONEHOT-1:0] onehot_value);
-  integer bit_count;
+  int bit_count;
 
   `COUNT_ONES(WIDTH_ONEHOT, onehot_value, bit_count)
 
@@ -116,7 +116,7 @@ task check_sequence(input logic [WIDTH_BINARY-1:0] start_value, input logic [WID
              ? stop_value - start_value + 1
              : WIDTH_BINARY_POW2 - start_value + stop_value + 1;
 
-  for (integer step = 0; step < iterations; step++) begin
+  for (int step = 0; step < iterations; step++) begin
     current_binary = (start_value + step) % WIDTH_BINARY_POW2;
 
     // Check conversion correctness
@@ -146,7 +146,7 @@ initial begin
 
     // Check 1: Exhaustive test
     $display("CHECK 1: Exhaustive test.");
-    for (integer step = 0; step <= WIDTH_BINARY_POW2; step++) begin
+    for (int step = 0; step <= WIDTH_BINARY_POW2; step++) begin
       logic [WIDTH_BINARY-1:0] current_binary;
       logic [WIDTH_ONEHOT-1:0] current_onehot;
 
@@ -167,7 +167,7 @@ initial begin
 
     // Check 1: Random test
     $display("CHECK 1: Random test.");
-    for (integer sequence_index = 0; sequence_index < RANDOM_SEQUENCE_COUNT; sequence_index++) begin
+    for (int sequence_index = 0; sequence_index < RANDOM_SEQUENCE_COUNT; sequence_index++) begin
       logic [WIDTH_BINARY-1:0] start_value;
       logic [WIDTH_BINARY-1:0] stop_value;
       start_value = $urandom_range(0, WIDTH_BINARY_POW2-1);

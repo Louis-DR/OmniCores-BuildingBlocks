@@ -53,16 +53,16 @@ logic  full_next;
 assign full_next = &valid_next;
 
 // Iteration variable
-integer depth_index;
+int depth_index;
 
 // Index of the first free slot in the memory
 logic [INDEX_WIDTH-1:0] first_free_index;
 always_comb begin
   first_free_index = 0;
 `ifdef SIMUMLATOR_NO_BREAK
-  for (depth_index = DEPTH-1; depth_index >= 0; depth_index = depth_index-1) begin
+  for (int depth_index = DEPTH-1; depth_index >= 0; depth_index = depth_index-1) begin
 `else
-  for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+  for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
 `endif
     if (!valid[depth_index]) begin
       first_free_index = depth_index;
@@ -75,7 +75,7 @@ end
 
 // Allocation and eviction
 always_comb begin
-  for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+  for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
     buffer_next [depth_index] = buffer [depth_index];
     valid_next  [depth_index] = valid  [depth_index];
   end
@@ -93,9 +93,9 @@ always_comb begin
   search_index = 0;
   search_hit   = 0;
 `ifdef SIMUMLATOR_NO_BREAK
-  for (depth_index = DEPTH-1; depth_index >= 0; depth_index = depth_index-1) begin
+  for (int depth_index = DEPTH-1; depth_index >= 0; depth_index = depth_index-1) begin
 `else
-  for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+  for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
 `endif
     if (valid[depth_index] && buffer[depth_index] == search_tag) begin
       search_index = depth_index;

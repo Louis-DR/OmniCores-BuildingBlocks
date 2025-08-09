@@ -18,10 +18,10 @@
 module parity__testbench ();
 
 // Devices parameters
-localparam DATA_WIDTH = 8;
+localparam int DATA_WIDTH = 8;
 
 // Devices constants
-localparam DATA_WIDTH_POW2 = 2 ** DATA_WIDTH;
+localparam int DATA_WIDTH_POW2 = 2 ** DATA_WIDTH;
 
 // Devices ports
 logic [DATA_WIDTH-1:0] encoder_data;
@@ -82,7 +82,7 @@ initial begin
 
   // Check 1: Parity encoder exhaustive test
   $display("CHECK 1: Parity encoder exhaustive test.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     encoder_data = data_configuration;
 
     // Calculate expected parity code
@@ -106,7 +106,7 @@ initial begin
 
   // Check 2: Parity checker with correct parity
   $display("CHECK 2: Parity checker with correct parity.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data = data_configuration;
     test_code = ^test_data;
 
@@ -127,7 +127,7 @@ initial begin
 
   // Check 3: Parity checker with incorrect parity
   $display("CHECK 3: Parity checker with incorrect parity.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data = data_configuration;
     test_code = ~(^test_data);
 
@@ -148,7 +148,7 @@ initial begin
 
   // Check 4: Block checker with correct parity blocks
   $display("CHECK 4: Block checker with correct parity blocks.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data  = data_configuration;
     test_code  = ^test_data;
     test_block = {test_code, test_data};
@@ -169,7 +169,7 @@ initial begin
 
   // Check 5: Block checker with incorrect parity blocks
   $display("CHECK 5: Block checker with incorrect parity blocks.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     test_data  = data_configuration;
     test_code  = ~(^test_data);
     test_block = {test_code, test_data};
@@ -190,7 +190,7 @@ initial begin
 
   // Check 6: Complete encode-decode cycle
   $display("CHECK 6: Complete encode-decode cycle.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     // Encode the data
     encoder_data = data_configuration;
     #1;
@@ -220,13 +220,13 @@ initial begin
 
   // Check 7: Single bit error detection
   $display("CHECK 7: Single bit error detection.");
-  for (integer data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
+  for (int data_configuration = 0; data_configuration < DATA_WIDTH_POW2; data_configuration++) begin
     // Encode the original data
     encoder_data = data_configuration;
     #1;
 
     // Introduce single bit errors in each position of the block
-    for (integer error_position = 0; error_position <= DATA_WIDTH; error_position++) begin
+    for (int error_position = 0; error_position <= DATA_WIDTH; error_position++) begin
       // Create corrupted block with single bit error
       test_block = encoder_block ^ (1 << error_position);
 
