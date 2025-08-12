@@ -106,6 +106,7 @@ This module has no dependency.
 
 | Module                                                                                   | Path                                                               | Comment                                                   |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------- |
+| [`clock_multiplier`](../clock_multiplier/clock_multiplier.md)                            | `omnicores-buildingblocks/sources/clock/clock_multiplier`          | Static clock multiplier behavioral model.                 |
 | [`clock_gater`](../clock_gater/clock_gater.md)                                           | `omnicores-buildingblocks/sources/clock/clock_gater`               | Clock gater behavioral model.                             |
 | [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                         | `omnicores-buildingblocks/sources/clock/clock_multiplexer`         | Multiplexer to select between clocks.                     |
 | [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md)          | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer`    | Faster clock multiplexer.                                 |
