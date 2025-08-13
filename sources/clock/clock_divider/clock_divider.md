@@ -12,7 +12,7 @@
 
 ![clock_divider](clock_divider.symbol.svg)
 
-Divides the frequency of the input clock `clock_in` by the `DIVISION` factor. The output clock `clock_out` runs `DIVISION` times slower than the input clock. If `DIVISION` is 1 or less, `clock_in` is directly passed through to `clock_out` without any logic. If `DIVISION` is 2 or more, a counter is used. For odd `DIVISION` values greater than 1, the high pulse of `clock_out` is one `clock_in` cycle longer than the low pulse, resulting in a duty cycle slightly greater than 50%. For even `DIVISION` values greater than 1, the duty cycle is exactly 50%.
+Divides the frequency of the input clock `clock_in` by the `DIVISION` factor. The output clock `clock_out` runs `DIVISION` times slower than the input clock. If `DIVISION` is 1 or less, `clock_in` is directly passed through to `clock_out` without any logic. If `DIVISION` is a power of two, the MSB of a free‑running binary counter is used, producing an exact 50% duty cycle. Otherwise, for non-power-of-two values, a counter with decode is used. For odd `DIVISION` values greater than 1, the high pulse of `clock_out` is one `clock_in` cycle longer than the low pulse, resulting in a duty cycle slightly greater than 50%. For even non-power-of-two `DIVISION` values greater than 1, the duty cycle is exactly 50%.
 
 ![clock_divider](clock_divider.wavedrom.svg)
 
@@ -32,7 +32,11 @@ Divides the frequency of the input clock `clock_in` by the `DIVISION` factor. Th
 
 ## Operation
 
-If `DIVISION < 2`, `clock_out` is directly assigned to `clock_in`. Else, the module uses an internal counter that increments on each positive edge of `clock_in`. The counter counts from `0` up to `DIVISION - 1`. When the counter reaches `DIVISION / 2 - (1 - DIVISION % 2)` (which simplifies to `DIVISION / 2 - 1` for even `DIVISION` and `(DIVISION - 1) / 2` for odd `DIVISION`), `clock_out` transitions low. When the counter reaches `DIVISION - 1`, `clock_out` transitions high, and the counter resets to `0`. The asynchronous reset `resetn` forces `clock_out` low and resets the `counter` to `0`.
+If `DIVISION < 2`, `clock_out` is directly assigned to `clock_in`.
+
+If `DIVISION` is a power of two and at least 2, the module uses a free‑running binary counter and drives `clock_out` with the counter MSB. This yields an exact 50% duty cycle, avoids wide equality comparisons, and keeps the design fully synchronous.
+
+Otherwise, the module uses an internal counter that increments on each positive edge of `clock_in`. The counter counts from `0` up to `DIVISION - 1`. When the counter reaches `DIVISION / 2 - (1 - DIVISION % 2)` (which simplifies to `DIVISION / 2 - 1` for even `DIVISION` and `(DIVISION - 1) / 2` for odd `DIVISION`), `clock_out` transitions low. When the counter reaches `DIVISION - 1`, `clock_out` transitions high, and the counter resets to `0`. The asynchronous reset `resetn` forces `clock_out` low and resets the `counter` to `0`.
 
 ## Paths
 

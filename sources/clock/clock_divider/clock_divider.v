@@ -19,6 +19,7 @@
 
 
 `include "clog2.vh"
+`include "is_pow2.vh"
 
 
 
@@ -36,7 +37,31 @@ if (DIVISION < 2) begin
   assign clock_out = clock_in;
 end
 
-// Division factor of 2 or more
+// Division factor is a power of two
+else if (`IS_POW2(DIVISION)) begin
+
+  // Width of the counter
+  localparam DIVISION_LOG2 = `CLOG2(DIVISION);
+
+  // Free-running counter
+  reg [DIVISION_LOG2-1:0] counter;
+
+  always @(posedge clock_in or negedge resetn) begin
+    // Reset
+    if (!resetn) begin
+      counter <= 0;
+    end
+    // Operation
+    else begin
+      counter <= counter + 1;
+    end
+  end
+
+  // Use the MSB of the binary counter
+  assign clock_out = counter[DIVISION_LOG2-1];
+end
+
+// Division factor of 2 or more and not a power of two
 else begin
 
   // Width of the counter
