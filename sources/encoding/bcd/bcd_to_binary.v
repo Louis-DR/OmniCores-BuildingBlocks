@@ -31,7 +31,7 @@ localparam NUMBER_ITERATIONS = WIDTH_BINARY;
 localparam BCD_DIGIT_WIDTH   = 4;
 localparam NUMBER_BCD_DIGITS = WIDTH_BCD / BCD_DIGIT_WIDTH;
 
-wire [SCRATCH_WIDTH-1:0] scratch [NUMBER_ITERATIONS:0];
+wire [SCRATCH_WIDTH-1:0] scratch [NUMBER_ITERATIONS-1:0];
 
 generate
   for (genvar iteration = 0; iteration < NUMBER_ITERATIONS; iteration = iteration + 1) begin : reverse_double_dabble
@@ -65,6 +65,6 @@ generate
   end
 endgenerate
 
-assign binary = scratch[NUMBER_ITERATIONS][WIDTH_BINARY-1:0];
+assign binary = scratch[NUMBER_ITERATIONS-1][WIDTH_BINARY-1:0];
 
 endmodule
