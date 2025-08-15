@@ -79,15 +79,26 @@ The following table lists the parameter values verified by the testbench.
 
 ## Constraints
 
-A `generated_clock` should be created on the output pin of the `clock_divided` flip-flop of the clock divider. For even division factors, `-divide_by` can be used since the duty cycle is 50%. For odd divisions factors, `-edges` must be used instead, with the high pulses being one more input clock cycle than the low pulses.
+The constraints file `clock_divider.sdc` contains the procedure `::omnicores::buildingblocks::timing::clock_divider::apply_constraints_to_instance`. It takes as parameter the hierarchical path to the instance of the clock divider and applies constraints to it, and optionally the division factor. If the division factor is not provided to the function call, the procedure will try to determine it.
 
 ```tcl
-# For an even division factor, the -divide_by argument can be used as the duty cycles is 50%
-create_generated_clock -name  -source [get_pins clock_divider/clock_in] -divide_by 2 [get_pins clock_divider/clock_divider_reg/Q]
+set clock_divider_path "path/to/clock_divider"
+set division_factor 2
 
-# For an odd division factor, the -edges argument should be used instead
-create_generated_clock -name  -source [get_pins clock_divider/clock_in] -edges {0 4 6} [get_pins clock_divider/clock_divider_reg/Q]
+::omnicores::buildingblocks::timing::clock_divider::apply_constraints_to_instance $clock_divider_path $division_factor
 ```
+
+The procedure fetches all the clocks defined on the input clock pin, and creates a generated clock on the output clock pin for each of them. The generated clocks have the correct divided frequency, and edges for odd division factor to specify the asymetric duty cycle. The generated clocks are considered logically exclusive using a clock group.
+
+To call the procedure automatically on all instances of the clock divider, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `clock_divider` and the constraints procedure `::omnicores::buildingblocks::timing::clock_divider::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
+
+```tcl
+::omnicores::common::apply_constraints_to_all_module_instances "clock_divider" "::omnicores::buildingblocks::timing::clock_divider::apply_constraints_to_instance"
+```
+
+**Important:** the constraints procedure should be called after all clocks on the input pin have been declared. If the input clocks are defined by other OmniCores procedures, they should be called in order of the clock tree. The procedure will print a warning if no clocks are defined on an input clock pin, but it cannot detect if other clocks are added after the procedure is called. This is especially important when applying the constraints automatically on all instances as the order cannot be controlled.
+
+Special gates (AND, OR, NOT) made for clock paths can be used for better results if they are available in the technology node.
 
 ## Deliverables
 
@@ -96,6 +107,7 @@ create_generated_clock -name  -source [get_pins clock_divider/clock_in] -edges {
 | Design              | [`clock_divider.v`](clock_divider.v)                           | Verilog design.                                     |
 | Testbench           | [`clock_divider.testbench.sv`](clock_divider.testbench.sv)     | SystemVerilog verification testbench.               |
 | Waveform script     | [`clock_divider.testbench.gtkw`](clock_divider.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script   | [`clock_divider.sdc`](clock_divider.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor   | [`clock_divider.symbol.sss`](clock_divider.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`clock_divider.symbol.svg`](clock_divider.symbol.svg)         | Generated vector image of the symbol.               |
 | Waveform descriptor | [`clock_divider.wavedrom.json`](clock_divider.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
