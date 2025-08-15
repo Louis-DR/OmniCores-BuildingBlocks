@@ -44,14 +44,14 @@ generate
       // Shift the previous scratch right by 1
       wire [SCRATCH_WIDTH-1:0] scratch_temporary;
       shift_right #(
-        .WIDTH ( SCRATCH_WIDTH ),
+        .WIDTH ( SCRATCH_WIDTH )
       ) shift_right_inst (
         .data_in  ( scratch[iteration-1] ),
         .data_out ( scratch_temporary )
       );
       // Decode the BCD digits from the shifted scratch
       wire [3:0] bcd_digits [NUMBER_BCD_DIGITS-1:0];
-      for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : bcd_digits
+      for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : decode_bcd_digits
         assign bcd_digits[digit] = scratch_temporary[WIDTH_BINARY + BCD_DIGIT_WIDTH*digit +: BCD_DIGIT_WIDTH];
       end
       // Subtract 3 from any BCD digit which is at least 8
