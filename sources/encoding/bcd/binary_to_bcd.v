@@ -35,11 +35,11 @@ wire [SCRATCH_WIDTH-1:0] scratch [NUMBER_ITERATIONS:0];
 generate
   for (genvar iteration = 0; iteration < NUMBER_ITERATIONS; iteration = iteration + 1) begin : double_dabble
     // Initialize the scratch with the binary input
-    if (iteration == 0) begin
+    if (iteration == 0) begin : initialization
       assign scratch[iteration] = {{WIDTH_BCD{1'b0}}, binary};
     end
     // For each iteration
-    else begin
+    else begin : iteration
       // Decode the BCD digits from the previous scratch
       wire [3:0] bcd_digits [NUMBER_BCD_DIGITS-1:0];
       for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : decode_bcd_digits

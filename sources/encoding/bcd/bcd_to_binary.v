@@ -36,11 +36,11 @@ wire [SCRATCH_WIDTH-1:0] scratch [NUMBER_ITERATIONS:0];
 generate
   for (genvar iteration = 0; iteration < NUMBER_ITERATIONS; iteration = iteration + 1) begin : reverse_double_dabble
     // Initialize the scratch with the BCD input
-    if (iteration == 0) begin
+    if (iteration == 0) begin : initialization
       assign scratch[iteration] = {bcd, {WIDTH_BINARY{1'b0}}};
     end
     // For each iteration
-    else begin
+    else begin : iteration
       // Shift the previous scratch right by 1
       wire [SCRATCH_WIDTH-1:0] scratch_temporary;
       shift_right #(
@@ -60,7 +60,7 @@ generate
                (bcd_digits[digit] >= 8) ? bcd_digits[digit] - 3 : bcd_digits[digit];
       end
       // Copy the binary portion unchanged
-      assign scratch[iteration][WIDTH_BINARY-1:0] = scratch_shifted[WIDTH_BINARY-1:0];
+      assign scratch[iteration][WIDTH_BINARY-1:0] = scratch_temporary[WIDTH_BINARY-1:0];
     end
   end
 endgenerate
