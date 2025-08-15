@@ -30,40 +30,36 @@ localparam NUMBER_ITERATIONS = WIDTH_BINARY;
 localparam BCD_DIGIT_WIDTH   = 4;
 localparam NUMBER_BCD_DIGITS = WIDTH_BCD / BCD_DIGIT_WIDTH;
 
-wire [SCRATCH_WIDTH-1:0] scratch [NUMBER_ITERATIONS-1:0];
+wire [SCRATCH_WIDTH-1:0] scratch [NUMBER_ITERATIONS:0];
+
+// Initialize the scratch with the binary input
+assign scratch[0] = {{WIDTH_BCD{1'b0}}, binary};
 
 generate
   for (genvar iteration = 0; iteration < NUMBER_ITERATIONS; iteration = iteration + 1) begin : double_dabble
-    // Initialize the scratch with the binary input
-    if (iteration == 0) begin : initialization
-      assign scratch[iteration] = {{WIDTH_BCD{1'b0}}, binary};
+    // Decode the BCD digits from the current scratch
+    wire [3:0] bcd_digits [NUMBER_BCD_DIGITS-1:0];
+    for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : decode_bcd_digits
+      assign bcd_digits[digit] = scratch[iteration][WIDTH_BINARY + BCD_DIGIT_WIDTH*digit +: BCD_DIGIT_WIDTH];
     end
-    // For each iteration
-    else begin : iteration
-      // Decode the BCD digits from the previous scratch
-      wire [3:0] bcd_digits [NUMBER_BCD_DIGITS-1:0];
-      for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : decode_bcd_digits
-        assign bcd_digits[digit] = scratch[iteration-1][WIDTH_BINARY + BCD_DIGIT_WIDTH*digit +: BCD_DIGIT_WIDTH];
-      end
-      // Add 3 to any BCD digit which is at least 5
-      wire [SCRATCH_WIDTH-1:0] scratch_temporary;
-      for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : add_3_to_bcd_digits
-        assign scratch_temporary[WIDTH_BINARY + BCD_DIGIT_WIDTH*digit +: BCD_DIGIT_WIDTH] =
-               (bcd_digits[digit] >= 5) ? bcd_digits[digit] + 3 : bcd_digits[digit];
-      end
-      // Copy the binary portion unchanged
-      assign scratch_temporary[WIDTH_BINARY-1:0] = scratch[iteration-1][WIDTH_BINARY-1:0];
-      // Shift left by 1
-      shift_left #(
-        .WIDTH ( SCRATCH_WIDTH )
-      ) shift_left_inst (
-        .data_in  ( scratch_temporary  ),
-        .data_out ( scratch[iteration] )
-      );
+    // Add 3 to any BCD digit which is at least 5
+    wire [SCRATCH_WIDTH-1:0] scratch_temporary;
+    for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : add_3_to_bcd_digits
+      assign scratch_temporary[WIDTH_BINARY + BCD_DIGIT_WIDTH*digit +: BCD_DIGIT_WIDTH] =
+             (bcd_digits[digit] >= 5) ? bcd_digits[digit] + 3 : bcd_digits[digit];
     end
+    // Copy the binary portion unchanged
+    assign scratch_temporary[WIDTH_BINARY-1:0] = scratch[iteration][WIDTH_BINARY-1:0];
+    // Shift left by 1
+    shift_left #(
+      .WIDTH ( SCRATCH_WIDTH )
+    ) shift_left_inst (
+      .data_in  ( scratch_temporary    ),
+      .data_out ( scratch[iteration+1] )
+    );
   end
 endgenerate
 
-assign bcd = scratch[NUMBER_ITERATIONS-1][WIDTH_BINARY +: WIDTH_BCD];
+assign bcd = scratch[NUMBER_ITERATIONS][WIDTH_BINARY +: WIDTH_BCD];
 
 endmodule
