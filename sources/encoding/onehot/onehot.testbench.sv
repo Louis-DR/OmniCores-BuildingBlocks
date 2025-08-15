@@ -25,10 +25,9 @@ localparam int WIDTH_BINARY = 8;
 localparam int WIDTH_ONEHOT = 2**WIDTH_BINARY;
 
 // Test parameters
-localparam int WIDTH_BINARY_POW2         = 2**WIDTH_BINARY;
-localparam int FULL_CHECK_MAX_DURATION   = 1024; // Exhaustive up to 2^10
-localparam int RANDOM_SEQUENCE_COUNT     = 32;   // Number of random sequences
-localparam int RANDOM_SEQUENCE_LENGTH    = 32;   // Length of each random sequence
+localparam int WIDTH_BINARY_POW2       = 2**WIDTH_BINARY;
+localparam int FULL_CHECK_MAX_DURATION = 1024; // Exhaustive up to 2^10
+localparam int RANDOM_CHECK_DURATION   = 1000; // Number of random iterations
 
 // Device ports
 logic [WIDTH_BINARY-1:0] binary_to_onehot_binary;
@@ -105,29 +104,6 @@ task check_onehot_property(input logic [WIDTH_ONEHOT-1:0] onehot_value);
                 $time, onehot_value, bit_count);
 endtask
 
-// Task to check a sequence from start_value to stop_value
-task check_sequence(input logic [WIDTH_BINARY-1:0] start_value, input logic [WIDTH_BINARY-1:0] stop_value);
-  logic [WIDTH_BINARY-1:0] current_binary;
-  logic [WIDTH_ONEHOT-1:0] current_onehot;
-  logic [WIDTH_BINARY-1:0] iterations;
-
-  // Support wrapping
-  iterations = stop_value >= start_value
-             ? stop_value - start_value + 1
-             : WIDTH_BINARY_POW2 - start_value + stop_value + 1;
-
-  for (int step = 0; step < iterations; step++) begin
-    current_binary = (start_value + step) % WIDTH_BINARY_POW2;
-
-    // Check conversion correctness
-    check_conversion(current_binary);
-    current_onehot = binary_to_onehot_onehot;
-
-    // Check one-hot property
-    check_onehot_property(current_onehot);
-  end
-endtask
-
 // Main test block
 initial begin
   // Log waves
@@ -146,11 +122,11 @@ initial begin
 
     // Check 1: Exhaustive test
     $display("CHECK 1: Exhaustive test.");
-    for (int step = 0; step <= WIDTH_BINARY_POW2; step++) begin
+    for (int value = 0; value < WIDTH_BINARY_POW2; value++) begin
       logic [WIDTH_BINARY-1:0] current_binary;
       logic [WIDTH_ONEHOT-1:0] current_onehot;
 
-      current_binary = step % WIDTH_BINARY_POW2;
+      current_binary = value[WIDTH_BINARY-1:0];
 
       // Check conversion correctness
       check_conversion(current_binary);
@@ -167,12 +143,18 @@ initial begin
 
     // Check 1: Random test
     $display("CHECK 1: Random test.");
-    for (int sequence_index = 0; sequence_index < RANDOM_SEQUENCE_COUNT; sequence_index++) begin
-      logic [WIDTH_BINARY-1:0] start_value;
-      logic [WIDTH_BINARY-1:0] stop_value;
-      start_value = $urandom_range(0, WIDTH_BINARY_POW2-1);
-      stop_value  = (start_value + RANDOM_SEQUENCE_LENGTH - 1) % WIDTH_BINARY_POW2;
-      check_sequence(start_value, stop_value);
+    repeat (RANDOM_CHECK_DURATION) begin
+      logic [WIDTH_BINARY-1:0] current_binary;
+      logic [WIDTH_ONEHOT-1:0] current_onehot;
+
+      current_binary = $urandom_range(0, WIDTH_BINARY_POW2-1);
+
+      // Check conversion correctness
+      check_conversion(current_binary);
+      current_onehot = binary_to_onehot_onehot;
+
+      // Check one-hot property
+      check_onehot_property(current_onehot);
     end
 
   end
