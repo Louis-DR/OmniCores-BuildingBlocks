@@ -31,14 +31,6 @@ Converts Grey code (reflected binary code) back to standard binary representatio
 
 The grey-to-binary conversion uses an iterative algorithm where each binary bit is computed based on the Grey code input and previously computed binary bits. The most significant bit (MSB) of the binary output equals the MSB of the Grey code input. For all other positions `i` (from MSB-1 down to LSB), the binary bit is computed as `binary[i] = binary[i+1] ^ grey[i]`.
 
-The algorithm can be expressed as:
-
-```
-binary[WIDTH-1] = grey[WIDTH-1]
-for i = WIDTH-2 down to 0:
-    binary[i] = binary[i+1] ^ grey[i]
-```
-
 This sequential dependency from MSB to LSB means the conversion requires multiple logic levels but ensures perfect reconstruction of the original binary value.
 
 ## Paths
@@ -96,5 +88,5 @@ This module has no external module dependencies.
 | Module                                              | Path                                               | Comment                    |
 | --------------------------------------------------- | -------------------------------------------------- | -------------------------- |
 | [`binary_to_grey`](binary_to_grey.md)               | `omnicores-buildingblocks/sources/encoding/grey`   | Binary to Grey encoder.    |
-| [`binary_to_onehot`](../onehot/binary_to_onehot.md) | `omnicores-buildingblocks/sources/encoding/onehot` | Binary to one-hot encoder. |
 | [`onehot_to_binary`](../onehot/onehot_to_binary.md) | `omnicores-buildingblocks/sources/encoding/onehot` | One-hot to binary decoder. |
+| [`bcd_to_binary`](bcd_to_binary.md)                 | `omnicores-buildingblocks/sources/encoding/bcd`    | BCD to binary decoder.     |

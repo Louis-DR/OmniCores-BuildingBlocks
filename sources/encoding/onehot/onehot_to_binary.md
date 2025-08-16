@@ -32,15 +32,6 @@ Converts one-hot encoded values back to standard binary representation. This dec
 
 The one-hot-to-binary conversion uses a priority encoder algorithm that searches through the one-hot input to find the position of the set bit. The conversion is implemented using a function that iterates through all bit positions and returns the index of the bit that is set to 1.
 
-The algorithm can be expressed as:
-
-```
-binary = 0
-for i = 0 to WIDTH_ONEHOT-1:
-    if onehot[i] == 1:
-        binary = i
-```
-
 This implementation assumes that exactly one bit is set in the one-hot input. If multiple bits are set, the decoder will return the index of the highest-numbered set bit. If no bits are set, the output will be 0.
 
 ## Paths
@@ -98,5 +89,5 @@ This module has no external module dependencies.
 | Module                                        | Path                                               | Comment                    |
 | --------------------------------------------- | -------------------------------------------------- | -------------------------- |
 | [`binary_to_onehot`](binary_to_onehot.md)     | `omnicores-buildingblocks/sources/encoding/onehot` | Binary to one-hot encoder. |
-| [`binary_to_grey`](../grey/binary_to_grey.md) | `omnicores-buildingblocks/sources/encoding/grey`   | Binary to Grey encoder.    |
 | [`grey_to_binary`](../grey/grey_to_binary.md) | `omnicores-buildingblocks/sources/encoding/grey`   | Grey to binary decoder.    |
+| [`bcd_to_binary`](bcd_to_binary.md)           | `omnicores-buildingblocks/sources/encoding/bcd`    | BCD to binary decoder.     |
