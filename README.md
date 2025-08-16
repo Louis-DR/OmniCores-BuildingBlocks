@@ -106,7 +106,7 @@ Below is a list of the modules currently available in this collection. More modu
 | [`pulse_separator`](sources/pulse/pulse_separator/pulse_separator.md)                                                                     | pulse          | Pulse separator                                                                   | :green_circle:  :green_circle:  :green_circle: :white_circle: |
 | [`fast_pulse_separator`](sources/pulse/fast_pulse_separator/fast_pulse_separator.md)                                                      | pulse          | Fast pulse separator                                                              | :green_circle:  :green_circle:  :green_circle: :white_circle: |
 | [`pulse_extender`](sources/pulse/pulse_extender/pulse_extender.md)                                                                        | pulse          | Pulse extender                                                                    | :green_circle:  :green_circle:  :green_circle: :white_circle: |
-| [`fast_pulse_separator`](sources/pulse/fast_pulse_extender/fast_pulse_extender.md)                                                        | pulse          | Fast pulse separator                                                              | :green_circle:  :green_circle:  :green_circle: :white_circle: |
+| [`fast_pulse_extender`](sources/pulse/fast_pulse_extender/fast_pulse_extender.md)                                                         | pulse          | Fast pulse extender                                                               | :green_circle:  :green_circle:  :green_circle: :white_circle: |
 | `fibonacci_lfsr`                                                                                                                          | shift register | Fibonacci linear feedback shift register                                          | :green_circle:  :red_circle:    :red_circle:   :white_circle: |
 | `galois_lfsr`                                                                                                                             | shift register | Galois linear feedback shift register                                             | :green_circle:  :red_circle:    :red_circle:   :white_circle: |
 | [`synchronizer`](sources/timing/synchronizer/synchronizer.md)                                                                             | timing         | Simple synchronizer                                                               | :green_circle:  :green_circle:  :green_circle: :green_circle: |
@@ -169,9 +169,10 @@ Modules planned or in development :
   - Deinterleaver
   - Bit stripper
 - Encoding
-  - Binary-coded-decimal encoder and decoder
   - Seven-segment encoder and decoder
-  - ASCII encoder and decoder
+  - Alphabet 5-bit encoder and decoder
+  - Alphanumerical 6-bit encoder and decoder
+  - ASCII 7-bit encoder and decoder
 - Error control
   - Golay codes
   - Extended Golay codes
