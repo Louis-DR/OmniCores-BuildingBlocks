@@ -95,3 +95,7 @@ There are no synthesis and implementation constraints for this block.
 | [`binary_to_bcd`](binary_to_bcd.md)                 | `omnicores-buildingblocks/sources/encoding/bcd`    | Binary to BCD encoder.     |
 | [`onehot_to_binary`](../onehot/onehot_to_binary.md) | `omnicores-buildingblocks/sources/encoding/onehot` | One-hot to binary decoder. |
 | [`grey_to_binary`](../grey/grey_to_binary.md)       | `omnicores-buildingblocks/sources/encoding/grey`   | Grey to binary decoder.    |
+
+## References
+
+- [Wikipedia, “Double dabble”.](https://en.wikipedia.org/wiki/Double_dabble)
