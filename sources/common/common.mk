@@ -125,7 +125,7 @@ optimize_verilator: compile_verilator
 optimize_icarus: compile_icarus
 
 optimize_modelsim: compile_modelsim
-	vopt -work $(WORK_LIBRARY) -designfile $(DESIGN_FILE) -o $(OPTIMIZED_TOP) $(TOP_TESTBENCH)
+	vopt -work $(WORK_LIBRARY) -designfile $(DESIGN_FILE) -o $(OPTIMIZED_TOP) $(TESTBENCH_MODULE)
 
 optimize: optimize_icarus
 
