@@ -22,10 +22,6 @@ namespace eval ::omnicores::buildingblocks::timing::fast_clock_multiplexer {
 
   # Apply timing constraints to a specific instance of the fast clock multiplexer module
   proc apply_constraints_to_instance { instance_path } {
-    # Use common helper functions
-    namespace import ::omnicores::common::get_registers
-    namespace import ::omnicores::common::get_at_index
-    namespace import ::omnicores::common::get_width
 
     # Check if the instance exists
     if { [get_cells -quiet $instance_path] eq "" } {
