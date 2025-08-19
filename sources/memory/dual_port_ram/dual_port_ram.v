@@ -38,10 +38,11 @@ reg [WIDTH-1:0] memory [DEPTH-1:0];
 // Read logic
 assign read_data = read_enable ? memory[read_address] : 0;
 
+integer depth_index;
 always @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
-    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
+    for (depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
       memory[depth_index] <= 0;
     end
   end

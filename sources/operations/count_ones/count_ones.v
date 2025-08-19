@@ -25,9 +25,10 @@ module count_ones #(
 
 function [COUNT_WIDTH-1:0] count_ones_f;
   input [DATA_WIDTH-1:0] data;
+  integer bit_index;
   begin
     count_ones_f = 0;
-    for (int bit_index = 0; bit_index < DATA_WIDTH; bit_index = bit_index+1) begin
+    for (bit_index = 0; bit_index < DATA_WIDTH; bit_index = bit_index+1) begin
       if (data[bit_index]) begin
         count_ones_f = count_ones_f + 1;
       end

@@ -12,7 +12,7 @@
 // ║              without any logic.                                           ║
 // ║                                                                           ║
 // ║              This module is not synthesizable and should be used as a     ║
-// ║              behavioral model for a DLL or PLL base static frequency      ║
+// ║              behavioral model for a DLL or PLL based static frequency     ║
 // ║              multiplier.                                                  ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝

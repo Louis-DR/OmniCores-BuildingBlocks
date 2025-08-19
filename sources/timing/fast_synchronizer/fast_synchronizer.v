@@ -33,14 +33,15 @@ module fast_synchronizer #(
 );
 
 reg [STAGES-1:0] stages;
+integer stage_index;
 
 always @(negedge clock or negedge resetn) begin
   if (!resetn) begin
-    for (int stage_index = STAGES-2; stage_index >= 0; stage_index = stage_index-2) begin
+    for (stage_index = STAGES-2; stage_index >= 0; stage_index = stage_index-2) begin
       stages[stage_index] <= 0;
     end
   end else begin
-    for (int stage_index = STAGES-2; stage_index >= 0; stage_index = stage_index-2) begin
+    for (stage_index = STAGES-2; stage_index >= 0; stage_index = stage_index-2) begin
       if (stage_index == 0) begin
         stages[stage_index] <= data_in;
       end else begin
@@ -52,11 +53,11 @@ end
 
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
-    for (int stage_index = STAGES-1; stage_index >= 0; stage_index = stage_index-2) begin
+    for (stage_index = STAGES-1; stage_index >= 0; stage_index = stage_index-2) begin
       stages[stage_index] <= 0;
     end
   end else begin
-    for (int stage_index = STAGES-1; stage_index >= 0; stage_index = stage_index-2) begin
+    for (stage_index = STAGES-1; stage_index >= 0; stage_index = stage_index-2) begin
       if (stage_index == 0) begin
         stages[stage_index] <= data_in;
       end else begin

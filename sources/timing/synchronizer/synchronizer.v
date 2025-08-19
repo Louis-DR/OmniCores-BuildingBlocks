@@ -30,12 +30,13 @@ module synchronizer #(
 );
 
 reg [STAGES-1:0] stages;
+integer stage_index;
 
 always @(posedge clock or negedge resetn) begin
   if (!resetn) stages <= 0;
   else begin
     stages[0] <= data_in;
-    for (int stage_index = 1; stage_index < STAGES; stage_index = stage_index+1) begin
+    for (stage_index = 1; stage_index < STAGES; stage_index = stage_index+1) begin
       stages[stage_index] <= stages[stage_index-1];
     end
   end
