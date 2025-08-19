@@ -136,6 +136,7 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 
 | Module                                                                                   | Path                                                               | Comment                                                   |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------- |
+| [`wide_clock_multiplexer`](../wide_clock_multiplexer/wide_clock_multiplexer.md)          | `omnicores-buildingblocks/sources/clock/wide_clock_multiplexer`    | Variant with any number of input clocks.                  |
 | [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md)          | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer`    | Variant with slightly faster switching time.              |
 | [`nonstop_clock_multiplexer`](../nonstop_clock_multiplexer/nonstop_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/nonstop_clock_multiplexer` | Variant working when one clock is not running.            |
 | [`switchover_clock_selector`](../switchover_clock_selector/switchover_clock_selector.md) | `omnicores-buildingblocks/sources/clock/switchover_clock_selector` | Selector that switches to a second clock onces it starts. |

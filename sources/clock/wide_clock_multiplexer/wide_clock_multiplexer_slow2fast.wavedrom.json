@@ -1,0 +1,7 @@
+{"signal": [
+  {"name": "clock[0]",  "wave": "p..................................."},
+  {"name": "clock[1]",  "wave": "hlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhl"},
+  {"name": "clock[2]",  "wave": "h.l.h.l.h.l.h.l.h.l.h.l.h.l.h.l.h.l."},
+  {"name": "select",    "wave": "=.......=.............=.............", "data": ["2", "1", "0"]},
+  {"name": "clock_out", "wave": "h.l.h.l.h.l.h.l...hlhlhlhl.p........"}
+], "config":{"skin": "narrow"}}

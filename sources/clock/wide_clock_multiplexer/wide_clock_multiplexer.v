@@ -20,8 +20,8 @@
 
 
 module wide_clock_multiplexer #(
-  parameter STAGES       = 3,
-  parameter CLOCKS       = 2,
+  parameter STAGES       = 2,
+  parameter CLOCKS       = 3,
   parameter SELECT_WIDTH = `CLOG2(CLOCKS)
 ) (
   input       [CLOCKS-1:0] clocks,
