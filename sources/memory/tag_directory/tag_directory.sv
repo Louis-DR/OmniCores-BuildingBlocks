@@ -59,14 +59,14 @@ int depth_index;
 logic [INDEX_WIDTH-1:0] first_free_index;
 always_comb begin
   first_free_index = 0;
-`ifdef SIMUMLATOR_NO_BREAK
+`ifdef SIMULATOR_NO_BREAK
   for (int depth_index = DEPTH-1; depth_index >= 0; depth_index = depth_index-1) begin
 `else
   for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
 `endif
     if (!valid[depth_index]) begin
       first_free_index = depth_index;
-`ifndef SIMUMLATOR_NO_BREAK
+`ifndef SIMULATOR_NO_BREAK
       break;
 `endif
     end
@@ -92,7 +92,7 @@ end
 always_comb begin
   search_index = 0;
   search_hit   = 0;
-`ifdef SIMUMLATOR_NO_BREAK
+`ifdef SIMULATOR_NO_BREAK
   for (int depth_index = DEPTH-1; depth_index >= 0; depth_index = depth_index-1) begin
 `else
   for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
@@ -100,7 +100,7 @@ always_comb begin
     if (valid[depth_index] && buffer[depth_index] == search_tag) begin
       search_index = depth_index;
       search_hit   = 1;
-`ifndef SIMUMLATOR_NO_BREAK
+`ifndef SIMULATOR_NO_BREAK
       break;
 `endif
     end

@@ -1,7 +1,7 @@
 `ifndef __OMNICORES_BOOLEAN__
 `define __OMNICORES_BOOLEAN__
 
-`ifdef SIMUMLATOR_NO_BOOL
+`ifdef SIMULATOR_NO_BOOL
 typedef bit bool;
 `endif
 

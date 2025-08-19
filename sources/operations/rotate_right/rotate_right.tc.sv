@@ -84,7 +84,7 @@ initial begin
     // Check : random stimulus
     $display("CHECK : Random stimulus.");
     for (int random_iteration = 0; random_iteration < RANDOM_CHECK_DURATION; random_iteration++) begin
-`ifdef SIMUMLATOR_NO_RANDOMIZE
+`ifdef SIMULATOR_NO_RANDOMIZE
       // Alternative to std:randomize() up to 1024 bits
       data_in = {$urandom(), $urandom(), $urandom(), $urandom(),
                  $urandom(), $urandom(), $urandom(), $urandom(),

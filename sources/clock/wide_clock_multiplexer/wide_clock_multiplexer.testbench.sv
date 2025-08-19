@@ -139,7 +139,7 @@ initial begin
         for (int clock_index = 0; clock_index < CLOCKS; clock_index++) begin
           if (absolute(time_negedge_clock_out-time_posedge_clock_out - clock_periods[clock_index]/2) <= GLITCH_PERIOD_TOLERANCE * clock_periods[clock_index]/2) begin
             pulse_width_valid = true;
-`ifndef SIMUMLATOR_NO_BREAK
+`ifndef SIMULATOR_NO_BREAK
             break;
 `endif
           end
