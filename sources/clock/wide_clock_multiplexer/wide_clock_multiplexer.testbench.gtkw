@@ -1,0 +1,19 @@
+[dumpfile] "wide_clock_multiplexer.testbench.vcd"
+[savefile] "wide_clock_multiplexer.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-31.853239 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+wide_clock_multiplexer__testbench.resetns[2:0]
+wide_clock_multiplexer__testbench.clocks[2:0]
+@24
+wide_clock_multiplexer__testbench.select[1:0]
+@28
+wide_clock_multiplexer__testbench.clock_out
+[pattern_trace] 1
+[pattern_trace] 0
