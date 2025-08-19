@@ -19,8 +19,10 @@
 
 module fast_clock_multiplexer__testbench ();
 
+// Device parameters
+localparam int STAGES = 2;
+
 // Test parameters
-localparam int    DUT_STAGES                      = 2;
 localparam real   CLOCK_0_PERIOD                  = 10;
 localparam real   CLOCK_1_PERIOD                  = CLOCK_0_PERIOD*2;
 localparam string FREQUENCY_UNIT                  = "MHz";
@@ -47,14 +49,14 @@ real time_negedge_clock_out;
 
 // Device under test
 fast_clock_multiplexer #(
-  .STAGES      ( DUT_STAGES  )
+  .STAGES    ( STAGES    )
 ) fast_clock_multiplexer_dut (
-  .clock_0     ( clock_0     ),
-  .clock_1     ( clock_1     ),
-  .resetn_0    ( resetn_0    ),
-  .resetn_1    ( resetn_1    ),
-  .select      ( select      ),
-  .clock_out   ( clock_out   )
+  .clock_0   ( clock_0   ),
+  .clock_1   ( clock_1   ),
+  .resetn_0  ( resetn_0  ),
+  .resetn_1  ( resetn_1  ),
+  .select    ( select    ),
+  .clock_out ( clock_out )
 );
 
 // Clock 0 generation
@@ -102,7 +104,7 @@ initial begin
   $display("CHECK 1 : Switching back and forth between clocks.");
   for (int check_step = 0; check_step <= BACK_AND_FORTH_ITERATIONS; check_step++) begin
     select = ~select;
-    #(DUT_STAGES*(CLOCK_0_PERIOD+CLOCK_1_PERIOD));
+    #(STAGES*(CLOCK_0_PERIOD+CLOCK_1_PERIOD));
     `measure_frequency(clock_out, clock_out_frequency)
     expected_clock_out_frequency = select ? clock_1_frequency : clock_0_frequency;
     if      (clock_out_frequency == 0) $error("[%t] Output clock is not running with select at %0d.", $time, select);
@@ -118,7 +120,7 @@ initial begin
     // Stimulus
     begin
       repeat (RANDOM_GLITCH_CHECK_ITERATIONS) begin
-        #($urandom_range(10*DUT_STAGES*(CLOCK_0_PERIOD+CLOCK_1_PERIOD)));
+        #($urandom_range(10*STAGES*(CLOCK_0_PERIOD+CLOCK_1_PERIOD)));
         select = ~select;
       end
     end
