@@ -9,5 +9,5 @@ reorder_buffer
 => write_index       read_valid ->
 => write_data         read_data =>
 <- write_error       read_error ->
-<- full               data_full ->
-<- empty             data_empty ->
+<- reserve_full       data_full ->
+<- reserve_empty     data_empty ->
