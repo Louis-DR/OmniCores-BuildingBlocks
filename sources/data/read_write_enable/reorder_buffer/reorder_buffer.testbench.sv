@@ -36,8 +36,8 @@ localparam int  RANDOM_CHECK_TIMEOUT           = 1000;
 // Device ports
 logic                   clock;
 logic                   resetn;
-logic                   full;
-logic                   empty;
+logic                   reserve_full;
+logic                   reserve_empty;
 logic                   data_full;
 logic                   data_empty;
 logic                   reserve_enable;
@@ -70,8 +70,8 @@ reorder_buffer #(
 ) reorder_buffer_dut (
   .clock          ( clock          ),
   .resetn         ( resetn         ),
-  .full           ( full           ),
-  .empty          ( empty          ),
+  .reserve_full   ( reserve_full   ),
+  .reserve_empty  ( reserve_empty  ),
   .data_full      ( data_full      ),
   .data_empty     ( data_empty     ),
   .reserve_enable ( reserve_enable ),
@@ -122,10 +122,10 @@ initial begin
   // Check 1 : Reserve once
   $display("CHECK 1 : Reserve once.");
   // Initial state
-  if ( full      ) $error("[%0tns] Full flag is asserted after reset.", $time);
-  if (!empty     ) $error("[%0tns] Empty flag is deasserted after reset.", $time);
-  if ( data_full ) $error("[%0tns] Data full flag is asserted after reset.", $time);
-  if (!data_empty) $error("[%0tns] Data empty flag is deasserted after reset.", $time);
+  if ( reserve_full ) $error("[%0tns] Reserve full flag is asserted after reset.", $time);
+  if (!reserve_empty) $error("[%0tns] Reserve empty flag is deasserted after reset.", $time);
+  if ( data_full    ) $error("[%0tns] Data full flag is asserted after reset.", $time);
+  if (!data_empty   ) $error("[%0tns] Data empty flag is deasserted after reset.", $time);
   // Write operation
   @(negedge clock);
   reserve_enable = 1;
@@ -139,10 +139,10 @@ initial begin
   @(negedge clock);
   reserve_enable = 0;
   // Final state
-  if ( full      ) $error("[%0tns] Full flag is asserted after one reservation.", $time);
-  if ( empty     ) $error("[%0tns] Empty flag is asserted after one reservation.", $time);
-  if ( data_full ) $error("[%0tns] Data full flag is asserted after one reservation.", $time);
-  if (!data_empty) $error("[%0tns] Data empty flag is deasserted after one reservation.", $time);
+  if ( reserve_full ) $error("[%0tns] Reserve full flag is asserted after one reservation.", $time);
+  if ( reserve_empty) $error("[%0tns] Reserve empty flag is asserted after one reservation.", $time);
+  if ( data_full    ) $error("[%0tns] Data full flag is asserted after one reservation.", $time);
+  if (!data_empty   ) $error("[%0tns] Data empty flag is deasserted after one reservation.", $time);
 
   repeat(10) @(posedge clock);
 
@@ -162,10 +162,10 @@ initial begin
   write_enable = 0;
   write_data   = 0;
   // Final state
-  if ( full      ) $error("[%0tns] Full flag is asserted after one write.", $time);
-  if ( empty     ) $error("[%0tns] Empty flag is asserted after one write.", $time);
-  if ( data_full ) $error("[%0tns] Data full flag is asserted after one write.", $time);
-  if ( data_empty) $error("[%0tns] Data empty flag is asserted after one write.", $time);
+  if ( reserve_full ) $error("[%0tns] Reserve full flag is asserted after one write.", $time);
+  if ( reserve_empty) $error("[%0tns] Reserve empty flag is asserted after one write.", $time);
+  if ( data_full    ) $error("[%0tns] Data full flag is asserted after one write.", $time);
+  if ( data_empty   ) $error("[%0tns] Data empty flag is asserted after one write.", $time);
 
   repeat(10) @(posedge clock);
 
@@ -175,15 +175,14 @@ initial begin
   read_enable = 1;
   @(posedge clock);
   if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
-  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+  if (read_data !== memory_model[0]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
   @(negedge clock);
   read_enable = 0;
-  read_index  = 0;
   // Final state
-  if ( full      ) $error("[%0tns] Full flag is asserted after reading the only entry.", $time);
-  if (!empty     ) $error("[%0tns] Empty flag is deasserted after reading the only entry.", $time);
-  if ( data_full ) $error("[%0tns] Data full flag is asserted after reading the only entry.", $time);
-  if (!data_empty) $error("[%0tns] Data empty flag is deasserted after reading the only entry.", $time);
+  if ( reserve_full ) $error("[%0tns] Reserve full flag is asserted after reading the only entry.", $time);
+  if (!reserve_empty) $error("[%0tns] Reserve empty flag is deasserted after reading the only entry.", $time);
+  if ( data_full    ) $error("[%0tns] Data full flag is asserted after reading the only entry.", $time);
+  if (!data_empty   ) $error("[%0tns] Data empty flag is deasserted after reading the only entry.", $time);
 
   repeat(10) @(posedge clock);
 

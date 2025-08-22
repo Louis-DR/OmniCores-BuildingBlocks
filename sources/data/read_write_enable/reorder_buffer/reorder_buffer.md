@@ -30,8 +30,8 @@ The buffer maintains separate reservation and read pointers to track the order o
 | ---------------- | --------- | ------------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------------------- |
 | `clock`          | input     | 1             | self         |          |             | Clock signal.                                                                                   |
 | `resetn`         | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                  |
-| `full`           | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>`0`: buffer has free reservation slots.<br/>`1`: buffer is full.   |
-| `empty`          | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>`0`: buffer has reserved slots.<br/>`1`: buffer is empty.         |
+| `reserve_full`   | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>`0`: buffer has free reservation slots.<br/>`1`: buffer is full.   |
+| `reserve_empty`  | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>`0`: buffer has reserved slots.<br/>`1`: buffer is empty.         |
 | `data_full`      | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>`0`: buffer has unwritten slots.<br/>`1`: all reserved slots are written. |
 | `data_empty`     | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>`0`: buffer has written data.<br/>`1`: no written data available.        |
 | `reserve_enable` | input     | 1             | `clock`      |          |             | Reserve enable signal.<br/>`0`: idle.<br/>`1`: reserve slot and get index.                      |
@@ -50,7 +50,7 @@ The buffer maintains separate reservation and read pointers to track the order o
 
 The reorder buffer operates through a three-stage protocol that maintains strict ordering guarantees:
 
-**Stage 1: Reservation** - When `reserve_enable` is asserted, a slot is reserved in program order using the next available index from the first-free slot finder. The `reserve_index` output provides the index that should be used for the subsequent write operation. The reservation advances the reserve pointer to maintain ordering.
+**Stage 1: Reservation** - When `reserve_enable` is asserted, a slot is reserved in program order using the next available index from the reserve pointer. The `reserve_index` output provides the index that should be used for the subsequent write operation. The reservation advances the reserve pointer to maintain ordering.
 
 **Stage 2: Out-of-order Writing** - When `write_enable` is asserted with a previously reserved `write_index`, the `write_data` is stored in the specified slot and marked as valid. Writes can complete in any order as long as they target previously reserved slots. Writing to an unreserved or already written slot generates a `write_error`.
 
@@ -58,7 +58,7 @@ The reorder buffer operates through a three-stage protocol that maintains strict
 
 The buffer maintains separate tracking for reserved slots (allocated but potentially unwritten) and valid slots (written and ready for reading). This allows the buffer to distinguish between reservations and actual data availability.
 
-Separate flags are used for notifying filling level for slot reservation (`full`, `empty`) and for data reading (`data_full`, `data_empty`).
+Separate flags are used for notifying filling level for slot reservation (`reserve_full`, `reserve_empty`) and for data reading (`data_full`, `data_empty`).
 
 **Error conditions:**
 - `reserve_error`: Attempting to reserve when the buffer is full
@@ -67,16 +67,18 @@ Separate flags are used for notifying filling level for slot reservation (`full`
 
 ## Paths
 
-| From             | To                                         | Type          | Comment                                                   |
-| ---------------- | ------------------------------------------ | ------------- | --------------------------------------------------------- |
-| `reserve_enable` | `reserve_index`                            | combinational | Index calculation through first-free-slot logic.          |
-| `write_data`     | `read_data`                                | sequential    | Data path through internal memory array and read pointer. |
-| `reserve_enable` | `full`, `empty`                            | sequential    | Control path through internal reservation bits.           |
-| `write_enable`   | `full`, `empty`, `data_full`, `data_empty` | sequential    | Control path through internal reservation and valid bits. |
-| `read_enable`    | `full`, `empty`, `data_full`, `data_empty` | sequential    | Control path through internal reservation and valid bits. |
-| `reserve_enable` | `reserve_error`                            | combinational | Calculated with status flags.                             |
-| `write_enable`   | `write_error`                              | combinational | Calculated with status flags.                             |
-| `read_enable`    | `read_error`                               | combinational | Calculated with status flags.                             |
+| From             | To                                                         | Type          | Comment                                                   |
+| ---------------- | ---------------------------------------------------------- | ------------- | --------------------------------------------------------- |
+| `reserve_enable` | `reserve_index`                                            | combinational | Index output from reserve pointer.                        |
+| `write_data`     | `read_data`                                                | sequential    | Data path through internal memory array and read pointer. |
+| `write_enable`   | `read_valid`                                               | sequential    | Control path through internal valid bits.                 |
+| `read_enable`    | `read_valid`                                               | sequential    | Control path through internal valid bits.                 |
+| `reserve_enable` | `reserve_full`, `reserve_empty`                            | sequential    | Control path through internal reservation bits.           |
+| `write_enable`   | `reserve_full`, `reserve_empty`, `data_full`, `data_empty` | sequential    | Control path through internal reservation and valid bits. |
+| `read_enable`    | `reserve_full`, `reserve_empty`, `data_full`, `data_empty` | sequential    | Control path through internal reservation and valid bits. |
+| `reserve_enable` | `reserve_error`                                            | combinational | Calculated with status flags.                             |
+| `write_enable`   | `write_error`                                              | combinational | Calculated with status flags.                             |
+| `read_enable`    | `read_error`                                               | combinational | Calculated with status flags.                             |
 
 ## Complexity
 
@@ -84,9 +86,9 @@ Separate flags are used for notifying filling level for slot reservation (`full`
 | --------------- | ---------------- | ------- |
 | `O(log₂ DEPTH)` | `O(WIDTH×DEPTH)` |         |
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array, `2×DEPTH` flip-flops for the reservation and validity tracking bits, and `2×INDEX_WIDTH` flip-flops for the reserve and read pointers.
+The module requires `WIDTH×DEPTH` flip-flops for the memory array, `2×DEPTH` flip-flops for the reservation and validity tracking bits, and `2×(INDEX_WIDTH+1)` flip-flops for the reserve and read pointers (including wrap bits).
 
-The critical path includes the first-free-slot detection logic for reserve index generation, which has `O(log₂ DEPTH)` delay complexity. Additional logic is required for pointer management and status flag generation.
+The critical path includes memory array access and address decoding logic, which has `O(log₂ DEPTH)` delay complexity. Additional delay comes from multi-bit pointer comparisons and status flag generation.
 
 ## Verification
 
@@ -94,18 +96,22 @@ The reorder buffer is verified using a SystemVerilog testbench with comprehensiv
 
 The following table lists the checks performed by the testbench.
 
-| Number | Check                 | Description                                                                               |
-| ------ | --------------------- | ----------------------------------------------------------------------------------------- |
-| 1      | Reserve once          | Verifies single reservation operation and status flag updates.                            |
-| 2      | Write once            | Verifies writing to a reserved slot and proper data storage.                              |
-| 3      | Read once             | Verifies in-order reading of written data and slot cleanup.                               |
-| 4      | Reserve to full       | Fills the buffer with reservations and verifies full flag behavior.                       |
-| 5      | Out-of-order writes   | Verifies that writes can complete in different order than reservations.                   |
-| 6      | In-order reads        | Verifies that reads must occur in reservation order regardless of write completion order. |
-| 7      | Write to unreserved   | Verifies error detection when writing to slots that were not reserved.                    |
-| 8      | Read when unavailable | Verifies error detection when reading before data is written.                             |
-| 9      | Mixed operations      | Tests concurrent reserve, write, and read operations with proper ordering.                |
-| 10     | Random stimulus       | Performs random operations and verifies data integrity and ordering against a model.      |
+| Number | Check                  | Description                                                                               |
+| ------ | ---------------------- | ----------------------------------------------------------------------------------------- |
+| 1      | Reserve once           | Verifies single reservation operation and status flag updates.                            |
+| 2      | Write once             | Verifies writing to a reserved slot and proper data storage.                              |
+| 3      | Read once              | Verifies in-order reading of written data and slot cleanup.                               |
+| 4      | Reserve to full        | Fills the buffer with reservations and verifies full flag behavior.                       |
+| 5      | Out-of-order writes    | Verifies that writes can complete in different order than reservations.                   |
+| 6      | In-order reads         | Verifies that reads must occur in reservation order regardless of write completion order. |
+| 7      | Reservation when full  | Verifies error detection when reserving without available slots.                          |
+| 8      | Write to unreserved    | Verifies error detection when writing to slots that were not reserved.                    |
+| 9      | Write to already valid | Verifies error detection when writing to slots already valid.                             |
+| 10     | Write out of bounds    | Verifies error detection when writing to index exceeding the depth.                       |
+| 11     | Read when unavailable  | Verifies error detection when reading before data is written.                             |
+| 12     | Successive operation   | Tests successive reserve, write, and read operations.                                     |
+| 13     | Concurrent operation   | Tests concurrent reserve, write, and read operations.                                     |
+| 14     | Random stimulus        | Performs random operations and verifies data integrity and ordering against a model.      |
 
 The following table lists the parameter values verified by the testbench.
 
@@ -130,10 +136,10 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                             | Path                                                    | Comment                                      |
-| ------------------------------------------------------------------ | ------------------------------------------------------- | -------------------------------------------- |
-| [`first_one`](../../../operations/first_one/first_one.md)          | `omnicores-buildingblocks/sources/operations/first_one` | Used for finding the first free slot.        |
-| [`onehot_to_binary`](../../../encoding/onehot/onehot_to_binary.md) | `omnicores-buildingblocks/sources/encoding/onehot`      | Used for converting one-hot to binary index. |
+| Module                                                             | Path                                                    | Comment           |
+| ------------------------------------------------------------------ | ------------------------------------------------------- | ----------------- |
+| [`first_one`](../../../operations/first_one/first_one.md)          | `omnicores-buildingblocks/sources/operations/first_one` | No longer needed. |
+| [`onehot_to_binary`](../../../encoding/onehot/onehot_to_binary.md) | `omnicores-buildingblocks/sources/encoding/onehot`      | No longer needed. |
 
 ## Related modules
 

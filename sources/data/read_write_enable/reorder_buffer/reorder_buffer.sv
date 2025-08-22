@@ -24,8 +24,8 @@ module reorder_buffer #(
 ) (
   input                    clock,
   input                    resetn,
-  output logic             full,
-  output logic             empty,
+  output logic             reserve_full,
+  output logic             reserve_empty,
   output logic             data_full,
   output logic             data_empty,
   // Reservation interface
@@ -56,41 +56,25 @@ logic [DEPTH-1:0] reserved_next;
 logic [DEPTH-1:0] valid;
 logic [DEPTH-1:0] valid_next;
 
-// Head and tail pointers
-logic [INDEX_WIDTH-1:0] reserve_pointer;
-logic [INDEX_WIDTH-1:0] reserve_pointer_next;
-logic [INDEX_WIDTH-1:0] read_pointer;
-logic [INDEX_WIDTH-1:0] read_pointer_next;
+// Reservation and read pointers with wrap bits
+logic [INDEX_WIDTH:0] reserve_pointer;
+logic [INDEX_WIDTH:0] reserve_pointer_next;
+logic [INDEX_WIDTH:0] read_pointer;
+logic [INDEX_WIDTH:0] read_pointer_next;
 
-// Full and empty flags
-logic  full_next;
-assign full_next = &reserved_next;
-logic  empty_next;
-assign empty_next = ~|reserved_next;
+// Reservation full and empty flags
+logic  reserve_full_next;
+assign reserve_full_next =  reserve_pointer_next[INDEX_WIDTH-1:0] == read_pointer_next[INDEX_WIDTH-1:0]
+                         && reserve_pointer_next[INDEX_WIDTH]     != read_pointer_next[INDEX_WIDTH];
+logic  reserve_empty_next;
+assign reserve_empty_next =  reserve_pointer_next[INDEX_WIDTH-1:0] == read_pointer_next[INDEX_WIDTH-1:0]
+                          && reserve_pointer_next[INDEX_WIDTH]     == read_pointer_next[INDEX_WIDTH];
+
+// Data full and empty flags
 logic  data_full_next;
 assign data_full_next = &valid_next;
 logic  data_empty_next;
 assign data_empty_next = ~|valid_next;
-
-// Index of the first free slot in the memory
-logic       [DEPTH-1:0] first_free_onehot;
-logic [INDEX_WIDTH-1:0] first_free_index;
-
-// Find the first free slot in the memory
-first_one #(
-  .WIDTH ( DEPTH )
-) first_free_slot (
-  .data      ( ~reserved         ),
-  .first_one ( first_free_onehot )
-);
-
-// Convert the one-hot index to a binary index
-onehot_to_binary #(
-  .WIDTH_ONEHOT ( DEPTH )
-) onehot_to_index (
-  .onehot ( first_free_onehot ),
-  .binary ( first_free_index  )
-);
 
 // Reservation, write, and read logic
 always_comb begin
@@ -103,8 +87,8 @@ always_comb begin
     valid_next    [depth_index] = valid    [depth_index];
   end
   // Reservation operation
-  if (reserve_enable) begin
-    reserved_next [reserve_index] = 1'b1;
+  if (reserve_enable && !reserve_full) begin
+    reserved_next [reserve_pointer[INDEX_WIDTH-1:0]] = 1'b1;
     reserve_pointer_next = reserve_pointer + 1;
   end
   // Write operation
@@ -113,24 +97,24 @@ always_comb begin
     valid_next  [write_index] = 1'b1;
   end
   // Read operation
-  if (read_enable) begin
-    valid_next    [read_pointer] = 1'b0;
-    reserved_next [read_pointer] = 1'b0;
+  if (read_enable && read_valid) begin
+    valid_next    [read_pointer[INDEX_WIDTH-1:0]] = 1'b0;
+    reserved_next [read_pointer[INDEX_WIDTH-1:0]] = 1'b0;
     read_pointer_next = read_pointer + 1;
   end
 end
 
 // Reservation logic
-assign reserve_index = first_free_index;
-// Reservation error if already reserved
-assign reserve_error = reserve_enable && reserved[reserve_index];
+assign reserve_index = reserve_pointer[INDEX_WIDTH-1:0];
+// Reservation error if buffer is full
+assign reserve_error = reserve_enable && reserve_full;
 
-// Write error if already valid or not reserved
-assign write_error = write_enable && (valid[write_index] || !reserved[write_index]);
+// Write error if already valid, not reserved, or index out of bounds
+assign write_error = write_enable && (valid[write_index] || !reserved[write_index] || write_index >= DEPTH);
 
 // Read logic
-assign read_valid = valid[read_pointer];
-assign read_data  = buffer[read_pointer];
+assign read_valid = valid  [read_pointer[INDEX_WIDTH-1:0]];
+assign read_data  = buffer [read_pointer[INDEX_WIDTH-1:0]];
 // Read error if not valid
 assign read_error = read_enable && !read_valid;
 
@@ -138,8 +122,8 @@ assign read_error = read_enable && !read_valid;
 always_ff @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
-    full            <= 0;
-    empty           <= 1;
+    reserve_full    <= 0;
+    reserve_empty   <= 1;
     data_full       <= 0;
     data_empty      <= 1;
     reserve_pointer <= 0;
@@ -152,8 +136,8 @@ always_ff @(posedge clock or negedge resetn) begin
   end
   // Operation
   else begin
-    full            <= full_next;
-    empty           <= empty_next;
+    reserve_full    <= reserve_full_next;
+    reserve_empty   <= reserve_empty_next;
     data_full       <= data_full_next;
     data_empty      <= data_empty_next;
     reserve_pointer <= reserve_pointer_next;
