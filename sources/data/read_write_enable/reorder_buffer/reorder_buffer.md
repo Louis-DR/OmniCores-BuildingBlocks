@@ -96,25 +96,26 @@ The reorder buffer is verified using a SystemVerilog testbench with comprehensiv
 
 The following table lists the checks performed by the testbench.
 
-| Number | Check                  | Description                                                                          |
-| ------ | ---------------------- | ------------------------------------------------------------------------------------ |
-| 1      | Reserve once           | Verifies single reservation operation and status flag updates.                       |
-| 2      | Write once             | Verifies writing to a reserved slot and proper data storage.                         |
-| 3      | Read once              | Verifies in-order reading of written data and slot cleanup.                          |
-| 4      | Reserve all            | Reserve all slots in the buffer.                                                     |
-| 5      | Write in-order         | Writes to all the reserved slots in order of reservation.                            |
-| 6      | Read in-order          | Read the whole buffer in-order.                                                      |
-| 7      | Reserve all again      | Reserve all slots in the buffer again.                                               |
-| 8      | Write reverse-order    | Writes to all the reserved slots in reverse order of reservation.                    |
-| 9      | Read in-order again    | Read the whole buffer in-order again.                                                |
-| 10     | Reservation when full  | Verifies error detection when reserving without available slots.                     |
-| 11     | Write to unreserved    | Verifies error detection when writing to slots that were not reserved.               |
-| 12     | Write to already valid | Verifies error detection when writing to slots already valid.                        |
-| 13     | Write out of bounds    | Verifies error detection when writing to index exceeding the depth.                  |
-| 14     | Read when unavailable  | Verifies error detection when reading before data is written.                        |
-| 15     | Successive operation   | Tests successive reserve, write, and read operations.                                |
-| 16     | Concurrent operation   | Tests concurrent reserve, write, and read operations.                                |
-| 17     | Random stimulus        | Performs random operations and verifies data integrity and ordering against a model. |
+| Number | Check                       | Description                                                                           |
+| ------ | --------------------------- | ------------------------------------------------------------------------------------- |
+| 1      | Reserve once                | Verifies single reservation operation and status flag updates.                        |
+| 2      | Write once                  | Verifies writing to a reserved slot and proper data storage.                          |
+| 3      | Read once                   | Verifies in-order reading of written data and slot cleanup.                           |
+| 4      | Reserve all                 | Reserve all slots in the buffer.                                                      |
+| 5      | Write in-order              | Writes to all the reserved slots in order of reservation.                             |
+| 6      | Read in-order               | Read the whole buffer in-order.                                                       |
+| 7      | Reserve all again           | Reserve all slots in the buffer again.                                                |
+| 8      | Write reverse-order         | Writes to all the reserved slots in reverse order of reservation.                     |
+| 9      | Read in-order again         | Read the whole buffer in-order again.                                                 |
+| 10     | Write overwrite             | Verifies error detection when writing to slots already written to.                    |
+| 11     | Write at unreserved         | Verifies error detection when writing to slots that were not reserved.                |
+| 12     | Read at unreserved          | Verifies error detection when reading when no slot is reserved.                       |
+| 13     | Read before write           | Verifies error detection when reading at reserved slot before the data is written.    |
+| 14     | Reserve when fully reserved | Verifies error detection when reserving without available slots (no data available).  |
+| 15     | Reserve when fully written  | Verifies error detection when reserving without available slots (all data available). |
+| 16     | Successive operation        | Tests successive reserve, write, and read operations.                                 |
+| 17     | Concurrent operation        | Tests concurrent reserve, write, and read operations.                                 |
+| 18     | Random stimulus             | Performs random operations and verifies data integrity and ordering against a model.  |
 
 The following table lists the parameter values verified by the testbench.
 

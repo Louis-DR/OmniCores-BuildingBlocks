@@ -27,7 +27,8 @@ localparam int  DEPTH        = 8;
 localparam int  INDEX_WIDTH  = $clog2(DEPTH);
 
 // Check parameters
-localparam int  CONTINUOUS_CHECK_DURATION      = 100;
+localparam int  SUCCESSIVE_CHECK_DURATION      = 100;
+localparam int  CONCURRENT_CHECK_DURATION      = 100;
 localparam int  RANDOM_CHECK_DURATION          = 100;
 localparam real RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
 localparam real RANDOM_CHECK_READ_PROBABILITY  = 0.5;
@@ -131,6 +132,8 @@ initial begin
     memory_model[index] = '0;
     valid_model[index]  = 1'b0;
   end
+  reserved_indices_for_write = {};
+  reserved_indices_for_read  = {};
 
   // Reset
   resetn = 0;
@@ -142,7 +145,7 @@ initial begin
   $display("CHECK 1 : Reserve once.");
   // Initial state
   check_flags(false, true, false, true, " after reset");
-  // Write operation
+  // Reserve operation
   @(negedge clock);
   reserve_enable = 1;
   @(posedge clock);
@@ -182,6 +185,7 @@ initial begin
 
   // Check 3 : Read once
   $display("CHECK 3 : Read once.");
+  // Read operation
   @(negedge clock);
   read_enable = 1;
   @(posedge clock);
@@ -201,7 +205,7 @@ initial begin
 
   // Check 4 : Reserve all
   $display("CHECK 4 : Reserve all.");
-  // Fill the memory
+  // Reserve all
   @(negedge clock);
   reserve_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
@@ -223,7 +227,7 @@ initial begin
 
   // Check 5 : Write in-order
   $display("CHECK 5 : Write in-order.");
-  // Fill the memory
+  // Write all
   @(negedge clock);
   write_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
@@ -245,7 +249,7 @@ initial begin
 
   // Check 6 : Read in-order
   $display("CHECK 6 : Read in-order.");
-  // Fill the memory
+  // Read all
   @(negedge clock);
   read_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
@@ -267,7 +271,7 @@ initial begin
 
   // Check 7 : Reserve all again
   $display("CHECK 7 : Reserve all again.");
-  // Fill the memory
+  // Reserve all
   @(negedge clock);
   reserve_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
@@ -289,7 +293,7 @@ initial begin
 
   // Check 8 : Write reverse-order
   $display("CHECK 8 : Write reverse-order.");
-  // Fill the memory
+  // Write all
   @(negedge clock);
   write_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
@@ -311,7 +315,7 @@ initial begin
 
   // Check 9 : Read in-order again
   $display("CHECK 9 : Read in-order again.");
-  // Fill the memory
+  // Read all
   @(negedge clock);
   read_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
@@ -331,133 +335,328 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // // Check 10 : Continuous write & clear almost empty
-  // $display("CHECK 10 : Continuous write & clear almost empty.");
-  // if (!empty) $error("[%0tns] Buffer is not empty.", $time);
-  // last_written_index = 'x;
-  // for (int iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
-  //   @(negedge clock);
-  //   // Read except for the first iteration
-  //   if (iteration > 0) begin
-  //     read_enable = 1;
-  //     read_clear  = 1;
-  //     read_index  = last_written_index;
-  //     #0;
-  //     if (read_error) $error("[%0tns] Read error asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
-  //     if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
-  //     memory_model[read_index] = 'x;
-  //     valid_model[read_index]  = 1'b0;
-  //     valid_entries_count--;
-  //   end else begin
-  //     read_enable = 0;
-  //     read_clear  = 0;
-  //     read_index  = 0;
-  //   end
-  //   // Write except for the last iteration
-  //   if (iteration < CONTINUOUS_CHECK_DURATION-1) begin
-  //     write_enable       = 1;
-  //     write_data         = $urandom_range(WIDTH_POW2);
-  //     last_written_index = write_index;
-  //     #0;
-  //     if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds at iteration %0d.", $time, write_index, iteration);
-  //     if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model at iteration %0d.", $time, write_index, iteration);
-  //     memory_model[write_index] = write_data;
-  //     valid_model[write_index]  = 1'b1;
-  //     valid_entries_count++;
-  //   end else begin
-  //     write_enable       = 0;
-  //     write_data         = 0;
-  //     last_written_index = 'x;
-  //   end
-  // end
-  // // Deassert all signals
-  // @(negedge clock);
-  // write_enable = 0;
-  // read_enable  = 0;
-  // read_clear   = 0;
-  // read_index   = 0;
-  // @(posedge clock);
-  // // Final state
-  // if (!empty) $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
-  // if ( full ) $error("[%0tns] Final state is full.", $time);
-  // if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
+  // Check 10 : Write overwrite
+  $display("CHECK 10 : Write overwrite.");
+  // Reserve operation
+  @(negedge clock);
+  reserve_enable = 1;
+  @(posedge clock);
+  reserved_entries_count++;
+  reserved_indices_for_write.push_back(reserve_index);
+  reserved_indices_for_read.push_back(reserve_index);
+  reserved_model [reserve_index] = 1;
+  memory_model   [reserve_index] = 'x;
+  @(negedge clock);
+  reserve_enable = 0;
+  // Write operation
+  @(negedge clock);
+  write_enable = 1;
+  write_index  = reserved_indices_for_write[0];
+  write_data   = $urandom_range(WIDTH_POW2);
+  @(posedge clock);
+  valid_entries_count++;
+  valid_model  [write_index] = 1;
+  memory_model [write_index] = write_data;
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  // Write operation
+  @(negedge clock);
+  write_enable = 1;
+  write_index  = reserved_indices_for_write.pop_front();
+  write_data   = $urandom_range(WIDTH_POW2);
+  @(posedge clock);
+  if (!write_error) $error("[%0tns] No write error when overwriting at index '%0d'.", $time, write_index);
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  // Reset from broken state
+  resetn = 0;
+  @(posedge clock);
+  resetn = 1;
+  @(posedge clock);
+  // Final state
+  check_flags(false, true, false, true, " after resetting after overwriting");
+  // Clear the test variables
+  reserve_enable = 0;
+  write_enable   = 0;
+  write_index    = 0;
+  write_data     = 0;
+  read_enable    = 0;
+  valid_entries_count = 0;
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = '0;
+    valid_model[index]  = 1'b0;
+  end
+  reserved_indices_for_write = {};
+  reserved_indices_for_read  = {};
 
-  // repeat(10) @(posedge clock);
+  repeat(10) @(posedge clock);
 
-  // // Check 11 : Continuous write & clear almost full
-  // $display("CHECK 11 : Continuous write & clear almost full.");
-  // if (!empty) $error("[%0tns] Buffer is not empty.", $time);
-  // last_written_index = 'x;
-  // for (int iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
-  //   @(negedge clock);
-  //   // Read except for the first few iterations to fill the buffer
-  //   if (iteration > DEPTH-2) begin
-  //     read_enable = 1;
-  //     read_clear  = 1;
-  //     read_index  = last_written_index;
-  //     #0;
-  //     if (read_error) $error("[%0tns] Read error asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
-  //     if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
-  //     memory_model[read_index] = 'x;
-  //     valid_model[read_index]  = 1'b0;
-  //     valid_entries_count--;
-  //   end else begin
-  //     read_enable = 0;
-  //     read_clear  = 0;
-  //     read_index  = 0;
-  //   end
-  //   // Write except for the last few iterations to empty the buffer
-  //   if (iteration < CONTINUOUS_CHECK_DURATION-1) begin
-  //     write_enable       = 1;
-  //     write_data         = $urandom_range(WIDTH_POW2);
-  //     last_written_index = write_index;
-  //     #0;
-  //     if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds at iteration %0d.", $time, write_index, iteration);
-  //     if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model at iteration %0d.", $time, write_index, iteration);
-  //     memory_model[write_index] = write_data;
-  //     valid_model[write_index]  = 1'b1;
-  //     valid_entries_count++;
-  //   end else begin
-  //     write_enable       = 0;
-  //     write_data         = 0;
-  //     last_written_index = 'x;
-  //   end
-  // end
-  // // Read and clear remaining valid entries
-  // for (int index = 0; index < DEPTH; index++) begin
-  //   if (valid_model[index]) begin
-  //     @(negedge clock);
-  //     read_enable = 1;
-  //     read_clear  = 1;
-  //     read_index  = index;
-  //     #0;
-  //     if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during final read pass.", $time, read_index);
-  //     if (read_data !== memory_model[index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during final read pass.", $time, read_data, read_index, memory_model[index]);
-  //     memory_model[read_index] = 'x;
-  //     valid_model[read_index]  = 1'b0;
-  //     valid_entries_count--;
-  //     @(posedge clock);
-  //   end else begin
-  //     @(negedge clock);
-  //     read_enable = 0;
-  //     read_clear  = 0;
-  //     read_index  = index;
-  //     @(posedge clock);
-  //   end
-  // end
-  // // Deassert all signals
-  // @(negedge clock);
-  // write_enable = 0;
-  // read_enable  = 0;
-  // read_clear   = 0;
-  // read_index   = 0;
-  // @(posedge clock);
-  // // Final state
-  // if (!empty) $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
-  // if ( full ) $error("[%0tns] Final state is full.", $time);
-  // if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
+  // Check 11 : Write at unreserved
+  $display("CHECK 11 : Write at unreserved.");
+  // Write operation
+  @(negedge clock);
+  write_enable = 1;
+  write_index  = 0;
+  write_data   = $urandom_range(WIDTH_POW2);
+  @(posedge clock);
+  if (!write_error) $error("[%0tns] No write error when writing at unreserved index '%0d'.", $time, write_index);
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  // Reset from broken state
+  resetn = 0;
+  @(posedge clock);
+  resetn = 1;
+  @(posedge clock);
+  // Final state
+  check_flags(false, true, false, true, " after resetting after writing at unreserved");
+  // Clear the test variables
+  reserve_enable = 0;
+  write_enable   = 0;
+  write_index    = 0;
+  write_data     = 0;
+  read_enable    = 0;
+  valid_entries_count = 0;
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = '0;
+    valid_model[index]  = 1'b0;
+  end
+  reserved_indices_for_write = {};
+  reserved_indices_for_read  = {};
 
-  // repeat(10) @(posedge clock);
+  repeat(10) @(posedge clock);
+
+  // Check 12 : Read at unreserved
+  $display("CHECK 12 : Read at unreserved.");
+  // Read operation
+  @(negedge clock);
+  read_enable = 1;
+  @(posedge clock);
+  if (!read_error) $error("[%0tns] No read error when reading at unreserved buffer.", $time);
+  @(negedge clock);
+  read_enable = 0;
+  // Reset from broken state
+  resetn = 0;
+  @(posedge clock);
+  resetn = 1;
+  @(posedge clock);
+  // Final state
+  check_flags(false, true, false, true, " after resetting after reading at unreserved");
+  // Clear the test variables
+  reserve_enable = 0;
+  write_enable   = 0;
+  write_index    = 0;
+  write_data     = 0;
+  read_enable    = 0;
+  valid_entries_count = 0;
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = '0;
+    valid_model[index]  = 1'b0;
+  end
+  reserved_indices_for_write = {};
+  reserved_indices_for_read  = {};
+
+  repeat(10) @(posedge clock);
+
+  // Check 13 : Read before write
+  $display("CHECK 13 : Read before write.");
+  // Reserve operation
+  @(negedge clock);
+  reserve_enable = 1;
+  @(posedge clock);
+  reserved_entries_count++;
+  reserved_indices_for_write.push_back(reserve_index);
+  reserved_indices_for_read.push_back(reserve_index);
+  reserved_model [reserve_index] = 1;
+  memory_model   [reserve_index] = 'x;
+  @(negedge clock);
+  reserve_enable = 0;
+  // Read operation
+  @(negedge clock);
+  read_enable = 1;
+  @(posedge clock);
+  if (!read_error) $error("[%0tns] No read error when reading before write.", $time);
+  @(negedge clock);
+  read_enable = 0;
+  // Reset from broken state
+  resetn = 0;
+  @(posedge clock);
+  resetn = 1;
+  @(posedge clock);
+  // Final state
+  check_flags(false, true, false, true, " after resetting after reading before write");
+  // Clear the test variables
+  reserve_enable = 0;
+  write_enable   = 0;
+  write_index    = 0;
+  write_data     = 0;
+  read_enable    = 0;
+  valid_entries_count = 0;
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = '0;
+    valid_model[index]  = 1'b0;
+  end
+  reserved_indices_for_write = {};
+  reserved_indices_for_read  = {};
+
+  repeat(10) @(posedge clock);
+
+  // Check 14 : Reserve when fully reserved
+  $display("CHECK 14 : Reserve when fully reserved.");
+  // Reserve all
+  @(negedge clock);
+  reserve_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    @(posedge clock);
+    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
+    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+    reserved_entries_count++;
+    reserved_indices_for_write.push_back(reserve_index);
+    reserved_indices_for_read.push_back(reserve_index);
+    reserved_model [reserve_index] = 1;
+    memory_model   [reserve_index] = 'x;
+  end
+  @(negedge clock);
+  reserve_enable = 0;
+  // Reserve operation
+  @(negedge clock);
+  reserve_enable = 1;
+  @(posedge clock);
+  if (!reserve_error) $error("[%0tns] No reserve error when reserving when buffer fully reserved.", $time);
+  @(negedge clock);
+  reserve_enable = 0;
+  // Reset from broken state
+  resetn = 0;
+  @(posedge clock);
+  resetn = 1;
+  @(posedge clock);
+  // Final state
+  check_flags(false, true, false, true, " after resetting after reserving when fullly reserved");
+  // Clear the test variables
+  reserve_enable = 0;
+  write_enable   = 0;
+  write_index    = 0;
+  write_data     = 0;
+  read_enable    = 0;
+  valid_entries_count = 0;
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = '0;
+    valid_model[index]  = 1'b0;
+  end
+  reserved_indices_for_write = {};
+  reserved_indices_for_read  = {};
+
+  repeat(10) @(posedge clock);
+
+  // Check 15 : Reserve when fully written
+  $display("CHECK 15 : Reserve when fully written.");
+  // Reserve all
+  @(negedge clock);
+  reserve_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    @(posedge clock);
+    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
+    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+    reserved_entries_count++;
+    reserved_indices_for_write.push_back(reserve_index);
+    reserved_indices_for_read.push_back(reserve_index);
+    reserved_model [reserve_index] = 1;
+    memory_model   [reserve_index] = 'x;
+  end
+  @(negedge clock);
+  reserve_enable = 0;
+  // Write all
+  @(negedge clock);
+  write_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    write_index = reserved_indices_for_write.pop_front();
+    write_data  = $urandom_range(WIDTH_POW2);
+    @(posedge clock);
+    if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
+    valid_entries_count++;
+    valid_model  [write_index] = 1;
+    memory_model [write_index] = write_data;
+    @(negedge clock);
+  end
+  write_enable = 0;
+  write_data   = 0;
+  // Reserve operation
+  @(negedge clock);
+  reserve_enable = 1;
+  @(posedge clock);
+  if (!reserve_error) $error("[%0tns] No reserve error when reserving when buffer fully written.", $time);
+  @(negedge clock);
+  reserve_enable = 0;
+  // Reset from broken state
+  resetn = 0;
+  @(posedge clock);
+  resetn = 1;
+  @(posedge clock);
+  // Final state
+  check_flags(false, true, false, true, " after resetting after reserving when fullly written");
+  // Clear the test variables
+  reserve_enable = 0;
+  write_enable   = 0;
+  write_index    = 0;
+  write_data     = 0;
+  read_enable    = 0;
+  valid_entries_count = 0;
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = '0;
+    valid_model[index]  = 1'b0;
+  end
+
+  repeat(10) @(posedge clock);
+
+  // Check 16 : Successive operations
+  $display("CHECK 16 : Successive operations.");
+  repeat (SUCCESSIVE_CHECK_DURATION) begin
+    // Reserve operation
+    @(negedge clock);
+    reserve_enable = 1;
+    @(posedge clock);
+    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
+    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+    reserved_entries_count++;
+    reserved_indices_for_write.push_back(reserve_index);
+    reserved_indices_for_read.push_back(reserve_index);
+    reserved_model [reserve_index] = 1;
+    memory_model   [reserve_index] = 'x;
+    @(negedge clock);
+    reserve_enable = 0;
+    // Write operation
+    @(negedge clock);
+    write_enable = 1;
+    write_index  = reserved_indices_for_write.pop_front();
+    write_data   = $urandom_range(WIDTH_POW2);
+    @(posedge clock);
+    if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
+    valid_entries_count++;
+    valid_model  [write_index] = 1;
+    memory_model [write_index] = write_data;
+    @(negedge clock);
+    write_enable = 0;
+    write_data   = 0;
+    // Read operation
+    @(negedge clock);
+    read_enable = 1;
+    @(posedge clock);
+    read_index = reserved_indices_for_read.pop_front();
+    if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
+    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
+    reserved_model [read_index] = 0;
+    valid_model    [read_index] = 0;
+    reserved_entries_count--;
+    valid_entries_count--;
+    @(negedge clock);
+    read_enable = 0;
+  end
+  // Final state
+  check_flags(false, true, false, true, " after successive operations check");
+
+  repeat(10) @(posedge clock);
 
   // // Check 12 : Random stimulus
   // $display("CHECK 12 : Random stimulus.");
