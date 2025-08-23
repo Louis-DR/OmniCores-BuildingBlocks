@@ -13,6 +13,7 @@
 
 `timescale 1ns/1ns
 `include "random.svh"
+`include "boolean.svh"
 
 
 
@@ -53,15 +54,16 @@ logic       [WIDTH-1:0] read_data;
 logic                   read_error;
 
 // Test variables
-logic [WIDTH-1:0] memory_model   [DEPTH-1:0];
-logic             reserved_model [DEPTH-1:0];
-logic             valid_model    [DEPTH-1:0];
-int               reserved_entries_count;
-int               valid_entries_count;
-int               timeout_countdown;
-int               transfer_count;
-int               first_valid_index;
-int               reserved_indices[$];
+logic [INDEX_WIDTH-1:0] read_index;
+logic       [WIDTH-1:0] memory_model   [DEPTH-1:0];
+logic                   reserved_model [DEPTH-1:0];
+logic                   valid_model    [DEPTH-1:0];
+int                     reserved_indices_for_write [$];
+int                     reserved_indices_for_read  [$];
+int                     reserved_entries_count;
+int                     valid_entries_count;
+int                     timeout_countdown;
+int                     transfer_count;
 
 // Device under test
 reorder_buffer #(
@@ -95,6 +97,23 @@ initial begin
   end
 end
 
+// Task to check the status flags
+task automatic check_flags;
+  input logic  expect_reserve_full;
+  input logic  expect_reserve_empty;
+  input logic  expect_data_full;
+  input logic  expect_data_empty;
+  input string context_string;
+  if ( expect_reserve_full  && !reserve_full  ) $error("[%0tns] Reserve full flag is not asserted%s.",  $time, context_string);
+  if ( expect_reserve_empty && !reserve_empty ) $error("[%0tns] Reserve empty flag is not asserted%s.", $time, context_string);
+  if ( expect_data_full     && !data_full     ) $error("[%0tns] Data full flag is not asserted%s.",     $time, context_string);
+  if ( expect_data_empty    && !data_empty    ) $error("[%0tns] Data empty flag is not asserted%s.",    $time, context_string);
+  if (!expect_reserve_full  &&  reserve_full  ) $error("[%0tns] Reserve full flag is asserted%s.",      $time, context_string);
+  if (!expect_reserve_empty &&  reserve_empty ) $error("[%0tns] Reserve empty flag is asserted%s.",     $time, context_string);
+  if (!expect_data_full     &&  data_full     ) $error("[%0tns] Data full flag is asserted%s.",         $time, context_string);
+  if (!expect_data_empty    &&  data_empty    ) $error("[%0tns] Data empty flag is asserted%s.",        $time, context_string);
+endtask
+
 // Main block
 initial begin
   // Log waves
@@ -122,27 +141,22 @@ initial begin
   // Check 1 : Reserve once
   $display("CHECK 1 : Reserve once.");
   // Initial state
-  if ( reserve_full ) $error("[%0tns] Reserve full flag is asserted after reset.", $time);
-  if (!reserve_empty) $error("[%0tns] Reserve empty flag is deasserted after reset.", $time);
-  if ( data_full    ) $error("[%0tns] Data full flag is asserted after reset.", $time);
-  if (!data_empty   ) $error("[%0tns] Data empty flag is deasserted after reset.", $time);
+  check_flags(false, true, false, true, " after reset");
   // Write operation
   @(negedge clock);
   reserve_enable = 1;
   @(posedge clock);
   if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
   if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
-  reserved_indices.push_back(reserve_index);
-  reserved_model[reserve_index] = 1;
   reserved_entries_count++;
-  memory_model[reserve_index] = 'x;
+  reserved_indices_for_write.push_back(reserve_index);
+  reserved_indices_for_read.push_back(reserve_index);
+  reserved_model [reserve_index] = 1;
+  memory_model   [reserve_index] = 'x;
   @(negedge clock);
   reserve_enable = 0;
   // Final state
-  if ( reserve_full ) $error("[%0tns] Reserve full flag is asserted after one reservation.", $time);
-  if ( reserve_empty) $error("[%0tns] Reserve empty flag is asserted after one reservation.", $time);
-  if ( data_full    ) $error("[%0tns] Data full flag is asserted after one reservation.", $time);
-  if (!data_empty   ) $error("[%0tns] Data empty flag is deasserted after one reservation.", $time);
+  check_flags(false, false, false, true, " after one reservation");
 
   repeat(10) @(posedge clock);
 
@@ -151,21 +165,18 @@ initial begin
   // Write operation
   @(negedge clock);
   write_enable = 1;
-  write_index  = reserved_indices.pop_front();
+  write_index  = reserved_indices_for_write.pop_front();
   write_data   = $urandom_range(WIDTH_POW2);
   @(posedge clock);
   if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
-  memory_model[write_index] = write_data;
-  valid_model[write_index]  = 1;
   valid_entries_count++;
+  valid_model  [write_index] = 1;
+  memory_model [write_index] = write_data;
   @(negedge clock);
   write_enable = 0;
   write_data   = 0;
   // Final state
-  if ( reserve_full ) $error("[%0tns] Reserve full flag is asserted after one write.", $time);
-  if ( reserve_empty) $error("[%0tns] Reserve empty flag is asserted after one write.", $time);
-  if ( data_full    ) $error("[%0tns] Data full flag is asserted after one write.", $time);
-  if ( data_empty   ) $error("[%0tns] Data empty flag is asserted after one write.", $time);
+  check_flags(false, false, false, false, " after one write");
 
   repeat(10) @(posedge clock);
 
@@ -174,108 +185,151 @@ initial begin
   @(negedge clock);
   read_enable = 1;
   @(posedge clock);
+  read_index = reserved_indices_for_read.pop_front();
   if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
-  if (read_data !== memory_model[0]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
+  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
+  reserved_model [read_index] = 0;
+  valid_model    [read_index] = 0;
+  reserved_entries_count--;
+  valid_entries_count--;
   @(negedge clock);
   read_enable = 0;
   // Final state
-  if ( reserve_full ) $error("[%0tns] Reserve full flag is asserted after reading the only entry.", $time);
-  if (!reserve_empty) $error("[%0tns] Reserve empty flag is deasserted after reading the only entry.", $time);
-  if ( data_full    ) $error("[%0tns] Data full flag is asserted after reading the only entry.", $time);
-  if (!data_empty   ) $error("[%0tns] Data empty flag is deasserted after reading the only entry.", $time);
+  check_flags(false, true, false, true, " after reading the only entry");
 
   repeat(10) @(posedge clock);
 
-  // // Check 4 : Read while empty
-  // $display("CHECK 4 : Read while empty.");
-  // // Try reading the cleared index again
-  // @(negedge clock);
-  // read_enable = 1;
-  // read_index  = last_written_index;
-  // @(posedge clock);
-  // if (!read_error) $error("[%0tns] Read error not asserted for cleared index %0d.", $time, read_index);
-  // @(negedge clock);
-  // read_enable = 0;
-  // read_index  = 0;
+  // Check 4 : Reserve all
+  $display("CHECK 4 : Reserve all.");
+  // Fill the memory
+  @(negedge clock);
+  reserve_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    @(posedge clock);
+    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
+    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+    reserved_entries_count++;
+    reserved_indices_for_write.push_back(reserve_index);
+    reserved_indices_for_read.push_back(reserve_index);
+    reserved_model [reserve_index] = 1;
+    memory_model   [reserve_index] = 'x;
+  end
+  @(negedge clock);
+  reserve_enable = 0;
+  // Final state
+  check_flags(true, false, false, true, " after reserving all slots");
 
-  // repeat(10) @(posedge clock);
+  repeat(10) @(posedge clock);
 
-  // // Check 5 : Writing to full
-  // $display("CHECK 5 : Writing to full.");
-  // // Fill the memory
-  // for (int write_count = valid_entries_count; write_count < DEPTH; write_count++) begin
-  //   @(negedge clock);
-  //   write_enable = 1;
-  //   write_data   = $urandom_range(WIDTH_POW2);
-  //   @(posedge clock);
-  //   if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds during fill.", $time, write_index);
-  //   if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model during fill.", $time, write_index);
-  //   memory_model[write_index] = write_data;
-  //   valid_model[write_index]  = 1'b1;
-  //   valid_entries_count++;
-  //   @(negedge clock);
-  //   write_enable = 0;
-  //   write_data   = 0;
-  //   if (!full && valid_entries_count == DEPTH) $error("[%0tns] Full flag not asserted when model is full (%0d/%0d).", $time, valid_entries_count, DEPTH);
-  //   if ( full && valid_entries_count  < DEPTH) $error("[%0tns] Full flag asserted when model is not full (%0d/%0d).", $time, valid_entries_count, DEPTH);
-  // end
-  // // Final state
-  // if ( empty) $error("[%0tns] Empty flag is asserted after filling. Should be full.", $time);
-  // if (!full ) $error("[%0tns] Full flag is deasserted after filling. Should be full.", $time);
-  // if (valid_entries_count != DEPTH) $error("[%0tns] Model count '%0d' is not equal to DEPTH '%0d' after filling.", $time, valid_entries_count, DEPTH);
+  // Check 5 : Write in-order
+  $display("CHECK 5 : Write in-order.");
+  // Fill the memory
+  @(negedge clock);
+  write_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    write_index = reserved_indices_for_write.pop_front();
+    write_data  = $urandom_range(WIDTH_POW2);
+    @(posedge clock);
+    if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
+    valid_entries_count++;
+    valid_model  [write_index] = 1;
+    memory_model [write_index] = write_data;
+  end
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  // Final state
+  check_flags(true, false, true, false, " after writing all reserved slots in-order");
 
-  // repeat(10) @(posedge clock);
+  repeat(10) @(posedge clock);
 
-  // // Check 8 : Read all without clearing
-  // $display("CHECK 8 : Read all without clearing.");
-  // read_clear = 0;
-  // for (int read_count = 0; read_count < DEPTH; read_count++) begin
-  //   @(negedge clock);
-  //   read_enable = 1;
-  //   read_index  = read_count;
-  //   @(posedge clock);
-  //   if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during read.", $time, read_index);
-  //   if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during read.", $time, read_data, read_index, memory_model[read_index]);
-  //   @(negedge clock);
-  //   read_enable = 0;
-  //   read_index  = 0;
-  //   if (!empty && valid_entries_count == 0) $error("[%0tns] Empty flag not asserted when model is empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
-  //   if ( empty && valid_entries_count  > 0) $error("[%0tns] Empty flag asserted when model is not empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
-  // end
-  // // Final state
-  // if ( empty) $error("[%0tns] Empty flag is asserted after reading without clearing. Should be full.", $time);
-  // if (!full ) $error("[%0tns] Full flag is deasserted after reading without clearing. Should be full.", $time);
-  // if (valid_entries_count != DEPTH) $error("[%0tns] Model count '%0d' is not equal to DEPTH '%0d' after reading without clearing.", $time, valid_entries_count, DEPTH);
-  // read_clear = 0;
+  // Check 6 : Read in-order
+  $display("CHECK 6 : Read in-order.");
+  // Fill the memory
+  @(negedge clock);
+  read_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    @(posedge clock);
+    read_index = reserved_indices_for_read.pop_front();
+    if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
+    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
+    reserved_model [read_index] = 0;
+    valid_model    [read_index] = 0;
+    reserved_entries_count--;
+    valid_entries_count--;
+  end
+  @(negedge clock);
+  read_enable = 0;
+  // Final state
+  check_flags(false, true, false, true, " after reading the whole buffer");
 
-  // repeat(10) @(posedge clock);
+  repeat(10) @(posedge clock);
 
-  // // Check 9 : Read and clear to empty
-  // $display("CHECK 9 : Read and clear to empty.");
-  // read_clear = 1;
-  // for (int clear_count = 0; clear_count < DEPTH; clear_count++) begin
-  //   @(negedge clock);
-  //   read_enable = 1;
-  //   read_index  = clear_count;
-  //   @(posedge clock);
-  //   if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during clear.", $time, read_index);
-  //   if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
-  //   memory_model[read_index] = 'x;
-  //   valid_model[read_index]  = 1'b0;
-  //   valid_entries_count--;
-  //   @(negedge clock);
-  //   read_enable = 0;
-  //   read_index  = 0;
-  //   if (!empty && valid_entries_count == 0) $error("[%0tns] Empty flag not asserted when model is empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
-  //   if ( empty && valid_entries_count  > 0) $error("[%0tns] Empty flag asserted when model is not empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
-  // end
-  // // Final state
-  // if (!empty) $error("[%0tns] Empty flag is deasserted after clearing all. Should be empty.", $time);
-  // if ( full ) $error("[%0tns] Full flag is asserted after clearing all. Should be empty.", $time);
-  // if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0 after clearing all.", $time, valid_entries_count);
-  // read_clear = 0;
+  // Check 7 : Reserve all again
+  $display("CHECK 7 : Reserve all again.");
+  // Fill the memory
+  @(negedge clock);
+  reserve_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    @(posedge clock);
+    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
+    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+    reserved_entries_count++;
+    reserved_indices_for_write.push_back(reserve_index);
+    reserved_indices_for_read.push_back(reserve_index);
+    reserved_model [reserve_index] = 1;
+    memory_model   [reserve_index] = 'x;
+  end
+  @(negedge clock);
+  reserve_enable = 0;
+  // Final state
+  check_flags(true, false, false, true, " after reserving all slots again");
 
-  // repeat(10) @(posedge clock);
+  repeat(10) @(posedge clock);
+
+  // Check 8 : Write reverse-order
+  $display("CHECK 8 : Write reverse-order.");
+  // Fill the memory
+  @(negedge clock);
+  write_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    write_index = reserved_indices_for_write.pop_back();
+    write_data  = $urandom_range(WIDTH_POW2);
+    @(posedge clock);
+    if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
+    valid_entries_count++;
+    valid_model  [write_index] = 1;
+    memory_model [write_index] = write_data;
+  end
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  // Final state
+  check_flags(true, false, true, false, " after writing all reserved slots in reverse order");
+
+  repeat(10) @(posedge clock);
+
+  // Check 9 : Read in-order again
+  $display("CHECK 9 : Read in-order again.");
+  // Fill the memory
+  @(negedge clock);
+  read_enable = 1;
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    @(posedge clock);
+    read_index = reserved_indices_for_read.pop_front();
+    if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
+    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
+    reserved_model [read_index] = 0;
+    valid_model    [read_index] = 0;
+    reserved_entries_count--;
+    valid_entries_count--;
+  end
+  @(negedge clock);
+  read_enable = 0;
+  // Final state
+  check_flags(false, true, false, true, " after reading the whole buffer again");
+
+  repeat(10) @(posedge clock);
 
   // // Check 10 : Continuous write & clear almost empty
   // $display("CHECK 10 : Continuous write & clear almost empty.");
