@@ -47,8 +47,7 @@ module out_of_order_buffer #(
 );
 
 // Memory array
-logic [WIDTH-1:0] buffer      [DEPTH-1:0];
-logic [WIDTH-1:0] buffer_next [DEPTH-1:0];
+logic [WIDTH-1:0] memory [DEPTH-1:0];
 logic [DEPTH-1:0] valid;
 logic [DEPTH-1:0] valid_next;
 
@@ -84,13 +83,9 @@ onehot_to_binary #(
 // Allocation and clear logic
 always_comb begin
   // Default assignments
-  for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-    buffer_next [depth_index] = buffer [depth_index];
-    valid_next  [depth_index] = valid  [depth_index];
-  end
+  valid_next = valid;
   // Write allocation operation
   if (write_enable) begin
-    buffer_next [first_free_index] = write_data;
     valid_next  [first_free_index] = 1'b1;
   end
   // Read clear operation
@@ -100,7 +95,7 @@ always_comb begin
 end
 
 // Read logic
-assign read_data  = buffer[read_index];
+assign read_data  = memory[read_index];
 assign read_error = read_enable && !valid[read_index];
 
 // Reset and sequential logic
@@ -109,19 +104,20 @@ always_ff @(posedge clock or negedge resetn) begin
   if (!resetn) begin
     full  <= 0;
     empty <= 1;
-    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-      buffer [depth_index] <= 0;
-      valid  [depth_index] <= 0;
-    end
+    valid <= 0;
   end
   // Operation
   else begin
     full  <= full_next;
     empty <= empty_next;
-    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-      buffer [depth_index] <= buffer_next [depth_index];
-      valid  [depth_index] <= valid_next  [depth_index];
-    end
+    valid <= valid_next;
+  end
+end
+
+// Write to memory without reset
+always @(posedge clock) begin
+  if (write_enable) begin
+    memory[first_free_index] <= write_data;
   end
 end
 
