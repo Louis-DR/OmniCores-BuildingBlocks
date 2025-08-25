@@ -14,7 +14,7 @@
 
 Synchronous buffer that allows out-of-order reading of stored data entries. The buffer stores data in the first available slot and returns the corresponding index, allowing data to be read back using that same index at any time. The buffer uses a write-enable/read-enable protocol for flow control and provides full and empty status flags.
 
-When writing, the data is stored in the first free slot and the corresponding index is returned on the same cycle. The data becomes available for reading in the next cycle. The read operation is fully combinatorial and data can be optionally cleared during the read operation to free the slot for future writes.
+When writing, the data is stored in the first free slot and the corresponding index is returned on the same cycle. The data becomes available for reading in the next cycle. The read operation is fully combinatorial and data can be optionally cleared during the read operation to free the slot for future writes. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 The buffer provides error detection for invalid read operations (reading from invalid indices) but does not implement safety mechanisms against writing when full, so the integration must use the status flags and enable signals carefully.
 
@@ -68,6 +68,7 @@ The status flags are calculated based on the vector of valid bits. The buffer is
 | `write_enable` | `full`        | sequential    | Control path through internal validity bits.     |
 | `write_enable` | `empty`       | sequential    | Control path through internal validity bits.     |
 | `read_index`   | `read_data`   | combinational | Direct memory array access.                      |
+| `read_index`   | `read_error`  | combinational | Error detection through validity bit check.      |
 | `read_enable`  | `read_error`  | combinational | Error detection through validity bit check.      |
 | `read_enable`  | `full`        | sequential    | Control path through internal validity bits.     |
 | `read_enable`  | `empty`       | sequential    | Control path through internal validity bits.     |
