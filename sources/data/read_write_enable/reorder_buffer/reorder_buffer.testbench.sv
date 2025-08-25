@@ -61,8 +61,6 @@ logic                   reserved_model [DEPTH-1:0];
 logic                   valid_model    [DEPTH-1:0];
 int                     reserved_indices_for_write [$];
 int                     reserved_indices_for_read  [$];
-int                     reserved_entries_count;
-int                     valid_entries_count;
 int                     timeout_countdown;
 int                     transfer_count;
 
@@ -98,6 +96,56 @@ initial begin
   end
 end
 
+// Task to reserve a slot
+task automatic reserve();
+  reserve_enable = 1;
+  @(posedge clock);
+  if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
+  if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+  reserved_indices_for_write.push_back(reserve_index);
+  reserved_indices_for_read.push_back(reserve_index);
+  reserved_model [reserve_index] = 1;
+  memory_model   [reserve_index] = 'x;
+  @(negedge clock);
+  reserve_enable = 0;
+endtask
+
+// Task to write to a reserved index
+task automatic write(input logic [INDEX_WIDTH-1:0] index);
+  write_enable = 1;
+  write_index  = index;
+  write_data   = $urandom_range(WIDTH_POW2);
+  @(posedge clock);
+  if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
+  valid_model  [write_index] = 1;
+  memory_model [write_index] = write_data;
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+endtask
+
+// Task to read
+task automatic read();
+  read_enable = 1;
+  @(posedge clock);
+  read_index = reserved_indices_for_read.pop_front();
+  if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
+  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
+  reserved_model [read_index] = 0;
+  valid_model    [read_index] = 0;
+  @(negedge clock);
+  read_enable = 0;
+endtask
+
+task automatic clear_verification_variables();
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = '0;
+    valid_model[index]  = 1'b0;
+  end
+  reserved_indices_for_write = {};
+  reserved_indices_for_read  = {};
+endtask
+
 // Task to check the status flags
 task automatic check_flags;
   input logic  expect_reserve_full;
@@ -127,13 +175,7 @@ initial begin
   write_index    = 0;
   write_data     = 0;
   read_enable    = 0;
-  valid_entries_count = 0;
-  for (int index = 0; index < DEPTH; index++) begin
-    memory_model[index] = '0;
-    valid_model[index]  = 1'b0;
-  end
-  reserved_indices_for_write = {};
-  reserved_indices_for_read  = {};
+  clear_verification_variables();
 
   // Reset
   resetn = 0;
@@ -146,18 +188,7 @@ initial begin
   // Initial state
   check_flags(false, true, false, true, " after reset");
   // Reserve operation
-  @(negedge clock);
-  reserve_enable = 1;
-  @(posedge clock);
-  if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
-  if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
-  reserved_entries_count++;
-  reserved_indices_for_write.push_back(reserve_index);
-  reserved_indices_for_read.push_back(reserve_index);
-  reserved_model [reserve_index] = 1;
-  memory_model   [reserve_index] = 'x;
-  @(negedge clock);
-  reserve_enable = 0;
+  reserve();
   // Final state
   check_flags(false, false, false, true, " after one reservation");
 
@@ -167,17 +198,7 @@ initial begin
   $display("CHECK 2 : Write once.");
   // Write operation
   @(negedge clock);
-  write_enable = 1;
-  write_index  = reserved_indices_for_write.pop_front();
-  write_data   = $urandom_range(WIDTH_POW2);
-  @(posedge clock);
-  if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
-  valid_entries_count++;
-  valid_model  [write_index] = 1;
-  memory_model [write_index] = write_data;
-  @(negedge clock);
-  write_enable = 0;
-  write_data   = 0;
+  write(reserved_indices_for_write.pop_front());
   // Final state
   check_flags(false, false, false, false, " after one write");
 
@@ -187,17 +208,7 @@ initial begin
   $display("CHECK 3 : Read once.");
   // Read operation
   @(negedge clock);
-  read_enable = 1;
-  @(posedge clock);
-  read_index = reserved_indices_for_read.pop_front();
-  if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
-  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
-  reserved_model [read_index] = 0;
-  valid_model    [read_index] = 0;
-  reserved_entries_count--;
-  valid_entries_count--;
-  @(negedge clock);
-  read_enable = 0;
+  read();
   // Final state
   check_flags(false, true, false, true, " after reading the only entry");
 
@@ -209,17 +220,8 @@ initial begin
   @(negedge clock);
   reserve_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    @(posedge clock);
-    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
-    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
-    reserved_entries_count++;
-    reserved_indices_for_write.push_back(reserve_index);
-    reserved_indices_for_read.push_back(reserve_index);
-    reserved_model [reserve_index] = 1;
-    memory_model   [reserve_index] = 'x;
+    reserve();
   end
-  @(negedge clock);
-  reserve_enable = 0;
   // Final state
   check_flags(true, false, false, true, " after reserving all slots");
 
@@ -231,17 +233,8 @@ initial begin
   @(negedge clock);
   write_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    write_index = reserved_indices_for_write.pop_front();
-    write_data  = $urandom_range(WIDTH_POW2);
-    @(posedge clock);
-    if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
-    valid_entries_count++;
-    valid_model  [write_index] = 1;
-    memory_model [write_index] = write_data;
+    write(reserved_indices_for_write.pop_front());
   end
-  @(negedge clock);
-  write_enable = 0;
-  write_data   = 0;
   // Final state
   check_flags(true, false, true, false, " after writing all reserved slots in-order");
 
@@ -253,17 +246,8 @@ initial begin
   @(negedge clock);
   read_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    @(posedge clock);
-    read_index = reserved_indices_for_read.pop_front();
-    if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
-    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
-    reserved_model [read_index] = 0;
-    valid_model    [read_index] = 0;
-    reserved_entries_count--;
-    valid_entries_count--;
+    read();
   end
-  @(negedge clock);
-  read_enable = 0;
   // Final state
   check_flags(false, true, false, true, " after reading the whole buffer");
 
@@ -275,17 +259,8 @@ initial begin
   @(negedge clock);
   reserve_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    @(posedge clock);
-    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
-    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
-    reserved_entries_count++;
-    reserved_indices_for_write.push_back(reserve_index);
-    reserved_indices_for_read.push_back(reserve_index);
-    reserved_model [reserve_index] = 1;
-    memory_model   [reserve_index] = 'x;
+    reserve();
   end
-  @(negedge clock);
-  reserve_enable = 0;
   // Final state
   check_flags(true, false, false, true, " after reserving all slots again");
 
@@ -297,17 +272,8 @@ initial begin
   @(negedge clock);
   write_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    write_index = reserved_indices_for_write.pop_back();
-    write_data  = $urandom_range(WIDTH_POW2);
-    @(posedge clock);
-    if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
-    valid_entries_count++;
-    valid_model  [write_index] = 1;
-    memory_model [write_index] = write_data;
+    write(reserved_indices_for_write.pop_back());
   end
-  @(negedge clock);
-  write_enable = 0;
-  write_data   = 0;
   // Final state
   check_flags(true, false, true, false, " after writing all reserved slots in reverse order");
 
@@ -319,17 +285,8 @@ initial begin
   @(negedge clock);
   read_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    @(posedge clock);
-    read_index = reserved_indices_for_read.pop_front();
-    if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
-    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
-    reserved_model [read_index] = 0;
-    valid_model    [read_index] = 0;
-    reserved_entries_count--;
-    valid_entries_count--;
+    read();
   end
-  @(negedge clock);
-  read_enable = 0;
   // Final state
   check_flags(false, true, false, true, " after reading the whole buffer again");
 
@@ -339,27 +296,10 @@ initial begin
   $display("CHECK 10 : Write overwrite.");
   // Reserve operation
   @(negedge clock);
-  reserve_enable = 1;
-  @(posedge clock);
-  reserved_entries_count++;
-  reserved_indices_for_write.push_back(reserve_index);
-  reserved_indices_for_read.push_back(reserve_index);
-  reserved_model [reserve_index] = 1;
-  memory_model   [reserve_index] = 'x;
-  @(negedge clock);
-  reserve_enable = 0;
+  reserve();
   // Write operation
   @(negedge clock);
-  write_enable = 1;
-  write_index  = reserved_indices_for_write[0];
-  write_data   = $urandom_range(WIDTH_POW2);
-  @(posedge clock);
-  valid_entries_count++;
-  valid_model  [write_index] = 1;
-  memory_model [write_index] = write_data;
-  @(negedge clock);
-  write_enable = 0;
-  write_data   = 0;
+  write(reserved_indices_for_write[0]);
   // Write operation
   @(negedge clock);
   write_enable = 1;
@@ -378,18 +318,7 @@ initial begin
   // Final state
   check_flags(false, true, false, true, " after resetting after overwriting");
   // Clear the test variables
-  reserve_enable = 0;
-  write_enable   = 0;
-  write_index    = 0;
-  write_data     = 0;
-  read_enable    = 0;
-  valid_entries_count = 0;
-  for (int index = 0; index < DEPTH; index++) begin
-    memory_model[index] = '0;
-    valid_model[index]  = 1'b0;
-  end
-  reserved_indices_for_write = {};
-  reserved_indices_for_read  = {};
+  clear_verification_variables();
 
   repeat(10) @(posedge clock);
 
@@ -413,18 +342,7 @@ initial begin
   // Final state
   check_flags(false, true, false, true, " after resetting after writing at unreserved");
   // Clear the test variables
-  reserve_enable = 0;
-  write_enable   = 0;
-  write_index    = 0;
-  write_data     = 0;
-  read_enable    = 0;
-  valid_entries_count = 0;
-  for (int index = 0; index < DEPTH; index++) begin
-    memory_model[index] = '0;
-    valid_model[index]  = 1'b0;
-  end
-  reserved_indices_for_write = {};
-  reserved_indices_for_read  = {};
+  clear_verification_variables();
 
   repeat(10) @(posedge clock);
 
@@ -445,18 +363,7 @@ initial begin
   // Final state
   check_flags(false, true, false, true, " after resetting after reading at unreserved");
   // Clear the test variables
-  reserve_enable = 0;
-  write_enable   = 0;
-  write_index    = 0;
-  write_data     = 0;
-  read_enable    = 0;
-  valid_entries_count = 0;
-  for (int index = 0; index < DEPTH; index++) begin
-    memory_model[index] = '0;
-    valid_model[index]  = 1'b0;
-  end
-  reserved_indices_for_write = {};
-  reserved_indices_for_read  = {};
+  clear_verification_variables();
 
   repeat(10) @(posedge clock);
 
@@ -464,15 +371,7 @@ initial begin
   $display("CHECK 13 : Read before write.");
   // Reserve operation
   @(negedge clock);
-  reserve_enable = 1;
-  @(posedge clock);
-  reserved_entries_count++;
-  reserved_indices_for_write.push_back(reserve_index);
-  reserved_indices_for_read.push_back(reserve_index);
-  reserved_model [reserve_index] = 1;
-  memory_model   [reserve_index] = 'x;
-  @(negedge clock);
-  reserve_enable = 0;
+  reserve();
   // Read operation
   @(negedge clock);
   read_enable = 1;
@@ -488,18 +387,7 @@ initial begin
   // Final state
   check_flags(false, true, false, true, " after resetting after reading before write");
   // Clear the test variables
-  reserve_enable = 0;
-  write_enable   = 0;
-  write_index    = 0;
-  write_data     = 0;
-  read_enable    = 0;
-  valid_entries_count = 0;
-  for (int index = 0; index < DEPTH; index++) begin
-    memory_model[index] = '0;
-    valid_model[index]  = 1'b0;
-  end
-  reserved_indices_for_write = {};
-  reserved_indices_for_read  = {};
+  clear_verification_variables();
 
   repeat(10) @(posedge clock);
 
@@ -512,7 +400,6 @@ initial begin
     @(posedge clock);
     if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
     if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
-    reserved_entries_count++;
     reserved_indices_for_write.push_back(reserve_index);
     reserved_indices_for_read.push_back(reserve_index);
     reserved_model [reserve_index] = 1;
@@ -535,18 +422,7 @@ initial begin
   // Final state
   check_flags(false, true, false, true, " after resetting after reserving when fullly reserved");
   // Clear the test variables
-  reserve_enable = 0;
-  write_enable   = 0;
-  write_index    = 0;
-  write_data     = 0;
-  read_enable    = 0;
-  valid_entries_count = 0;
-  for (int index = 0; index < DEPTH; index++) begin
-    memory_model[index] = '0;
-    valid_model[index]  = 1'b0;
-  end
-  reserved_indices_for_write = {};
-  reserved_indices_for_read  = {};
+  clear_verification_variables();
 
   repeat(10) @(posedge clock);
 
@@ -556,14 +432,7 @@ initial begin
   @(negedge clock);
   reserve_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    @(posedge clock);
-    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
-    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
-    reserved_entries_count++;
-    reserved_indices_for_write.push_back(reserve_index);
-    reserved_indices_for_read.push_back(reserve_index);
-    reserved_model [reserve_index] = 1;
-    memory_model   [reserve_index] = 'x;
+    reserve();
   end
   @(negedge clock);
   reserve_enable = 0;
@@ -571,17 +440,8 @@ initial begin
   @(negedge clock);
   write_enable = 1;
   for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    write_index = reserved_indices_for_write.pop_front();
-    write_data  = $urandom_range(WIDTH_POW2);
-    @(posedge clock);
-    if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
-    valid_entries_count++;
-    valid_model  [write_index] = 1;
-    memory_model [write_index] = write_data;
-    @(negedge clock);
+    write(reserved_indices_for_write.pop_front());
   end
-  write_enable = 0;
-  write_data   = 0;
   // Reserve operation
   @(negedge clock);
   reserve_enable = 1;
@@ -597,61 +457,20 @@ initial begin
   // Final state
   check_flags(false, true, false, true, " after resetting after reserving when fullly written");
   // Clear the test variables
-  reserve_enable = 0;
-  write_enable   = 0;
-  write_index    = 0;
-  write_data     = 0;
-  read_enable    = 0;
-  valid_entries_count = 0;
-  for (int index = 0; index < DEPTH; index++) begin
-    memory_model[index] = '0;
-    valid_model[index]  = 1'b0;
-  end
+  clear_verification_variables();
 
   repeat(10) @(posedge clock);
 
   // Check 16 : Successive operations
   $display("CHECK 16 : Successive operations.");
+  @(negedge clock);
   repeat (SUCCESSIVE_CHECK_DURATION) begin
     // Reserve operation
-    @(negedge clock);
-    reserve_enable = 1;
-    @(posedge clock);
-    if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
-    if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
-    reserved_entries_count++;
-    reserved_indices_for_write.push_back(reserve_index);
-    reserved_indices_for_read.push_back(reserve_index);
-    reserved_model [reserve_index] = 1;
-    memory_model   [reserve_index] = 'x;
-    @(negedge clock);
-    reserve_enable = 0;
+    reserve();
     // Write operation
-    @(negedge clock);
-    write_enable = 1;
-    write_index  = reserved_indices_for_write.pop_front();
-    write_data   = $urandom_range(WIDTH_POW2);
-    @(posedge clock);
-    if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
-    valid_entries_count++;
-    valid_model  [write_index] = 1;
-    memory_model [write_index] = write_data;
-    @(negedge clock);
-    write_enable = 0;
-    write_data   = 0;
+    write(reserved_indices_for_write.pop_front());
     // Read operation
-    @(negedge clock);
-    read_enable = 1;
-    @(posedge clock);
-    read_index = reserved_indices_for_read.pop_front();
-    if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
-    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index 0 differs from model '%0h'.", $time, read_data, memory_model[0]);
-    reserved_model [read_index] = 0;
-    valid_model    [read_index] = 0;
-    reserved_entries_count--;
-    valid_entries_count--;
-    @(negedge clock);
-    read_enable = 0;
+    read();
   end
   // Final state
   check_flags(false, true, false, true, " after successive operations check");
@@ -683,7 +502,6 @@ initial begin
   //         if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
   //         memory_model[write_index] = write_data;
   //         valid_model[write_index]  = 1'b1;
-  //         valid_entries_count++;
   //         transfer_count++;
   //       end
   //     end
@@ -718,7 +536,6 @@ initial begin
   //         if (read_clear) begin
   //           memory_model[read_index] = 'x;
   //           valid_model[read_index]  = 1'b0;
-  //           valid_entries_count--;
   //         end
   //       end
   //     end
@@ -727,15 +544,7 @@ initial begin
   //   begin
   //     forever begin
   //       @(negedge clock);
-  //       if (valid_entries_count == 0) begin
-  //         if (!empty) $error("[%0tns] Empty flag is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-  //         if ( full ) $error("[%0tns] Full flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-  //       end else if (valid_entries_count == DEPTH) begin
-  //         if ( empty) $error("[%0tns] Empty flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-  //         if (!full ) $error("[%0tns] Full flag is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
   //       end else begin
-  //         if ( empty) $error("[%0tns] Empty flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-  //         if ( full ) $error("[%0tns] Full flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
   //       end
   //     end
   //   end
@@ -761,9 +570,7 @@ initial begin
   // join_any
   // disable fork;
   // // Final state
-  // if (!empty) $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
   // if ( full ) $error("[%0tns] Final state is full.", $time);
-  // if (valid_entries_count != 0) $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
 
   // repeat(10) @(posedge clock);
 
