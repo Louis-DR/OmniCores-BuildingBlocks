@@ -87,7 +87,7 @@ always_comb begin
     valid_next    [depth_index] = valid    [depth_index];
   end
   // Reservation operation
-  if (reserve_enable && !reserve_full) begin
+  if (reserve_enable) begin
     reserved_next [reserve_pointer[INDEX_WIDTH-1:0]] = 1'b1;
     reserve_pointer_next = reserve_pointer + 1;
   end
@@ -97,7 +97,7 @@ always_comb begin
     valid_next  [write_index] = 1'b1;
   end
   // Read operation
-  if (read_enable && read_valid) begin
+  if (read_enable) begin
     valid_next    [read_pointer[INDEX_WIDTH-1:0]] = 1'b0;
     reserved_next [read_pointer[INDEX_WIDTH-1:0]] = 1'b0;
     read_pointer_next = read_pointer + 1;

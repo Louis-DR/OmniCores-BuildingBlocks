@@ -12,9 +12,11 @@
 
 ![reorder_buffer](reorder_buffer.symbol.svg)
 
-Synchronous buffer that ensures in-order data reading from out-of-order data writes. The buffer operates with a three-stage protocol: in-order reservation of slots, out-of-order writing to reserved slots, and in-order reading of written data. This design is essential for systems that require program order to be maintained despite out-of-order execution or completion.
+Synchronous buffer that ensures in-order data reading from out-of-order data writes. The buffer operates with a three-stage protocol: in-order reservation of slots, out-of-order writing to reserved slots, and in-order reading of written data. The reserve operation provdes an index that should be caried through the system for the corresponding write operation. Data can only be read in-order when the corresponding writes have occured. This design is essential for systems that require program order to be maintained despite out-of-order execution or completion.
 
-The buffer maintains separate reservation and read pointers to track the order of operations. Data can only be read when it becomes available at the head of the queue (read pointer position), ensuring strict in-order delivery even when writes complete out of order.
+The buffer uses a reserve-enable/write-enable/read-enable protocol for flow control. It doesn't implement safety mechanism against reserving when full, writing at non-reserved or already written slots, or reading before the data is available, so the integration must use the `reserve_full` status flag to know when a slot is ready to be reserved, only use reserved indices to write data once per slot, and use the `read_valid` flow control signal to know when the next data in-order is available to read. Careful, just because the `data_empty` signal is low doesn't mean the next in-order data is available.
+
+Error flags are also generated combinationally for reservation when full, writing to non-reserved or already written slots, and when reading before the next in-order data has been written. Since there is no safety mechanism, if an invalid transaction is attempted (one error flag is high at the rising edge of the clock), the behavior of the buffer becomes unspecified and it should be reset to restore proper operation.
 
 ## Parameters
 
@@ -61,9 +63,9 @@ The buffer maintains separate tracking for reserved slots (allocated but potenti
 Separate flags are used for notifying filling level for slot reservation (`reserve_full`, `reserve_empty`) and for data reading (`data_full`, `data_empty`).
 
 **Error conditions:**
-- `reserve_error`: Attempting to reserve when the buffer is full
-- `write_error`: Writing to an unreserved slot or a slot that already contains valid data
-- `read_error`: Attempting to read when no valid data is available at the head
+- `reserve_error`: Attempting to reserve when the buffer is full.
+- `write_error`: Writing to an unreserved slot or a slot that already contains valid data.
+- `read_error`: Attempting to read when no valid data is available at the head.
 
 ## Paths
 
