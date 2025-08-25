@@ -18,6 +18,8 @@ The buffer uses a reserve-enable/write-enable/read-enable protocol for flow cont
 
 Error flags are also generated combinationally for reservation when full, writing to non-reserved or already written slots, and when reading before the next in-order data has been written. Since there is no safety mechanism, if an invalid transaction is attempted (one error flag is high at the rising edge of the clock), the behavior of the buffer becomes unspecified and it should be reset to restore proper operation.
 
+The read data output continuously shows the value at the head of the buffer, allowing instant data access without necessarily popping the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
+
 ## Parameters
 
 | Name          | Type    | Allowed Values | Default       | Description                                        |

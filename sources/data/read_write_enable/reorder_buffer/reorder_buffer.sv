@@ -45,8 +45,7 @@ module reorder_buffer #(
 );
 
 // Memory array
-logic [WIDTH-1:0] buffer      [DEPTH-1:0];
-logic [WIDTH-1:0] buffer_next [DEPTH-1:0];
+logic [WIDTH-1:0] memory [DEPTH-1:0];
 
 // Reserved entries
 logic [DEPTH-1:0] reserved;
@@ -81,11 +80,8 @@ always_comb begin
   // Default assignments
   reserve_pointer_next = reserve_pointer;
   read_pointer_next    = read_pointer;
-  for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-    buffer_next   [depth_index] = buffer   [depth_index];
-    reserved_next [depth_index] = reserved [depth_index];
-    valid_next    [depth_index] = valid    [depth_index];
-  end
+  reserved_next        = reserved;
+  valid_next           = valid;
   // Reservation operation
   if (reserve_enable) begin
     reserved_next [reserve_pointer[INDEX_WIDTH-1:0]] = 1'b1;
@@ -93,7 +89,6 @@ always_comb begin
   end
   // Write operation
   if (write_enable) begin
-    buffer_next [write_index] = write_data;
     valid_next  [write_index] = 1'b1;
   end
   // Read operation
@@ -114,7 +109,7 @@ assign write_error = write_enable && (valid[write_index] || !reserved[write_inde
 
 // Read logic
 assign read_valid = valid  [read_pointer[INDEX_WIDTH-1:0]];
-assign read_data  = buffer [read_pointer[INDEX_WIDTH-1:0]];
+assign read_data  = memory [read_pointer[INDEX_WIDTH-1:0]];
 // Read error if not valid
 assign read_error = read_enable && !read_valid;
 
@@ -128,11 +123,8 @@ always_ff @(posedge clock or negedge resetn) begin
     data_empty      <= 1;
     reserve_pointer <= 0;
     read_pointer    <= 0;
-    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-      buffer   [depth_index] <= 0;
-      reserved [depth_index] <= 0;
-      valid    [depth_index] <= 0;
-    end
+    reserved        <= 0;
+    valid           <= 0;
   end
   // Operation
   else begin
@@ -142,11 +134,15 @@ always_ff @(posedge clock or negedge resetn) begin
     data_empty      <= data_empty_next;
     reserve_pointer <= reserve_pointer_next;
     read_pointer    <= read_pointer_next;
-    for (int depth_index = 0; depth_index < DEPTH; depth_index = depth_index+1) begin
-      buffer   [depth_index] <= buffer_next   [depth_index];
-      reserved [depth_index] <= reserved_next [depth_index];
-      valid    [depth_index] <= valid_next    [depth_index];
-    end
+    reserved        <= reserved_next;
+    valid           <= valid_next;
+  end
+end
+
+// Write to memory without reset
+always @(posedge clock) begin
+  if (write_enable) begin
+    memory[write_index] <= write_data;
   end
 end
 
