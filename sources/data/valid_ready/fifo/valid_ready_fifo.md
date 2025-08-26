@@ -14,7 +14,7 @@
 
 Synchronous First-In First-Out queue for data buffering and flow control with configurable depth and valid-ready handshake flow control. The FIFO provides full and empty status flags and implements a handshake protocol where transfers only occur when both valid and ready signals are asserted. The handshake protocol manages and protects flow control, eliminating the need for external enable logic.
 
-The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily popping the entry.
+The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily popping the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
 

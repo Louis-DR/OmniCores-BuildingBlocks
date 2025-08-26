@@ -14,7 +14,7 @@
 
 Advanced synchronous First-In First-Out queue with comprehensive monitoring features and valid-ready handshake flow control. This enhanced FIFO provides level monitoring, dynamic threshold flags, flush functionality, and error protection mechanisms. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, automatically managing flow control without external enable logic.
 
-The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry.
+The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
 

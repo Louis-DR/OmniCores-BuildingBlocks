@@ -14,7 +14,7 @@
 
 Advanced asynchronous First-In First-Out queue that combines clock domain crossing capabilities with comprehensive monitoring features and valid-ready handshake flow control. The FIFO operates with separate write and read clock domains while providing enhanced status information, level monitoring, dynamic thresholds, and flush functionality in both domains. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, automatically managing flow control in each clock domain.
 
-The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry.
+The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
 

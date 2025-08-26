@@ -14,7 +14,7 @@
 
 Asynchronous First-In First-Out queue for crossing clock domains. The FIFO uses a write-enable/read-enable protocol for flow control and provides full and empty status flags. It operates with separate write and read clock domains, using Gray-coded pointer synchronization to safely communicate across clock boundaries. It doesn't implement a safety mechanism against writing when full or reading when empty so the integration must use the status flags and the enable signals carefully.
 
-The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry.
+The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
 
