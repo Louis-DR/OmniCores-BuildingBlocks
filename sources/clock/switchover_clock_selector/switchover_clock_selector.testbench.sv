@@ -88,7 +88,7 @@ initial begin
     if (resetn) begin
       if (   absolute(time_negedge_clock_out-time_posedge_clock_out -  FIRST_CLOCK_PERIOD/2) > GLITCH_PERIOD_TOLERANCE *  FIRST_CLOCK_PERIOD/2
           && absolute(time_negedge_clock_out-time_posedge_clock_out - SECOND_CLOCK_PERIOD/2) > GLITCH_PERIOD_TOLERANCE * SECOND_CLOCK_PERIOD/2) begin
-        $error("[%t] Glitch detected on the output clock.", $time);
+        $error("[%0tns] Glitch detected on the output clock.", $time);
       end
     end
   end
@@ -124,7 +124,7 @@ initial begin
   $display("CHECK 1 : No clock running.");
   `measure_frequency(clock_out, clock_out_frequency)
   expected_clock_out_frequency = 0;
-  if (clock_out_frequency != 0) $error("[%t] Output clock is running with frequency %d%s when neither input clocks are running.",
+  if (clock_out_frequency != 0) $error("[%0tns] Output clock is running with frequency %d%s when neither input clocks are running.",
                                         $time, clock_out_frequency, FREQUENCY_UNIT);
 
   // Check 2 : Start first clock
@@ -133,9 +133,9 @@ initial begin
   @(posedge first_clock);
   `measure_frequency(clock_out, clock_out_frequency)
   expected_clock_out_frequency = first_clock_frequency;
-  if      (clock_out_frequency == 0) $error("[%t] Output clock is not running after the first clock has started.", $time);
+  if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running after the first clock has started.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
-    $error("[%t] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) after the first clock has started.",
+    $error("[%0tns] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) after the first clock has started.",
            $time, clock_out_frequency, FREQUENCY_UNIT, expected_clock_out_frequency, FREQUENCY_UNIT, expected_clock_out_frequency);
   end
 
@@ -147,9 +147,9 @@ initial begin
   repeat (STAGES) @(posedge second_clock);
   `measure_frequency(clock_out, clock_out_frequency)
   expected_clock_out_frequency = second_clock_frequency;
-  if      (clock_out_frequency == 0) $error("[%t] Output clock is not running after the second clock has started.", $time);
+  if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running after the second clock has started.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
-    $error("[%t] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) after the second clock has started.",
+    $error("[%0tns] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) after the second clock has started.",
            $time, clock_out_frequency, FREQUENCY_UNIT, expected_clock_out_frequency, FREQUENCY_UNIT, expected_clock_out_frequency);
   end
 
@@ -159,9 +159,9 @@ initial begin
   repeat (STAGES) @(posedge second_clock);
   `measure_frequency(clock_out, clock_out_frequency)
   expected_clock_out_frequency = second_clock_frequency;
-  if      (clock_out_frequency == 0) $error("[%t] Output clock is not running after the first clock has stopped.", $time);
+  if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running after the first clock has stopped.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
-    $error("[%t] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) after the first clock has stopped.",
+    $error("[%0tns] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) after the first clock has stopped.",
            $time, clock_out_frequency, FREQUENCY_UNIT, expected_clock_out_frequency, FREQUENCY_UNIT, expected_clock_out_frequency);
   end
 

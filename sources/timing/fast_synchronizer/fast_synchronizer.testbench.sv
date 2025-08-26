@@ -111,7 +111,7 @@ initial begin
         time_negedge_data_out = $time;
         data_out_pulse_duration = time_negedge_data_out - time_posedge_data_out;
         assert (data_out_pulse_duration % CLOCK_PERIOD == 0)
-          else $error("[%t] Glitch detected on the output data.", $time);
+          else $error("[%0tns] Glitch detected on the output data.", $time);
       end
     end
   join_any

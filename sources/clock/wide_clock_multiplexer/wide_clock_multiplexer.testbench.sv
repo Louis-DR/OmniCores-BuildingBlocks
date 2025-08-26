@@ -110,9 +110,9 @@ initial begin
     #(STAGES*2*UPPER_CLOCK_PERIOD);
     `measure_frequency(clock_out, clock_out_frequency)
     expected_clock_out_frequency = clocks_frequency[select];
-    if      (clock_out_frequency == 0) $error("[%t] Output clock is not running with select at %0d.", $time, select);
+    if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running with select at %0d.", $time, select);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
-      $error("[%t] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) with select at %0d.",
+      $error("[%0tns] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) with select at %0d.",
              $time, clock_out_frequency, FREQUENCY_UNIT, select, expected_clock_out_frequency, FREQUENCY_UNIT, select);
     end
   end
@@ -145,7 +145,7 @@ initial begin
           end
         end
         if (!pulse_width_valid) begin
-          $error("[%t] Glitch detected on the output clock.", $time);
+          $error("[%0tns] Glitch detected on the output clock.", $time);
         end
       end
     end

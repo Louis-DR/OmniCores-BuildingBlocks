@@ -70,32 +70,32 @@ initial begin
   @(posedge clock_in);
   enable = 0;
   `measure_frequency(clock_out, clock_out_frequency)
-  if (clock_out_frequency != 0) $error("[%t] Output clock is running but should be gated.", $time);
+  if (clock_out_frequency != 0) $error("[%0tns] Output clock is running but should be gated.", $time);
   @(posedge clock_in);
   enable = 1;
   `measure_frequency(clock_out, clock_out_frequency)
-  if (clock_out_frequency == 0) $error("[%t] Output clock is gated but should be running.", $time);
-  if (clock_out_frequency != clock_in_frequency) $error("[%t] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency, FREQUENCY_UNIT);
+  if (clock_out_frequency == 0) $error("[%0tns] Output clock is gated but should be running.", $time);
+  if (clock_out_frequency != clock_in_frequency) $error("[%0tns] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency, FREQUENCY_UNIT);
   @(posedge clock_in);
   enable = 0;
   `measure_frequency(clock_out, clock_out_frequency)
-  if (clock_out_frequency != 0) $error("[%t] Output clock is running but should be gated.", $time);
+  if (clock_out_frequency != 0) $error("[%0tns] Output clock is running but should be gated.", $time);
 
   // Check 2 : Test mode disbale-enable-disable sequence
   $display("CHECK 2 : Test mode disbale-enable-disable sequence.");
   @(posedge clock_in);
   test_enable = 0;
   `measure_frequency(clock_out, clock_out_frequency)
-  if (clock_out_frequency != 0) $error("[%t] Output clock is running but should be gated.", $time);
+  if (clock_out_frequency != 0) $error("[%0tns] Output clock is running but should be gated.", $time);
   @(posedge clock_in);
   test_enable = 1;
   `measure_frequency(clock_out, clock_out_frequency)
-  if (clock_out_frequency == 0) $error("[%t] Output clock is gated but should be running.", $time);
-  if (clock_out_frequency != clock_in_frequency) $error("[%t] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency, FREQUENCY_UNIT);
+  if (clock_out_frequency == 0) $error("[%0tns] Output clock is gated but should be running.", $time);
+  if (clock_out_frequency != clock_in_frequency) $error("[%0tns] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency, FREQUENCY_UNIT);
   @(posedge clock_in);
   test_enable = 0;
   `measure_frequency(clock_out, clock_out_frequency)
-  if (clock_out_frequency != 0) $error("[%t] Output clock is running but should be gated.", $time);
+  if (clock_out_frequency != 0) $error("[%0tns] Output clock is running but should be gated.", $time);
 
   // Check 3 : Clock frequency division with enable
   $display("CHECK 3 : Clock frequency division with enable.");
@@ -111,7 +111,7 @@ initial begin
     // Check
     begin
       `measure_frequency(clock_out, clock_out_frequency)
-      if (clock_out_frequency != clock_in_frequency/2) $error("[%t] Output clock frequency (%d%s) isn't equal to the input clock frequency divided by two (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency/2, FREQUENCY_UNIT);
+      if (clock_out_frequency != clock_in_frequency/2) $error("[%0tns] Output clock frequency (%d%s) isn't equal to the input clock frequency divided by two (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency/2, FREQUENCY_UNIT);
     end
   join_any
   disable fork;
@@ -136,7 +136,7 @@ initial begin
         time_posedge_clock_out = $time;
         @(negedge clock_out);
         time_negedge_clock_out = $time;
-        if (time_negedge_clock_out-time_posedge_clock_out != CLOCK_PERIOD/2) $error("[%t] Glitch detected on the output clock.", $time);
+        if (time_negedge_clock_out-time_posedge_clock_out != CLOCK_PERIOD/2) $error("[%0tns] Glitch detected on the output clock.", $time);
       end
     end
   join_any

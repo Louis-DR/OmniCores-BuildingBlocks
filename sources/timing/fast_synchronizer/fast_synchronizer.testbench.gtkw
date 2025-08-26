@@ -12,11 +12,6 @@
 fast_synchronizer__testbench.clock
 fast_synchronizer__testbench.resetn
 fast_synchronizer__testbench.data_in
-fast_synchronizer__testbench.data_out[5:1]
-fast_synchronizer__testbench.gen_stages[1].fast_synchronizer_dut.data_out
-fast_synchronizer__testbench.gen_stages[2].fast_synchronizer_dut.data_out
-fast_synchronizer__testbench.gen_stages[3].fast_synchronizer_dut.data_out
-fast_synchronizer__testbench.gen_stages[4].fast_synchronizer_dut.data_out
-fast_synchronizer__testbench.gen_stages[5].fast_synchronizer_dut.data_out
+fast_synchronizer__testbench.data_out
 [pattern_trace] 1
 [pattern_trace] 0

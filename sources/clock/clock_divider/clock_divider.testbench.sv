@@ -74,8 +74,8 @@ initial begin
   $display("CHECK 1 : Output divided frequency.");
   for (int division = 1; division <= MAX_TEST_DIVISION; division++) begin
     `measure_frequency(clock_out[division], clock_out_frequency)
-    if      (clock_out_frequency == 0) $error("[%t] Output clock with division factor of %0d is not running.", $time,  division);
-    else if (clock_out_frequency != clock_in_frequency/division) $error("[%t] Output clock frequency (%d%s) with division factor of %0d doesn't match the expected clock frequency (%d%s).",
+    if      (clock_out_frequency == 0) $error("[%0tns] Output clock with division factor of %0d is not running.", $time,  division);
+    else if (clock_out_frequency != clock_in_frequency/division) $error("[%0tns] Output clock frequency (%d%s) with division factor of %0d doesn't match the expected clock frequency (%d%s).",
                                                                         $time, clock_out_frequency, FREQUENCY_UNIT, division, clock_in_frequency/division, FREQUENCY_UNIT);
   end
 
