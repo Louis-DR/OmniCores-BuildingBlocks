@@ -4,8 +4,12 @@
 `include "boolean.svh"
 `include "constants.svh"
 
+function real random_ratio();
+  return $urandom / real'(INT_UNSIGNED_MAX);
+endfunction
+
 function bool random_boolean(input real probability);
-  return ($urandom / real'(INT_UNSIGNED_MAX)) < probability;
+  return random_ratio() < probability;
 endfunction
 
 `endif
