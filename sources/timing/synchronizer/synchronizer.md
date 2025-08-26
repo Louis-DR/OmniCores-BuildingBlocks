@@ -53,26 +53,19 @@ The latency from `data_in` to `data_out` is `STAGES` clock cycles of the `clock`
 
 ## Verification
 
-The `synchronizer` module is verified using a SystemVerilog testbench. The testbench instantiates multiple `synchronizer` DUTs with the `STAGES` parameter ranging from 1 to `MAX_TEST_STAGES` (set to 5). It provides the same stimulus to all DUTs and checks their output in parallel.
+The synchronizer is verified using a SystemVerilog testbench with a single check sequences.
 
 The following table lists the checks performed by the testbench.
 
-| Number | Check                                        | Description                                                                                                                                     |
-| ------ | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1      | Low-to-high transition at 25% of clock cycle | Toggles the `data_in` from 0 to 1 slightly after the clock edge and checks that it propagates with the expected delay and without glitch.       |
-| 2      | High-to-low transition at 25% of clock cycle | Toggles the `data_in` from 1 to 0 slightly after the clock edge and checks that it propagates with the expected delay and without glitch.       |
-| 3      | Low-to-high transition at 75% of clock cycle | Toggles the `data_in` from 0 to 1 slightly before the next clock edge and checks that it propagates with the expected delay and without glitch. |
-| 4      | High-to-low transition at 75% of clock cycle | Toggles the `data_in` from 1 to 0 slightly before the next clock edge and checks that it propagates with the expected delay and without glitch. |
+| Number | Check       | Description                                                                                              |
+| ------ | ----------- | -------------------------------------------------------------------------------------------------------- |
+| 1      | Random test | Toggles the `data_in` randomly and checks that it propagates with the expected delay and without glitch. |
 
 The following table lists the parameter values verified by the testbench.
 
 | `STAGES`    |
 | ----------- |
-| 1           |
 | 2 (default) |
-| 3           |
-| 4           |
-| 5           |
 
 ## Constraints
 
