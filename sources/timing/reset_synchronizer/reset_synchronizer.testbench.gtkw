@@ -1,0 +1,16 @@
+[dumpfile] "reset_synchronizer.testbench.vcd"
+[savefile] "reset_synchronizer.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-5.455228 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+reset_synchronizer__testbench.clock
+reset_synchronizer__testbench.resetn_in
+reset_synchronizer__testbench.resetn_out
+[pattern_trace] 1
+[pattern_trace] 0
