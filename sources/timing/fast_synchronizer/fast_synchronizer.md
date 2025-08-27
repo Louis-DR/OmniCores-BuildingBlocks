@@ -37,7 +37,7 @@ To prevent glitches at the capture stage, there should be no combinational logic
 
 ## Operation
 
-The `fast_synchronizer` module consists of a chain of `STAGES` D-type flip-flops. On each rising edge of `clock`, the value of `data_in` is captured by the first flip-flop in the chain (called the capture stage). Subsequent flip-flops (called synchronization stages) capture the output of the preceding flip-flop in the chain. The `data_out` signal is the output of the last flip-flop in the chain.
+The `fast_synchronizer` module consists of a chain of `STAGES` D-type flip-flops. On either the rising or falling edge of `clock`, the value of `data_in` is captured by the first flip-flop in the chain (called the capture stage). Subsequent flip-flops (called synchronization stages) capture the output of the preceding flip-flop in the chain. The `data_out` signal is the output of the last flip-flop in the chain.
 
 The last flop in the destination domain captures on the rising edge, and the previous flops alternate between capturating on the negative and positive edges. This reduces the latency of the synchronizer, but degrades MTBF. It can also confuse the tools that recognize typical synchronizer structures.
 

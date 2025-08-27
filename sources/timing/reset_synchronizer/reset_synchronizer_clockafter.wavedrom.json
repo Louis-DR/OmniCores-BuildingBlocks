@@ -1,0 +1,9 @@
+{"signal": [
+  {"name": "clock",               "wave": "l.....p....."},
+  {"name": "resetn_in",           "wave": "h.0..1......", "phase": 0.5},
+  {"name": "resetn_out STAGES=1", "wave": "h.<0.......l1...........>", "phase": 0.5},
+  {"name": "resetn_out STAGES=2", "wave": "h.<0.........l1.........>", "phase": 0.5},
+  {"name": "resetn_out STAGES=3", "wave": "h.<0...........l1.......>", "phase": 0.5},
+  {"name": "resetn_out STAGES=4", "wave": "h.<0.............l1.....>", "phase": 0.5},
+  {"name": "resetn_out STAGES=5", "wave": "h.<0...............l1...>", "phase": 0.5}
+], "config": {"hbounds":[0,11]}}
