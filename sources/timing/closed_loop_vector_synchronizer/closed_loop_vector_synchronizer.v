@@ -65,19 +65,23 @@ set_reset_flip_flop_with_reset #(
 toggle_pulse_synchronizer #(
   .STAGES ( STAGES )
 ) update_pulse_synchronizer (
-  .clock     ( destination_clock  ),
-  .resetn    ( destination_resetn ),
-  .pulse_in  ( update_pulse       ),
-  .pulse_out ( capture_pulse      )
+  .source_clock       ( source_clock       ),
+  .source_resetn      ( source_resetn      ),
+  .destination_clock  ( destination_clock  ),
+  .destination_resetn ( destination_resetn ),
+  .pulse_in           ( update_pulse       ),
+  .pulse_out          ( capture_pulse      )
 );
 
 toggle_pulse_synchronizer #(
   .STAGES ( STAGES )
 ) feedback_pulse_synchronizer (
-  .clock     ( source_clock   ),
-  .resetn    ( source_resetn  ),
-  .pulse_in  ( capture_pulse  ),
-  .pulse_out ( feedback_pulse )
+  .source_clock       ( destination_clock  ),
+  .source_resetn      ( destination_resetn ),
+  .destination_clock  ( source_clock       ),
+  .destination_resetn ( source_resetn      ),
+  .pulse_in           ( capture_pulse      ),
+  .pulse_out          ( feedback_pulse     )
 );
 
 always @(posedge source_clock or negedge source_resetn) begin
