@@ -1,0 +1,6 @@
+closed_loop_vector_synchronizer.v
+../toggle_pulse_synchronizer/toggle_pulse_synchronizer.v
+../synchronizer/synchronizer.v
+../../pulse/edge_detector/edge_detector.v
+../../flip_flop/toggle_flip_flop_with_reset/toggle_flip_flop_with_reset.v
+../../flip_flop/set_reset_flip_flop_with_reset/set_reset_flip_flop_with_reset.v
