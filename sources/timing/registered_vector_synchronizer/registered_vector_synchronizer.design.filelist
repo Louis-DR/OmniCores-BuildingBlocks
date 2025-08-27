@@ -1,0 +1,3 @@
+registered_vector_synchronizer.v
+../vector_synchronizer/vector_synchronizer.v
+../synchronizer/synchronizer.v
