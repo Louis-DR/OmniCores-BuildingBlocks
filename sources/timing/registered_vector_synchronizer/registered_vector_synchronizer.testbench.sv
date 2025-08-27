@@ -43,6 +43,7 @@ logic [WIDTH-1:0] data_in;
 logic [WIDTH-1:0] data_out;
 
 // Test signals
+logic [WIDTH-1:0] presynchronization_stage_model;
 logic [WIDTH-1:0] data_queue [$];
 logic [WIDTH-1:0] data_out_expected;
 
@@ -90,6 +91,7 @@ initial begin
 
   // Initialization
   data_in = 0;
+  presynchronization_stage_model = 0;
 
   // Reset test
   source_resetn      = 0;
@@ -107,15 +109,17 @@ initial begin
     // Stimulus
     begin
       forever begin
-        repeat ($urandom_range(RANDOM_SOURCE_MIN_PULSE, RANDOM_SOURCE_MAX_PULSE)) @(posedge source_clock);
+        repeat ($urandom_range(RANDOM_SOURCE_MIN_PULSE, RANDOM_SOURCE_MAX_PULSE)) @(negedge source_clock);
         data_in = $urandom_range(WIDTH_POW2 - 1);
+        @(posedge source_clock);
+        presynchronization_stage_model = data_in;
       end
     end
     // Check output data
     begin
       repeat (RANDOM_TEST_DURATION) begin
         @(posedge destination_clock);
-        data_queue.push_back(data_in);
+        data_queue.push_back(presynchronization_stage_model);
         #1ps;
         if (data_queue.size() == STAGES) begin
           data_out_expected = data_queue.pop_front();
