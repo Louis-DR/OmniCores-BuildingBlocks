@@ -61,9 +61,9 @@ namespace eval ::omnicores::buildingblocks::timing::reset_synchronizer {
       set stage_clear_pin   [get_pins -quiet ${stage_reg_pattern}/R]
       if { $stage_clear_pin ne "" } {
         puts "Info: Setting false path to '${stage_reg_pattern}/R'."
-        set_false_path -to $stage_clear_pin
+        set_false_path -fall -to $stage_clear_pin
       } else {
-        puts "Warning: Could not find stage pin pattern '${stage_reg_pattern}/Q' for synchronizer instance '$instance_path'."
+        puts "Warning: Could not find pin pattern '${stage_reg_pattern}/R' for synchronizer instance '$instance_path'."
       }
     }
 
