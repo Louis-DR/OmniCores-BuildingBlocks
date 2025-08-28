@@ -87,6 +87,7 @@ There are no synthesis and implementation constraints for this block.
 | Waveform script   | [`count_ones.testbench.gtkw`](count_ones.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`count_ones.symbol.sss`](count_ones.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`count_ones.symbol.svg`](count_ones.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`count_ones.symbol.drawio`](count_ones.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`count_ones.md`](count_ones.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -81,14 +81,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                             | Description                                         |
-| ----------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`repetition_encoder.v`](repetition_encoder.v)                   | Verilog design.                                     |
-| Testbench         | [`repetition.testbench.sv`](repetition.testbench.sv)             | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`repetition.testbench.gtkw`](repetition.testbench.gtkw)         | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`repetition_encoder.symbol.sss`](repetition_encoder.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`repetition_encoder.symbol.svg`](repetition_encoder.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`repetition_encoder.md`](repetition_encoder.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                   | Description                                         |
+| ----------------- | ---------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`repetition_encoder.v`](repetition_encoder.v)                         | Verilog design.                                     |
+| Testbench         | [`repetition.testbench.sv`](repetition.testbench.sv)                   | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`repetition.testbench.gtkw`](repetition.testbench.gtkw)               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`repetition_encoder.symbol.sss`](repetition_encoder.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`repetition_encoder.symbol.svg`](repetition_encoder.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`repetition_encoder.symbol.drawio`](repetition_encoder.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`repetition_encoder.md`](repetition_encoder.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

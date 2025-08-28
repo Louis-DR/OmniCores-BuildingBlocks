@@ -120,6 +120,7 @@ Clock domain crossing constraints should be applied to the Gray pointer synchron
 | Waveform script   | [`asynchronous_fifo.testbench.gtkw`](asynchronous_fifo.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`asynchronous_fifo.symbol.sss`](asynchronous_fifo.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`asynchronous_fifo.symbol.svg`](asynchronous_fifo.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`asynchronous_fifo.symbol.drawio`](asynchronous_fifo.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`asynchronous_fifo.md`](asynchronous_fifo.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -70,14 +70,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                                         | Description                                         |
-| ----------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`extended_hamming_block_corrector.sv`](extended_hamming_block_corrector.sv)                 | SystemVerilog design.                               |
-| Testbench         | [`extended_hamming.testbench.sv`](extended_hamming.testbench.sv)                             | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`extended_hamming.testbench.gtkw`](extended_hamming.testbench.gtkw)                         | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`extended_hamming_block_corrector.symbol.sss`](extended_hamming_block_corrector.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`extended_hamming_block_corrector.symbol.svg`](extended_hamming_block_corrector.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`extended_hamming_block_corrector.md`](extended_hamming_block_corrector.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                                               | Description                                         |
+| ----------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`extended_hamming_block_corrector.sv`](extended_hamming_block_corrector.sv)                       | SystemVerilog design.                               |
+| Testbench         | [`extended_hamming.testbench.sv`](extended_hamming.testbench.sv)                                   | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`extended_hamming.testbench.gtkw`](extended_hamming.testbench.gtkw)                               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`extended_hamming_block_corrector.symbol.sss`](extended_hamming_block_corrector.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`extended_hamming_block_corrector.symbol.svg`](extended_hamming_block_corrector.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`extended_hamming_block_corrector.symbol.drawio`](extended_hamming_block_corrector.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`extended_hamming_block_corrector.md`](extended_hamming_block_corrector.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

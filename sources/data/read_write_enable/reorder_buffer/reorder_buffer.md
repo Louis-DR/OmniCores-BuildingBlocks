@@ -140,6 +140,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`reorder_buffer.testbench.gtkw`](reorder_buffer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`reorder_buffer.symbol.sss`](reorder_buffer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`reorder_buffer.symbol.svg`](reorder_buffer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`reorder_buffer.symbol.drawio`](reorder_buffer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`reorder_buffer.md`](reorder_buffer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

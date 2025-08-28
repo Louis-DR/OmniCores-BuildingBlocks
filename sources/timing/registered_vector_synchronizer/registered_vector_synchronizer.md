@@ -101,6 +101,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Waveform script   | [`registered_vector_synchronizer.testbench.gtkw`](registered_vector_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`registered_vector_synchronizer.symbol.sss`](registered_vector_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`registered_vector_synchronizer.symbol.svg`](registered_vector_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`registered_vector_synchronizer.symbol.drawio`](registered_vector_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`registered_vector_synchronizer.md`](registered_vector_synchronizer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

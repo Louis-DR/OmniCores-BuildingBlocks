@@ -75,15 +75,16 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                 | Description                                         |
-| ----------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`parity_block_checker.v`](parity_block_checker.v)                   | Verilog design.                                     |
-| Testbench         | [`parity.testbench.sv`](parity.testbench.sv)                         | SystemVerilog verification shared testbench.        |
-| Testbench         | [`parity.testbench.sv`](parity.testbench.sv)                         | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`parity.testbench.gtkw`](parity.testbench.gtkw)                     | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`parity_block_checker.symbol.sss`](parity_block_checker.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`parity_block_checker.symbol.svg`](parity_block_checker.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`parity_block_checker.md`](parity_block_checker.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                       | Description                                         |
+| ----------------- | -------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`parity_block_checker.v`](parity_block_checker.v)                         | Verilog design.                                     |
+| Testbench         | [`parity.testbench.sv`](parity.testbench.sv)                               | SystemVerilog verification shared testbench.        |
+| Testbench         | [`parity.testbench.sv`](parity.testbench.sv)                               | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`parity.testbench.gtkw`](parity.testbench.gtkw)                           | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`parity_block_checker.symbol.sss`](parity_block_checker.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`parity_block_checker.symbol.svg`](parity_block_checker.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`parity_block_checker.symbol.drawio`](parity_block_checker.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`parity_block_checker.md`](parity_block_checker.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

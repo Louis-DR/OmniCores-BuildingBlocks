@@ -79,6 +79,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script     | [`falling_edge_detector.testbench.gtkw`](falling_edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor   | [`falling_edge_detector.symbol.sss`](falling_edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`falling_edge_detector.symbol.svg`](falling_edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`falling_edge_detector.symbol.drawio`](falling_edge_detector.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`falling_edge_detector.wavedrom.json`](falling_edge_detector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`falling_edge_detector.wavedrom.svg`](falling_edge_detector.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`falling_edge_detector.md`](falling_edge_detector.md)                         | Markdown documentation datasheet.                   |

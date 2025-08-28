@@ -87,16 +87,17 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type               | File                                               | Description                                         |
-| ------------------ | -------------------------------------------------- | --------------------------------------------------- |
-| Design             | [`rotate_left.v`](rotate_left.v)                   | Verilog design file.                                |
-| Testbench template | [`rotate_left.tb.sv.j2`](rotate_left.tb.sv.j2)     | Template of the top-level SystemVerilog testbench.  |
-| Testbench          | [`rotate_left.tb.sv`](rotate_left.tb.sv)           | Generated gop-level SystemVerilog testbench.        |
-| Testcase           | [`rotate_left.tc.sv`](rotate_left.tc.sv)           | SystemVerilog testcase.                             |
-| Waveform script    | [`rotate_left.tb.gtkw`](rotate_left.tb.gtkw)       | Script to load waveforms in GTKWave (assumed).      |
-| Symbol descriptor  | [`rotate_left.symbol.sss`](rotate_left.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image       | [`rotate_left.symbol.svg`](rotate_left.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet          | [`rotate_left.md`](rotate_left.md)                 | Markdown documentation datasheet.                   |
+| Type               | File                                                     | Description                                         |
+| ------------------ | -------------------------------------------------------- | --------------------------------------------------- |
+| Design             | [`rotate_left.v`](rotate_left.v)                         | Verilog design file.                                |
+| Testbench template | [`rotate_left.tb.sv.j2`](rotate_left.tb.sv.j2)           | Template of the top-level SystemVerilog testbench.  |
+| Testbench          | [`rotate_left.tb.sv`](rotate_left.tb.sv)                 | Generated gop-level SystemVerilog testbench.        |
+| Testcase           | [`rotate_left.tc.sv`](rotate_left.tc.sv)                 | SystemVerilog testcase.                             |
+| Waveform script    | [`rotate_left.tb.gtkw`](rotate_left.tb.gtkw)             | Script to load waveforms in GTKWave (assumed).      |
+| Symbol descriptor  | [`rotate_left.symbol.sss`](rotate_left.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image       | [`rotate_left.symbol.svg`](rotate_left.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape       | [`rotate_left.symbol.drawio`](rotate_left.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet          | [`rotate_left.md`](rotate_left.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

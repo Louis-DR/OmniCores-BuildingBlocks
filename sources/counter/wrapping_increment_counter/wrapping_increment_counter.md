@@ -92,6 +92,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`wrapping_increment_counter.testbench.gtkw`](wrapping_increment_counter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`wrapping_increment_counter.symbol.sss`](wrapping_increment_counter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`wrapping_increment_counter.symbol.svg`](wrapping_increment_counter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`wrapping_increment_counter.symbol.drawio`](wrapping_increment_counter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`wrapping_increment_counter.md`](wrapping_increment_counter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

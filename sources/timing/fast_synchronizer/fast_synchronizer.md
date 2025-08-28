@@ -99,6 +99,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Constraint script   | [`fast_synchronizer.sdc`](fast_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor   | [`fast_synchronizer.symbol.sss`](fast_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`fast_synchronizer.symbol.svg`](fast_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`fast_synchronizer.symbol.drawio`](fast_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`fast_synchronizer.wavedrom.json`](fast_synchronizer.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`fast_synchronizer.wavedrom.svg`](fast_synchronizer.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`fast_synchronizer.md`](fast_synchronizer.md)                         | Markdown documentation datasheet.                   |

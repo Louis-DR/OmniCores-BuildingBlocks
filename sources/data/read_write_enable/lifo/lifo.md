@@ -108,6 +108,7 @@ There are no synthesis and implementation constraints for this block.
 | Waveform script   | [`lifo.testbench.gtkw`](lifo.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`lifo.symbol.sss`](lifo.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`lifo.symbol.svg`](lifo.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`lifo.symbol.drawio`](lifo.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`lifo.md`](lifo.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -78,6 +78,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`first_one.testbench.gtkw`](first_one.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`first_one.symbol.sss`](first_one.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`first_one.symbol.svg`](first_one.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`first_one.symbol.drawio`](first_one.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`first_one.md`](first_one.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -72,6 +72,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`fast_first_one.testbench.gtkw`](fast_first_one.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`fast_first_one.symbol.sss`](fast_first_one.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`fast_first_one.symbol.svg`](fast_first_one.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`fast_first_one.symbol.drawio`](fast_first_one.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`fast_first_one.md`](fast_first_one.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

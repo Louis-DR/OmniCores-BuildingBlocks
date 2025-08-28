@@ -75,6 +75,7 @@ The following table lists the parameter values verified by the testbench.
 | Constraint script   | [`switchover_clock_selector.sdc`](switchover_clock_selector.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor   | [`switchover_clock_selector.symbol.sss`](switchover_clock_selector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`switchover_clock_selector.symbol.svg`](switchover_clock_selector.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`switchover_clock_selector.symbol.drawio`](switchover_clock_selector.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`switchover_clock_selector.wavedrom.json`](switchover_clock_selector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`switchover_clock_selector.wavedrom.svg`](switchover_clock_selector.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`switchover_clock_selector.md`](switchover_clock_selector.md)                         | Markdown documentation datasheet.                   |

@@ -86,6 +86,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script     | [`fast_pulse_extender.testbench.gtkw`](fast_pulse_extender.testbench.gtkw)   | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor   | [`fast_pulse_extender.symbol.sss`](fast_pulse_extender.symbol.sss)           | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`fast_pulse_extender.symbol.svg`](fast_pulse_extender.symbol.svg)           | Generated vector image of the symbol.               |
+| Symbol shape        | [`fast_pulse_extender.symbol.drawio`](fast_pulse_extender.symbol.drawio)     | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`fast_pulse_extender.wavedrom.json`](fast_pulse_extender.wavedrom.json)     | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`fast_pulse_extender.wavedrom.svg`](fast_pulse_extender.wavedrom.svg)       | Generated image of the waveform.                    |
 | Datasheet           | [`fast_pulse_extender.md`](fast_pulse_extender.md)                           | Markdown documentation datasheet.                   |

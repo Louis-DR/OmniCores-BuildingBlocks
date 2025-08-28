@@ -68,6 +68,7 @@ As this is a behavioral model, the primary constraint is that it should not be s
 | Waveform script   | [`clock_gater.testbench.gtkw`](clock_gater.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`clock_gater.symbol.sss`](clock_gater.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`clock_gater.symbol.svg`](clock_gater.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`clock_gater.symbol.drawio`](clock_gater.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`clock_gater.md`](clock_gater.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

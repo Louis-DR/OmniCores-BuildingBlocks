@@ -71,14 +71,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                         | Description                                         |
-| ----------------- | ------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`onehot_to_binary.v`](onehot_to_binary.v)                   | Verilog design.                                     |
-| Testbench         | [`onehot.testbench.sv`](onehot.testbench.sv)                 | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`onehot.testbench.gtkw`](onehot.testbench.gtkw)             | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`onehot_to_binary.symbol.sss`](onehot_to_binary.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`onehot_to_binary.symbol.svg`](onehot_to_binary.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`onehot_to_binary.md`](onehot_to_binary.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                               | Description                                         |
+| ----------------- | ------------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`onehot_to_binary.v`](onehot_to_binary.v)                         | Verilog design.                                     |
+| Testbench         | [`onehot.testbench.sv`](onehot.testbench.sv)                       | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`onehot.testbench.gtkw`](onehot.testbench.gtkw)                   | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`onehot_to_binary.symbol.sss`](onehot_to_binary.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`onehot_to_binary.symbol.svg`](onehot_to_binary.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`onehot_to_binary.symbol.drawio`](onehot_to_binary.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`onehot_to_binary.md`](onehot_to_binary.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

@@ -96,6 +96,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Constraint script | [`vector_synchronizer.sdc`](vector_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor | [`vector_synchronizer.symbol.sss`](vector_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`vector_synchronizer.symbol.svg`](vector_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`vector_synchronizer.symbol.drawio`](vector_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`vector_synchronizer.md`](vector_synchronizer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

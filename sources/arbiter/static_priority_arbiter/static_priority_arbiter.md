@@ -74,6 +74,7 @@ There are no synthesis and implementation constraints for this block.
 | Waveform script   | [`static_priority_arbiter.testbench.gtkw`](static_priority_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`static_priority_arbiter.symbol.sss`](static_priority_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`static_priority_arbiter.symbol.svg`](static_priority_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`static_priority_arbiter.symbol.drawio`](static_priority_arbiter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`static_priority_arbiter.md`](static_priority_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

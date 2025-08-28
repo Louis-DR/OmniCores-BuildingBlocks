@@ -83,6 +83,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script     | [`pulse_extender.testbench.gtkw`](pulse_extender.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor   | [`pulse_extender.symbol.sss`](pulse_extender.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`pulse_extender.symbol.svg`](pulse_extender.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`pulse_extender.symbol.drawio`](pulse_extender.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`pulse_extender.wavedrom.json`](pulse_extender.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`pulse_extender.wavedrom.svg`](pulse_extender.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`pulse_extender.md`](pulse_extender.md)                         | Markdown documentation datasheet.                   |

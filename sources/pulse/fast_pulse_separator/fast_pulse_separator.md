@@ -89,6 +89,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script     | [`fast_pulse_separator.testbench.gtkw`](fast_pulse_separator.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor   | [`fast_pulse_separator.symbol.sss`](fast_pulse_separator.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`fast_pulse_separator.symbol.svg`](fast_pulse_separator.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`fast_pulse_separator.symbol.drawio`](fast_pulse_separator.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`fast_pulse_separator.wavedrom.json`](fast_pulse_separator.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`fast_pulse_separator.wavedrom.svg`](fast_pulse_separator.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`fast_pulse_separator.md`](fast_pulse_separator.md)                         | Markdown documentation datasheet.                   |

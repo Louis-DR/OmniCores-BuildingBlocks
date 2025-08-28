@@ -77,14 +77,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                     | Description                                         |
-| ----------------- | -------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`parity_encoder.v`](parity_encoder.v)                   | Verilog design.                                     |
-| Testbench         | [`parity.testbench.sv`](parity.testbench.sv)             | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`parity.testbench.gtkw`](parity.testbench.gtkw)         | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`parity_encoder.symbol.sss`](parity_encoder.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`parity_encoder.symbol.svg`](parity_encoder.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`parity_encoder.md`](parity_encoder.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                           | Description                                         |
+| ----------------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`parity_encoder.v`](parity_encoder.v)                         | Verilog design.                                     |
+| Testbench         | [`parity.testbench.sv`](parity.testbench.sv)                   | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`parity.testbench.gtkw`](parity.testbench.gtkw)               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`parity_encoder.symbol.sss`](parity_encoder.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`parity_encoder.symbol.svg`](parity_encoder.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`parity_encoder.symbol.drawio`](parity_encoder.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`parity_encoder.md`](parity_encoder.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

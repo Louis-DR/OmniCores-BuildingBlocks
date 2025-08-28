@@ -79,6 +79,7 @@ If the technology node provides a dedicated toggle flip-flop cell with asynchron
 | Waveform script   | [`toggle_flip_flop_with_reset.testbench.gtkw`](toggle_flip_flop_with_reset.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`toggle_flip_flop_with_reset.symbol.sss`](toggle_flip_flop_with_reset.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`toggle_flip_flop_with_reset.symbol.svg`](toggle_flip_flop_with_reset.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`toggle_flip_flop_with_reset.symbol.drawio`](toggle_flip_flop_with_reset.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`toggle_flip_flop_with_reset.md`](toggle_flip_flop_with_reset.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -70,14 +70,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                     | Description                                         |
-| ----------------- | -------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`grey_to_binary.v`](grey_to_binary.v)                   | Verilog design.                                     |
-| Testbench         | [`grey.testbench.sv`](grey.testbench.sv)                 | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`grey.testbench.gtkw`](grey.testbench.gtkw)             | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`grey_to_binary.symbol.sss`](grey_to_binary.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`grey_to_binary.symbol.svg`](grey_to_binary.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`grey_to_binary.md`](grey_to_binary.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                           | Description                                         |
+| ----------------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`grey_to_binary.v`](grey_to_binary.v)                         | Verilog design.                                     |
+| Testbench         | [`grey.testbench.sv`](grey.testbench.sv)                       | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`grey.testbench.gtkw`](grey.testbench.gtkw)                   | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`grey_to_binary.symbol.sss`](grey_to_binary.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`grey_to_binary.symbol.svg`](grey_to_binary.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`grey_to_binary.symbol.drawio`](grey_to_binary.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`grey_to_binary.md`](grey_to_binary.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

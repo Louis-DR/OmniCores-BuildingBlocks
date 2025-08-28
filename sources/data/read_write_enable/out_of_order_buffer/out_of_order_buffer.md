@@ -125,6 +125,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`out_of_order_buffer.testbench.gtkw`](out_of_order_buffer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`out_of_order_buffer.symbol.sss`](out_of_order_buffer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`out_of_order_buffer.symbol.svg`](out_of_order_buffer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`out_of_order_buffer.symbol.drawio`](out_of_order_buffer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`out_of_order_buffer.md`](out_of_order_buffer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -72,6 +72,7 @@ If the technology node provides a dedicated set-reset flip-flop cell, this modul
 | Waveform script   | [`set_reset_flip_flop.testbench.gtkw`](set_reset_flip_flop.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`set_reset_flip_flop.symbol.sss`](set_reset_flip_flop.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`set_reset_flip_flop.symbol.svg`](set_reset_flip_flop.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`set_reset_flip_flop.symbol.drawio`](set_reset_flip_flop.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`set_reset_flip_flop.md`](set_reset_flip_flop.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

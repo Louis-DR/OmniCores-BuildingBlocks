@@ -81,6 +81,7 @@ There are no synthesis and implementation constraints for this block.
 | Waveform script   | [`small_round_robin_arbiter.testbench.gtkw`](small_round_robin_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`small_round_robin_arbiter.symbol.sss`](small_round_robin_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`small_round_robin_arbiter.symbol.svg`](small_round_robin_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`small_round_robin_arbiter.symbol.drawio`](small_round_robin_arbiter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`small_round_robin_arbiter.md`](small_round_robin_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

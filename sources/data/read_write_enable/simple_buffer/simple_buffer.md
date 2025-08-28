@@ -99,6 +99,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`simple_buffer.testbench.gtkw`](simple_buffer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`simple_buffer.symbol.sss`](simple_buffer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`simple_buffer.symbol.svg`](simple_buffer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`simple_buffer.symbol.drawio`](simple_buffer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`simple_buffer.md`](simple_buffer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

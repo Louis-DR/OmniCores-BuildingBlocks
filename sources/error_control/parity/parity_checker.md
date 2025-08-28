@@ -77,14 +77,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                     | Description                                         |
-| ----------------- | -------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`parity_checker.v`](parity_checker.v)                   | Verilog design.                                     |
-| Testbench         | [`parity.testbench.sv`](parity.testbench.sv)             | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`parity.testbench.gtkw`](parity.testbench.gtkw)         | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`parity_checker.symbol.sss`](parity_checker.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`parity_checker.symbol.svg`](parity_checker.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`parity_checker.md`](parity_checker.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                           | Description                                         |
+| ----------------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`parity_checker.v`](parity_checker.v)                         | Verilog design.                                     |
+| Testbench         | [`parity.testbench.sv`](parity.testbench.sv)                   | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`parity.testbench.gtkw`](parity.testbench.gtkw)               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`parity_checker.symbol.sss`](parity_checker.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`parity_checker.symbol.svg`](parity_checker.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`parity_checker.symbol.drawio`](parity_checker.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`parity_checker.md`](parity_checker.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

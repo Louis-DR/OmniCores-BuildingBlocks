@@ -93,6 +93,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`saturating_counter.testbench.gtkw`](saturating_counter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`saturating_counter.symbol.sss`](saturating_counter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`saturating_counter.symbol.svg`](saturating_counter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`saturating_counter.symbol.drawio`](saturating_counter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`saturating_counter.md`](saturating_counter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -101,6 +101,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`probabilistic_saturating_counter.testbench.gtkw`](probabilistic_saturating_counter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`probabilistic_saturating_counter.symbol.sss`](probabilistic_saturating_counter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`probabilistic_saturating_counter.symbol.svg`](probabilistic_saturating_counter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`probabilistic_saturating_counter.symbol.drawio`](probabilistic_saturating_counter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`probabilistic_saturating_counter.md`](probabilistic_saturating_counter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

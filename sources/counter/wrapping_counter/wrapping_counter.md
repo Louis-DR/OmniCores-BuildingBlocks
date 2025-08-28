@@ -99,6 +99,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`wrapping_counter.testbench.gtkw`](wrapping_counter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`wrapping_counter.symbol.sss`](wrapping_counter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`wrapping_counter.symbol.svg`](wrapping_counter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`wrapping_counter.symbol.drawio`](wrapping_counter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`wrapping_counter.md`](wrapping_counter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

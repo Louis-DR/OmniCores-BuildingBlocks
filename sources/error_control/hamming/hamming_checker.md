@@ -74,14 +74,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                       | Description                                         |
-| ----------------- | ---------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`hamming_checker.sv`](hamming_checker.sv)                 | SystemVerilog design.                               |
-| Testbench         | [`hamming.testbench.sv`](hamming.testbench.sv)             | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`hamming.testbench.gtkw`](hamming.testbench.gtkw)         | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`hamming_checker.symbol.sss`](hamming_checker.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`hamming_checker.symbol.svg`](hamming_checker.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`hamming_checker.md`](hamming_checker.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                             | Description                                         |
+| ----------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`hamming_checker.sv`](hamming_checker.sv)                       | SystemVerilog design.                               |
+| Testbench         | [`hamming.testbench.sv`](hamming.testbench.sv)                   | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`hamming.testbench.gtkw`](hamming.testbench.gtkw)               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`hamming_checker.symbol.sss`](hamming_checker.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`hamming_checker.symbol.svg`](hamming_checker.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`hamming_checker.symbol.drawio`](hamming_checker.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`hamming_checker.md`](hamming_checker.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

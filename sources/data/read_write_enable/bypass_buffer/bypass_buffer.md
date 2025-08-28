@@ -100,6 +100,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`bypass_buffer.testbench.gtkw`](bypass_buffer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`bypass_buffer.symbol.sss`](bypass_buffer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`bypass_buffer.symbol.svg`](bypass_buffer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`bypass_buffer.symbol.drawio`](bypass_buffer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`bypass_buffer.md`](bypass_buffer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

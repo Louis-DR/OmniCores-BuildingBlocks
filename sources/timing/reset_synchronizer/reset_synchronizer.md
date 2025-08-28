@@ -103,6 +103,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Constraint script   | [`reset_synchronizer.sdc`](reset_synchronizer.sdc)                                             | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor   | [`reset_synchronizer.symbol.sss`](reset_synchronizer.symbol.sss)                               | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`reset_synchronizer.symbol.svg`](reset_synchronizer.symbol.svg)                               | Generated vector image of the symbol.               |
+| Symbol shape        | [`reset_synchronizer.symbol.drawio`](reset_synchronizer.symbol.drawio)                         | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`reset_synchronizer_clockbefore.wavedrom.json`](reset_synchronizer_clockbefore.wavedrom.json) | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`reset_synchronizer_clockbefore.wavedrom.svg`](reset_synchronizer_clockbefore.wavedrom.svg)   | Generated image of the waveform.                    |
 | Waveform descriptor | [`reset_synchronizer_clockafter.wavedrom.json`](reset_synchronizer_clockafter.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |

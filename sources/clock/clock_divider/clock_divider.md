@@ -110,6 +110,7 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 | Constraint script   | [`clock_divider.sdc`](clock_divider.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor   | [`clock_divider.symbol.sss`](clock_divider.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`clock_divider.symbol.svg`](clock_divider.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`clock_divider.symbol.drawio`](clock_divider.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`clock_divider.wavedrom.json`](clock_divider.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`clock_divider.wavedrom.svg`](clock_divider.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`clock_divider.md`](clock_divider.md)                         | Markdown documentation datasheet.                   |

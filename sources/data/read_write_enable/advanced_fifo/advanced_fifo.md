@@ -128,6 +128,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`advanced_fifo.testbench.gtkw`](advanced_fifo.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`advanced_fifo.symbol.sss`](advanced_fifo.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`advanced_fifo.symbol.svg`](advanced_fifo.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`advanced_fifo.symbol.drawio`](advanced_fifo.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`advanced_fifo.md`](advanced_fifo.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

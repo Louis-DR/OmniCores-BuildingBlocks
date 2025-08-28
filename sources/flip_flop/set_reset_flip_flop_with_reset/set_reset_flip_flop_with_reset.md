@@ -82,6 +82,7 @@ If the technology node provides a dedicated set-reset flip-flop cell with asynch
 | Waveform script   | [`set_reset_flip_flop_with_reset.testbench.gtkw`](set_reset_flip_flop_with_reset.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`set_reset_flip_flop_with_reset.symbol.sss`](set_reset_flip_flop_with_reset.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`set_reset_flip_flop_with_reset.symbol.svg`](set_reset_flip_flop_with_reset.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`set_reset_flip_flop_with_reset.symbol.drawio`](set_reset_flip_flop_with_reset.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`set_reset_flip_flop_with_reset.md`](set_reset_flip_flop_with_reset.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -104,6 +104,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Waveform script   | [`toggle_pulse_synchronizer.testbench.gtkw`](toggle_pulse_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`toggle_pulse_synchronizer.symbol.sss`](toggle_pulse_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`toggle_pulse_synchronizer.symbol.svg`](toggle_pulse_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`toggle_pulse_synchronizer.symbol.drawio`](toggle_pulse_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`toggle_pulse_synchronizer.md`](toggle_pulse_synchronizer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

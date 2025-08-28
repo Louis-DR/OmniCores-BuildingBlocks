@@ -82,6 +82,7 @@ If the technology node provides a dedicated JK flip-flop cell with asynchronous 
 | Waveform script   | [`jk_flip_flop_with_reset.testbench.gtkw`](jk_flip_flop_with_reset.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`jk_flip_flop_with_reset.symbol.sss`](jk_flip_flop_with_reset.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`jk_flip_flop_with_reset.symbol.svg`](jk_flip_flop_with_reset.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`jk_flip_flop_with_reset.symbol.drawio`](jk_flip_flop_with_reset.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`jk_flip_flop_with_reset.md`](jk_flip_flop_with_reset.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

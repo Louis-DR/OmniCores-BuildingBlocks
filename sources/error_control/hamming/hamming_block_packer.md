@@ -74,14 +74,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                 | Description                                         |
-| ----------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`hamming_block_packer.sv`](hamming_block_packer.sv)                 | SystemVerilog design.                               |
-| Testbench         | [`hamming.testbench.sv`](hamming.testbench.sv)                       | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`hamming.testbench.gtkw`](hamming.testbench.gtkw)                   | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`hamming_block_packer.symbol.sss`](hamming_block_packer.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`hamming_block_packer.symbol.svg`](hamming_block_packer.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`hamming_block_packer.md`](hamming_block_packer.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                       | Description                                         |
+| ----------------- | -------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`hamming_block_packer.sv`](hamming_block_packer.sv)                       | SystemVerilog design.                               |
+| Testbench         | [`hamming.testbench.sv`](hamming.testbench.sv)                             | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`hamming.testbench.gtkw`](hamming.testbench.gtkw)                         | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`hamming_block_packer.symbol.sss`](hamming_block_packer.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`hamming_block_packer.symbol.svg`](hamming_block_packer.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`hamming_block_packer.symbol.drawio`](hamming_block_packer.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`hamming_block_packer.md`](hamming_block_packer.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

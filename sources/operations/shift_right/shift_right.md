@@ -88,16 +88,17 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type               | File                                               | Description                                         |
-| ------------------ | -------------------------------------------------- | --------------------------------------------------- |
-| Design             | [`shift_right.v`](shift_right.v)                   | Verilog design file.                                |
-| Testbench template | [`shift_right.tb.sv.j2`](shift_right.tb.sv.j2)     | Template of the top-level SystemVerilog testbench.  |
-| Testbench          | [`shift_right.tb.sv`](shift_right.tb.sv)           | Generated gop-level SystemVerilog testbench.        |
-| Testcase           | [`shift_right.tc.sv`](shift_right.tc.sv)           | SystemVerilog testcase.                             |
-| Waveform script    | [`shift_right.tb.gtkw`](shift_right.tb.gtkw)       | Script to load waveforms in GTKWave (assumed).      |
-| Symbol descriptor  | [`shift_right.symbol.sss`](shift_right.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image       | [`shift_right.symbol.svg`](shift_right.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet          | [`shift_right.md`](shift_right.md)                 | Markdown documentation datasheet.                   |
+| Type               | File                                                     | Description                                         |
+| ------------------ | -------------------------------------------------------- | --------------------------------------------------- |
+| Design             | [`shift_right.v`](shift_right.v)                         | Verilog design file.                                |
+| Testbench template | [`shift_right.tb.sv.j2`](shift_right.tb.sv.j2)           | Template of the top-level SystemVerilog testbench.  |
+| Testbench          | [`shift_right.tb.sv`](shift_right.tb.sv)                 | Generated gop-level SystemVerilog testbench.        |
+| Testcase           | [`shift_right.tc.sv`](shift_right.tc.sv)                 | SystemVerilog testcase.                             |
+| Waveform script    | [`shift_right.tb.gtkw`](shift_right.tb.gtkw)             | Script to load waveforms in GTKWave (assumed).      |
+| Symbol descriptor  | [`shift_right.symbol.sss`](shift_right.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image       | [`shift_right.symbol.svg`](shift_right.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape       | [`shift_right.symbol.drawio`](shift_right.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet          | [`shift_right.md`](shift_right.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

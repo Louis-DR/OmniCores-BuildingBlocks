@@ -105,6 +105,7 @@ There are no synthesis and implementation constraints for this block.
 | Waveform script   | [`valid_ready_lifo.testbench.gtkw`](valid_ready_lifo.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`valid_ready_lifo.symbol.sss`](valid_ready_lifo.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`valid_ready_lifo.symbol.svg`](valid_ready_lifo.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`valid_ready_lifo.symbol.drawio`](valid_ready_lifo.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`valid_ready_lifo.md`](valid_ready_lifo.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -81,14 +81,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                             | Description                                         |
-| ----------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`repetition_checker.v`](repetition_checker.v)                   | Verilog design.                                     |
-| Testbench         | [`repetition.testbench.sv`](repetition.testbench.sv)             | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`repetition.testbench.gtkw`](repetition.testbench.gtkw)         | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`repetition_checker.symbol.sss`](repetition_checker.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`repetition_checker.symbol.svg`](repetition_checker.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`repetition_checker.md`](repetition_checker.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                   | Description                                         |
+| ----------------- | ---------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`repetition_checker.v`](repetition_checker.v)                         | Verilog design.                                     |
+| Testbench         | [`repetition.testbench.sv`](repetition.testbench.sv)                   | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`repetition.testbench.gtkw`](repetition.testbench.gtkw)               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`repetition_checker.symbol.sss`](repetition_checker.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`repetition_checker.symbol.svg`](repetition_checker.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`repetition_checker.symbol.drawio`](repetition_checker.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`repetition_checker.md`](repetition_checker.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

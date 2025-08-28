@@ -85,6 +85,7 @@ There are no synthesis and implementation constraints for this block as it is a 
 | Waveform script     | [`clock_multiplier.testbench.gtkw`](clock_multiplier.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor   | [`clock_multiplier.symbol.sss`](clock_multiplier.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`clock_multiplier.symbol.svg`](clock_multiplier.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`clock_multiplier.symbol.drawio`](clock_multiplier.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`clock_multiplier.wavedrom.json`](clock_multiplier.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`clock_multiplier.wavedrom.svg`](clock_multiplier.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`clock_multiplier.md`](clock_multiplier.md)                         | Markdown documentation datasheet.                   |

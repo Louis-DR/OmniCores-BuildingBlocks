@@ -98,6 +98,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`hysteresis_saturating_counter.testbench.gtkw`](hysteresis_saturating_counter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`hysteresis_saturating_counter.symbol.sss`](hysteresis_saturating_counter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`hysteresis_saturating_counter.symbol.svg`](hysteresis_saturating_counter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`hysteresis_saturating_counter.symbol.drawio`](hysteresis_saturating_counter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`hysteresis_saturating_counter.md`](hysteresis_saturating_counter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

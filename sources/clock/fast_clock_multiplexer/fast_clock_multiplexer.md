@@ -120,6 +120,7 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 | Constraint script   | [`fast_clock_multiplexer.sdc`](fast_clock_multiplexer.sdc)                                         | Tickle SDC constraint script for synthesis.                     |
 | Symbol descriptor   | [`fast_clock_multiplexer.symbol.sss`](fast_clock_multiplexer.symbol.sss)                           | Symbol descriptor for SiliconSuite-SymbolGenerator.             |
 | Symbol image        | [`fast_clock_multiplexer.symbol.svg`](fast_clock_multiplexer.symbol.svg)                           | Generated vector image of the symbol.                           |
+| Symbol shape        | [`fast_clock_multiplexer.symbol.drawio`](fast_clock_multiplexer.symbol.drawio)                     | Generated DrawIO shape of the symbol.                           |
 | Waveform descriptor | [`fast_clock_multiplexer_fast2slow.wavedrom.json`](fast_clock_multiplexer_fast2slow.wavedrom.json) | Waveform descriptor for Wavedrom of the fast-to-slow switching. |
 | Waveform descriptor | [`fast_clock_multiplexer_slow2fast.wavedrom.json`](fast_clock_multiplexer_slow2fast.wavedrom.json) | Waveform descriptor for Wavedrom of the slow-to-fast switching. |
 | Waveform image      | [`fast_clock_multiplexer_fast2slow.wavedrom.svg`](fast_clock_multiplexer_fast2slow.wavedrom.svg)   | Generated image of the waveform of the fast-to-slow switching.  |

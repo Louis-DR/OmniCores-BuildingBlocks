@@ -85,6 +85,7 @@ There are no synthesis and implementation constraints for this block.
 | Waveform script   | [`balanced_round_robin_arbiter.testbench.gtkw`](balanced_round_robin_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`balanced_round_robin_arbiter.symbol.sss`](balanced_round_robin_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`balanced_round_robin_arbiter.symbol.svg`](balanced_round_robin_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`balanced_round_robin_arbiter.symbol.drawio`](balanced_round_robin_arbiter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`balanced_round_robin_arbiter.md`](balanced_round_robin_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

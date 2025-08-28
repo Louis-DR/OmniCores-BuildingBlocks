@@ -69,14 +69,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                         | Description                                         |
-| ----------------- | ---------------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`extended_hamming_checker.sv`](extended_hamming_checker.sv)                 | SystemVerilog design.                               |
-| Testbench         | [`extended_hamming.testbench.sv`](extended_hamming.testbench.sv)             | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`extended_hamming.testbench.gtkw`](extended_hamming.testbench.gtkw)         | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`extended_hamming_checker.symbol.sss`](extended_hamming_checker.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`extended_hamming_checker.symbol.svg`](extended_hamming_checker.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`extended_hamming_checker.md`](extended_hamming_checker.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                               | Description                                         |
+| ----------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`extended_hamming_checker.sv`](extended_hamming_checker.sv)                       | SystemVerilog design.                               |
+| Testbench         | [`extended_hamming.testbench.sv`](extended_hamming.testbench.sv)                   | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`extended_hamming.testbench.gtkw`](extended_hamming.testbench.gtkw)               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`extended_hamming_checker.symbol.sss`](extended_hamming_checker.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`extended_hamming_checker.symbol.svg`](extended_hamming_checker.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`extended_hamming_checker.symbol.drawio`](extended_hamming_checker.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`extended_hamming_checker.md`](extended_hamming_checker.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

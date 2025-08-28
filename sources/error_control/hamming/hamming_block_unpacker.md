@@ -74,14 +74,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                     | Description                                         |
-| ----------------- | ------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`hamming_block_unpacker.sv`](hamming_block_unpacker.sv)                 | SystemVerilog design.                               |
-| Testbench         | [`hamming.testbench.sv`](hamming.testbench.sv)                           | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`hamming.testbench.gtkw`](hamming.testbench.gtkw)                       | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`hamming_block_unpacker.symbol.sss`](hamming_block_unpacker.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`hamming_block_unpacker.symbol.svg`](hamming_block_unpacker.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`hamming_block_unpacker.md`](hamming_block_unpacker.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                           | Description                                         |
+| ----------------- | ------------------------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`hamming_block_unpacker.sv`](hamming_block_unpacker.sv)                       | SystemVerilog design.                               |
+| Testbench         | [`hamming.testbench.sv`](hamming.testbench.sv)                                 | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`hamming.testbench.gtkw`](hamming.testbench.gtkw)                             | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`hamming_block_unpacker.symbol.sss`](hamming_block_unpacker.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`hamming_block_unpacker.symbol.svg`](hamming_block_unpacker.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`hamming_block_unpacker.symbol.drawio`](hamming_block_unpacker.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`hamming_block_unpacker.md`](hamming_block_unpacker.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

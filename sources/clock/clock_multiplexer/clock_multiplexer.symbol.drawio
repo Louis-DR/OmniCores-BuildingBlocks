@@ -1,0 +1,241 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.1.1 Chrome/132.0.6834.210 Electron/34.3.3 Safari/537.36" version="26.1.1">
+  <diagram name="Clock Multiplexer" id="Clock -Multiplexer">
+    <mxGraphModel dx         = "0"
+                  dy         = "0"
+                  grid       = "1"
+                  gridSize   = "10"
+                  guides     = "1"
+                  tooltips   = "1"
+                  connect    = "1"
+                  arrows     = "1"
+                  fold       = "1"
+                  page       = "1"
+                  pageScale  = "1"
+                  pageWidth  = "110"
+                  pageHeight = "80"
+                  math       = "0"
+                  shadow     = "0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id          = "2"
+                parent      = "1"
+                value       = ""
+                vertex      = "1"
+                connectable = "0"
+                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[0,0,0,0,70],[0.5,0,0,0,0],[0.5,0,0,0,80]];">
+          <mxGeometry width  = "110"
+                      height = "80"
+                      as     = "geometry"/>
+        </mxCell>
+        <mxCell id     = "box"
+                parent = "2"
+                value  = ""
+                vertex = "1"
+                style  = "rounded=1;arcSize=5;fillColor=none;strokeWidth=1;strokeColor=black;whiteSpace=wrap;html=1;connectable=0;">
+          <mxGeometry x="15"
+                      y="0"
+                      width="80"
+                      height="80"
+                      as="geometry"/>
+        </mxCell>
+        <mxCell id     = "title"
+                parent = "2"
+                value  = "Clock Multiplexer"
+                vertex = "1"
+                style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontStyle=1;fontColor=black;connectable=0;">
+          <mxGeometry x      = "15"
+                      y      = "7"
+                      width  = "80"
+                      height = "0"
+                      as     = "geometry"/>
+        </mxCell>
+        <mxCell id     = "subtitle"
+                parent = "2"
+                value  = "clock_multiplexer"
+                vertex = "1"
+                style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+          <mxGeometry x      = "15"
+                      y      = "16"
+                      width  = "80"
+                      height = "0"
+                      as     = "geometry"/>
+        </mxCell>
+            <mxCell id     = "resetn_0-label"
+                    parent = "2"
+                    value  = "resetn_0"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "30"
+                width  = "80"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "resetn_0-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "30"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "30"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "clock_0-label"
+                    parent = "2"
+                    value  = "clock_0"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "40"
+                width  = "80"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "clock_0-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "40"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "40"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "select-label"
+                    parent = "2"
+                    value  = "select"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "50"
+                width  = "80"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "select-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "50"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "50"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="clock_out-label"
+                    parent="2"
+                    value="clock_out"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "50"
+                width  = "80"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "clock_out-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "110"
+                         y  = "50"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "95"
+                         y  = "50"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "clock_1-label"
+                    parent = "2"
+                    value  = "clock_1"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "60"
+                width  = "80"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "clock_1-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "60"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "60"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "resetn_1-label"
+                    parent = "2"
+                    value  = "resetn_1"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "70"
+                width  = "80"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "resetn_1-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "70"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "70"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

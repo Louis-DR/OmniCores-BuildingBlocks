@@ -88,6 +88,7 @@ There are no synthesis and implementation constraints for this block.
 | Waveform script   | [`dynamic_priority_arbiter.testbench.gtkw`](dynamic_priority_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`dynamic_priority_arbiter.symbol.sss`](dynamic_priority_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`dynamic_priority_arbiter.symbol.svg`](dynamic_priority_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`dynamic_priority_arbiter.symbol.drawio`](dynamic_priority_arbiter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`dynamic_priority_arbiter.md`](dynamic_priority_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

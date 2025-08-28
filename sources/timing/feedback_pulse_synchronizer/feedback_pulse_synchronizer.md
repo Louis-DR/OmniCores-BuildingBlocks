@@ -106,6 +106,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Waveform script   | [`feedback_pulse_synchronizer.testbench.gtkw`](feedback_pulse_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`feedback_pulse_synchronizer.symbol.sss`](feedback_pulse_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`feedback_pulse_synchronizer.symbol.svg`](feedback_pulse_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`feedback_pulse_synchronizer.symbol.drawio`](feedback_pulse_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`feedback_pulse_synchronizer.md`](feedback_pulse_synchronizer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -89,6 +89,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script     | [`multi_edge_detector.testbench.gtkw`](multi_edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor   | [`multi_edge_detector.symbol.sss`](multi_edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`multi_edge_detector.symbol.svg`](multi_edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`multi_edge_detector.symbol.drawio`](multi_edge_detector.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`multi_edge_detector.wavedrom.json`](multi_edge_detector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`multi_edge_detector.wavedrom.svg`](multi_edge_detector.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`multi_edge_detector.md`](multi_edge_detector.md)                         | Markdown documentation datasheet.                   |

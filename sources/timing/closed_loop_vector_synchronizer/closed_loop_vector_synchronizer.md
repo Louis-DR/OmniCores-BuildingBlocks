@@ -101,6 +101,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Waveform script   | [`closed_loop_vector_synchronizer.testbench.gtkw`](closed_loop_vector_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`closed_loop_vector_synchronizer.symbol.sss`](closed_loop_vector_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`closed_loop_vector_synchronizer.symbol.svg`](closed_loop_vector_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`closed_loop_vector_synchronizer.symbol.drawio`](closed_loop_vector_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`closed_loop_vector_synchronizer.md`](closed_loop_vector_synchronizer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

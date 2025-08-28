@@ -76,6 +76,7 @@ The following table lists the checks performed by the testbench.
 | Waveform script   | [`jk_flip_flop.testbench.gtkw`](jk_flip_flop.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`jk_flip_flop.symbol.sss`](jk_flip_flop.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`jk_flip_flop.symbol.svg`](jk_flip_flop.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`jk_flip_flop.symbol.drawio`](jk_flip_flop.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`jk_flip_flop.md`](jk_flip_flop.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

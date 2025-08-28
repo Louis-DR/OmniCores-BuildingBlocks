@@ -95,6 +95,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script   | [`skid_buffer.testbench.gtkw`](skid_buffer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`skid_buffer.symbol.sss`](skid_buffer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`skid_buffer.symbol.svg`](skid_buffer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`skid_buffer.symbol.drawio`](skid_buffer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`skid_buffer.md`](skid_buffer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

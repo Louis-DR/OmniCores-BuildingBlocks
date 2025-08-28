@@ -136,6 +136,7 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 | Constraint script   | [`nonstop_clock_multiplexer.sdc`](nonstop_clock_multiplexer.sdc)                                           | Tickle SDC constraint script for synthesis.                      |
 | Symbol descriptor   | [`nonstop_clock_multiplexer.symbol.sss`](nonstop_clock_multiplexer.symbol.sss)                             | Symbol descriptor for SiliconSuite-SymbolGenerator.              |
 | Symbol image        | [`nonstop_clock_multiplexer.symbol.svg`](nonstop_clock_multiplexer.symbol.svg)                             | Generated vector image of the symbol.                            |
+| Symbol shape        | [`nonstop_clock_multiplexer.symbol.drawio`](nonstop_clock_multiplexer.symbol.drawio)                       | Generated DrawIO shape of the symbol.                            |
 | Waveform descriptor | [`nonstop_clock_multiplexer_fast2slow.wavedrom.json`](nonstop_clock_multiplexer_fast2slow.wavedrom.json)   | Waveform descriptor for Wavedrom of the fast-to-slow switching.  |
 | Waveform descriptor | [`nonstop_clock_multiplexer_slow2fast.wavedrom.json`](nonstop_clock_multiplexer_slow2fast.wavedrom.json)   | Waveform descriptor for Wavedrom of the slow-to-fast switching.  |
 | Waveform descriptor | [`nonstop_clock_multiplexer_stop2clock.wavedrom.json`](nonstop_clock_multiplexer_stop2clock.wavedrom.json) | Waveform descriptor for Wavedrom of the stop-to-clock switching. |

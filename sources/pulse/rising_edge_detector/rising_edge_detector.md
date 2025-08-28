@@ -79,6 +79,7 @@ There are no specific synthesis or implementation constraints for this block.
 | Waveform script     | [`rising_edge_detector.testbench.gtkw`](rising_edge_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor   | [`rising_edge_detector.symbol.sss`](rising_edge_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`rising_edge_detector.symbol.svg`](rising_edge_detector.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`rising_edge_detector.symbol.drawio`](rising_edge_detector.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`rising_edge_detector.wavedrom.json`](rising_edge_detector.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`rising_edge_detector.wavedrom.svg`](rising_edge_detector.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`rising_edge_detector.md`](rising_edge_detector.md)                         | Markdown documentation datasheet.                   |

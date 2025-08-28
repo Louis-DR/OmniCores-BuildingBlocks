@@ -95,6 +95,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Constraint script   | [`synchronizer.sdc`](synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor   | [`synchronizer.symbol.sss`](synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image        | [`synchronizer.symbol.svg`](synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`synchronizer.symbol.drawio`](synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Waveform descriptor | [`synchronizer.wavedrom.json`](synchronizer.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
 | Waveform image      | [`synchronizer.wavedrom.svg`](synchronizer.wavedrom.svg)     | Generated image of the waveform.                    |
 | Datasheet           | [`synchronizer.md`](synchronizer.md)                         | Markdown documentation datasheet.                   |

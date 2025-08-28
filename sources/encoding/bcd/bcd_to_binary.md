@@ -73,14 +73,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                   | Description                                         |
-| ----------------- | ------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`bcd_to_binary.v`](bcd_to_binary.v)                   | Verilog design.                                     |
-| Testbench         | [`bcd.testbench.sv`](bcd.testbench.sv)                 | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`bcd.testbench.gtkw`](bcd.testbench.gtkw)             | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`bcd_to_binary.symbol.sss`](bcd_to_binary.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`bcd_to_binary.symbol.svg`](bcd_to_binary.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`bcd_to_binary.md`](bcd_to_binary.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                         | Description                                         |
+| ----------------- | ------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`bcd_to_binary.v`](bcd_to_binary.v)                         | Verilog design.                                     |
+| Testbench         | [`bcd.testbench.sv`](bcd.testbench.sv)                       | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`bcd.testbench.gtkw`](bcd.testbench.gtkw)                   | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`bcd_to_binary.symbol.sss`](bcd_to_binary.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`bcd_to_binary.symbol.svg`](bcd_to_binary.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`bcd_to_binary.symbol.drawio`](bcd_to_binary.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`bcd_to_binary.md`](bcd_to_binary.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

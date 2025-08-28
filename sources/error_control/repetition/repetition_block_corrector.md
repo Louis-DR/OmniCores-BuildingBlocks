@@ -81,14 +81,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                             | Description                                         |
-| ----------------- | -------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`repetition_block_corrector.v`](repetition_block_corrector.v)                   | Verilog design.                                     |
-| Testbench         | [`repetition.testbench.sv`](repetition.testbench.sv)                             | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`repetition.testbench.gtkw`](repetition.testbench.gtkw)                         | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`repetition_block_corrector.symbol.sss`](repetition_block_corrector.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`repetition_block_corrector.symbol.svg`](repetition_block_corrector.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`repetition_block_corrector.md`](repetition_block_corrector.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                                   | Description                                         |
+| ----------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`repetition_block_corrector.v`](repetition_block_corrector.v)                         | Verilog design.                                     |
+| Testbench         | [`repetition.testbench.sv`](repetition.testbench.sv)                                   | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`repetition.testbench.gtkw`](repetition.testbench.gtkw)                               | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`repetition_block_corrector.symbol.sss`](repetition_block_corrector.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`repetition_block_corrector.symbol.svg`](repetition_block_corrector.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`repetition_block_corrector.symbol.drawio`](repetition_block_corrector.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`repetition_block_corrector.md`](repetition_block_corrector.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

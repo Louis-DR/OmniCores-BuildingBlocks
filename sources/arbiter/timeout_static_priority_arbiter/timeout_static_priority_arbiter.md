@@ -88,6 +88,7 @@ There are no synthesis and implementation constraints for this block.
 | Waveform script   | [`timeout_static_priority_arbiter.testbench.gtkw`](timeout_static_priority_arbiter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
 | Symbol descriptor | [`timeout_static_priority_arbiter.symbol.sss`](timeout_static_priority_arbiter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`timeout_static_priority_arbiter.symbol.svg`](timeout_static_priority_arbiter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`timeout_static_priority_arbiter.symbol.drawio`](timeout_static_priority_arbiter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
 | Datasheet         | [`timeout_static_priority_arbiter.md`](timeout_static_priority_arbiter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies

@@ -84,14 +84,15 @@ There are no synthesis and implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                 | Description                                         |
-| ----------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`repetition_corrector.v`](repetition_corrector.v)                   | Verilog design.                                     |
-| Testbench         | [`repetition.testbench.sv`](repetition.testbench.sv)                 | SystemVerilog verification shared testbench.        |
-| Waveform script   | [`repetition.testbench.gtkw`](repetition.testbench.gtkw)             | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`repetition_corrector.symbol.sss`](repetition_corrector.symbol.sss) | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`repetition_corrector.symbol.svg`](repetition_corrector.symbol.svg) | Generated vector image of the symbol.               |
-| Datasheet         | [`repetition_corrector.md`](repetition_corrector.md)                 | Markdown documentation datasheet.                   |
+| Type              | File                                                                       | Description                                         |
+| ----------------- | -------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`repetition_corrector.v`](repetition_corrector.v)                         | Verilog design.                                     |
+| Testbench         | [`repetition.testbench.sv`](repetition.testbench.sv)                       | SystemVerilog verification shared testbench.        |
+| Waveform script   | [`repetition.testbench.gtkw`](repetition.testbench.gtkw)                   | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`repetition_corrector.symbol.sss`](repetition_corrector.symbol.sss)       | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`repetition_corrector.symbol.svg`](repetition_corrector.symbol.svg)       | Generated vector image of the symbol.               |
+| Symbol shape      | [`repetition_corrector.symbol.drawio`](repetition_corrector.symbol.drawio) | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`repetition_corrector.md`](repetition_corrector.md)                       | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
