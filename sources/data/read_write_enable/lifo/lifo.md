@@ -14,7 +14,7 @@
 
 Synchronous Last-In First-Out stack for data buffering and temporary storage with configurable depth. The LIFO uses a write-enable/read-enable protocol for flow control and provides full and empty status flags. It doesn't implement a safety mechanism against writing when full or reading when empty so the integration must use the status flags and the enable signals carefully.
 
-The read data output continuously shows the value at the top of the stack when not empty, allowing instant data access without necessarily popping the entry.
+The read data output continuously shows the value at the top of the stack when not empty, allowing instant data access without necessarily popping the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
 
@@ -44,7 +44,7 @@ For **write operation**, when `write_enable` is asserted, `write_data` is stored
 
 There is no safety mechanism against writing when full. The stack pointer will be incremented beyond the valid range, potentially overwriting data and corrupting the full and empty flags, breaking the LIFO.
 
-For **read operation**, the `read_data` output continuously provides the data at the top of the stack (stack pointer minus one). When `read_enable` is asserted, only the stack pointer is decremented to expose the previous entry as the new top.
+For **read operation**, the `read_data` output continuously provides the data at the top of the stack (stack pointer minus one). When `read_enable` is asserted, the stack pointer is decremented to expose the previous entry as the new top.
 
 There is no safety mechanism against reading when empty. The stack pointer will be decremented below zero, causing undefined behavior and corrupting the full and empty flags, breaking the LIFO.
 

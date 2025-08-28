@@ -28,7 +28,7 @@ The read data output continuously shows the value at the head of the queue when 
 | Name          | Direction | Width   | Clock        | Reset    | Reset value | Description                                                                       |
 | ------------- | --------- | ------- | ------------ | -------- | ----------- | --------------------------------------------------------------------------------- |
 | `clock`       | input     | 1       | self         |          |             | Clock signal.                                                                     |
-| `resetn`      | input     | 1       | asynchronous | self     | `0`         | Asynchronous active-low reset.                                                    |
+| `resetn`      | input     | 1       | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                    |
 | `write_data`  | input     | `WIDTH` | `clock`      |          |             | Data to be written to the queue.                                                  |
 | `write_valid` | input     | 1       | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.  |
 | `write_ready` | output    | 1       | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: queue is full.<br/>`1`: queue can accept write data. |
