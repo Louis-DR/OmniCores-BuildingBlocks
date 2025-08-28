@@ -29,7 +29,7 @@ To prevent glitches at the capture stage, there should be no combinational logic
 | Name       | Direction | Width | Clock        | Reset    | Reset value | Description                                           |
 | ---------- | --------- | ----- | ------------ | -------- | ----------- | ----------------------------------------------------- |
 | `clock`    | input     | 1     | self         |          |             | Destination clock domain for the synchronized signal. |
-| `resetn`   | input     | 1     | `clock`      | self     | `0`         | Asynchronous active-low reset.                        |
+| `resetn`   | input     | 1     | `clock`      | self     | active-low  | Asynchronous active-low reset.                        |
 | `data_in`  | input     | 1     | asynchronous |          |             | Asynchronous input data signal to be synchronized.    |
 | `data_out` | output    | 1     | `clock`      | `resetn` | `0`         | Synchronized output data signal to `clock`.           |
 

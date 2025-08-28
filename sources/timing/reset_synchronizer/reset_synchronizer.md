@@ -37,7 +37,7 @@ With the clock starting after the deassertion :
 | Name         | Direction | Width | Clock        | Reset       | Reset value | Description                                                    |
 | ------------ | --------- | ----- | ------------ | ----------- | ----------- | -------------------------------------------------------------- |
 | `clock`      | input     | 1     | self         |             |             | Destination clock domain for the synchronized signal.          |
-| `resetn_in`  | input     | 1     | asynchronous |             |             | Asynchronous input active-low reset signal to be synchronized. |
+| `resetn_in`  | input     | 1     | asynchronous | self        | active-low  | Asynchronous input active-low reset signal to be synchronized. |
 | `resetn_out` | output    | 1     | `clock`      | `resetn_in` | `0`         | Synchronized output active-low reset signal to `clock`.        |
 
 ## Operation
