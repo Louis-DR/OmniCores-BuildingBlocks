@@ -77,7 +77,7 @@ text{font-size:11pt;
     overflow:visible;
     enable-background:accumulate}
 .s7{color:#000000;
-    fill:#ffe0b9;
+    fill:none;
     fill-opacity:1;
     fill-rule:nonzero;
     stroke:none;
