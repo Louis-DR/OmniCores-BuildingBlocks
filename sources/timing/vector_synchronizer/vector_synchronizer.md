@@ -93,6 +93,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Design            | [`vector_synchronizer.v`](vector_synchronizer.v)                           | Verilog design file.                                |
 | Testbench         | [`vector_synchronizer.testbench.sv`](vector_synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
 | Waveform script   | [`vector_synchronizer.testbench.gtkw`](vector_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script | [`vector_synchronizer.sdc`](vector_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor | [`vector_synchronizer.symbol.sss`](vector_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`vector_synchronizer.symbol.svg`](vector_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
 | Datasheet         | [`vector_synchronizer.md`](vector_synchronizer.md)                         | Markdown documentation datasheet.                   |
