@@ -107,9 +107,10 @@ To call the procedure automatically on all instances of the synchronizer, use th
 
 This module depends on the following external modules:
 
-| Module                                                                 | Path                                                          | Description                    |
-| ---------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------ |
-| [`vector_synchronizer`](../vector_synchronizer/vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/vector_synchronizer` | Multi-bit synchronizer module. |
+| Module                                                                 | Path                                                          | Description                           |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------- |
+| [`vector_synchronizer`](../vector_synchronizer/vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/vector_synchronizer` | Multi-bit synchronizer module.        |
+| [`synchronizer`](../synchronizer/synchronizer.md)                      | `omnicores-buildingblocks/sources/timing/synchronizer`        | Basic single-bit synchronizer module. |
 
 ## Related modules
 

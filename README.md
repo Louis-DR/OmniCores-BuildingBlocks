@@ -115,7 +115,7 @@ Below is a list of the modules currently available in this collection. More modu
 | [`registered_synchronizer`](sources/timing/registered_synchronizer/registered_synchronizer.md)                                            | timing         | Registered synchronizer                                                           | :green_circle:  :green_circle:  :green_circle: :red_circle:   |
 | [`reset_synchronizer`](sources/timing/reset_synchronizer/reset_synchronizer.md)                                                           | timing         | Reset de-assertion synchronizer                                                   | :green_circle:  :green_circle:  :green_circle: :green_circle: |
 | [`vector_synchronizer`](sources/timing/vector_synchronizer/vector_synchronizer.md)                                                        | timing         | Vector synchronizer that transmits the bits independently                         | :green_circle:  :green_circle:  :green_circle: :red_circle:   |
-| `closed_loop_vector_synchronizer`                                                                                                         | timing         | Vector synchronizer that transmits all bits at once                               | :green_circle:  :green_circle:  :red_circle:   :red_circle:   |
+| [`closed_loop_vector_synchronizer`](sources/timing/closed_loop_vector_synchronizer/closed_loop_vector_synchronizer.md)                    | timing         | Vector synchronizer that transmits all bits at once                               | :green_circle:  :green_circle:  :green_circle: :red_circle:   |
 | [`registered_vector_synchronizer`](sources/timing/registered_vector_synchronizer/registered_vector_synchronizer.md)                       | timing         | Registered vector synchronizer                                                    | :green_circle:  :green_circle:  :green_circle: :red_circle:   |
 | `grey_vector_synchronizer`                                                                                                                | timing         | Registered vector synchronizer with Grey encoding                                 | :green_circle:  :green_circle:  :red_circle:   :red_circle:   |
 | `feedback_pulse_synchronizer`                                                                                                             | timing, pulse  | Pulse synchronizer using feedback                                                 | :green_circle:  :green_circle:  :red_circle:   :red_circle:   |
@@ -146,6 +146,7 @@ Modules planned or in development :
   - Debounce
   - Pulse filter
   - Pulse separator with different high and low time
+  - Long pulse synchronizer
 - Clock logic
   - Programmable clock pulse filter
   - Programmable clock divider
