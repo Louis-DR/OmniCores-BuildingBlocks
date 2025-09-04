@@ -64,38 +64,40 @@ end
 // Division factor of 2 or more and not a power of two
 else begin
 
-  // Width of the counter
-  localparam DIVISION_LOG2 = `CLOG2(DIVISION);
+  // Duration of the high and low pulses
+  localparam HIGH_PULSE_DURATION = (DIVISION + 1) / 2;
+  localparam  LOW_PULSE_DURATION =  DIVISION      / 2;
 
-  // Counter register
-  reg [DIVISION_LOG2-1:0] counter;
+  // Half pulse count-down
+  localparam COUNTDOWN_WIDTH = `CLOG2(HIGH_PULSE_DURATION);
+  reg [COUNTDOWN_WIDTH-1:0] countdown;
 
-  // Divided clock flop
+  // Divided clock flop, acts as the FSM state
   reg clock_divided;
 
   always @(posedge clock_in or negedge resetn) begin
     // Reset
     if (!resetn) begin
+      // Low pulse at reset
       clock_divided <= 0;
-      counter       <= 0;
+      countdown     <= LOW_PULSE_DURATION - 1;
     end
     // Operation
     else begin
-      // Counter max, divided clock rising edge
-      if (counter == DIVISION-1) begin
-        clock_divided <= 1;
-        counter       <= 0;
+      // When the countdown reaches zero, the current pulse has ended
+      if (countdown == 0) begin
+        // Invert the clock output
+        clock_divided <= ~clock_divided;
+        // Reload countdown based on the current pulse polarity
+        if (clock_divided == 0) begin
+          countdown <= HIGH_PULSE_DURATION - 1;
+        end else begin
+          countdown <= LOW_PULSE_DURATION - 1;
+        end
       end
-      // Counter half, divided clock falling edge
-      // The formula is equivalent to `ceil(DIVISION/2)-1`
-      // which makes the high pulse longer for odd division factor
-      else if (counter == ((DIVISION + 2) / 2) - 1) begin
-        clock_divided <= 0;
-        counter       <= counter + 1;
-      end
-      // Increment counter
+      // Keep counting down
       else begin
-        counter <= counter + 1;
+        countdown <= countdown - 1;
       end
     end
   end
