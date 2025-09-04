@@ -130,3 +130,4 @@ This module depends on the following external modules:
 | [`closed_loop_vector_synchronizer`](../closed_loop_vector_synchronizer/closed_loop_vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/closed_loop_vector_synchronizer` | Vector synchronizer with feedback for guaranteed atomic updates.             |
 | [`reset_synchronizer`](../reset_synchronizer/reset_synchronizer.md)                                        | `omnicores-buildingblocks/sources/timing/reset_synchronizer`              | Synchronizer specifically for reset signals.                                 |
 | [`feedback_pulse_synchronizer`](../feedback_pulse_synchronizer/feedback_pulse_synchronizer.md)             | `omnicores-buildingblocks/sources/timing/feedback_pulse_synchronizer`     | Synchronizer for pulses using a feedback mechanism.                          |
+

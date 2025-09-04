@@ -129,3 +129,4 @@ This module depends on the following external modules:
 | [`reset_synchronizer`](../reset_synchronizer/reset_synchronizer.md)                                     | `omnicores-buildingblocks/sources/timing/reset_synchronizer`             | Synchronizer specifically for reset signals.                                 |
 | [`feedback_pulse_synchronizer`](../feedback_pulse_synchronizer/feedback_pulse_synchronizer.md)          | `omnicores-buildingblocks/sources/timing/feedback_pulse_synchronizer`    | Synchronizer for pulses using a feedback mechanism.                          |
 | [`toggle_pulse_synchronizer`](../toggle_pulse_synchronizer/toggle_pulse_synchronizer.md)                | `omnicores-buildingblocks/sources/timing/toggle_pulse_synchronizer`      | Synchronizer for pulses using a toggle mechanism.                            |
+
