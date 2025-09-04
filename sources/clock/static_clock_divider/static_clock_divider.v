@@ -81,20 +81,21 @@ else begin
     end
     // Operation
     else begin
-      // Counter full, divided clock rising edge
+      // Counter max, divided clock rising edge
       if (counter == DIVISION-1) begin
         clock_divided <= 1;
         counter       <= 0;
       end
       // Counter half, divided clock falling edge
-      // The modulo part makes the high pulse longer for odd division factors
-      else if (counter == DIVISION/2 - (1-DIVISION%2)) begin
+      // The formula is equivalent to `ceil(DIVISION/2)-1`
+      // which makes the high pulse longer for odd division factor
+      else if (counter == ((DIVISION + 2) / 2) - 1) begin
         clock_divided <= 0;
         counter       <= counter + 1;
       end
       // Increment counter
       else begin
-        counter       <= counter + 1;
+        counter <= counter + 1;
       end
     end
   end
