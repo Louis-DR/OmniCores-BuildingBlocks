@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_divider.v                                              ║
+// ║ File:        static_clock_divider.v                                       ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Divides the frequency of the clock by the DIVISION factor    ║
 // ║              parameter.                                                   ║
@@ -23,7 +23,7 @@
 
 
 
-module clock_divider #(
+module static_clock_divider #(
   parameter DIVISION = 2
 ) (
   input  clock_in,

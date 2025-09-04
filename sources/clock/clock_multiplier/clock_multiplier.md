@@ -96,8 +96,8 @@ This module has no dependency.
 
 ## Related modules
 
-| Module                                                           | Path                                                       | Comment                               |
-| ---------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------- |
-| [`clock_gater`](../clock_gater/clock_gater.md)                   | `omnicores-buildingblocks/sources/clock/clock_gater`       | Clock gater behavioral model.         |
-| [`clock_divider`](../clock_divider/clock_divider.md)             | `omnicores-buildingblocks/sources/clock/clock_divider`     | Static clock divider.                 |
-| [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/clock_multiplexer` | Multiplexer to select between clocks. |
+| Module                                                                    | Path                                                          | Comment                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------- |
+| [`clock_gater`](../clock_gater/clock_gater.md)                            | `omnicores-buildingblocks/sources/clock/clock_gater`          | Clock gater behavioral model.         |
+| [`static_clock_divider`](../static_clock_divider/static_clock_divider.md) | `omnicores-buildingblocks/sources/clock/static_clock_divider` | Static clock divider.                 |
+| [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)          | `omnicores-buildingblocks/sources/clock/clock_multiplexer`    | Multiplexer to select between clocks. |

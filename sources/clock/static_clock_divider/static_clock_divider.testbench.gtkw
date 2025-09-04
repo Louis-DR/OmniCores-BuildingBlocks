@@ -1,0 +1,25 @@
+[dumpfile] "static_clock_divider.testbench.vcd"
+[savefile] "static_clock_divider.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-10.029770 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+static_clock_divider__testbench.clock_in
+static_clock_divider__testbench.resetn
+static_clock_divider__testbench.gen_division[1].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[2].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[3].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[4].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[5].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[6].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[7].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[8].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[9].static_clock_divider_dut.clock_out
+static_clock_divider__testbench.gen_division[10].static_clock_divider_dut.clock_out
+[pattern_trace] 1
+[pattern_trace] 0

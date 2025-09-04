@@ -1,8 +1,8 @@
-# Clock Divider
+# Static Clock Divider
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Clock Divider                                                                    |
+| Module  | Static Clock Divider                                                             |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,11 +10,11 @@
 
 ## Overview
 
-![clock_divider](clock_divider.symbol.svg)
+![static_clock_divider](static_clock_divider.symbol.svg)
 
 Divides the frequency of the input clock `clock_in` by the `DIVISION` factor. The output clock `clock_out` runs `DIVISION` times slower than the input clock. If `DIVISION` is 1 or less, `clock_in` is directly passed through to `clock_out` without any logic. If `DIVISION` is a power of two, the MSB of a free‑running binary counter is used, producing an exact 50% duty cycle. Otherwise, for non-power-of-two values, a counter with decode is used. For odd `DIVISION` values greater than 1, the high pulse of `clock_out` is one `clock_in` cycle longer than the low pulse, resulting in a duty cycle slightly greater than 50%. For even non-power-of-two `DIVISION` values greater than 1, the duty cycle is exactly 50%.
 
-![clock_divider](clock_divider.wavedrom.svg)
+![static_clock_divider](static_clock_divider.wavedrom.svg)
 
 ## Parameters
 
@@ -79,21 +79,21 @@ The following table lists the parameter values verified by the testbench.
 
 ## Constraints
 
-The constraints file `clock_divider.sdc` contains the procedure `::omnicores::buildingblocks::timing::clock_divider::apply_constraints_to_instance`. It takes as parameter the hierarchical path to the instance of the clock divider and applies constraints to it, and optionally the division factor. If the division factor is not provided to the function call, the procedure will try to determine it.
+The constraints file `static_clock_divider.sdc` contains the procedure `::omnicores::buildingblocks::timing::static_clock_divider::apply_constraints_to_instance`. It takes as parameter the hierarchical path to the instance of the clock divider and applies constraints to it, and optionally the division factor. If the division factor is not provided to the function call, the procedure will try to determine it.
 
 ```tcl
-set clock_divider_path "path/to/clock_divider"
+set static_clock_divider_path "path/to/static_clock_divider"
 set division_factor 2
 
-::omnicores::buildingblocks::timing::clock_divider::apply_constraints_to_instance $clock_divider_path $division_factor
+::omnicores::buildingblocks::timing::static_clock_divider::apply_constraints_to_instance $static_clock_divider_path $division_factor
 ```
 
 The procedure fetches all the clocks defined on the input clock pin, and creates a generated clock on the output clock pin for each of them. The generated clocks have the correct divided frequency, and edges for odd division factor to specify the asymetric duty cycle. The generated clocks are considered logically exclusive using a clock group.
 
-To call the procedure automatically on all instances of the clock divider, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `clock_divider` and the constraints procedure `::omnicores::buildingblocks::timing::clock_divider::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
+To call the procedure automatically on all instances of the clock divider, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `static_clock_divider` and the constraints procedure `::omnicores::buildingblocks::timing::static_clock_divider::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
 
 ```tcl
-::omnicores::common::apply_constraints_to_all_module_instances "clock_divider" "::omnicores::buildingblocks::timing::clock_divider::apply_constraints_to_instance"
+::omnicores::common::apply_constraints_to_all_module_instances "static_clock_divider" "::omnicores::buildingblocks::timing::static_clock_divider::apply_constraints_to_instance"
 ```
 
 **Important:** the constraints procedure should be called after all clocks on the input pin have been declared. If the input clocks are defined by other OmniCores procedures, they should be called in order of the clock tree. The procedure will print a warning if no clocks are defined on an input clock pin, but it cannot detect if other clocks are added after the procedure is called. This is especially important when applying the constraints automatically on all instances as the order cannot be controlled.
@@ -102,18 +102,18 @@ Special gates (AND, OR, NOT) made for clock paths can be used for better results
 
 ## Deliverables
 
-| Type                | File                                                           | Description                                         |
-| ------------------- | -------------------------------------------------------------- | --------------------------------------------------- |
-| Design              | [`clock_divider.v`](clock_divider.v)                           | Verilog design.                                     |
-| Testbench           | [`clock_divider.testbench.sv`](clock_divider.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script     | [`clock_divider.testbench.gtkw`](clock_divider.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Constraint script   | [`clock_divider.sdc`](clock_divider.sdc)                       | Tickle SDC constraint script for synthesis.         |
-| Symbol descriptor   | [`clock_divider.symbol.sss`](clock_divider.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image        | [`clock_divider.symbol.svg`](clock_divider.symbol.svg)         | Generated vector image of the symbol.               |
-| Symbol shape        | [`clock_divider.symbol.drawio`](clock_divider.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
-| Waveform descriptor | [`clock_divider.wavedrom.json`](clock_divider.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
-| Waveform image      | [`clock_divider.wavedrom.svg`](clock_divider.wavedrom.svg)     | Generated image of the waveform.                    |
-| Datasheet           | [`clock_divider.md`](clock_divider.md)                         | Markdown documentation datasheet.                   |
+| Type                | File                                                                         | Description                                         |
+| ------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design              | [`static_clock_divider.v`](static_clock_divider.v)                           | Verilog design.                                     |
+| Testbench           | [`static_clock_divider.testbench.sv`](static_clock_divider.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`static_clock_divider.testbench.gtkw`](static_clock_divider.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script   | [`static_clock_divider.sdc`](static_clock_divider.sdc)                       | Tickle SDC constraint script for synthesis.         |
+| Symbol descriptor   | [`static_clock_divider.symbol.sss`](static_clock_divider.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`static_clock_divider.symbol.svg`](static_clock_divider.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`static_clock_divider.symbol.drawio`](static_clock_divider.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
+| Waveform descriptor | [`static_clock_divider.wavedrom.json`](static_clock_divider.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`static_clock_divider.wavedrom.svg`](static_clock_divider.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`static_clock_divider.md`](static_clock_divider.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

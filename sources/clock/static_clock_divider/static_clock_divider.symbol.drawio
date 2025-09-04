@@ -52,7 +52,7 @@
         </mxCell>
         <mxCell id     = "subtitle"
                 parent = "2"
-                value  = "clock_divider"
+                value  = "static_clock_divider"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"

@@ -3,9 +3,9 @@
 # ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 # ║ Website:     louis-dr.github.io                                           ║
 # ║ License:     MIT License                                                  ║
-# ║ File:        clock_divider.sdc                                            ║
+# ║ File:        static_clock_divider.sdc                                     ║
 # ╟───────────────────────────────────────────────────────────────────────────╢
-# ║ Description: SDC constraints for the clock divider module.                ║
+# ║ Description: SDC constraints for the static clock divider module.         ║
 # ║                                                                           ║
 # ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -16,7 +16,7 @@ source [file join [file dirname [info script]] "../../common/common.sdc"]
 
 
 
-namespace eval ::omnicores::buildingblocks::timing::clock_divider {
+namespace eval ::omnicores::buildingblocks::timing::static_clock_divider {
 
   # Apply timing constraints to a specific instance of the clock divider module
   proc apply_constraints_to_instance { instance_path {division_factor ""} } {

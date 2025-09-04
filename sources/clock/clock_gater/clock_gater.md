@@ -79,7 +79,7 @@ This module has no dependency.
 
 | Module                                                                                   | Path                                                               | Comment                                                   |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------- |
-| [`clock_divider`](../clock_divider/clock_divider.md)                                     | `omnicores-buildingblocks/sources/clock/clock_divider`             | Static clock divider.                                     |
+| [`static_clock_divider`](../static_clock_divider/static_clock_divider.md)                | `omnicores-buildingblocks/sources/clock/static_clock_divider`      | Static clock divider.                                     |
 | [`clock_multiplexer`](../clock_multiplexer/clock_multiplexer.md)                         | `omnicores-buildingblocks/sources/clock/clock_multiplexer`         | Multiplexer to select between clocks.                     |
 | [`fast_clock_multiplexer`](../fast_clock_multiplexer/fast_clock_multiplexer.md)          | `omnicores-buildingblocks/sources/clock/fast_clock_multiplexer`    | Faster clock multiplexer.                                 |
 | [`nonstop_clock_multiplexer`](../nonstop_clock_multiplexer/nonstop_clock_multiplexer.md) | `omnicores-buildingblocks/sources/clock/nonstop_clock_multiplexer` | Clock multiplexer working when one clock is not running.  |

@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_divider.testbench.sv                                   ║
+// ║ File:        static_clock_divider.testbench.sv                            ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the clock divider.                             ║
+// ║ Description: Testbench for the static clock divider.                      ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -16,7 +16,7 @@
 
 
 
-module clock_divider__testbench ();
+module static_clock_divider__testbench ();
 
 // Test parameters
 localparam real   CLOCK_PERIOD      = 10;
@@ -36,9 +36,9 @@ real clock_out_frequency;
 generate
   for (genvar division = 1; division <= MAX_TEST_DIVISION; division++) begin : gen_division
     // Device under test
-    clock_divider #(
+    static_clock_divider #(
       .DIVISION  ( division            )
-    ) clock_divider_dut (
+    ) static_clock_divider_dut (
       .clock_in  ( clock_in            ),
       .resetn    ( resetn              ),
       .clock_out ( clock_out[division] )
@@ -57,8 +57,8 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("clock_divider.testbench.vcd");
-  $dumpvars(0,clock_divider__testbench);
+  $dumpfile("static_clock_divider.testbench.vcd");
+  $dumpvars(0,static_clock_divider__testbench);
 
   // Reset
   resetn = 0;
