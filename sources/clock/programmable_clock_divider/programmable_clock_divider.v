@@ -26,7 +26,7 @@
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
-
+`include "clog2.vh"
 
 module programmable_clock_divider #(
   parameter DIVISION_WIDTH = 4,
@@ -38,90 +38,124 @@ module programmable_clock_divider #(
   output                     clock_out
 );
 
+// Generated clock signal before multiplexing
+reg clock_divider;
+
 // Division factor registered to prevent glitches
 reg [DIVISION_WIDTH-1:0] division_reg;
+wire passthrough_mode = division_reg == 0;
+wire division_mode    = ~passthrough_mode;
+
+// Use a glitchless multiplexer to switch between passthrough and divided clock
+clock_multiplexer #(
+  .STAGES ( 1 ) // Clocks are synchronous
+) clock_out_multiplexer (
+  .clock_0   ( clock_in      ),
+  .clock_1   ( clock_divider ),
+  .resetn_0  ( resetn        ),
+  .resetn_1  ( resetn        ),
+  .select    ( division_mode ),
+  .clock_out ( clock_out     )
+);
 
 // Coarse power-of-two division
 if (POWER_OF_TWO == 1) begin
 
-  // Chain of flops for clock dividion, each dividing the previous output frequency by 2
-  localparam DIVISION_WIDTH_POW2 = 2**DIVISION_WIDTH;
-  reg [DIVISION_WIDTH_POW2-1:0] chain_divider;
+  // Half pulse count-down
+  localparam COUNTDOWN_WIDTH = (2**DIVISION_WIDTH) - 1;
+  reg [COUNTDOWN_WIDTH-1:0] countdown;
+
+  // The duration of each half-pulse is 2^(division-1) cycles.
+  // The value to load is the duration - 1.
+  wire [COUNTDOWN_WIDTH-1:0] reload_value = (division_reg > 0) ? (1 << (division_reg - 1)) - 1 : 0;
 
   always @(posedge clock_in or negedge resetn) begin
     // Reset
     if (!resetn) begin
       division_reg  <= division;
-      chain_divider <= 0;
+      clock_divider <= 0;
+      // Initialize countdown based on the initial division value
+      countdown     <= (division > 0) ? (1 << (division - 1)) - 1 : 0;
     end
     // Operation
     else begin
-      // Should be synthesized as chain of toggle flip-flops
-      chain_divider <= chain_divider + 1;
-      // Update division factor on counter overflow
-      if (chain_divider == {DIVISION_WIDTH_POW2{1'b1}}) begin
-        division_reg <= division;
+      // Passthrough mode
+      if (passthrough_mode) begin
+        countdown     <= 0;
+        clock_divider <= 0;
+        division_reg  <= division;
+      end
+      // Division mode
+      else begin
+        // When countdown reaches zero, the half-pulse has ended
+        if (countdown == 0) begin
+          // Invert the clock output
+          clock_divider <= ~clock_divider;
+          // Reload countdown for the next half-pulse
+          countdown     <= reload_value;
+          // Update division factor at the end of a full cycle
+          if (clock_divider == 0) begin
+            division_reg <= division;
+          end
+        end
+        // Keep counting down
+        else begin
+          countdown <= countdown - 1;
+        end
       end
     end
   end
-
-  // Tap the division chain for the correct power-of-two factor
-  assign clock_out = (division_reg == 0) ? clock_in : chain_divider[division_reg-1];
 end
 
 // Fine decimal division
 else begin
 
-  // Counter register
-  reg [DIVISION_WIDTH-1:0] counter;
+  // Duration of the high and low pulses
+  wire [DIVISION_WIDTH-1:0] high_pulse_duration = (division_reg + 2) / 2;
+  wire [DIVISION_WIDTH-1:0]  low_pulse_duration = (division_reg + 1) / 2;
 
-  // Divided clock flop
-  reg clock_divided;
+  // Half pulse count-down
+  reg [DIVISION_WIDTH-1:0] countdown;
 
   always @(posedge clock_in or negedge resetn) begin
     // Reset
     if (!resetn) begin
+      // Low pulse at reset
       division_reg  <= division;
-      clock_divided <= 0;
-      counter       <= 0;
+      clock_divider <= 0;
+      countdown     <= (division + 1) / 2 - 1;
     end
     // Operation
     else begin
-      // Passthrough
-      if (division_reg == 0) begin
-        counter       <= 0;
-        clock_divided <= 0;
+      // Passthrough mode
+      if (passthrough_mode) begin
+        countdown     <= 0;
+        clock_divider <= 0;
         // Update division factor
         division_reg  <= division;
       end
-      // Division
+      // Division mode
       else begin
-        // Counter max, divided clock rising edge
-        if (counter == division_reg) begin
-          clock_divided <= 1;
-          counter       <= 0;
-          // Update division factor
-          division_reg  <= division;
+        // When the countdown reaches zero, the current pulse has ended
+        if (countdown == 0) begin
+          // Invert the clock output
+          clock_divider <= ~clock_divider;
+          // Reload countdown based on the current pulse polarity
+          if (clock_divider == 0) begin
+            countdown    <= high_pulse_duration - 1;
+            // Update division factor at the end of a full cycle
+            division_reg <= division;
+          end else begin
+            countdown <= low_pulse_duration - 1;
+          end
         end
-        // Counter half, divided clock falling edge
-        // The formula is equivalent to `ceil(division_reg/2)-1`
-        // which makes the high pulse longer for odd division factor
-        else if (counter == ((division_reg + 2) / 2) - 1) begin
-          clock_divided <= 0;
-          counter       <= counter + 1;
-        end
-        // Increment counter
+        // Keep counting down
         else begin
-          counter <= counter + 1;
+          countdown <= countdown - 1;
         end
       end
     end
   end
-
-  assign clock_out = (division_reg == 0) ? clock_in : clock_out_generated;
-
-  // Connect the output clock to the divided clock flop
-  assign clock_out_generated = clock_divided;
 end
 
 endmodule

@@ -1,0 +1,19 @@
+[dumpfile] "programmable_clock_divider.testbench.vcd"
+[savefile] "programmable_clock_divider.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-10.029770 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+static_clock_divider__testbench.clock_in
+static_clock_divider__testbench.resetn
+@24
+static_clock_divider__testbench.division[3:0]
+@28
+static_clock_divider__testbench.clock_out
+[pattern_trace] 1
+[pattern_trace] 0

@@ -1,0 +1,3 @@
+programmable_clock_divider.v
+../clock_multiplexer/clock_multiplexer.v
+../../timing/synchronizer/synchronizer.v
