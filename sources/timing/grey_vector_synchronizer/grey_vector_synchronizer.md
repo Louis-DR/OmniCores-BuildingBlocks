@@ -97,6 +97,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Design            | [`grey_vector_synchronizer.v`](grey_vector_synchronizer.v)                           | Verilog design file.                                |
 | Testbench         | [`grey_vector_synchronizer.testbench.sv`](grey_vector_synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
 | Waveform script   | [`grey_vector_synchronizer.testbench.gtkw`](grey_vector_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script | [`grey_vector_synchronizer.sdc`](grey_vector_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor | [`grey_vector_synchronizer.symbol.sss`](grey_vector_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`grey_vector_synchronizer.symbol.svg`](grey_vector_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
 | Symbol shape      | [`grey_vector_synchronizer.symbol.drawio`](grey_vector_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
