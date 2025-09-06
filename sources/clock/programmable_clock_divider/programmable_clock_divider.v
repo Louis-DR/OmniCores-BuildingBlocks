@@ -26,7 +26,11 @@
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
+
+
 `include "clog2.vh"
+
+
 
 module programmable_clock_divider #(
   parameter DIVISION_WIDTH = 4,

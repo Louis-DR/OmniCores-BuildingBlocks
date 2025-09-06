@@ -1,0 +1,5 @@
+{"signal": [
+  {"name": "clock_in",  "wave": "p............................."},
+  {"name": "division",  "wave": "=..=.........=................", "data": ["0", "1", "2"]},
+  {"name": "clock_out", "wave": "p....hlhlhlhlhlhlh.lh.lh.lh.lh"}
+], "config":{"skin": "narrow"}}
