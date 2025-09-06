@@ -104,6 +104,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Design            | [`feedback_pulse_synchronizer.v`](feedback_pulse_synchronizer.v)                           | Verilog design file.                                |
 | Testbench         | [`feedback_pulse_synchronizer.testbench.sv`](feedback_pulse_synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
 | Waveform script   | [`feedback_pulse_synchronizer.testbench.gtkw`](feedback_pulse_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script | [`feedback_pulse_synchronizer.sdc`](feedback_pulse_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor | [`feedback_pulse_synchronizer.symbol.sss`](feedback_pulse_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`feedback_pulse_synchronizer.symbol.svg`](feedback_pulse_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
 | Symbol shape      | [`feedback_pulse_synchronizer.symbol.drawio`](feedback_pulse_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |

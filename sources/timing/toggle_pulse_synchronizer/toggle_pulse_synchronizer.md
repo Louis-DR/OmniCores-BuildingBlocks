@@ -102,6 +102,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Design            | [`toggle_pulse_synchronizer.v`](toggle_pulse_synchronizer.v)                           | Verilog design file.                                |
 | Testbench         | [`toggle_pulse_synchronizer.testbench.sv`](toggle_pulse_synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
 | Waveform script   | [`toggle_pulse_synchronizer.testbench.gtkw`](toggle_pulse_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script | [`toggle_pulse_synchronizer.sdc`](toggle_pulse_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor | [`toggle_pulse_synchronizer.symbol.sss`](toggle_pulse_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`toggle_pulse_synchronizer.symbol.svg`](toggle_pulse_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
 | Symbol shape      | [`toggle_pulse_synchronizer.symbol.drawio`](toggle_pulse_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
