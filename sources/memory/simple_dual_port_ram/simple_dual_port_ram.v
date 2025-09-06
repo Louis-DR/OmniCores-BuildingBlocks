@@ -28,18 +28,20 @@ module simple_dual_port_ram #(
   // Read interface
   input                      read_enable,
   input  [ADDRESS_WIDTH-1:0] read_address,
-  output         [WIDTH-1:0] read_data
+  output reg     [WIDTH-1:0] read_data
 );
 
 // Memory array
 reg [WIDTH-1:0] memory [DEPTH-1:0];
 
-// Read logic
-assign read_data = read_enable ? memory[read_address] : 0;
-
 // Write logic
 always @(posedge clock) begin
   if (write_enable) memory[write_address] <= write_data;
+end
+
+// Read logic
+always @(posedge clock) begin
+  if (read_enable) read_data <= memory[read_address];
 end
 
 endmodule

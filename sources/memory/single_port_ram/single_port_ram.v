@@ -20,26 +20,26 @@ module single_port_ram #(
   parameter DEPTH = 16,
   parameter ADDRESS_WIDTH = `CLOG2(DEPTH)
 ) (
-  input clock,
+  input                      clock,
   // Read-write interface
   input                      write_enable,
   input                      read_enable,
   input  [ADDRESS_WIDTH-1:0] address,
   input          [WIDTH-1:0] write_data,
-  output         [WIDTH-1:0] read_data
+  output reg     [WIDTH-1:0] read_data
 );
 
 // Memory array
 reg [WIDTH-1:0] memory [DEPTH-1:0];
 
-// Read logic
-assign read_data = read_enable ? memory[address] : 0;
-
+// Write logic
 always @(posedge clock) begin
-  // Write
-  if (write_enable) begin
-    memory[address] <= write_data;
-  end
+  if (write_enable) memory[address] <= write_data;
+end
+
+// Read logic
+always @(posedge clock) begin
+  if (read_enable) read_data <= memory[address];
 end
 
 endmodule
