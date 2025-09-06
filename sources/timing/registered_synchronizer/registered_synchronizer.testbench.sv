@@ -30,7 +30,7 @@ localparam real DESTINATION_CLOCK_PERIOD = CLOCK_FAST_PERIOD;
 localparam int  RANDOM_TEST_DURATION     = 1000;
 localparam int  RANDOM_SOURCE_MIN_PULSE  = 1;
 localparam int  RANDOM_SOURCE_MAX_PULSE  = 8;
-localparam real GLITCH_TOLERENCE         = 10;
+localparam real GLITCH_TOLERANCE         = 10;
 
 // Device ports
 logic source_clock;
@@ -133,7 +133,7 @@ initial begin
         @(negedge data_out);
         time_negedge_data_out = $time;
         data_out_pulse_duration = time_negedge_data_out - time_posedge_data_out;
-        assert (data_out_pulse_duration % DESTINATION_CLOCK_PERIOD <= GLITCH_TOLERENCE)
+        assert (data_out_pulse_duration % DESTINATION_CLOCK_PERIOD <= GLITCH_TOLERANCE)
           else $error("[%0tns] Glitch detected on the output data.", $time);
       end
     end
