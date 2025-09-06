@@ -99,6 +99,7 @@ To call the procedure automatically on all instances of the synchronizer, use th
 | Design            | [`registered_vector_synchronizer.v`](registered_vector_synchronizer.v)                           | Verilog design file.                                |
 | Testbench         | [`registered_vector_synchronizer.testbench.sv`](registered_vector_synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
 | Waveform script   | [`registered_vector_synchronizer.testbench.gtkw`](registered_vector_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script | [`registered_vector_synchronizer.sdc`](registered_vector_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
 | Symbol descriptor | [`registered_vector_synchronizer.symbol.sss`](registered_vector_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
 | Symbol image      | [`registered_vector_synchronizer.symbol.svg`](registered_vector_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
 | Symbol shape      | [`registered_vector_synchronizer.symbol.drawio`](registered_vector_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
