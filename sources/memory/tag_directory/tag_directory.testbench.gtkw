@@ -1,0 +1,39 @@
+[dumpfile] "tag_directory.testbench.vcd"
+[savefile] "tag_directory.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-7.850139 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+tag_directory__testbench.clock
+tag_directory__testbench.resetn
+tag_directory__testbench.full
+tag_directory__testbench.empty
+@200
+-
+@28
+tag_directory__testbench.allocate_enable
+@22
+tag_directory__testbench.allocate_tag[7:0]
+@24
+tag_directory__testbench.allocate_index[3:0]
+@200
+-
+@22
+tag_directory__testbench.search_tag[7:0]
+@24
+tag_directory__testbench.search_index[3:0]
+@28
+tag_directory__testbench.search_hit
+@200
+-
+@28
+tag_directory__testbench.evict_enable
+@24
+tag_directory__testbench.evict_index[3:0]
+[pattern_trace] 1
+[pattern_trace] 0
