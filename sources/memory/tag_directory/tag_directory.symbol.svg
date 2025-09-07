@@ -1,38 +1,48 @@
-<svg width="270" height="220" viewBox="0 0 135 110" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="85" height="100" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="67" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Tag Directory</text>
-  <text x="67" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">tag_directory</text>
+<svg width="276" height="220" viewBox="0 0 138 110" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="88" height="100" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="69" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Tag Directory</text>
+  <text x="69" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">tag_directory</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
         <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
         <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
       <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
         <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">allocate_enable</text>
-        <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="108" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">search_hit</text>
-        <line x1="110" y1="55" x2="124" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 130 55 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">allocate_tag</text>
-        <line x1="19" y1="65" x2="5" y2="65" stroke="black" stroke-width="1"/>
-        <path d="M 25 65 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="8" y1="63" x2="12" y2="67" stroke="black" stroke-width="1"/>
-      <text x="108" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">search_tag</text>
-        <line x1="116" y1="65" x2="130" y2="65" stroke="black" stroke-width="1"/>
-        <path d="M 110 65 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="123" y1="63" x2="127" y2="67" stroke="black" stroke-width="1"/>
-      <text x="108" y="75" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">search_index</text>
-        <line x1="110" y1="75" x2="124" y2="75" stroke="black" stroke-width="1"/>
-        <path d="M 130 75 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="113" y1="73" x2="117" y2="77" stroke="black" stroke-width="1"/>
-      <text x="108" y="85" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">evict_enable</text>
-        <line x1="116" y1="85" x2="130" y2="85" stroke="black" stroke-width="1"/>
-        <path d="M 110 85 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="108" y="95" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">evict_index</text>
-        <line x1="116" y1="95" x2="130" y2="95" stroke="black" stroke-width="1"/>
-        <path d="M 110 95 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="123" y1="93" x2="127" y2="97" stroke="black" stroke-width="1"/>
+      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">full</text>
+        <line x1="25" y1="55" x2="11" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 5 55 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="111" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">evict_enable</text>
+        <line x1="119" y1="55" x2="133" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 113 55 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">empty</text>
+        <line x1="25" y1="65" x2="11" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 5 65 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="111" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">evict_index</text>
+        <line x1="119" y1="65" x2="133" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 113 65 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="126" y1="63" x2="130" y2="67" stroke="black" stroke-width="1"/>
+      <text x="27" y="75" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">allocate_enable</text>
+        <line x1="19" y1="75" x2="5" y2="75" stroke="black" stroke-width="1"/>
+        <path d="M 25 75 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="111" y="75" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">search_hit</text>
+        <line x1="113" y1="75" x2="127" y2="75" stroke="black" stroke-width="1"/>
+        <path d="M 133 75 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="85" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">allocate_tag</text>
+        <line x1="19" y1="85" x2="5" y2="85" stroke="black" stroke-width="1"/>
+        <path d="M 25 85 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="83" x2="12" y2="87" stroke="black" stroke-width="1"/>
+      <text x="111" y="85" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">search_tag</text>
+        <line x1="119" y1="85" x2="133" y2="85" stroke="black" stroke-width="1"/>
+        <path d="M 113 85 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="126" y1="83" x2="130" y2="87" stroke="black" stroke-width="1"/>
+      <text x="27" y="95" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">allocate_index</text>
+        <line x1="25" y1="95" x2="11" y2="95" stroke="black" stroke-width="1"/>
+        <path d="M 5 95 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="18" y1="93" x2="22" y2="97" stroke="black" stroke-width="1"/>
+      <text x="111" y="95" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">search_index</text>
+        <line x1="113" y1="95" x2="127" y2="95" stroke="black" stroke-width="1"/>
+        <path d="M 133 95 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="116" y1="93" x2="120" y2="97" stroke="black" stroke-width="1"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

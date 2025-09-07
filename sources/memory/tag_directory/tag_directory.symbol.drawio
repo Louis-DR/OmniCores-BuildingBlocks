@@ -23,7 +23,7 @@
                 value       = ""
                 vertex      = "1"
                 connectable = "0"
-                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[1,0,0,0,70],[1,0,0,0,80],[1,0,0,0,90],[0.5,0,0,0,0],[0.5,0,0,0,100]];">
+                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[0,0,0,0,90],[1,0,0,0,90],[0.5,0,0,0,0],[0.5,0,0,0,100]];">
           <mxGeometry width  = "120"
                       height = "100"
                       as     = "geometry"/>
@@ -119,9 +119,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "allocate_enable-label"
+            <mxCell id     = "full-label"
                     parent = "2"
-                    value  = "allocate_enable"
+                    value  = "full"
                     vertex = "1"
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -131,36 +131,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "allocate_enable-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "0"
-                         y  = "50"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "15"
-                         y  = "50"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="search_hit-label"
-                    parent="2"
-                    value="search_hit"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "50"
-                width  = "90"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "search_hit-arrow"
+            <mxCell id     = "full-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
@@ -169,98 +140,11 @@
                           height   = "50"
                           relative = "1"
                           as       = "geometry">
-                <mxPoint x  = "120"
-                         y  = "50"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "105"
-                         y  = "50"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id     = "allocate_tag-label"
-                    parent = "2"
-                    value  = "allocate_tag"
-                    vertex = "1"
-                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "60"
-                width  = "90"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "allocate_tag-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
                 <mxPoint x  = "0"
-                         y  = "60"
+                         y  = "50"
                          as = "sourcePoint"/>
                 <mxPoint x  = "15"
-                         y  = "60"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="search_tag-label"
-                    parent="2"
-                    value="search_tag"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "60"
-                width  = "90"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "search_tag-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "120"
-                         y  = "60"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "105"
-                         y  = "60"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="search_index-label"
-                    parent="2"
-                    value="search_index"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "70"
-                width  = "90"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "search_index-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "120"
-                         y  = "70"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "105"
-                         y  = "70"
+                         y  = "50"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
@@ -271,7 +155,7 @@
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "80"
+                y      = "50"
                 width  = "90"
                 height = "0"
                 as     = "geometry"/>
@@ -286,10 +170,39 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "120"
-                         y  = "80"
+                         y  = "50"
                          as = "sourcePoint"/>
                 <mxPoint x  = "105"
-                         y  = "80"
+                         y  = "50"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "empty-label"
+                    parent = "2"
+                    value  = "empty"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "60"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "empty-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "60"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "60"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
@@ -300,7 +213,7 @@
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "90"
+                y      = "60"
                 width  = "90"
                 height = "0"
                 as     = "geometry"/>
@@ -310,6 +223,180 @@
                     value  = ""
                     edge   = "1"
                     style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "60"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "60"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "allocate_enable-label"
+                    parent = "2"
+                    value  = "allocate_enable"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "70"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "allocate_enable-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "70"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "70"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="search_hit-label"
+                    parent="2"
+                    value="search_hit"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "70"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "search_hit-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "70"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "70"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "allocate_tag-label"
+                    parent = "2"
+                    value  = "allocate_tag"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "80"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "allocate_tag-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "80"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "80"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="search_tag-label"
+                    parent="2"
+                    value="search_tag"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "80"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "search_tag-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "80"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "80"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "allocate_index-label"
+                    parent = "2"
+                    value  = "allocate_index"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "90"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "allocate_index-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "90"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "90"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="search_index-label"
+                    parent="2"
+                    value="search_index"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "90"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "search_index-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
               <mxGeometry width    = "50"
                           height   = "50"
                           relative = "1"

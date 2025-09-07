@@ -86,11 +86,11 @@ always_comb begin
   valid_next = valid;
   // Write allocation operation
   if (write_enable) begin
-    valid_next  [first_free_index] = 1'b1;
+    valid_next[first_free_index] = 1;
   end
   // Read clear operation
   if (read_enable && read_clear) begin
-    valid_next[read_index] = 1'b0;
+    valid_next[read_index] = 0;
   end
 end
 
