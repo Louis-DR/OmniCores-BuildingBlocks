@@ -90,7 +90,7 @@ Below is a list of the modules currently available in this collection. More modu
 | `true_dual_port_ram`                                                                                                                      | memory         | True Dual-port RAM                                                                | :green_circle:  :red_circle:    :red_circle:   :white_circle: |
 | `asynchronous_true_dual_port_ram`                                                                                                         | memory         | Asynchronous true dual-port RAM                                                   | :green_circle:  :red_circle:    :red_circle:   :white_circle: |
 | [`tag_directory`](sources/memory/tag_directory/tag_directory.md)                                                                          | memory         | Tag directory with manual eviction                                                | :green_circle:  :green_circle:  :green_circle: :white_circle: |
-| `content_addressable_memory`                                                                                                              | memory         | Content addressable memory                                                        | :orange_circle: :red_circle:    :red_circle:   :white_circle: |
+| `content_addressable_memory`                                                                                                              | memory         | Content addressable memory                                                        | :green_circle:  :red_circle:    :red_circle:   :white_circle: |
 | [`rotate_left`](sources/operations/rotate_left/rotate_left.md)                                                                            | operations     | Rotate a vector left with wrapping by a static amount                             | :green_circle:  :green_circle:  :green_circle: :white_circle: |
 | [`rotate_right`](sources/operations/rotate_right/rotate_right.md)                                                                         | operations     | Rotate a vector right with wrapping by a static amount                            | :green_circle:  :green_circle:  :green_circle: :white_circle: |
 | [`shift_left`](sources/operations/shift_left/shift_left.md)                                                                               | operations     | Shift a vector left with padding by a static amount                               | :green_circle:  :green_circle:  :green_circle: :white_circle: |
@@ -141,10 +141,11 @@ Modules planned or in development :
   - Multiplexer-router
   - Fork-join
 - Memories
-  - Tag directory with eviction policy
-  - Content addressable memory
+  - Advanced tag directory with safety, one-hot output, and two search ports
+  - Advanced CAM with safety, simultaneous read and evict, optional pipelining, and delete hit/miss
   - Set-associative memory
-  - True dual-port RAM (TDP, and rename the other to simple dual port (SDP))
+  - Simple cache
+  - Triple-port RAM
 - Pulse logic
   - Debounce
   - Pulse filter
@@ -189,7 +190,7 @@ Modules planned or in development :
   - SHA1, SHA2, SHA3
   - SHA256, SHA384, SHA512
   - AES128, AES256
-  - ShangMi 2, SM3, SM4
+  - ShangMi2, SM3, SM4
 - Arbiters
   - Timeout dynamic priority arbiter
   - Weighted round robin arbiter
