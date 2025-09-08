@@ -3,11 +3,13 @@
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-7.850139 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-12.690768 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
+@420
+tag_directory__testbench.check
 @28
 tag_directory__testbench.clock
 tag_directory__testbench.resetn
