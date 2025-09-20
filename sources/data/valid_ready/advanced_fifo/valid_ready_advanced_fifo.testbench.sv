@@ -24,7 +24,7 @@ localparam real CLOCK_PERIOD = 10;
 localparam int  WIDTH        = 8;
 localparam int  WIDTH_POW2   = 2**WIDTH;
 localparam int  DEPTH        = 4;
-localparam int  DEPTH_LOG2   = `CLOG2(DEPTH);
+localparam int  DEPTH_LOG2   = $clog2(DEPTH);
 
 // Check parameters
 localparam int  THROUGHPUT_CHECK_DURATION      = 100;

@@ -14,7 +14,6 @@
 `timescale 1ns/1ns
 `include "random.svh"
 `include "boolean.svh"
-`include "clog2.vh"
 
 
 
@@ -22,7 +21,7 @@ module count_ones__testbench ();
 
 // Device parameters
 localparam int DATA_WIDTH  = 12;
-localparam int COUNT_WIDTH = `CLOG2(DATA_WIDTH+1);
+localparam int COUNT_WIDTH = $clog2(DATA_WIDTH+1);
 
 // Test parameters
 localparam int DATA_WIDTH_POW2       = 2**DATA_WIDTH;

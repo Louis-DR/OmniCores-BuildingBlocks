@@ -35,8 +35,7 @@
 module content_addressable_memory #(
   parameter TAG_WIDTH   = 8,
   parameter DATA_WIDTH  = 8,
-  parameter DEPTH       = 16,
-  parameter INDEX_WIDTH = $clog2(DEPTH)
+  parameter DEPTH       = 16
 ) (
   input                   clock,
   input                   resetn,
@@ -55,6 +54,8 @@ module content_addressable_memory #(
   input                   delete_enable,
   input   [TAG_WIDTH-1:0] delete_tag
 );
+
+parameter INDEX_WIDTH = $clog2(DEPTH);
 
 // Tag directory
 logic                   directory_allocate_enable;
