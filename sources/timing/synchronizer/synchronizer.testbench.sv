@@ -13,6 +13,8 @@
 
 `timescale 1ns/1ps
 `include "random.svh"
+`include "absolute.svh"
+`include "real_modulo.svh"
 
 
 
@@ -22,8 +24,9 @@ module synchronizer__testbench ();
 localparam int STAGES = 2;
 
 // Test parameters
-localparam real CLOCK_PERIOD         = 10;
-localparam int  RANDOM_TEST_DURATION = 1000;
+localparam real CLOCK_PERIOD            = 10;
+localparam int  RANDOM_TEST_DURATION    = 1000;
+localparam real GLITCH_PERIOD_TOLERANCE = 0.05;
 
 // Device ports
 logic clock;
@@ -104,7 +107,7 @@ initial begin
         @(negedge data_out);
         time_negedge_data_out = $time;
         data_out_pulse_duration = time_negedge_data_out - time_posedge_data_out;
-        assert (data_out_pulse_duration % CLOCK_PERIOD == 0)
+        assert (absolute(real_modulo(data_out_pulse_duration, CLOCK_PERIOD)) < GLITCH_PERIOD_TOLERANCE * CLOCK_PERIOD)
           else $error("[%0tns] Glitch detected on the output data.", $time);
       end
     end

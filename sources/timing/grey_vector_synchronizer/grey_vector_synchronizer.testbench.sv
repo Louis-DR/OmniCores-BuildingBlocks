@@ -13,6 +13,8 @@
 
 `timescale 1ns/1ps
 `include "random.svh"
+`include "absolute.svh"
+`include "real_modulo.svh"
 
 
 
@@ -32,7 +34,7 @@ localparam int  WIDTH_POW2               = 2 ** WIDTH;
 localparam int  RANDOM_TEST_DURATION     = 1000;
 localparam int  RANDOM_SOURCE_MIN_PULSE  = 1;
 localparam int  RANDOM_SOURCE_MAX_PULSE  = 8;
-localparam real GLITCH_TOLERANCE         = 10;
+localparam real GLITCH_PERIOD_TOLERANCE  = 0.05;
 
 // Device ports
 logic             source_clock;
@@ -136,7 +138,7 @@ initial begin
         @(negedge data_out);
         time_negedge_data_out = $time;
         data_out_pulse_duration = time_negedge_data_out - time_posedge_data_out;
-        assert (data_out_pulse_duration % DESTINATION_CLOCK_PERIOD <= GLITCH_TOLERANCE)
+        assert (absolute(real_modulo(data_out_pulse_duration, DESTINATION_CLOCK_PERIOD)) < GLITCH_PERIOD_TOLERANCE * DESTINATION_CLOCK_PERIOD)
           else $error("[%0tns] Glitch detected on the output data.", $time);
       end
     end
