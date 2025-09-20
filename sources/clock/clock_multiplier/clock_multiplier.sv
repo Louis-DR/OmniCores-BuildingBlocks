@@ -56,10 +56,10 @@ else begin
       // Input clock measurement
       begin
         @(posedge clock_in);
-        clock_in_timer_start = $time;
+        clock_in_timer_start = $realtime;
         forever begin
           @(posedge clock_in);
-          clock_in_timer_stop  = $time;
+          clock_in_timer_stop  = $realtime;
           clock_in_period      = clock_in_timer_stop - clock_in_timer_start;
           clock_in_timer_start = clock_in_timer_stop;
           clock_out_period     = clock_in_period / MULTIPLICATION;

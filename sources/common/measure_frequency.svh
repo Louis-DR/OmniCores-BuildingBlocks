@@ -12,9 +12,9 @@ real __measure_frequenc_time_stop__;
   fork                                                   \
     begin                                                \
       @(posedge clock)                                   \
-      __measure_frequenc_time_start__ = $time;           \
+      __measure_frequenc_time_start__ = $realtime;           \
       repeat (duration) @(posedge clock)                  \
-      __measure_frequenc_time_stop__ = $time;            \
+      __measure_frequenc_time_stop__ = $realtime;            \
       frequency = multiplier * duration                  \
                   / (  __measure_frequenc_time_stop__    \
                      - __measure_frequenc_time_start__); \

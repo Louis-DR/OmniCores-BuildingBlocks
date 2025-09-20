@@ -106,9 +106,9 @@ initial begin
     begin
       forever begin
         @(negedge resetn_out);
-        time_negedge_resetn_out = $time;
+        time_negedge_resetn_out = $realtime;
         @(posedge resetn_out);
-        time_posedge_resetn_out = $time;
+        time_posedge_resetn_out = $realtime;
         resetn_out_pulse_duration = time_posedge_resetn_out - time_negedge_resetn_out;
         assert (resetn_out_pulse_duration >= CLOCK_PERIOD)
           else $error("[%0tns] Glitch detected on the output resetn.", $time);

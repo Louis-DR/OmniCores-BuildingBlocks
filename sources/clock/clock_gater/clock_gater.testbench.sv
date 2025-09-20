@@ -133,9 +133,9 @@ initial begin
     begin
       forever begin
         @(posedge clock_out);
-        time_posedge_clock_out = $time;
+        time_posedge_clock_out = $realtime;
         @(negedge clock_out);
-        time_negedge_clock_out = $time;
+        time_negedge_clock_out = $realtime;
         if (time_negedge_clock_out-time_posedge_clock_out != CLOCK_PERIOD/2) $error("[%0tns] Glitch detected on the output clock.", $time);
       end
     end

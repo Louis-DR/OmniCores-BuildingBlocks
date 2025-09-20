@@ -131,9 +131,9 @@ initial begin
     begin
       forever begin
         @(posedge data_out);
-        time_posedge_data_out = $time;
+        time_posedge_data_out = $realtime;
         @(negedge data_out);
-        time_negedge_data_out = $time;
+        time_negedge_data_out = $realtime;
         data_out_pulse_duration = time_negedge_data_out - time_posedge_data_out;
         assert (absolute(real_modulo(data_out_pulse_duration, DESTINATION_CLOCK_PERIOD)) < GLITCH_PERIOD_TOLERANCE * DESTINATION_CLOCK_PERIOD)
           else $error("[%0tns] Glitch detected on the output data.", $time);
