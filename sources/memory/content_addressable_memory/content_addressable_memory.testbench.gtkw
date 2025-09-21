@@ -1,0 +1,43 @@
+[dumpfile] "content_addressable_memory.testbench.vcd"
+[savefile] "content_addressable_memory.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-12.420788 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@420
+content_addressable_memory__testbench.check[31:0]
+@28
+content_addressable_memory__testbench.clock
+content_addressable_memory__testbench.resetn
+content_addressable_memory__testbench.full
+content_addressable_memory__testbench.empty
+@200
+-
+@28
+content_addressable_memory__testbench.write_enable
+@22
+content_addressable_memory__testbench.write_tag[7:0]
+content_addressable_memory__testbench.write_data[7:0]
+@200
+-
+@28
+content_addressable_memory__testbench.read_enable
+@22
+content_addressable_memory__testbench.read_tag[7:0]
+content_addressable_memory__testbench.read_data[7:0]
+@28
+content_addressable_memory__testbench.read_hit
+@200
+-
+@28
+content_addressable_memory__testbench.delete_enable
+@22
+content_addressable_memory__testbench.delete_tag[7:0]
+@28
+content_addressable_memory__testbench.delete_hit
+[pattern_trace] 1
+[pattern_trace] 0

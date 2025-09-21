@@ -1,0 +1,8 @@
+content_addressable_memory.sv
+../tag_directory/tag_directory.sv
+../simple_dual_port_ram/simple_dual_port_ram.v
+../../operations/first_one/first_one.v
+../../operations/fast_first_one/fast_first_one.v
+../../operations/small_first_one/small_first_one.v
+../../operations/shift_left/shift_left.v
+../../encoding/onehot/onehot_to_binary.v
