@@ -52,7 +52,8 @@ module content_addressable_memory #(
   output                  read_hit,
   // Evict interface
   input                   delete_enable,
-  input   [TAG_WIDTH-1:0] delete_tag
+  input   [TAG_WIDTH-1:0] delete_tag,
+  output                  delete_hit
 );
 
 parameter INDEX_WIDTH = $clog2(DEPTH);
@@ -85,12 +86,12 @@ tag_directory #(
 );
 
 // Data memory
-logic                     ram_write_enable;
-logic [ADDRESS_WIDTH-1:0] ram_write_address;
-logic    [DATA_WIDTH-1:0] ram_write_data;
-logic                     ram_read_enable;
-logic [ADDRESS_WIDTH-1:0] ram_read_address;
-logic    [DATA_WIDTH-1:0] ram_read_data;
+logic                   ram_write_enable;
+logic [INDEX_WIDTH-1:0] ram_write_address;
+logic  [DATA_WIDTH-1:0] ram_write_data;
+logic                   ram_read_enable;
+logic [INDEX_WIDTH-1:0] ram_read_address;
+logic  [DATA_WIDTH-1:0] ram_read_data;
 simple_dual_port_ram #(
   .WIDTH ( DATA_WIDTH ),
   .DEPTH ( DEPTH      )
@@ -120,8 +121,9 @@ assign ram_read_address = directory_search_index;
 assign read_data        = ram_read_data;
 assign read_hit         = ram_read_enable;
 
-// Assign
+// Delete logic
 assign directory_evict_enable = delete_enable & directory_search_hit;
 assign directory_evict_index  = directory_search_index;
+assign delete_hit             = directory_evict_enable;
 
 endmodule

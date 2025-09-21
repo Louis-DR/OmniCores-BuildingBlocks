@@ -1,5 +1,5 @@
-<svg width="354" height="240" viewBox="0 0 177 120" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="127" height="110" fill="none" stroke="black" stroke-width="1" rx="5"/>
+<svg width="354" height="280" viewBox="0 0 177 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="127" height="130" fill="none" stroke="black" stroke-width="1" rx="5"/>
   <text x="88" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Content-Addressable Memory</text>
   <text x="88" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">content_addressable_memory</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
@@ -36,16 +36,19 @@
         <line x1="152" y1="85" x2="166" y2="85" stroke="black" stroke-width="1"/>
         <path d="M 172 85 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="155" y1="83" x2="159" y2="87" stroke="black" stroke-width="1"/>
-      <text x="27" y="95" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">delete_enable</text>
-        <line x1="19" y1="95" x2="5" y2="95" stroke="black" stroke-width="1"/>
-        <path d="M 25 95 l -6 +2.0 v -4 z" fill="black"/>
       <text x="150" y="95" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_hit</text>
         <line x1="152" y1="95" x2="166" y2="95" stroke="black" stroke-width="1"/>
         <path d="M 172 95 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="105" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">delete_tag</text>
-        <line x1="19" y1="105" x2="5" y2="105" stroke="black" stroke-width="1"/>
-        <path d="M 25 105 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="8" y1="103" x2="12" y2="107" stroke="black" stroke-width="1"/>
+      <text x="150" y="105" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">delete_enable</text>
+        <line x1="158" y1="105" x2="172" y2="105" stroke="black" stroke-width="1"/>
+        <path d="M 152 105 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="150" y="115" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">delete_tag</text>
+        <line x1="158" y1="115" x2="172" y2="115" stroke="black" stroke-width="1"/>
+        <path d="M 152 115 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="165" y1="113" x2="169" y2="117" stroke="black" stroke-width="1"/>
+      <text x="150" y="125" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">delete_hit</text>
+        <line x1="152" y1="125" x2="166" y2="125" stroke="black" stroke-width="1"/>
+        <path d="M 172 125 l -6 +2.0 v -4 z" fill="black"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

@@ -12,7 +12,7 @@
                   page       = "1"
                   pageScale  = "1"
                   pageWidth  = "160"
-                  pageHeight = "110"
+                  pageHeight = "130"
                   math       = "0"
                   shadow     = "0">
       <root>
@@ -23,9 +23,9 @@
                 value       = ""
                 vertex      = "1"
                 connectable = "0"
-                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[0,0,0,0,90],[1,0,0,0,90],[0,0,0,0,100],[0.5,0,0,0,0],[0.5,0,0,0,110]];">
+                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[1,0,0,0,90],[1,0,0,0,100],[1,0,0,0,110],[1,0,0,0,120],[0.5,0,0,0,0],[0.5,0,0,0,130]];">
           <mxGeometry width  = "160"
-                      height = "110"
+                      height = "130"
                       as     = "geometry"/>
         </mxCell>
         <mxCell id     = "box"
@@ -36,7 +36,7 @@
           <mxGeometry x="15"
                       y="0"
                       width="130"
-                      height="110"
+                      height="130"
                       as="geometry"/>
         </mxCell>
         <mxCell id     = "title"
@@ -351,35 +351,6 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "delete_enable-label"
-                    parent = "2"
-                    value  = "delete_enable"
-                    vertex = "1"
-                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "90"
-                width  = "130"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "delete_enable-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "0"
-                         y  = "90"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "15"
-                         y  = "90"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
             <mxCell id="read_hit-label"
                     parent="2"
                     value="read_hit"
@@ -409,14 +380,43 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "delete_tag-label"
-                    parent = "2"
-                    value  = "delete_tag"
-                    vertex = "1"
-                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+            <mxCell id="delete_enable-label"
+                    parent="2"
+                    value="delete_enable"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
                 y      = "100"
+                width  = "130"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "delete_enable-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "160"
+                         y  = "100"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "145"
+                         y  = "100"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="delete_tag-label"
+                    parent="2"
+                    value="delete_tag"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "110"
                 width  = "130"
                 height = "0"
                 as     = "geometry"/>
@@ -430,11 +430,40 @@
                           height   = "50"
                           relative = "1"
                           as       = "geometry">
-                <mxPoint x  = "0"
-                         y  = "100"
+                <mxPoint x  = "160"
+                         y  = "110"
                          as = "sourcePoint"/>
-                <mxPoint x  = "15"
-                         y  = "100"
+                <mxPoint x  = "145"
+                         y  = "110"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="delete_hit-label"
+                    parent="2"
+                    value="delete_hit"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "120"
+                width  = "130"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "delete_hit-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "160"
+                         y  = "120"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "145"
+                         y  = "120"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
