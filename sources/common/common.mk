@@ -76,8 +76,8 @@ DEFINES_ICARUS          := $(addprefix -D ,$(DEFINES))
 DEFINES_MODELSIM        := $(addprefix +define+,$(DEFINES))
 
 # Output files for each tool
-OBJ_DIRECTORY           ?= obj_dir/
-EXE_FILE                ?= $(OBJ_DIRECTORY)/V$(DESIGN_NAME)
+VERILATOR_DIRECTORY     ?= $(TESTBENCH_BASENAME).obj/
+EXE_FILE                ?= $(VERILATOR_DIRECTORY)/$(TESTBENCH_MODULE)
 OPTIMIZED_TOP           ?= $(TESTBENCH_MODULE)_opt
 WORK_LIBRARY            ?= $(TESTBENCH_BASENAME).lib
 VVP_FILE                ?= $(TESTBENCH_BASENAME).vvp
@@ -112,7 +112,7 @@ preprocess:
 
 # Compilation of the testbench
 compile_verilator: preprocess
-	verilator $(COMPILE_FLAGS_VERILATOR) --binary $(INCLUDES_VERILATOR) $(DEFINES_VERILATOR) $(VERIFICATION_FILES)
+	verilator $(COMPILE_FLAGS_VERILATOR) --binary $(INCLUDES_VERILATOR) $(DEFINES_VERILATOR) $(VERIFICATION_FILES) --top-module $(TESTBENCH_MODULE) --Mdir $(VERILATOR_DIRECTORY) --prefix $(TESTBENCH_MODULE)
 
 compile_icarus: preprocess
 	iverilog $(COMPILE_FLAGS_ICARUS) -o $(VVP_FILE) $(INCLUDES_ICARUS) $(DEFINES_ICARUS) $(VERIFICATION_FILES)
@@ -176,7 +176,7 @@ waves: waves_gtkwave
 
 # Clean-up the generated files
 clean:
-	rm -rf ./$(OBJ_DIRECTORY)
+	rm -rf ./$(VERILATOR_DIRECTORY)
 	rm -rf ./$(WORK_LIBRARY)
 	rm -f ./$(VVP_FILE)
 	rm -f ./$(DESIGN_FILE)

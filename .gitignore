@@ -1,5 +1,6 @@
 .vscode/
-*obj_dir/
+__pycache__/
+*.obj/
 *.lib/
 *.vvp
 *.wlf
