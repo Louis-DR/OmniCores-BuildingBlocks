@@ -1,0 +1,56 @@
+<svg width="282" height="240" viewBox="0 0 141 120" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="91" height="110" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="70" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">FIFO Controller</text>
+  <text x="70" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">fifo_controller</text>
+      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
+        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="114" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_write_enable</text>
+        <line x1="116" y1="35" x2="130" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 136 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
+        <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="114" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_read_enable</text>
+        <line x1="116" y1="45" x2="130" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 136 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="114" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_address</text>
+        <line x1="116" y1="55" x2="130" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 136 55 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="119" y1="53" x2="123" y2="57" stroke="black" stroke-width="1"/>
+      <text x="114" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_write_data</text>
+        <line x1="116" y1="65" x2="130" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 136 65 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="119" y1="63" x2="123" y2="67" stroke="black" stroke-width="1"/>
+      <text x="114" y="75" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_read_data</text>
+        <line x1="122" y1="75" x2="136" y2="75" stroke="black" stroke-width="1"/>
+        <path d="M 116 75 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="129" y1="73" x2="133" y2="77" stroke="black" stroke-width="1"/>
+      <text x="27" y="85" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_enable</text>
+        <line x1="19" y1="85" x2="5" y2="85" stroke="black" stroke-width="1"/>
+        <path d="M 25 85 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="114" y="85" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_enable</text>
+        <line x1="122" y1="85" x2="136" y2="85" stroke="black" stroke-width="1"/>
+        <path d="M 116 85 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="95" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_data</text>
+        <line x1="19" y1="95" x2="5" y2="95" stroke="black" stroke-width="1"/>
+        <path d="M 25 95 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="93" x2="12" y2="97" stroke="black" stroke-width="1"/>
+      <text x="114" y="95" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_data</text>
+        <line x1="116" y1="95" x2="130" y2="95" stroke="black" stroke-width="1"/>
+        <path d="M 136 95 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="119" y1="93" x2="123" y2="97" stroke="black" stroke-width="1"/>
+      <text x="27" y="105" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">full</text>
+        <line x1="25" y1="105" x2="11" y2="105" stroke="black" stroke-width="1"/>
+        <path d="M 5 105 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="114" y="105" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">empty</text>
+        <line x1="116" y1="105" x2="130" y2="105" stroke="black" stroke-width="1"/>
+        <path d="M 136 105 l -6 +2.0 v -4 z" fill="black"/>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          filter: invert(100%) hue-rotate(180deg);
+        }
+      }
+    </style>
+</svg>

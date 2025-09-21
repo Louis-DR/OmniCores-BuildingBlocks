@@ -1,0 +1,10 @@
+FIFO Controller
+fifo_controller
+-> clock          memory_write_enable ->
+-> resetn          memory_read_enable ->
+                       memory_address =>
+                    memory_write_data =>
+                     memory_read_data <=
+-> write_enable           read_enable <-
+=> write_data               read_data =>
+<- full                         empty ->
