@@ -107,9 +107,9 @@ initial begin
 
   // Measure the running clocks frequency
   @(posedge first_clock);
-  `measure_frequency(first_clock, first_clock_frequency)
+  `MEASURE_FREQUENCY(first_clock, first_clock_frequency)
   @(posedge second_clock);
-  `measure_frequency(second_clock, second_clock_frequency)
+  `MEASURE_FREQUENCY(second_clock, second_clock_frequency)
 
   // Turn off both clocks
   @(negedge first_clock);  first_clock_active  = false;
@@ -122,7 +122,7 @@ initial begin
 
   // Check 1 : No clock running
   $display("CHECK 1 : No clock running.");
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = 0;
   if (clock_out_frequency != 0) $error("[%0tns] Output clock is running with frequency %d%s when neither input clocks are running.",
                                         $time, clock_out_frequency, FREQUENCY_UNIT);
@@ -131,7 +131,7 @@ initial begin
   $display("CHECK 2 : Start first clock.");
   first_clock_active = true;
   @(posedge first_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = first_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running after the first clock has started.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
@@ -145,7 +145,7 @@ initial begin
   @(posedge second_clock);
   repeat (STAGES) @(posedge first_clock);
   repeat (STAGES) @(posedge second_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = second_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running after the second clock has started.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
@@ -157,7 +157,7 @@ initial begin
   $display("CHECK 4 : Stop first clock.");
   first_clock_active = false;
   repeat (STAGES) @(posedge second_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = second_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running after the first clock has stopped.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin

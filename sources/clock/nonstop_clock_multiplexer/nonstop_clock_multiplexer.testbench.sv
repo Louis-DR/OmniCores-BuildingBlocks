@@ -107,16 +107,16 @@ initial begin
 
   // Measure the input clocks frequency
   @(posedge clock_0);
-  `measure_frequency(clock_0, clock_0_frequency)
+  `MEASURE_FREQUENCY(clock_0, clock_0_frequency)
   @(posedge clock_1);
-  `measure_frequency(clock_1, clock_1_frequency)
+  `MEASURE_FREQUENCY(clock_1, clock_1_frequency)
 
   // Check 1 : Switching back and forth between clocks
   $display("CHECK 1 : Switching back and forth between clocks.");
   for (int check_step = 0 ; check_step <= BACK_AND_FORTH_ITERATIONS ; check_step++) begin
     select = ~select;
     #(STAGES*2*(CLOCK_0_PERIOD+CLOCK_1_PERIOD));
-    `measure_frequency(clock_out, clock_out_frequency)
+    `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
     expected_clock_out_frequency = select ? clock_1_frequency : clock_0_frequency;
     if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running with select at %0d.", $time, select);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
@@ -136,7 +136,7 @@ initial begin
   for (int check_step = 0 ; check_step <= BACK_AND_FORTH_ITERATIONS ; check_step++) begin
     select = ~select;
     #(STAGES*2*(CLOCK_0_PERIOD+CLOCK_1_PERIOD));
-    `measure_frequency(clock_out, clock_out_frequency)
+    `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
     expected_clock_out_frequency = select ? clock_1_frequency : 0;
     if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
       $error("[%0tns] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) with select at %0d.",
@@ -156,7 +156,7 @@ initial begin
   for (int check_step = 0 ; check_step <= BACK_AND_FORTH_ITERATIONS ; check_step++) begin
     select = ~select;
     #(STAGES*2*(CLOCK_0_PERIOD+CLOCK_1_PERIOD));
-    `measure_frequency(clock_out, clock_out_frequency)
+    `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
     expected_clock_out_frequency = select ? 0 : clock_0_frequency;
     if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
       $error("[%0tns] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) with select at %0d.",

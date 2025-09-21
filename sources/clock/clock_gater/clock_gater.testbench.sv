@@ -63,38 +63,38 @@ initial begin
 
   // Measure the input clock frequency
   @(posedge clock_in);
-  `measure_frequency(clock_in, clock_in_frequency)
+  `MEASURE_FREQUENCY(clock_in, clock_in_frequency)
 
   // Check 1 : Normal disbale-enable-disable sequence
   $display("CHECK 1 : Normal disbale-enable-disable sequence.");
   @(posedge clock_in);
   enable = 0;
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   if (clock_out_frequency != 0) $error("[%0tns] Output clock is running but should be gated.", $time);
   @(posedge clock_in);
   enable = 1;
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   if (clock_out_frequency == 0) $error("[%0tns] Output clock is gated but should be running.", $time);
   if (clock_out_frequency != clock_in_frequency) $error("[%0tns] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency, FREQUENCY_UNIT);
   @(posedge clock_in);
   enable = 0;
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   if (clock_out_frequency != 0) $error("[%0tns] Output clock is running but should be gated.", $time);
 
   // Check 2 : Test mode disbale-enable-disable sequence
   $display("CHECK 2 : Test mode disbale-enable-disable sequence.");
   @(posedge clock_in);
   test_enable = 0;
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   if (clock_out_frequency != 0) $error("[%0tns] Output clock is running but should be gated.", $time);
   @(posedge clock_in);
   test_enable = 1;
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   if (clock_out_frequency == 0) $error("[%0tns] Output clock is gated but should be running.", $time);
   if (clock_out_frequency != clock_in_frequency) $error("[%0tns] Output clock frequency (%d%s) doesn't match the input clock frequency (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency, FREQUENCY_UNIT);
   @(posedge clock_in);
   test_enable = 0;
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   if (clock_out_frequency != 0) $error("[%0tns] Output clock is running but should be gated.", $time);
 
   // Check 3 : Clock frequency division with enable
@@ -110,7 +110,7 @@ initial begin
     end
     // Check
     begin
-      `measure_frequency(clock_out, clock_out_frequency)
+      `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
       if (clock_out_frequency != clock_in_frequency/2) $error("[%0tns] Output clock frequency (%d%s) isn't equal to the input clock frequency divided by two (%d%s).", $time, clock_out_frequency, FREQUENCY_UNIT, clock_in_frequency/2, FREQUENCY_UNIT);
     end
   join_any

@@ -78,7 +78,7 @@ initial begin
 
   // Measure the input clock frequency
   @(posedge clock_in);
-  `measure_frequency(clock_in, clock_in_frequency)
+  `MEASURE_FREQUENCY(clock_in, clock_in_frequency)
 
   // Check 1 : Output divided frequency
   $display("CHECK 1 : Output divided frequency.");
@@ -91,7 +91,7 @@ initial begin
       repeat(division_value+1) @(posedge clock_in);
       expected_clock_out_frequency = clock_in_frequency / (division+1);
     end
-    `measure_frequency(clock_out, clock_out_frequency, FREQUENCY_MEASUREMENT_DURATION, FREQUENCY_MEASUREMENT_TIMEOUT)
+    `MEASURE_FREQUENCY(clock_out, clock_out_frequency, FREQUENCY_MEASUREMENT_DURATION, FREQUENCY_MEASUREMENT_TIMEOUT)
     if      (clock_out_frequency == 0) $error("[%0tns] Output clock with division factor of %0d is not running.", $time,  division);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
       $error("[%0tns] Output clock frequency (%d%s) with division factor of %0d doesn't match the expected clock frequency (%d%s).",

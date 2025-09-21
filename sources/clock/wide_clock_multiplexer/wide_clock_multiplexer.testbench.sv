@@ -100,7 +100,7 @@ initial begin
   // Measure the input clocks frequency
   for (int clock_index = 0; clock_index < CLOCKS; clock_index++) begin
     @(posedge clocks[clock_index]);
-    `measure_frequency(clocks[clock_index], clocks_frequency[clock_index])
+    `MEASURE_FREQUENCY(clocks[clock_index], clocks_frequency[clock_index])
   end
 
   // Check 1 : Switching back and forth between clocks
@@ -108,7 +108,7 @@ initial begin
   for (int check_step = 0; check_step <= BACK_AND_FORTH_ITERATIONS; check_step++) begin
     select = (select + 1) % CLOCKS;
     #(STAGES*2*UPPER_CLOCK_PERIOD);
-    `measure_frequency(clock_out, clock_out_frequency)
+    `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
     expected_clock_out_frequency = clocks_frequency[select];
     if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running with select at %0d.", $time, select);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin

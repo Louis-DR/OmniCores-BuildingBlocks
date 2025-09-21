@@ -8,13 +8,13 @@
 // The multiplier is the multiplier of the duration to get the frequency (default: 1000 for MHz)
 real __measure_frequenc_time_start__;
 real __measure_frequenc_time_stop__;
-`define measure_frequency(clock, frequency, duration=10, timeout=1e4, multiplier=1e3) \
+`define MEASURE_FREQUENCY(clock, frequency, duration=10, timeout=1e4, multiplier=1e3) \
   fork                                                   \
     begin                                                \
       @(posedge clock)                                   \
-      __measure_frequenc_time_start__ = $realtime;           \
-      repeat (duration) @(posedge clock)                  \
-      __measure_frequenc_time_stop__ = $realtime;            \
+      __measure_frequenc_time_start__ = $realtime;       \
+      repeat (duration) @(posedge clock)                 \
+      __measure_frequenc_time_stop__ = $realtime;        \
       frequency = multiplier * duration                  \
                   / (  __measure_frequenc_time_stop__    \
                      - __measure_frequenc_time_start__); \

@@ -64,13 +64,13 @@ initial begin
 
   // Measure the input clock frequency
   @(posedge clock_in);
-  `measure_frequency(clock_in, clock_in_frequency, FREQUENCY_MEASUREMENT_DURATION)
+  `MEASURE_FREQUENCY(clock_in, clock_in_frequency, FREQUENCY_MEASUREMENT_DURATION)
 
   // Check 1 : Output multiplied frequency
   $display("CHECK 1 : Output multiplied frequency.");
   for (int multiplication = 1; multiplication <= MAX_TEST_MULTIPLICATION; multiplication++) begin
     expected_clock_out_frequency = clock_in_frequency * multiplication;
-    `measure_frequency(clock_out[multiplication], clock_out_frequency, FREQUENCY_MEASUREMENT_DURATION)
+    `MEASURE_FREQUENCY(clock_out[multiplication], clock_out_frequency, FREQUENCY_MEASUREMENT_DURATION)
     if      (clock_out_frequency == 0) $error("[%0tns] Output clock with multiplication factor of %0d is not running.", $time,  multiplication);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency)
       $error("[%0tns] Output clock frequency (%d%s) with multiplication factor of %0d doesn't match the expected clock frequency (%d%s).",

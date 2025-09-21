@@ -107,9 +107,9 @@ initial begin
 
   // Measure the running clocks frequency
   @(posedge priority_clock);
-  `measure_frequency(priority_clock, priority_clock_frequency)
+  `MEASURE_FREQUENCY(priority_clock, priority_clock_frequency)
   @(posedge fallback_clock);
-  `measure_frequency(fallback_clock, fallback_clock_frequency)
+  `MEASURE_FREQUENCY(fallback_clock, fallback_clock_frequency)
 
   // Turn off both clocks
   @(negedge priority_clock); priority_clock_active = false;
@@ -122,7 +122,7 @@ initial begin
 
   // Check 1 : No clock running
   $display("CHECK 1 : No clock running.");
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = 0;
   if (clock_out_frequency != 0) $error("[%0tns] Output clock is running with frequency %d%s when neither input clocks are running.",
                                         $time, clock_out_frequency, FREQUENCY_UNIT);
@@ -132,7 +132,7 @@ initial begin
   priority_clock_active = false;
   fallback_clock_active = true;
   repeat (2*STAGES) @(posedge fallback_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = fallback_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running when only the fallback clock is running.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
@@ -146,7 +146,7 @@ initial begin
   fallback_clock_active = true;
   repeat (2*STAGES) @(posedge priority_clock);
   repeat (2*STAGES) @(posedge fallback_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = priority_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running when both clocks are running.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
@@ -159,7 +159,7 @@ initial begin
   priority_clock_active = true;
   fallback_clock_active = false;
   repeat (2*STAGES) @(posedge priority_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = priority_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running when only the priority clock is running.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
@@ -172,7 +172,7 @@ initial begin
   priority_clock_active = false;
   fallback_clock_active = false;
   #(PRIORITY_CLOCK_PERIOD + FALLBACK_CLOCK_PERIOD);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = 0;
   if (clock_out_frequency != 0) $error("[%0tns] Output clock is running with frequency %d%s when neither input clocks are running.",
                                         $time, clock_out_frequency, FREQUENCY_UNIT);
@@ -182,7 +182,7 @@ initial begin
   priority_clock_active = true;
   fallback_clock_active = false;
   repeat (2*STAGES) @(posedge priority_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = priority_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running when only the priority clock is running.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
@@ -196,7 +196,7 @@ initial begin
   fallback_clock_active = true;
   repeat (2*STAGES) @(posedge priority_clock);
   repeat (2*STAGES) @(posedge fallback_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = priority_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running when both clocks are running.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
@@ -209,7 +209,7 @@ initial begin
   priority_clock_active = false;
   fallback_clock_active = true;
   repeat (2*STAGES) @(posedge fallback_clock);
-  `measure_frequency(clock_out, clock_out_frequency)
+  `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   expected_clock_out_frequency = fallback_clock_frequency;
   if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running when only the fallback clock is running.", $time);
   else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
