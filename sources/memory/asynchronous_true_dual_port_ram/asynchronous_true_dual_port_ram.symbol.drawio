@@ -119,9 +119,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "port_0_write_enable-label"
+            <mxCell id     = "port_0_access_enable-label"
                     parent = "2"
-                    value  = "port_0_write_enable"
+                    value  = "port_0_access_enable"
                     vertex = "1"
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -131,7 +131,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "port_0_write_enable-arrow"
+            <mxCell id     = "port_0_access_enable-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
@@ -148,9 +148,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id="port_1_write_enable-label"
+            <mxCell id="port_1_access_enable-label"
                     parent="2"
-                    value="port_1_write_enable"
+                    value="port_1_access_enable"
                     vertex="1"
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -160,7 +160,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "port_1_write_enable-arrow"
+            <mxCell id     = "port_1_access_enable-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
@@ -177,9 +177,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "port_0_read_enable-label"
+            <mxCell id     = "port_0_write-label"
                     parent = "2"
-                    value  = "port_0_read_enable"
+                    value  = "port_0_write"
                     vertex = "1"
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -189,7 +189,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "port_0_read_enable-arrow"
+            <mxCell id     = "port_0_write-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
@@ -206,9 +206,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id="port_1_read_enable-label"
+            <mxCell id="port_1_write-label"
                     parent="2"
-                    value="port_1_read_enable"
+                    value="port_1_write"
                     vertex="1"
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -218,7 +218,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "port_1_read_enable-arrow"
+            <mxCell id     = "port_1_write-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"

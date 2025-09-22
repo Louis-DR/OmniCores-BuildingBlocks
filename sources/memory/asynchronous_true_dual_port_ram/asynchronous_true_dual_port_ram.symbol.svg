@@ -8,16 +8,16 @@
       <text x="173" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_clock</text>
         <line x1="181" y1="35" x2="195" y2="35" stroke="black" stroke-width="1"/>
         <path d="M 175 35 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_write_enable</text>
+      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_access_enable</text>
         <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="173" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_write_enable</text>
+      <text x="173" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_access_enable</text>
         <line x1="181" y1="45" x2="195" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 175 45 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_read_enable</text>
+      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_write</text>
         <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="173" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_read_enable</text>
+      <text x="173" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_write</text>
         <line x1="181" y1="55" x2="195" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 175 55 l +6 +2.0 v -4 z" fill="black"/>
       <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_address</text>

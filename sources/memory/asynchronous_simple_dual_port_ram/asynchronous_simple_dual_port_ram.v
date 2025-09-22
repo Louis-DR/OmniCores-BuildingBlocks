@@ -19,7 +19,8 @@
 module asynchronous_simple_dual_port_ram #(
   parameter WIDTH = 8,
   parameter DEPTH = 16,
-  parameter ADDRESS_WIDTH = `CLOG2(DEPTH)
+  parameter REGISTERED_READ = 1,
+  parameter ADDRESS_WIDTH   = `CLOG2(DEPTH)
 ) (
   // Write interface
   input                      write_clock,
@@ -41,9 +42,18 @@ always @(posedge write_clock) begin
   if (write_enable) memory[write_address] <= write_data;
 end
 
-// Read logic
-always @(posedge read_clock) begin
-  if (read_enable) read_data <= memory[read_address];
+// Registered read logic
+if (REGISTERED_READ) begin
+  reg registered_read_data;
+  always @(posedge clock) begin
+    if (read_enable) registered_read_data <= memory[read_address];
+  end
+  assign read_data = registered_read_data;
+end
+
+// Combinational read logic
+else begin
+  assign read_data = memory[read_address];
 end
 
 endmodule

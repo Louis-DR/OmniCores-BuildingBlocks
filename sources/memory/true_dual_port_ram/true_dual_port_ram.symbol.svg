@@ -1,46 +1,46 @@
-<svg width="348" height="200" viewBox="0 0 174 100" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="124" height="90" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="87" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">True Dual-Port RAM</text>
-  <text x="87" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">true_dual_port_ram</text>
+<svg width="376" height="200" viewBox="0 0 188 100" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="138" height="90" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="94" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">True Dual-Port RAM</text>
+  <text x="94" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">true_dual_port_ram</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
         <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
         <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_write_enable</text>
+      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_access_enable</text>
         <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="147" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_write_enable</text>
-        <line x1="155" y1="45" x2="169" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 149 45 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_read_enable</text>
+      <text x="161" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_access_enable</text>
+        <line x1="169" y1="45" x2="183" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 163 45 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_write</text>
         <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="147" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_read_enable</text>
-        <line x1="155" y1="55" x2="169" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 149 55 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="161" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_write</text>
+        <line x1="169" y1="55" x2="183" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 163 55 l +6 +2.0 v -4 z" fill="black"/>
       <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_address</text>
         <line x1="19" y1="65" x2="5" y2="65" stroke="black" stroke-width="1"/>
         <path d="M 25 65 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="63" x2="12" y2="67" stroke="black" stroke-width="1"/>
-      <text x="147" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_address</text>
-        <line x1="155" y1="65" x2="169" y2="65" stroke="black" stroke-width="1"/>
-        <path d="M 149 65 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="162" y1="63" x2="166" y2="67" stroke="black" stroke-width="1"/>
+      <text x="161" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_address</text>
+        <line x1="169" y1="65" x2="183" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 163 65 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="176" y1="63" x2="180" y2="67" stroke="black" stroke-width="1"/>
       <text x="27" y="75" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_write_data</text>
         <line x1="19" y1="75" x2="5" y2="75" stroke="black" stroke-width="1"/>
         <path d="M 25 75 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="73" x2="12" y2="77" stroke="black" stroke-width="1"/>
-      <text x="147" y="75" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_write_data</text>
-        <line x1="155" y1="75" x2="169" y2="75" stroke="black" stroke-width="1"/>
-        <path d="M 149 75 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="162" y1="73" x2="166" y2="77" stroke="black" stroke-width="1"/>
+      <text x="161" y="75" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_write_data</text>
+        <line x1="169" y1="75" x2="183" y2="75" stroke="black" stroke-width="1"/>
+        <path d="M 163 75 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="176" y1="73" x2="180" y2="77" stroke="black" stroke-width="1"/>
       <text x="27" y="85" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_0_read_data</text>
         <line x1="25" y1="85" x2="11" y2="85" stroke="black" stroke-width="1"/>
         <path d="M 5 85 l +6 +2.0 v -4 z" fill="black"/>
           <line x1="18" y1="83" x2="22" y2="87" stroke="black" stroke-width="1"/>
-      <text x="147" y="85" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_read_data</text>
-        <line x1="149" y1="85" x2="163" y2="85" stroke="black" stroke-width="1"/>
-        <path d="M 169 85 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="152" y1="83" x2="156" y2="87" stroke="black" stroke-width="1"/>
+      <text x="161" y="85" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">port_1_read_data</text>
+        <line x1="163" y1="85" x2="177" y2="85" stroke="black" stroke-width="1"/>
+        <path d="M 183 85 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="166" y1="83" x2="170" y2="87" stroke="black" stroke-width="1"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {
