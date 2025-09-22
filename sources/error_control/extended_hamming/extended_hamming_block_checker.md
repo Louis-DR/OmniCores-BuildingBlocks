@@ -34,8 +34,8 @@ The Extended Hamming Block Checker operates by first separating the extra parity
 
 | From    | To                    | Type          | Comment                                                |
 | ------- | --------------------- | ------------- | ------------------------------------------------------ |
-| `block` | `correctable_error`   | combinatorial | Through extra parity validation and syndrome analysis. |
-| `block` | `uncorrectable_error` | combinatorial | Through extra parity validation and syndrome analysis. |
+| `block` | `correctable_error`   | combinational | Through extra parity validation and syndrome analysis. |
+| `block` | `uncorrectable_error` | combinational | Through extra parity validation and syndrome analysis. |
 
 ## Complexity
 

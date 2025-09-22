@@ -38,7 +38,7 @@ For a binary input value `N`, the output will have exactly one bit set at positi
 
 | From     | To       | Type          | Comment                              |
 | -------- | -------- | ------------- | ------------------------------------ |
-| `binary` | `onehot` | combinatorial | Direct shift-based conversion logic. |
+| `binary` | `onehot` | combinational | Direct shift-based conversion logic. |
 
 ## Complexity
 

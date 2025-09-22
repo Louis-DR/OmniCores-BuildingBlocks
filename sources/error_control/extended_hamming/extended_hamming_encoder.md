@@ -34,8 +34,8 @@ The Extended Hamming Encoder operates by first generating standard Hamming codes
 
 | From   | To      | Type          | Comment                                     |
 | ------ | ------- | ------------- | ------------------------------------------- |
-| `data` | `code`  | combinatorial | Through Hamming encoder and parity encoder. |
-| `data` | `block` | combinatorial | Through Hamming encoder and block packer.   |
+| `data` | `code`  | combinational | Through Hamming encoder and parity encoder. |
+| `data` | `block` | combinational | Through Hamming encoder and block packer.   |
 
 ## Complexity
 

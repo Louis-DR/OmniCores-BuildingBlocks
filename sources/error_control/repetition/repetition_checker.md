@@ -39,8 +39,8 @@ When all repetitions match, no error is detected (error = 0). If any repetition 
 
 | From   | To      | Type          | Comment                                    |
 | ------ | ------- | ------------- | ------------------------------------------ |
-| `data` | `error` | combinatorial | Through internal repetition block checker. |
-| `code` | `error` | combinatorial | Through internal repetition block checker. |
+| `data` | `error` | combinational | Through internal repetition block checker. |
+| `code` | `error` | combinational | Through internal repetition block checker. |
 
 ## Complexity
 

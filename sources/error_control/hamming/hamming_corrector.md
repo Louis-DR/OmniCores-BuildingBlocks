@@ -40,12 +40,12 @@ The syndrome directly encodes the error position in the Hamming block, allowing 
 
 | From   | To                         | Type          | Comment                                   |
 | ------ | -------------------------- | ------------- | ----------------------------------------- |
-| `data` | `error`                    | combinatorial | Through internal Hamming block corrector. |
-| `code` | `error`                    | combinatorial | Through internal Hamming block corrector. |
-| `data` | `corrected_data`           | combinatorial | Through internal Hamming block corrector. |
-| `code` | `corrected_data`           | combinatorial | Through internal Hamming block corrector. |
-| `data` | `corrected_error_position` | combinatorial | Through internal Hamming block corrector. |
-| `code` | `corrected_error_position` | combinatorial | Through internal Hamming block corrector. |
+| `data` | `error`                    | combinational | Through internal Hamming block corrector. |
+| `code` | `error`                    | combinational | Through internal Hamming block corrector. |
+| `data` | `corrected_data`           | combinational | Through internal Hamming block corrector. |
+| `code` | `corrected_data`           | combinational | Through internal Hamming block corrector. |
+| `data` | `corrected_error_position` | combinational | Through internal Hamming block corrector. |
+| `code` | `corrected_error_position` | combinational | Through internal Hamming block corrector. |
 
 ## Complexity
 

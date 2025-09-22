@@ -38,8 +38,8 @@ When the computed parity matches the received parity code, no error is detected 
 
 | From   | To      | Type          | Comment                                |
 | ------ | ------- | ------------- | -------------------------------------- |
-| `data` | `error` | combinatorial | Through internal parity block checker. |
-| `code` | `error` | combinatorial | Through internal parity block checker. |
+| `data` | `error` | combinational | Through internal parity block checker. |
+| `code` | `error` | combinational | Through internal parity block checker. |
 
 ## Complexity
 

@@ -37,7 +37,7 @@ The module provides a unified interface for error detection in systems where Ham
 
 | From    | To      | Type          | Comment                                              |
 | ------- | ------- | ------------- | ---------------------------------------------------- |
-| `block` | `error` | combinatorial | Through unpacker, encoder, and syndrome computation. |
+| `block` | `error` | combinational | Through unpacker, encoder, and syndrome computation. |
 
 ## Complexity
 

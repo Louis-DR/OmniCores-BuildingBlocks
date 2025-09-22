@@ -40,10 +40,10 @@ For each bit position, the corrector counts the number of 1s and 0s across all r
 
 | From   | To               | Type          | Comment                                      |
 | ------ | ---------------- | ------------- | -------------------------------------------- |
-| `data` | `error`          | combinatorial | Through internal repetition block corrector. |
-| `code` | `error`          | combinatorial | Through internal repetition block corrector. |
-| `data` | `corrected_data` | combinatorial | Through internal repetition block corrector. |
-| `code` | `corrected_data` | combinatorial | Through internal repetition block corrector. |
+| `data` | `error`          | combinational | Through internal repetition block corrector. |
+| `code` | `error`          | combinational | Through internal repetition block corrector. |
+| `data` | `corrected_data` | combinational | Through internal repetition block corrector. |
+| `code` | `corrected_data` | combinational | Through internal repetition block corrector. |
 
 ## Complexity
 

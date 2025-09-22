@@ -39,9 +39,9 @@ The module provides a unified interface for both error detection and correction 
 
 | From    | To                         | Type          | Comment                                       |
 | ------- | -------------------------- | ------------- | --------------------------------------------- |
-| `block` | `error`                    | combinatorial | Through syndrome computation logic.           |
-| `block` | `corrected_block`          | combinatorial | Through error mask generation and correction. |
-| `block` | `corrected_error_position` | combinatorial | Through syndrome to position conversion.      |
+| `block` | `error`                    | combinational | Through syndrome computation logic.           |
+| `block` | `corrected_block`          | combinational | Through error mask generation and correction. |
+| `block` | `corrected_error_position` | combinational | Through syndrome to position conversion.      |
 
 ## Complexity
 

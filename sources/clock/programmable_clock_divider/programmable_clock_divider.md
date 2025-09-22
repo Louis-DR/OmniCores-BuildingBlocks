@@ -40,7 +40,7 @@ The module's behavior is determined by the `POWER_OF_TWO` parameter:
 
 In **fine decimal division mode** (`POWER_OF_TWO = 0`), the module divides the clock frequency by `division + 1`. For odd division factors, the high pulse of `clock_out` is one `clock_in` cycle longer than the low pulse. For even factors, the duty cycle is exactly 50%. This is implemented with a decrementing counter to time the duration of the high and low pulses of the output clock.
 
-In **coarse power-of-two division mode** (`POWER_OF_TWO = 1`), the module divides the clock frequency by `2^division`. This allows for a very large division range. The output clock has a perfect 50% duty cycle. This is implemented using a decrementing counter that times a half-period of the output clock, toggling the output clock when it reaches zero. This mode requires a larger internal counter and more complex combinatorial logic (a barrel shifter) to calculate the reload value, but offers an exponential division range.
+In **coarse power-of-two division mode** (`POWER_OF_TWO = 1`), the module divides the clock frequency by `2^division`. This allows for a very large division range. The output clock has a perfect 50% duty cycle. This is implemented using a decrementing counter that times a half-period of the output clock, toggling the output clock when it reaches zero. This mode requires a larger internal counter and more complex combinational logic (a barrel shifter) to calculate the reload value, but offers an exponential division range.
 
 ## Paths
 

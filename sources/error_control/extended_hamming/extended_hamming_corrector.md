@@ -37,14 +37,14 @@ The Extended Hamming Corrector operates by first padding the input data to match
 
 | From   | To                         | Type          | Comment                                            |
 | ------ | -------------------------- | ------------- | -------------------------------------------------- |
-| `data` | `corrected_data`           | combinatorial | Through internal Extended Hamming block corrector. |
-| `code` | `corrected_data`           | combinatorial | Through internal Extended Hamming block corrector. |
-| `data` | `corrected_error_position` | combinatorial | Through internal Extended Hamming block corrector. |
-| `code` | `corrected_error_position` | combinatorial | Through internal Extended Hamming block corrector. |
-| `data` | `correctable_error`        | combinatorial | Through internal Extended Hamming block corrector. |
-| `code` | `correctable_error`        | combinatorial | Through internal Extended Hamming block corrector. |
-| `data` | `uncorrectable_error`      | combinatorial | Through internal Extended Hamming block corrector. |
-| `code` | `uncorrectable_error`      | combinatorial | Through internal Extended Hamming block corrector. |
+| `data` | `corrected_data`           | combinational | Through internal Extended Hamming block corrector. |
+| `code` | `corrected_data`           | combinational | Through internal Extended Hamming block corrector. |
+| `data` | `corrected_error_position` | combinational | Through internal Extended Hamming block corrector. |
+| `code` | `corrected_error_position` | combinational | Through internal Extended Hamming block corrector. |
+| `data` | `correctable_error`        | combinational | Through internal Extended Hamming block corrector. |
+| `code` | `correctable_error`        | combinational | Through internal Extended Hamming block corrector. |
+| `data` | `uncorrectable_error`      | combinational | Through internal Extended Hamming block corrector. |
+| `code` | `uncorrectable_error`      | combinational | Through internal Extended Hamming block corrector. |
 
 ## Complexity
 

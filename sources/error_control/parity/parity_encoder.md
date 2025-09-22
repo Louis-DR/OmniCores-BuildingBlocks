@@ -38,8 +38,8 @@ The encoder generates two outputs: the individual parity code for separate trans
 
 | From   | To      | Type          | Comment                         |
 | ------ | ------- | ------------- | ------------------------------- |
-| `data` | `code`  | combinatorial | XOR reduction for parity.       |
-| `data` | `block` | combinatorial | Direct concatenation with code. |
+| `data` | `code`  | combinational | XOR reduction for parity.       |
+| `data` | `block` | combinational | Direct concatenation with code. |
 
 ## Complexity
 

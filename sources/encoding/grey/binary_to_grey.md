@@ -37,7 +37,7 @@ This ensures that consecutive binary numbers produce Grey codes that differ by e
 
 | From     | To     | Type          | Comment                            |
 | -------- | ------ | ------------- | ---------------------------------- |
-| `binary` | `grey` | combinatorial | Direct XOR-based conversion logic. |
+| `binary` | `grey` | combinational | Direct XOR-based conversion logic. |
 
 ## Complexity
 

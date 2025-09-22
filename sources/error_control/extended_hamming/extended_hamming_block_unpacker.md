@@ -34,8 +34,8 @@ The Extended Hamming Block Unpacker operates by first separating the extra parit
 
 | From    | To     | Type          | Comment                      |
 | ------- | ------ | ------------- | ---------------------------- |
-| `block` | `data` | combinatorial | Direct bit extraction logic. |
-| `block` | `code` | combinatorial | Direct bit extraction logic. |
+| `block` | `data` | combinational | Direct bit extraction logic. |
+| `block` | `code` | combinational | Direct bit extraction logic. |
 
 ## Complexity
 

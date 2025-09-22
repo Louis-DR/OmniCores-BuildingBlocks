@@ -14,7 +14,7 @@
 
 Synchronous buffer that allows out-of-order reading of stored data entries with valid-ready handshake flow control. The buffer stores data in the first available slot and returns the corresponding index, allowing data to be read back using that same index at any time. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, automatically managing flow control for both write and read operations.
 
-When writing, the data is stored in the first free slot and the corresponding index is returned on the same cycle. The data becomes available for reading in the next cycle. The read operation is fully combinatorial and data can be optionally cleared during the read operation to free the slot for future writes. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
+When writing, the data is stored in the first free slot and the corresponding index is returned on the same cycle. The data becomes available for reading in the next cycle. The read operation is fully combinational and data can be optionally cleared during the read operation to free the slot for future writes. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 The buffer provides automatic flow control through the handshake protocol, with `write_ready` indicating space availability and `read_ready` indicating valid data at the specified index.
 

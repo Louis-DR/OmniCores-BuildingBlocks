@@ -38,7 +38,7 @@ For an input data vector of width N, the output count can range from 0 (all bits
 
 | From   | To      | Type          | Comment                                                |
 | ------ | ------- | ------------- | ------------------------------------------------------ |
-| `data` | `count` | combinatorial | Direct combinatorial logic for bit counting operation. |
+| `data` | `count` | combinational | Direct combinational logic for bit counting operation. |
 
 ## Complexity
 

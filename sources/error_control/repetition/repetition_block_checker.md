@@ -38,7 +38,7 @@ The module provides a unified interface for error detection in systems where rep
 
 | From    | To      | Type          | Comment                                    |
 | ------- | ------- | ------------- | ------------------------------------------ |
-| `block` | `error` | combinatorial | Through bit grouping and comparison logic. |
+| `block` | `error` | combinational | Through bit grouping and comparison logic. |
 
 ## Complexity
 

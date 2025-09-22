@@ -127,7 +127,7 @@ initial begin
     expected_code  = {CODE_WIDTH{encoder_data}};
     expected_block = {expected_code, encoder_data};
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Check encoder outputs
@@ -151,7 +151,7 @@ initial begin
     checker_data = test_data;
     checker_code = test_code;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should not detect any error with correct repetition
@@ -172,7 +172,7 @@ initial begin
     checker_data = test_data;
     checker_code = test_code;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should detect error with incorrect repetition
@@ -193,7 +193,7 @@ initial begin
 
     block_checker_block = test_block;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should not detect any error with correct repetition block
@@ -214,7 +214,7 @@ initial begin
 
     block_checker_block = test_block;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should detect error with incorrect repetition block
@@ -306,7 +306,7 @@ initial begin
     corrector_data = test_data;
     corrector_code = test_code;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should not detect any error and output the original data

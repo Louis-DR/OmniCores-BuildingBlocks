@@ -36,10 +36,10 @@ The Extended Hamming Block Corrector operates by first separating the extra pari
 
 | From    | To                         | Type          | Comment                                                 |
 | ------- | -------------------------- | ------------- | ------------------------------------------------------- |
-| `block` | `corrected_block`          | combinatorial | Through syndrome computation and error mask generation. |
-| `block` | `corrected_error_position` | combinatorial | Through syndrome to position conversion.                |
-| `block` | `correctable_error`        | combinatorial | Through extra parity validation and syndrome analysis.  |
-| `block` | `uncorrectable_error`      | combinatorial | Through extra parity validation and syndrome analysis.  |
+| `block` | `corrected_block`          | combinational | Through syndrome computation and error mask generation. |
+| `block` | `corrected_error_position` | combinational | Through syndrome to position conversion.                |
+| `block` | `correctable_error`        | combinational | Through extra parity validation and syndrome analysis.  |
+| `block` | `uncorrectable_error`      | combinational | Through extra parity validation and syndrome analysis.  |
 
 ## Complexity
 

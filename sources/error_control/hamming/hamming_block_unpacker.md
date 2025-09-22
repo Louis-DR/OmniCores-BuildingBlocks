@@ -38,8 +38,8 @@ The unpacker automatically handles different block widths by calculating the emb
 
 | From    | To     | Type          | Comment                      |
 | ------- | ------ | ------------- | ---------------------------- |
-| `block` | `data` | combinatorial | Direct bit extraction logic. |
-| `block` | `code` | combinatorial | Direct bit extraction logic. |
+| `block` | `data` | combinational | Direct bit extraction logic. |
+| `block` | `code` | combinational | Direct bit extraction logic. |
 
 ## Complexity
 
@@ -47,7 +47,7 @@ The unpacker automatically handles different block widths by calculating the emb
 | ------ | ------ | --------------------------------------- |
 | `O(0)` | `O(0)` | Direct wiring and bit position routing. |
 
-The block unpacker requires only combinatorial wiring to extract bits according to the Hamming code structure, resulting in zero delay and no logic gates.
+The block unpacker requires only combinational wiring to extract bits according to the Hamming code structure, resulting in zero delay and no logic gates.
 
 ## Verification
 

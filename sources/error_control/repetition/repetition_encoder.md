@@ -39,8 +39,8 @@ The encoder produces two outputs: the repetition code containing the additional 
 
 | From   | To      | Type          | Comment                           |
 | ------ | ------- | ------------- | --------------------------------- |
-| `data` | `code`  | combinatorial | Direct replication of input data. |
-| `data` | `block` | combinatorial | Concatenation with repetitions.   |
+| `data` | `code`  | combinational | Direct replication of input data. |
+| `data` | `block` | combinational | Concatenation with repetitions.   |
 
 ## Complexity
 

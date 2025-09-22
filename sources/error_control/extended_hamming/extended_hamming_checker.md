@@ -35,10 +35,10 @@ The Extended Hamming Checker operates by first padding the input data to match t
 
 | From   | To                    | Type          | Comment                                          |
 | ------ | --------------------- | ------------- | ------------------------------------------------ |
-| `data` | `correctable_error`   | combinatorial | Through internal Extended Hamming block checker. |
-| `code` | `correctable_error`   | combinatorial | Through internal Extended Hamming block checker. |
-| `data` | `uncorrectable_error` | combinatorial | Through internal Extended Hamming block checker. |
-| `code` | `uncorrectable_error` | combinatorial | Through internal Extended Hamming block checker. |
+| `data` | `correctable_error`   | combinational | Through internal Extended Hamming block checker. |
+| `code` | `correctable_error`   | combinational | Through internal Extended Hamming block checker. |
+| `data` | `uncorrectable_error` | combinational | Through internal Extended Hamming block checker. |
+| `code` | `uncorrectable_error` | combinational | Through internal Extended Hamming block checker. |
 
 ## Complexity
 

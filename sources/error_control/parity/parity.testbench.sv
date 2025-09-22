@@ -89,7 +89,7 @@ initial begin
     expected_code  = ^encoder_data;
     expected_block = {expected_code, encoder_data};
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Check encoder outputs
@@ -113,7 +113,7 @@ initial begin
     checker_data = test_data;
     checker_code = test_code;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should not detect any error with correct parity
@@ -134,7 +134,7 @@ initial begin
     checker_data = test_data;
     checker_code = test_code;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should detect error with incorrect parity
@@ -155,7 +155,7 @@ initial begin
 
     block_checker_block = test_block;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should not detect any error with correct parity block
@@ -176,7 +176,7 @@ initial begin
 
     block_checker_block = test_block;
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Should detect error with incorrect parity block

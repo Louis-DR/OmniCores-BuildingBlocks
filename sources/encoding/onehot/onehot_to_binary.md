@@ -38,7 +38,7 @@ This implementation assumes that exactly one bit is set in the one-hot input. If
 
 | From     | To       | Type          | Comment                                                 |
 | -------- | -------- | ------------- | ------------------------------------------------------- |
-| `onehot` | `binary` | combinatorial | Priority encoder logic to find the position of set bit. |
+| `onehot` | `binary` | combinational | Priority encoder logic to find the position of set bit. |
 
 ## Complexity
 

@@ -34,8 +34,8 @@ The Extended Hamming Block Packer operates by first separating the extra parity 
 
 | From   | To      | Type          | Comment                       |
 | ------ | ------- | ------------- | ----------------------------- |
-| `data` | `block` | combinatorial | Direct bit positioning logic. |
-| `code` | `block` | combinatorial | Direct bit positioning logic. |
+| `data` | `block` | combinational | Direct bit positioning logic. |
+| `code` | `block` | combinational | Direct bit positioning logic. |
 
 ## Complexity
 

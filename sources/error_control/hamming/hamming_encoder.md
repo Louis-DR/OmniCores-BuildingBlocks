@@ -38,8 +38,8 @@ The encoder generates both individual parity codes for separate transmission or 
 
 | From   | To      | Type          | Comment                           |
 | ------ | ------- | ------------- | --------------------------------- |
-| `data` | `code`  | combinatorial | Through parity generation logic.  |
-| `data` | `block` | combinatorial | Through block packer integration. |
+| `data` | `code`  | combinational | Through parity generation logic.  |
+| `data` | `block` | combinational | Through block packer integration. |
 
 ## Complexity
 

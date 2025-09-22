@@ -38,8 +38,8 @@ When the computed syndrome is zero, no error is detected (error = 0). If the syn
 
 | From   | To      | Type          | Comment                                 |
 | ------ | ------- | ------------- | --------------------------------------- |
-| `data` | `error` | combinatorial | Through internal Hamming block checker. |
-| `code` | `error` | combinatorial | Through internal Hamming block checker. |
+| `data` | `error` | combinational | Through internal Hamming block checker. |
+| `code` | `error` | combinational | Through internal Hamming block checker. |
 
 ## Complexity
 

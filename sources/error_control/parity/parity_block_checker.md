@@ -37,7 +37,7 @@ The module provides a unified interface for error detection in systems where par
 
 | From    | To      | Type          | Comment                                     |
 | ------- | ------- | ------------- | ------------------------------------------- |
-| `block` | `error` | combinatorial | Through data extraction and parity encoder. |
+| `block` | `error` | combinational | Through data extraction and parity encoder. |
 
 ## Complexity
 

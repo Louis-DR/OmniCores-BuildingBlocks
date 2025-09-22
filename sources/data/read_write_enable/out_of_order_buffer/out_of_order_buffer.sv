@@ -18,7 +18,7 @@
 // ║                                                                           ║
 // ║              The write index is available on the same cycle as the write  ║
 // ║              operation, and the data is available for reading in the next ║
-// ║              cycle. The read operation is fully combinatorial and         ║
+// ║              cycle. The read operation is fully combinational and         ║
 // ║              clearing frees the spot for writing in the next cycle.       ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝

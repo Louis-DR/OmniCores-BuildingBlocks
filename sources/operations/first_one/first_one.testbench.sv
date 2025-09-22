@@ -72,7 +72,7 @@ initial begin
         found_first_one    = true;
       end
     end
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
     // Check the first one output
     assert (first_one_small === first_one_expected)

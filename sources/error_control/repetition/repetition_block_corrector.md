@@ -39,8 +39,8 @@ The module provides a unified interface for both error detection and correction 
 
 | From    | To               | Type          | Comment                                         |
 | ------- | ---------------- | ------------- | ----------------------------------------------- |
-| `block` | `error`          | combinatorial | Through bit grouping and comparison logic.      |
-| `block` | `corrected_data` | combinatorial | Through bit grouping and majority voting logic. |
+| `block` | `error`          | combinational | Through bit grouping and comparison logic.      |
+| `block` | `corrected_data` | combinational | Through bit grouping and majority voting logic. |
 
 ## Complexity
 

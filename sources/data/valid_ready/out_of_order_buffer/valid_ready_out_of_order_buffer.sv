@@ -19,7 +19,7 @@
 // ║                                                                           ║
 // ║              The write index is available on the same cycle as the write  ║
 // ║              operation, and the data is available for reading in the next ║
-// ║              cycle. The read operation is fully combinatorial and         ║
+// ║              cycle. The read operation is fully combinational and         ║
 // ║              clearing frees the spot for writing in the next cycle.       ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
@@ -74,6 +74,6 @@ out_of_order_buffer #(
 
 assign write_ready = ~full;
 assign read_ready  = out_of_order_buffer.valid[read_index];
-// Cannot use read_error for read_ready because it is combinatorial with read_enable
+// Cannot use read_error for read_ready because it is combinational with read_enable
 
 endmodule

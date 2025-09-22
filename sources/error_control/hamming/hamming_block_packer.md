@@ -38,8 +38,8 @@ The packer automatically handles different data widths by calculating the requir
 
 | From   | To      | Type          | Comment                       |
 | ------ | ------- | ------------- | ----------------------------- |
-| `data` | `block` | combinatorial | Direct bit positioning logic. |
-| `code` | `block` | combinatorial | Direct bit positioning logic. |
+| `data` | `block` | combinational | Direct bit positioning logic. |
+| `code` | `block` | combinational | Direct bit positioning logic. |
 
 ## Complexity
 
@@ -47,7 +47,7 @@ The packer automatically handles different data widths by calculating the requir
 | ------ | ------ | --------------------------------------- |
 | `O(0)` | `O(0)` | Direct wiring and bit position routing. |
 
-The block packer requires only combinatorial wiring to position bits according to the Hamming code structure, resulting in zero delay and no logic gates.
+The block packer requires only combinational wiring to position bits according to the Hamming code structure, resulting in zero delay and no logic gates.
 
 ## Verification
 

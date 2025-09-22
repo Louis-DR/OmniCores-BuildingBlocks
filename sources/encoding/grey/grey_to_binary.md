@@ -37,7 +37,7 @@ This sequential dependency from MSB to LSB means the conversion requires multipl
 
 | From   | To       | Type          | Comment                                                     |
 | ------ | -------- | ------------- | ----------------------------------------------------------- |
-| `grey` | `binary` | combinatorial | Multi-level XOR chain from MSB to LSB for conversion logic. |
+| `grey` | `binary` | combinational | Multi-level XOR chain from MSB to LSB for conversion logic. |
 
 ## Complexity
 

@@ -65,7 +65,7 @@ initial begin
       end
     end
 
-    // Wait for combinatorial logic propagation
+    // Wait for combinational logic propagation
     #1;
 
     // Check the grant output

@@ -40,7 +40,7 @@ The BCD-to-binary conversion uses the reverse double-dabble algorithm, which per
 
 | From  | To       | Type          | Comment                                                |
 | ----- | -------- | ------------- | ------------------------------------------------------ |
-| `bcd` | `binary` | combinatorial | Reverse double-dabble algorithm with iterative shifts. |
+| `bcd` | `binary` | combinational | Reverse double-dabble algorithm with iterative shifts. |
 
 ## Complexity
 
