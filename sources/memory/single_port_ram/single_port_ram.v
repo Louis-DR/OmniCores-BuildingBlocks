@@ -22,12 +22,16 @@ module single_port_ram #(
 ) (
   input                      clock,
   // Read-write interface
-  input                      write_enable,
-  input                      read_enable,
+  input                      access_enable,
+  input                      write,
   input  [ADDRESS_WIDTH-1:0] address,
   input          [WIDTH-1:0] write_data,
   output reg     [WIDTH-1:0] read_data
 );
+
+// Internal enable signals
+wire write_enable = access_enable &  write;
+wire read_enable  = access_enable & ~write;
 
 // Memory array
 reg [WIDTH-1:0] memory [DEPTH-1:0];

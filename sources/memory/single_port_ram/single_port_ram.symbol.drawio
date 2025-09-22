@@ -119,9 +119,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "write_enable-label"
+            <mxCell id     = "access_enable-label"
                     parent = "2"
-                    value  = "write_enable"
+                    value  = "access_enable"
                     vertex = "1"
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -131,7 +131,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "write_enable-arrow"
+            <mxCell id     = "access_enable-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
@@ -148,9 +148,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "read_enable-label"
+            <mxCell id     = "write-label"
                     parent = "2"
-                    value  = "read_enable"
+                    value  = "write"
                     vertex = "1"
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -160,7 +160,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "read_enable-arrow"
+            <mxCell id     = "write-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
