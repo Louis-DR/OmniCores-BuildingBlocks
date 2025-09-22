@@ -95,7 +95,7 @@ There are no synthesis and implementation constraints for this block.
 | --------------------------------------------------- | -------------------------------------------------- | -------------------------- |
 | [`binary_to_bcd`](binary_to_bcd.md)                 | `omnicores-buildingblocks/sources/encoding/bcd`    | Binary to BCD encoder.     |
 | [`onehot_to_binary`](../onehot/onehot_to_binary.md) | `omnicores-buildingblocks/sources/encoding/onehot` | One-hot to binary decoder. |
-| [`grey_to_binary`](../grey/grey_to_binary.md)       | `omnicores-buildingblocks/sources/encoding/grey`   | Grey to binary decoder.    |
+| [`gray_to_binary`](../gray/gray_to_binary.md)       | `omnicores-buildingblocks/sources/encoding/gray`   | Gray to binary decoder.    |
 
 ## References
 

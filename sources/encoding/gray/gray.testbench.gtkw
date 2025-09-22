@@ -1,5 +1,5 @@
-[dumpfile] "grey.testbench.vcd"
-[savefile] "grey.testbench.gtkw"
+[dumpfile] "gray.testbench.vcd"
+[savefile] "gray.testbench.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
@@ -9,9 +9,9 @@
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
-grey__testbench.binary_to_grey_dut.binary[3:0]
-grey__testbench.binary_to_grey_dut.grey[3:0]
-grey__testbench.grey_to_binary_dut.grey[3:0]
-grey__testbench.grey_to_binary_dut.binary[3:0]
+gray__testbench.binary_to_gray_dut.binary[3:0]
+gray__testbench.binary_to_gray_dut.gray[3:0]
+gray__testbench.gray_to_binary_dut.gray[3:0]
+gray__testbench.gray_to_binary_dut.binary[3:0]
 [pattern_trace] 1
 [pattern_trace] 0

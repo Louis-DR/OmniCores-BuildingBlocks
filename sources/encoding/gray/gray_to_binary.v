@@ -3,24 +3,30 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        binary_to_grey.v                                             ║
+// ║ File:        gray_to_binary.v                                             ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Binary to Grey encoder. This code reorders the binary        ║
-// ║              numeral system such that two successive values differ in     ║
-// ║              only one bit.                                                ║
+// ║ Description: Gray to binary decoder.                                      ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
 
-module binary_to_grey #(
+module gray_to_binary #(
   parameter WIDTH = 8
 ) (
-  input  [WIDTH-1:0] binary,
-  output [WIDTH-1:0] grey
+  input  [WIDTH-1:0] gray,
+  output [WIDTH-1:0] binary
 );
 
-// Gray code is obtained by XORing the binary input with itself shifted right by 1
-assign grey = binary ^ (binary >> 1);
+// The MSB remains the same
+assign binary[WIDTH-1] = gray[WIDTH-1];
+
+// Generate the rest of the bits using XOR operations from MSB to LSB
+genvar bit_index;
+generate
+  for (bit_index = WIDTH-2; bit_index >= 0; bit_index = bit_index-1) begin : gen_bits
+    assign binary[bit_index] = binary[bit_index+1] ^ gray[bit_index];
+  end
+endgenerate
 
 endmodule

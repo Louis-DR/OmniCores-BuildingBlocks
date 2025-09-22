@@ -1,6 +1,6 @@
-grey_vector_synchronizer.v
-../../encoding/grey/binary_to_grey.v
-../../encoding/grey/grey_to_binary.v
+gray_vector_synchronizer.v
+../../encoding/gray/binary_to_gray.v
+../../encoding/gray/gray_to_binary.v
 ../registered_vector_synchronizer/registered_vector_synchronizer.v
 ../vector_synchronizer/vector_synchronizer.v
 ../synchronizer/synchronizer.v

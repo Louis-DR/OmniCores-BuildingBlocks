@@ -19,7 +19,7 @@
 // ║                                                                           ║
 // ║              The synchronized signal must only change by one bit between  ║
 // ║              two clock cycles of the synchronization clock. In practice,  ║
-// ║              this module may be used for grey-coded incremental counters  ║
+// ║              this module may be used for gray-coded incremental counters  ║
 // ║              or for bit fields in certain cases.                          ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝

@@ -41,7 +41,7 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The asynchronous FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointer each have an additional wrap bit for correct full/empty detection. Data integrity and stability is ensured through careful synchronization using Grey-coding of the pointers.
+The asynchronous FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointer each have an additional wrap bit for correct full/empty detection. Data integrity and stability is ensured through careful synchronization using Gray-coding of the pointers.
 
 The **write clock domain** contains a write pointer that indexes the shared memory array. When `write_enable` is asserted, `write_data` is stored at the write pointer location, and both the binary and Gray-coded write pointers are incremented. The Gray-coded write pointer is synchronized to the read domain for empty status generation.
 
@@ -53,7 +53,7 @@ There is no safety mechanism against reading when empty ; the read pointer will 
 
 **Clock domain crossing** is handled by synchronizing Gray-coded pointers between domains using multi-stage synchronizers. Gray coding ensures that only one bit changes at a time, preventing metastability issues during clock domain crossing.
 
-The status flags are calculated based on the Grey-coded read and write pointers in specific domains. The queue is full if the Grey-coded read and write pointers differ only in their two most significant bits, while all other bits are identical. The queue is empty if the Grey-coded read and write pointers in the read domain are the same.
+The status flags are calculated based on the Gray-coded read and write pointers in specific domains. The queue is full if the Gray-coded read and write pointers differ only in their two most significant bits, while all other bits are identical. The queue is empty if the Gray-coded read and write pointers in the read domain are the same.
 
 ## Paths
 
@@ -128,7 +128,7 @@ Clock domain crossing constraints should be applied to the Gray pointer synchron
 | Module                                                                              | Path                                                          | Comment                                 |
 | ----------------------------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------- |
 | [`vector_synchronizer`](../../../timing/vector_synchronizer/vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/vector_synchronizer` | For Gray pointer clock domain crossing. |
-| [`binary_to_grey`](../../../encoding/grey/binary_to_grey.md)                        | `omnicores-buildingblocks/sources/encoding/grey`              | For converting binary pointers to Gray. |
+| [`binary_to_gray`](../../../encoding/gray/binary_to_gray.md)                        | `omnicores-buildingblocks/sources/encoding/gray`              | For converting binary pointers to Gray. |
 
 ## Related modules
 

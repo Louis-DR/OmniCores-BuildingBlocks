@@ -3,9 +3,9 @@
 # ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 # ║ Website:     louis-dr.github.io                                           ║
 # ║ License:     MIT License                                                  ║
-# ║ File:        grey_vector_synchronizer.sdc                                 ║
+# ║ File:        gray_vector_synchronizer.sdc                                 ║
 # ╟───────────────────────────────────────────────────────────────────────────╢
-# ║ Description: SDC constraints for the grey vector synchronizer module.     ║
+# ║ Description: SDC constraints for the gray vector synchronizer module.     ║
 # ║                                                                           ║
 # ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -16,9 +16,9 @@ source [file join [file dirname [info script]] "../../timing/registered_vector_s
 
 
 
-namespace eval ::omnicores::buildingblocks::timing::grey_vector_synchronizer {
+namespace eval ::omnicores::buildingblocks::timing::gray_vector_synchronizer {
 
-  # Apply timing constraints to a specific instance of the grey vector synchronizer module
+  # Apply timing constraints to a specific instance of the gray vector synchronizer module
   proc apply_constraints_to_instance { instance_path } {
 
     # Check if the instance exists

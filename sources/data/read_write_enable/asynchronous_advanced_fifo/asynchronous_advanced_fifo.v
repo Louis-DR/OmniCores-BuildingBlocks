@@ -89,43 +89,43 @@ reg [DEPTH_LOG2:0] write_pointer;
 // Write address without wrap bit to index the memory
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 
-// Write pointer incremented and corresponding grey-code
+// Write pointer incremented and corresponding gray-code
 wire [DEPTH_LOG2:0] write_pointer_incremented = write_pointer + 1;
-wire [DEPTH_LOG2:0] write_pointer_incremented_grey;
+wire [DEPTH_LOG2:0] write_pointer_incremented_gray;
 
-// Write pointer grey-code encoder
-binary_to_grey #(
+// Write pointer gray-code encoder
+binary_to_gray #(
   .WIDTH  ( DEPTH_LOG2+1 )
-) write_pointer_incremented_grey_encoder (
+) write_pointer_incremented_gray_encoder (
   .binary ( write_pointer_incremented      ),
-  .grey   ( write_pointer_incremented_grey )
+  .gray   ( write_pointer_incremented_gray )
 );
 
-// Grey-coded pointers in write clock domain
-reg  [DEPTH_LOG2:0] write_pointer_grey_w;
-wire [DEPTH_LOG2:0] read_pointer_grey_w;
+// Gray-coded pointers in write clock domain
+reg  [DEPTH_LOG2:0] write_pointer_gray_w;
+wire [DEPTH_LOG2:0] read_pointer_gray_w;
 
 // Read pointer in write clock domain
 wire [DEPTH_LOG2:0] read_pointer_w;
 
-// Read pointer grey-code decoder
-grey_to_binary #(
+// Read pointer gray-code decoder
+gray_to_binary #(
   .WIDTH  ( DEPTH_LOG2+1 )
-) read_pointer_grey_decoder (
-  .grey   ( read_pointer_grey_w ),
+) read_pointer_gray_decoder (
+  .gray   ( read_pointer_gray_w ),
   .binary ( read_pointer_w      )
 );
 
 // Calculate FIFO level by comparing write and read pointers
 assign write_level = write_pointer - read_pointer_w;
 
-// Queue is empty if the grey-coded read and write pointers are the same
-assign write_empty        = write_pointer_grey_w == read_pointer_grey_w;
+// Queue is empty if the gray-coded read and write pointers are the same
+assign write_empty        = write_pointer_gray_w == read_pointer_gray_w;
 assign write_not_empty    = ~write_empty;
 assign write_almost_empty = write_level == 1;
 
-// Queue is full if the grey-coded pointers match this expression
-assign write_full         = write_pointer_grey_w == {~read_pointer_grey_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_w[DEPTH_LOG2-2:0]};
+// Queue is full if the gray-coded pointers match this expression
+assign write_full         = write_pointer_gray_w == {~read_pointer_gray_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_gray_w[DEPTH_LOG2-2:0]};
 assign write_not_full     = ~write_full;
 assign write_almost_full  = write_level == DEPTH - 1;
 
@@ -137,12 +137,12 @@ assign write_upper_threshold_status = write_level >= write_upper_threshold_level
 always @(posedge write_clock or negedge write_resetn) begin
   if (!write_resetn) begin
     write_pointer        <= 0;
-    write_pointer_grey_w <= 0;
+    write_pointer_gray_w <= 0;
     write_miss           <= 0;
   end else begin
     if (write_flush) begin
       write_pointer        <= read_pointer_w;
-      write_pointer_grey_w <= read_pointer_grey_w;
+      write_pointer_gray_w <= read_pointer_gray_w;
     end else if (write_enable) begin
       if (write_full) begin
         if (!write_clear_miss) begin
@@ -150,7 +150,7 @@ always @(posedge write_clock or negedge write_resetn) begin
         end
       end else begin
         write_pointer        <= write_pointer_incremented;
-        write_pointer_grey_w <= write_pointer_incremented_grey;
+        write_pointer_gray_w <= write_pointer_incremented_gray;
       end
     end
     if (write_clear_miss) begin
@@ -178,43 +178,43 @@ reg [DEPTH_LOG2:0] read_pointer;
 // Read address without wrap bit to index the memory
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 
-// Read pointer incremented and corresponding grey-code
+// Read pointer incremented and corresponding gray-code
 wire [DEPTH_LOG2:0] read_pointer_incremented = read_pointer + 1;
-wire [DEPTH_LOG2:0] read_pointer_incremented_grey;
+wire [DEPTH_LOG2:0] read_pointer_incremented_gray;
 
-// Read pointer grey-code encoder
-binary_to_grey #(
+// Read pointer gray-code encoder
+binary_to_gray #(
   .WIDTH  ( DEPTH_LOG2+1 )
-) read_pointer_incremented_grey_encoder (
+) read_pointer_incremented_gray_encoder (
   .binary ( read_pointer_incremented      ),
-  .grey   ( read_pointer_incremented_grey )
+  .gray   ( read_pointer_incremented_gray )
 );
 
-// Grey-coded pointers in read clock domain
-wire [DEPTH_LOG2:0] write_pointer_grey_r;
-reg  [DEPTH_LOG2:0] read_pointer_grey_r;
+// Gray-coded pointers in read clock domain
+wire [DEPTH_LOG2:0] write_pointer_gray_r;
+reg  [DEPTH_LOG2:0] read_pointer_gray_r;
 
 // Write pointer in read clock domain
 wire [DEPTH_LOG2:0] write_pointer_r;
 
-// Write pointer grey-code decoder
-grey_to_binary #(
+// Write pointer gray-code decoder
+gray_to_binary #(
   .WIDTH  ( DEPTH_LOG2+1 )
-) write_pointer_grey_decoder (
-  .grey   ( write_pointer_grey_r ),
+) write_pointer_gray_decoder (
+  .gray   ( write_pointer_gray_r ),
   .binary ( write_pointer_r      )
 );
 
 // Calculate FIFO level by comparing write and read pointers
 assign read_level = write_pointer_r - read_pointer;
 
-// Queue is empty if the grey-coded read and write pointers are the same
-assign read_empty        = write_pointer_grey_r == read_pointer_grey_r;
+// Queue is empty if the gray-coded read and write pointers are the same
+assign read_empty        = write_pointer_gray_r == read_pointer_gray_r;
 assign read_not_empty    = ~read_empty;
 assign read_almost_empty = read_level == 1;
 
-// Queue is full if the grey-coded pointers match this expression
-assign read_full         = write_pointer_grey_r == {~read_pointer_grey_r[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_grey_r[DEPTH_LOG2-2:0]};
+// Queue is full if the gray-coded pointers match this expression
+assign read_full         = write_pointer_gray_r == {~read_pointer_gray_r[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_gray_r[DEPTH_LOG2-2:0]};
 assign read_not_full     = ~read_full;
 assign read_almost_full  = read_level == DEPTH - 1;
 
@@ -229,12 +229,12 @@ assign read_data = memory[read_address];
 always @(posedge read_clock or negedge read_resetn) begin
   if (!read_resetn) begin
     read_pointer        <= 0;
-    read_pointer_grey_r <= 0;
+    read_pointer_gray_r <= 0;
     read_error          <= 0;
   end else begin
     if (read_flush) begin
       read_pointer        <= write_pointer_r;
-      read_pointer_grey_r <= write_pointer_grey_r;
+      read_pointer_gray_r <= write_pointer_gray_r;
     end else if (read_enable) begin
       if (read_empty) begin
         if (!read_clear_error) begin
@@ -242,7 +242,7 @@ always @(posedge read_clock or negedge read_resetn) begin
         end
       end else begin
         read_pointer        <= read_pointer_incremented;
-        read_pointer_grey_r <= read_pointer_incremented_grey;
+        read_pointer_gray_r <= read_pointer_incremented_gray;
       end
     end
     if (read_clear_error) begin
@@ -257,26 +257,26 @@ end
 // │ Clock domain crossing │
 // └───────────────────────┘
 
-// Grey-coded read pointer synchronizer
+// Gray-coded read pointer synchronizer
 vector_synchronizer #(
   .WIDTH    ( DEPTH_LOG2+1 ),
   .STAGES   ( STAGES_WRITE )
-) read_pointer_grey_sync (
+) read_pointer_gray_sync (
   .clock    ( write_clock         ),
   .resetn   ( write_resetn        ),
-  .data_in  ( read_pointer_grey_r ),
-  .data_out ( read_pointer_grey_w )
+  .data_in  ( read_pointer_gray_r ),
+  .data_out ( read_pointer_gray_w )
 );
 
-// Grey-coded write pointer synchronizer
+// Gray-coded write pointer synchronizer
 vector_synchronizer #(
   .WIDTH    ( DEPTH_LOG2+1 ),
   .STAGES   ( STAGES_READ  )
-) write_pointer_grey_sync (
+) write_pointer_gray_sync (
   .clock    ( read_clock           ),
   .resetn   ( read_resetn          ),
-  .data_in  ( write_pointer_grey_w ),
-  .data_out ( write_pointer_grey_r )
+  .data_in  ( write_pointer_gray_w ),
+  .data_out ( write_pointer_gray_r )
 );
 
 endmodule

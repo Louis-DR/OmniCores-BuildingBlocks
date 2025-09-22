@@ -90,5 +90,5 @@ This module has no external module dependencies.
 | Module                                        | Path                                               | Comment                    |
 | --------------------------------------------- | -------------------------------------------------- | -------------------------- |
 | [`onehot_to_binary`](onehot_to_binary.md)     | `omnicores-buildingblocks/sources/encoding/onehot` | One-hot to binary decoder. |
-| [`binary_to_grey`](../grey/binary_to_grey.md) | `omnicores-buildingblocks/sources/encoding/grey`   | Binary to Grey encoder.    |
+| [`binary_to_gray`](../gray/binary_to_gray.md) | `omnicores-buildingblocks/sources/encoding/gray`   | Binary to Gray encoder.    |
 | [`binary_to_bcd`](binary_to_bcd.md)           | `omnicores-buildingblocks/sources/encoding/bcd`    | Binary to BCD encoder.     |

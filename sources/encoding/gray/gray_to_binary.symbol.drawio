@@ -1,5 +1,5 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.1.1 Chrome/132.0.6834.210 Electron/34.3.3 Safari/537.36" version="26.1.1">
-  <diagram name="Grey-to-Binary" id="Grey-to-Binary">
+  <diagram name="Gray-to-Binary" id="Gray-to-Binary">
     <mxGraphModel dx         = "0"
                   dy         = "0"
                   grid       = "1"
@@ -41,7 +41,7 @@
         </mxCell>
         <mxCell id     = "title"
                 parent = "2"
-                value  = "Grey-to-Binary"
+                value  = "Gray-to-Binary"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontStyle=1;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"
@@ -52,7 +52,7 @@
         </mxCell>
         <mxCell id     = "subtitle"
                 parent = "2"
-                value  = "grey_to_binary"
+                value  = "gray_to_binary"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"
@@ -61,9 +61,9 @@
                       height = "0"
                       as     = "geometry"/>
         </mxCell>
-            <mxCell id     = "grey-label"
+            <mxCell id     = "gray-label"
                     parent = "2"
-                    value  = "grey"
+                    value  = "gray"
                     vertex = "1"
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -73,7 +73,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "grey-arrow"
+            <mxCell id     = "gray-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"

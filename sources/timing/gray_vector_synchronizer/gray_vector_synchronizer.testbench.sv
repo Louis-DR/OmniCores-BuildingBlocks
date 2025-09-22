@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        grey_vector_synchronizer.testbench.sv                  ║
+// ║ File:        gray_vector_synchronizer.testbench.sv                  ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the registered vector synchronizer.            ║
 // ║                                                                           ║
@@ -18,7 +18,7 @@
 
 
 
-module grey_vector_synchronizer__testbench ();
+module gray_vector_synchronizer__testbench ();
 
 // Device parameters
 localparam int WIDTH  = 8;
@@ -55,10 +55,10 @@ real time_negedge_data_out;
 real data_out_pulse_duration;
 
 // Device under test
-grey_vector_synchronizer #(
+gray_vector_synchronizer #(
   .WIDTH  ( WIDTH  ),
   .STAGES ( STAGES )
-) grey_vector_synchronizer_dut (
+) gray_vector_synchronizer_dut (
   .source_clock       ( source_clock       ),
   .source_resetn      ( source_resetn      ),
   .destination_clock  ( destination_clock  ),
@@ -88,8 +88,8 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("grey_vector_synchronizer.testbench.vcd");
-  $dumpvars(0,grey_vector_synchronizer__testbench);
+  $dumpfile("gray_vector_synchronizer.testbench.vcd");
+  $dumpvars(0,gray_vector_synchronizer__testbench);
 
   // Initialization
   data_in = 0;

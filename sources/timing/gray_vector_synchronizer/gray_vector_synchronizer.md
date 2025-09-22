@@ -1,8 +1,8 @@
-# Grey Vector Synchronizer
+# Gray Vector Synchronizer
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Grey Vector Synchronizer                                                         |
+| Module  | Gray Vector Synchronizer                                                         |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,11 +10,11 @@
 
 ## Overview
 
-![grey_vector_synchronizer](grey_vector_synchronizer.symbol.svg)
+![gray_vector_synchronizer](gray_vector_synchronizer.symbol.svg)
 
-Resynchronizes an incremental multi-bit vector signal `data_in` from its source `source_clock` clock domain to the destination `destination_clock` domain using Grey encoding, a presynchronization stage, and a chain of flip-flops. This helps prevent metastability issues when crossing clock domains. The number of flip-flop stages can be increased from the default two to three or more for even better MTBF. The synchronized data must be synchronous to its clock and remain stable for at least one cycle of the destination `clock` to be correctly captured.
+Resynchronizes an incremental multi-bit vector signal `data_in` from its source `source_clock` clock domain to the destination `destination_clock` domain using Gray encoding, a presynchronization stage, and a chain of flip-flops. This helps prevent metastability issues when crossing clock domains. The number of flip-flop stages can be increased from the default two to three or more for even better MTBF. The synchronized data must be synchronous to its clock and remain stable for at least one cycle of the destination `clock` to be correctly captured.
 
-This variant of the registered vector synchronizer is specifically designed for synchronizing binary vectors that change incrementally (by +1 or -1) between clock cycles. The Grey encoding ensures that only one bit changes between consecutive values, making it safe for clock domain crossing without the risk of multiple bits resolving metastability at different times. This is particularly useful for counters, pointers, and other incrementally changing values.
+This variant of the registered vector synchronizer is specifically designed for synchronizing binary vectors that change incrementally (by +1 or -1) between clock cycles. The Gray encoding ensures that only one bit changes between consecutive values, making it safe for clock domain crossing without the risk of multiple bits resolving metastability at different times. This is particularly useful for counters, pointers, and other incrementally changing values.
 
 The added source clock domain register (presynchronization stage) is useful to ensure stable glitch-free input to the synchronizer stages. This prevents combinational logic glitches in the source domain from affecting the clock domain crossing reliability.
 
@@ -38,15 +38,15 @@ The added source clock domain register (presynchronization stage) is useful to e
 
 ## Operation
 
-The `grey_vector_synchronizer` module consists of three stages: binary-to-Grey encoding, registered vector synchronization, and Grey-to-binary decoding. First, the input binary vector `data_in` is converted to Grey code using a `binary_to_grey` encoder. This Grey-coded vector is then passed through a `registered_vector_synchronizer` which registers it in the source domain and synchronizes it to the destination domain through `STAGES` flip-flops. Finally, the synchronized Grey-coded vector is converted back to binary using a `grey_to_binary` decoder.
+The `gray_vector_synchronizer` module consists of three stages: binary-to-Gray encoding, registered vector synchronization, and Gray-to-binary decoding. First, the input binary vector `data_in` is converted to Gray code using a `binary_to_gray` encoder. This Gray-coded vector is then passed through a `registered_vector_synchronizer` which registers it in the source domain and synchronizes it to the destination domain through `STAGES` flip-flops. Finally, the synchronized Gray-coded vector is converted back to binary using a `gray_to_binary` decoder.
 
-The Grey encoding is crucial because it ensures that when the input data changes by ±1, only one bit of the Grey-coded representation changes. This eliminates the possibility of spurious intermediate values that could occur if multiple bits of a binary counter were to resolve metastability at different times during clock domain crossing.
+The Gray encoding is crucial because it ensures that when the input data changes by ±1, only one bit of the Gray-coded representation changes. This eliminates the possibility of spurious intermediate values that could occur if multiple bits of a binary counter were to resolve metastability at different times during clock domain crossing.
 
 ## Paths
 
 | From      | To         | Type       | Comment                                                                                                                              |
 | --------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `data_in` | `data_out` | sequential | The signal passes through binary-to-Grey encoding, presynchronization stage, then `STAGES` flip-flops, then Grey-to-binary decoding. |
+| `data_in` | `data_out` | sequential | The signal passes through binary-to-Gray encoding, presynchronization stage, then `STAGES` flip-flops, then Gray-to-binary decoding. |
 
 The latency from `data_in` to `data_out` is one clock cycle of the `source_clock` domain plus `STAGES` clock cycles of the `destination_clock` domain.
 
@@ -58,7 +58,7 @@ The latency from `data_in` to `data_out` is one clock cycle of the `source_clock
 
 ## Verification
 
-The grey vector synchronizer is verified using a SystemVerilog testbench with a single check sequence.
+The gray vector synchronizer is verified using a SystemVerilog testbench with a single check sequence.
 
 The following table lists the checks performed by the testbench.
 
@@ -74,34 +74,34 @@ The following table lists the parameter values verified by the testbench.
 
 ## Constraints
 
-The constraints file `grey_vector_synchronizer.sdc` contains the procedure `::omnicores::buildingblocks::timing::grey_vector_synchronizer::apply_constraints_to_instance`. It takes as parameter the hierarchical path to the instance of the synchronizer and applies constraints to it.
+The constraints file `gray_vector_synchronizer.sdc` contains the procedure `::omnicores::buildingblocks::timing::gray_vector_synchronizer::apply_constraints_to_instance`. It takes as parameter the hierarchical path to the instance of the synchronizer and applies constraints to it.
 
 ```tcl
-set grey_vector_synchronizer_path "path/to/grey_vector_synchronizer"
+set gray_vector_synchronizer_path "path/to/gray_vector_synchronizer"
 
-::omnicores::buildingblocks::timing::grey_vector_synchronizer::apply_constraints_to_instance $grey_vector_synchronizer_path
+::omnicores::buildingblocks::timing::gray_vector_synchronizer::apply_constraints_to_instance $gray_vector_synchronizer_path
 ```
 
 The procedure applies a false-path from the output of the presynchronization flops to the input of the capture flops and a max-delay of 0 between the synchronization flops. The false-path tells the tool to not consider this timing path as this is clock-domain-crossing. The max-delay forces the tool to place the synchronization flops as close as possible to each other to minimize metastability. This max-delay of 0 will necessarily violate as it is impossible to meet, so the violation should be waived. Alternatively, the max-delay can be removed and replaced by special instructions for the place-ant-route tool.
 
-To call the procedure automatically on all instances of the synchronizer, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `grey_vector_synchronizer` and the constraints procedure `::omnicores::buildingblocks::timing::grey_vector_synchronizer::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
+To call the procedure automatically on all instances of the synchronizer, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `gray_vector_synchronizer` and the constraints procedure `::omnicores::buildingblocks::timing::gray_vector_synchronizer::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
 
 ```tcl
-::omnicores::common::apply_constraints_to_all_module_instances "grey_vector_synchronizer" "::omnicores::buildingblocks::timing::grey_vector_synchronizer::apply_constraints_to_instance"
+::omnicores::common::apply_constraints_to_all_module_instances "gray_vector_synchronizer" "::omnicores::buildingblocks::timing::gray_vector_synchronizer::apply_constraints_to_instance"
 ```
 
 ## Deliverables
 
 | Type              | File                                                                                 | Description                                         |
 | ----------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`grey_vector_synchronizer.v`](grey_vector_synchronizer.v)                           | Verilog design file.                                |
-| Testbench         | [`grey_vector_synchronizer.testbench.sv`](grey_vector_synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`grey_vector_synchronizer.testbench.gtkw`](grey_vector_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Constraint script | [`grey_vector_synchronizer.sdc`](grey_vector_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
-| Symbol descriptor | [`grey_vector_synchronizer.symbol.sss`](grey_vector_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`grey_vector_synchronizer.symbol.svg`](grey_vector_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
-| Symbol shape      | [`grey_vector_synchronizer.symbol.drawio`](grey_vector_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
-| Datasheet         | [`grey_vector_synchronizer.md`](grey_vector_synchronizer.md)                         | Markdown documentation datasheet.                   |
+| Design            | [`gray_vector_synchronizer.v`](gray_vector_synchronizer.v)                           | Verilog design file.                                |
+| Testbench         | [`gray_vector_synchronizer.testbench.sv`](gray_vector_synchronizer.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`gray_vector_synchronizer.testbench.gtkw`](gray_vector_synchronizer.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Constraint script | [`gray_vector_synchronizer.sdc`](gray_vector_synchronizer.sdc)                       | Tickle SDC constraint script for synthesis.         |
+| Symbol descriptor | [`gray_vector_synchronizer.symbol.sss`](gray_vector_synchronizer.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`gray_vector_synchronizer.symbol.svg`](gray_vector_synchronizer.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`gray_vector_synchronizer.symbol.drawio`](gray_vector_synchronizer.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`gray_vector_synchronizer.md`](gray_vector_synchronizer.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 
@@ -112,8 +112,8 @@ This module depends on the following external modules:
 | [`registered_vector_synchronizer`](../registered_vector_synchronizer/registered_vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/registered_vector_synchronizer` | Multi-bit synchronizer with source domain registration. |
 | [`vector_synchronizer`](../vector_synchronizer/vector_synchronizer.md)                                  | `omnicores-buildingblocks/sources/timing/vector_synchronizer`            | Multi-bit synchronizer module.                          |
 | [`synchronizer`](../synchronizer/synchronizer.md)                                                       | `omnicores-buildingblocks/sources/timing/synchronizer`                   | Basic single-bit synchronizer module.                   |
-| [`binary_to_grey`](../../encoding/grey/binary_to_grey.md)                                               | `omnicores-buildingblocks/sources/encoding/grey`                         | Binary to Grey code encoder.                            |
-| [`grey_to_binary`](../../encoding/grey/grey_to_binary.md)                                               | `omnicores-buildingblocks/sources/encoding/grey`                         | Grey code to binary decoder.                            |
+| [`binary_to_gray`](../../encoding/gray/binary_to_gray.md)                                               | `omnicores-buildingblocks/sources/encoding/gray`                         | Binary to Gray code encoder.                            |
+| [`gray_to_binary`](../../encoding/gray/gray_to_binary.md)                                               | `omnicores-buildingblocks/sources/encoding/gray`                         | Gray code to binary decoder.                            |
 
 ## Related modules
 
