@@ -13,6 +13,7 @@
 
 
 `include "clog2.vh"
+`include "is_pow2.vh"
 
 
 
@@ -28,15 +29,14 @@ module wrapping_counter #(
   output [RANGE_LOG2-1:0] count
 );
 
-localparam RANGE_IS_POW2 = RANGE == 2 ** RANGE_LOG2;
-localparam COUNTER_MIN   = 0;
-localparam COUNTER_MAX   = RANGE - 1;
+localparam COUNTER_MIN = 0;
+localparam COUNTER_MAX = RANGE - 1;
 
 reg [RANGE_LOG2-1:0] counter;
 
 generate
   // If the range is a power of 2, the wrapping is automatic
-  if (RANGE_IS_POW2) begin : gen_pow2_counter
+  if (`IS_POW2(RANGE)) begin : gen_pow2_counter
     always @(posedge clock or negedge resetn) begin
       if (!resetn) begin
         counter <= RESET_VALUE;
