@@ -67,7 +67,7 @@ int                    timeout_countdown;
 
 // Write
 task automatic write;
-  input logic [TAG_WIDTH-1:0] tag_to_write;
+  input logic  [TAG_WIDTH-1:0] tag_to_write;
   input logic [DATA_WIDTH-1:0] data_to_write;
   write_enable = 1;
   write_tag    = tag_to_write;
@@ -298,6 +298,15 @@ initial begin
       forever begin
         @(posedge clock);
         check_flags("");
+      end
+    end
+    // Correct model for overwrite and delete
+    begin
+      forever begin
+        @(posedge clock);
+        if (write_enable && delete_enable && write_tag === delete_tag) begin
+          model_memory[write_tag] = write_data;
+        end
       end
     end
     // Stop condition
