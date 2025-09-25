@@ -12,13 +12,14 @@
 
 ![gray_to_binary](gray_to_binary.symbol.svg)
 
-Converts Gray code (reflected binary code) back to standard binary representation. This decoder performs the inverse operation of the binary-to-gray encoder, recovering the original binary value from its Gray code representation.
+Converts Gray code (reflected binary code) back to standard binary representation. This decoder performs the inverse operation of the binary-to-gray encoder, recovering the original binary value from its Gray code representation. The module supports any even range, including ranges that are not a power-of-two.
 
 ## Parameters
 
-| Name    | Type    | Allowed Values | Default | Description                           |
-| ------- | ------- | -------------- | ------- | ------------------------------------- |
-| `WIDTH` | integer | `≥1`           | `8`     | Bit width of the gray/binary vectors. |
+| Name    | Type    | Allowed Values | Default         | Description                                                                  |
+| ------- | ------- | -------------- | --------------- | ---------------------------------------------------------------------------- |
+| `RANGE` | integer | `≥2` and even  | `16`            | The number of unique values in the code. Must be an even number.             |
+| `WIDTH` | integer | `≥1`           | `$clog2(RANGE)` | Bit width of the gray/binary vectors. Automatically calculated from `RANGE`. |
 
 ## Ports
 
@@ -32,6 +33,8 @@ Converts Gray code (reflected binary code) back to standard binary representatio
 The gray-to-binary conversion uses an iterative algorithm where each binary bit is computed based on the Gray code input and previously computed binary bits. The most significant bit (MSB) of the binary output equals the MSB of the Gray code input. For all other positions `i` (from MSB-1 down to LSB), the binary bit is computed as `binary[i] = binary[i+1] ^ gray[i]`.
 
 This sequential dependency from MSB to LSB means the conversion requires multiple logic levels but ensures perfect reconstruction of the original binary value.
+
+For non-power-of-two even ranges, an offset is subtracted from the result of the conversion. This offset corresponds to the reverse operation of the Gray encoding with pruning of the ends of the Grey sequence of the next higher power-of-two range.
 
 ## Paths
 
@@ -53,16 +56,16 @@ The gray-to-binary decoder is verified using a comprehensive SystemVerilog testb
 
 The following table lists the checks performed by the testbench.
 
-| Number | Check           | Description                                                                            |
-| ------ | --------------- | -------------------------------------------------------------------------------------- |
-| 1a     | Exhaustive test | If `WIDTH` ≤ 10, checks the Gray code and its properties for all binary input values . |
-| 1b     | Random test     | If `WIDTH` > 10, checks the Gray code and its properties for random sequences.         |
+| Number | Check           | Description                                                                              |
+| ------ | --------------- | ---------------------------------------------------------------------------------------- |
+| 1a     | Exhaustive test | If `RANGE ≤ 1024`, checks the Gray code and its properties for all binary input values . |
+| 1b     | Random test     | If `RANGE > 1024`, checks the Gray code and its properties for random sequences.         |
 
 The following table lists the parameter values verified by the testbench.
 
-| `WIDTH` |           |
+| `RANGE` |           |
 | ------- | --------- |
-| 8       | (default) |
+| 16      | (default) |
 
 ## Constraints
 

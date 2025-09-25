@@ -21,10 +21,10 @@
 module gray__testbench ();
 
 // Device parameters
-localparam int WIDTH = 8;
+localparam int RANGE = 16;
 
 // Test parameters
-localparam int WIDTH_POW2              = 2**WIDTH;
+localparam int WIDTH                   = $clog2(RANGE);
 localparam int FULL_CHECK_MAX_DURATION = 1024; // Exhaustive up to 2^10
 localparam int RANDOM_SEQUENCE_COUNT   = 32;   // Number of random sequences
 localparam int RANDOM_SEQUENCE_LENGTH  = 32;   // Length of each random sequence
@@ -38,14 +38,14 @@ logic [WIDTH-1:0] gray_to_binary_binary;
 
 // Devices under test
 binary_to_gray #(
-  .WIDTH  ( WIDTH )
+  .RANGE  ( RANGE )
 ) binary_to_gray_dut (
   .binary ( binary_to_gray_binary ),
   .gray   ( binary_to_gray_gray   )
 );
 
 gray_to_binary #(
-  .WIDTH  ( WIDTH )
+  .RANGE  ( RANGE )
 ) gray_to_binary_dut (
   .gray   ( gray_to_binary_gray   ),
   .binary ( gray_to_binary_binary )
@@ -53,16 +53,22 @@ gray_to_binary #(
 
 // Reference function for binary to gray conversion
 function logic [WIDTH-1:0] reference_binary_to_gray(input logic [WIDTH-1:0] binary);
-  return binary ^ (binary >> 1);
+  logic [WIDTH-1:0] offset_binary;
+  int offset = ((2 ** WIDTH) - RANGE) / 2;
+  offset_binary = binary + offset;
+  return offset_binary ^ (offset_binary >> 1);
 endfunction
 
 // Reference function for gray to binary conversion
 function logic [WIDTH-1:0] reference_gray_to_binary(input logic [WIDTH-1:0] gray);
   logic [WIDTH-1:0] binary;
-  binary[WIDTH-1] = gray[WIDTH-1];
+  logic [WIDTH-1:0] offset_binary;
+  int offset = ((2 ** WIDTH) - RANGE) / 2;
+  offset_binary[WIDTH-1] = gray[WIDTH-1];
   for (int bit_index = WIDTH-2; bit_index >= 0; bit_index--) begin
-    binary[bit_index] = binary[bit_index+1] ^ gray[bit_index];
+    offset_binary[bit_index] = offset_binary[bit_index+1] ^ gray[bit_index];
   end
+  binary = offset_binary - offset;
   return binary;
 endfunction
 
@@ -111,11 +117,11 @@ task check_sequence(input logic [WIDTH-1:0] start_value, input logic [WIDTH-1:0]
 
   // Support wrapping
   iterations = stop_value >= start_value
-             ? stop_value - start_value + 1
-             : WIDTH_POW2 - start_value + stop_value + 1;
+             ? stop_value  - start_value + 1
+             : RANGE       - start_value + 1 + stop_value;
 
   for (int step = 0; step < iterations; step++) begin
-    current_binary = (start_value + step) % WIDTH_POW2;
+    current_binary = (start_value + step) % RANGE;
 
     // Check conversion correctness
     check_conversion(current_binary);
@@ -144,16 +150,16 @@ initial begin
   #1;
 
   // If the width is small, we perform exhaustive testing
-  if (WIDTH_POW2 <= FULL_CHECK_MAX_DURATION) begin
+  if (RANGE <= FULL_CHECK_MAX_DURATION) begin
 
     // Check 1: Exhaustive test
     $display("CHECK 1: Exhaustive test.");
-    for (int step = 0; step <= WIDTH_POW2; step++) begin
+    for (int step = 0; step <= RANGE; step++) begin
       logic [WIDTH-1:0] current_binary;
       logic [WIDTH-1:0] current_gray;
       logic [WIDTH-1:0] previous_gray;
 
-      current_binary = step % WIDTH_POW2;
+      current_binary = step % RANGE;
 
       // Check conversion correctness
       check_conversion(current_binary);
@@ -177,8 +183,8 @@ initial begin
     for (int sequence_index = 0; sequence_index < RANDOM_SEQUENCE_COUNT; sequence_index++) begin
       logic [WIDTH-1:0] start_value;
       logic [WIDTH-1:0] stop_value;
-      start_value = $urandom_range(0, WIDTH_POW2-1);
-      stop_value  = (start_value + RANDOM_SEQUENCE_LENGTH - 1) % WIDTH_POW2;
+      start_value = $urandom_range(0, RANGE-1);
+      stop_value  = (start_value + RANDOM_SEQUENCE_LENGTH - 1) % RANGE;
       check_sequence(start_value, stop_value);
     end
 
