@@ -1,0 +1,30 @@
+[dumpfile] "simple_dual_port_ram.testbench.vcd"
+[savefile] "simple_dual_port_ram.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-13.093547 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@420
+simple_dual_port_ram__testbench.check
+@28
+simple_dual_port_ram__testbench.clock
+@200
+-
+@28
+simple_dual_port_ram__testbench.write_enable
+@22
+simple_dual_port_ram__testbench.write_address[3:0]
+simple_dual_port_ram__testbench.write_data[7:0]
+@200
+-
+@28
+simple_dual_port_ram__testbench.read_enable
+@22
+simple_dual_port_ram__testbench.read_address[3:0]
+simple_dual_port_ram__testbench.read_data[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
