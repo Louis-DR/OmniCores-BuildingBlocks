@@ -29,9 +29,11 @@ localparam int  ADDRESS_WIDTH   = $clog2(DEPTH);
 localparam int  WIDTH_POW2      = 2**WIDTH;
 
 // Test parameters
-localparam real CLOCK_PERIOD             = 10;
-localparam int  RANDOM_CHECK_DURATION    = 1000;
-localparam real RANDOM_WRITE_PROBABILITY = 0.5;
+localparam real CLOCK_PERIOD              = 10;
+localparam int  RANDOM_CHECK_DURATION     = 1000;
+localparam int  RANDOM_CHECK_TIMEOUT      = 10000;
+localparam real RANDOM_ACCESS_PROBABILITY = 0.5;
+localparam real RANDOM_WRITE_PROBABILITY  = 0.5;
 
 // Device ports
 logic                     clock;
@@ -44,6 +46,8 @@ logic         [WIDTH-1:0] read_data;
 // Test variables
 int               check;
 logic [WIDTH-1:0] memory_model [DEPTH];
+int               transfer_count;
+int               timeout_countdown;
 
 // Write task
 task automatic write_once;
@@ -122,63 +126,102 @@ initial begin
   $dumpvars(0, single_port_ram__testbench);
 
   // Initialization
-  access_enable = 0;
-  write         = 0;
+  access_enable =  0;
+  write         =  0;
   address       = 'x;
   write_data    = 'x;
 
-  // Check 1 : Write address as data to all locations, then read back
-  $display("CHECK 1 : Write address as data to all locations, then read back."); check = 1;
+  // Check 1 : All zero
+  $display("CHECK 1 : All zero."); check = 1;
   @(negedge clock);
-  for (int index = 0; index < DEPTH; index++) begin
-    write_once(index, index[WIDTH-1:0]);
-  end
+  write_all('0);
   read_all();
 
   repeat(10) @(posedge clock);
 
-  // Check 2 : Write inverse address as data to all locations, then read back
-  $display("CHECK 2 : Write inverse address as data to all locations, then read back."); check = 2;
+  // Check 2 : Address walking ones
+  $display("CHECK 2 : Address walking ones."); check = 2;
   @(negedge clock);
-  for (int index = 0; index < DEPTH; index++) begin
-    write_once(index, ~index[WIDTH-1:0]);
-  end
-  read_all();
-
-  repeat(10) @(posedge clock);
-
-  // Check 3 : Walking 1s data pattern on a single address
-  $display("CHECK 3 : Walking 1s data pattern on a single address."); check = 3;
-  @(negedge clock);
-  for (int bit_index = 0; bit_index < WIDTH; bit_index++) begin
-    write_once(0, 1'b1 << bit_index);
-    read_once(0);
+  // Memory is already filled with all zeros
+  // Walk vector of ones through the memory and check address aliasing
+  for (int address_index = 0; address_index < DEPTH; address_index++) begin
+    write_once(address_index, '1);
+    read_all();
+    write_once(address_index, '0);
   end
 
   repeat(10) @(posedge clock);
 
-  // Check 4 : Walking 0s data pattern on a single address
-  $display("CHECK 4 : Walking 0s data pattern on a single address."); check = 4;
+  // Check 3 : Address walking zeros
+  $display("CHECK 3 : Address walking zeros."); check = 3;
   @(negedge clock);
-  for (int bit_index = 0; bit_index < WIDTH; bit_index++) begin
-    write_once(0, ~(1'b1 << bit_index));
-    read_once(0);
+  // Fill the memory with all ones
+  write_all('1);
+  // Walk vector of zeros through the memory and check address aliasing
+  for (int address_index = 0; address_index < DEPTH; address_index++) begin
+    write_once(address_index, '0);
+    read_all();
+    write_once(address_index, '1);
   end
 
   repeat(10) @(posedge clock);
 
-  // Check 5 : Random reads and writes
-  $display("CHECK 5 : Random reads and writes."); check = 5;
+  // Check 4 : Data walking one
+  $display("CHECK 4 : Data walking one."); check = 4;
   @(negedge clock);
-  for (int iteration = 0; iteration < RANDOM_CHECK_DURATION; iteration++) begin
-    if (random_boolean(RANDOM_WRITE_PROBABILITY)) begin
-      // Random write
-      write_once($urandom_range(DEPTH), $urandom_range(WIDTH_POW2-1));
-    end else begin
-      // Random read
-      read_once($urandom_range(DEPTH));
+  // For each address, walk a one through the data bits and check data aliasing
+  for (int address_index = 0; address_index < DEPTH; address_index++) begin
+    for (int bit_index = 0; bit_index < WIDTH; bit_index++) begin
+      write_once(address_index, 1 << bit_index);
+      read_once(address_index);
     end
   end
+
+  repeat(10) @(posedge clock);
+
+  // Check 5 : Data walking zero
+  $display("CHECK 5 : Data walking zero."); check = 5;
+  @(negedge clock);
+  // For each address, walk a zero through the data bits and check data aliasing
+  for (int address_index = 0; address_index < DEPTH; address_index++) begin
+    for (int bit_index = 0; bit_index < WIDTH; bit_index++) begin
+      write_once(address_index, ~(1 << bit_index));
+      read_once(address_index);
+    end
+  end
+
+  repeat(10) @(posedge clock);
+
+  // Check 6 : Random stimulus
+  $display("CHECK 6 : Random stimulus."); check = 6;
+  @(negedge clock);
+  transfer_count    = 0;
+  timeout_countdown = RANDOM_CHECK_TIMEOUT;
+  fork
+    // Writing and reading
+    begin
+      while (transfer_count < RANDOM_CHECK_DURATION) begin
+        @(negedge clock);
+        if (random_boolean(RANDOM_ACCESS_PROBABILITY)) begin
+          if (random_boolean(RANDOM_WRITE_PROBABILITY)) begin
+            write_once($urandom_range(DEPTH), $urandom_range(WIDTH_POW2));
+          end else begin
+            read_once($urandom_range(DEPTH));
+          end
+          transfer_count++;
+        end
+      end
+    end
+    // Timeout
+    begin
+      while (timeout_countdown > 0) begin
+        @(negedge clock);
+        timeout_countdown--;
+      end
+      $error("[%0tns] Timeout.", $time);
+    end
+  join_any
+  disable fork;
 
   repeat(10) @(posedge clock);
 
