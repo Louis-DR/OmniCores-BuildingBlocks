@@ -94,3 +94,8 @@ This module has no external module dependencies.
 | [`gray_to_binary`](gray_to_binary.md)               | `omnicores-buildingblocks/sources/encoding/gray`   | Gray to binary decoder.    |
 | [`binary_to_onehot`](../onehot/binary_to_onehot.md) | `omnicores-buildingblocks/sources/encoding/onehot` | Binary to one-hot encoder. |
 | [`binary_to_bcd`](binary_to_bcd.md)                 | `omnicores-buildingblocks/sources/encoding/bcd`    | Binary to BCD encoder.     |
+
+## References
+
+- [Wikipedia, “Gray code”.](https://en.wikipedia.org/wiki/Gray_code)
+- [Max Maxfield, “How to generate Gray Codes for non-power-of-2 sequences”, EETimes.com, 29/06/2007.](https://www.eetimes.com/how-to-generate-gray-codes-for-non-power-of-2-sequences/)
