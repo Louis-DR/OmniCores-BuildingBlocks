@@ -46,8 +46,32 @@ logic         [WIDTH-1:0] read_data;
 // Test variables
 int               check;
 logic [WIDTH-1:0] memory_model [DEPTH];
+logic [WIDTH-1:0] expected_data;
 int               transfer_count;
 int               timeout_countdown;
+
+// Device under test
+single_port_ram #(
+  .WIDTH           ( WIDTH           ),
+  .DEPTH           ( DEPTH           ),
+  .REGISTERED_READ ( REGISTERED_READ ),
+  .ADDRESS_WIDTH   ( ADDRESS_WIDTH   )
+) single_port_ram_dut (
+  .clock         ( clock         ),
+  .access_enable ( access_enable ),
+  .write         ( write         ),
+  .address       ( address       ),
+  .write_data    ( write_data    ),
+  .read_data     ( read_data     )
+);
+
+// Source clock generation
+initial begin
+  clock = 1;
+  forever begin
+    #(CLOCK_PERIOD/2) clock = ~clock;
+  end
+end
 
 // Write task
 task automatic write_once;
@@ -80,10 +104,11 @@ task automatic read_once;
   access_enable = 1;
   write         = 0;
   address       = address_;
+  expected_data = memory_model[address_];
   if (REGISTERED_READ) @(posedge clock);
   @(posedge clock);
-  assert (read_data === memory_model[address_])
-    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address_, memory_model[address_]);
+  assert (read_data === expected_data)
+    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address_, expected_data);
   @(negedge clock);
   access_enable = 0;
   address       = 'x;
@@ -95,29 +120,6 @@ task automatic read_all;
     read_once(index);
   end
 endtask
-
-// Device under test
-single_port_ram #(
-  .WIDTH           ( WIDTH           ),
-  .DEPTH           ( DEPTH           ),
-  .REGISTERED_READ ( REGISTERED_READ ),
-  .ADDRESS_WIDTH   ( ADDRESS_WIDTH   )
-) single_port_ram_dut (
-  .clock         ( clock         ),
-  .access_enable ( access_enable ),
-  .write         ( write         ),
-  .address       ( address       ),
-  .write_data    ( write_data    ),
-  .read_data     ( read_data     )
-);
-
-// Source clock generation
-initial begin
-  clock = 1;
-  forever begin
-    #(CLOCK_PERIOD/2) clock = ~clock;
-  end
-end
 
 // Main block
 initial begin

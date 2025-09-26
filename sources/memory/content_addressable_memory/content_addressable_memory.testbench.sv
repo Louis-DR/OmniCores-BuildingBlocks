@@ -65,6 +65,36 @@ int                    number_entries;
 int                    transfer_count;
 int                    timeout_countdown;
 
+// Device under test
+content_addressable_memory #(
+  .TAG_WIDTH  ( TAG_WIDTH  ),
+  .DATA_WIDTH ( DATA_WIDTH ),
+  .DEPTH      ( DEPTH      )
+) content_addressable_memory_dut (
+  .clock         ( clock         ),
+  .resetn        ( resetn        ),
+  .full          ( full          ),
+  .empty         ( empty         ),
+  .write_enable  ( write_enable  ),
+  .write_tag     ( write_tag     ),
+  .write_data    ( write_data    ),
+  .read_enable   ( read_enable   ),
+  .read_tag      ( read_tag      ),
+  .read_data     ( read_data     ),
+  .read_hit      ( read_hit      ),
+  .delete_enable ( delete_enable ),
+  .delete_tag    ( delete_tag    ),
+  .delete_hit    ( delete_hit    )
+);
+
+// Source clock generation
+initial begin
+  clock = 1;
+  forever begin
+    #(CLOCK_PERIOD/2) clock = ~clock;
+  end
+end
+
 // Write
 task automatic write;
   input logic  [TAG_WIDTH-1:0] tag_to_write;
@@ -155,36 +185,6 @@ task automatic check_flags;
   if (!expect_full ) assert (!full ) else $error("[%0tns] Full flag is asserted%s.",      $time, context_string);
   if (!expect_empty) assert (!empty) else $error("[%0tns] Empty flag is asserted%s.",     $time, context_string);
 endtask
-
-// Device under test
-content_addressable_memory #(
-  .TAG_WIDTH  ( TAG_WIDTH  ),
-  .DATA_WIDTH ( DATA_WIDTH ),
-  .DEPTH      ( DEPTH      )
-) content_addressable_memory_dut (
-  .clock         ( clock         ),
-  .resetn        ( resetn        ),
-  .full          ( full          ),
-  .empty         ( empty         ),
-  .write_enable  ( write_enable  ),
-  .write_tag     ( write_tag     ),
-  .write_data    ( write_data    ),
-  .read_enable   ( read_enable   ),
-  .read_tag      ( read_tag      ),
-  .read_data     ( read_data     ),
-  .read_hit      ( read_hit      ),
-  .delete_enable ( delete_enable ),
-  .delete_tag    ( delete_tag    ),
-  .delete_hit    ( delete_hit    )
-);
-
-// Source clock generation
-initial begin
-  clock = 1;
-  forever begin
-    #(CLOCK_PERIOD/2) clock = ~clock;
-  end
-end
 
 // Main block
 initial begin
