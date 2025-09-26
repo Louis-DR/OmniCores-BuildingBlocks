@@ -53,8 +53,8 @@ end
 
 // Registered read logic
 if (REGISTERED_READ) begin
-  reg port_0_registered_read_data;
-  reg port_1_registered_read_data;
+  reg [WIDTH-1:0] port_0_registered_read_data;
+  reg [WIDTH-1:0] port_1_registered_read_data;
   always @(posedge clock) begin
     if (port_0_read_enable) port_0_registered_read_data <= memory[port_0_address];
     if (port_1_read_enable) port_1_registered_read_data <= memory[port_1_address];

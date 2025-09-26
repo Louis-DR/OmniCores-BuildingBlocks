@@ -42,7 +42,7 @@ end
 
 // Registered read logic
 if (REGISTERED_READ) begin
-  reg registered_read_data;
+  reg [WIDTH-1:0] registered_read_data;
   always @(posedge clock) begin
     if (read_enable) registered_read_data <= memory[read_address];
   end
