@@ -106,7 +106,7 @@ task automatic read_once;
   address       = address_;
   expected_data = memory_model[address_];
   if (REGISTERED_READ) @(posedge clock);
-  @(posedge clock);
+  #(1);
   assert (read_data === expected_data)
     else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address_, expected_data);
   @(negedge clock);

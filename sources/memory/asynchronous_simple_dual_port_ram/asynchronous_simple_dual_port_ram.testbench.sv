@@ -11,7 +11,7 @@
 
 
 
-`timescale 1ns/1ps
+`timescale 1ns/1fs
 `include "random.svh"
 `include "boolean.svh"
 
@@ -83,7 +83,7 @@ task automatic read_once;
   read_address  = address_;
   if (REGISTERED_READ) @(posedge read_clock);
   expected_data = memory_model[address_];
-  @(posedge read_clock);
+  #(1);
   assert (read_data === expected_data)
     else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address_, expected_data);
   @(negedge read_clock);
