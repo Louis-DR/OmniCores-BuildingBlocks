@@ -1,0 +1,34 @@
+[dumpfile] "asynchronous_true_dual_port_ram.testbench.vcd"
+[savefile] "asynchronous_true_dual_port_ram.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-22.727177 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@420
+asynchronous_true_dual_port_ram__testbench.check
+@200
+-
+@28
+asynchronous_true_dual_port_ram__testbench.port_0_clock
+asynchronous_true_dual_port_ram__testbench.port_0_access_enable
+asynchronous_true_dual_port_ram__testbench.port_0_write
+@22
+asynchronous_true_dual_port_ram__testbench.port_0_address[3:0]
+asynchronous_true_dual_port_ram__testbench.port_0_write_data[7:0]
+asynchronous_true_dual_port_ram__testbench.port_0_read_data[7:0]
+@200
+-
+@28
+asynchronous_true_dual_port_ram__testbench.port_1_clock
+asynchronous_true_dual_port_ram__testbench.port_1_access_enable
+asynchronous_true_dual_port_ram__testbench.port_1_write
+@22
+asynchronous_true_dual_port_ram__testbench.port_1_address[3:0]
+asynchronous_true_dual_port_ram__testbench.port_1_write_data[7:0]
+asynchronous_true_dual_port_ram__testbench.port_1_read_data[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
