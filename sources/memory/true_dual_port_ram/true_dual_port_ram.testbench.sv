@@ -222,24 +222,24 @@ initial begin
 
   repeat(5) @(posedge clock);
 
-  // Check 1.1 : All zero (port 0 write, port 1 read)
-  $display("CHECK 1.1 : All zero (port 0 write, port 1 read)."); check = 1;
+  // Check 1 : All zero (port 0 write, port 1 read)
+  $display("CHECK 1 : All zero (port 0 write, port 1 read)."); check = 1;
   @(negedge clock);
   write_all(0, '0);
   read_all(1);
 
   repeat(10) @(posedge clock);
 
-  // Check 1.2 : All zero (port 1 write, port 0 read)
-  $display("CHECK 1.2 : All zero (port 1 write, port 0 read)."); check = 2;
+  // Check 2 : All zero (port 1 write, port 0 read)
+  $display("CHECK 2 : All zero (port 1 write, port 0 read)."); check = 2;
   @(negedge clock);
   write_all(1, '0);
   read_all(0);
 
   repeat(10) @(posedge clock);
 
-  // Check 2.1 : Address walking ones (port 0 write, port 1 read)
-  $display("CHECK 2.1 : Address walking ones (port 0 write, port 1 read)."); check = 3;
+  // Check 3 : Address walking ones (port 0 write, port 1 read)
+  $display("CHECK 3 : Address walking ones (port 0 write, port 1 read)."); check = 3;
   @(negedge clock);
   for (int address_index = 0; address_index < DEPTH; address_index++) begin
     write_once(0, address_index, '1);
@@ -249,8 +249,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 2.2 : Address walking ones (port 1 write, port 0 read)
-  $display("CHECK 2.2 : Address walking ones (port 1 write, port 0 read)."); check = 4;
+  // Check 4 : Address walking ones (port 1 write, port 0 read)
+  $display("CHECK 4 : Address walking ones (port 1 write, port 0 read)."); check = 4;
   @(negedge clock);
   for (int address_index = 0; address_index < DEPTH; address_index++) begin
     write_once(1, address_index, '1);
@@ -260,8 +260,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 3.1 : Address walking zeros (port 0 write, port 1 read)
-  $display("CHECK 3.1 : Address walking zeros (port 0 write, port 1 read)."); check = 5;
+  // Check 5 : Address walking zeros (port 0 write, port 1 read)
+  $display("CHECK 5 : Address walking zeros (port 0 write, port 1 read)."); check = 5;
   @(negedge clock);
   write_all(0, '1);
   for (int address_index = 0; address_index < DEPTH; address_index++) begin
@@ -272,8 +272,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 3.2 : Address walking zeros (port 1 write, port 0 read)
-  $display("CHECK 3.2 : Address walking zeros (port 1 write, port 0 read)."); check = 6;
+  // Check 6 : Address walking zeros (port 1 write, port 0 read)
+  $display("CHECK 6 : Address walking zeros (port 1 write, port 0 read)."); check = 6;
   @(negedge clock);
   write_all(1, '1);
   for (int address_index = 0; address_index < DEPTH; address_index++) begin
@@ -284,8 +284,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 4.1 : Data walking one (port 0 write, port 1 read)
-  $display("CHECK 4.1 : Data walking one (port 0 write, port 1 read)."); check = 7;
+  // Check 7 : Data walking one (port 0 write, port 1 read)
+  $display("CHECK 7 : Data walking one (port 0 write, port 1 read)."); check = 7;
   @(negedge clock);
   for (int address_index = 0; address_index < DEPTH; address_index++) begin
     for (int bit_index = 0; bit_index < WIDTH; bit_index++) begin
@@ -296,8 +296,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 4.2 : Data walking one (port 1 write, port 0 read)
-  $display("CHECK 4.2 : Data walking one (port 1 write, port 0 read)."); check = 8;
+  // Check 8 : Data walking one (port 1 write, port 0 read)
+  $display("CHECK 8 : Data walking one (port 1 write, port 0 read)."); check = 8;
   @(negedge clock);
   for (int address_index = 0; address_index < DEPTH; address_index++) begin
     for (int bit_index = 0; bit_index < WIDTH; bit_index++) begin
@@ -308,8 +308,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 5.1 : Data walking zero (port 0 write, port 1 read)
-  $display("CHECK 5.1 : Data walking zero (port 0 write, port 1 read)."); check = 9;
+  // Check 9 : Data walking zero (port 0 write, port 1 read)
+  $display("CHECK 9 : Data walking zero (port 0 write, port 1 read)."); check = 9;
   @(negedge clock);
   for (int address_index = 0; address_index < DEPTH; address_index++) begin
     for (int bit_index = 0; bit_index < WIDTH; bit_index++) begin
@@ -320,8 +320,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 5.2 : Data walking zero (port 1 write, port 0 read)
-  $display("CHECK 5.2 : Data walking zero (port 1 write, port 0 read)."); check = 10;
+  // Check 10 : Data walking zero (port 1 write, port 0 read)
+  $display("CHECK 10 : Data walking zero (port 1 write, port 0 read)."); check = 10;
   @(negedge clock);
   for (int address_index = 0; address_index < DEPTH; address_index++) begin
     for (int bit_index = 0; bit_index < WIDTH; bit_index++) begin
@@ -332,8 +332,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 6 : Concurrent writes (port 0 and port 1)
-  $display("CHECK 6 : Concurrent writes (port 0 and port 1)."); check = 11;
+  // Check 11 : Concurrent writes (port 0 and port 1)
+  $display("CHECK 11 : Concurrent writes (port 0 and port 1)."); check = 11;
   @(negedge clock);
   timeout_countdown = CONCURRENT_CHECK_TIMEOUT;
   fork
@@ -364,8 +364,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 7 : Concurrent reads (port 0 and port 1)
-  $display("CHECK 7 : Concurrent reads (port 0 and port 1)."); check = 12;
+  // Check 12 : Concurrent reads (port 0 and port 1)
+  $display("CHECK 12 : Concurrent reads (port 0 and port 1)."); check = 12;
   @(negedge clock);
   timeout_countdown = CONCURRENT_CHECK_TIMEOUT;
   fork
@@ -394,8 +394,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 8 : Concurrent read/write (port 0 read, port 1 write)
-  $display("CHECK 8 : Concurrent read/write (port 0 read, port 1 write)."); check = 13;
+  // Check 13 : Concurrent read/write (port 0 read, port 1 write)
+  $display("CHECK 13 : Concurrent read/write (port 0 read, port 1 write)."); check = 13;
   @(negedge clock);
   timeout_countdown = CONCURRENT_CHECK_TIMEOUT;
   fork
@@ -424,8 +424,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 9 : Concurrent read/write (port 0 write, port 1 read)
-  $display("CHECK 9 : Concurrent read/write (port 0 write, port 1 read)."); check = 14;
+  // Check 14 : Concurrent read/write (port 0 write, port 1 read)
+  $display("CHECK 14 : Concurrent read/write (port 0 write, port 1 read)."); check = 14;
   @(negedge clock);
   transfer_count    = 0;
   timeout_countdown = CONCURRENT_CHECK_TIMEOUT;
@@ -455,8 +455,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 10 : Random stimulus
-  $display("CHECK 10 : Random stimulus."); check = 15;
+  // Check 15 : Random stimulus
+  $display("CHECK 15 : Random stimulus."); check = 15;
   @(negedge clock);
   transfer_count    = 0;
   timeout_countdown = RANDOM_CHECK_TIMEOUT;
