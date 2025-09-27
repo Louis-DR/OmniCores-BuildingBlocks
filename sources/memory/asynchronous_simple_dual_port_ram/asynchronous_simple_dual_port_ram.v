@@ -23,15 +23,15 @@ module asynchronous_simple_dual_port_ram #(
   parameter ADDRESS_WIDTH   = `CLOG2(DEPTH)
 ) (
   // Write interface
-  input                      write_clock,
-  input                      write_enable,
-  input  [ADDRESS_WIDTH-1:0] write_address,
-  input          [WIDTH-1:0] write_data,
+  input                     write_clock,
+  input                     write_enable,
+  input [ADDRESS_WIDTH-1:0] write_address,
+  input         [WIDTH-1:0] write_data,
   // Read interface
-  input                      read_clock,
-  input                      read_enable,
-  input  [ADDRESS_WIDTH-1:0] read_address,
-  output reg     [WIDTH-1:0] read_data
+  input                     read_clock,
+  input                     read_enable,
+  input [ADDRESS_WIDTH-1:0] read_address,
+  output        [WIDTH-1:0] read_data
 );
 
 // Memory array
