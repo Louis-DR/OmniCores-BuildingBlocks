@@ -18,6 +18,7 @@
 module simple_dual_port_ram #(
   parameter WIDTH = 8,
   parameter DEPTH = 16,
+  parameter WRITE_THROUGH   = 0,
   parameter REGISTERED_READ = 1,
   parameter ADDRESS_WIDTH   = `CLOG2(DEPTH)
 ) (
@@ -40,18 +41,29 @@ always @(posedge clock) begin
   if (write_enable) memory[write_address] <= write_data;
 end
 
+// Read-write conflict
+wire same_address = write_address == read_address;
+
 // Registered read logic
 if (REGISTERED_READ) begin
   reg [WIDTH-1:0] registered_read_data;
   always @(posedge clock) begin
-    if (read_enable) registered_read_data <= memory[read_address];
+    if (read_enable) begin
+      // Write through
+      if (WRITE_THROUGH && write_enable && same_address) begin
+        registered_read_data <= write_data;
+      // Read before write
+      end else begin
+        registered_read_data <= memory[read_address];
+      end
+    end
   end
   assign read_data = registered_read_data;
 end
 
 // Combinational read logic
 else begin
-  assign read_data = memory[read_address];
+  assign read_data = (WRITE_THROUGH && write_enable && same_address) ? write_data : memory[read_address];
 end
 
 endmodule
