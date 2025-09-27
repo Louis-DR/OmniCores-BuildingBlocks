@@ -22,6 +22,7 @@ module simple_dual_port_ram__testbench ();
 // Device parameters
 localparam int  WIDTH           = 8;
 localparam int  DEPTH           = 16;
+localparam bit  WRITE_THROUGH   = 0;
 localparam bit  REGISTERED_READ = 1;
 
 // Derived parameters
@@ -53,54 +54,12 @@ logic [WIDTH-1:0] expected_data;
 int               transfer_count;
 int               timeout_countdown;
 
-// Write task
-task automatic write_once;
-  input [ADDRESS_WIDTH-1:0] address_;
-  input         [WIDTH-1:0] data;
-  write_enable  = 1;
-  write_address = address_;
-  write_data    = data;
-  @(posedge clock);
-  memory_model[address_] = data;
-  @(negedge clock);
-  write_enable = 0;
-endtask
-
-// Write all task
-task automatic write_all;
-  input [WIDTH-1:0] data;
-  for (int index = 0; index < DEPTH; index++) begin
-    write_once(index, data);
-  end
-endtask
-
-// Read task
-task automatic read_once;
-  input [ADDRESS_WIDTH-1:0] address_;
-  read_enable   = 1;
-  read_address  = address_;
-  expected_data = memory_model[address_];
-  if (REGISTERED_READ) @(posedge clock);
-  #(1);
-  assert (read_data === expected_data)
-    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address_, expected_data);
-  @(negedge clock);
-  read_enable = 0;
-endtask
-
-// Read all task
-task automatic read_all;
-  for (int index = 0; index < DEPTH; index++) begin
-    read_once(index);
-  end
-endtask
-
 // Device under test
 simple_dual_port_ram #(
   .WIDTH           ( WIDTH           ),
   .DEPTH           ( DEPTH           ),
-  .REGISTERED_READ ( REGISTERED_READ ),
-  .ADDRESS_WIDTH   ( ADDRESS_WIDTH   )
+  .WRITE_THROUGH   ( WRITE_THROUGH   ),
+  .REGISTERED_READ ( REGISTERED_READ )
 ) simple_dual_port_ram_dut (
   .clock         ( clock         ),
   .write_enable  ( write_enable  ),
@@ -118,6 +77,53 @@ initial begin
     #(CLOCK_PERIOD/2) clock = ~clock;
   end
 end
+
+// Write task
+task automatic write_once;
+  input [ADDRESS_WIDTH-1:0] address;
+  input         [WIDTH-1:0] data;
+  write_enable  = 1;
+  write_address = address;
+  write_data    = data;
+  @(posedge clock);
+  memory_model[address] = data;
+  @(negedge clock);
+  write_enable = 0;
+endtask
+
+// Write all task
+task automatic write_all;
+  input [WIDTH-1:0] data;
+  for (int index = 0; index < DEPTH; index++) begin
+    write_once(index, data);
+  end
+endtask
+
+// Read task
+task automatic read_once;
+  input [ADDRESS_WIDTH-1:0] address;
+  read_enable   = 1;
+  read_address  = address;
+  if (WRITE_THROUGH) begin
+    #(1);
+    expected_data = (write_enable && write_address == address) ? write_data : memory_model[address];
+  end else begin
+    expected_data = memory_model[address];
+  end
+  if (REGISTERED_READ) @(posedge clock);
+  #(1);
+  assert (read_data === expected_data)
+    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address, expected_data);
+  @(negedge clock);
+  read_enable = 0;
+endtask
+
+// Read all task
+task automatic read_all;
+  for (int index = 0; index < DEPTH; index++) begin
+    read_once(index);
+  end
+endtask
 
 // Main block
 initial begin
@@ -244,15 +250,20 @@ initial begin
     end
     // Reading
     begin
-
       forever begin
         @(negedge clock);
         if (random_boolean(RANDOM_READ_PROBABILITY)) begin
           read_enable   = 1;
           read_address  = $urandom_range(DEPTH);
           expected_data = memory_model[read_address];
+          if (WRITE_THROUGH) begin
+            #(1);
+            expected_data = (write_enable && write_address == read_address) ? write_data : memory_model[read_address];
+          end else begin
+            expected_data = memory_model[read_address];
+          end
           if (REGISTERED_READ) @(posedge clock);
-          @(posedge clock);
+          #(1);
           assert (read_data === expected_data)
             else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, read_address, expected_data);
         end else begin

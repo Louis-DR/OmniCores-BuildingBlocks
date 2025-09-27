@@ -54,8 +54,7 @@ int               timeout_countdown;
 single_port_ram #(
   .WIDTH           ( WIDTH           ),
   .DEPTH           ( DEPTH           ),
-  .REGISTERED_READ ( REGISTERED_READ ),
-  .ADDRESS_WIDTH   ( ADDRESS_WIDTH   )
+  .REGISTERED_READ ( REGISTERED_READ )
 ) single_port_ram_dut (
   .clock         ( clock         ),
   .access_enable ( access_enable ),
@@ -84,8 +83,8 @@ task automatic write_once;
   @(posedge clock);
   memory_model[address_] = data;
   @(negedge clock);
-  access_enable = 0;
-  write         = 0;
+  access_enable =  0;
+  write         =  0;
   address       = 'x;
   write_data    = 'x;
 endtask

@@ -57,13 +57,14 @@ int               timeout_countdown;
 
 // Write task
 task automatic write_once;
-  input [ADDRESS_WIDTH-1:0] address_;
+  input [ADDRESS_WIDTH-1:0] address;
   input         [WIDTH-1:0] data;
   write_enable  = 1;
-  write_address = address_;
+  write_address = address;
   write_data    = data;
   @(posedge write_clock);
-  memory_model[address_] = data;
+  // $display("[%0tns] Write data '0x%0h' at address '0x%0h'.", $time, data, address);
+  memory_model[address] = data;
   @(negedge write_clock);
   write_enable = 0;
 endtask
@@ -78,14 +79,15 @@ endtask
 
 // Read task
 task automatic read_once;
-  input [ADDRESS_WIDTH-1:0] address_;
+  input [ADDRESS_WIDTH-1:0] address;
   read_enable   = 1;
-  read_address  = address_;
+  read_address  = address;
   if (REGISTERED_READ) @(posedge read_clock);
-  expected_data = memory_model[address_];
+  expected_data = memory_model[address];
   #(1);
+  // $display("[%0tns] Read data '0x%0h' at address '0x%0h'.", $time, read_data, address);
   assert (read_data === expected_data)
-    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address_, expected_data);
+    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address, expected_data);
   @(negedge read_clock);
   read_enable = 0;
 endtask
@@ -97,13 +99,12 @@ task automatic read_all;
   end
 endtask
 
-// DUT
+// Device under test
 asynchronous_simple_dual_port_ram #(
   .WIDTH           ( WIDTH           ),
   .DEPTH           ( DEPTH           ),
-  .REGISTERED_READ ( REGISTERED_READ ),
-  .ADDRESS_WIDTH   ( ADDRESS_WIDTH   )
-) dut (
+  .REGISTERED_READ ( REGISTERED_READ )
+) asynchronous_simple_dual_port_ram_dut (
   .write_clock   ( write_clock   ),
   .write_enable  ( write_enable  ),
   .write_address ( write_address ),
