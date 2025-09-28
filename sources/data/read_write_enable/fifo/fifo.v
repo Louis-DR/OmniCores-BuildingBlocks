@@ -48,11 +48,14 @@ reg [WIDTH-1:0] memory [DEPTH-1:0];
 // │ Write logic │
 // └─────────────┘
 
-// Write pointer with wrap bit to compare with the read pointer
+// Write pointer with lap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] write_pointer;
 
-// Write address without wrap bit to index the memory
+// Write address without lap bit to index the memory
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
+
+// Write lap bit
+wire write_lap = write_pointer[DEPTH_LOG2];
 
 
 
@@ -60,26 +63,28 @@ wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 // │ Read logic │
 // └────────────┘
 
-// Read pointer with wrap bit to compare with the read pointer
+// Read pointer with lap bit to compare with the read pointer
 reg [DEPTH_LOG2:0] read_pointer;
 
-// Read address without wrap bit to index the memory
+// Read address without lap bit to index the memory
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 
 // Value at the read pointer is always on the read data bus
 assign read_data = memory[read_address];
 
+// Read lap bit
+wire read_lap = read_pointer[DEPTH_LOG2];
 
 
 // ┌──────────────┐
 // │ Status logic │
 // └──────────────┘
 
-// Queue is full if the read and write pointers are the same but the wrap bits are different
-assign full  = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && write_pointer[DEPTH_LOG2] != read_pointer[DEPTH_LOG2];
+// Queue is full if the read and write pointers are the same but the lap bits are different
+assign full  = write_address == read_address && write_lap != read_lap;
 
-// Queue is empty if the read and write pointers are the same and the wrap bits are equal
-assign empty = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && write_pointer[DEPTH_LOG2] == read_pointer[DEPTH_LOG2];
+// Queue is empty if the read and write pointers are the same and the lap bits are equal
+assign empty = write_address == read_address && write_lap == read_lap;
 
 
 
