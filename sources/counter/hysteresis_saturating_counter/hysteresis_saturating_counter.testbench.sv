@@ -18,12 +18,22 @@
 
 module hysteresis_saturating_counter__testbench ();
 
+// Device parameters
+localparam int  RANGE           = 4;
+localparam int  RESET_VALUE     = 0;
+localparam int  COERCIVITY      = 1;
+
+// Derived parameters
+localparam int  WIDTH           = $clog2(RANGE);
+localparam int  COUNT_MIN       = 0;
+localparam int  COUNT_MAX       = RANGE - 1;
+localparam int  COUNT_HALF_LOW  = RANGE/2 - 1;
+localparam int  COUNT_HALF_HIGH = RANGE/2;
+localparam int  COUNT_JUMP_LOW  = COUNT_HALF_LOW  - COERCIVITY;
+localparam int  COUNT_JUMP_HIGH = COUNT_HALF_HIGH + COERCIVITY;
+
 // Test parameters
 localparam real CLOCK_PERIOD = 10;
-localparam int  RANGE        = 4;
-localparam int  RANGE_LOG2   = $clog2(RANGE);
-localparam int  RESET_VALUE  = 0;
-localparam int  COERCIVITY   = 1;
 
 // Check parameters
 localparam int  RANDOM_CHECK_DURATION              = 100;
@@ -35,15 +45,9 @@ logic                  clock;
 logic                  resetn;
 logic                  increment;
 logic                  decrement;
-logic [RANGE_LOG2-1:0] count;
+logic [WIDTH-1:0] count;
 
 // Test variables
-int min_count       = 0;
-int max_count       = RANGE - 1;
-int half_low_count  = RANGE/2 - 1;
-int half_high_count = RANGE/2;
-int jump_low_count  = half_low_count - COERCIVITY;
-int jump_high_count = half_high_count + COERCIVITY;
 int expected_count;
 
 // Device under test
@@ -69,15 +73,15 @@ end
 
 // Function to predict next count value with hysteresis
 function int predict_next_count(input int current_count, input logic increment, input logic decrement);
-  if (increment && !decrement && current_count != max_count) begin
-    if (current_count == half_low_count) begin
-      return jump_high_count;
+  if (increment && !decrement && current_count != COUNT_MAX) begin
+    if (current_count == COUNT_HALF_LOW) begin
+      return COUNT_JUMP_HIGH;
     end else begin
       return current_count + 1;
     end
-  end else if (decrement && !increment && current_count != min_count) begin
-    if (current_count == half_high_count) begin
-      return jump_low_count;
+  end else if (decrement && !increment && current_count != COUNT_MIN) begin
+    if (current_count == COUNT_HALF_HIGH) begin
+      return COUNT_JUMP_LOW;
     end else begin
       return current_count - 1;
     end
@@ -112,10 +116,10 @@ initial begin
 
   // Check 2 : Increment without hysteresis
   $display("CHECK 2 : Increment without hysteresis.");
-  expected_count = min_count;
+  expected_count = COUNT_MIN;
   @(negedge clock);
   increment = 1;
-  while (count != half_low_count) begin
+  while (count != COUNT_HALF_LOW) begin
     @(posedge clock);
     expected_count += 1;
     @(negedge clock);
@@ -129,14 +133,14 @@ initial begin
 
   // Check 3 : Hysteresis jump up
   $display("CHECK 3 : Hysteresis jump up.");
-  if (count != half_low_count) begin
-    $error("[%0tns] Counter should be at half_low_count '%0d' but is at '%0d'.", $time, half_low_count, count);
+  if (count != COUNT_HALF_LOW) begin
+    $error("[%0tns] Counter should be at half-low '%0d' but is at '%0d'.", $time, COUNT_HALF_LOW, count);
   end
   @(negedge clock);
   increment = 1;
   @(negedge clock);
-  if (count != jump_high_count) begin
-    $error("[%0tns] Counter should jump to '%0d' but is at '%0d'.", $time, jump_high_count, count);
+  if (count != COUNT_JUMP_HIGH) begin
+    $error("[%0tns] Counter should jump to '%0d' but is at '%0d'.", $time, COUNT_JUMP_HIGH, count);
   end
   increment = 0;
 
@@ -144,10 +148,10 @@ initial begin
 
   // Check 4 : Continue increment to max
   $display("CHECK 4 : Continue increment to max.");
-  expected_count = jump_high_count;
+  expected_count = COUNT_JUMP_HIGH;
   @(negedge clock);
   increment = 1;
-  while (count != max_count) begin
+  while (count != COUNT_MAX) begin
     @(posedge clock);
     expected_count += 1;
     @(negedge clock);
@@ -161,10 +165,10 @@ initial begin
 
   // Check 5 : Decrement without hysteresis
   $display("CHECK 5 : Decrement without hysteresis.");
-  expected_count = max_count;
+  expected_count = COUNT_MAX;
   @(negedge clock);
   decrement = 1;
-  while (count != half_high_count) begin
+  while (count != COUNT_HALF_HIGH) begin
     @(posedge clock);
     expected_count -= 1;
     @(negedge clock);
@@ -178,14 +182,14 @@ initial begin
 
   // Check 6 : Hysteresis jump down
   $display("CHECK 6 : Hysteresis jump down.");
-  if (count != half_high_count) begin
-    $error("[%0tns] Counter should be at half_high_count '%0d' but is at '%0d'.", $time, half_high_count, count);
+  if (count != COUNT_HALF_HIGH) begin
+    $error("[%0tns] Counter should be at half-high '%0d' but is at '%0d'.", $time, COUNT_HALF_HIGH, count);
   end
   @(negedge clock);
   decrement = 1;
   @(negedge clock);
-  if (count != jump_low_count) begin
-    $error("[%0tns] Counter should jump to '%0d' but is at '%0d'.", $time, jump_low_count, count);
+  if (count != COUNT_JUMP_LOW) begin
+    $error("[%0tns] Counter should jump to '%0d' but is at '%0d'.", $time, COUNT_JUMP_LOW, count);
   end
   decrement = 0;
 
@@ -193,10 +197,10 @@ initial begin
 
   // Check 7 : Continue decrement to min
   $display("CHECK 7 : Continue decrement to min.");
-  expected_count = jump_low_count;
+  expected_count = COUNT_JUMP_LOW;
   @(negedge clock);
   decrement = 1;
-  while (count != min_count) begin
+  while (count != COUNT_MIN) begin
     @(posedge clock);
     expected_count -= 1;
     @(negedge clock);

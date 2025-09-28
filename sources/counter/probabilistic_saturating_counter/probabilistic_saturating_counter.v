@@ -19,17 +19,17 @@
 
 module probabilistic_saturating_counter #(
   parameter      RANGE                  = 4,
-  parameter      RANGE_LOG2             = `CLOG2(RANGE),
   parameter      RESET_VALUE            = 0,
   parameter      RANDOM_NUMBER_WIDTH    = 8,
-  parameter real SATURATION_PROBABILITY = 0.25
+  parameter real SATURATION_PROBABILITY = 0.25,
+  parameter      WIDTH                  = `CLOG2(RANGE)
 ) (
-  input                            clock,
-  input                            resetn,
-  input                            increment,
-  input                            decrement,
-  input  [RANDOM_NUMBER_WIDTH-1:0] random_number,
-  output          [RANGE_LOG2-1:0] count
+  input                           clock,
+  input                           resetn,
+  input                           increment,
+  input                           decrement,
+  input [RANDOM_NUMBER_WIDTH-1:0] random_number,
+  output              [WIDTH-1:0] count
 );
 
 localparam COUNTER_MIN = 0;
@@ -37,7 +37,7 @@ localparam COUNTER_MAX = RANGE - 1;
 
 localparam RANDOM_NUMBER_MAX = 2 ** RANDOM_NUMBER_WIDTH;
 
-reg [RANGE_LOG2-1:0] counter;
+reg [WIDTH-1:0] counter;
 wire counter_is_min           = counter == COUNTER_MIN;
 wire counter_is_max           = counter == COUNTER_MAX;
 wire counter_is_min_plus_one  = counter == COUNTER_MIN + 1;

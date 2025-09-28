@@ -21,17 +21,16 @@ The counter supports both power-of-2 and non-power-of-2 ranges with optimized im
 | Name          | Type    | Allowed Values | Default | Description                                                                       |
 | ------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------- |
 | `RANGE`       | integer | `≥2`           | `4`     | Counter range. Counter counts from `0` to `RANGE-1`.                              |
-| `RANGE_LOG2`  | integer | `≥1`           | `2`     | Bit width of the counter. Automatically calculated as `log₂(RANGE)`.              |
 | `RESET_VALUE` | integer | `0 to RANGE-1` | `0`     | Initial counter value after reset. Must be within the valid range `[0, RANGE-1]`. |
 
 ## Ports
 
-| Name        | Direction | Width        | Clock        | Reset    | Reset value   | Description                                                          |
-| ----------- | --------- | ------------ | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
-| `clock`     | input     | 1            | self         |          |               | Clock signal.                                                        |
-| `resetn`    | input     | 1            | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
-| `increment` | input     | 1            | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
-| `count`     | output    | `RANGE_LOG2` | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
+| Name        | Direction | Width         | Clock        | Reset    | Reset value   | Description                                                          |
+| ----------- | --------- | ------------- | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
+| `clock`     | input     | 1             | self         |          |               | Clock signal.                                                        |
+| `resetn`    | input     | 1             | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
+| `increment` | input     | 1             | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
+| `count`     | output    | `log₂(RANGE)` | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
 
 ## Operation
 
@@ -57,7 +56,7 @@ The counter is reset to `RESET_VALUE` when `resetn` is asserted (active-low). Th
 | -------------------- | --------------- | ------- |
 | `O(log₂ log₂ RANGE)` | `O(log₂ RANGE)` |         |
 
-The module requires `RANGE_LOG2` flip-flops for the counter register, plus combinational logic for boundary detection (in non-power-of-2 cases) and increment operations. For power-of-2 ranges, the implementation is more efficient as it leverages natural binary overflow behavior. The critical path includes the counter comparison logic (for non-power-of-2 ranges) and the increment arithmetic.
+The module requires `log₂(RANGE)` flip-flops for the counter register, plus combinational logic for boundary detection (in non-power-of-2 cases) and increment operations. For power-of-2 ranges, the implementation is more efficient as it leverages natural binary overflow behavior. The critical path includes the counter comparison logic (for non-power-of-2 ranges) and the increment arithmetic.
 
 ## Verification
 
@@ -65,13 +64,13 @@ The wrapping increment counter is verified using a SystemVerilog testbench with 
 
 The following table lists the checks performed by the testbench.
 
-| Number | Check                      | Description                                                                                               |
-| ------ | -------------------------- | --------------------------------------------------------------------------------------------------------- |
-| 1      | Reset value                | Verifies that the counter initializes to the specified `RESET_VALUE` after reset.                         |
-| 2      | Increment without wrapping | Tests incrementing from minimum towards maximum value without reaching the boundary.                      |
-| 3      | Increment with wrapping    | Tests increment wrapping behavior from maximum value back to minimum value.                               |
-| 4      | Full cycle increment       | Tests a complete increment cycle through all values and verifies return to starting point.                |
-| 5      | Random                     | Performs random increment operations and verifies counter behavior against expected values.               |
+| Number | Check                      | Description                                                                                 |
+| ------ | -------------------------- | ------------------------------------------------------------------------------------------- |
+| 1      | Reset value                | Verifies that the counter initializes to the specified `RESET_VALUE` after reset.           |
+| 2      | Increment without wrapping | Tests incrementing from minimum towards maximum value without reaching the boundary.        |
+| 3      | Increment with wrapping    | Tests increment wrapping behavior from maximum value back to minimum value.                 |
+| 4      | Full cycle increment       | Tests a complete increment cycle through all values and verifies return to starting point.  |
+| 5      | Random                     | Performs random increment operations and verifies counter behavior against expected values. |
 
 The following table lists the parameter values verified by the testbench.
 

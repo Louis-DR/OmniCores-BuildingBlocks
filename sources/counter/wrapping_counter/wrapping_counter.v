@@ -19,20 +19,20 @@
 
 module wrapping_counter #(
   parameter RANGE       = 4,
-  parameter RANGE_LOG2  = `CLOG2(RANGE),
-  parameter RESET_VALUE = 0
+  parameter RESET_VALUE = 0,
+  parameter WIDTH       = `CLOG2(RANGE)
 ) (
-  input                   clock,
-  input                   resetn,
-  input                   increment,
-  input                   decrement,
-  output [RANGE_LOG2-1:0] count
+  input              clock,
+  input              resetn,
+  input              increment,
+  input              decrement,
+  output [WIDTH-1:0] count
 );
 
 localparam COUNTER_MIN = 0;
 localparam COUNTER_MAX = RANGE - 1;
 
-reg [RANGE_LOG2-1:0] counter;
+reg [WIDTH-1:0] counter;
 
 generate
   // If the range is a power of 2, the wrapping is automatic

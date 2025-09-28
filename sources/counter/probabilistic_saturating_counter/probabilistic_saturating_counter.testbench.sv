@@ -20,13 +20,21 @@
 
 module probabilistic_saturating_counter__testbench ();
 
-// Test parameters
-localparam real CLOCK_PERIOD           = 10;
+// Device parameters
 localparam int  RANGE                  = 4;
-localparam int  RANGE_LOG2             = $clog2(RANGE);
 localparam int  RESET_VALUE            = 0;
 localparam int  RANDOM_NUMBER_WIDTH    = 8;
 localparam real SATURATION_PROBABILITY = 0.25;
+
+// Derived parameters
+localparam int  WIDTH                  = $clog2(RANGE);
+localparam int  COUNT_MIN              = 0;
+localparam int  COUNT_MAX              = RANGE - 1;
+localparam int  COUNT_MIN_PLUS_ONE     = COUNT_MIN + 1;
+localparam int  COUNT_MAX_MINUS_ONE    = COUNT_MAX - 1;
+
+// Test parameters
+localparam real CLOCK_PERIOD           = 10;
 
 // Check parameters
 localparam int  CHECK_TIMEOUT                      = 1000;
@@ -43,13 +51,9 @@ logic                           resetn;
 logic                           increment;
 logic                           decrement;
 logic [RANDOM_NUMBER_WIDTH-1:0] random_number;
-logic          [RANGE_LOG2-1:0] count;
+logic               [WIDTH-1:0] count;
 
 // Test variables
-int  min_count           = 0;
-int  max_count           = RANGE - 1;
-int  min_plus_one_count  = 1;
-int  max_minus_one_count = RANGE - 2;
 int  expected_count;
 bool force_saturation;
 int  timeout_countdown;
@@ -127,7 +131,7 @@ initial begin
   fork
     // Check
     begin
-      while (count != max_count) begin
+      while (count != COUNT_MAX) begin
         @(posedge clock);
         expected_count += 1;
         @(negedge clock);
@@ -160,7 +164,7 @@ initial begin
   fork
     // Check
     begin
-      while (count != min_count) begin
+      while (count != COUNT_MIN) begin
         @(posedge clock);
         expected_count -= 1;
         @(negedge clock);
@@ -195,15 +199,15 @@ initial begin
       // First, get to max-1
       @(negedge clock);
       increment = 1;
-      while (count != max_minus_one_count) begin
+      while (count != COUNT_MAX_MINUS_ONE) begin
         @(negedge clock);
       end
       increment = 0;
       @(posedge clock);
       // Now measure saturation probability
       repeat (PROBABILITY_MEASUREMENT_DURATION) begin
-        if (count != max_minus_one_count) begin
-          $error("[%0tns] Counter should be at max-1 ('%0d') but is at '%0d'.", $time, max_minus_one_count, count);
+        if (count != COUNT_MAX_MINUS_ONE) begin
+          $error("[%0tns] Counter should be at max-1 ('%0d') but is at '%0d'.", $time, COUNT_MAX_MINUS_ONE, count);
         end
         // Increment to try saturating
         @(negedge clock);
@@ -212,7 +216,7 @@ initial begin
         @(negedge clock);
         increment = 0;
         // Check if the counter has saturated
-        if (count == max_count) begin
+        if (count == COUNT_MAX) begin
           saturation_successes += 1;
           // Reset back to max-1 for next attempt
           @(negedge clock);
@@ -251,15 +255,15 @@ initial begin
       // First, get to min+1
       @(negedge clock);
       decrement = 1;
-      while (count != min_plus_one_count) begin
+      while (count != COUNT_MIN_PLUS_ONE) begin
         @(negedge clock);
       end
       decrement = 0;
       @(posedge clock);
       // Now measure saturation probability
       repeat (PROBABILITY_MEASUREMENT_DURATION) begin
-        if (count != min_plus_one_count) begin
-          $error("[%0tns] Counter should be at min+1 ('%0d') but is at '%0d'.", $time, min_plus_one_count, count);
+        if (count != COUNT_MIN_PLUS_ONE) begin
+          $error("[%0tns] Counter should be at min+1 ('%0d') but is at '%0d'.", $time, COUNT_MIN_PLUS_ONE, count);
         end
         // Decrement to try saturating
         @(negedge clock);
@@ -268,7 +272,7 @@ initial begin
         @(negedge clock);
         decrement = 0;
         // Check if the counter has saturated
-        if (count == min_count) begin
+        if (count == COUNT_MIN) begin
           saturation_successes += 1;
           // Reset back to min+1 for next attempt
           @(negedge clock);
@@ -311,20 +315,20 @@ initial begin
     decrement = random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY);
     @(posedge clock);
     if (!(increment && decrement)) begin
-      if (increment && count != max_count) begin
+      if (increment && count != COUNT_MAX) begin
         expected_count += 1;
-      end else if (decrement && count != min_count) begin
+      end else if (decrement && count != COUNT_MIN) begin
         expected_count -= 1;
       end
     end
     @(negedge clock);
     // If we tried to increment to saturation, but the counter is not saturated, it is fine
-    if (expected_count == max_count && increment && count == max_minus_one_count) begin
-      expected_count = max_minus_one_count;
+    if (expected_count == COUNT_MAX && increment && count == COUNT_MAX_MINUS_ONE) begin
+      expected_count = COUNT_MAX_MINUS_ONE;
     end
     // If we tried to decrement to saturation, but the counter is not saturated, it is fine
-    if (expected_count == min_count && decrement && count == min_plus_one_count) begin
-      expected_count = min_plus_one_count;
+    if (expected_count == COUNT_MIN && decrement && count == COUNT_MIN_PLUS_ONE) begin
+      expected_count = COUNT_MIN_PLUS_ONE;
     end
     // Check if the counter is at the expected value
     if (count != expected_count) begin

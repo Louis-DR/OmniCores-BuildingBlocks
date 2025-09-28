@@ -18,11 +18,17 @@
 
 module saturating_counter__testbench ();
 
+// Device parameters
+localparam int  RANGE       = 4;
+localparam int  RESET_VALUE = 0;
+
+// Derived parameters
+localparam int  WIDTH       = $clog2(RANGE);
+localparam int  COUNT_MIN   = 0;
+localparam int  COUNT_MAX   = RANGE - 1;
+
 // Test parameters
 localparam real CLOCK_PERIOD = 10;
-localparam int  RANGE        = 4;
-localparam int  RANGE_LOG2   = $clog2(RANGE);
-localparam int  RESET_VALUE  = 0;
 
 // Check parameters
 localparam int  RANDOM_CHECK_DURATION              = 100;
@@ -30,15 +36,13 @@ localparam real RANDOM_CHECK_INCREMENT_PROBABILITY = 0.5;
 localparam real RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 
 // Device ports
-logic                  clock;
-logic                  resetn;
-logic                  increment;
-logic                  decrement;
-logic [RANGE_LOG2-1:0] count;
+logic             clock;
+logic             resetn;
+logic             increment;
+logic             decrement;
+logic [WIDTH-1:0] count;
 
 // Test variables
-int min_count = 0;
-int max_count = RANGE - 1;
 int expected_count;
 
 // Device under test
@@ -87,10 +91,10 @@ initial begin
 
   // Check 2 : Increment
   $display("CHECK 2 : Increment.");
-  expected_count = min_count;
+  expected_count = COUNT_MIN;
   @(negedge clock);
   increment = 1;
-  while (count != max_count) begin
+  while (count != COUNT_MAX) begin
     @(posedge clock);
     expected_count += 1;
     @(negedge clock);
@@ -104,10 +108,10 @@ initial begin
 
   // Check 3 : Decrement
   $display("CHECK 3 : Decrement.");
-  expected_count = max_count;
+  expected_count = COUNT_MAX;
   @(negedge clock);
   decrement = 1;
-  while (count != min_count) begin
+  while (count != COUNT_MIN) begin
     @(posedge clock);
     expected_count -= 1;
     @(negedge clock);
@@ -134,9 +138,9 @@ initial begin
     decrement = random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY);
     @(posedge clock);
     if (!(increment && decrement)) begin
-      if (increment && count != max_count) begin
+      if (increment && count != COUNT_MAX) begin
         expected_count += 1;
-      end else if (decrement && count != min_count) begin
+      end else if (decrement && count != COUNT_MIN) begin
         expected_count -= 1;
       end
     end

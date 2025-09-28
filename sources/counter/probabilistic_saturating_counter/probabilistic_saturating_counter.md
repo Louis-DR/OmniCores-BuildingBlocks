@@ -21,7 +21,6 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 | Name                     | Type    | Allowed Values | Default | Description                                                                       |
 | ------------------------ | ------- | -------------- | ------- | --------------------------------------------------------------------------------- |
 | `RANGE`                  | integer | `≥2`           | `4`     | Counter range. Counter counts from `0` to `RANGE-1`.                              |
-| `RANGE_LOG2`             | integer | `≥1`           | `2`     | Bit width of the counter. Automatically calculated as `log₂(RANGE)`.              |
 | `RESET_VALUE`            | integer | `0 to RANGE-1` | `0`     | Initial counter value after reset. Must be within the valid range `[0, RANGE-1]`. |
 | `RANDOM_NUMBER_WIDTH`    | integer | `≥1`           | `8`     | Bit width of the random number input used for probability calculations.           |
 | `SATURATION_PROBABILITY` | real    | `0.0 to 1.0`   | `0.25`  | Probability of transitioning to saturated values when at boundary points.         |
@@ -35,7 +34,7 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 | `increment`     | input     | 1                     | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
 | `decrement`     | input     | 1                     | `clock`      |          |               | Decrement control signal.<br/>`0`: idle.<br/>`1`: decrement counter. |
 | `random_number` | input     | `RANDOM_NUMBER_WIDTH` | `clock`      |          |               | Random number input for probability calculations.                    |
-| `count`         | output    | `RANGE_LOG2`          | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
+| `count`         | output    | `log₂(RANGE)`         | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
 
 ## Operation
 
@@ -65,7 +64,7 @@ The counter is reset to `RESET_VALUE` when `resetn` is asserted (active-low). Th
 | -------------------- | --------------- | ------- |
 | `O(log₂ log₂ RANGE)` | `O(log₂ RANGE)` |         |
 
-The module requires `RANGE_LOG2` flip-flops for the counter register, plus combinational logic for boundary detection, probability calculations, and random number comparison. The critical path includes the counter comparison logic, probability threshold calculation, and the increment/decrement arithmetic with conditional probabilistic behavior.
+The module requires `log₂(RANGE)` flip-flops for the counter register, plus combinational logic for boundary detection, probability calculations, and random number comparison. The critical path includes the counter comparison logic, probability threshold calculation, and the increment/decrement arithmetic with conditional probabilistic behavior.
 
 ## Verification
 

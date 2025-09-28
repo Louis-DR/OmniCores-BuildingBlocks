@@ -21,18 +21,17 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 | Name          | Type    | Allowed Values | Default | Description                                                                       |
 | ------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------- |
 | `RANGE`       | integer | `≥2`           | `4`     | Counter range. Counter counts from `0` to `RANGE-1`.                              |
-| `RANGE_LOG2`  | integer | `≥1`           | `2`     | Bit width of the counter. Automatically calculated as `log₂(RANGE)`.              |
 | `RESET_VALUE` | integer | `0 to RANGE-1` | `0`     | Initial counter value after reset. Must be within the valid range `[0, RANGE-1]`. |
 
 ## Ports
 
-| Name        | Direction | Width        | Clock        | Reset    | Reset value   | Description                                                          |
-| ----------- | --------- | ------------ | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
-| `clock`     | input     | 1            | self         |          |               | Clock signal.                                                        |
-| `resetn`    | input     | 1            | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
-| `increment` | input     | 1            | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
-| `decrement` | input     | 1            | `clock`      |          |               | Decrement control signal.<br/>`0`: idle.<br/>`1`: decrement counter. |
-| `count`     | output    | `RANGE_LOG2` | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
+| Name        | Direction | Width         | Clock        | Reset    | Reset value   | Description                                                          |
+| ----------- | --------- | ------------- | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
+| `clock`     | input     | 1             | self         |          |               | Clock signal.                                                        |
+| `resetn`    | input     | 1             | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
+| `increment` | input     | 1             | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
+| `decrement` | input     | 1             | `clock`      |          |               | Decrement control signal.<br/>`0`: idle.<br/>`1`: decrement counter. |
+| `count`     | output    | `log₂(RANGE)` | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
 
 ## Operation
 
@@ -59,7 +58,7 @@ The counter is reset to `RESET_VALUE` when `resetn` is asserted (active-low). Th
 | -------------------- | --------------- | ------- |
 | `O(log₂ log₂ RANGE)` | `O(log₂ RANGE)` |         |
 
-The module requires `RANGE_LOG2` flip-flops for the counter register, plus small combinational logic for boundary detection and increment/decrement operations. The critical path includes the counter comparison logic and the increment/decrement arithmetic.
+The module requires `log₂(RANGE)` flip-flops for the counter register, plus small combinational logic for boundary detection and increment/decrement operations. The critical path includes the counter comparison logic and the increment/decrement arithmetic.
 
 ## Verification
 
