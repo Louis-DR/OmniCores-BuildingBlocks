@@ -28,7 +28,7 @@ module advanced_wrapping_counter #(
   parameter RANGE        = 4,
   parameter RESET_VALUE  = 0,
   parameter LAP_BIT      = 0,
-  parameter WIDTH_NO_LAP = $clog2(RANGE),
+  parameter WIDTH_NO_LAP = `CLOG2(RANGE),
   parameter WIDTH        = WIDTH_NO_LAP + LAP_BIT
 ) (
   input              clock,
