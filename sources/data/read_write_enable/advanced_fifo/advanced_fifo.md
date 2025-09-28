@@ -18,11 +18,11 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Parameters
 
-| Name         | Type    | Allowed Values | Default       | Description                                     |
-| ------------ | ------- | -------------- | ------------- | ----------------------------------------------- |
-| `WIDTH`      | integer | `≥1`           | `8`           | Bit width of the data vector.                   |
-| `DEPTH`      | integer | `≥2`           | `4`           | Number of entries in the queue.                 |
-| `DEPTH_LOG2` | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated). |
+| Name         | Type    | Allowed Values | Default       | Description                                                 |
+| ------------ | ------- | -------------- | ------------- | ----------------------------------------------------------- |
+| `WIDTH`      | integer | `≥1`           | `8`           | Bit width of the data vector.                               |
+| `DEPTH`      | integer | `≥2`           | `4`           | Number of entries in the queue. Non-power-of-two supported. |
+| `DEPTH_LOG2` | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated).             |
 
 ## Ports
 
@@ -52,7 +52,7 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The FIFO maintains an internal memory array indexed by separate read and write pointers, each with an additional wrap bit for correct level calculation.
+The FIFO maintains an internal memory array indexed by separate read and write pointers, each with an additional lap bit for correct level calculation, implemented with `advanced_wrapping_counter`.
 
 For **write operation**, when `write_enable` is asserted, `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented. Writing when full is ignored and the data is lost.
 
@@ -68,7 +68,7 @@ The level, status, and threshold outputs are calculated based on the read and wr
 
 The `write_miss` and `read_error` flags are cleared when the `clear_flags` input is asserted.
 
-Asserting the `flush` input empties the whole FIFO at the next rising edge of the clock by advancing the read pointer to the write pointer.
+Asserting the `flush` input empties the whole FIFO at the next rising edge of the clock by advancing the read pointer to the write pointer. During a flush cycle, read and write pointer increments are gated so no entry is consumed or written concurrently.
 
 ## Paths
 
@@ -133,7 +133,8 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-This module has no external module dependencies.
+- Module: `advanced_wrapping_counter` — `sources/counter/advanced_wrapping_counter/advanced_wrapping_counter.v`
+- Include: `clog2.vh`
 
 ## Related modules
 

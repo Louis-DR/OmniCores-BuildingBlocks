@@ -18,10 +18,10 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Parameters
 
-| Name    | Type    | Allowed Values | Default | Description                     |
-| ------- | ------- | -------------- | ------- | ------------------------------- |
-| `WIDTH` | integer | `≥1`           | `8`     | Bit width of the data vector.   |
-| `DEPTH` | integer | `≥2`           | `4`     | Number of entries in the queue. |
+| Name    | Type    | Allowed Values    | Default | Description                     |
+| ------- | ------- | ----------------- | ------- | ------------------------------- |
+| `WIDTH` | integer | `≥1`              | `8`     | Bit width of the data vector.   |
+| `DEPTH` | integer | `≥2` power-of-two | `4`     | Number of entries in the queue. |
 
 ## Ports
 
