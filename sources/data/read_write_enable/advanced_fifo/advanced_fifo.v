@@ -68,26 +68,75 @@ reg [WIDTH-1:0] memory [DEPTH-1:0];
 // │ Write logic │
 // └─────────────┘
 
-// Write pointer with wrap bit to compare with the read pointer
-reg [DEPTH_LOG2:0] write_pointer;
+// Write pointer with lap bit handled by advanced counter
+wire [DEPTH_LOG2:0] write_pointer;
 
-// Write address without wrap bit to index the memory
+// Write address without lap bit to index the memory
 wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 
+// Write lap bit
+wire write_lap = write_pointer[DEPTH_LOG2];
+
+// Write when not full and not flushing
+wire do_write = write_enable && !full && !flush;
+
+// Write pointer counter
+advanced_wrapping_counter #(
+  .RANGE       ( DEPTH ),
+  .RESET_VALUE ( 0     ),
+  .LAP_BIT     ( 1     )
+) write_pointer_counter (
+  .clock       ( clock         ),
+  .resetn      ( resetn        ),
+  .load_enable ( '0            ),
+  .load_count  ( '0            ),
+  .decrement   ( '0            ),
+  .increment   ( do_write      ),
+  .count       ( write_pointer ),
+  .minimum     (               ),
+  .maximum     (               ),
+  .underflow   (               ),
+  .overflow    (               )
+);
 
 
 // ┌────────────┐
 // │ Read logic │
 // └────────────┘
 
-// Read pointer with wrap bit to compare with the read pointer
-reg [DEPTH_LOG2:0] read_pointer;
+// Read pointer with lap bit handled by advanced counter
+wire [DEPTH_LOG2:0] read_pointer;
 
-// Read address without wrap bit to index the memory
+// Read address without lap bit to index the memory
 wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
+
+// Read lap bit
+wire read_lap = read_pointer[DEPTH_LOG2];
 
 // Value at the read pointer is always on the read data bus
 assign read_data = memory[read_address];
+
+// Read when not empty and not flushing
+wire do_read  = read_enable  && !empty && !flush;
+
+// Read pointer counter with flush control
+advanced_wrapping_counter #(
+  .RANGE       ( DEPTH ),
+  .RESET_VALUE ( 0     ),
+  .LAP_BIT     ( 1     )
+) read_pointer_counter (
+  .clock       ( clock         ),
+  .resetn      ( resetn        ),
+  .load_enable ( flush         ),
+  .load_count  ( write_pointer ),
+  .decrement   ( '0            ),
+  .increment   ( do_read       ),
+  .count       ( read_pointer  ),
+  .minimum     (               ),
+  .maximum     (               ),
+  .underflow   (               ),
+  .overflow    (               )
+);
 
 
 
@@ -95,16 +144,16 @@ assign read_data = memory[read_address];
 // │ Status logic │
 // └──────────────┘
 
-// Calculate FIFO level by comparing write and read pointers
+// Calculate FIFO level
 assign level = write_pointer - read_pointer;
 
-// Queue is empty if the read and write pointers are the same and the wrap bits are equal
-assign empty        = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && write_pointer[DEPTH_LOG2] == read_pointer[DEPTH_LOG2];
+// Queue is empty if the read and write pointers are the same and the lap bits are equal
+assign empty        = write_address == read_address && write_lap == read_lap;
 assign not_empty    = ~empty;
 assign almost_empty = level == 1;
 
-// Queue is full if the read and write pointers are the same but the wrap bits are different
-assign full         = write_pointer[DEPTH_LOG2-1:0] == read_pointer[DEPTH_LOG2-1:0] && write_pointer[DEPTH_LOG2] != read_pointer[DEPTH_LOG2];
+// Queue is full if the read and write pointers are the same but the lap bits are different
+assign full         = write_address == read_address && write_lap != read_lap;
 assign not_full     = ~full;
 assign almost_full  = level == DEPTH - 1;
 
@@ -118,45 +167,24 @@ assign upper_threshold_status = level >= upper_threshold_level;
 // │ Synchronous logic │
 // └───────────────────┘
 
-// Pointer and flags sequential logic
+// Flags sequential logic
 always @(posedge clock or negedge resetn) begin
-  // Reset
   if (!resetn) begin
-    write_pointer <= 0;
-    read_pointer  <= 0;
-    write_miss    <= 0;
-    read_error    <= 0;
-  end
-  // Operation
-  else begin
-    // Flush
-    if (flush) begin
-      read_pointer <= write_pointer;
-    end
-    // Not flush
-    else begin
-      // Write
-      if (write_enable) begin
-        if (full) begin
-          if (!clear_flags) begin
-            write_miss <= 1;
-          end
-        end else begin
-          write_pointer <= write_pointer + 1;
+    write_miss <= 0;
+    read_error <= 0;
+  end else begin
+    if (!flush) begin
+      if (write_enable && full) begin
+        if (!clear_flags) begin
+          write_miss <= 1;
         end
       end
-      // Read
-      if (read_enable) begin
-        if (empty) begin
-          if (!clear_flags) begin
-            read_error <= 1;
-          end
-        end else begin
-          read_pointer <= read_pointer + 1;
+      if (read_enable && empty) begin
+        if (!clear_flags) begin
+          read_error <= 1;
         end
       end
     end
-    // Clear
     if (clear_flags) begin
       write_miss <= 0;
       read_error <= 0;

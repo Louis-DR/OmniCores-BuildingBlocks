@@ -1,1 +1,2 @@
 advanced_fifo.v
+../../../counter/advanced_wrapping_counter/advanced_wrapping_counter.v
