@@ -40,8 +40,8 @@ localparam real RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 // Device ports
 logic             clock;
 logic             resetn;
-logic             increment;
 logic             decrement;
+logic             increment;
 logic [WIDTH-1:0] count;
 
 // Test variables
@@ -55,8 +55,8 @@ wrapping_counter #(
 ) wrapping_counter_dut (
   .clock     ( clock     ),
   .resetn    ( resetn    ),
-  .increment ( increment ),
   .decrement ( decrement ),
+  .increment ( increment ),
   .count     ( count     )
 );
 
@@ -94,8 +94,8 @@ initial begin
   $dumpvars(0,wrapping_counter__testbench);
 
   // Initialization
-  increment = 0;
   decrement = 0;
+  increment = 0;
 
   // Reset
   resetn = 0;
@@ -298,8 +298,8 @@ initial begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
   end
-  increment = 0;
   decrement = 0;
+  increment = 0;
 
   // End of test
   $finish;

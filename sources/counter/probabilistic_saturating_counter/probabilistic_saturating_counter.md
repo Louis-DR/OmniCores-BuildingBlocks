@@ -31,8 +31,8 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 | --------------- | --------- | --------------------- | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
 | `clock`         | input     | 1                     | self         |          |               | Clock signal.                                                        |
 | `resetn`        | input     | 1                     | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
-| `increment`     | input     | 1                     | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
 | `decrement`     | input     | 1                     | `clock`      |          |               | Decrement control signal.<br/>`0`: idle.<br/>`1`: decrement counter. |
+| `increment`     | input     | 1                     | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
 | `random_number` | input     | `RANDOM_NUMBER_WIDTH` | `clock`      |          |               | Random number input for probability calculations.                    |
 | `count`         | output    | `log₂(RANGE)`         | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
 
@@ -40,9 +40,9 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 
 The probabilistic saturating counter maintains a count value within the range `[0, RANGE-1]` while exhibiting probabilistic behavior at the boundary transition points. On each rising edge of the clock, the counter responds to the increment and decrement control signals with probabilistic saturation near the boundaries.
 
-For **increment operation**, when `increment` is asserted and the counter is not at its maximum value (`RANGE-1`), the counter normally increases by 1. However, when the counter is at the pre-maximum value (`RANGE-2`), the transition to the maximum value only occurs with the configured probability. The probability is determined by comparing the `random_number` input against the `SATURATION_PROBABILITY` threshold. If the counter is already at the maximum value, asserting `increment` has no effect.
-
 For **decrement operation**, when `decrement` is asserted and the counter is not at its minimum value (`0`), the counter normally decreases by 1. However, when the counter is at the post-minimum value (`1`), the transition to the minimum value only occurs with the configured probability using the same random number comparison mechanism. If the counter is already at the minimum value, asserting `decrement` has no effect.
+
+For **increment operation**, when `increment` is asserted and the counter is not at its maximum value (`RANGE-1`), the counter normally increases by 1. However, when the counter is at the pre-maximum value (`RANGE-2`), the transition to the maximum value only occurs with the configured probability. The probability is determined by comparing the `random_number` input against the `SATURATION_PROBABILITY` threshold. If the counter is already at the maximum value, asserting `increment` has no effect.
 
 The **random saturation** (either for the maximum or minimum value) is determined using the `random_number` input and the `SATURATION_PROBABILITY` parameter using the formula `random_number < SATURATION_PROBABILITY × 2 ^ RANDOM_NUMBER_WIDTH`. For instance, if `SATURATION_PROBABILITY=0.25` (25%) and `RANDOM_NUMBER_WIDTH=8`, then the saturation is possible only if `random_number < 0.25 × 2⁸ = 64`. Therefore, setting `random_number` to zero guarantees saturation, and `random_number` to all ones guarantees that saturation is impossible. If the formula `SATURATION_PROBABILITY × 2 ^ RANDOM_NUMBER_WIDTH` doesn't evaluate to an integer, then the effective probability isn't exact.
 
@@ -54,8 +54,8 @@ The counter is reset to `RESET_VALUE` when `resetn` is asserted (active-low). Th
 
 | From            | To      | Type       | Comment                                                   |
 | --------------- | ------- | ---------- | --------------------------------------------------------- |
-| `increment`     | `count` | sequential | Increment control path through internal counter register. |
 | `decrement`     | `count` | sequential | Decrement control path through internal counter register. |
+| `increment`     | `count` | sequential | Increment control path through internal counter register. |
 | `random_number` | `count` | sequential | Random number path through probability calculation logic. |
 
 ## Complexity

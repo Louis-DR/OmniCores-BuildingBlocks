@@ -43,8 +43,8 @@ localparam real RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 // Device ports
 logic                  clock;
 logic                  resetn;
-logic                  increment;
 logic                  decrement;
+logic                  increment;
 logic [WIDTH-1:0] count;
 
 // Test variables
@@ -58,8 +58,8 @@ hysteresis_saturating_counter #(
 ) hysteresis_saturating_counter_dut (
   .clock     ( clock     ),
   .resetn    ( resetn    ),
-  .increment ( increment ),
   .decrement ( decrement ),
+  .increment ( increment ),
   .count     ( count     )
 );
 
@@ -97,8 +97,8 @@ initial begin
   $dumpvars(0,hysteresis_saturating_counter__testbench);
 
   // Initialization
-  increment = 0;
   decrement = 0;
+  increment = 0;
 
   // Reset
   resetn = 0;
@@ -215,8 +215,8 @@ initial begin
   // Check 8 : Random
   $display("CHECK 8 : Random.");
   @(negedge clock);
-  decrement = 0;
   increment = 0;
+  decrement = 0;
   resetn    = 0;
   expected_count = RESET_VALUE;
   @(negedge clock);
@@ -232,8 +232,8 @@ initial begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
   end
-  increment = 0;
   decrement = 0;
+  increment = 0;
 
   // End of test
   $finish;

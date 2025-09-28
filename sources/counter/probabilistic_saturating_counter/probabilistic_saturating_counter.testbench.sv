@@ -48,8 +48,8 @@ localparam real RANDOM_CHECK_DECREMENT_PROBABILITY = 0.5;
 // Device ports
 logic                           clock;
 logic                           resetn;
-logic                           increment;
 logic                           decrement;
+logic                           increment;
 logic [RANDOM_NUMBER_WIDTH-1:0] random_number;
 logic               [WIDTH-1:0] count;
 
@@ -72,8 +72,8 @@ probabilistic_saturating_counter #(
 ) probabilistic_saturating_counter_dut (
   .clock         ( clock         ),
   .resetn        ( resetn        ),
-  .increment     ( increment     ),
   .decrement     ( decrement     ),
+  .increment     ( increment     ),
   .random_number ( random_number ),
   .count         ( count         )
 );
@@ -102,8 +102,8 @@ initial begin
   $dumpvars(0,probabilistic_saturating_counter__testbench);
 
   // Initialization
-  increment        = 0;
   decrement        = 0;
+  increment        = 0;
   random_number    = 0;
   force_saturation = false;
 
@@ -335,8 +335,8 @@ initial begin
       $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
     end
   end
-  increment = 0;
   decrement = 0;
+  increment = 0;
 
   // End of test
   $finish;

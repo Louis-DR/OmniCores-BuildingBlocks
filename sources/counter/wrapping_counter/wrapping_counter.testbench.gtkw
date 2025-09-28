@@ -11,8 +11,8 @@
 @28
 wrapping_counter__testbench.wrapping_counter_dut.clock
 wrapping_counter__testbench.wrapping_counter_dut.resetn
-wrapping_counter__testbench.wrapping_counter_dut.increment
 wrapping_counter__testbench.wrapping_counter_dut.decrement
+wrapping_counter__testbench.wrapping_counter_dut.increment
 @24
 wrapping_counter__testbench.wrapping_counter_dut.count[1:0]
 [pattern_trace] 1

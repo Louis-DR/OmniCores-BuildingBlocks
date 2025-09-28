@@ -25,8 +25,8 @@ module hysteresis_saturating_counter #(
 ) (
   input              clock,
   input              resetn,
-  input              increment,
   input              decrement,
+  input              increment,
   output [WIDTH-1:0] count
 );
 

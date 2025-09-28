@@ -30,17 +30,17 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 | ----------- | --------- | ------------- | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
 | `clock`     | input     | 1             | self         |          |               | Clock signal.                                                        |
 | `resetn`    | input     | 1             | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
-| `increment` | input     | 1             | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
 | `decrement` | input     | 1             | `clock`      |          |               | Decrement control signal.<br/>`0`: idle.<br/>`1`: decrement counter. |
+| `increment` | input     | 1             | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
 | `count`     | output    | `log₂(RANGE)` | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
 
 ## Operation
 
 The hysteresis saturating counter maintains a count value within the range `[0, RANGE-1]` while exhibiting hysteresis behavior at specific transition points. On each rising edge of the clock, the counter responds to the increment and decrement control signals with special jump behavior at the middle thresholds.
 
-For **increment operation**, when `increment` is asserted and the counter is not at its maximum value (`RANGE-1`), the counter normally increases by 1. However, when the counter reaches the lower hysteresis threshold (`RANGE/2-1`), it jumps to the upper threshold plus coercivity (`RANGE/2+COERCIVITY`) instead of incrementing by 1. If the counter is already at the maximum value, asserting `increment` has no effect.
-
 For **decrement operation**, when `decrement` is asserted and the counter is not at its minimum value (`0`), the counter normally decreases by 1. However, when the counter reaches the upper hysteresis threshold (`RANGE/2`), it jumps to the lower threshold minus coercivity (`RANGE/2-1-COERCIVITY`) instead of decrementing by 1. If the counter is already at the minimum value, asserting `decrement` has no effect.
+
+For **increment operation**, when `increment` is asserted and the counter is not at its maximum value (`RANGE-1`), the counter normally increases by 1. However, when the counter reaches the lower hysteresis threshold (`RANGE/2-1`), it jumps to the upper threshold plus coercivity (`RANGE/2+COERCIVITY`) instead of incrementing by 1. If the counter is already at the maximum value, asserting `increment` has no effect.
 
 The **hysteresis behavior** creates a loop where the counter exhibits different transition points when incrementing versus decrementing, providing noise immunity and preventing oscillation around the middle values. The coercivity parameter determines the width of the hysteresis gap. If both `increment` and `decrement` are asserted simultaneously, the counter value is not changed.
 
@@ -50,8 +50,8 @@ The counter is reset to `RESET_VALUE` when `resetn` is asserted (active-low). Th
 
 | From        | To      | Type       | Comment                                                   |
 | ----------- | ------- | ---------- | --------------------------------------------------------- |
-| `increment` | `count` | sequential | Increment control path through internal counter register. |
 | `decrement` | `count` | sequential | Decrement control path through internal counter register. |
+| `increment` | `count` | sequential | Increment control path through internal counter register. |
 
 ## Complexity
 

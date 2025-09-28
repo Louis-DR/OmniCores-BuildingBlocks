@@ -26,8 +26,8 @@ module probabilistic_saturating_counter #(
 ) (
   input                           clock,
   input                           resetn,
-  input                           increment,
   input                           decrement,
+  input                           increment,
   input [RANDOM_NUMBER_WIDTH-1:0] random_number,
   output              [WIDTH-1:0] count
 );

@@ -29,17 +29,17 @@ The counter supports both power-of-2 and non-power-of-2 ranges with optimized im
 | ----------- | --------- | ------------- | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
 | `clock`     | input     | 1             | self         |          |               | Clock signal.                                                        |
 | `resetn`    | input     | 1             | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
-| `increment` | input     | 1             | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
 | `decrement` | input     | 1             | `clock`      |          |               | Decrement control signal.<br/>`0`: idle.<br/>`1`: decrement counter. |
+| `increment` | input     | 1             | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
 | `count`     | output    | `log₂(RANGE)` | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
 
 ## Operation
 
 The wrapping counter maintains a count value within the range `[0, RANGE-1]`. On each rising edge of the clock, the counter responds to the increment and decrement control signals.
 
-For **increment operation**, when `increment` is asserted and the counter is not at its maximum value (`RANGE-1`), the counter increases by 1. If the counter is at the maximum value, asserting `increment` causes the counter to wrap around to the minimum value (`0`).
-
 For **decrement operation**, when `decrement` is asserted and the counter is not at its minimum value (`0`), the counter decreases by 1. If the counter is at the minimum value, asserting `decrement` causes the counter to wrap around to the maximum value (`RANGE-1`).
+
+For **increment operation**, when `increment` is asserted and the counter is not at its maximum value (`RANGE-1`), the counter increases by 1. If the counter is at the maximum value, asserting `increment` causes the counter to wrap around to the minimum value (`0`).
 
 The counter exhibits **wrapping behavior** at both boundaries, providing overflow wrapping when incrementing at maximum value and underflow wrapping when decrementing at minimum value. This makes it suitable for applications requiring circular or modular counting behavior. If both `increment` and `decrement` are asserted simultaneously, the counter value is not changed.
 
@@ -51,8 +51,8 @@ The counter is reset to `RESET_VALUE` when `resetn` is asserted (active-low). Th
 
 | From        | To      | Type       | Comment                                                   |
 | ----------- | ------- | ---------- | --------------------------------------------------------- |
-| `increment` | `count` | sequential | Increment control path through internal counter register. |
 | `decrement` | `count` | sequential | Decrement control path through internal counter register. |
+| `increment` | `count` | sequential | Increment control path through internal counter register. |
 
 ## Complexity
 

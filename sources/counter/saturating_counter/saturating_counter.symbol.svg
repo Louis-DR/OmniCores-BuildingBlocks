@@ -8,10 +8,10 @@
       <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
         <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">increment</text>
+      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">decrement</text>
         <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">decrement</text>
+      <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">increment</text>
         <line x1="19" y1="65" x2="5" y2="65" stroke="black" stroke-width="1"/>
         <path d="M 25 65 l -6 +2.0 v -4 z" fill="black"/>
       <text x="106" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">count</text>
