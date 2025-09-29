@@ -104,9 +104,9 @@ This module has no external module dependencies.
 
 ## Related modules
 
-| Module                                                                    | Path                                                                    | Comment                                                         |
-| ------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [`valid_ready_skid_buffer`](../../valid_ready/skid_buffer/skid_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/skid_buffer`         | Variant of this module with valid-ready handshake flow control. |
-| [`simple_buffer`](../simple_buffer/simple_buffer.md)                      | `omnicores-buildingblocks/sources/data/read_write_enable/simple_buffer` | Single-entry buffer for storage.                                |
-| [`bypass_buffer`](../bypass_buffer/bypass_buffer.md)                      | `omnicores-buildingblocks/sources/data/read_write_enable/bypass_buffer` | Single-entry buffer aimed at relieving back-pressure.           |
-| [`fifo`](../fifo/fifo.md)                                                 | `omnicores-buildingblocks/sources/data/read_write_enable/fifo`          | Multi-entry first-in-first-out queue.                           |
+| Module                                                                    | Path                                                                | Comment                                                         |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`valid_ready_skid_buffer`](../../valid_ready/skid_buffer/skid_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/skid_buffer`     | Variant of this module with valid-ready handshake flow control. |
+| [`simple_buffer`](../simple_buffer/simple_buffer.md)                      | `omnicores-buildingblocks/sources/data/access_enable/simple_buffer` | Single-entry buffer for storage.                                |
+| [`bypass_buffer`](../bypass_buffer/bypass_buffer.md)                      | `omnicores-buildingblocks/sources/data/access_enable/bypass_buffer` | Single-entry buffer aimed at relieving back-pressure.           |
+| [`fifo`](../fifo/fifo.md)                                                 | `omnicores-buildingblocks/sources/data/access_enable/fifo`          | Multi-entry first-in-first-out queue.                           |

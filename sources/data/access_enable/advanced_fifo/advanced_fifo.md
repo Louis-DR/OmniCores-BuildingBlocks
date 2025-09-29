@@ -138,9 +138,9 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                                      | Path                                                                                 | Comment                                                         |
-| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| [`valid_ready_advanced_fifo`](../../valid_ready/advanced_fifo/valid_ready_advanced_fifo.md) | `omnicores-buildingblocks/sources/data/valid_ready/advanced_fifo`                    | Variant of this module with valid-ready handshake flow control. |
-| [`fifo`](../fifo/fifo.md)                                                                   | `omnicores-buildingblocks/sources/data/read_write_enable/fifo`                       | Basic FIFO without advanced features or protection.             |
-| [`asynchronous_fifo`](../asynchronous_fifo/asynchronous_fifo.md)                            | `omnicores-buildingblocks/sources/data/read_write_enable/asynchronous_fifo`          | Basic asynchronous FIFO for clock domain crossing.              |
-| [`asynchronous_advanced_fifo`](../asynchronous_advanced_fifo/asynchronous_advanced_fifo.md) | `omnicores-buildingblocks/sources/data/read_write_enable/asynchronous_advanced_fifo` | Advanced asynchronous FIFO for crossing clock domains.          |
+| Module                                                                                      | Path                                                                             | Comment                                                         |
+| ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`valid_ready_advanced_fifo`](../../valid_ready/advanced_fifo/valid_ready_advanced_fifo.md) | `omnicores-buildingblocks/sources/data/valid_ready/advanced_fifo`                | Variant of this module with valid-ready handshake flow control. |
+| [`fifo`](../fifo/fifo.md)                                                                   | `omnicores-buildingblocks/sources/data/access_enable/fifo`                       | Basic FIFO without advanced features or protection.             |
+| [`asynchronous_fifo`](../asynchronous_fifo/asynchronous_fifo.md)                            | `omnicores-buildingblocks/sources/data/access_enable/asynchronous_fifo`          | Basic asynchronous FIFO for clock domain crossing.              |
+| [`asynchronous_advanced_fifo`](../asynchronous_advanced_fifo/asynchronous_advanced_fifo.md) | `omnicores-buildingblocks/sources/data/access_enable/asynchronous_advanced_fifo` | Advanced asynchronous FIFO for crossing clock domains.          |

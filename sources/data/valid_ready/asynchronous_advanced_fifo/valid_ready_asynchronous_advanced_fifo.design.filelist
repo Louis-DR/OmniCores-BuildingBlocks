@@ -1,5 +1,5 @@
 valid_ready_asynchronous_advanced_fifo.v
-../../read_write_enable/asynchronous_advanced_fifo/asynchronous_advanced_fifo.v
+../../access_enable/asynchronous_advanced_fifo/asynchronous_advanced_fifo.v
 ../../../timing/vector_synchronizer/vector_synchronizer.v
 ../../../timing/synchronizer/synchronizer.v
 ../../../encoding/gray/binary_to_gray.v

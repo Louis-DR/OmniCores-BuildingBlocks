@@ -134,15 +134,15 @@ There are no specific synthesis or implementation constraints for this block.
 
 This module depends on the following modules:
 
-| Module                                                                                      | Path                                                                          | Comment                                        |
-| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------- |
-| [`out_of_order_buffer`](../../read_write_enable/out_of_order_buffer/out_of_order_buffer.md) | `omnicores-buildingblocks/sources/data/read_write_enable/out_of_order_buffer` | Underlying out-of-order buffer implementation. |
+| Module                                                                                  | Path                                                                      | Comment                                        |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------- |
+| [`out_of_order_buffer`](../../access_enable/out_of_order_buffer/out_of_order_buffer.md) | `omnicores-buildingblocks/sources/data/access_enable/out_of_order_buffer` | Underlying out-of-order buffer implementation. |
 
 ## Related modules
 
-| Module                                                                                      | Path                                                                          | Comment                                                     |
-| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [`out_of_order_buffer`](../../read_write_enable/out_of_order_buffer/out_of_order_buffer.md) | `omnicores-buildingblocks/sources/data/read_write_enable/out_of_order_buffer` | Base variant with read-write enable flow control.           |
-| [`valid_ready_reorder_buffer`](../reorder_buffer/valid_ready_reorder_buffer.md)             | `omnicores-buildingblocks/sources/data/valid_ready/reorder_buffer`            | Buffer that ensures in-order read from out-of-order writes. |
-| [`valid_ready_fifo`](../fifo/valid_ready_fifo.md)                                           | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                      | Traditional first-in-first-out queue with ordered access.   |
-| [`valid_ready_simple_buffer`](../simple_buffer/valid_ready_simple_buffer.md)                | `omnicores-buildingblocks/sources/data/valid_ready/simple_buffer`             | Single-entry buffer for storage.                            |
+| Module                                                                                  | Path                                                                      | Comment                                                     |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| [`out_of_order_buffer`](../../access_enable/out_of_order_buffer/out_of_order_buffer.md) | `omnicores-buildingblocks/sources/data/access_enable/out_of_order_buffer` | Base variant with read-write enable flow control.           |
+| [`valid_ready_reorder_buffer`](../reorder_buffer/valid_ready_reorder_buffer.md)         | `omnicores-buildingblocks/sources/data/valid_ready/reorder_buffer`        | Buffer that ensures in-order read from out-of-order writes. |
+| [`valid_ready_fifo`](../fifo/valid_ready_fifo.md)                                       | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                  | Traditional first-in-first-out queue with ordered access.   |
+| [`valid_ready_simple_buffer`](../simple_buffer/valid_ready_simple_buffer.md)            | `omnicores-buildingblocks/sources/data/valid_ready/simple_buffer`         | Single-entry buffer for storage.                            |

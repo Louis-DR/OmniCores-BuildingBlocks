@@ -1,2 +1,2 @@
 valid_ready_fifo.v
-../../read_write_enable/fifo/fifo.v
+../../access_enable/fifo/fifo.v

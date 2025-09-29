@@ -1,2 +1,2 @@
 valid_ready_simple_buffer.v
-../../read_write_enable/simple_buffer/simple_buffer.v
+../../access_enable/simple_buffer/simple_buffer.v

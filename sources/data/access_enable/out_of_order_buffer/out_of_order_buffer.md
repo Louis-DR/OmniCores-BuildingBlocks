@@ -137,8 +137,8 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                                            | Path                                                                     | Comment                                                         |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| [`valid_ready_out_of_order_buffer`](../../valid_ready/out_of_order_buffer/out_of_order_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/out_of_order_buffer`  | Variant of this module with valid-ready handshake flow control. |
-| [`reorder_buffer`](../reorder_buffer/reorder_buffer.md)                                           | `omnicores-buildingblocks/sources/data/read_write_enable/reorder_buffer` | Buffer that ensures in-order read from out-of-order writes.     |
-| [`fifo`](../fifo/fifo.md)                                                                         | `omnicores-buildingblocks/sources/data/read_write_enable/fifo`           | Traditional first-in-first-out queue with ordered access.       |
+| Module                                                                                            | Path                                                                    | Comment                                                         |
+| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`valid_ready_out_of_order_buffer`](../../valid_ready/out_of_order_buffer/out_of_order_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/out_of_order_buffer` | Variant of this module with valid-ready handshake flow control. |
+| [`reorder_buffer`](../reorder_buffer/reorder_buffer.md)                                           | `omnicores-buildingblocks/sources/data/access_enable/reorder_buffer`    | Buffer that ensures in-order read from out-of-order writes.     |
+| [`fifo`](../fifo/fifo.md)                                                                         | `omnicores-buildingblocks/sources/data/access_enable/fifo`              | Traditional first-in-first-out queue with ordered access.       |

@@ -116,7 +116,7 @@ This module has no external module dependencies.
 
 | Module                                                                                   | Path                                                              | Comment                                                               |
 | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [`lifo`](../../read_write_enable/lifo/lifo.md)                                           | `omnicores-buildingblocks/sources/data/read_write_enable/lifo`    | Variant of this module with read-write-enable handshake flow control. |
+| [`lifo`](../../access_enable/lifo/lifo.md)                                               | `omnicores-buildingblocks/sources/data/access_enable/lifo`        | Variant of this module with read-write-enable handshake flow control. |
 | [`valid_ready_fifo`](../valid_ready/fifo/valid_ready_fifo.md)                            | `omnicores-buildingblocks/sources/data/valid_ready/fifo`          | First-In First-Out queue with opposite ordering behavior.             |
 | [`valid_ready_simple_buffer`](../valid_ready/simple_buffer/valid_ready_simple_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/simple_buffer` | Single-entry buffer for storage.                                      |
 | [`valid_ready_skid_buffer`](../valid_ready/skid_buffer/valid_ready_skid_buffer.md)       | `omnicores-buildingblocks/sources/data/valid_ready/skid_buffer`   | Two-entry buffer for simple bus pipelining.                           |

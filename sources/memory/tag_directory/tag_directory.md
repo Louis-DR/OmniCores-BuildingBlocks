@@ -123,8 +123,8 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                                           | Path                                                                          | Comment                                                                      |
-| ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [`simple_dual_port_ram`](../simple_dual_port_ram/simple_dual_port_ram.md)                        | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram`                | Standard memory module, accessed by address instead of content.              |
-| [`reorder_buffer`](../../data/valid_ready/reorder_buffer/reorder_buffer.md)                      | `omnicores-buildingblocks/sources/data/valid_ready/reorder_buffer`            | Buffer with in-order allocation, out-of-order writing, and in-order reading. |
-| [`out_of_order_buffer`](../../data/read_write_enable/out_of_order_buffer/out_of_order_buffer.md) | `omnicores-buildingblocks/sources/data/read_write_enable/out_of_order_buffer` | Buffer with in-order writing and out-of-order reading.                       |
+| Module                                                                                       | Path                                                                      | Comment                                                                      |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [`simple_dual_port_ram`](../simple_dual_port_ram/simple_dual_port_ram.md)                    | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram`            | Standard memory module, accessed by address instead of content.              |
+| [`reorder_buffer`](../../data/valid_ready/reorder_buffer/reorder_buffer.md)                  | `omnicores-buildingblocks/sources/data/valid_ready/reorder_buffer`        | Buffer with in-order allocation, out-of-order writing, and in-order reading. |
+| [`out_of_order_buffer`](../../data/access_enable/out_of_order_buffer/out_of_order_buffer.md) | `omnicores-buildingblocks/sources/data/access_enable/out_of_order_buffer` | Buffer with in-order writing and out-of-order reading.                       |

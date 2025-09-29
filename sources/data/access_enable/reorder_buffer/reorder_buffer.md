@@ -152,8 +152,8 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Related modules
 
-| Module                                                                             | Path                                                                          | Comment                                                         |
-| ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [`valid_ready_reorder_buffer`](../../valid_ready/reorder_buffer/reorder_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/reorder_buffer`            | Variant of this module with valid-ready handshake flow control. |
-| [`out_of_order_buffer`](../out_of_order_buffer/out_of_order_buffer.md)             | `omnicores-buildingblocks/sources/data/read_write_enable/out_of_order_buffer` | Buffer that allows random access without ordering constraints.  |
-| [`fifo`](../fifo/fifo.md)                                                          | `omnicores-buildingblocks/sources/data/read_write_enable/fifo`                | Traditional first-in-first-out queue with strict ordering.      |
+| Module                                                                             | Path                                                                      | Comment                                                         |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`valid_ready_reorder_buffer`](../../valid_ready/reorder_buffer/reorder_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/reorder_buffer`        | Variant of this module with valid-ready handshake flow control. |
+| [`out_of_order_buffer`](../out_of_order_buffer/out_of_order_buffer.md)             | `omnicores-buildingblocks/sources/data/access_enable/out_of_order_buffer` | Buffer that allows random access without ordering constraints.  |
+| [`fifo`](../fifo/fifo.md)                                                          | `omnicores-buildingblocks/sources/data/access_enable/fifo`                | Traditional first-in-first-out queue with strict ordering.      |

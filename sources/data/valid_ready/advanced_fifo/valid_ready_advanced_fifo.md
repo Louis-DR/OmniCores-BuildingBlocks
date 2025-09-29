@@ -128,15 +128,15 @@ There are no synthesis and implementation constraints for this block.
 
 This module depends on the following modules:
 
-| Module                                                                    | Path                                                                    | Comment                                  |
-| ------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------- |
-| [`advanced_fifo`](../../read_write_enable/advanced_fifo/advanced_fifo.md) | `omnicores-buildingblocks/sources/data/read_write_enable/advanced_fifo` | Underlying advanced FIFO implementation. |
+| Module                                                                | Path                                                                | Comment                                  |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------- |
+| [`advanced_fifo`](../../access_enable/advanced_fifo/advanced_fifo.md) | `omnicores-buildingblocks/sources/data/access_enable/advanced_fifo` | Underlying advanced FIFO implementation. |
 
 ## Related modules
 
 | Module                                                                                                              | Path                                                                           | Comment                                                |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------ |
-| [`advanced_fifo`](../../read_write_enable/advanced_fifo/advanced_fifo.md)                                           | `omnicores-buildingblocks/sources/data/read_write_enable/advanced_fifo`        | Base variant with read-write enable flow control.      |
+| [`advanced_fifo`](../../access_enable/advanced_fifo/advanced_fifo.md)                                               | `omnicores-buildingblocks/sources/data/access_enable/advanced_fifo`            | Base variant with read-write enable flow control.      |
 | [`valid_ready_fifo`](../fifo/valid_ready_fifo.md)                                                                   | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                       | Basic FIFO without advanced monitoring features.       |
 | [`valid_ready_asynchronous_advanced_fifo`](../asynchronous_advanced_fifo/valid_ready_asynchronous_advanced_fifo.md) | `omnicores-buildingblocks/sources/data/valid_ready/asynchronous_advanced_fifo` | Asynchronous advanced FIFO for crossing clock domains. |
 | [`valid_ready_simple_buffer`](../simple_buffer/valid_ready_simple_buffer.md)                                        | `omnicores-buildingblocks/sources/data/valid_ready/simple_buffer`              | Single-entry buffer for storage.                       |

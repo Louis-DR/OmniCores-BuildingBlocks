@@ -116,10 +116,10 @@ This module has no external module dependencies.
 
 ## Related modules
 
-| Module                                                           | Path                                                                        | Comment                                                         |
-| ---------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [`valid_ready_fifo`](../../valid_ready/fifo/valid_ready_fifo.md) | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                    | Variant of this module with valid-ready handshake flow control. |
-| [`asynchronous_fifo`](../asynchronous_fifo/asynchronous_fifo.md) | `omnicores-buildingblocks/sources/data/read_write_enable/asynchronous_fifo` | Asynchronous FIFO for crossing clock domains.                   |
-| [`advanced_fifo`](../advanced_fifo/advanced_fifo.md)             | `omnicores-buildingblocks/sources/data/read_write_enable/advanced_fifo`     | FIFO with additional features and protection mechanisms.        |
-| [`simple_buffer`](../simple_buffer/simple_buffer.md)             | `omnicores-buildingblocks/sources/data/read_write_enable/simple_buffer`     | Single-entry buffer for storage.                                |
-| [`skid_buffer`](../skid_buffer/skid_buffer.md)                   | `omnicores-buildingblocks/sources/data/read_write_enable/skid_buffer`       | Two-entry buffer for simple bus pipelining.                     |
+| Module                                                           | Path                                                                    | Comment                                                         |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`valid_ready_fifo`](../../valid_ready/fifo/valid_ready_fifo.md) | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                | Variant of this module with valid-ready handshake flow control. |
+| [`asynchronous_fifo`](../asynchronous_fifo/asynchronous_fifo.md) | `omnicores-buildingblocks/sources/data/access_enable/asynchronous_fifo` | Asynchronous FIFO for crossing clock domains.                   |
+| [`advanced_fifo`](../advanced_fifo/advanced_fifo.md)             | `omnicores-buildingblocks/sources/data/access_enable/advanced_fifo`     | FIFO with additional features and protection mechanisms.        |
+| [`simple_buffer`](../simple_buffer/simple_buffer.md)             | `omnicores-buildingblocks/sources/data/access_enable/simple_buffer`     | Single-entry buffer for storage.                                |
+| [`skid_buffer`](../skid_buffer/skid_buffer.md)                   | `omnicores-buildingblocks/sources/data/access_enable/skid_buffer`       | Two-entry buffer for simple bus pipelining.                     |

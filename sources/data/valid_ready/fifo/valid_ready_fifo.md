@@ -111,15 +111,15 @@ There are no synthesis and implementation constraints for this block.
 
 This module depends on the following modules:
 
-| Module                                         | Path                                                           | Comment                         |
-| ---------------------------------------------- | -------------------------------------------------------------- | ------------------------------- |
-| [`fifo`](../../read_write_enable/fifo/fifo.md) | `omnicores-buildingblocks/sources/data/read_write_enable/fifo` | Underlying FIFO implementation. |
+| Module                                     | Path                                                       | Comment                         |
+| ------------------------------------------ | ---------------------------------------------------------- | ------------------------------- |
+| [`fifo`](../../access_enable/fifo/fifo.md) | `omnicores-buildingblocks/sources/data/access_enable/fifo` | Underlying FIFO implementation. |
 
 ## Related modules
 
 | Module                                                                                   | Path                                                                  | Comment                                                  |
 | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------- |
-| [`fifo`](../../read_write_enable/fifo/fifo.md)                                           | `omnicores-buildingblocks/sources/data/read_write_enable/fifo`        | Base variant with read-write enable flow control.        |
+| [`fifo`](../../access_enable/fifo/fifo.md)                                               | `omnicores-buildingblocks/sources/data/access_enable/fifo`            | Base variant with read-write enable flow control.        |
 | [`valid_ready_advanced_fifo`](../advanced_fifo/valid_ready_advanced_fifo.md)             | `omnicores-buildingblocks/sources/data/valid_ready/advanced_fifo`     | FIFO with additional features and protection mechanisms. |
 | [`valid_ready_asynchronous_fifo`](../asynchronous_fifo/valid_ready_asynchronous_fifo.md) | `omnicores-buildingblocks/sources/data/valid_ready/asynchronous_fifo` | Asynchronous FIFO for crossing clock domains.            |
 | [`valid_ready_simple_buffer`](../simple_buffer/valid_ready_simple_buffer.md)             | `omnicores-buildingblocks/sources/data/valid_ready/simple_buffer`     | Single-entry buffer for storage.                         |

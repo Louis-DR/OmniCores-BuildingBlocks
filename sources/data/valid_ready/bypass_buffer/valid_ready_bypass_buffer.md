@@ -109,15 +109,15 @@ There are no synthesis and implementation constraints for this block.
 
 This module depends on the following modules:
 
-| Module                                                                    | Path                                                                    | Comment                           |
-| ------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------- |
-| [`bypass_buffer`](../../read_write_enable/bypass_buffer/bypass_buffer.md) | `omnicores-buildingblocks/sources/data/read_write_enable/bypass_buffer` | Underlying buffer implementation. |
+| Module                                                                | Path                                                                | Comment                           |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------- |
+| [`bypass_buffer`](../../access_enable/bypass_buffer/bypass_buffer.md) | `omnicores-buildingblocks/sources/data/access_enable/bypass_buffer` | Underlying buffer implementation. |
 
 ## Related modules
 
-| Module                                                                       | Path                                                                    | Comment                                           |
-| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------- |
-| [`bypass_buffer`](../../read_write_enable/bypass_buffer/bypass_buffer.md)    | `omnicores-buildingblocks/sources/data/read_write_enable/bypass_buffer` | Base variant with read-write enable flow control. |
-| [`valid_ready_simple_buffer`](../simple_buffer/valid_ready_simple_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/simple_buffer`       | Single-entry buffer for storage.                  |
-| [`valid_ready_skid_buffer`](../skid_buffer/valid_ready_skid_buffer.md)       | `omnicores-buildingblocks/sources/data/valid_ready/skid_buffer`         | Two-entry buffer more suited to bus pipelining.   |
-| [`valid_ready_fifo`](../fifo/valid_ready_fifo.md)                            | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                | Multi-entry first-in-first-out queue.             |
+| Module                                                                       | Path                                                                | Comment                                           |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------- |
+| [`bypass_buffer`](../../access_enable/bypass_buffer/bypass_buffer.md)        | `omnicores-buildingblocks/sources/data/access_enable/bypass_buffer` | Base variant with read-write enable flow control. |
+| [`valid_ready_simple_buffer`](../simple_buffer/valid_ready_simple_buffer.md) | `omnicores-buildingblocks/sources/data/valid_ready/simple_buffer`   | Single-entry buffer for storage.                  |
+| [`valid_ready_skid_buffer`](../skid_buffer/valid_ready_skid_buffer.md)       | `omnicores-buildingblocks/sources/data/valid_ready/skid_buffer`     | Two-entry buffer more suited to bus pipelining.   |
+| [`valid_ready_fifo`](../fifo/valid_ready_fifo.md)                            | `omnicores-buildingblocks/sources/data/valid_ready/fifo`            | Multi-entry first-in-first-out queue.             |

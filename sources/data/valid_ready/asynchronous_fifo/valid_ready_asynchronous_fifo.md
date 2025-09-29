@@ -116,15 +116,15 @@ Clock domain crossing constraints should be applied to all Gray pointer synchron
 
 This module depends on the following modules:
 
-| Module                                                                                | Path                                                                        | Comment                                      |
-| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------- |
-| [`asynchronous_fifo`](../../read_write_enable/asynchronous_fifo/asynchronous_fifo.md) | `omnicores-buildingblocks/sources/data/read_write_enable/asynchronous_fifo` | Underlying asynchronous FIFO implementation. |
+| Module                                                                            | Path                                                                    | Comment                                      |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------- |
+| [`asynchronous_fifo`](../../access_enable/asynchronous_fifo/asynchronous_fifo.md) | `omnicores-buildingblocks/sources/data/access_enable/asynchronous_fifo` | Underlying asynchronous FIFO implementation. |
 
 ## Related modules
 
 | Module                                                                                                              | Path                                                                           | Comment                                              |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------- |
-| [`asynchronous_fifo`](../../read_write_enable/asynchronous_fifo/asynchronous_fifo.md)                               | `omnicores-buildingblocks/sources/data/read_write_enable/asynchronous_fifo`    | Base variant with read-write enable flow control.    |
+| [`asynchronous_fifo`](../../access_enable/asynchronous_fifo/asynchronous_fifo.md)                                   | `omnicores-buildingblocks/sources/data/access_enable/asynchronous_fifo`        | Base variant with read-write enable flow control.    |
 | [`valid_ready_fifo`](../fifo/valid_ready_fifo.md)                                                                   | `omnicores-buildingblocks/sources/data/valid_ready/fifo`                       | Synchronous FIFO for single clock domain use.        |
 | [`valid_ready_asynchronous_advanced_fifo`](../asynchronous_advanced_fifo/valid_ready_asynchronous_advanced_fifo.md) | `omnicores-buildingblocks/sources/data/valid_ready/asynchronous_advanced_fifo` | Asynchronous FIFO with advanced monitoring features. |
 | [`valid_ready_simple_buffer`](../simple_buffer/valid_ready_simple_buffer.md)                                        | `omnicores-buildingblocks/sources/data/valid_ready/simple_buffer`              | Single-entry buffer for storage.                     |

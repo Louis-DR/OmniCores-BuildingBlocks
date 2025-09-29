@@ -1,2 +1,2 @@
 valid_ready_lifo.v
-../../read_write_enable/lifo/lifo.v
+../../access_enable/lifo/lifo.v
