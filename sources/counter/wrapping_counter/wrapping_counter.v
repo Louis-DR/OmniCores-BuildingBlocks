@@ -49,7 +49,7 @@ generate
       end
     end
   end
-  // If the range is not a power of 2, we need to handle wrapping manually
+  // If the range is not a power of 2, handle wrapping manually
   else begin : gen_non_pow2_counter
     wire counter_is_max = counter == COUNTER_MAX;
     wire counter_is_min = counter == COUNTER_MIN;

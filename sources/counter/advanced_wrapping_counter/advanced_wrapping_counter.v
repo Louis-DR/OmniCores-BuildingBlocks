@@ -95,7 +95,7 @@ generate
       end
     end
   end
-  // If the range is not a power of 2, we need to handle wrapping manually
+  // If the range is not a power of 2, handle wrapping and lap bit manually
   else begin : gen_non_pow2_counter
     always @(posedge clock or negedge resetn) begin
       if (!resetn) begin

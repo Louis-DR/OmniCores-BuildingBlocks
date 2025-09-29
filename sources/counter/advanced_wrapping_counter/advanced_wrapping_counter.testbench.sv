@@ -411,8 +411,8 @@ initial begin
   decrement = 0;
   increment = 0;
 
-  // Check 9 : Load feature and flag/pulse behavior
-  $display("CHECK 9 : Load feature and flag/pulse behavior.");
+  // Check 9 : Load feature
+  $display("CHECK 9 : Load feature.");
   @(negedge clock);
   load_count  = COUNT_MAX;
   load_enable = 1;
