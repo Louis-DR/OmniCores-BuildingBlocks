@@ -17,8 +17,8 @@ gray_wrapping_counter__testbench.gray_wrapping_counter_dut.load_count[1:0]
 @28
 gray_wrapping_counter__testbench.gray_wrapping_counter_dut.decrement
 gray_wrapping_counter__testbench.gray_wrapping_counter_dut.increment
-@24
 gray_wrapping_counter__testbench.gray_wrapping_counter_dut.count_gray[1:0]
+@24
 gray_wrapping_counter__testbench.gray_wrapping_counter_dut.count_binary[1:0]
 @28
 gray_wrapping_counter__testbench.gray_wrapping_counter_dut.minimum

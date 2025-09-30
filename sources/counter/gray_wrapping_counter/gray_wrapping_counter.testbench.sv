@@ -54,9 +54,9 @@ logic             underflow;
 logic             overflow;
 
 // Test variables
-int   expected_count;
-int   timeout_countdown;
-int   previous_index;
+int               expected_count;
+int               timeout_countdown;
+logic [WIDTH-1:0] previous_binary;
 logic [WIDTH-1:0] previous_gray;
 
 // Device under test
@@ -142,6 +142,7 @@ initial begin
   load_count  = 0;
 
   // Reset
+  @(posedge clock);
   resetn = 0;
   @(posedge clock);
   resetn = 1;
@@ -166,7 +167,6 @@ initial begin
 
   // Check 2 : Increment without wrapping
   $display("CHECK 2 : Increment without wrapping.");
-  expected_count = COUNT_MIN;
   @(negedge clock);
   increment = 1;
   timeout_countdown = CHECK_TIMEOUT;
@@ -174,8 +174,8 @@ initial begin
     // Check
     begin
       while (count_binary != COUNT_MAX) begin
-        previous_index = count_binary;
-        previous_gray  = count_gray;
+        previous_binary = count_binary;
+        previous_gray   = count_gray;
         @(posedge clock);
         expected_count += 1;
         @(negedge clock);
@@ -208,11 +208,12 @@ initial begin
   $display("CHECK 3 : Increment with wrapping.");
   assert (count_binary == COUNT_MAX)
     else $error("[%0tns] Counter should be at maximum '%0d' but is at '%0d'.", $time, COUNT_MAX, count_binary);
+  previous_binary = count_binary;
+  previous_gray   = count_gray;
   @(negedge clock);
   increment = 1;
-  previous_index = count_binary;
-  previous_gray  = count_gray;
   @(posedge clock);
+  expected_count = predict_next_count(previous_binary, 1, 0);
   @(negedge clock);
   #(1);
   assert (overflow && !underflow)
@@ -232,11 +233,12 @@ initial begin
   $display("CHECK 4 : Decrement with wrapping.");
   assert (count_binary == COUNT_MIN)
     else $error("[%0tns] Counter should be at minimum '%0d' but is at '%0d'.", $time, COUNT_MIN, count_binary);
+  previous_binary = count_binary;
+  previous_gray   = count_gray;
   @(negedge clock);
   decrement = 1;
-  previous_index = count_binary;
-  previous_gray  = count_gray;
   @(posedge clock);
+  expected_count = predict_next_count(previous_binary, 0, 1);
   @(negedge clock);
   #(1);
   assert (underflow && !overflow)
@@ -254,7 +256,6 @@ initial begin
 
   // Check 5 : Decrement without wrapping
   $display("CHECK 5 : Decrement without wrapping.");
-  expected_count = COUNT_MAX;
   @(negedge clock);
   decrement = 1;
   timeout_countdown = CHECK_TIMEOUT;
@@ -262,6 +263,8 @@ initial begin
     // Check
     begin
       while (count_binary != COUNT_MIN) begin
+        previous_binary = count_binary;
+        previous_gray   = count_gray;
         @(posedge clock);
         expected_count -= 1;
         @(negedge clock);
@@ -298,16 +301,16 @@ initial begin
     // Check
     begin
       repeat (RANGE) begin
-        previous_index = count_binary;
-        previous_gray  = count_gray;
+        previous_binary = count_binary;
+        previous_gray   = count_gray;
         @(posedge clock);
+        expected_count = predict_next_count(previous_binary, 1, 0);
         @(negedge clock);
         #(1);
-        assert ( (previous_index == COUNT_MAX) ? overflow : !overflow )
+        assert ( (previous_binary == COUNT_MAX) ? overflow : !overflow )
           else $error("[%0tns] Overflow pulse mismatch during full-cycle increment.", $time);
         assert (!underflow)
           else $error("[%0tns] Underflow should be low during increment-only.", $time);
-        expected_count = predict_next_count(previous_index, 1, 0);
         assert (count_binary == expected_count)
           else $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count_binary, expected_count);
         check_bit_difference(previous_gray, count_gray);
@@ -342,16 +345,16 @@ initial begin
     // Check
     begin
       repeat (RANGE) begin
-        previous_index = count_binary;
-        previous_gray  = count_gray;
+        previous_binary = count_binary;
+        previous_gray   = count_gray;
         @(posedge clock);
+        expected_count = predict_next_count(previous_binary, 0, 1);
         @(negedge clock);
         #(1);
-        assert ( (previous_index == COUNT_MIN) ? underflow : !underflow )
+        assert ( (previous_binary == COUNT_MIN) ? underflow : !underflow )
           else $error("[%0tns] Underflow pulse mismatch during full-cycle decrement.", $time);
         assert (!overflow)
           else $error("[%0tns] Overflow should be low during decrement-only.", $time);
-        expected_count = predict_next_count(previous_index, 0, 1);
         assert (count_binary == expected_count)
           else $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count_binary, expected_count);
         check_bit_difference(previous_gray, count_gray);
@@ -389,16 +392,17 @@ initial begin
   repeat (RANDOM_CHECK_DURATION) begin
     increment = random_boolean(RANDOM_CHECK_INCREMENT_PROBABILITY);
     decrement = random_boolean(RANDOM_CHECK_DECREMENT_PROBABILITY);
-    previous_index = count_binary;
-    previous_gray  = count_gray;
+    previous_binary = count_binary;
+    previous_gray   = count_gray;
     @(posedge clock);
+    expected_count = predict_next_count(previous_binary, increment, decrement);
     @(negedge clock);
     #(1);
     begin
       logic expected_overflow;
       logic expected_underflow;
-      expected_overflow  = (increment && !decrement && previous_index == COUNT_MAX);
-      expected_underflow = (decrement && !increment && previous_index == COUNT_MIN);
+      expected_overflow  = (increment && !decrement && previous_binary == COUNT_MAX);
+      expected_underflow = (decrement && !increment && previous_binary == COUNT_MIN);
       assert (overflow  == expected_overflow)  else $error("[%0tns] Overflow pulse mismatch in random test.",  $time);
       assert (underflow == expected_underflow) else $error("[%0tns] Underflow pulse mismatch in random test.", $time);
       if (increment ^ decrement) begin
@@ -408,7 +412,6 @@ initial begin
         assert (count_gray === previous_gray) else $error("[%0tns] Gray code changed without a step.", $time);
       end
     end
-    expected_count = predict_next_count(previous_index, increment, decrement);
     assert (count_binary == expected_count) else $error("[%0tns] Counter value mismatch in random test.", $time);
     assert (minimum == (expected_count == COUNT_MIN)) else $error("[%0tns] Minimum flag mismatch in random test.", $time);
     assert (maximum == (expected_count == COUNT_MAX)) else $error("[%0tns] Maximum flag mismatch in random test.", $time);
