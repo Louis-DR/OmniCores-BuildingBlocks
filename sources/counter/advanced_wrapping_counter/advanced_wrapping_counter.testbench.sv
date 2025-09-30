@@ -22,7 +22,7 @@ module advanced_wrapping_counter__testbench ();
 // Device parameters
 localparam int  RANGE        = 4;
 localparam int  RESET_VALUE  = 0;
-localparam int  LAP_BIT      = 1;
+localparam int  LAP_BIT      = 0;
 
 // Derived parameters
 localparam int  WIDTH_NO_LAP = $clog2(RANGE);
@@ -399,8 +399,7 @@ initial begin
       if (overflow != expected_overflow) $error("[%0tns] Overflow pulse mismatch in random test.", $time);
       if (underflow != expected_underflow) $error("[%0tns] Underflow pulse mismatch in random test.", $time);
       if (LAP_BIT) begin
-        logic lap_toggled = (count[LAP_INDEX] != previous_lap);
-        if (lap_toggled != (expected_overflow || expected_underflow)) $error("[%0tns] Lap bit toggle mismatch in random test.", $time);
+        if ((count[LAP_INDEX] != previous_lap) != (expected_overflow || expected_underflow)) $error("[%0tns] Lap bit toggle mismatch in random test.", $time);
       end
     end
     expected_count = predict_next_count(previous_index, increment, decrement);
