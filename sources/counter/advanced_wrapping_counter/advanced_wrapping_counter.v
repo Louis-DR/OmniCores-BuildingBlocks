@@ -114,7 +114,7 @@ generate
               if (LAP_BIT) counter <= {~counter[WIDTH_NO_LAP], COUNTER_MIN};
               else         counter <= COUNTER_MIN;
             end else begin
-              if (LAP_BIT) counter <= {counter[WIDTH_NO_LAP], counter_no_lap + 1};
+              if (LAP_BIT) counter <= {counter[WIDTH_NO_LAP], counter_no_lap + 1'b1};
               else         counter <= counter_no_lap + 1;
             end
           end else if (decrement && !increment) begin
@@ -123,7 +123,7 @@ generate
               if (LAP_BIT) counter <= {~counter[WIDTH_NO_LAP], COUNTER_MAX};
               else         counter <= COUNTER_MAX;
             end else begin
-              if (LAP_BIT) counter <= {counter[WIDTH_NO_LAP], counter_no_lap - 1};
+              if (LAP_BIT) counter <= {counter[WIDTH_NO_LAP], counter_no_lap - 1'b1};
               else         counter <= counter_no_lap - 1;
             end
           end
