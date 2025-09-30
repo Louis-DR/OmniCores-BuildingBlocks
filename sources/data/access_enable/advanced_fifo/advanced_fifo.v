@@ -100,6 +100,7 @@ advanced_wrapping_counter #(
 );
 
 
+
 // ┌────────────┐
 // │ Read logic │
 // └────────────┘
@@ -145,7 +146,13 @@ advanced_wrapping_counter #(
 // └──────────────┘
 
 // Calculate FIFO level
-assign level = write_pointer - read_pointer;
+if (`IS_POW2(DEPTH)) begin : gen_pow2_level
+  // For power-of-2 depths, the level is simply the difference between the write and read pointers
+  assign level = write_pointer - read_pointer;
+end else begin : gen_non_pow2_level
+  // For non-power-of-2 depths, we need to handle the lap bit explicitly and use the address difference
+  assign level = write_address - read_address + (write_lap == read_lap ? 0 : DEPTH);
+end
 
 // Queue is empty if the read and write pointers are the same and the lap bits are equal
 assign empty        = write_address == read_address && write_lap == read_lap;
