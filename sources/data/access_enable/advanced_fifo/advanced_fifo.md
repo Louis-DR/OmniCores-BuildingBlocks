@@ -133,8 +133,9 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-- Module: `advanced_wrapping_counter` — `sources/counter/advanced_wrapping_counter/advanced_wrapping_counter.v`
-- Include: `clog2.vh`
+| Module                                                                                                 | Path                                                                 | Comment                 |
+| ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- | ----------------------- |
+| [`advanced_wrapping_counter`](../../../counter/advanced_wrapping_counter/advanced_wrapping_counter.md) | `omnicores-buildingblocks/sources/counter/advanced_wrapping_counter` | For pointer management. |
 
 ## Related modules
 
