@@ -18,13 +18,13 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Parameters
 
-| Name           | Type    | Allowed Values | Default       | Description                                     |
-| -------------- | ------- | -------------- | ------------- | ----------------------------------------------- |
-| `WIDTH`        | integer | `≥1`           | `8`           | Bit width of the data vector.                   |
-| `DEPTH`        | integer | `≥2`           | `4`           | Number of entries in the queue.                 |
-| `DEPTH_LOG2`   | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated). |
-| `STAGES_WRITE` | integer | `≥1`           | `2`           | Number of synchronizer stages for write domain. |
-| `STAGES_READ`  | integer | `≥1`           | `2`           | Number of synchronizer stages for read domain.  |
+| Name           | Type    | Allowed Values  | Default       | Description                                     |
+| -------------- | ------- | --------------- | ------------- | ----------------------------------------------- |
+| `WIDTH`        | integer | `≥1`            | `8`           | Bit width of the data vector.                   |
+| `DEPTH`        | integer | `≥2` power-of-2 | `4`           | Number of entries in the queue.                 |
+| `DEPTH_LOG2`   | integer | `≥1`            | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated). |
+| `STAGES_WRITE` | integer | `≥1`            | `2`           | Number of synchronizer stages for write domain. |
+| `STAGES_READ`  | integer | `≥1`            | `2`           | Number of synchronizer stages for read domain.  |
 
 ## Ports
 
@@ -69,7 +69,7 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The asynchronous advanced FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointer each have an additional wrap bit for correct correct level calculation. Data integrity and stability is ensured through careful synchronization using Gray-coding of the pointers.
+The asynchronous advanced FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointers are implemented with `gray_wrapping_counter` which provides both binary and Gray-coded values. The range of the counter is double the depth such that the pointers have an additional lap bit for correct level calculation. Data integrity and stability is ensured through careful synchronization of the Gray-coding of the pointers.
 
 The **write clock domain** contains a write pointer that indexes the shared memory array. When `write_enable` is asserted, `write_data` is stored at the write pointer location, and both the binary and Gray-coded write pointers are incremented. The Gray-coded write pointer is synchronized to the read domain for level calculations.
 
@@ -86,6 +86,8 @@ The level, status, and threshold outputs are calculated based on the Gray-coded 
 The `write_miss` and `read_error` flags are cleared when the respective `write_clear_miss` and `read_clear_error` inputs are asserted.
 
 The FIFO can be flushed from either domain by asserting the `write_flush` or `read_flush` inputs. Flushing from the write domain will move back the write pointer to the synchronized read pointer in the write domain, and flushing from the read domain will advance the read pointer to the synchronized write pointer in the read domain. If a read or write operation is performed too close to a flush operation, it might not see the synchronized state of the FIFO which could result in the FIFO reaching an unexpected broken state.
+
+Is the depth is not a power-of-two but is even, after the reset is deasserted, enough cycles of both clocks must be pass before the level and flag outputs are correct. This is due to the Gray encodings for non-power-of-two range not starting at 0, and therefore the value must propagate through the syncronizers.
 
 ## Paths
 
@@ -165,11 +167,13 @@ Clock domain crossing constraints should be applied to all Gray pointer synchron
 
 ## Dependencies
 
-| Module                                                                              | Path                                                          | Comment                                      |
-| ----------------------------------------------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------- |
-| [`vector_synchronizer`](../../../timing/vector_synchronizer/vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/vector_synchronizer` | For Gray pointer clock domain crossing.      |
-| [`binary_to_gray`](../../../encoding/gray/binary_to_gray.md)                        | `omnicores-buildingblocks/sources/encoding/gray`              | For converting binary pointers to Gray.      |
-| [`gray_to_binary`](../../../encoding/gray/gray_to_binary.md)                        | `omnicores-buildingblocks/sources/encoding/gray`              | For converting Gray pointers back to binary. |
+| Module                                                                                     | Path                                                             | Comment                                      |
+| ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- | -------------------------------------------- |
+| [`gray_wrapping_counter`](../../../counter/gray_wrapping_counter/gray_wrapping_counter.md) | `omnicores-buildingblocks/sources/counter/gray_wrapping_counter` | For binary and Gray pointer counting.        |
+| [`vector_synchronizer`](../../../timing/vector_synchronizer/vector_synchronizer.md)        | `omnicores-buildingblocks/sources/timing/vector_synchronizer`    | For Gray pointer clock domain crossing.      |
+| [`synchronizer`](../../../timing/synchronizer/synchronizer.md)                             | `omnicores-buildingblocks/sources/timing/synchronizer`           | For Gray pointer clock domain crossing.      |
+| [`binary_to_gray`](../../../encoding/gray/binary_to_gray.md)                               | `omnicores-buildingblocks/sources/encoding/gray`                 | For converting binary pointers to Gray.      |
+| [`gray_to_binary`](../../../encoding/gray/gray_to_binary.md)                               | `omnicores-buildingblocks/sources/encoding/gray`                 | For converting Gray pointers back to binary. |
 
 ## Related modules
 

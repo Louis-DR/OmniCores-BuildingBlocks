@@ -81,6 +81,7 @@ logic [DEPTH_LOG2:0] read_upper_threshold_level;
 logic                read_upper_threshold_status;
 
 // Test variables
+int check;
 int data_expected[$];
 int pop_trash;
 int transfer_count;
@@ -171,17 +172,19 @@ initial begin
   read_upper_threshold_level  = DEPTH;
 
   // Reset
+  @(posedge write_clock);
+  @(posedge read_clock);
   write_resetn = 0;
   read_resetn  = 0;
   @(posedge write_clock);
   @(posedge read_clock);
   write_resetn = 1;
   read_resetn  = 1;
-  @(posedge write_clock);
-  @(posedge read_clock);
+  repeat (5) @(posedge write_clock);
+  repeat (5) @(posedge read_clock);
 
   // Check 1 : Writing to full
-  $display("CHECK 1 : Writing to full.");
+  $display("CHECK 1 : Writing to full."); check = 1;
   outstanding_count = 0;
   // Initial state
   if (!read_empty) $error("[%0tns] Empty flag is deasserted after reset. The FIFO should be empty.", $time);
@@ -218,7 +221,7 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Check 2 : Write miss
-  $display("CHECK 2 : Write miss.");
+  $display("CHECK 2 : Write miss."); check = 2;
   // Initial state
   if ( read_empty) $error("[%0tns] Empty flag is asserted before the write miss check. The FIFO should be full.", $time);
   if (!write_full) $error("[%0tns] Full flag is deasserted before the write miss check. The FIFO should be full.", $time);
@@ -255,7 +258,7 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Check 3 : Reading to empty
-  $display("CHECK 3 : Reading to empty.");
+  $display("CHECK 3 : Reading to empty."); check = 3;
   // Reading
   for (int read_count = 1; read_count <= DEPTH; read_count++) begin
     @(negedge read_clock);
@@ -283,7 +286,7 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Check 4 : Read error
-  $display("CHECK 4 : Read error.");
+  $display("CHECK 4 : Read error."); check = 4;
   // Initial state
   if (!read_empty) $error("[%0tns] Empty flag is deasserted before the read error check. The FIFO should be empty.", $time);
   if ( write_full) $error("[%0tns] Full flag is asserted before the read error check. The FIFO should be empty.", $time);
@@ -318,7 +321,7 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Check 5 : Flushing from write port
-  $display("CHECK 5 : Flushing from write port.");
+  $display("CHECK 5 : Flushing from write port."); check = 5;
   // Writing once
   @(negedge write_clock);
   write_enable = 1;
@@ -351,7 +354,7 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Check 6 : Flushing from read port
-  $display("CHECK 6 : Flushing from read port.");
+  $display("CHECK 6 : Flushing from read port."); check = 6;
   // Writing once
   @(negedge write_clock);
   write_enable = 1;
@@ -384,7 +387,7 @@ initial begin
   repeat(5) @(posedge read_clock);
 
   // Checks 7-9 : Maximal throughput
-  for (int check = 7; check <= 9; check++) begin
+  for (check = 7; check <= 9; check++) begin
     case (check)
       7: begin
         $display("CHECK 7 : Maximal throughput with same frequencies.");
@@ -492,7 +495,7 @@ initial begin
   end
 
   // Checks 10-12 : Random stimulus
-  for (int check = 10; check <= 12; check++) begin
+  for (check = 10; check <= 12; check++) begin
     case (check)
       10: begin
         $display("CHECK 10 : Random stimulus with same frequencies.");

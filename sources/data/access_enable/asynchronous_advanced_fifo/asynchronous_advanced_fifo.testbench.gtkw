@@ -3,11 +3,13 @@
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-11.013885 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-11.054358 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
+@24
+asynchronous_advanced_fifo__testbench.check
 @28
 asynchronous_advanced_fifo__testbench.write_clock
 asynchronous_advanced_fifo__testbench.write_resetn
