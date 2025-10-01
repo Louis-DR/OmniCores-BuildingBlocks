@@ -48,9 +48,14 @@ logic                write_resetn;
 logic                write_flush;
 logic                write_enable;
 logic    [WIDTH-1:0] write_data;
-logic                write_full;
 logic                write_miss;
 logic                write_clear_miss;
+logic                write_empty;
+logic                write_not_empty;
+logic                write_almost_empty;
+logic                write_full;
+logic                write_not_full;
+logic                write_almost_full;
 logic [DEPTH_LOG2:0] write_level;
 logic [DEPTH_LOG2:0] write_lower_threshold_level;
 logic                write_lower_threshold_status;
@@ -61,9 +66,14 @@ logic                read_resetn;
 logic                read_flush;
 logic                read_enable;
 logic    [WIDTH-1:0] read_data;
-logic                read_empty;
 logic                read_error;
 logic                read_clear_error;
+logic                read_empty;
+logic                read_not_empty;
+logic                read_almost_empty;
+logic                read_full;
+logic                read_not_full;
+logic                read_almost_full;
 logic [DEPTH_LOG2:0] read_level;
 logic [DEPTH_LOG2:0] read_lower_threshold_level;
 logic                read_lower_threshold_status;
@@ -90,9 +100,14 @@ asynchronous_advanced_fifo #(
   .write_flush                  ( write_flush                  ),
   .write_enable                 ( write_enable                 ),
   .write_data                   ( write_data                   ),
-  .write_full                   ( write_full                   ),
   .write_miss                   ( write_miss                   ),
   .write_clear_miss             ( write_clear_miss             ),
+  .write_empty                  ( write_empty                  ),
+  .write_not_empty              ( write_not_empty              ),
+  .write_almost_empty           ( write_almost_empty           ),
+  .write_full                   ( write_full                   ),
+  .write_not_full               ( write_not_full               ),
+  .write_almost_full            ( write_almost_full            ),
   .write_level                  ( write_level                  ),
   .write_lower_threshold_level  ( write_lower_threshold_level  ),
   .write_lower_threshold_status ( write_lower_threshold_status ),
@@ -103,9 +118,14 @@ asynchronous_advanced_fifo #(
   .read_flush                   ( read_flush                   ),
   .read_enable                  ( read_enable                  ),
   .read_data                    ( read_data                    ),
-  .read_empty                   ( read_empty                   ),
   .read_error                   ( read_error                   ),
   .read_clear_error             ( read_clear_error             ),
+  .read_empty                   ( read_empty                   ),
+  .read_not_empty               ( read_not_empty               ),
+  .read_almost_empty            ( read_almost_empty            ),
+  .read_full                    ( read_full                    ),
+  .read_not_full                ( read_not_full                ),
+  .read_almost_full             ( read_almost_full             ),
   .read_level                   ( read_level                   ),
   .read_lower_threshold_level   ( read_lower_threshold_level   ),
   .read_lower_threshold_status  ( read_lower_threshold_status  ),
