@@ -14,7 +14,11 @@
 
 Synchronous bidirectional counter that increments and decrements within a configurable range with wrapping behavior. In addition to the binary count, it provides the corresponding Gray-coded output and supports a load interface that accepts either binary or Gray values based on a parameter. Minimum/maximum flags and single-cycle overflow/underflow pulses are provided. There is no lap bit.
 
-The counter supports both power-of-2 and non-power-of-2 ranges. When both `increment` and `decrement` are asserted in the same cycle, the count does not change.
+The counter supports both power-of-2 and non-power-of-2 ranges. Note that the Gray count for zero when the range is not a power-of-two is not zero. This is especially important at reset if some other registers or synchronizers are reset to all zero.
+
+Also note that the MSB of the Gray encoding is low for the first half of the range and high for the second, and sequence of the rest of the bits is symetrical after the half depth. This can be useful to use the MSB as a lap bit.
+
+When both `increment` and `decrement` are asserted in the same cycle, the count does not change.
 
 ## Parameters
 

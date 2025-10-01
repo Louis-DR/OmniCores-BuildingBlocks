@@ -14,6 +14,10 @@
 
 Converts binary numbers to Gray code (also known as reflected binary code). Gray code is a binary numeral system where two successive values differ in only one bit. This property makes Gray code particularly useful in applications where minimizing switching transitions is important, such as rotary encoders, analog-to-digital converters, and Karnaugh maps. The module supports any even range, including ranges that are not a power-of-two.
 
+Note that the Gray encoding for zero when the range is not a power-of-two is not zero. This is especially important at reset if some other registers or synchronizers are reset to all zero.
+
+Also note that the MSB of the Gray encoding is low for the first half of the range and high for the second, and sequence of the rest of the bits is symetrical after the half depth. This can be useful to use the MSB as a lap bit.
+
 ## Parameters
 
 | Name    | Type    | Allowed Values | Default         | Description                                                                  |
