@@ -532,7 +532,7 @@ initial begin
       // Write status check
       begin
         forever begin
-          @(negedge write_clock);
+          @(posedge write_clock);
           // if (write_level != outstanding_count) $error("[%0tns] Write level '%0d' is not as expected '%0d'.", $time, write_level, outstanding_count);
           // if (outstanding_count == 0) begin
           //   if ( write_full) $error("[%0tns] Full flag is asserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
@@ -552,7 +552,7 @@ initial begin
       // Read status check
       begin
         forever begin
-          @(negedge read_clock);
+          @(posedge read_clock);
           // if (read_level != outstanding_count) $error("[%0tns] Read level '%0d' is not as expected '%0d'.", $time, read_level, outstanding_count);
           // if (outstanding_count == 0) begin
           //   if (!read_empty) $error("[%0tns] Empty flag is deasserted. The FIFO should be have %0d entries in it.", $time, outstanding_count);
