@@ -67,30 +67,12 @@ generate
         overflow  <= 0;
         if (load_enable) begin
           counter <= load_count;
-        end else begin
-          reg [WIDTH_NO_LAP-1:0] next_index;
-          reg                    next_lap;
-          next_index = counter_no_lap;
-          next_lap   = LAP_BIT ? counter[WIDTH_NO_LAP] : 1'b0;
-          if (increment && !decrement) begin
-            if (counter_no_lap == COUNTER_MAX) begin
-              overflow   <= 1;
-              next_index = COUNTER_MIN;
-              if (LAP_BIT) next_lap = ~counter[WIDTH_NO_LAP];
-            end else begin
-              next_index = counter_no_lap + {{(WIDTH_NO_LAP-1){1'b0}},1'b1};
-            end
-          end else if (decrement && !increment) begin
-            if (counter_no_lap == COUNTER_MIN) begin
-              underflow  <= 1;
-              next_index = COUNTER_MAX;
-              if (LAP_BIT) next_lap = ~counter[WIDTH_NO_LAP];
-            end else begin
-              next_index = counter_no_lap - {{(WIDTH_NO_LAP-1){1'b0}},1'b1};
-            end
-          end
-          if (LAP_BIT) counter <= {next_lap, next_index};
-          else         counter <= next_index;
+        end else if (increment && !decrement) begin
+          overflow <= maximum;
+          counter  <= counter + 1;
+        end else if (decrement && !increment) begin
+          underflow <= minimum;
+          counter   <= counter - 1;
         end
       end
     end
@@ -107,25 +89,21 @@ generate
         overflow  <= 0;
         if (load_enable) begin
           counter <= load_count;
-        end else begin
-          if (increment && !decrement) begin
-            if (maximum) begin
-              overflow <= 1;
-              if (LAP_BIT) counter <= {~counter[WIDTH_NO_LAP], COUNTER_MIN};
-              else         counter <= COUNTER_MIN;
-            end else begin
-              if (LAP_BIT) counter <= {counter[WIDTH_NO_LAP], counter_no_lap + 1'b1};
-              else         counter <= counter_no_lap + 1;
-            end
-          end else if (decrement && !increment) begin
-            if (minimum) begin
-              underflow <= 1;
-              if (LAP_BIT) counter <= {~counter[WIDTH_NO_LAP], COUNTER_MAX};
-              else         counter <= COUNTER_MAX;
-            end else begin
-              if (LAP_BIT) counter <= {counter[WIDTH_NO_LAP], counter_no_lap - 1'b1};
-              else         counter <= counter_no_lap - 1;
-            end
+        end else if (increment && !decrement) begin
+          if (maximum) begin
+            overflow <= 1;
+            if (LAP_BIT) counter <= {~counter[WIDTH_NO_LAP], COUNTER_MIN};
+            else         counter <= COUNTER_MIN;
+          end else begin
+            counter <= counter + 1;
+          end
+        end else if (decrement && !increment) begin
+          if (minimum) begin
+            underflow <= 1;
+            if (LAP_BIT) counter <= {~counter[WIDTH_NO_LAP], COUNTER_MAX};
+            else         counter <= COUNTER_MAX;
+          end else begin
+            counter <= counter - 1;
           end
         end
       end
