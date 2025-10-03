@@ -88,7 +88,7 @@ initial begin
 end
 
 // Reference function for binary to gray conversion (matches design mapping)
-function logic [WIDTH-1:0] reference_binary_to_gray;
+function automatic logic [WIDTH-1:0] reference_binary_to_gray;
   input logic [WIDTH-1:0] binary;
   logic [WIDTH-1:0] offset_binary;
   int offset = ((2 ** WIDTH) - RANGE) / 2;

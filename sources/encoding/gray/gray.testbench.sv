@@ -52,7 +52,7 @@ gray_to_binary #(
 );
 
 // Reference function for binary to gray conversion
-function logic [WIDTH-1:0] reference_binary_to_gray(input logic [WIDTH-1:0] binary);
+function automatic logic [WIDTH-1:0] reference_binary_to_gray(input logic [WIDTH-1:0] binary);
   logic [WIDTH-1:0] offset_binary;
   int offset = ((2 ** WIDTH) - RANGE) / 2;
   offset_binary = binary + offset;
@@ -60,7 +60,7 @@ function logic [WIDTH-1:0] reference_binary_to_gray(input logic [WIDTH-1:0] bina
 endfunction
 
 // Reference function for gray to binary conversion
-function logic [WIDTH-1:0] reference_gray_to_binary(input logic [WIDTH-1:0] gray);
+function automatic logic [WIDTH-1:0] reference_gray_to_binary(input logic [WIDTH-1:0] gray);
   logic [WIDTH-1:0] binary;
   logic [WIDTH-1:0] offset_binary;
   int offset = ((2 ** WIDTH) - RANGE) / 2;
