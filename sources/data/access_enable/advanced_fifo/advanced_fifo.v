@@ -22,6 +22,7 @@
 
 
 `include "clog2.vh"
+`include "is_pow2.vh"
 
 
 
