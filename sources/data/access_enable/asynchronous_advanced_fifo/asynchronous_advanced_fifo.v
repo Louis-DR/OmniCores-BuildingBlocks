@@ -92,6 +92,13 @@ reg [WIDTH-1:0] memory [DEPTH-1:0];
 wire [DEPTH_LOG2:0] write_pointer;
 wire [DEPTH_LOG2:0] write_pointer_gray;
 
+// Write address without lap bit to index the memory
+wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
+
+// Read pointer in write clock domain
+wire [DEPTH_LOG2:0] read_pointer_gray_w;
+wire [DEPTH_LOG2:0] read_pointer_w;
+
 // Write when not full and not flushing
 wire do_write = write_enable && !write_full && !write_flush;
 
@@ -115,13 +122,6 @@ gray_wrapping_counter #(
   .underflow    (                    ),
   .overflow     (                    )
 );
-
-// Write address without lap bit to index the memory
-wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
-
-// Read pointer in write clock domain
-wire [DEPTH_LOG2:0] read_pointer_gray_w;
-wire [DEPTH_LOG2:0] read_pointer_w;
 
 // Read pointer gray-code decoder
 gray_to_binary #(
@@ -180,6 +180,13 @@ end
 wire [DEPTH_LOG2:0] read_pointer;
 wire [DEPTH_LOG2:0] read_pointer_gray;
 
+// Read address without lap bit to index the memory
+wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
+
+// Write pointer in read clock domain
+wire [DEPTH_LOG2:0] write_pointer_gray_r;
+wire [DEPTH_LOG2:0] write_pointer_r;
+
 // Read when not empty and not flushing
 wire do_read = read_enable && !read_empty && !read_flush;
 
@@ -203,13 +210,6 @@ gray_wrapping_counter #(
   .underflow    (                   ),
   .overflow     (                   )
 );
-
-// Read address without lap bit to index the memory
-wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
-
-// Write pointer in read clock domain
-wire [DEPTH_LOG2:0] write_pointer_gray_r;
-wire [DEPTH_LOG2:0] write_pointer_r;
 
 // Write pointer gray-code decoder
 gray_to_binary #(
