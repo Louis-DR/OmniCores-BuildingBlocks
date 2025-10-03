@@ -3,13 +3,14 @@
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-3.872040 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-8.489050 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
+@24
+barrel_rotator_left__testbench.check
 @28
-barrel_rotator_left__testbench.clock
 barrel_rotator_left__testbench.rotation[2:0]
 barrel_rotator_left__testbench.data_in[7:0]
 barrel_rotator_left__testbench.data_out[7:0]

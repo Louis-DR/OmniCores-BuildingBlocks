@@ -17,36 +17,36 @@
 
 module barrel_rotator_right__testbench ();
 
+// Device parameters
+localparam int DATA_WIDTH     = 8;
+localparam int ROTATION_WIDTH = `CLOG2(DATA_WIDTH);
+
+// Derived parameters
+localparam int DATA_WIDTH_POW2 = 2 ** DATA_WIDTH;
+
 // Test parameters
-localparam real CLOCK_PERIOD = 10;
-localparam int  WIDTH        =  8;
-localparam int  WIDTH_LOG2   = $clog2(WIDTH);
+localparam int RANDOM_CHECK_DURATION = 1000;
 
 // Device ports
-logic                  clock;
-logic      [WIDTH-1:0] data_in;
-logic [WIDTH_LOG2-1:0] rotation;
-logic      [WIDTH-1:0] data_out;
+logic     [DATA_WIDTH-1:0] data_in;
+logic [ROTATION_WIDTH-1:0] rotation;
+logic     [DATA_WIDTH-1:0] data_out;
 
 // Test signals
-logic [WIDTH-1:0] data_out_expected;
+logic [DATA_WIDTH-1:0] data_out_expected;
+
+// Test variables
+int check;
 
 // Device under test
 barrel_rotator_right #(
-  .WIDTH    ( WIDTH    )
+  .DATA_WIDTH     ( DATA_WIDTH     ),
+  .ROTATION_WIDTH ( ROTATION_WIDTH )
 ) barrel_rotator_right_dut (
   .data_in  ( data_in  ),
   .rotation ( rotation ),
   .data_out ( data_out )
 );
-
-// Clock generation
-initial begin
-  clock = 1;
-  forever begin
-    #(CLOCK_PERIOD/2) clock = ~clock;
-  end
-end
 
 // Main block
 initial begin
@@ -58,109 +58,47 @@ initial begin
   data_in  = 0;
   rotation = 0;
 
-  #(CLOCK_PERIOD);
+  #10;
 
-  for (int rotation_index = 0; rotation_index < WIDTH; rotation_index++) begin
+  // Check 1 : Walking one
+  $display("CHECK 1 : Walking one."); check = 1;
+  data_in = 1 << (DATA_WIDTH-1);
+  for (int rotation_index = 0; rotation_index < DATA_WIDTH; rotation_index++) begin
     rotation = rotation_index;
-    data_in  = 8'b10011001;
-    #(CLOCK_PERIOD);
+    data_out_expected = 1 << (DATA_WIDTH-1-rotation_index);
+    #1;
+    assert (data_out === data_out_expected)
+      else $error("[%0tns] Incorrect output for input data '%b' and rotation '%b' : expected '%b' but got '%b'.", $time, data_in, rotation, data_out_expected, data_out);
   end
 
-  // // Check 1 : low-to-high at 25% of clock cycle
-  // $display("CHECK 1 : Low-to-high at 25%% of clock cycle.");
-  // fork
-  //   // Stimulus
-  //   begin
-  //     #(CLOCK_PERIOD*0.25);
-  //     data_in = 1;
-  //   end
-  //   // Check
-  //   begin
-  //     @(posedge clock);
-  //     data_out_expected = MAX_TEST_STAGES'(0);
-  //     check_data_out(data_out_expected);
-  //     @(posedge clock);
-  //     for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
-  //       data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b1 };
-  //       check_data_out(data_out_expected);
-  //       @(posedge clock);
-  //     end
-  //     check_data_out(data_out_expected);
-  //     @(posedge clock);
-  //   end
-  // join
+  #10;
 
-  // // Check 2 : high-to-low at 25% of clock cycle
-  // $display("CHECK 2 : High-to-low at 25%% of clock cycle.");
-  // fork
-  //   // Stimulus
-  //   begin
-  //     #(CLOCK_PERIOD*0.25);
-  //     data_in = 0;
-  //   end
-  //   // Check
-  //   begin
-  //     @(posedge clock);
-  //     data_out_expected = ~MAX_TEST_STAGES'(0);
-  //     check_data_out(data_out_expected);
-  //     @(posedge clock);
-  //     for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
-  //       data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b0 };
-  //       check_data_out(data_out_expected);
-  //       @(posedge clock);
-  //     end
-  //     check_data_out(data_out_expected);
-  //     @(posedge clock);
-  //   end
-  // join
+  // Check 2 : Walking zero
+  $display("CHECK 2 : Walking zero."); check = 2;
+  data_in = ~(1 << (DATA_WIDTH-1));
+  for (int rotation_index = 0; rotation_index < DATA_WIDTH; rotation_index++) begin
+    rotation = rotation_index;
+    data_out_expected = ~(1 << (DATA_WIDTH-1-rotation_index));
+    #1;
+    assert (data_out === data_out_expected)
+      else $error("[%0tns] Incorrect output for input data '%b' and rotation '%b' : expected '%b' but got '%b'.", $time, data_in, rotation, data_out_expected, data_out);
+  end
 
-  // // Check 3 : low-to-high at 75% of clock cycle
-  // $display("CHECK 3 : Low-to-high at 75%% of clock cycle.");
-  // fork
-  //   // Stimulus
-  //   begin
-  //     #(CLOCK_PERIOD*0.75);
-  //     data_in = 1;
-  //   end
-  //   // Check
-  //   begin
-  //     @(posedge clock);
-  //     data_out_expected = MAX_TEST_STAGES'(0);
-  //     check_data_out(data_out_expected);
-  //     @(posedge clock);
-  //     for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
-  //       data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b1 };
-  //       check_data_out(data_out_expected);
-  //       @(posedge clock);
-  //     end
-  //     check_data_out(data_out_expected);
-  //     @(posedge clock);
-  //   end
-  // join
+  #10;
 
-  // // Check 4 : high-to-low at 75% of clock cycle
-  // $display("CHECK 4 : High-to-low at 75%% of clock cycle.");
-  // fork
-  //   // Stimulus
-  //   begin
-  //     #(CLOCK_PERIOD*0.75);
-  //     data_in = 0;
-  //   end
-  //   // Check
-  //   begin
-  //     @(posedge clock);
-  //     data_out_expected = ~MAX_TEST_STAGES'(0);
-  //     check_data_out(data_out_expected);
-  //     @(posedge clock);
-  //     for (int check_step = 0; check_step < MAX_TEST_STAGES; check_step++) begin
-  //       data_out_expected = { data_out_expected[MAX_TEST_STAGES-1:1] , 1'b0 };
-  //       check_data_out(data_out_expected);
-  //       @(posedge clock);
-  //     end
-  //     check_data_out(data_out_expected);
-  //     @(posedge clock);
-  //   end
-  // join
+  // Check 3 : Random
+  $display("CHECK 3 : Random."); check = 3;
+  repeat (RANDOM_CHECK_DURATION) begin
+    data_in  = $urandom_range(0, DATA_WIDTH_POW2-1);
+    rotation = $urandom_range(0, ROTATION_WIDTH-1);
+    data_out_expected = (data_in >> rotation) | (data_in << (DATA_WIDTH - rotation));
+    #1;
+    assert (data_out === data_out_expected)
+      else $error("[%0tns] Incorrect output for input data '%b' and rotation '%b' : expected '%b' but got '%b'.", $time, data_in, rotation, data_out_expected, data_out);
+    #1;
+  end
+
+  #10;
 
   // End of test
   $finish;
