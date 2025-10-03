@@ -16,15 +16,15 @@
 
 
 module barrel_rotator_left #(
-  parameter WIDTH      = 8,
-  parameter WIDTH_LOG2 = `CLOG2(WIDTH)
+  parameter DATA_WIDTH     = 8,
+  parameter ROTATION_WIDTH = `CLOG2(DATA_WIDTH)
 ) (
-  input      [WIDTH-1:0] data_in,
-  input [WIDTH_LOG2-1:0] rotation,
-  output     [WIDTH-1:0] data_out
+  input     [DATA_WIDTH-1:0] data_in,
+  input [ROTATION_WIDTH-1:0] rotation,
+  output    [DATA_WIDTH-1:0] data_out
 );
 
-wire [2*WIDTH-1:0] data_in_extended = {data_in, data_in};
-assign data_out = data_in_extended[WIDTH - rotation +: WIDTH];
+wire [2*DATA_WIDTH-1:0] data_in_extended = {data_in, data_in};
+assign data_out = data_in_extended[DATA_WIDTH - rotation +: DATA_WIDTH];
 
 endmodule
