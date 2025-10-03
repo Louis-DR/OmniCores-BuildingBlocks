@@ -44,7 +44,7 @@ end
 // Odd range
 else begin : gen_non_power_of_two_odd_range
   // Gray encoding requires even range
-  $error("Gray encoding requires an even range.");
+  initial $error("Gray encoding requires an even range.");
 end
 
 endmodule
