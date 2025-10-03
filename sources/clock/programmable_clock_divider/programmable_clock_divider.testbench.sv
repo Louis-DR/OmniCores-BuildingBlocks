@@ -17,7 +17,7 @@
 
 
 
-module static_clock_divider__testbench ();
+module programmable_clock_divider__testbench ();
 
 // Device parameter
 localparam int DIVISION_WIDTH = 4;
@@ -46,7 +46,7 @@ real expected_clock_out_frequency;
 programmable_clock_divider #(
   .DIVISION_WIDTH ( DIVISION_WIDTH ),
   .POWER_OF_TWO   ( POWER_OF_TWO   )
-) static_clock_divider_dut (
+) programmable_clock_divider_dut (
   .clock_in  ( clock_in  ),
   .resetn    ( resetn    ),
   .division  ( division  ),
@@ -65,7 +65,7 @@ end
 initial begin
   // Log waves
   $dumpfile("programmable_clock_divider.testbench.vcd");
-  $dumpvars(0,static_clock_divider__testbench);
+  $dumpvars(0,programmable_clock_divider__testbench);
 
   // Initialization
   division = 0;
