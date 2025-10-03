@@ -8,8 +8,9 @@
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
+@24
+barrel_shifter_left__testbench.check
 @28
-barrel_shifter_left__testbench.clock
 barrel_shifter_left__testbench.shift[2:0]
 barrel_shifter_left__testbench.pad_value
 barrel_shifter_left__testbench.data_in[7:0]
