@@ -1,2 +1,1 @@
-rotate_right.tc.sv
-rotate_right.tb.sv
+rotate_right.testbench.sv

@@ -18,7 +18,7 @@
 module barrel_shifter_right__testbench ();
 
 // Device parameters
-localparam int DATA_WIDTH     = 8;
+localparam int DATA_WIDTH  = 8;
 localparam int SHIFT_WIDTH = `CLOG2(DATA_WIDTH);
 
 // Derived parameters

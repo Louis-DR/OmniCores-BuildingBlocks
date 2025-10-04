@@ -18,7 +18,7 @@
 module barrel_shifter_left__testbench ();
 
 // Device parameters
-localparam int DATA_WIDTH     = 8;
+localparam int DATA_WIDTH  = 8;
 localparam int SHIFT_WIDTH = `CLOG2(DATA_WIDTH);
 
 // Derived parameters
@@ -122,8 +122,8 @@ initial begin
   // Check 5 : Random
   $display("CHECK 5 : Random."); check = 5;
   repeat (RANDOM_CHECK_DURATION) begin
-    data_in  = $urandom_range(0, DATA_WIDTH_POW2-1);
-    shift = $urandom_range(0, DATA_WIDTH-1);
+    data_in   = $urandom_range(0, DATA_WIDTH_POW2-1);
+    shift     = $urandom_range(0, DATA_WIDTH-1);
     pad_value = $urandom_range(0, 1);
     data_out_expected = ((data_in << shift) | ({DATA_WIDTH{pad_value}} & ((1 << shift) - 1))) & ((1 << DATA_WIDTH) - 1);
     #1;

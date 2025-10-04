@@ -1,2 +1,1 @@
-shift_right.tc.sv
-shift_right.tb.sv
+shift_right.testbench.sv
