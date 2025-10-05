@@ -12,16 +12,18 @@
 
 ![valid_ready_fifo](valid_ready_fifo.symbol.svg)
 
-Synchronous First-In First-Out queue for data buffering and flow control with configurable depth and valid-ready handshake flow control. The FIFO provides full and empty status flags and implements a handshake protocol where transfers only occur when both valid and ready signals are asserted. The handshake protocol manages and protects flow control, eliminating the need for external enable logic.
+Synchronous First-In First-Out queue for data buffering and flow control with configurable depth and valid-ready handshake flow control. The FIFO provides full and empty status flags and implements a handshake protocol where transfers only occur when both valid and ready signals are asserted. The handshake protocol manages and protects flow control, providing inherent backpressure and safety.
+
+The design is structured as a modular architecture with valid-ready handshake logic wrapping a separate controller for pointer management and control logic, and a generic simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
 
 The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily popping the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
 
-| Name    | Type    | Allowed Values | Default | Description                     |
-| ------- | ------- | -------------- | ------- | ------------------------------- |
-| `WIDTH` | integer | `≥1`           | `8`     | Bit width of the data vector.   |
-| `DEPTH` | integer | `≥2`           | `4`     | Number of entries in the queue. |
+| Name    | Type    | Allowed Values    | Default | Description                     |
+| ------- | ------- | ----------------- | ------- | ------------------------------- |
+| `WIDTH` | integer | `≥1`              | `8`     | Bit width of the data vector.   |
+| `DEPTH` | integer | `≥2` power-of-two | `4`     | Number of entries in the queue. |
 
 ## Ports
 
@@ -40,11 +42,17 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The valid-ready FIFO is a wrapper around the read-write enable FIFO that implements the valid-ready handshake protocol. It maintains an internal memory array indexed by separate read and write pointers.
+The valid-ready FIFO consists of three main components: handshake logic that implements the valid-ready protocol, a controller that manages pointers and status flags, and a simple dual-port RAM for data storage.
 
-For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented.
+The **handshake logic** derives enable signals from the valid-ready protocol. A write enable is generated when both `write_valid` and `write_ready` are asserted. A read enable is generated when both `read_valid` and `read_ready` are asserted. The `write_ready` signal is driven by the inverse of the `full` flag, providing inherent backpressure when the queue is full. The `read_valid` signal is driven by the inverse of the `empty` flag, preventing reads from an empty queue.
 
-For **read operation**, a read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. The `read_data` output continuously provides the data at the read pointer location, and after the transfer, only the read pointer is incremented to advance to the next entry.
+The **controller** maintains separate read and write pointers, each with an additional wrap bit for correct full/empty detection. It generates the memory interface signals and calculates the status flags. The controller doesn't store any data, only control state.
+
+The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
+
+For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The controller directs the RAM to store `write_data` at the location pointed to by the write pointer, and the write pointer is incremented. When the queue is full, `write_ready` is deasserted, preventing write transfers and providing safety.
+
+For **read operation**, the `read_data` output continuously provides the data at the read pointer location from the RAM. A read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. Only the read pointer is incremented to advance to the next entry. When the queue is empty, `read_valid` is deasserted, preventing read transfers and providing safety.
 
 If the queue is empty, data written can be read in the next cycle. When the queue is not empty nor full, it can be written to and read from at the same time with back-to-back transactions at full throughput.
 
@@ -68,7 +76,7 @@ The status flags are calculated based on the read and write pointers. The queue 
 
 In this table, the delay refers to the timing critical path, which determines the maximal operating frequency.
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array and `2×(log₂DEPTH+1)` flip-flops for the read and write pointers with wrap bits. The wrapper adds minimal logic for the valid-ready protocol conversion.
+The RAM requires `WIDTH×DEPTH` flip-flops for the memory array. The controller requires `2×(log₂DEPTH+1)` flip-flops for the read and write pointers with wrap bits. The handshake wrapper adds minimal logic for the valid-ready protocol conversion.
 
 Under tight timing constraints, the critical path delay might achieve `O(log₂ log₂ DEPTH)` complexity instead of `O(log₂ DEPTH)`, while sacrificing some area. This depends on how the synthesizer implements and optimizes the memory array indexing with the pointers, the pointer incrementation during read and write operation, and the pointer comparison for the full and empty flags.
 
@@ -111,9 +119,10 @@ There are no synthesis and implementation constraints for this block.
 
 This module depends on the following modules:
 
-| Module                                     | Path                                                       | Comment                         |
-| ------------------------------------------ | ---------------------------------------------------------- | ------------------------------- |
-| [`fifo`](../../access_enable/fifo/fifo.md) | `omnicores-buildingblocks/sources/data/access_enable/fifo` | Underlying FIFO implementation. |
+| Module                 | Path                                                           | Comment                                  |
+| ---------------------- | -------------------------------------------------------------- | ---------------------------------------- |
+| `fifo_controller`      | `omnicores-buildingblocks/sources/data/controllers/fifo`       | Controller for pointer and status logic. |
+| `simple_dual_port_ram` | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram` | Dual-port RAM for data storage.          |
 
 ## Related modules
 

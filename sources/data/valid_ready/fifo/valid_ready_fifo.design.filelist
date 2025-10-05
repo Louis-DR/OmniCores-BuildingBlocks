@@ -1,2 +1,3 @@
 valid_ready_fifo.v
-../../access_enable/fifo/fifo.v
+../../controllers/fifo/fifo_controller.v
+../../../memory/simple_dual_port_ram/simple_dual_port_ram.v
