@@ -53,6 +53,11 @@ logic             read_valid;
 logic             read_ready;
 logic             read_empty;
 
+// Test signals
+logic [WIDTH-1:0] sampled_write_data;
+logic             sampled_write_valid;
+logic             sampled_write_ready;
+
 // Test variables
 int data_expected[$];
 int pop_trash;
@@ -317,10 +322,14 @@ initial begin
             write_valid = 0;
             write_data  = 0;
           end
+          // Sample before clock edge
+          sampled_write_data  = write_data;
+          sampled_write_valid = write_valid;
+          sampled_write_ready = write_ready;
           // Check
           @(posedge write_clock);
-          if (write_valid && write_ready) begin
-            data_expected.push_back(write_data);
+          if (sampled_write_valid && sampled_write_ready) begin
+            data_expected.push_back(sampled_write_data);
             transfer_count++;
             outstanding_count++;
           end
@@ -336,8 +345,9 @@ initial begin
           end else begin
             read_ready = 0;
           end
-          // Check
+          // Check after posedge using the handshake that occurred
           @(posedge read_clock);
+          if (WRITE_CLOCK_PERIOD < READ_CLOCK_PERIOD) #1;
           if (read_valid && read_ready) begin
             if (data_expected.size() != 0) begin
               if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
