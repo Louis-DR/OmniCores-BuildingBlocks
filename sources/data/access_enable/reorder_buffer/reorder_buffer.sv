@@ -31,17 +31,13 @@ module reorder_buffer #(
   // Reservation interface
   input                    reserve_enable,
   output [INDEX_WIDTH-1:0] reserve_index,
-  output                   reserve_error,
   // Write interface
   input                    write_enable,
   input  [INDEX_WIDTH-1:0] write_index,
   input        [WIDTH-1:0] write_data,
-  output                   write_error,
   // Read interface
   input                    read_enable,
-  output                   read_valid,
-  output       [WIDTH-1:0] read_data,
-  output                   read_error
+  output       [WIDTH-1:0] read_data
 );
 
 // Memory array
@@ -101,17 +97,9 @@ end
 
 // Reservation logic
 assign reserve_index = reserve_pointer[INDEX_WIDTH-1:0];
-// Reservation error if buffer is full
-assign reserve_error = reserve_enable && reserve_full;
-
-// Write error if already valid, not reserved, or index out of bounds
-assign write_error = write_enable && (valid[write_index] || !reserved[write_index] || write_index >= DEPTH);
 
 // Read logic
-assign read_valid = valid  [read_pointer[INDEX_WIDTH-1:0]];
-assign read_data  = memory [read_pointer[INDEX_WIDTH-1:0]];
-// Read error if not valid
-assign read_error = read_enable && !read_valid;
+assign read_data = memory[read_pointer[INDEX_WIDTH-1:0]];
 
 // Reset and sequential logic
 always_ff @(posedge clock or negedge resetn) begin

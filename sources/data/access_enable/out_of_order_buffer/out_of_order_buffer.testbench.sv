@@ -45,7 +45,6 @@ logic                   read_enable;
 logic                   read_clear;
 logic [INDEX_WIDTH-1:0] read_index;
 logic       [WIDTH-1:0] read_data;
-logic                   read_error;
 
 // Test variables
 logic [WIDTH-1:0] memory_model [DEPTH-1:0];
@@ -70,8 +69,7 @@ out_of_order_buffer #(
   .read_enable  ( read_enable  ),
   .read_clear   ( read_clear   ),
   .read_index   ( read_index   ),
-  .read_data    ( read_data    ),
-  .read_error   ( read_error   )
+  .read_data    ( read_data    )
 );
 
 // Source clock generation
@@ -138,7 +136,6 @@ initial begin
   read_clear  = 0;
   read_index  = last_written_index;
   @(posedge clock);
-  if (read_error) $error("[%0tns] Read error asserted for valid index '%0d'.", $time, read_index);
   if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
   @(negedge clock);
   read_enable = 0;
@@ -159,7 +156,6 @@ initial begin
   read_clear  = 1;
   read_index  = last_written_index;
   @(posedge clock);
-  if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during clear.", $time, read_index);
   if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
   memory_model[read_index] = 'x;
   valid_model[read_index]  = 0;
@@ -174,22 +170,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 4 : Read while empty
-  $display("CHECK 4 : Read while empty.");
-  // Try reading the cleared index again
-  @(negedge clock);
-  read_enable = 1;
-  read_index  = last_written_index;
-  @(posedge clock);
-  if (!read_error) $error("[%0tns] Read error not asserted for cleared index %0d.", $time, read_index);
-  @(negedge clock);
-  read_enable = 0;
-  read_index  = 0;
-
-  repeat(10) @(posedge clock);
-
-  // Check 5 : Writing to full
-  $display("CHECK 5 : Writing to full.");
+  // Check 4 : Writing to full
+  $display("CHECK 4 : Writing to full.");
   // Fill the memory
   for (int write_count = valid_entries_count; write_count < DEPTH; write_count++) begin
     @(negedge clock);
@@ -214,15 +196,14 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 8 : Read all without clearing
-  $display("CHECK 8 : Read all without clearing.");
+  // Check 5 : Read all without clearing
+  $display("CHECK 5 : Read all without clearing.");
   read_clear = 0;
   for (int read_count = 0; read_count < DEPTH; read_count++) begin
     @(negedge clock);
     read_enable = 1;
     read_index  = read_count;
     @(posedge clock);
-    if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during read.", $time, read_index);
     if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during read.", $time, read_data, read_index, memory_model[read_index]);
     @(negedge clock);
     read_enable = 0;
@@ -238,15 +219,14 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 9 : Read and clear to empty
-  $display("CHECK 9 : Read and clear to empty.");
+  // Check 6 : Read and clear to empty
+  $display("CHECK 6 : Read and clear to empty.");
   read_clear = 1;
   for (int clear_count = 0; clear_count < DEPTH; clear_count++) begin
     @(negedge clock);
     read_enable = 1;
     read_index  = clear_count;
     @(posedge clock);
-    if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during clear.", $time, read_index);
     if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
     memory_model[read_index] = 'x;
     valid_model[read_index]  = 0;
@@ -265,8 +245,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 10 : Continuous write & clear almost empty
-  $display("CHECK 10 : Continuous write & clear almost empty.");
+  // Check 7 : Continuous write & clear almost empty
+  $display("CHECK 7 : Continuous write & clear almost empty.");
   if (!empty) $error("[%0tns] Buffer is not empty.", $time);
   last_written_index = 'x;
   for (int iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
@@ -277,7 +257,6 @@ initial begin
       read_clear  = 1;
       read_index  = last_written_index;
       #0;
-      if (read_error) $error("[%0tns] Read error asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
       if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
       memory_model[read_index] = 'x;
       valid_model[read_index]  = 0;
@@ -318,8 +297,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 11 : Continuous write & clear almost full
-  $display("CHECK 11 : Continuous write & clear almost full.");
+  // Check 8 : Continuous write & clear almost full
+  $display("CHECK 8 : Continuous write & clear almost full.");
   if (!empty) $error("[%0tns] Buffer is not empty.", $time);
   last_written_index = 'x;
   for (int iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
@@ -330,7 +309,6 @@ initial begin
       read_clear  = 1;
       read_index  = last_written_index;
       #0;
-      if (read_error) $error("[%0tns] Read error asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
       if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
       memory_model[read_index] = 'x;
       valid_model[read_index]  = 0;
@@ -365,7 +343,6 @@ initial begin
       read_clear  = 1;
       read_index  = index;
       #0;
-      if (read_error) $error("[%0tns] Read error asserted for valid index '%0d' during final read pass.", $time, read_index);
       if (read_data !== memory_model[index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during final read pass.", $time, read_data, read_index, memory_model[index]);
       memory_model[read_index] = 'x;
       valid_model[read_index]  = 0;
@@ -393,8 +370,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 12 : Random stimulus
-  $display("CHECK 12 : Random stimulus.");
+  // Check 9 : Random stimulus
+  $display("CHECK 9 : Random stimulus.");
   @(negedge clock);
   transfer_count    = 0;
   timeout_countdown = RANDOM_CHECK_TIMEOUT;
@@ -448,7 +425,6 @@ initial begin
         // Check
         @(posedge clock);
         if (read_enable) begin
-          if (read_error) $error("[%0tns] Read error asserted for valid index '%0d'.", $time, read_index);
           if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
           if (read_clear) begin
             memory_model[read_index] = 'x;

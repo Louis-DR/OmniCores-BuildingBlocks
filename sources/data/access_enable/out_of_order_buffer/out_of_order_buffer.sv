@@ -42,8 +42,7 @@ module out_of_order_buffer #(
   input                    read_enable,
   input                    read_clear,
   input  [INDEX_WIDTH-1:0] read_index,
-  output       [WIDTH-1:0] read_data,
-  output                   read_error
+  output       [WIDTH-1:0] read_data
 );
 
 // Memory array
@@ -95,8 +94,7 @@ always_comb begin
 end
 
 // Read logic
-assign read_data  = memory[read_index];
-assign read_error = read_enable && !valid[read_index];
+assign read_data = memory[read_index];
 
 // Reset and sequential logic
 always_ff @(posedge clock or negedge resetn) begin

@@ -4,10 +4,8 @@ reorder_buffer
 -> resetn
 -> reserve_enable
 <= reserve_index
-<- reserve_error
 -> write_enable     read_enable <-
-=> write_index       read_valid ->
+=> write_index
 => write_data         read_data =>
-<- write_error       read_error ->
 <- reserve_full       data_full ->
 <- reserve_empty     data_empty ->

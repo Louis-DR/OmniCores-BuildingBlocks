@@ -44,15 +44,11 @@ logic                   data_full;
 logic                   data_empty;
 logic                   reserve_enable;
 logic [INDEX_WIDTH-1:0] reserve_index;
-logic                   reserve_error;
 logic                   write_enable;
 logic [INDEX_WIDTH-1:0] write_index;
 logic       [WIDTH-1:0] write_data;
-logic                   write_error;
 logic                   read_enable;
-logic                   read_valid;
 logic       [WIDTH-1:0] read_data;
-logic                   read_error;
 
 // Test variables
 logic [INDEX_WIDTH-1:0] read_index;
@@ -80,15 +76,11 @@ reorder_buffer #(
   .data_empty     ( data_empty     ),
   .reserve_enable ( reserve_enable ),
   .reserve_index  ( reserve_index  ),
-  .reserve_error  ( reserve_error  ),
   .write_enable   ( write_enable   ),
   .write_data     ( write_data     ),
   .write_index    ( write_index    ),
-  .write_error    ( write_error    ),
   .read_enable    ( read_enable    ),
-  .read_valid     ( read_valid     ),
-  .read_data      ( read_data      ),
-  .read_error     ( read_error     )
+  .read_data      ( read_data      )
 );
 
 // Source clock generation
@@ -119,7 +111,6 @@ task automatic write(input logic [INDEX_WIDTH-1:0] index);
   write_index  = index;
   write_data   = $urandom_range(WIDTH_POW2);
   @(posedge clock);
-  if (write_error) $error("[%0tns] Write error when writing to reserved index '%0d'.", $time, write_index);
   valid_model  [write_index] = 1;
   memory_model [write_index] = write_data;
   @(negedge clock);
@@ -130,10 +121,9 @@ endtask
 // Task to read
 task automatic read();
   read_enable = 1;
+  read_index  = reserved_indices_for_read.pop_front();
   @(posedge clock);
-  read_index = reserved_indices_for_read.pop_front();
-  if (!read_valid) $error("[%0tns] Read valid is deasserted after writing.", $time);
-  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h'.", $time, read_data, memory_model[0]);
+  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h'.", $time, read_data, memory_model[read_index]);
   reserved_model [read_index] = 0;
   valid_model    [read_index] = 0;
   @(negedge clock);
@@ -289,164 +279,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 10 : Write overwrite
-  $display("CHECK 10 : Write overwrite.");
-  // Reserve operation
-  @(negedge clock);
-  reserve();
-  // Write operation
-  @(negedge clock);
-  write(reserved_indices_for_write[0]);
-  // Write operation
-  @(negedge clock);
-  write_enable = 1;
-  write_index  = reserved_indices_for_write.pop_front();
-  write_data   = $urandom_range(WIDTH_POW2);
-  @(posedge clock);
-  if (!write_error) $error("[%0tns] No write error when overwriting at index '%0d'.", $time, write_index);
-  @(negedge clock);
-  write_enable = 0;
-  write_data   = 0;
-  // Reset from broken state
-  resetn = 0;
-  @(posedge clock);
-  resetn = 1;
-  @(posedge clock);
-  // Final state
-  check_flags(false, true, false, true, " after resetting after overwriting");
-  // Clear the test variables
-  clear_verification_variables();
-
-  repeat(10) @(posedge clock);
-
-  // Check 11 : Write at unreserved
-  $display("CHECK 11 : Write at unreserved.");
-  // Write operation
-  @(negedge clock);
-  write_enable = 1;
-  write_index  = 0;
-  write_data   = $urandom_range(WIDTH_POW2);
-  @(posedge clock);
-  if (!write_error) $error("[%0tns] No write error when writing at unreserved index '%0d'.", $time, write_index);
-  @(negedge clock);
-  write_enable = 0;
-  write_data   = 0;
-  // Reset from broken state
-  resetn = 0;
-  @(posedge clock);
-  resetn = 1;
-  @(posedge clock);
-  // Final state
-  check_flags(false, true, false, true, " after resetting after writing at unreserved");
-  // Clear the test variables
-  clear_verification_variables();
-
-  repeat(10) @(posedge clock);
-
-  // Check 12 : Read at unreserved
-  $display("CHECK 12 : Read at unreserved.");
-  // Read operation
-  @(negedge clock);
-  read_enable = 1;
-  @(posedge clock);
-  if (!read_error) $error("[%0tns] No read error when reading at unreserved buffer.", $time);
-  @(negedge clock);
-  read_enable = 0;
-  // Reset from broken state
-  resetn = 0;
-  @(posedge clock);
-  resetn = 1;
-  @(posedge clock);
-  // Final state
-  check_flags(false, true, false, true, " after resetting after reading at unreserved");
-  // Clear the test variables
-  clear_verification_variables();
-
-  repeat(10) @(posedge clock);
-
-  // Check 13 : Read before write
-  $display("CHECK 13 : Read before write.");
-  // Reserve operation
-  @(negedge clock);
-  reserve();
-  // Read operation
-  @(negedge clock);
-  read_enable = 1;
-  @(posedge clock);
-  if (!read_error) $error("[%0tns] No read error when reading before write.", $time);
-  @(negedge clock);
-  read_enable = 0;
-  // Reset from broken state
-  resetn = 0;
-  @(posedge clock);
-  resetn = 1;
-  @(posedge clock);
-  // Final state
-  check_flags(false, true, false, true, " after resetting after reading before write");
-  // Clear the test variables
-  clear_verification_variables();
-
-  repeat(10) @(posedge clock);
-
-  // Check 14 : Reserve when fully reserved
-  $display("CHECK 14 : Reserve when fully reserved.");
-  // Reserve all
-  @(negedge clock);
-  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    reserve();
-  end
-  // Reserve operation
-  @(negedge clock);
-  reserve_enable = 1;
-  @(posedge clock);
-  if (!reserve_error) $error("[%0tns] No reserve error when reserving when buffer fully reserved.", $time);
-  @(negedge clock);
-  reserve_enable = 0;
-  // Reset from broken state
-  resetn = 0;
-  @(posedge clock);
-  resetn = 1;
-  @(posedge clock);
-  // Final state
-  check_flags(false, true, false, true, " after resetting after reserving when fullly reserved");
-  // Clear the test variables
-  clear_verification_variables();
-
-  repeat(10) @(posedge clock);
-
-  // Check 15 : Reserve when fully written
-  $display("CHECK 15 : Reserve when fully written.");
-  // Reserve all
-  @(negedge clock);
-  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    reserve();
-  end
-  // Write all
-  @(negedge clock);
-  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
-    write(reserved_indices_for_write.pop_front());
-  end
-  // Reserve operation
-  @(negedge clock);
-  reserve_enable = 1;
-  @(posedge clock);
-  if (!reserve_error) $error("[%0tns] No reserve error when reserving when buffer fully written.", $time);
-  @(negedge clock);
-  reserve_enable = 0;
-  // Reset from broken state
-  resetn = 0;
-  @(posedge clock);
-  resetn = 1;
-  @(posedge clock);
-  // Final state
-  check_flags(false, true, false, true, " after resetting after reserving when fullly written");
-  // Clear the test variables
-  clear_verification_variables();
-
-  repeat(10) @(posedge clock);
-
-  // Check 16 : Successive operations
-  $display("CHECK 16 : Successive operations.");
+  // Check 10 : Successive operations
+  $display("CHECK 10 : Successive operations.");
   @(negedge clock);
   repeat (SUCCESSIVE_CHECK_DURATION) begin
     // Reserve operation
@@ -461,8 +295,8 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 17 : Random stimulus
-  $display("CHECK 17 : Random stimulus.");
+  // Check 11 : Random stimulus
+  $display("CHECK 11 : Random stimulus.");
   @(negedge clock);
   transfer_count    = 0;
   timeout_countdown = RANDOM_CHECK_TIMEOUT;
@@ -506,7 +340,8 @@ initial begin
       forever begin
         // Stimulus
         @(negedge clock);
-        if (read_valid && random_boolean(RANDOM_CHECK_READ_PROBABILITY)) begin
+        // Check if the next in-order entry is valid before reading
+        if (reserved_indices_for_read.size() > 0 && valid_model[reserved_indices_for_read[0]] && random_boolean(RANDOM_CHECK_READ_PROBABILITY)) begin
           read();
         end else begin
           read_enable = 0;
@@ -526,8 +361,8 @@ initial begin
       while (transfer_count < RANDOM_CHECK_DURATION) begin
         @(negedge clock);
       end
-      // Read until empty
-      while (!data_empty) begin
+      // Read until all reserved entries are read
+      while (reserved_indices_for_read.size() > 0) begin
         @(negedge clock);
       end
     end

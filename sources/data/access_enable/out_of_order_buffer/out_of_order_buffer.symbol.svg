@@ -1,5 +1,5 @@
-<svg width="272" height="240" viewBox="0 0 136 120" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="86" height="110" fill="none" stroke="black" stroke-width="1" rx="5"/>
+<svg width="272" height="220" viewBox="0 0 136 110" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="86" height="100" fill="none" stroke="black" stroke-width="1" rx="5"/>
   <text x="68" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Out-of-Order Buffer</text>
   <text x="68" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">out_of_order_buffer</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
@@ -33,15 +33,12 @@
         <line x1="117" y1="85" x2="131" y2="85" stroke="black" stroke-width="1"/>
         <path d="M 111 85 l +6 +2.0 v -4 z" fill="black"/>
           <line x1="124" y1="83" x2="128" y2="87" stroke="black" stroke-width="1"/>
-      <text x="109" y="95" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_error</text>
+      <text x="27" y="95" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">full</text>
+        <line x1="25" y1="95" x2="11" y2="95" stroke="black" stroke-width="1"/>
+        <path d="M 5 95 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="109" y="95" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">empty</text>
         <line x1="111" y1="95" x2="125" y2="95" stroke="black" stroke-width="1"/>
         <path d="M 131 95 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="105" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">full</text>
-        <line x1="25" y1="105" x2="11" y2="105" stroke="black" stroke-width="1"/>
-        <path d="M 5 105 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="109" y="105" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">empty</text>
-        <line x1="111" y1="105" x2="125" y2="105" stroke="black" stroke-width="1"/>
-        <path d="M 131 105 l -6 +2.0 v -4 z" fill="black"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

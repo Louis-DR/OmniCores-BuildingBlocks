@@ -14,9 +14,9 @@
 
 Synchronous buffer that allows out-of-order reading of stored data entries. The buffer stores data in the first available slot and returns the corresponding index, allowing data to be read back using that same index at any time. The buffer uses a write-enable/read-enable protocol for flow control and provides full and empty status flags.
 
-When writing, the data is stored in the first free slot and the corresponding index is returned on the same cycle. The data becomes available for reading in the next cycle. The read operation is fully combinational and data can be optionally cleared during the read operation to free the slot for future writes. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
+When writing, the data is stored in the first free slot and the corresponding index is returned on the same cycle. The data becomes available for reading in the next cycle. The read operation is fully combinational and data can be optionally cleared during the read operation to free the slot for future writes. The internal memory array is not reset, so it will contain invalid data in silicon and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
-The buffer provides error detection for invalid read operations (reading from invalid indices) but does not implement safety mechanisms against writing when full, so the integration must use the status flags and enable signals carefully.
+The buffer does not implement safety mechanisms against incorrect usage, so the integration is responsible for ensuring correct operation by checking status flags before enabling operations and only reading from valid indices.
 
 ## Parameters
 
@@ -41,21 +41,16 @@ The buffer provides error detection for invalid read operations (reading from in
 | `read_clear`   | input     | 1             | `clock`      |          |             | Clear enable signal.<br/>`0`: read only.<br/>`1`: clear slot after reading.           |
 | `read_index`   | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to read from.                                                       |
 | `read_data`    | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer at the specified index.                                     |
-| `read_error`   | output    | 1             | `clock`      | `resetn` | `0`         | Read error flag.<br/>`0`: no error.<br/>`1`: read attempted from invalid index.       |
 
 ## Operation
 
 The out-of-order buffer maintains an internal memory array with a validity bit for each slot. Unlike traditional FIFOs that enforce first-in-first-out order, this buffer allows random access to stored data using indices.
 
-For **write operation**, when `write_enable` is asserted, the `write_data` is stored in the first available free slot found by scanning the validity bits. The `write_index` output provides the index of the allocated slot on the same cycle. The slot becomes valid and available for reading in the next cycle.
+For **write operation**, when `write_enable` is asserted, the `write_data` is stored in the first available free slot found by scanning the validity bits. The `write_index` output provides the index of the allocated slot on the same cycle. The slot becomes valid and available for reading in the next cycle. The integration must check the `full` flag before asserting `write_enable`. If a write is attempted when full, the write operation will override the first entry of the buffer (index 0) and the buffer will continue to function but with corrupted data.
 
-There is no safety mechanism against writing when full ; if attempted, the write operation will override the first entry of the buffer (index 0) and the buffer will continue to function correctly but with corrupted data.
+For **read operation**, the `read_data` output continuously provides the data stored at the location specified by `read_index`. When `read_enable` and `read_clear` are both asserted, the slot is marked as invalid, thus freed for future writes. The integration must only read from indices that contain valid data. The `read_data` may contain data previously stored at an invalid index, as the data is not cleared when an entry is invalidated.
 
-For **read operation**, the `read_data` output continuously provides the data stored at the location specified by `read_index`. When `read_enable` and `read_clear` are both asserted, the slot is marked as invalid, thus freed for future writes.
-
-When `read_enable` is asserted but the entry at index `read_index` is invalid, the `read_error` flag is asserted. The `read_data` may be data previously stored at this index, as it is not cleared when the entry is invalidated. The buffer can continue operating normally after an invalid read.
-
-Asserting `read_clear` but not `read_enable` is not expected, but will not break the buffer. The clear will simply be ignored.
+Asserting `read_clear` without `read_enable` is not expected, but will not break the buffer. The clear will simply be ignored.
 
 The status flags are calculated based on the vector of valid bits. The buffer is full when there are no free slots (cannot write), and empty when all the slots are free (cannot read).
 
@@ -68,8 +63,6 @@ The status flags are calculated based on the vector of valid bits. The buffer is
 | `write_enable` | `full`        | sequential    | Control path through internal validity bits.     |
 | `write_enable` | `empty`       | sequential    | Control path through internal validity bits.     |
 | `read_index`   | `read_data`   | combinational | Direct memory array access.                      |
-| `read_index`   | `read_error`  | combinational | Error detection through validity bit check.      |
-| `read_enable`  | `read_error`  | combinational | Error detection through validity bit check.      |
 | `read_enable`  | `full`        | sequential    | Control path through internal validity bits.     |
 | `read_enable`  | `empty`       | sequential    | Control path through internal validity bits.     |
 | `read_clear`   | `full`        | sequential    | Control path through internal validity bits.     |
@@ -89,7 +82,7 @@ The critical path includes the first-free-slot detection logic for write index g
 
 ## Verification
 
-The out-of-order buffer is verified using a SystemVerilog testbench with comprehensive check sequences that validate all buffer operations, error detection, and edge cases.
+The out-of-order buffer is verified using a SystemVerilog testbench with comprehensive check sequences that validate all buffer operations and edge cases.
 
 The following table lists the checks performed by the testbench.
 
@@ -98,13 +91,12 @@ The following table lists the checks performed by the testbench.
 | 1      | Write once                            | Verifies single write operation and status flag updates.                                       |
 | 2      | Read once without clearing            | Verifies data integrity and read operation without clearing the slot.                          |
 | 3      | Read once and clear                   | Verifies read operation with slot clearing and proper status flag updates.                     |
-| 4      | Read while empty                      | Verifies error detection when reading from cleared/invalid indices.                            |
-| 5      | Writing to full                       | Fills the buffer completely and verifies the full flag behavior.                               |
-| 6      | Read all without clearing             | Reads all valid slots without clearing and verifies data integrity.                            |
-| 7      | Read and clear to empty               | Clears all slots and verifies empty flag behavior and proper cleanup.                          |
-| 8      | Continuous write & clear almost empty | Tests continuous write and clear operations with the buffer almost empty.                      |
-| 9      | Continuous write & clear almost full  | Tests continuous write and clear operations with the buffer almost full.                       |
-| 10     | Random stimulus                       | Performs random write, read, and clear operations and verifies data integrity against a model. |
+| 4      | Writing to full                       | Fills the buffer completely and verifies the full flag behavior.                               |
+| 5      | Read all without clearing             | Reads all valid slots without clearing and verifies data integrity.                            |
+| 6      | Read and clear to empty               | Clears all slots and verifies empty flag behavior and proper cleanup.                          |
+| 7      | Continuous write & clear almost empty | Tests continuous write and clear operations with the buffer almost empty.                      |
+| 8      | Continuous write & clear almost full  | Tests continuous write and clear operations with the buffer almost full.                       |
+| 9      | Random stimulus                       | Performs random write, read, and clear operations and verifies data integrity against a model. |
 
 The following table lists the parameter values verified by the testbench.
 
