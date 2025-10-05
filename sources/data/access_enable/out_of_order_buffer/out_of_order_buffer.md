@@ -14,6 +14,8 @@
 
 Synchronous buffer that allows out-of-order reading of stored data entries. The buffer stores data in the first available slot and returns the corresponding index, allowing data to be read back using that same index at any time. The buffer uses a write-enable/read-enable protocol for flow control and provides full and empty status flags.
 
+The design is structured as a modular architecture with a separate controller for index management, validity tracking, and control logic, and a generic simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
+
 When writing, the data is stored in the first free slot and the corresponding index is returned on the same cycle. The data becomes available for reading in the next cycle. The read operation is fully combinational and data can be optionally cleared during the read operation to free the slot for future writes. The internal memory array is not reset, so it will contain invalid data in silicon and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 The buffer does not implement safety mechanisms against incorrect usage, so the integration is responsible for ensuring correct operation by checking status flags before enabling operations and only reading from valid indices.
@@ -44,11 +46,17 @@ The buffer does not implement safety mechanisms against incorrect usage, so the 
 
 ## Operation
 
-The out-of-order buffer maintains an internal memory array with a validity bit for each slot. Unlike traditional FIFOs that enforce first-in-first-out order, this buffer allows random access to stored data using indices.
+The out-of-order buffer consists of two main components: a controller that manages validity tracking, index allocation, and control logic, and a simple dual-port RAM for data storage.
 
-For **write operation**, when `write_enable` is asserted, the `write_data` is stored in the first available free slot found by scanning the validity bits. The `write_index` output provides the index of the allocated slot on the same cycle. The slot becomes valid and available for reading in the next cycle. The integration must check the `full` flag before asserting `write_enable`. If a write is attempted when full, the write operation will override the first entry of the buffer (index 0) and the buffer will continue to function but with corrupted data.
+The **controller** maintains a validity bit for each slot and implements first-free-slot logic to allocate write indices. It generates the memory interface signals and calculates the status flags. The controller doesn't store any data, only control state.
 
-For **read operation**, the `read_data` output continuously provides the data stored at the location specified by `read_index`. When `read_enable` and `read_clear` are both asserted, the slot is marked as invalid, thus freed for future writes. The integration must only read from indices that contain valid data. The `read_data` may contain data previously stored at an invalid index, as the data is not cleared when an entry is invalidated.
+The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
+
+Unlike traditional FIFOs that enforce first-in-first-out order, this buffer allows random access to stored data using indices.
+
+For **write operation**, when `write_enable` is asserted, the controller identifies the first available free slot by scanning the validity bits. The controller directs the RAM to store `write_data` at the allocated slot. The `write_index` output provides the index of the allocated slot on the same cycle. The slot becomes valid and available for reading in the next cycle. The integration must check the `full` flag before asserting `write_enable`. If a write is attempted when full, the write operation will override the first entry of the buffer (index 0) and the buffer will continue to function but with corrupted data.
+
+For **read operation**, the `read_data` output continuously provides the data stored at the location specified by `read_index` from the RAM. When `read_enable` and `read_clear` are both asserted, the slot is marked as invalid in the controller, thus freed for future writes. The integration must only read from indices that contain valid data. The `read_data` may contain data previously stored at an invalid index, as the data is not cleared when an entry is invalidated.
 
 Asserting `read_clear` without `read_enable` is not expected, but will not break the buffer. The clear will simply be ignored.
 
@@ -122,10 +130,12 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                             | Path                                                    | Comment                                      |
-| ------------------------------------------------------------------ | ------------------------------------------------------- | -------------------------------------------- |
-| [`first_one`](../../../operations/first_one/first_one.md)          | `omnicores-buildingblocks/sources/operations/first_one` | Used for finding the first free slot.        |
-| [`onehot_to_binary`](../../../encoding/onehot/onehot_to_binary.md) | `omnicores-buildingblocks/sources/encoding/onehot`      | Used for converting one-hot to binary index. |
+This module depends on the following modules:
+
+| Module                           | Path                                                                    | Comment                                                      |
+| -------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `out_of_order_buffer_controller` | `omnicores-buildingblocks/sources/data/controllers/out_of_order_buffer` | Controller for validity tracking and index allocation logic. |
+| `simple_dual_port_ram`           | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram`          | Dual-port RAM for data storage.                              |
 
 ## Related modules
 

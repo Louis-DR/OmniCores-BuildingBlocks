@@ -1,6 +1,8 @@
 out_of_order_buffer.sv
+../../controllers/out_of_order_buffer/out_of_order_buffer_controller.sv
 ../../../operations/first_one/first_one.v
 ../../../operations/fast_first_one/fast_first_one.v
-../../../operations/small_first_one/small_first_one.v
 ../../../operations/shift_left/shift_left.v
+../../../operations/small_first_one/small_first_one.v
 ../../../encoding/onehot/onehot_to_binary.v
+../../../memory/simple_dual_port_ram/simple_dual_port_ram.v

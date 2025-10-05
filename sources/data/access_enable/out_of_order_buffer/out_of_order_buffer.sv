@@ -7,20 +7,6 @@
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Buffer with out-of-order reading.                            ║
 // ║                                                                           ║
-// ║              When writting, the data is stored in the first free slot and ║
-// ║              the corresponding index is returned. The data can then be    ║
-// ║              read at the same index. The data can also be cleared during  ║
-// ║              the read operation, which frees the slot.                    ║
-// ║                                                                           ║
-// ║              It is impossible to write when the memory is full, and       ║
-// ║              reading to an invalid index will return an error (but not    ║
-// ║              break the memory.                                            ║
-// ║                                                                           ║
-// ║              The write index is available on the same cycle as the write  ║
-// ║              operation, and the data is available for reading in the next ║
-// ║              cycle. The read operation is fully combinational and         ║
-// ║              clearing frees the spot for writing in the next cycle.       ║
-// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
@@ -45,78 +31,51 @@ module out_of_order_buffer #(
   output       [WIDTH-1:0] read_data
 );
 
-// Memory array
-logic [WIDTH-1:0] memory [DEPTH-1:0];
-logic [DEPTH-1:0] valid;
-logic [DEPTH-1:0] valid_next;
+// Memory interface signals
+logic                   memory_write_enable;
+logic [INDEX_WIDTH-1:0] memory_write_address;
+logic       [WIDTH-1:0] memory_write_data;
+logic                   memory_read_enable;
+logic [INDEX_WIDTH-1:0] memory_read_address;
+logic       [WIDTH-1:0] memory_read_data;
 
-// Full when all entries are valid
-logic  full_next;
-assign full_next = &valid_next;
-
-// Empty when no entries are valid
-logic  empty_next;
-assign empty_next = ~|valid_next;
-
-// Index of the first free slot in the memory
-logic       [DEPTH-1:0] first_free_onehot;
-logic [INDEX_WIDTH-1:0] first_free_index;
-assign write_index = first_free_index;
-
-// Find the first free slot in the memory
-first_one #(
-  .WIDTH ( DEPTH )
-) first_free_slot (
-  .data      ( ~valid            ),
-  .first_one ( first_free_onehot )
+// Controller
+out_of_order_buffer_controller #(
+  .WIDTH ( WIDTH ),
+  .DEPTH ( DEPTH )
+) controller (
+  .clock                ( clock                ),
+  .resetn               ( resetn               ),
+  .full                 ( full                 ),
+  .empty                ( empty                ),
+  .write_enable         ( write_enable         ),
+  .write_data           ( write_data           ),
+  .write_index          ( write_index          ),
+  .read_enable          ( read_enable          ),
+  .read_clear           ( read_clear           ),
+  .read_index           ( read_index           ),
+  .read_data            ( read_data            ),
+  .memory_write_enable  ( memory_write_enable  ),
+  .memory_write_address ( memory_write_address ),
+  .memory_write_data    ( memory_write_data    ),
+  .memory_read_enable   ( memory_read_enable   ),
+  .memory_read_address  ( memory_read_address  ),
+  .memory_read_data     ( memory_read_data     )
 );
 
-// Convert the one-hot index to a binary index
-onehot_to_binary #(
-  .WIDTH_ONEHOT ( DEPTH )
-) onehot_to_index (
-  .onehot ( first_free_onehot ),
-  .binary ( first_free_index  )
+// Memory
+simple_dual_port_ram #(
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .REGISTERED_READ ( 0     )
+) memory (
+  .clock         ( clock                ),
+  .write_enable  ( memory_write_enable  ),
+  .write_address ( memory_write_address ),
+  .write_data    ( memory_write_data    ),
+  .read_enable   ( memory_read_enable   ),
+  .read_address  ( memory_read_address  ),
+  .read_data     ( memory_read_data     )
 );
-
-// Allocation and clear logic
-always_comb begin
-  // Default assignments
-  valid_next = valid;
-  // Write allocation operation
-  if (write_enable) begin
-    valid_next[first_free_index] = 1;
-  end
-  // Read clear operation
-  if (read_enable && read_clear) begin
-    valid_next[read_index] = 0;
-  end
-end
-
-// Read logic
-assign read_data = memory[read_index];
-
-// Reset and sequential logic
-always_ff @(posedge clock or negedge resetn) begin
-  // Reset
-  if (!resetn) begin
-    full  <= 0;
-    empty <= 1;
-    valid <= 0;
-  end
-  // Operation
-  else begin
-    full  <= full_next;
-    empty <= empty_next;
-    valid <= valid_next;
-  end
-end
-
-// Write to memory without reset
-always @(posedge clock) begin
-  if (write_enable) begin
-    memory[first_free_index] <= write_data;
-  end
-end
 
 endmodule
