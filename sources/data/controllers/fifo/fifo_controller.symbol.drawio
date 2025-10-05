@@ -11,8 +11,8 @@
                   fold       = "1"
                   page       = "1"
                   pageScale  = "1"
-                  pageWidth  = "130"
-                  pageHeight = "110"
+                  pageWidth  = "120"
+                  pageHeight = "130"
                   math       = "0"
                   shadow     = "0">
       <root>
@@ -23,9 +23,9 @@
                 value       = ""
                 vertex      = "1"
                 connectable = "0"
-                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[1,0,0,0,30],[0,0,0,0,40],[1,0,0,0,40],[1,0,0,0,50],[1,0,0,0,60],[1,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[0,0,0,0,90],[1,0,0,0,90],[0,0,0,0,100],[1,0,0,0,100],[0.5,0,0,0,0],[0.5,0,0,0,110]];">
-          <mxGeometry width  = "130"
-                      height = "110"
+                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[1,0,0,0,80],[1,0,0,0,90],[1,0,0,0,100],[1,0,0,0,110],[1,0,0,0,120],[0.5,0,0,0,0],[0.5,0,0,0,130]];">
+          <mxGeometry width  = "120"
+                      height = "130"
                       as     = "geometry"/>
         </mxCell>
         <mxCell id     = "box"
@@ -35,8 +35,8 @@
                 style  = "rounded=1;arcSize=5;fillColor=none;strokeWidth=1;strokeColor=black;whiteSpace=wrap;html=1;connectable=0;">
           <mxGeometry x="15"
                       y="0"
-                      width="100"
-                      height="110"
+                      width="90"
+                      height="130"
                       as="geometry"/>
         </mxCell>
         <mxCell id     = "title"
@@ -46,7 +46,7 @@
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontStyle=1;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"
                       y      = "7"
-                      width  = "100"
+                      width  = "90"
                       height = "0"
                       as     = "geometry"/>
         </mxCell>
@@ -57,7 +57,7 @@
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"
                       y      = "16"
-                      width  = "100"
+                      width  = "90"
                       height = "0"
                       as     = "geometry"/>
         </mxCell>
@@ -69,7 +69,7 @@
               <mxGeometry
                 x      = "15"
                 y      = "30"
-                width  = "100"
+                width  = "90"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -90,35 +90,6 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id="memory_write_enable-label"
-                    parent="2"
-                    value="memory_write_enable"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "30"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "memory_write_enable-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "130"
-                         y  = "30"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "115"
-                         y  = "30"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
             <mxCell id     = "resetn-label"
                     parent = "2"
                     value  = "resetn"
@@ -127,7 +98,7 @@
               <mxGeometry
                 x      = "15"
                 y      = "40"
-                width  = "100"
+                width  = "90"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -148,238 +119,6 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id="memory_read_enable-label"
-                    parent="2"
-                    value="memory_read_enable"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "40"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "memory_read_enable-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "130"
-                         y  = "40"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "115"
-                         y  = "40"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="memory_address-label"
-                    parent="2"
-                    value="memory_address"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "50"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "memory_address-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "130"
-                         y  = "50"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "115"
-                         y  = "50"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="memory_write_data-label"
-                    parent="2"
-                    value="memory_write_data"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "60"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "memory_write_data-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "130"
-                         y  = "60"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "115"
-                         y  = "60"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="memory_read_data-label"
-                    parent="2"
-                    value="memory_read_data"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "70"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "memory_read_data-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "130"
-                         y  = "70"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "115"
-                         y  = "70"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id     = "write_enable-label"
-                    parent = "2"
-                    value  = "write_enable"
-                    vertex = "1"
-                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "80"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "write_enable-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "0"
-                         y  = "80"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "15"
-                         y  = "80"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="read_enable-label"
-                    parent="2"
-                    value="read_enable"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "80"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "read_enable-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "130"
-                         y  = "80"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "115"
-                         y  = "80"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id     = "write_data-label"
-                    parent = "2"
-                    value  = "write_data"
-                    vertex = "1"
-                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "90"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "write_data-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "0"
-                         y  = "90"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "15"
-                         y  = "90"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="read_data-label"
-                    parent="2"
-                    value="read_data"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "90"
-                width  = "100"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "read_data-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "130"
-                         y  = "90"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "115"
-                         y  = "90"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
             <mxCell id     = "full-label"
                     parent = "2"
                     value  = "full"
@@ -387,8 +126,8 @@
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "100"
-                width  = "100"
+                y      = "50"
+                width  = "90"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -402,10 +141,10 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "0"
-                         y  = "100"
+                         y  = "50"
                          as = "sourcePoint"/>
                 <mxPoint x  = "15"
-                         y  = "100"
+                         y  = "50"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
@@ -416,8 +155,8 @@
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "100"
-                width  = "100"
+                y      = "50"
+                width  = "90"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -430,11 +169,272 @@
                           height   = "50"
                           relative = "1"
                           as       = "geometry">
-                <mxPoint x  = "130"
+                <mxPoint x  = "120"
+                         y  = "50"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "50"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "write_enable-label"
+                    parent = "2"
+                    value  = "write_enable"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "60"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "write_enable-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "60"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "60"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="read_enable-label"
+                    parent="2"
+                    value="read_enable"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "60"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "read_enable-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "60"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "60"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "write_data-label"
+                    parent = "2"
+                    value  = "write_data"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "70"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "write_data-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "70"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "70"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="read_data-label"
+                    parent="2"
+                    value="read_data"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "70"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "read_data-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "70"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "70"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="memory_write_enable-label"
+                    parent="2"
+                    value="memory_write_enable"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "80"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_write_enable-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "80"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "80"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="memory_read_enable-label"
+                    parent="2"
+                    value="memory_read_enable"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "90"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_read_enable-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "90"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "90"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="memory_address-label"
+                    parent="2"
+                    value="memory_address"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "100"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_address-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
                          y  = "100"
                          as = "sourcePoint"/>
-                <mxPoint x  = "115"
+                <mxPoint x  = "105"
                          y  = "100"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="memory_write_data-label"
+                    parent="2"
+                    value="memory_write_data"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "110"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_write_data-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "110"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "110"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="memory_read_data-label"
+                    parent="2"
+                    value="memory_read_data"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "120"
+                width  = "90"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_read_data-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "120"
+                         y  = "120"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "105"
+                         y  = "120"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
