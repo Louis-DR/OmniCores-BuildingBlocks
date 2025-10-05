@@ -1,0 +1,390 @@
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║ Project:     OmniCores-BuildingBlocks                                     ║
+// ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
+// ║ Website:     louis-dr.github.io                                           ║
+// ║ License:     MIT License                                                  ║
+// ║ File:        valid_ready_reorder_buffer.testbench.sv                      ║
+// ╟───────────────────────────────────────────────────────────────────────────╢
+// ║ Description: Testbench for the reorder buffer.                            ║
+// ║                                                                           ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+
+`timescale 1ns/1ns
+`include "random.svh"
+
+
+
+module valid_ready_reorder_buffer__testbench ();
+
+// Test parameters
+localparam real CLOCK_PERIOD = 10;
+localparam int  WIDTH        = 8;
+localparam int  WIDTH_POW2   = 2**WIDTH;
+localparam int  DEPTH        = 8;
+localparam int  INDEX_WIDTH  = $clog2(DEPTH);
+
+// Check parameters
+localparam int  SUCCESSIVE_CHECK_DURATION        = 100;
+localparam int  CONCURRENT_CHECK_DURATION        = 100;
+localparam int  RANDOM_CHECK_DURATION            = 100;
+localparam real RANDOM_CHECK_RESERVE_PROBABILITY = 0.5;
+localparam real RANDOM_CHECK_WRITE_PROBABILITY   = 0.5;
+localparam real RANDOM_CHECK_READ_PROBABILITY    = 0.5;
+localparam int  RANDOM_CHECK_TIMEOUT             = 1000;
+
+// Device ports
+logic                   clock;
+logic                   resetn;
+logic                   reserve_full;
+logic                   reserve_empty;
+logic                   data_full;
+logic                   data_empty;
+logic                   reserve_valid;
+logic [INDEX_WIDTH-1:0] reserve_index;
+logic                   reserve_ready;
+logic                   write_valid;
+logic [INDEX_WIDTH-1:0] write_index;
+logic       [WIDTH-1:0] write_data;
+logic                   write_ready;
+logic       [WIDTH-1:0] read_data;
+logic                   read_valid;
+logic                   read_ready;
+logic       [WIDTH-1:0] memory_model [DEPTH-1:0];
+logic       [DEPTH-1:0] reserved_model;
+logic       [DEPTH-1:0] valid_model;
+int                     reserved_indices_for_write [$];
+int                     reserved_indices_for_read  [$];
+int                     timeout_countdown;
+int                     transfer_count;
+`ifdef SIMULATOR_NO_QUEUE_SHUFFLE
+int                     random_queue_index;
+`endif
+
+// Device under test
+valid_ready_reorder_buffer #(
+  .WIDTH ( WIDTH ),
+  .DEPTH ( DEPTH )
+) valid_ready_reorder_buffer_dut (
+  .clock          ( clock          ),
+  .resetn         ( resetn         ),
+  .reserve_full   ( reserve_full   ),
+  .reserve_empty  ( reserve_empty  ),
+  .data_full      ( data_full      ),
+  .data_empty     ( data_empty     ),
+  .reserve_valid  ( reserve_valid  ),
+  .reserve_index  ( reserve_index  ),
+  .reserve_ready  ( reserve_ready  ),
+  .write_valid    ( write_valid    ),
+  .write_data     ( write_data     ),
+  .write_index    ( write_index    ),
+  .write_ready    ( write_ready    ),
+  .read_data      ( read_data      ),
+  .read_valid     ( read_valid     ),
+  .read_ready     ( read_ready     )
+);
+
+// Source clock generation
+initial begin
+  clock = 1;
+  forever begin
+    #(CLOCK_PERIOD/2) clock = ~clock;
+  end
+end
+
+// Task to reserve a slot
+task automatic reserve();
+  reserve_valid = 1;
+  @(posedge clock);
+  if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
+  if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+  reserved_indices_for_write.push_back(reserve_index);
+  reserved_indices_for_read.push_back(reserve_index);
+  reserved_model [reserve_index] = 1;
+  memory_model   [reserve_index] = 'x;
+  @(negedge clock);
+  reserve_valid = 0;
+endtask
+
+// Task to write to a reserved index
+task automatic write(input logic [INDEX_WIDTH-1:0] index);
+  write_valid = 1;
+  write_index = index;
+  write_data  = $urandom_range(WIDTH_POW2);
+  @(posedge clock);
+  valid_model  [write_index] = 1;
+  memory_model [write_index] = write_data;
+  @(negedge clock);
+  write_valid = 0;
+  write_data  = 0;
+endtask
+
+// Task to read
+task automatic read();
+  int read_index;
+  read_index = reserved_indices_for_read.pop_front();
+  read_ready = 1;
+  @(posedge clock);
+  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h'.", $time, read_data, memory_model[read_index]);
+  reserved_model [read_index] = 0;
+  valid_model    [read_index] = 0;
+  @(negedge clock);
+  read_ready = 0;
+endtask
+
+task automatic clear_verification_variables();
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = '0;
+    valid_model[index]  = 1'b0;
+  end
+  reserved_indices_for_write = {};
+  reserved_indices_for_read  = {};
+endtask
+
+// Task to check the status flags
+task automatic check_flags;
+  input logic  expect_reserve_full;
+  input logic  expect_reserve_empty;
+  input logic  expect_data_full;
+  input logic  expect_data_empty;
+  input string context_string;
+  if ( expect_reserve_full  && !reserve_full  ) $error("[%0tns] Reserve full flag is not asserted%s.",  $time, context_string);
+  if ( expect_reserve_empty && !reserve_empty ) $error("[%0tns] Reserve empty flag is not asserted%s.", $time, context_string);
+  if ( expect_data_full     && !data_full     ) $error("[%0tns] Data full flag is not asserted%s.",     $time, context_string);
+  if ( expect_data_empty    && !data_empty    ) $error("[%0tns] Data empty flag is not asserted%s.",    $time, context_string);
+  if (!expect_reserve_full  &&  reserve_full  ) $error("[%0tns] Reserve full flag is asserted%s.",      $time, context_string);
+  if (!expect_reserve_empty &&  reserve_empty ) $error("[%0tns] Reserve empty flag is asserted%s.",     $time, context_string);
+  if (!expect_data_full     &&  data_full     ) $error("[%0tns] Data full flag is asserted%s.",         $time, context_string);
+  if (!expect_data_empty    &&  data_empty    ) $error("[%0tns] Data empty flag is asserted%s.",        $time, context_string);
+endtask
+
+// Main block
+initial begin
+  // Log waves
+  $dumpfile("valid_ready_reorder_buffer.testbench.vcd");
+  $dumpvars(0,valid_ready_reorder_buffer__testbench);
+
+  // Initialization
+  reserve_valid = 0;
+  write_valid   = 0;
+  write_index   = 0;
+  write_data    = 0;
+  read_ready    = 0;
+  clear_verification_variables();
+
+  // Reset
+  resetn = 0;
+  @(posedge clock);
+  resetn = 1;
+  @(posedge clock);
+
+  // Check 1 : Reserve once
+  $display("CHECK 1 : Reserve once.");
+  // Initial state
+  check_flags(false, true, false, true, " after reset");
+  // Reserve operation
+  @(negedge clock);
+  reserve();
+  // Final state
+  check_flags(false, false, false, true, " after one reservation");
+
+  repeat(10) @(posedge clock);
+
+  // Check 2 : Write once
+  $display("CHECK 2 : Write once.");
+  // Write operation
+  @(negedge clock);
+  write(reserved_indices_for_write.pop_front());
+  // Final state
+  check_flags(false, false, false, false, " after one write");
+
+  repeat(10) @(posedge clock);
+
+  // Check 3 : Read once
+  $display("CHECK 3 : Read once.");
+  // Read operation
+  @(negedge clock);
+  read();
+  // Final state
+  check_flags(false, true, false, true, " after reading the only entry");
+
+  repeat(10) @(posedge clock);
+
+  // Check 4 : Reserve all
+  $display("CHECK 4 : Reserve all.");
+  // Reserve all
+  @(negedge clock);
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    reserve();
+  end
+  // Final state
+  check_flags(true, false, false, true, " after reserving all slots");
+
+  repeat(10) @(posedge clock);
+
+  // Check 5 : Write in-order
+  $display("CHECK 5 : Write in-order.");
+  // Write all
+  @(negedge clock);
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    write(reserved_indices_for_write.pop_front());
+  end
+  // Final state
+  check_flags(true, false, true, false, " after writing all reserved slots in-order");
+
+  repeat(10) @(posedge clock);
+
+  // Check 6 : Read in-order
+  $display("CHECK 6 : Read in-order.");
+  // Read all
+  @(negedge clock);
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    read();
+  end
+  // Final state
+  check_flags(false, true, false, true, " after reading the whole buffer");
+
+  repeat(10) @(posedge clock);
+
+  // Check 7 : Reserve all again
+  $display("CHECK 7 : Reserve all again.");
+  // Reserve all
+  @(negedge clock);
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    reserve();
+  end
+  // Final state
+  check_flags(true, false, false, true, " after reserving all slots again");
+
+  repeat(10) @(posedge clock);
+
+  // Check 8 : Write reverse-order
+  $display("CHECK 8 : Write reverse-order.");
+  // Write all
+  @(negedge clock);
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    write(reserved_indices_for_write.pop_back());
+  end
+  // Final state
+  check_flags(true, false, true, false, " after writing all reserved slots in reverse order");
+
+  repeat(10) @(posedge clock);
+
+  // Check 9 : Read in-order again
+  $display("CHECK 9 : Read in-order again.");
+  // Read all
+  @(negedge clock);
+  for (int reserve_count = 0; reserve_count < DEPTH; reserve_count++) begin
+    read();
+  end
+  // Final state
+  check_flags(false, true, false, true, " after reading the whole buffer again");
+
+  repeat(10) @(posedge clock);
+
+  // Check 10 : Successive operations
+  $display("CHECK 10 : Successive operations.");
+  @(negedge clock);
+  repeat (SUCCESSIVE_CHECK_DURATION) begin
+    // Reserve operation
+    reserve();
+    // Write operation
+    write(reserved_indices_for_write.pop_front());
+    // Read operation
+    read();
+  end
+  // Final state
+  check_flags(false, true, false, true, " after successive operations check");
+
+  repeat(10) @(posedge clock);
+
+  // Check 11 : Random stimulus
+  $display("CHECK 11 : Random stimulus.");
+  @(negedge clock);
+  transfer_count    = 0;
+  timeout_countdown = RANDOM_CHECK_TIMEOUT;
+  fork
+    // Reserving
+    begin
+      forever begin
+        // Stimulus
+        @(negedge clock);
+        if (!reserve_full && random_boolean(RANDOM_CHECK_RESERVE_PROBABILITY) && transfer_count < RANDOM_CHECK_DURATION) begin
+          reserve();
+          transfer_count++;
+        end else begin
+          reserve_valid = 0;
+        end
+      end
+    end
+    // Writing
+    begin
+      forever begin
+        // Stimulus
+        @(negedge clock);
+        if (|(reserved_model & ~valid_model) && random_boolean(RANDOM_CHECK_WRITE_PROBABILITY)) begin
+`ifndef SIMULATOR_NO_QUEUE_SHUFFLE
+          reserved_indices_for_write.shuffle();
+          write(reserved_indices_for_write.pop_front());
+`else
+          random_queue_index = $urandom_range(reserved_indices_for_write.size()-1);
+          write(reserved_indices_for_write[random_queue_index]);
+          reserved_indices_for_write.delete(random_queue_index);
+`endif
+        end else begin
+          write_valid = 0;
+          write_index = 0;
+          write_data  = 0;
+        end
+      end
+    end
+    // Reading
+    begin
+      forever begin
+        // Stimulus
+        @(negedge clock);
+        // Check if data is available (read_valid is high) before reading
+        if (read_valid && random_boolean(RANDOM_CHECK_READ_PROBABILITY)) begin
+          read();
+        end else begin
+          read_ready = 0;
+        end
+      end
+    end
+    // Status check
+    begin
+      forever begin
+        @(negedge clock);
+        check_flags(&reserved_model, ~|reserved_model, &valid_model, ~|valid_model, " during random check");
+      end
+    end
+    // Stop condition
+    begin
+      // Transfer count
+      while (transfer_count < RANDOM_CHECK_DURATION) begin
+        @(negedge clock);
+      end
+      // Read until all reserved entries are read
+      while (reserved_indices_for_read.size() > 0) begin
+        @(negedge clock);
+      end
+    end
+    // Timeout
+    begin
+      while (timeout_countdown > 0) begin
+        @(negedge clock);
+        timeout_countdown--;
+      end
+      $error("[%0tns] Timeout.", $time);
+    end
+  join_any
+  disable fork;
+
+  repeat(10) @(posedge clock);
+
+  // End of test
+  $finish;
+end
+
+endmodule
