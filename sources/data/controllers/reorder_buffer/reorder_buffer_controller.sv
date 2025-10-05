@@ -30,6 +30,7 @@ module reorder_buffer_controller #(
   input                    write_enable,
   input  [INDEX_WIDTH-1:0] write_index,
   input        [WIDTH-1:0] write_data,
+  output logic             write_error,
   // Read interface
   input                    read_enable,
   output       [WIDTH-1:0] read_data,
@@ -96,6 +97,10 @@ end
 
 // Reservation logic
 assign reserve_index = reserve_pointer[INDEX_WIDTH-1:0];
+
+// Error detection
+// Write error: attempting to write to an unreserved or already-written index
+assign write_error = write_enable && (!reserved[write_index] || valid[write_index]);
 
 // Reset and sequential logic
 always_ff @(posedge clock or negedge resetn) begin

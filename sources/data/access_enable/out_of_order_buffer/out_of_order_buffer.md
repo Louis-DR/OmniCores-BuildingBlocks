@@ -43,6 +43,7 @@ The buffer does not implement safety mechanisms against incorrect usage, so the 
 | `read_clear`   | input     | 1             | `clock`      |          |             | Clear enable signal.<br/>`0`: read only.<br/>`1`: clear slot after reading.           |
 | `read_index`   | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to read from.                                                       |
 | `read_data`    | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer at the specified index.                                     |
+| `read_error`   | output    | 1             | `clock`      | `resetn` | `0`         | Read error pulse.<br/>`0`: no error.<br/>`1`: invalid index read attempted.           |
 
 ## Operation
 
@@ -57,6 +58,8 @@ Unlike traditional FIFOs that enforce first-in-first-out order, this buffer allo
 For **write operation**, when `write_enable` is asserted, the controller identifies the first available free slot by scanning the validity bits. The controller directs the RAM to store `write_data` at the allocated slot. The `write_index` output provides the index of the allocated slot on the same cycle. The slot becomes valid and available for reading in the next cycle. The integration must check the `full` flag before asserting `write_enable`. If a write is attempted when full, the write operation will override the first entry of the buffer (index 0) and the buffer will continue to function but with corrupted data.
 
 For **read operation**, the `read_data` output continuously provides the data stored at the location specified by `read_index` from the RAM. When `read_enable` and `read_clear` are both asserted, the slot is marked as invalid in the controller, thus freed for future writes. The integration must only read from indices that contain valid data. The `read_data` may contain data previously stored at an invalid index, as the data is not cleared when an entry is invalidated.
+
+**Error detection**: The `read_error` output pulses for one cycle when `read_enable` is asserted while the slot at `read_index` is invalid. This indicates an incorrect usage where the integration attempted to read from an invalid index. The read operation will still provide the data stored at that location in RAM, but it may be stale or uninitialized.
 
 Asserting `read_clear` without `read_enable` is not expected, but will not break the buffer. The clear will simply be ignored.
 

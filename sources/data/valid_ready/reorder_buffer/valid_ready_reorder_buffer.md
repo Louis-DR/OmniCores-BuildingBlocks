@@ -12,9 +12,11 @@
 
 ![valid_ready_reorder_buffer](valid_ready_reorder_buffer.symbol.svg)
 
-Synchronous buffer that ensures in-order data reading from out-of-order data writes with valid-ready handshake flow control. The buffer operates with a three-stage protocol: in-order reservation of slots, out-of-order writing to reserved slots, and in-order reading of written data. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, automatically managing flow control for all three stages.
+Synchronous buffer that ensures in-order data reading from out-of-order data writes with valid-ready handshake flow control. The buffer operates with a three-stage protocol: in-order reservation of slots, out-of-order writing to reserved slots, and in-order reading of written data. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, providing inherent backpressure and safety.
 
-The buffer maintains separate reservation and read pointers to track the order of operations. Data can only be read when it becomes available at the head of the queue (read pointer position), ensuring strict in-order delivery even when writes complete out of order. The valid-ready protocol eliminates the need for external enable logic and provides automatic flow control protection.
+The design is structured as a modular architecture with valid-ready handshake logic wrapping a separate controller for dual-pointer management and validity tracking, and a generic simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
+
+The buffer maintains separate reservation and read pointers to track the order of operations. Data can only be read when it becomes available at the head of the queue (read pointer position), ensuring strict in-order delivery even when writes complete out of order.
 
 ## Parameters
 
@@ -26,36 +28,45 @@ The buffer maintains separate reservation and read pointers to track the order o
 
 ## Ports
 
-| Name             | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                                       |
-| ---------------- | --------- | ------------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------------------------------------- |
-| `clock`          | input     | 1             | self         |          |             | Clock signal.                                                                                                     |
-| `resetn`         | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                                    |
-| `reserve_full`   | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>`0`: buffer has free reservation slots.<br/>`1`: buffer is full.   |
-| `reserve_empty`  | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>`0`: buffer has reserved slots.<br/>`1`: buffer is empty.         |
-| `data_full`      | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>`0`: buffer has unwritten slots.<br/>`1`: all reserved slots are written. |
-| `data_empty`     | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>`0`: buffer has written data.<br/>`1`: no written data available.        |
-| `reserve_valid`  | input     | 1             | `clock`      |          |             | Reserve valid signal.<br/>`0`: no reserve transaction.<br/>`1`: request slot reservation.       |
-| `reserve_index`  | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                     |
-| `reserve_ready`  | output    | 1             | `clock`      | `resetn` | `1`         | Reserve ready signal.<br/>`0`: buffer is full.<br/>`1`: buffer can accept reservation.          |
-| `write_valid`    | input     | 1             | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.                |
-| `write_index`    | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to write to (must be previously reserved).                                    |
-| `write_data`     | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                               |
-| `write_ready`    | output    | 1             | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: buffer data is full.<br/>`1`: buffer can accept write data.        |
-| `read_valid`     | output    | 1             | `clock`      | `resetn` | `0`         | Read valid signal.<br/>`0`: no data at head.<br/>`1`: valid data available at head of queue.    |
-| `read_data`      | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the head of the queue.                                                           |
-| `read_ready`     | input     | 1             | `clock`      |          |             | Read ready signal.<br/>`0`: not ready to receive.<br/>`1`: ready to receive data from buffer.   |
+| Name            | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                     |
+| --------------- | --------- | ------------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| `clock`         | input     | 1             | self         |          |             | Clock signal.                                                                                   |
+| `resetn`        | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                  |
+| `reserve_full`  | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>`0`: buffer has free reservation slots.<br/>`1`: buffer is full.   |
+| `reserve_empty` | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>`0`: buffer has reserved slots.<br/>`1`: buffer is empty.         |
+| `data_full`     | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>`0`: buffer has unwritten slots.<br/>`1`: all reserved slots are written. |
+| `data_empty`    | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>`0`: buffer has written data.<br/>`1`: no written data available.        |
+| `reserve_valid` | input     | 1             | `clock`      |          |             | Reserve valid signal.<br/>`0`: no reserve transaction.<br/>`1`: request slot reservation.       |
+| `reserve_index` | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                     |
+| `reserve_ready` | output    | 1             | `clock`      | `resetn` | `1`         | Reserve ready signal.<br/>`0`: buffer is full.<br/>`1`: buffer can accept reservation.          |
+| `write_valid`   | input     | 1             | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.                |
+| `write_index`   | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to write to (must be previously reserved).                                    |
+| `write_data`    | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                               |
+| `write_ready`   | output    | 1             | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: buffer data is full.<br/>`1`: buffer can accept write data.        |
+| `write_error`   | output    | 1             | `clock`      | `resetn` | `0`         | Write error pulse.<br/>`0`: no error.<br/>`1`: invalid index write attempted.                   |
+| `read_valid`    | output    | 1             | `clock`      | `resetn` | `0`         | Read valid signal.<br/>`0`: no data at head.<br/>`1`: valid data available at head of queue.    |
+| `read_data`     | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the head of the queue.                                                           |
+| `read_ready`    | input     | 1             | `clock`      |          |             | Read ready signal.<br/>`0`: not ready to receive.<br/>`1`: ready to receive data from buffer.   |
 
 ## Operation
 
-The valid-ready reorder buffer is a wrapper around the read-write enable reorder buffer that implements the valid-ready handshake protocol. It operates through a three-stage protocol that maintains strict ordering guarantees while providing automatic flow control:
+The valid-ready reorder buffer consists of three main components: handshake logic that implements the valid-ready protocol, a controller that manages dual pointers and validity tracking, and a simple dual-port RAM for data storage.
 
-**Stage 1: Reservation** - A reservation transfer occurs when both `reserve_valid` and `reserve_ready` are asserted (high) on the same clock rising edge. A slot is reserved in program order using the next available index from the reserve pointer. The `reserve_index` output provides the index that should be used for the subsequent write operation. The reservation advances the reserve pointer to maintain ordering. The `reserve_ready` signal is automatically managed based on reservation buffer fullness.
+The **handshake logic** derives enable signals from the valid-ready protocol. A reserve enable is generated when both `reserve_valid` and `reserve_ready` are asserted. A write enable is generated when both `write_valid` and `write_ready` are asserted. A read enable is generated when both `read_valid` and `read_ready` are asserted. The `reserve_ready` signal is driven by the inverse of the `reserve_full` flag. The `write_ready` signal is driven by the inverse of the `data_full` flag. The `read_valid` signal is driven by the inverse of the `data_empty` flag, providing inherent safety.
 
-**Stage 2: Out-of-order Writing** - A write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The `write_data` is stored in the specified `write_index` slot (from previous reservation) and marked as valid. Writes can complete in any order as long as they target previously reserved slots. The `write_ready` signal is automatically managed based on data buffer fullness.
+The **controller** maintains separate reservation and read pointers, tracks validity bits for each slot (reserved and written states), generates the memory interface signals, and calculates the status flags. The controller doesn't store any data, only control state.
 
-**Stage 3: In-order Reading** - The module presents data at the head of the queue through the `read_data` output when `read_valid` is asserted. A read transfer occurs when both `read_valid` (module output) and `read_ready` (external input) are asserted (high) on the same clock rising edge. Data is read from the head of the queue (read pointer position) and the slot is freed for future reservations. The read pointer advances to the next slot. The `read_valid` signal is automatically asserted when the slot at the read pointer contains valid data, ensuring in-order delivery.
+The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
 
-The buffer maintains separate tracking for reserved slots (allocated but potentially unwritten) and valid slots (written and ready for reading). This allows the buffer to distinguish between reservations and actual data availability.
+The buffer operates through a three-stage protocol that maintains strict ordering guarantees:
+
+**Stage 1: Reservation** - A reservation transfer occurs when both `reserve_valid` and `reserve_ready` are asserted (high) on the same clock rising edge. The controller reserves a slot in program order using the next available index from the reserve pointer and provides this index on `reserve_index`. The reservation advances the reserve pointer to maintain ordering. When the reservation buffer is full, `reserve_ready` is deasserted, preventing further reservations and providing safety.
+
+**Stage 2: Out-of-order Writing** - A write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The controller directs the RAM to store `write_data` in the specified `write_index` slot (from previous reservation) and marks it as valid. Writes can complete in any order as long as they target previously reserved slots. When all reserved slots are written (data full), `write_ready` is deasserted, preventing write transfers until slots are freed. The `write_error` output pulses for one cycle when a write transfer occurs with an index that was not previously reserved or was already written, extending the valid-ready protocol to indicate incorrect usage.
+
+**Stage 3: In-order Reading** - The `read_data` output continuously provides the data at the read pointer location from the RAM. A read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. The controller frees the slot for future reservations and advances the read pointer to the next slot. The `read_valid` signal is automatically asserted when the slot at the read pointer contains valid written data, ensuring in-order delivery. When no written data is available at the head, `read_valid` is deasserted, preventing read transfers.
+
+The controller maintains separate tracking for reserved slots (allocated but potentially unwritten) and valid slots (written and ready for reading). This allows the buffer to distinguish between reservations and actual data availability.
 
 Separate flags are used for notifying filling level for slot reservation (`reserve_full`, `reserve_empty`) and for data reading (`data_full`, `data_empty`).
 
@@ -66,16 +77,16 @@ The handshake protocol provides automatic flow control protection:
 
 ## Paths
 
-| From             | To                                                         | Type          | Comment                                                   |
-| ---------------- | ---------------------------------------------------------- | ------------- | --------------------------------------------------------- |
-| `reserve_valid`  | `reserve_index`                                            | combinational | Index output from reserve pointer.                        |
-| `write_data`     | `read_data`                                                | sequential    | Data path through internal memory array and read pointer. |
-| `reserve_valid`  | `reserve_full`, `reserve_empty`                            | sequential    | Control path through internal reservation bits.           |
-| `write_valid`    | `reserve_full`, `reserve_empty`, `data_full`, `data_empty` | sequential    | Control path through internal reservation and valid bits. |
-| `read_ready`     | `reserve_full`, `reserve_empty`, `data_full`, `data_empty` | sequential    | Control path through internal reservation and valid bits. |
-| `reserve_full`   | `reserve_ready`                                            | combinational | Handshake protocol based on buffer status.                |
-| `data_full`      | `write_ready`                                              | combinational | Handshake protocol based on buffer status.                |
-| `read_pointer`   | `read_valid`                                               | combinational | Handshake protocol based on head slot validity.           |
+| From            | To                                                         | Type          | Comment                                                   |
+| --------------- | ---------------------------------------------------------- | ------------- | --------------------------------------------------------- |
+| `reserve_valid` | `reserve_index`                                            | combinational | Index output from reserve pointer.                        |
+| `write_data`    | `read_data`                                                | sequential    | Data path through internal memory array and read pointer. |
+| `reserve_valid` | `reserve_full`, `reserve_empty`                            | sequential    | Control path through internal reservation bits.           |
+| `write_valid`   | `reserve_full`, `reserve_empty`, `data_full`, `data_empty` | sequential    | Control path through internal reservation and valid bits. |
+| `read_ready`    | `reserve_full`, `reserve_empty`, `data_full`, `data_empty` | sequential    | Control path through internal reservation and valid bits. |
+| `reserve_full`  | `reserve_ready`                                            | combinational | Handshake protocol based on buffer status.                |
+| `data_full`     | `write_ready`                                              | combinational | Handshake protocol based on buffer status.                |
+| `read_pointer`  | `read_valid`                                               | combinational | Handshake protocol based on head slot validity.           |
 
 ## Complexity
 
@@ -93,19 +104,19 @@ The valid-ready reorder buffer is verified using a SystemVerilog testbench with 
 
 The following table lists the checks performed by the testbench.
 
-| Number | Check                | Description                                                                                          |
-| ------ | -------------------- | ---------------------------------------------------------------------------------------------------- |
-| 1      | Reserve once         | Verifies single reservation operation with handshake protocol and status flag updates.               |
-| 2      | Write once           | Verifies writing to a reserved slot with handshake protocol and proper data storage.                 |
-| 3      | Read once            | Verifies in-order reading of written data with handshake protocol and slot cleanup.                  |
-| 4      | Reserve all          | Reserve all slots in the buffer and verifies handshake compliance.                                   |
-| 5      | Write in-order       | Writes to all the reserved slots in order of reservation with handshake protocol.                    |
-| 6      | Read in-order        | Read the whole buffer in-order with handshake protocol.                                              |
-| 7      | Reserve all again    | Reserve all slots in the buffer again and verifies handshake compliance.                             |
-| 8      | Write reverse-order  | Writes to all the reserved slots in reverse order of reservation with handshake protocol.            |
-| 9      | Read in-order again  | Read the whole buffer in-order again with handshake protocol.                                        |
-| 10     | Successive operation | Tests successive reserve, write, and read operations with handshake protocol compliance.             |
-| 11     | Random stimulus      | Performs random operations with handshake and verifies data integrity and ordering against a model.  |
+| Number | Check                | Description                                                                                         |
+| ------ | -------------------- | --------------------------------------------------------------------------------------------------- |
+| 1      | Reserve once         | Verifies single reservation operation with handshake protocol and status flag updates.              |
+| 2      | Write once           | Verifies writing to a reserved slot with handshake protocol and proper data storage.                |
+| 3      | Read once            | Verifies in-order reading of written data with handshake protocol and slot cleanup.                 |
+| 4      | Reserve all          | Reserve all slots in the buffer and verifies handshake compliance.                                  |
+| 5      | Write in-order       | Writes to all the reserved slots in order of reservation with handshake protocol.                   |
+| 6      | Read in-order        | Read the whole buffer in-order with handshake protocol.                                             |
+| 7      | Reserve all again    | Reserve all slots in the buffer again and verifies handshake compliance.                            |
+| 8      | Write reverse-order  | Writes to all the reserved slots in reverse order of reservation with handshake protocol.           |
+| 9      | Read in-order again  | Read the whole buffer in-order again with handshake protocol.                                       |
+| 10     | Successive operation | Tests successive reserve, write, and read operations with handshake protocol compliance.            |
+| 11     | Random stimulus      | Performs random operations with handshake and verifies data integrity and ordering against a model. |
 
 The following table lists the parameter values verified by the testbench.
 

@@ -45,6 +45,7 @@ logic                   read_enable;
 logic                   read_clear;
 logic [INDEX_WIDTH-1:0] read_index;
 logic       [WIDTH-1:0] read_data;
+logic                   read_error;
 
 // Test variables
 logic [WIDTH-1:0] memory_model [DEPTH-1:0];
@@ -69,7 +70,8 @@ out_of_order_buffer #(
   .read_enable  ( read_enable  ),
   .read_clear   ( read_clear   ),
   .read_index   ( read_index   ),
-  .read_data    ( read_data    )
+  .read_data    ( read_data    ),
+  .read_error   ( read_error   )
 );
 
 // Source clock generation
@@ -534,6 +536,54 @@ initial begin
   assert (empty) else $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
   assert (!full) else $error("[%0tns] Final state is full.", $time);
   assert (valid_entries_count == 0) else $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
+
+  repeat(10) @(posedge clock);
+
+  // CHECK 10: Read error
+  $display("CHECK 10 : Read error on invalid index.");
+  // Reset
+  resetn = 0;
+  write_enable = 0;
+  write_data   = 0;
+  read_enable  = 0;
+  read_clear   = 0;
+  read_index   = 0;
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = 0;
+    valid_model[index]  = 0;
+  end
+  valid_entries_count = 0;
+  repeat(5) @(negedge clock);
+  resetn = 1;
+  repeat(5) @(negedge clock);
+  // Attempt to read from invalid index
+  read_enable = 1;
+  read_index  = 0;
+  @(posedge clock);
+  // Check read_error is asserted
+  assert (read_error) else $error("[%0tns] Read error not asserted for invalid index read.", $time);
+  @(negedge clock);
+  read_enable = 0;
+  read_index  = 0;
+  // Write to index 0
+  write();
+  assert (last_written_index == 0) else $error("[%0tns] Expected write to index 0.", $time);
+  // Attempt to read from valid index (should not error)
+  read_enable = 1;
+  read_index  = 0;
+  @(posedge clock);
+  assert (!read_error) else $error("[%0tns] Read error asserted for valid index read.", $time);
+  @(negedge clock);
+  read_enable = 0;
+  read_index  = 0;
+  // Attempt to read from different invalid index
+  read_enable = 1;
+  read_index  = 1;
+  @(posedge clock);
+  assert (read_error) else $error("[%0tns] Read error not asserted for invalid index read.", $time);
+  @(negedge clock);
+  read_enable = 0;
+  read_index  = 0;
 
   repeat(10) @(posedge clock);
 

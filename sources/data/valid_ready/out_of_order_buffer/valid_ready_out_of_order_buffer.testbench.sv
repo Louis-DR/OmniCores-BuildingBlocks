@@ -46,6 +46,7 @@ logic                    read_clear;
 logic [INDEX_WIDTH-1:0]  read_index;
 logic [WIDTH-1:0]        read_data;
 logic                    read_ready;
+logic                    read_error;
 logic                    empty;
 
 // Test variables
@@ -175,7 +176,10 @@ initial begin
   // Check 1 : Write once
   $display("CHECK 1 : Write once.");
   // Initial state
-  assert (!read_ready) else $error("[%0tns] Read ready is asserted after reset.", $time);
+  $display("[%0tns] After reset: full=%b empty=%b write_ready=%b read_ready=%b", $time, full, empty, write_ready, read_ready);
+  $display("[%0tns] Controller valid bits: %b", $time, valid_ready_out_of_order_buffer_dut.controller.valid);
+  $display("[%0tns] Controller outputs: full=%b empty=%b", $time, valid_ready_out_of_order_buffer_dut.controller.full, valid_ready_out_of_order_buffer_dut.controller.empty);
+  assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
   assert (write_ready) else $error("[%0tns] Write ready is deasserted after reset.", $time);
   assert (empty) else $error("[%0tns] Empty flag is deasserted after reset.", $time);
   assert (!full) else $error("[%0tns] Full flag is asserted after reset.", $time);
@@ -239,7 +243,7 @@ initial begin
   read_clear = 0;
   read_index = 0;
   // Final state
-  assert (!read_ready) else $error("[%0tns] Read ready is asserted after clearing the only valid entry.", $time);
+  assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
   assert (write_ready) else $error("[%0tns] Write ready is deasserted after clearing the only valid entry.", $time);
   assert (empty) else $error("[%0tns] Empty flag is deasserted after clearing the only valid entry.", $time);
   assert (!full) else $error("[%0tns] Full flag is asserted after clearing the only valid entry.", $time);
@@ -253,7 +257,9 @@ initial begin
   read_valid = 1;
   read_index = last_written_index;
   @(posedge clock);
-  assert (!read_ready) else $error("[%0tns] Read ready asserted for cleared index %0d.", $time, read_index);
+  assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
+  // Check that read_error is asserted for invalid index
+  assert (read_error) else $error("[%0tns] Read error not asserted for cleared index %0d.", $time, read_index);
   @(negedge clock);
   read_valid = 0;
   read_index = 0;
@@ -351,7 +357,7 @@ initial begin
     assert (!empty || valid_entries_count == 0) else $error("[%0tns] Empty flag asserted when model is not empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
   end
   // Final state check (should be empty)
-  assert (!read_ready) else $error("[%0tns] Read ready is asserted after clearing all.", $time);
+  assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
   assert (write_ready) else $error("[%0tns] Write ready is deasserted after clearing all.", $time);
   assert (empty) else $error("[%0tns] Empty flag is deasserted after clearing all. Should be empty.", $time);
   assert (!full) else $error("[%0tns] Full flag is asserted after clearing all. Should be empty.", $time);
@@ -524,16 +530,26 @@ initial begin
         // Stimulus
         @(negedge clock);
         if (random_boolean(RANDOM_CHECK_READ_PROBABILITY)) begin
+          // Find a valid entry to read
+          logic found_valid;
+          found_valid = 0;
           foreach (valid_model[index]) begin
             if (valid_model[index]) begin
-              read_index = index;
+              read_index  = index;
+              found_valid = 1;
               // break;
             end
           end
-          read_valid = 1;
-          if (random_boolean(RANDOM_CHECK_CLEAR_PROBABILITY)) begin
-            read_clear = 1;
+          // Only set read_valid if we found a valid entry
+          if (found_valid) begin
+            read_valid = 1;
+            if (random_boolean(RANDOM_CHECK_CLEAR_PROBABILITY)) begin
+              read_clear = 1;
+            end else begin
+              read_clear = 0;
+            end
           end else begin
+            read_valid = 0;
             read_clear = 0;
           end
         end else begin
@@ -543,7 +559,10 @@ initial begin
         // Check
         @(posedge clock);
         if (read_valid && read_ready) begin
+          assert (valid_model[read_index]) else $error("[%0tns] Read from invalid index '%0d'.", $time, read_index);
           assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+          // Check read_error signal
+          assert (!read_error) else $error("[%0tns] Read error asserted for valid read at index '%0d'.", $time, read_index);
           if (read_clear) begin
             memory_model[read_index] = 'x;
             valid_model[read_index]  = 1'b0;
@@ -556,13 +575,13 @@ initial begin
     begin
       forever begin
         @(negedge clock);
+        // Read ready is always asserted for indexed reads
+        assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
         if (valid_entries_count == 0) begin
-          assert (!read_ready) else $error("[%0tns] Read ready is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
           assert (write_ready) else $error("[%0tns] Write ready is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
           assert (empty) else $error("[%0tns] Empty flag is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
           assert (!full) else $error("[%0tns] Full flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
         end else if (valid_entries_count == DEPTH) begin
-          assert (read_ready) else $error("[%0tns] Read ready is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
           assert (!write_ready) else $error("[%0tns] Write ready is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
           assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
           assert (full) else $error("[%0tns] Full flag is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);

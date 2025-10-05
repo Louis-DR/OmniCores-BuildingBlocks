@@ -28,7 +28,8 @@ module out_of_order_buffer #(
   input                    read_enable,
   input                    read_clear,
   input  [INDEX_WIDTH-1:0] read_index,
-  output       [WIDTH-1:0] read_data
+  output       [WIDTH-1:0] read_data,
+  output logic             read_error
 );
 
 // Memory interface signals
@@ -55,6 +56,7 @@ out_of_order_buffer_controller #(
   .read_clear           ( read_clear           ),
   .read_index           ( read_index           ),
   .read_data            ( read_data            ),
+  .read_error           ( read_error           ),
   .memory_write_enable  ( memory_write_enable  ),
   .memory_write_address ( memory_write_address ),
   .memory_write_data    ( memory_write_data    ),

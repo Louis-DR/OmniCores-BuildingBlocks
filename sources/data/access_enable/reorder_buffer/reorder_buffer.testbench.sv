@@ -47,11 +47,13 @@ logic [INDEX_WIDTH-1:0] reserve_index;
 logic                   write_enable;
 logic [INDEX_WIDTH-1:0] write_index;
 logic       [WIDTH-1:0] write_data;
+logic                   write_error;
 logic                   read_enable;
 logic       [WIDTH-1:0] read_data;
 
 // Test variables
 logic [INDEX_WIDTH-1:0] read_index;
+logic [INDEX_WIDTH-1:0] reserved_idx;
 logic       [WIDTH-1:0] memory_model [DEPTH-1:0];
 logic       [DEPTH-1:0] reserved_model;
 logic       [DEPTH-1:0] valid_model;
@@ -79,6 +81,7 @@ reorder_buffer #(
   .write_enable   ( write_enable   ),
   .write_data     ( write_data     ),
   .write_index    ( write_index    ),
+  .write_error    ( write_error    ),
   .read_enable    ( read_enable    ),
   .read_data      ( read_data      )
 );
@@ -376,6 +379,52 @@ initial begin
     end
   join_any
   disable fork;
+
+  repeat(10) @(posedge clock);
+
+  // CHECK 12: Write error
+  $display("CHECK 12 : Write error on unreserved index.");
+  // Reset
+  resetn = 0;
+  reserve_enable = 0;
+  write_enable   = 0;
+  write_data     = 0;
+  write_index    = 0;
+  read_enable    = 0;
+  for (int index = 0; index < DEPTH; index++) begin
+    memory_model[index] = 0;
+  end
+  reserved_model              = 0;
+  valid_model                 = 0;
+  reserved_indices_for_write  = {};
+  reserved_indices_for_read   = {};
+  read_index                  = 0;
+  repeat(5) @(negedge clock);
+  resetn = 1;
+  repeat(5) @(negedge clock);
+  // Attempt to write to unreserved index (should error)
+  write_enable = 1;
+  write_data   = $urandom_range(WIDTH_POW2);
+  write_index  = 0;
+  @(posedge clock);
+  assert (write_error) else $error("[%0tns] Write error not asserted for unreserved index write.", $time);
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  write_index  = 0;
+  // Reserve and write normally
+  reserve();
+  write(0);
+  // Attempt to write to already-written index 0 (should error)
+  write_enable = 1;
+  write_data   = $urandom_range(WIDTH_POW2);
+  write_index  = 0;
+  @(posedge clock);
+  assert (write_error) else $error("[%0tns] Write error not asserted for already-written index write.", $time);
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+  write_index  = 0;
 
   repeat(10) @(posedge clock);
 

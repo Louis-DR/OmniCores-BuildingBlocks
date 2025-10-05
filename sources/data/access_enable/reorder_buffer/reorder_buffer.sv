@@ -30,6 +30,7 @@ module reorder_buffer #(
   input                    write_enable,
   input  [INDEX_WIDTH-1:0] write_index,
   input        [WIDTH-1:0] write_data,
+  output logic             write_error,
   // Read interface
   input                    read_enable,
   output       [WIDTH-1:0] read_data
@@ -59,6 +60,7 @@ reorder_buffer_controller #(
   .write_enable         ( write_enable         ),
   .write_index          ( write_index          ),
   .write_data           ( write_data           ),
+  .write_error          ( write_error          ),
   .read_enable          ( read_enable          ),
   .read_data            ( read_data            ),
   .memory_write_enable  ( memory_write_enable  ),

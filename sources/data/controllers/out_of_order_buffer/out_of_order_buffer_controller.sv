@@ -15,11 +15,11 @@ module out_of_order_buffer_controller #(
   parameter WIDTH       = 8,
   parameter DEPTH       = 8,
   parameter INDEX_WIDTH = $clog2(DEPTH)
-) (
+)(
   input                    clock,
   input                    resetn,
-  output logic             full,
-  output logic             empty,
+  output                   full,
+  output                   empty,
   // Write interface
   input                    write_enable,
   input        [WIDTH-1:0] write_data,
@@ -29,6 +29,7 @@ module out_of_order_buffer_controller #(
   input                    read_clear,
   input  [INDEX_WIDTH-1:0] read_index,
   output       [WIDTH-1:0] read_data,
+  output logic             read_error,
   // Memory interface
   output logic             memory_write_enable,
   output [INDEX_WIDTH-1:0] memory_write_address,
@@ -42,13 +43,9 @@ module out_of_order_buffer_controller #(
 logic [DEPTH-1:0] valid;
 logic [DEPTH-1:0] valid_next;
 
-// Full when all entries are valid
-logic  full_next;
-assign full_next = &valid_next;
-
-// Empty when no entries are valid
-logic  empty_next;
-assign empty_next = ~|valid_next;
+// Status flags (combinational, based on current valid state)
+assign full  = &valid;
+assign empty = ~|valid;
 
 // Index of the first free slot in the memory
 logic       [DEPTH-1:0] first_free_onehot;
@@ -85,18 +82,18 @@ always_comb begin
   end
 end
 
+// Error detection
+// Read error: attempting to read from an invalid index
+assign read_error = read_enable && !valid[read_index];
+
 // Reset and sequential logic
 always_ff @(posedge clock or negedge resetn) begin
   // Reset
   if (!resetn) begin
-    full  <= 0;
-    empty <= 1;
     valid <= 0;
   end
   // Operation
   else begin
-    full  <= full_next;
-    empty <= empty_next;
     valid <= valid_next;
   end
 end

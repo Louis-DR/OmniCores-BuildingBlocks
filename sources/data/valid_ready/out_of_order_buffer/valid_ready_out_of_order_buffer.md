@@ -12,11 +12,11 @@
 
 ![valid_ready_out_of_order_buffer](valid_ready_out_of_order_buffer.symbol.svg)
 
-Synchronous buffer that allows out-of-order reading of stored data entries with valid-ready handshake flow control. The buffer stores data in the first available slot and returns the corresponding index, allowing data to be read back using that same index at any time. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, automatically managing flow control for both write and read operations.
+Synchronous buffer that allows out-of-order reading of stored data entries with valid-ready handshake flow control. The buffer stores data in the first available slot and returns the corresponding index, allowing data to be read back using that same index at any time. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, providing inherent backpressure and safety.
+
+The design is structured as a modular architecture with valid-ready handshake logic wrapping a separate controller for validity tracking and index allocation logic, and a generic simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
 
 When writing, the data is stored in the first free slot and the corresponding index is returned on the same cycle. The data becomes available for reading in the next cycle. The read operation is fully combinational and data can be optionally cleared during the read operation to free the slot for future writes. The internal memory array is not reset, so it will contain invalid data in silicon and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
-
-The buffer provides automatic flow control through the handshake protocol, with `write_ready` indicating space availability and `read_ready` indicating valid data at the specified index.
 
 ## Parameters
 
@@ -43,20 +43,25 @@ The buffer provides automatic flow control through the handshake protocol, with 
 | `read_index`  | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to read from.                                                                       |
 | `read_data`   | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer at the specified index.                                                     |
 | `read_ready`  | output    | 1             | `clock`      | `resetn` | `0`         | Read ready signal.<br/>`0`: no valid data at index.<br/>`1`: valid data available at specified index. |
+| `read_error`  | output    | 1             | `clock`      | `resetn` | `0`         | Read error pulse.<br/>`0`: no error.<br/>`1`: invalid index read attempted.                           |
 
 ## Operation
 
-The valid-ready out-of-order buffer is a wrapper around the read-write enable out-of-order buffer that implements the valid-ready handshake protocol. It maintains an internal memory array with a validity bit for each slot. Unlike traditional FIFOs that enforce first-in-first-out order, this buffer allows random access to stored data using indices.
+The valid-ready out-of-order buffer consists of three main components: handshake logic that implements the valid-ready protocol, a controller that manages validity tracking and index allocation, and a simple dual-port RAM for data storage.
 
-For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The `write_data` is stored in the first available free slot found by scanning the validity bits. The `write_index` output provides the index of the allocated slot on the same cycle. The slot becomes valid and available for reading in the next cycle.
+The **handshake logic** derives enable signals from the valid-ready protocol. A write enable is generated when both `write_valid` and `write_ready` are asserted. A read enable is generated when both `read_valid` and `read_ready` are asserted. The `write_ready` signal is driven by the inverse of the `full` flag, providing inherent backpressure when the buffer is full. The `read_ready` signal is always asserted (indexed reads don't need flow control).
 
-The handshake protocol prevents writing when the buffer is full - when `write_ready` is low, any write attempt is ignored and `write_valid` will have no effect until space becomes available.
+The **controller** maintains a validity bit for each slot and implements first-free-slot logic to allocate write indices. It generates the memory interface signals and calculates the status flags. The controller doesn't store any data, only control state.
 
-For **read operation**, the `read_data` output continuously provides the data stored at the location specified by `read_index`. A read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. When both `read_valid` and `read_clear` are asserted during a valid transfer, the slot is marked as invalid, thus freed for future writes.
+The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
 
-The `read_ready` signal is automatically asserted when the slot at `read_index` contains valid data, enabling the handshake. When `read_ready` is low, it indicates that the specified index contains no valid data, and any read attempt will be ignored.
+For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The controller identifies the first available free slot by scanning the validity bits, directs the RAM to store `write_data` at that location, and provides the allocated slot index on `write_index` on the same cycle. The slot becomes valid and available for reading in the next cycle. When the buffer is full, `write_ready` is deasserted, preventing write transfers and providing safety.
 
-The status flags are calculated based on the vector of valid bits. The buffer is full when there are no free slots (cannot write), and empty when all the slots are free (cannot read).
+For **read operation**, the `read_data` output continuously provides the data stored at the location specified by `read_index` from the RAM. A read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. When both `read_valid` and `read_clear` are asserted during a valid transfer, the slot is marked as invalid, thus freed for future writes.
+
+**Error detection**: The `read_error` output pulses for one cycle when a read transfer occurs (both `read_valid` and `read_ready` are asserted) while the slot at `read_index` is invalid. This extends the valid-ready protocol to indicate incorrect usage where an attempt was made to read from an invalid index. The read operation will still provide the data stored at that location in RAM, but it may be stale or uninitialized.
+
+The status flags are calculated based on the vector of valid bits. The buffer is full when there are no free slots (all validity bits set), and empty when all the slots are free (no validity bits set).
 
 ## Paths
 
@@ -84,7 +89,7 @@ The status flags are calculated based on the vector of valid bits. The buffer is
 
 In this table, the delay refers to the timing critical path, which determines the maximal operating frequency.
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array, `DEPTH` flip-flops for the validity bits, and additional logic for the first-free-slot detection using a `first_one` module and one-hot to binary conversion. The wrapper adds minimal logic for the valid-ready protocol conversion.
+The RAM requires `WIDTH×DEPTH` flip-flops for the memory array. The controller requires `DEPTH` flip-flops for the validity bits, and additional logic for the first-free-slot detection using a `first_one` module and one-hot to binary conversion. The handshake wrapper adds minimal logic for the valid-ready protocol conversion.
 
 The critical path includes the first-free-slot detection logic for write index generation, and index decoding logic, which both have `O(log₂ DEPTH)` critical path delay complexity.
 

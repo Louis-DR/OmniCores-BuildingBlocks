@@ -38,13 +38,14 @@ The read data output continuously shows the value at the head of the buffer, all
 | `reserve_empty`  | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>`0`: buffer has reserved slots.<br/>`1`: buffer is empty.         |
 | `data_full`      | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>`0`: buffer has unwritten slots.<br/>`1`: all reserved slots are written. |
 | `data_empty`     | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>`0`: buffer has written data.<br/>`1`: no written data available.        |
-| `reserve_enable` | input     | 1             | `clock`      |          |             | Reserve enable signal.<br/>`0`: idle.<br/>`1`: reserve slot and get index. |
-| `reserve_index`  | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                |
-| `write_enable`   | input     | 1             | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write data to reserved slot.  |
-| `write_index`    | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to write to (must be previously reserved).               |
-| `write_data`     | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                          |
-| `read_enable`    | input     | 1             | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read data from head of queue.  |
-| `read_data`      | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the head of the queue.                                      |
+| `reserve_enable` | input     | 1             | `clock`      |          |             | Reserve enable signal.<br/>`0`: idle.<br/>`1`: reserve slot and get index.                      |
+| `reserve_index`  | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                     |
+| `write_enable`   | input     | 1             | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write data to reserved slot.                       |
+| `write_index`    | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to write to (must be previously reserved).                                    |
+| `write_data`     | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                               |
+| `write_error`    | output    | 1             | `clock`      | `resetn` | `0`         | Write error pulse.<br/>`0`: no error.<br/>`1`: invalid index write attempted.                   |
+| `read_enable`    | input     | 1             | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read data from head of queue.                       |
+| `read_data`      | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the head of the queue.                                                           |
 
 ## Operation
 
@@ -52,7 +53,7 @@ The reorder buffer operates through a three-stage protocol that maintains strict
 
 **Stage 1: Reservation** - When `reserve_enable` is asserted, a slot is reserved in program order using the next available index from the reserve pointer. The `reserve_index` output provides the index that should be used for the subsequent write operation. The reservation advances the reserve pointer to maintain ordering. The integration must ensure `reserve_full` is not asserted before asserting `reserve_enable`.
 
-**Stage 2: Out-of-order Writing** - When `write_enable` is asserted with a previously reserved `write_index`, the `write_data` is stored in the specified slot and marked as valid. Writes can complete in any order as long as they target previously reserved slots. The integration must only write to reserved indices and write to each index exactly once.
+**Stage 2: Out-of-order Writing** - When `write_enable` is asserted with a previously reserved `write_index`, the `write_data` is stored in the specified slot and marked as valid. Writes can complete in any order as long as they target previously reserved slots. The integration must only write to reserved indices and write to each index exactly once. The `write_error` output pulses for one cycle if `write_enable` is asserted with an index that was not previously reserved or was already written. This indicates incorrect usage, though the write operation will still modify the RAM (potentially corrupting data).
 
 **Stage 3: In-order Reading** - When `read_enable` is asserted, data is read from the head of the queue (read pointer position) and the slot is freed for future reservations. The read pointer advances to the next slot. The integration must ensure the slot at the read pointer contains valid data before asserting `read_enable`, ensuring in-order delivery.
 
@@ -126,10 +127,10 @@ There are no specific synthesis or implementation constraints for this block.
 
 This module depends on the following modules:
 
-| Module                         | Path                                                                   | Comment                                                    |
-| ------------------------------ | ---------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Module                      | Path                                                               | Comment                                                           |
+| --------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
 | `reorder_buffer_controller` | `omnicores-buildingblocks/sources/data/controllers/reorder_buffer` | Controller for reservation tracking and pointer management logic. |
-| `simple_dual_port_ram`         | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram`         | Simpledual-port RAM for data storage.                            |
+| `simple_dual_port_ram`      | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram`     | Simpledual-port RAM for data storage.                             |
 
 
 ## Related modules
