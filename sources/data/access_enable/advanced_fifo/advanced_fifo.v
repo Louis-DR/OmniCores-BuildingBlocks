@@ -34,7 +34,6 @@ module advanced_fifo #(
   input                 clock,
   input                 resetn,
   input                 flush,
-  input                 clear_flags,
   // Status flags
   output                empty,
   output                not_empty,
@@ -119,7 +118,7 @@ wire read_lap = read_pointer[DEPTH_LOG2];
 assign read_data = memory[read_address];
 
 // Read when not empty and not flushing
-wire do_read  = read_enable  && !empty && !flush;
+wire do_read = read_enable  && !empty && !flush;
 
 // Read pointer counter with flush control
 advanced_wrapping_counter #(
@@ -181,21 +180,15 @@ always @(posedge clock or negedge resetn) begin
     write_miss <= 0;
     read_error <= 0;
   end else begin
+    write_miss <= 0;
+    read_error <= 0;
     if (!flush) begin
       if (write_enable && full) begin
-        if (!clear_flags) begin
-          write_miss <= 1;
-        end
+        write_miss <= 1;
       end
       if (read_enable && empty) begin
-        if (!clear_flags) begin
-          read_error <= 1;
-        end
+        read_error <= 1;
       end
-    end
-    if (clear_flags) begin
-      write_miss <= 0;
-      read_error <= 0;
     end
   end
 end

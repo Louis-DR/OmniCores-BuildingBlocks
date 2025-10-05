@@ -26,29 +26,28 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Ports
 
-| Name                     | Direction | Width          | Clock        | Reset    | Reset value | Description                                                                           |
-| ------------------------ | --------- | -------------- | ------------ | -------- | ----------- | ------------------------------------------------------------------------------------- |
-| `clock`                  | input     | 1              | self         |          |             | Clock signal.                                                                         |
-| `resetn`                 | input     | 1              | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                        |
-| `flush`                  | input     | 1              | `clock`      |          |             | Flush control.<br/>`0`: idle.<br/>`1`: empty FIFO by advancing read to write pointer. |
-| `clear_flags`            | input     | 1              | `clock`      |          |             | Clear error flags.<br/>`0`: idle.<br/>`1`: clear `write_miss` and `read_error`.       |
-| `write_enable`           | input     | 1              | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write (push) to queue.                   |
-| `write_data`             | input     | `WIDTH`        | `clock`      |          |             | Data to be written to the queue.                                                      |
-| `write_miss`             | output    | 1              | `clock`      | `resetn` | `0`         | Write protection flag.<br/>`0`: no error.<br/>`1`: write attempted when full.         |
-| `read_enable`            | input     | 1              | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from queue.                    |
-| `read_data`              | output    | `WIDTH`        | `clock`      | `resetn` | `0`         | Data read from the queue head.                                                        |
-| `read_error`             | output    | 1              | `clock`      | `resetn` | `0`         | Read protection flag.<br/>`0`: no error.<br/>`1`: read attempted when empty.          |
-| `empty`                  | output    | 1              | `clock`      | `resetn` | `1`         | Queue empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty.            |
-| `not_empty`              | output    | 1              | `clock`      | `resetn` | `0`         | Inverted empty status.<br/>`0`: queue is empty.<br/>`1`: queue contains data.         |
-| `almost_empty`           | output    | 1              | `clock`      | `resetn` | `0`         | Near empty status.<br/>`0`: more than one entry.<br/>`1`: exactly one entry.          |
-| `full`                   | output    | 1              | `clock`      | `resetn` | `0`         | Queue full status.<br/>`0`: queue has free space.<br/>`1`: queue is full.             |
-| `not_full`               | output    | 1              | `clock`      | `resetn` | `1`         | Inverted full status.<br/>`0`: queue is full.<br/>`1`: queue has free space.          |
-| `almost_full`            | output    | 1              | `clock`      | `resetn` | `0`         | Near full status.<br/>`0`: more than one free slot.<br/>`1`: exactly one free slot.   |
-| `level`                  | output    | `DEPTH_LOG2+1` | `clock`      | `resetn` | `0`         | Current number of entries in the queue.                                               |
-| `lower_threshold_level`  | input     | `DEPTH_LOG2+1` | `clock`      |          |             | Lower threshold level for comparison.                                                 |
-| `lower_threshold_status` | output    | 1              | `clock`      | `resetn` | `1`         | Lower threshold status.<br/>`0`: level > threshold.<br/>`1`: level ≤ threshold.       |
-| `upper_threshold_level`  | input     | `DEPTH_LOG2+1` | `clock`      |          |             | Upper threshold level for comparison.                                                 |
-| `upper_threshold_status` | output    | 1              | `clock`      | `resetn` | `0`         | Upper threshold status.<br/>`0`: level < threshold.<br/>`1`: level ≥ threshold.       |
+| Name                     | Direction | Width          | Clock        | Reset    | Reset value | Description                                                                                                                            |
+| ------------------------ | --------- | -------------- | ------------ | -------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `clock`                  | input     | 1              | self         |          |             | Clock signal.                                                                                                                          |
+| `resetn`                 | input     | 1              | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                                                         |
+| `flush`                  | input     | 1              | `clock`      |          |             | Flush control.<br/>`0`: idle.<br/>`1`: empty FIFO by advancing read to write pointer.                                                  |
+| `write_enable`           | input     | 1              | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write (push) to queue.                                                                    |
+| `write_data`             | input     | `WIDTH`        | `clock`      |          |             | Data to be written to the queue.                                                                                                       |
+| `write_miss`             | output    | 1              | `clock`      | `resetn` | `0`         | Write protection pulse notification.<br/>`0`: no error.<br/>`1`: write attempted when full (asserted for one cycle, then auto-clears). |
+| `read_enable`            | input     | 1              | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from queue.                                                                     |
+| `read_data`              | output    | `WIDTH`        | `clock`      | `resetn` | `0`         | Data read from the queue head.                                                                                                         |
+| `read_error`             | output    | 1              | `clock`      | `resetn` | `0`         | Read protection pulse notification.<br/>`0`: no error.<br/>`1`: read attempted when empty (asserted for one cycle, then auto-clears).  |
+| `empty`                  | output    | 1              | `clock`      | `resetn` | `1`         | Queue empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty.                                                             |
+| `not_empty`              | output    | 1              | `clock`      | `resetn` | `0`         | Inverted empty status.<br/>`0`: queue is empty.<br/>`1`: queue contains data.                                                          |
+| `almost_empty`           | output    | 1              | `clock`      | `resetn` | `0`         | Near empty status.<br/>`0`: more than one entry.<br/>`1`: exactly one entry.                                                           |
+| `full`                   | output    | 1              | `clock`      | `resetn` | `0`         | Queue full status.<br/>`0`: queue has free space.<br/>`1`: queue is full.                                                              |
+| `not_full`               | output    | 1              | `clock`      | `resetn` | `1`         | Inverted full status.<br/>`0`: queue is full.<br/>`1`: queue has free space.                                                           |
+| `almost_full`            | output    | 1              | `clock`      | `resetn` | `0`         | Near full status.<br/>`0`: more than one free slot.<br/>`1`: exactly one free slot.                                                    |
+| `level`                  | output    | `DEPTH_LOG2+1` | `clock`      | `resetn` | `0`         | Current number of entries in the queue.                                                                                                |
+| `lower_threshold_level`  | input     | `DEPTH_LOG2+1` | `clock`      |          |             | Lower threshold level for comparison.                                                                                                  |
+| `lower_threshold_status` | output    | 1              | `clock`      | `resetn` | `1`         | Lower threshold status.<br/>`0`: level > threshold.<br/>`1`: level ≤ threshold.                                                        |
+| `upper_threshold_level`  | input     | `DEPTH_LOG2+1` | `clock`      |          |             | Upper threshold level for comparison.                                                                                                  |
+| `upper_threshold_status` | output    | 1              | `clock`      | `resetn` | `0`         | Upper threshold status.<br/>`0`: level < threshold.<br/>`1`: level ≥ threshold.                                                        |
 
 ## Operation
 
@@ -56,17 +55,15 @@ The FIFO maintains an internal memory array indexed by separate read and write p
 
 For **write operation**, when `write_enable` is asserted, `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented. Writing when full is ignored and the data is lost.
 
-The write safety mechanism prevents writing when full. The write will be ignored, the pointers will not be updated, and the data will be lost. The `write_miss` flag will also be set. The FIFO can continue operating normally.
+The write safety mechanism prevents writing when full. The write will be ignored, the pointers will not be updated, and the data will be lost. The `write_miss` pulse notification will assert for one clock cycle to signal the error, then automatically clear. The FIFO can continue operating normally.
 
 For **read operation**, the `read_data` output continuously provides the data at the read pointer location. When `read_enable` is asserted, only the read pointer is incremented to advance to the next entry.
 
-The read safety mechanism prevents reading when empty. The `read_data` will be invalid and the pointers will not be updated. The `read_error` flag will also be set. The FIFO can continue operating normally.
+The read safety mechanism prevents reading when empty. The `read_data` will be invalid and the pointers will not be updated. The `read_error` pulse notification will assert for one clock cycle to signal the error, then automatically clear. The FIFO can continue operating normally.
 
 If the queue is empty, data written can be read in the next cycle. When the queue is not empty nor full, it can be written to and read from at the same time with back-to-back transactions at full throughput.
 
 The level, status, and threshold outputs are calculated based on the read and write pointers.
-
-The `write_miss` and `read_error` flags are cleared when the `clear_flags` input is asserted.
 
 Asserting the `flush` input empties the whole FIFO at the next rising edge of the clock by advancing the read pointer to the write pointer. During a flush cycle, read and write pointer increments are gated so no entry is consumed or written concurrently.
 
@@ -83,7 +80,6 @@ Asserting the `flush` input empties the whole FIFO at the next rising edge of th
 | `flush`                 | `level`, `empty`, `not_empty`, `almost_empty`, `full`, `not_full`, `almost_full`, `lower_threshold_status`, `upper_threshold_status` | sequential    | Control path through internal pointers.  |
 | `lower_threshold_level` | `lower_threshold_status`                                                                                                             | combinational | Direct comparison with current level.    |
 | `upper_threshold_level` | `upper_threshold_status`                                                                                                             | combinational | Direct comparison with current level.    |
-| `clear_flags`           | `write_miss`, `read_error`                                                                                                           | sequential    | Control path for flags.                  |
 
 ## Complexity
 

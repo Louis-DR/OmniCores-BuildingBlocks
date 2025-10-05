@@ -49,7 +49,6 @@ logic                write_flush;
 logic                write_enable;
 logic    [WIDTH-1:0] write_data;
 logic                write_miss;
-logic                write_clear_miss;
 logic                write_empty;
 logic                write_not_empty;
 logic                write_almost_empty;
@@ -67,7 +66,6 @@ logic                read_flush;
 logic                read_enable;
 logic    [WIDTH-1:0] read_data;
 logic                read_error;
-logic                read_clear_error;
 logic                read_empty;
 logic                read_not_empty;
 logic                read_almost_empty;
@@ -99,7 +97,6 @@ asynchronous_advanced_fifo #(
   .write_clock                  ( write_clock                  ),
   .write_resetn                 ( write_resetn                 ),
   .write_flush                  ( write_flush                  ),
-  .write_clear_miss             ( write_clear_miss             ),
   .write_enable                 ( write_enable                 ),
   .write_data                   ( write_data                   ),
   .write_empty                  ( write_empty                  ),
@@ -117,7 +114,6 @@ asynchronous_advanced_fifo #(
   .read_clock                   ( read_clock                   ),
   .read_resetn                  ( read_resetn                  ),
   .read_flush                   ( read_flush                   ),
-  .read_clear_error             ( read_clear_error             ),
   .read_enable                  ( read_enable                  ),
   .read_data                    ( read_data                    ),
   .read_empty                   ( read_empty                   ),
@@ -187,13 +183,11 @@ initial begin
   $dumpvars(0,asynchronous_advanced_fifo__testbench);
 
   // Initialization
-  write_data       = 0;
-  write_enable     = 0;
-  read_enable      = 0;
-  write_flush      = 0;
-  read_flush       = 0;
-  write_clear_miss = 0;
-  read_clear_error = 0;
+  write_data   = 0;
+  write_enable = 0;
+  read_enable  = 0;
+  write_flush  = 0;
+  read_flush   = 0;
   write_lower_threshold_level = 0;
   write_upper_threshold_level = DEPTH;
   read_lower_threshold_level  = 0;
@@ -270,17 +264,15 @@ initial begin
   if ( read_error) $error("[%0tns] Read error flag is asserted after a write while full.", $time);
   if (write_level != DEPTH) $error("[%0tns] Write level '%0d' is not equal to DEPTH='%0d' after a write while full. The FIFO should be full.", $time, write_level, DEPTH);
   if (read_level  != DEPTH) $error("[%0tns] Read level '%0d' is not equal to DEPTH='%0d' after a write while full. The FIFO should be full.", $time, read_level, DEPTH);
-  // Clear flags
+  // Write miss cleared automatically after one cycle
   @(negedge write_clock);
-  write_clear_miss = 1;
-  @(negedge write_clock);
-  write_clear_miss = 0;
-  if ( read_empty) $error("[%0tns] Empty flag is asserted after clearing the flags. The FIFO should be full.", $time);
-  if (!write_full) $error("[%0tns] Full flag is deasserted after clearing the flags. The FIFO should be full.", $time);
-  if ( write_miss) $error("[%0tns] Write miss flag is asserted after clearing the flags.", $time);
-  if ( read_error) $error("[%0tns] Read error flag is asserted after clearing the flags.", $time);
-  if (write_level != DEPTH) $error("[%0tns] Write level '%0d' is not equal to DEPTH='%0d' after clearing the flags. The FIFO should be full.", $time, write_level, DEPTH);
-  if (read_level  != DEPTH) $error("[%0tns] Read level '%0d' is not equal to DEPTH='%0d' after clearing the flags. The FIFO should be full.", $time, read_level, DEPTH);
+  @(posedge write_clock);
+  if ( read_empty) $error("[%0tns] Empty flag is asserted. The FIFO should be full.", $time);
+  if (!write_full) $error("[%0tns] Full flag is deasserted. The FIFO should be full.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is still asserted.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is asserted.", $time);
+  if (write_level != DEPTH) $error("[%0tns] Write level '%0d' is not equal to DEPTH='%0d'. The FIFO should be full.", $time, write_level, DEPTH);
+  if (read_level  != DEPTH) $error("[%0tns] Read level '%0d' is not equal to DEPTH='%0d'. The FIFO should be full.", $time, read_level, DEPTH);
 
   repeat(5) @(posedge write_clock);
   repeat(5) @(posedge read_clock);
@@ -333,17 +325,15 @@ initial begin
   if (!read_error) $error("[%0tns] Read error flag is deasserted after a read while empty.", $time);
   if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after a read while empty. The FIFO should be empty.", $time, write_level);
   if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after a read while empty. The FIFO should be empty.", $time, read_level);
-  // Clear flags
+  // Read error cleared automatically after one cycle
   @(negedge read_clock);
-  read_clear_error = 1;
-  @(negedge read_clock);
-  read_clear_error = 0;
-  if (!read_empty) $error("[%0tns] Empty flag is deasserted after clearing the flags. The FIFO should be empty.", $time);
-  if ( write_full) $error("[%0tns] Full flag is asserted after clearing the flags. The FIFO should be empty.", $time);
-  if ( write_miss) $error("[%0tns] Write miss flag is asserted after clearing the flags.", $time);
-  if ( read_error) $error("[%0tns] Read error flag is asserted after clearing the flags.", $time);
-  if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero after clearing the flags. The FIFO should be empty.", $time, write_level);
-  if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero after clearing the flags. The FIFO should be empty.", $time, read_level);
+  @(posedge read_clock);
+  if (!read_empty) $error("[%0tns] Empty flag is deasserted. The FIFO should be empty.", $time);
+  if ( write_full) $error("[%0tns] Full flag is asserted. The FIFO should be empty.", $time);
+  if ( write_miss) $error("[%0tns] Write miss flag is asserted.", $time);
+  if ( read_error) $error("[%0tns] Read error flag is still asserted.", $time);
+  if (write_level != 0) $error("[%0tns] Write level '%0d' is not zero. The FIFO should be empty.", $time, write_level);
+  if (read_level  != 0) $error("[%0tns] Read level '%0d' is not zero. The FIFO should be empty.", $time, read_level);
 
   repeat(5) @(posedge write_clock);
   repeat(5) @(posedge read_clock);

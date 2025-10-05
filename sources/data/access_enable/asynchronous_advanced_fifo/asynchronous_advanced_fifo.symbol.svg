@@ -1,5 +1,5 @@
-<svg width="450" height="440" viewBox="0 0 225 220" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="175" height="210" fill="none" stroke="black" stroke-width="1" rx="5"/>
+<svg width="450" height="420" viewBox="0 0 225 210" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="175" height="200" fill="none" stroke="black" stroke-width="1" rx="5"/>
   <text x="112" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Asynchronous Advanced FIFO</text>
   <text x="112" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">asynchronous_advanced_fifo</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_clock</text>
@@ -40,84 +40,78 @@
       <text x="198" y="85" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_error</text>
         <line x1="200" y1="85" x2="214" y2="85" stroke="black" stroke-width="1"/>
         <path d="M 220 85 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="95" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_clear_miss</text>
-        <line x1="19" y1="95" x2="5" y2="95" stroke="black" stroke-width="1"/>
-        <path d="M 25 95 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="95" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_clear_error</text>
-        <line x1="206" y1="95" x2="220" y2="95" stroke="black" stroke-width="1"/>
-        <path d="M 200 95 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="105" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_empty</text>
+      <text x="27" y="95" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_empty</text>
+        <line x1="25" y1="95" x2="11" y2="95" stroke="black" stroke-width="1"/>
+        <path d="M 5 95 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="198" y="95" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_empty</text>
+        <line x1="200" y1="95" x2="214" y2="95" stroke="black" stroke-width="1"/>
+        <path d="M 220 95 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="105" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_not_empty</text>
         <line x1="25" y1="105" x2="11" y2="105" stroke="black" stroke-width="1"/>
         <path d="M 5 105 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="105" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_empty</text>
+      <text x="198" y="105" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_not_empty</text>
         <line x1="200" y1="105" x2="214" y2="105" stroke="black" stroke-width="1"/>
         <path d="M 220 105 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="115" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_not_empty</text>
+      <text x="27" y="115" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_almost_empty</text>
         <line x1="25" y1="115" x2="11" y2="115" stroke="black" stroke-width="1"/>
         <path d="M 5 115 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="115" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_not_empty</text>
+      <text x="198" y="115" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_almost_empty</text>
         <line x1="200" y1="115" x2="214" y2="115" stroke="black" stroke-width="1"/>
         <path d="M 220 115 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="125" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_almost_empty</text>
+      <text x="27" y="125" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_full</text>
         <line x1="25" y1="125" x2="11" y2="125" stroke="black" stroke-width="1"/>
         <path d="M 5 125 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="125" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_almost_empty</text>
+      <text x="198" y="125" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_full</text>
         <line x1="200" y1="125" x2="214" y2="125" stroke="black" stroke-width="1"/>
         <path d="M 220 125 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="135" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_full</text>
+      <text x="27" y="135" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_not_full</text>
         <line x1="25" y1="135" x2="11" y2="135" stroke="black" stroke-width="1"/>
         <path d="M 5 135 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="135" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_full</text>
+      <text x="198" y="135" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_not_full</text>
         <line x1="200" y1="135" x2="214" y2="135" stroke="black" stroke-width="1"/>
         <path d="M 220 135 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="145" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_not_full</text>
+      <text x="27" y="145" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_almost_full</text>
         <line x1="25" y1="145" x2="11" y2="145" stroke="black" stroke-width="1"/>
         <path d="M 5 145 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="145" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_not_full</text>
+      <text x="198" y="145" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_almost_full</text>
         <line x1="200" y1="145" x2="214" y2="145" stroke="black" stroke-width="1"/>
         <path d="M 220 145 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="155" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_almost_full</text>
+      <text x="27" y="155" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_level</text>
         <line x1="25" y1="155" x2="11" y2="155" stroke="black" stroke-width="1"/>
         <path d="M 5 155 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="155" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_almost_full</text>
+          <line x1="18" y1="153" x2="22" y2="157" stroke="black" stroke-width="1"/>
+      <text x="198" y="155" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_level</text>
         <line x1="200" y1="155" x2="214" y2="155" stroke="black" stroke-width="1"/>
         <path d="M 220 155 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="165" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_level</text>
-        <line x1="25" y1="165" x2="11" y2="165" stroke="black" stroke-width="1"/>
-        <path d="M 5 165 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="18" y1="163" x2="22" y2="167" stroke="black" stroke-width="1"/>
-      <text x="198" y="165" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_level</text>
-        <line x1="200" y1="165" x2="214" y2="165" stroke="black" stroke-width="1"/>
-        <path d="M 220 165 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="203" y1="163" x2="207" y2="167" stroke="black" stroke-width="1"/>
-      <text x="27" y="175" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_lower_threshold_level</text>
-        <line x1="19" y1="175" x2="5" y2="175" stroke="black" stroke-width="1"/>
-        <path d="M 25 175 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="8" y1="173" x2="12" y2="177" stroke="black" stroke-width="1"/>
-      <text x="198" y="175" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_lower_threshold_level</text>
-        <line x1="206" y1="175" x2="220" y2="175" stroke="black" stroke-width="1"/>
-        <path d="M 200 175 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="213" y1="173" x2="217" y2="177" stroke="black" stroke-width="1"/>
-      <text x="27" y="185" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_lower_threshold_status</text>
-        <line x1="25" y1="185" x2="11" y2="185" stroke="black" stroke-width="1"/>
-        <path d="M 5 185 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="185" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_lower_threshold_status</text>
-        <line x1="200" y1="185" x2="214" y2="185" stroke="black" stroke-width="1"/>
-        <path d="M 220 185 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="195" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_upper_threshold_level</text>
-        <line x1="19" y1="195" x2="5" y2="195" stroke="black" stroke-width="1"/>
-        <path d="M 25 195 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="8" y1="193" x2="12" y2="197" stroke="black" stroke-width="1"/>
-      <text x="198" y="195" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_upper_threshold_level</text>
-        <line x1="206" y1="195" x2="220" y2="195" stroke="black" stroke-width="1"/>
-        <path d="M 200 195 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="213" y1="193" x2="217" y2="197" stroke="black" stroke-width="1"/>
-      <text x="27" y="205" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_upper_threshold_status</text>
-        <line x1="25" y1="205" x2="11" y2="205" stroke="black" stroke-width="1"/>
-        <path d="M 5 205 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="198" y="205" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_upper_threshold_status</text>
-        <line x1="200" y1="205" x2="214" y2="205" stroke="black" stroke-width="1"/>
-        <path d="M 220 205 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="203" y1="153" x2="207" y2="157" stroke="black" stroke-width="1"/>
+      <text x="27" y="165" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_lower_threshold_level</text>
+        <line x1="19" y1="165" x2="5" y2="165" stroke="black" stroke-width="1"/>
+        <path d="M 25 165 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="163" x2="12" y2="167" stroke="black" stroke-width="1"/>
+      <text x="198" y="165" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_lower_threshold_level</text>
+        <line x1="206" y1="165" x2="220" y2="165" stroke="black" stroke-width="1"/>
+        <path d="M 200 165 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="213" y1="163" x2="217" y2="167" stroke="black" stroke-width="1"/>
+      <text x="27" y="175" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_lower_threshold_status</text>
+        <line x1="25" y1="175" x2="11" y2="175" stroke="black" stroke-width="1"/>
+        <path d="M 5 175 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="198" y="175" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_lower_threshold_status</text>
+        <line x1="200" y1="175" x2="214" y2="175" stroke="black" stroke-width="1"/>
+        <path d="M 220 175 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="185" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_upper_threshold_level</text>
+        <line x1="19" y1="185" x2="5" y2="185" stroke="black" stroke-width="1"/>
+        <path d="M 25 185 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="183" x2="12" y2="187" stroke="black" stroke-width="1"/>
+      <text x="198" y="185" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_upper_threshold_level</text>
+        <line x1="206" y1="185" x2="220" y2="185" stroke="black" stroke-width="1"/>
+        <path d="M 200 185 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="213" y1="183" x2="217" y2="187" stroke="black" stroke-width="1"/>
+      <text x="27" y="195" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_upper_threshold_status</text>
+        <line x1="25" y1="195" x2="11" y2="195" stroke="black" stroke-width="1"/>
+        <path d="M 5 195 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="198" y="195" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_upper_threshold_status</text>
+        <line x1="200" y1="195" x2="214" y2="195" stroke="black" stroke-width="1"/>
+        <path d="M 220 195 l -6 +2.0 v -4 z" fill="black"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {
