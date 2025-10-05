@@ -5,13 +5,8 @@
 // ║ License:     MIT License                                                  ║
 // ║ File:        fifo.v                                                       ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Synchronous First-In First-Out queue.                        ║
-// ║                                                                           ║
-// ║              If the FIFO isn't empty, the read_data output is the value   ║
-// ║              of the tail of the queue. Toggling the read input signal     ║
-// ║              only moves the read pointer to the next entry for the next   ║
-// ║              clock cycle. Therefore, the value can be read instantly and  ║
-// ║              without necessarily popping the value.                       ║
+// ║ Description: Synchronous First-In First-Out queue for data buffering and  ║
+// ║              temporary storage with configurable depth.                   ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -39,84 +34,51 @@ module fifo #(
 
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
-// Memory array
-reg [WIDTH-1:0] memory [DEPTH-1:0];
+// Memory interface signals
+logic                  memory_write_enable;
+logic [DEPTH_LOG2-1:0] memory_write_address;
+logic      [WIDTH-1:0] memory_write_data;
+logic                  memory_read_enable;
+logic [DEPTH_LOG2-1:0] memory_read_address;
+logic      [WIDTH-1:0] memory_read_data;
 
+// Controller
+fifo_controller #(
+  .WIDTH ( WIDTH ),
+  .DEPTH ( DEPTH )
+) controller (
+  .clock                ( clock                ),
+  .resetn               ( resetn               ),
+  .full                 ( full                 ),
+  .empty                ( empty                ),
+  // Write interface
+  .write_enable         ( write_enable         ),
+  .write_data           ( write_data           ),
+  // Read interface
+  .read_enable          ( read_enable          ),
+  .read_data            ( read_data            ),
+  // Memory interface
+  .memory_write_enable  ( memory_write_enable  ),
+  .memory_write_address ( memory_write_address ),
+  .memory_write_data    ( memory_write_data    ),
+  .memory_read_enable   ( memory_read_enable   ),
+  .memory_read_address  ( memory_read_address  ),
+  .memory_read_data     ( memory_read_data     )
+);
 
-
-// ┌─────────────┐
-// │ Write logic │
-// └─────────────┘
-
-// Write pointer with lap bit to compare with the read pointer
-reg [DEPTH_LOG2:0] write_pointer;
-
-// Write address without lap bit to index the memory
-wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
-
-// Write lap bit
-wire write_lap = write_pointer[DEPTH_LOG2];
-
-
-
-// ┌────────────┐
-// │ Read logic │
-// └────────────┘
-
-// Read pointer with lap bit to compare with the read pointer
-reg [DEPTH_LOG2:0] read_pointer;
-
-// Read address without lap bit to index the memory
-wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
-
-// Value at the read pointer is always on the read data bus
-assign read_data = memory[read_address];
-
-// Read lap bit
-wire read_lap = read_pointer[DEPTH_LOG2];
-
-
-// ┌──────────────┐
-// │ Status logic │
-// └──────────────┘
-
-// Queue is full if the read and write pointers are the same but the lap bits are different
-assign full  = write_address == read_address && write_lap != read_lap;
-
-// Queue is empty if the read and write pointers are the same and the lap bits are equal
-assign empty = write_address == read_address && write_lap == read_lap;
-
-
-
-// ┌───────────────────┐
-// │ Synchronous logic │
-// └───────────────────┘
-
-// Write and read pointers sequential logic
-always @(posedge clock or negedge resetn) begin
-  // Reset
-  if (!resetn) begin
-    write_pointer <= 0;
-    read_pointer  <= 0;
-  end
-  // Operation
-  else begin
-    // Write
-    if (write_enable) begin
-      write_pointer <= write_pointer + 1;
-    end
-    // Read
-    if (read_enable) begin
-      read_pointer <= read_pointer + 1;
-    end
-  end
-end
-
-// Write to memory without reset
-always @(posedge clock) begin
-  if (write_enable) begin
-    memory[write_address] <= write_data;
-  end
-end
+// Memory
+simple_dual_port_ram #(
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .REGISTERED_READ ( 0     )
+) memory (
+  .clock         ( clock                ),
+  .write_enable  ( memory_write_enable  ),
+  .write_address ( memory_write_address ),
+  .write_data    ( memory_write_data    ),
+  .read_enable   ( memory_read_enable   ),
+  .read_address  ( memory_read_address  ),
+  .read_data     ( memory_read_data     )
+);
 
 endmodule

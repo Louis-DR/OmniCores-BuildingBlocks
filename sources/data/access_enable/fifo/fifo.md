@@ -14,6 +14,8 @@
 
 Synchronous First-In First-Out queue for data buffering and flow control with configurable depth. The FIFO uses a write-enable/read-enable protocol for flow control and provides full and empty status flags. It doesn't implement a safety mechanism against writing when full or reading when empty so the integration must use the status flags and the enable signals carefuly.
 
+The design is structured as a modular architecture with a separate controller for pointer management and control logic, and a generic simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
+
 The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily popping the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
@@ -38,13 +40,17 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The FIFO maintains an internal memory array indexed by separate read and write pointers, each with an additional wrap bit for correct full/empty detection.
+The FIFO consists of two main components: a controller that manages pointers and status flags, and a simple dual-port RAM for data storage.
 
-For **write operation**, when `write_enable` is asserted, `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented.
+The **controller** maintains separate read and write pointers, each with an additional wrap bit for correct full/empty detection. It generates the memory interface signals and calculates the status flags. The controller doesn't store any data, only control state.
+
+The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
+
+For **write operation**, when `write_enable` is asserted, the controller directs the RAM to store `write_data` at the location pointed to by the write pointer, and the write pointer is incremented.
 
 There is no safety mechanism against writing when full. The write pointer will be incremented and surpass the read pointer, overwriting the data at the head, corrupting the full and empty flags, and breaking the FIFO.
 
-For **read operation**, the `read_data` output continuously provides the data at the read pointer location. When `read_enable` is asserted, only the read pointer is incremented to advance to the next entry.
+For **read operation**, the `read_data` output continuously provides the data at the read pointer location from the RAM. When `read_enable` is asserted, only the read pointer is incremented to advance to the next entry.
 
 There is no safety mechanism against reading when empty. The read pointer will be incremented and surpass the write pointer, causing the next data written to be lost, corrupting the full and empty flags, and breaking the FIFO.
 
@@ -71,7 +77,7 @@ The status flags are calculated based on the read and write pointers. The queue 
 
 In this table, the delay refers to the timing critical path, which determines the maximal operating frequency.
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array and `2×(log₂DEPTH+1)` flip-flops for the read and write pointers with wrap bits.
+The RAM requires `WIDTH×DEPTH` flip-flops for the memory array. The controller requires `2×(log₂DEPTH+1)` flip-flops for the read and write pointers with wrap bits.
 
 Under tight timing constraints, the critical path delay might achieve `O(log₂ log₂ DEPTH)` complexity instead of `O(log₂ DEPTH)`, while sacrificing some area. This depends on how the synthesizer implements and optimizes the memory array indexing with the pointers, the pointer incrementation during read and write operation, and the pointer comparison for the full and empty flags.
 
@@ -112,7 +118,12 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-This module has no external module dependencies.
+This module depends on the following modules:
+
+| Module                 | Path                                                           | Comment                                  |
+| ---------------------- | -------------------------------------------------------------- | ---------------------------------------- |
+| `fifo_controller`      | `omnicores-buildingblocks/sources/data/controllers/fifo`       | Controller for pointer and status logic. |
+| `simple_dual_port_ram` | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram` | Dual-port RAM for data storage.          |
 
 ## Related modules
 
