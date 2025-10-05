@@ -72,6 +72,51 @@ initial begin
   end
 end
 
+// Write task
+task automatic write;
+  input logic [WIDTH-1:0] data;
+  write_valid = 1;
+  write_data  = data;
+  @(posedge clock);
+  if (write_ready) begin
+    data_expected.push_back(data);
+  end
+  @(negedge clock);
+  write_valid = 0;
+  write_data  = 0;
+endtask
+
+// Read task
+task automatic read;
+  read_ready = 1;
+  @(posedge clock);
+  if (read_valid) begin
+    if (data_expected.size() != 0) begin
+      if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+      pop_trash = data_expected.pop_front();
+    end else begin
+      $error("[%0tns] Read valid while buffer should be empty.", $time);
+    end
+  end
+  @(negedge clock);
+  read_ready = 0;
+endtask
+
+// Check flags task
+task automatic check_flags;
+  input int expected_count;
+  if (expected_count == 0) begin
+    if (!empty) $error("[%0tns] Empty flag is deasserted. The buffer should have %0d entries in it.", $time, expected_count);
+  end else begin
+    if (empty) $error("[%0tns] Empty flag is asserted. The buffer should have %0d entries in it.", $time, expected_count);
+  end
+  if (expected_count == 2) begin
+    if (!full) $error("[%0tns] Full flag is deasserted. The buffer should have %0d entries in it.", $time, expected_count);
+  end else begin
+    if (full) $error("[%0tns] Full flag is asserted. The buffer should have %0d entries in it.", $time, expected_count);
+  end
+endtask
+
 // Main block
 initial begin
   // Log waves

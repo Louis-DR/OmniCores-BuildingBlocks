@@ -71,6 +71,48 @@ initial begin
   end
 end
 
+// Write task
+task automatic write;
+  input logic [WIDTH-1:0] data;
+  write_enable = 1;
+  write_data   = data;
+  @(posedge clock);
+  data_expected.push_back(data);
+  outstanding_count++;
+  @(negedge clock);
+  write_enable = 0;
+  write_data   = 0;
+endtask
+
+// Read task
+task automatic read;
+  read_enable = 1;
+  @(posedge clock);
+  if (data_expected.size() != 0) begin
+    if (read_data !== data_expected[$]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
+    pop_trash = data_expected.pop_back();
+    outstanding_count--;
+  end else begin
+    $error("[%0tns] Read enabled while LIFO should be empty.", $time);
+  end
+  @(negedge clock);
+  read_enable = 0;
+endtask
+
+// Check flags task
+task automatic check_flags;
+  if (outstanding_count == 0) begin
+    if (!empty) $error("[%0tns] Empty flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    if ( full ) $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+  end else if (outstanding_count == DEPTH) begin
+    if ( empty) $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    if (!full ) $error("[%0tns] Full flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+  end else begin
+    if ( empty) $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    if ( full ) $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+  end
+endtask
+
 // Main block
 initial begin
   // Log waves
@@ -78,9 +120,10 @@ initial begin
   $dumpvars(0,lifo__testbench);
 
   // Initialization
-  write_data   = 0;
-  write_enable = 0;
-  read_enable  = 0;
+  write_data        = 0;
+  write_enable      = 0;
+  read_enable       = 0;
+  outstanding_count = 0;
 
   // Reset
   resetn = 0;
@@ -91,26 +134,14 @@ initial begin
   // Check 1 : Writing to full
   $display("CHECK 1 : Writing to full.");
   // Initial state
-  if (!empty) $error("[%0tns] Empty flag is deasserted after reset. The LIFO should be empty.", $time);
-  if ( full ) $error("[%0tns] Full flag is asserted after reset. The LIFO should be empty.", $time);
+  check_flags();
   // Writing
   for (int write_count = 1; write_count <= DEPTH; write_count++) begin
     @(negedge clock);
-    write_enable = 1;
-    write_data   = $urandom_range(WIDTH_POW2);
-    @(posedge clock);
-    data_expected.push_back(write_data);
-    @(negedge clock);
-    write_enable = 0;
-    write_data   = 0;
-    if (write_count != DEPTH) begin
-      if ( empty) $error("[%0tns] Empty flag is asserted after %0d writes.", $time, write_count);
-      if ( full ) $error("[%0tns] Full flag is asserted after %0d writes.", $time, write_count);
-    end
+    write($urandom_range(WIDTH_POW2));
   end
   // Final state
-  if ( empty) $error("[%0tns] Empty flag is asserted after %0d writes. The LIFO should be full.", $time, DEPTH);
-  if (!full ) $error("[%0tns] Full flag is deasserted after %0d writes. The LIFO should be full.", $time, DEPTH);
+  check_flags();
 
   repeat(10) @(posedge clock);
 
@@ -119,24 +150,10 @@ initial begin
   // Reading
   for (int read_count = 1; read_count <= DEPTH; read_count++) begin
     @(negedge clock);
-    read_enable = 1;
-    @(posedge clock);
-    if (data_expected.size() != 0) begin
-      if (read_data !== data_expected[$]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
-    end else begin
-      $error("[%0tns] Read enabled while LIFO should be empty.", $time);
-    end
-    pop_trash = data_expected.pop_back();
-    @(negedge clock);
-    read_enable = 0;
-    if (read_count != DEPTH) begin
-      if ( empty) $error("[%0tns] Empty flag is asserted after %0d reads.", $time, read_count);
-      if ( full ) $error("[%0tns] Full flag is asserted after %0d reads.", $time, read_count);
-    end
+    read();
   end
   // Final state
-  if (!empty) $error("[%0tns] Empty flag is deasserted after %0d reads. The LIFO should be empty.", $time, DEPTH);
-  if ( full ) $error("[%0tns] Full flag is asserted after %0d reads. The LIFO should be empty.", $time, DEPTH);
+  check_flags();
 
   repeat(10) @(posedge clock);
 

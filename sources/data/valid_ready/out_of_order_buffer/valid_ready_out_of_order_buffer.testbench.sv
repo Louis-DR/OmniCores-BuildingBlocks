@@ -83,6 +83,71 @@ initial begin
   end
 end
 
+// Write task
+task automatic write;
+  write_valid = 1;
+  write_data  = $urandom_range(WIDTH_POW2);
+  @(posedge clock);
+  if (write_ready) begin
+    if (write_index >= DEPTH) $error("[%0tns] Write index '%0d' out of bounds.", $time, write_index);
+    if (valid_model[write_index]) $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
+    memory_model[write_index] = write_data;
+    valid_model[write_index]  = 1;
+    valid_entries_count++;
+    last_written_index = write_index;
+  end
+  @(negedge clock);
+  write_valid = 0;
+  write_data  = 0;
+endtask
+
+// Read task (without clear)
+task automatic read;
+  input logic [INDEX_WIDTH-1:0] index;
+  read_valid = 1;
+  read_clear = 0;
+  read_index = index;
+  @(posedge clock);
+  if (read_ready) begin
+    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+  end
+  @(negedge clock);
+  read_valid = 0;
+  read_index = 0;
+endtask
+
+// Read and clear task
+task automatic read_and_clear;
+  input logic [INDEX_WIDTH-1:0] index;
+  read_valid = 1;
+  read_clear = 1;
+  read_index = index;
+  @(posedge clock);
+  if (read_ready) begin
+    if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+    valid_model[read_index] = 0;
+    valid_entries_count--;
+  end
+  @(negedge clock);
+  read_valid = 0;
+  read_clear = 0;
+  read_index = 0;
+endtask
+
+// Check flags task
+task automatic check_flags;
+  if (valid_entries_count == 0) begin
+    if (!empty) $error("[%0tns] Empty flag is deasserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+    if ( full ) $error("[%0tns] Full flag is asserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+  end else if (valid_entries_count == DEPTH) begin
+    if ( empty) $error("[%0tns] Empty flag is asserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+    if (!full ) $error("[%0tns] Full flag is deasserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+  end else begin
+    if ( empty) $error("[%0tns] Empty flag is asserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+    if ( full ) $error("[%0tns] Full flag is asserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+  end
+endtask
+
 // Main block
 initial begin
   // Log waves

@@ -75,6 +75,52 @@ initial begin
   end
 end
 
+// Write task
+task automatic write;
+  input logic [WIDTH-1:0] data;
+  write_valid = 1;
+  write_data  = data;
+  @(posedge clock);
+  if (write_ready) begin
+    data_expected.push_back(data);
+    outstanding_count++;
+  end
+  @(negedge clock);
+  write_valid = 0;
+  write_data  = 0;
+endtask
+
+// Read task
+task automatic read;
+  read_ready = 1;
+  @(posedge clock);
+  if (read_valid) begin
+    if (data_expected.size() != 0) begin
+      if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+      pop_trash = data_expected.pop_front();
+      outstanding_count--;
+    end else begin
+      $error("[%0tns] Read valid while FIFO should be empty.", $time);
+    end
+  end
+  @(negedge clock);
+  read_ready = 0;
+endtask
+
+// Check flags task
+task automatic check_flags;
+  if (outstanding_count == 0) begin
+    if (!empty) $error("[%0tns] Empty flag is deasserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    if ( full ) $error("[%0tns] Full flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+  end else if (outstanding_count == DEPTH) begin
+    if ( empty) $error("[%0tns] Empty flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    if (!full ) $error("[%0tns] Full flag is deasserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+  end else begin
+    if ( empty) $error("[%0tns] Empty flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    if ( full ) $error("[%0tns] Full flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+  end
+endtask
+
 // Main block
 initial begin
   // Log waves

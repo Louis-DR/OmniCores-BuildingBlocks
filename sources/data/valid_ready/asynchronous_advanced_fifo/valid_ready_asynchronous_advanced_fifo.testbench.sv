@@ -127,6 +127,38 @@ initial begin
   end
 end
 
+// Write task
+task automatic write;
+  input logic [WIDTH-1:0] data;
+  write_valid = 1;
+  write_data  = data;
+  @(posedge write_clock);
+  if (write_ready) begin
+    data_expected.push_back(data);
+    outstanding_count++;
+  end
+  @(negedge write_clock);
+  write_valid = 0;
+  write_data  = 0;
+endtask
+
+// Read task
+task automatic read;
+  read_ready = 1;
+  @(posedge read_clock);
+  if (read_valid) begin
+    if (data_expected.size() != 0) begin
+      if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+      pop_trash = data_expected.pop_front();
+      outstanding_count--;
+    end else begin
+      $error("[%0tns] Read valid while FIFO should be empty.", $time);
+    end
+  end
+  @(negedge read_clock);
+  read_ready = 0;
+endtask
+
 // Main block
 initial begin
   // Log waves

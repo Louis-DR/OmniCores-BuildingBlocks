@@ -72,6 +72,46 @@ initial begin
   end
 end
 
+// Write task
+task automatic write;
+  input logic [WIDTH-1:0] data;
+  write_valid = 1;
+  write_data  = data;
+  @(posedge clock);
+  if (write_ready) begin
+    data_expected = data;
+  end
+  @(negedge clock);
+  write_valid = 0;
+  write_data  = 0;
+endtask
+
+// Read task
+task automatic read;
+  read_ready = 1;
+  if (read_data !== data_expected) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+  @(posedge clock);
+  if (read_valid) begin
+    data_expected = 'x;
+  end
+  @(negedge clock);
+  read_ready = 0;
+endtask
+
+// Check flags task
+task automatic check_flags;
+  input logic expected_empty;
+  input logic expected_full;
+  if (empty !== expected_empty) begin
+    if (expected_empty) $error("[%0tns] Empty flag is deasserted. The buffer should be empty.", $time);
+    else $error("[%0tns] Empty flag is asserted. The buffer should be full.", $time);
+  end
+  if (full !== expected_full) begin
+    if (expected_full) $error("[%0tns] Full flag is deasserted. The buffer should be full.", $time);
+    else $error("[%0tns] Full flag is asserted. The buffer should be empty.", $time);
+  end
+endtask
+
 // Main block
 initial begin
   // Log waves
