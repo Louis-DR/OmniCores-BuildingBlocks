@@ -49,9 +49,7 @@ module valid_ready_out_of_order_buffer #(
 );
 
 wire write_enable = write_valid & write_ready;
-wire read_enable  = read_valid  & read_ready;
-
-wire read_error;
+wire  read_enable =  read_valid &  read_ready;
 
 out_of_order_buffer #(
   .WIDTH        ( WIDTH        ),
@@ -68,12 +66,10 @@ out_of_order_buffer #(
   .read_enable  ( read_enable  ),
   .read_clear   ( read_clear   ),
   .read_index   ( read_index   ),
-  .read_data    ( read_data    ),
-  .read_error   ( read_error   )
+  .read_data    ( read_data    )
 );
 
 assign write_ready = ~full;
-assign read_ready  = out_of_order_buffer.valid[read_index];
-// Cannot use read_error for read_ready because it is combinational with read_enable
+assign  read_ready = out_of_order_buffer.valid[read_index];
 
 endmodule
