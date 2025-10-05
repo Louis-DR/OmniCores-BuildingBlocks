@@ -14,6 +14,8 @@
 
 Synchronous Last-In First-Out stack for data buffering and temporary storage with configurable depth. The LIFO uses a write-enable/read-enable protocol for flow control and provides full and empty status flags. It doesn't implement a safety mechanism against writing when full or reading when empty so the integration must use the status flags and the enable signals carefully.
 
+The design is structured as a modular architecture with a separate controller for pointer management and control logic, and a generic single-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration. The single-port RAM is sufficient because the LIFO accesses the same location for both reads and writes at the top of the stack, and simultaneous read/write operations simply replace the top element.
+
 The read data output continuously shows the value at the top of the stack when not empty, allowing instant data access without necessarily popping the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
@@ -38,13 +40,17 @@ The read data output continuously shows the value at the top of the stack when n
 
 ## Operation
 
-The LIFO maintains an internal memory array indexed by a single stack pointer that tracks the current top of the stack.
+The LIFO consists of two main components: a controller that manages the pointer and status flags, and a single-port RAM for data storage.
 
-For **write operation**, when `write_enable` is asserted, `write_data` is stored at the location pointed to by the stack pointer, and the stack pointer is incremented to point to the next available position.
+The **controller** maintains a single stack pointer that tracks the current top of the stack. It generates the memory interface signals and calculates the status flags. The controller doesn't store any data, only control state. When simultaneous read and write occur, the controller implements a combinational bypass to provide the written data directly to the read output, since the single-port RAM would not support simultaneous access to different addresses.
+
+The **single-port RAM** provides a single access port with combinational reads. The use of a single-port RAM is efficient for LIFO because reads and writes always target adjacent locations (top of stack), and simultaneous operations can be handled by the controller's bypass logic.
+
+For **write operation**, when `write_enable` is asserted, the controller directs the RAM to store `write_data` at the location pointed to by the stack pointer, and the stack pointer is incremented to point to the next available position.
 
 There is no safety mechanism against writing when full. The stack pointer will be incremented beyond the valid range, potentially overwriting data and corrupting the full and empty flags, breaking the LIFO.
 
-For **read operation**, the `read_data` output continuously provides the data at the top of the stack (stack pointer minus one). When `read_enable` is asserted, the stack pointer is decremented to expose the previous entry as the new top.
+For **read operation**, the `read_data` output continuously provides the data at the top of the stack (stack pointer minus one) from the RAM. When `read_enable` is asserted, the stack pointer is decremented to expose the previous entry as the new top.
 
 There is no safety mechanism against reading when empty. The stack pointer will be decremented below zero, causing undefined behavior and corrupting the full and empty flags, breaking the LIFO.
 
@@ -71,7 +77,7 @@ The status flags are calculated based on the stack pointer value. The stack is f
 
 In this table, the delay refers to the timing critical path, which determines the maximal operating frequency.
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array and `log₂DEPTH+1` flip-flops for the stack pointer.
+The RAM requires `WIDTH×DEPTH` flip-flops for the memory array. The controller requires `log₂DEPTH+1` flip-flops for the stack pointer.
 
 Under tight timing constraints, the critical path delay might achieve `O(log₂ log₂ DEPTH)` complexity instead of `O(log₂ DEPTH)`, while sacrificing some area. This depends on how the synthesizer implements and optimizes the memory array indexing with the pointer, the pointer incrementation and decrementation during write and read operations, and the pointer comparison for the full and empty flags.
 
@@ -113,7 +119,12 @@ There are no synthesis and implementation constraints for this block.
 
 ## Dependencies
 
-This module has no external module dependencies.
+This module depends on the following modules:
+
+| Module            | Path                                                      | Comment                                  |
+| ----------------- | --------------------------------------------------------- | ---------------------------------------- |
+| `lifo_controller` | `omnicores-buildingblocks/sources/data/controllers/lifo`  | Controller for pointer and status logic. |
+| `single_port_ram` | `omnicores-buildingblocks/sources/memory/single_port_ram` | Single-port RAM for data storage.        |
 
 ## Related modules
 
