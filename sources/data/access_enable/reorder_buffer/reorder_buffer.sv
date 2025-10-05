@@ -8,11 +8,6 @@
 // ║ Description: Reorder buffer with in-order reservation, out-of-order       ║
 // ║              writing, and in-order reading.                               ║
 // ║                                                                           ║
-// ║              First, the order is declared by reserving a slot which gives ║
-// ║              an index. Then, writes are performed out-of-order with the   ║
-// ║              reservation index. Finally, the data is read in order of the ║
-// ║              indicies when available.                                     ║
-// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
@@ -40,98 +35,53 @@ module reorder_buffer #(
   output       [WIDTH-1:0] read_data
 );
 
-// Memory array
-logic [WIDTH-1:0] memory [DEPTH-1:0];
+// Memory interface signals
+logic                   memory_write_enable;
+logic [INDEX_WIDTH-1:0] memory_write_address;
+logic       [WIDTH-1:0] memory_write_data;
+logic                   memory_read_enable;
+logic [INDEX_WIDTH-1:0] memory_read_address;
+logic       [WIDTH-1:0] memory_read_data;
 
-// Reserved entries
-logic [DEPTH-1:0] reserved;
-logic [DEPTH-1:0] reserved_next;
+// Controller
+reorder_buffer_controller #(
+  .WIDTH ( WIDTH ),
+  .DEPTH ( DEPTH )
+) controller (
+  .clock                ( clock                ),
+  .resetn               ( resetn               ),
+  .reserve_full         ( reserve_full         ),
+  .reserve_empty        ( reserve_empty        ),
+  .data_full            ( data_full            ),
+  .data_empty           ( data_empty           ),
+  .reserve_enable       ( reserve_enable       ),
+  .reserve_index        ( reserve_index        ),
+  .write_enable         ( write_enable         ),
+  .write_index          ( write_index          ),
+  .write_data           ( write_data           ),
+  .read_enable          ( read_enable          ),
+  .read_data            ( read_data            ),
+  .memory_write_enable  ( memory_write_enable  ),
+  .memory_write_address ( memory_write_address ),
+  .memory_write_data    ( memory_write_data    ),
+  .memory_read_enable   ( memory_read_enable   ),
+  .memory_read_address  ( memory_read_address  ),
+  .memory_read_data     ( memory_read_data     )
+);
 
-// Valid entries
-logic [DEPTH-1:0] valid;
-logic [DEPTH-1:0] valid_next;
-
-// Reservation and read pointers with wrap bits
-logic [INDEX_WIDTH:0] reserve_pointer;
-logic [INDEX_WIDTH:0] reserve_pointer_next;
-logic [INDEX_WIDTH:0] read_pointer;
-logic [INDEX_WIDTH:0] read_pointer_next;
-
-// Reservation full and empty flags
-logic  reserve_full_next;
-assign reserve_full_next =  reserve_pointer_next[INDEX_WIDTH-1:0] == read_pointer_next[INDEX_WIDTH-1:0]
-                         && reserve_pointer_next[INDEX_WIDTH]     != read_pointer_next[INDEX_WIDTH];
-logic  reserve_empty_next;
-assign reserve_empty_next =  reserve_pointer_next[INDEX_WIDTH-1:0] == read_pointer_next[INDEX_WIDTH-1:0]
-                          && reserve_pointer_next[INDEX_WIDTH]     == read_pointer_next[INDEX_WIDTH];
-
-// Data full and empty flags
-logic  data_full_next;
-assign data_full_next = &valid_next;
-logic  data_empty_next;
-assign data_empty_next = ~|valid_next;
-
-// Reservation, write, and read logic
-always_comb begin
-  // Default assignments
-  reserve_pointer_next = reserve_pointer;
-  read_pointer_next    = read_pointer;
-  reserved_next        = reserved;
-  valid_next           = valid;
-  // Reservation operation
-  if (reserve_enable) begin
-    reserved_next [reserve_pointer[INDEX_WIDTH-1:0]] = 1'b1;
-    reserve_pointer_next = reserve_pointer + 1;
-  end
-  // Write operation
-  if (write_enable) begin
-    valid_next  [write_index] = 1'b1;
-  end
-  // Read operation
-  if (read_enable) begin
-    valid_next    [read_pointer[INDEX_WIDTH-1:0]] = 1'b0;
-    reserved_next [read_pointer[INDEX_WIDTH-1:0]] = 1'b0;
-    read_pointer_next = read_pointer + 1;
-  end
-end
-
-// Reservation logic
-assign reserve_index = reserve_pointer[INDEX_WIDTH-1:0];
-
-// Read logic
-assign read_data = memory[read_pointer[INDEX_WIDTH-1:0]];
-
-// Reset and sequential logic
-always_ff @(posedge clock or negedge resetn) begin
-  // Reset
-  if (!resetn) begin
-    reserve_full    <= 0;
-    reserve_empty   <= 1;
-    data_full       <= 0;
-    data_empty      <= 1;
-    reserve_pointer <= 0;
-    read_pointer    <= 0;
-    reserved        <= 0;
-    valid           <= 0;
-  end
-  // Operation
-  else begin
-    reserve_full    <= reserve_full_next;
-    reserve_empty   <= reserve_empty_next;
-    data_full       <= data_full_next;
-    data_empty      <= data_empty_next;
-    reserve_pointer <= reserve_pointer_next;
-    read_pointer    <= read_pointer_next;
-    reserved        <= reserved_next;
-    valid           <= valid_next;
-  end
-end
-
-// Write to memory without reset
-always @(posedge clock) begin
-  if (write_enable) begin
-    memory[write_index] <= write_data;
-  end
-end
+// Memory
+simple_dual_port_ram #(
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .REGISTERED_READ ( 0     )
+) memory (
+  .clock         ( clock                ),
+  .write_enable  ( memory_write_enable  ),
+  .write_address ( memory_write_address ),
+  .write_data    ( memory_write_data    ),
+  .read_enable   ( memory_read_enable   ),
+  .read_address  ( memory_read_address  ),
+  .read_data     ( memory_read_data     )
+);
 
 endmodule

@@ -14,6 +14,8 @@
 
 Synchronous buffer that ensures in-order data reading from out-of-order data writes. The buffer operates with a three-stage protocol: in-order reservation of slots, out-of-order writing to reserved slots, and in-order reading of written data. The reserve operation provides an index that should be carried through the system for the corresponding write operation. Data can only be read in-order when the corresponding writes have occurred. This design is essential for systems that require program order to be maintained despite out-of-order execution or completion.
 
+The design is structured as a modular architecture with a separate controller for reservation tracking, dual pointer management, validity bits, and control logic, and a generic simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
+
 The buffer uses a reserve-enable/write-enable/read-enable protocol for flow control. It does not implement safety mechanisms against incorrect usage, so the integration is responsible for ensuring correct operation by checking status flags before enabling operations. Specifically, the integration must check `reserve_full` before asserting `reserve_enable`, only write to previously reserved indices once per slot, and ensure data has been written to the head slot before asserting `read_enable`. Note that `data_empty` being low does not guarantee the next in-order data is available—only that some reserved slot contains valid data.
 
 The read data output continuously shows the value at the head of the buffer, allowing instant data access without necessarily popping the entry. The internal memory array is not reset, so it will contain invalid data in silicon and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
@@ -122,10 +124,13 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                             | Path                                                    | Comment           |
-| ------------------------------------------------------------------ | ------------------------------------------------------- | ----------------- |
-| [`first_one`](../../../operations/first_one/first_one.md)          | `omnicores-buildingblocks/sources/operations/first_one` | No longer needed. |
-| [`onehot_to_binary`](../../../encoding/onehot/onehot_to_binary.md) | `omnicores-buildingblocks/sources/encoding/onehot`      | No longer needed. |
+This module depends on the following modules:
+
+| Module                         | Path                                                                   | Comment                                                    |
+| ------------------------------ | ---------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `reorder_buffer_controller` | `omnicores-buildingblocks/sources/data/controllers/reorder_buffer` | Controller for reservation tracking and pointer management logic. |
+| `simple_dual_port_ram`         | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram`         | Simpledual-port RAM for data storage.                            |
+
 
 ## Related modules
 
