@@ -1,2 +1,4 @@
 advanced_fifo.v
+../../controllers/advanced_fifo/advanced_fifo_controller.v
 ../../../counter/advanced_wrapping_counter/advanced_wrapping_counter.v
+../../../memory/simple_dual_port_ram/simple_dual_port_ram.v

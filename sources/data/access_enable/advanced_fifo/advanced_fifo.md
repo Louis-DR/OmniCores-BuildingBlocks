@@ -14,6 +14,8 @@
 
 Advanced synchronous First-In First-Out queue with enhanced features including protection mechanisms, error reporting, extended status flags, level monitoring, and dynamic thresholds.
 
+The design is structured as a modular architecture with a separate controller for pointer management, status logic, and protection mechanisms, and a generic simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
+
 The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
 ## Parameters
@@ -51,13 +53,17 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The FIFO maintains an internal memory array indexed by separate read and write pointers, each with an additional lap bit for correct level calculation, implemented with `advanced_wrapping_counter`.
+The FIFO consists of two main components: a controller that manages pointers, status logic, and protection mechanisms, and a simple dual-port RAM for data storage.
 
-For **write operation**, when `write_enable` is asserted, `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented. Writing when full is ignored and the data is lost.
+The **controller** maintains separate read and write pointers, each with an additional lap bit for correct level calculation, implemented with `advanced_wrapping_counter`. It generates the memory interface signals, calculates all status flags and thresholds, implements protection mechanisms, and generates error notifications. The controller doesn't store any data, only control state.
+
+The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
+
+For **write operation**, when `write_enable` is asserted, the controller directs the RAM to store `write_data` at the location pointed to by the write pointer, and the write pointer is incremented. Writing when full is ignored and the data is lost.
 
 The write safety mechanism prevents writing when full. The write will be ignored, the pointers will not be updated, and the data will be lost. The `write_miss` pulse notification will assert for one clock cycle to signal the error, then automatically clear. The FIFO can continue operating normally.
 
-For **read operation**, the `read_data` output continuously provides the data at the read pointer location. When `read_enable` is asserted, only the read pointer is incremented to advance to the next entry.
+For **read operation**, the `read_data` output continuously provides the data at the read pointer location from the RAM. When `read_enable` is asserted, only the read pointer is incremented to advance to the next entry.
 
 The read safety mechanism prevents reading when empty. The `read_data` will be invalid and the pointers will not be updated. The `read_error` pulse notification will assert for one clock cycle to signal the error, then automatically clear. The FIFO can continue operating normally.
 
@@ -129,9 +135,12 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-| Module                                                                                                 | Path                                                                 | Comment                 |
-| ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- | ----------------------- |
-| [`advanced_wrapping_counter`](../../../counter/advanced_wrapping_counter/advanced_wrapping_counter.md) | `omnicores-buildingblocks/sources/counter/advanced_wrapping_counter` | For pointer management. |
+This module depends on the following modules:
+
+| Module                     | Path                                                              | Comment                                                      |
+| -------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------ |
+| `advanced_fifo_controller` | `omnicores-buildingblocks/sources/data/controllers/advanced_fifo` | Controller for pointers, status flags, and protection logic. |
+| `simple_dual_port_ram`     | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram`    | Dual-port RAM for data storage.                              |
 
 ## Related modules
 
