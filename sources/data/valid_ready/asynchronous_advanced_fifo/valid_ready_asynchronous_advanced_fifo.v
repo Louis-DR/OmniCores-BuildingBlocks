@@ -60,52 +60,84 @@ module valid_ready_asynchronous_advanced_fifo #(
   output                read_upper_threshold_status
 );
 
-wire write_enable = write_valid;
-wire  read_enable =  read_ready;
+// Handshake logic
+wire write_enable = write_valid & write_ready;
+wire  read_enable =  read_valid &  read_ready;
 
-asynchronous_advanced_fifo #(
+assign write_ready = ~write_full;
+assign  read_valid = ~read_empty;
+
+// Memory interface signals
+logic                  memory_write_enable;
+logic [DEPTH_LOG2-1:0] memory_write_address;
+logic      [WIDTH-1:0] memory_write_data;
+logic                  memory_read_enable;
+logic [DEPTH_LOG2-1:0] memory_read_address;
+logic      [WIDTH-1:0] memory_read_data;
+
+// Controller
+asynchronous_advanced_fifo_controller #(
   .WIDTH        ( WIDTH        ),
   .DEPTH        ( DEPTH        ),
   .STAGES_WRITE ( STAGES_WRITE ),
   .STAGES_READ  ( STAGES_READ  )
-) asynchronous_advanced_fifo (
-  .write_clock                  ( write_clock                  ),
-  .write_resetn                 ( write_resetn                 ),
-  .write_flush                  ( write_flush                  ),
-  .write_enable                 ( write_enable                 ),
-  .write_data                   ( write_data                   ),
-  .write_empty                  (                              ),
-  .write_not_empty              (                              ),
-  .write_almost_empty           (                              ),
-  .write_full                   ( write_full                   ),
-  .write_not_full               (                              ),
-  .write_almost_full            (                              ),
-  .write_miss                   (                              ),
-  .write_level                  ( write_level                  ),
-  .write_lower_threshold_level  ( write_lower_threshold_level  ),
-  .write_lower_threshold_status ( write_lower_threshold_status ),
-  .write_upper_threshold_level  ( write_upper_threshold_level  ),
-  .write_upper_threshold_status ( write_upper_threshold_status ),
-  .read_clock                   ( read_clock                   ),
-  .read_resetn                  ( read_resetn                  ),
-  .read_flush                   ( read_flush                   ),
-  .read_enable                  ( read_enable                  ),
-  .read_data                    ( read_data                    ),
-  .read_empty                   ( read_empty                   ),
-  .read_not_empty               (                              ),
-  .read_almost_empty            (                              ),
-  .read_full                    (                              ),
-  .read_not_full                (                              ),
-  .read_almost_full             (                              ),
-  .read_error                   (                              ),
-  .read_level                   ( read_level                   ),
-  .read_lower_threshold_level   ( read_lower_threshold_level   ),
-  .read_lower_threshold_status  ( read_lower_threshold_status  ),
-  .read_upper_threshold_level   ( read_upper_threshold_level   ),
-  .read_upper_threshold_status  ( read_upper_threshold_status  )
+) controller (
+  .write_clock                   ( write_clock                   ),
+  .write_resetn                  ( write_resetn                  ),
+  .write_flush                   ( write_flush                   ),
+  .write_enable                  ( write_enable                  ),
+  .write_data                    ( write_data                    ),
+  .write_empty                   (                               ),
+  .write_not_empty               (                               ),
+  .write_almost_empty            (                               ),
+  .write_full                    ( write_full                    ),
+  .write_not_full                (                               ),
+  .write_almost_full             (                               ),
+  .write_miss                    (                               ),
+  .write_level                   ( write_level                   ),
+  .write_lower_threshold_level   ( write_lower_threshold_level   ),
+  .write_lower_threshold_status  ( write_lower_threshold_status  ),
+  .write_upper_threshold_level   ( write_upper_threshold_level   ),
+  .write_upper_threshold_status  ( write_upper_threshold_status  ),
+  .read_clock                    ( read_clock                    ),
+  .read_resetn                   ( read_resetn                   ),
+  .read_flush                    ( read_flush                    ),
+  .read_enable                   ( read_enable                   ),
+  .read_data                     ( read_data                     ),
+  .read_empty                    ( read_empty                    ),
+  .read_not_empty                (                               ),
+  .read_almost_empty             (                               ),
+  .read_full                     (                               ),
+  .read_not_full                 (                               ),
+  .read_almost_full              (                               ),
+  .read_error                    (                               ),
+  .read_level                    ( read_level                    ),
+  .read_lower_threshold_level    ( read_lower_threshold_level    ),
+  .read_lower_threshold_status   ( read_lower_threshold_status   ),
+  .read_upper_threshold_level    ( read_upper_threshold_level    ),
+  .read_upper_threshold_status   ( read_upper_threshold_status   ),
+  .memory_write_enable           ( memory_write_enable           ),
+  .memory_write_address          ( memory_write_address          ),
+  .memory_write_data             ( memory_write_data             ),
+  .memory_read_enable            ( memory_read_enable            ),
+  .memory_read_address           ( memory_read_address           ),
+  .memory_read_data              ( memory_read_data              )
 );
 
-assign write_ready = ~write_full;
-assign  read_valid = ~read_empty;
+// Memory
+asynchronous_simple_dual_port_ram #(
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .REGISTERED_READ ( 0     )
+) memory (
+  .write_clock   ( write_clock          ),
+  .write_enable  ( memory_write_enable  ),
+  .write_address ( memory_write_address ),
+  .write_data    ( memory_write_data    ),
+  .read_clock    ( read_clock           ),
+  .read_enable   ( memory_read_enable   ),
+  .read_address  ( memory_read_address  ),
+  .read_data     ( memory_read_data     )
+);
 
 endmodule

@@ -1,7 +1,10 @@
 valid_ready_asynchronous_advanced_fifo.v
-../../access_enable/asynchronous_advanced_fifo/asynchronous_advanced_fifo.v
+../../controllers/asynchronous_advanced_fifo/asynchronous_advanced_fifo_controller.v
 ../../../counter/gray_wrapping_counter/gray_wrapping_counter.v
-../../../timing/vector_synchronizer/vector_synchronizer.v
-../../../timing/synchronizer/synchronizer.v
+../../../counter/wrapping_counter/wrapping_counter.v
 ../../../encoding/gray/binary_to_gray.v
 ../../../encoding/gray/gray_to_binary.v
+../../../timing/vector_synchronizer/vector_synchronizer.v
+../../../timing/synchronizer/synchronizer.v
+../../../memory/asynchronous_simple_dual_port_ram/asynchronous_simple_dual_port_ram.v
+../../../memory/simple_dual_port_ram/simple_dual_port_ram.v

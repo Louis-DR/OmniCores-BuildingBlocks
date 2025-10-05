@@ -12,7 +12,9 @@
 
 ![valid_ready_asynchronous_advanced_fifo](valid_ready_asynchronous_advanced_fifo.symbol.svg)
 
-Advanced asynchronous First-In First-Out queue that combines clock domain crossing capabilities with comprehensive monitoring features and valid-ready handshake flow control. The FIFO operates with separate write and read clock domains while providing enhanced status information, level monitoring, dynamic thresholds, and flush functionality in both domains. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, automatically managing flow control in each clock domain.
+Advanced asynchronous First-In First-Out queue that combines clock domain crossing capabilities with comprehensive monitoring features and valid-ready handshake flow control. The FIFO operates with separate write and read clock domains while providing enhanced status information, level monitoring, dynamic thresholds, flush functionality, and inherent safety through the handshake protocol in both domains.
+
+The design is structured as a modular architecture with valid-ready handshake logic wrapping a separate controller for pointer management, clock domain crossing, monitoring logic, and an asynchronous simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
 
 The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
@@ -57,21 +59,27 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The valid-ready asynchronous advanced FIFO is a wrapper around the read-write enable asynchronous advanced FIFO that implements the valid-ready handshake protocol. It maintains an internal memory array indexed by separate read and write pointers operating in their respective clock domains while providing comprehensive monitoring capabilities.
+The valid-ready asynchronous advanced FIFO consists of three main components: handshake logic that implements the valid-ready protocol in each clock domain, a controller that manages pointers, clock domain crossing, and monitoring, and an asynchronous simple dual-port RAM for data storage.
 
-For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same `write_clock` rising edge. The `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented. The Gray-coded write pointer is synchronized to the read domain for safe clock domain crossing and level calculations.
+The **handshake logic** derives enable signals from the valid-ready protocol in each clock domain. A write enable is generated when both `write_valid` and `write_ready` are asserted in the write domain. A read enable is generated when both `read_valid` and `read_ready` are asserted in the read domain. The `write_ready` signal is driven by the inverse of the `write_full` flag, providing inherent backpressure when the queue is full. The `read_valid` signal is driven by the inverse of the `read_empty` flag, preventing reads from an empty queue.
 
-For **read operation**, a read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same `read_clock` rising edge. The `read_data` output continuously provides the data at the read pointer location, and after the transfer, only the read pointer is incremented to advance to the next entry. The Gray-coded read pointer is synchronized to the write domain.
+The **controller** maintains separate read and write pointers in their respective clock domains, implements Gray-code conversion for safe clock domain crossing, synchronizes pointers between domains using multi-stage synchronizers, calculates all status flags, levels, and thresholds in each domain, and handles flush requests. The controller doesn't store any data, only control state.
 
-**Clock domain crossing** is handled by synchronizing Gray-coded pointers between domains using multi-stage synchronizers. Gray coding ensures that only one bit changes at a time, preventing metastability issues during clock domain crossing.
+The **asynchronous simple dual-port RAM** provides independent read and write ports operating in different clock domains with combinational reads, allowing the data at the read address to appear immediately on the read data output.
 
-**Level monitoring** continuously tracks the number of entries in the queue using separate `write_level` and `read_level` outputs. Each domain calculates its level based on local pointers and synchronized pointers from the other domain.
+For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same `write_clock` rising edge. The controller directs the RAM to store `write_data` at the location pointed to by the write pointer, and the write pointer is incremented. The Gray-coded write pointer is synchronized to the read domain for safe clock domain crossing. When the queue is full, `write_ready` is deasserted, preventing write transfers and providing safety.
 
-**Dynamic thresholds** allow runtime configuration of upper and lower bounds for queue occupancy in each domain. The threshold status outputs are asserted when the level meets the threshold conditions, enabling advanced flow control strategies.
+For **read operation**, the `read_data` output continuously provides the data at the read pointer location from the RAM. A read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same `read_clock` rising edge. Only the read pointer is incremented to advance to the next entry. The Gray-coded read pointer is synchronized to the write domain. When the queue is empty, `read_valid` is deasserted, preventing read transfers and providing safety.
 
-**Flush functionality** allows immediate queue control from either domain. Write domain flush synchronizes the write pointer to the read pointer state, while read domain flush synchronizes the read pointer to the write pointer state.
+**Clock domain crossing** is handled by the controller synchronizing Gray-coded pointers between domains using multi-stage synchronizers. Gray coding ensures that only one bit changes at a time, preventing metastability issues during clock domain crossing.
 
-The status outputs are calculated based on the local pointers and the synchronized pointers from the other domain. The `write_full` flag prevents further writes, and the `read_empty` flag indicates no data availability.
+**Level monitoring** continuously tracks the number of entries in the queue using the `write_level` and `read_level` outputs in their respective domains. This is calculated by the controller comparing the local pointers with the synchronized pointers from the other domain.
+
+**Dynamic thresholds** allow runtime configuration of upper and lower bounds for queue occupancy in each domain. The threshold status outputs are computed independently in each clock domain by the controller.
+
+**Flush functionality** allows immediate emptying of the queue from either domain. Asserting `write_flush` in the write domain advances the read pointer to the write pointer position. Asserting `read_flush` in the read domain moves the write pointer to the read pointer position.
+
+The status outputs are calculated by the controller based on the local pointers and the synchronized pointers from the other domain. The `write_full` flag prevents further writes, and the `read_empty` flag indicates no data availability.
 
 ## Paths
 
@@ -99,7 +107,7 @@ The status outputs are calculated based on the local pointers and the synchroniz
 
 In this table, the delay refers to the timing critical path, which determines the maximal operating frequency.
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array, `4×(log₂DEPTH+1)` flip-flops for binary and Gray pointers in both domains, and `2×(log₂DEPTH+1)×(STAGES_WRITE+STAGES_READ)` flip-flops for the synchronizers, plus additional logic for advanced features. The wrapper adds minimal logic for the valid-ready protocol conversion.
+The RAM requires `WIDTH×DEPTH` flip-flops for the memory array. The controller requires `4×(log₂DEPTH+1)` flip-flops for binary and Gray pointers in both domains, and `2×(log₂DEPTH+1)×(STAGES_WRITE+STAGES_READ)` flip-flops for the synchronizers, plus additional logic for advanced features. The handshake wrapper adds minimal logic for the valid-ready protocol conversion.
 
 ## Verification
 
