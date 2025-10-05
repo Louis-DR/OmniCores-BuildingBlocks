@@ -95,8 +95,8 @@ end
 task automatic reserve();
   reserve_enable = 1;
   @(posedge clock);
-  if (reserve_index >= DEPTH) $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
-  if (valid_model[reserve_index]) $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+  assert (reserve_index < DEPTH) else $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
+  assert (!valid_model[reserve_index]) else $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
   reserved_indices_for_write.push_back(reserve_index);
   reserved_indices_for_read.push_back(reserve_index);
   reserved_model [reserve_index] = 1;
@@ -123,7 +123,7 @@ task automatic read();
   read_enable = 1;
   read_index  = reserved_indices_for_read.pop_front();
   @(posedge clock);
-  if (read_data !== memory_model[read_index]) $error("[%0tns] Read data '%0h' differs from model '%0h'.", $time, read_data, memory_model[read_index]);
+  assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' differs from model '%0h'.", $time, read_data, memory_model[read_index]);
   reserved_model [read_index] = 0;
   valid_model    [read_index] = 0;
   @(negedge clock);
@@ -146,14 +146,14 @@ task automatic check_flags;
   input logic  expect_data_full;
   input logic  expect_data_empty;
   input string context_string;
-  if ( expect_reserve_full  && !reserve_full  ) $error("[%0tns] Reserve full flag is not asserted%s.",  $time, context_string);
-  if ( expect_reserve_empty && !reserve_empty ) $error("[%0tns] Reserve empty flag is not asserted%s.", $time, context_string);
-  if ( expect_data_full     && !data_full     ) $error("[%0tns] Data full flag is not asserted%s.",     $time, context_string);
-  if ( expect_data_empty    && !data_empty    ) $error("[%0tns] Data empty flag is not asserted%s.",    $time, context_string);
-  if (!expect_reserve_full  &&  reserve_full  ) $error("[%0tns] Reserve full flag is asserted%s.",      $time, context_string);
-  if (!expect_reserve_empty &&  reserve_empty ) $error("[%0tns] Reserve empty flag is asserted%s.",     $time, context_string);
-  if (!expect_data_full     &&  data_full     ) $error("[%0tns] Data full flag is asserted%s.",         $time, context_string);
-  if (!expect_data_empty    &&  data_empty    ) $error("[%0tns] Data empty flag is asserted%s.",        $time, context_string);
+  if (expect_reserve_full)  assert (reserve_full)  else $error("[%0tns] Reserve full flag is not asserted%s.",  $time, context_string);
+  if (expect_reserve_empty) assert (reserve_empty) else $error("[%0tns] Reserve empty flag is not asserted%s.", $time, context_string);
+  if (expect_data_full)     assert (data_full)     else $error("[%0tns] Data full flag is not asserted%s.",     $time, context_string);
+  if (expect_data_empty)    assert (data_empty)    else $error("[%0tns] Data empty flag is not asserted%s.",    $time, context_string);
+  if (!expect_reserve_full)  assert (!reserve_full)  else $error("[%0tns] Reserve full flag is asserted%s.",      $time, context_string);
+  if (!expect_reserve_empty) assert (!reserve_empty) else $error("[%0tns] Reserve empty flag is asserted%s.",     $time, context_string);
+  if (!expect_data_full)     assert (!data_full)     else $error("[%0tns] Data full flag is asserted%s.",         $time, context_string);
+  if (!expect_data_empty)    assert (!data_empty)    else $error("[%0tns] Data empty flag is asserted%s.",        $time, context_string);
 endtask
 
 // Main block

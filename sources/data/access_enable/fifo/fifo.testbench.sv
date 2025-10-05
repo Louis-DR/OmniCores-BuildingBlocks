@@ -89,7 +89,8 @@ task automatic read;
   read_enable = 1;
   @(posedge clock);
   if (data_expected.size() != 0) begin
-    if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+    assert (read_data === data_expected[0])
+      else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
     pop_trash = data_expected.pop_front();
     outstanding_count--;
   end else begin
@@ -102,14 +103,14 @@ endtask
 // Check flags task
 task automatic check_flags;
   if (outstanding_count == 0) begin
-    if (!empty) $error("[%0tns] Empty flag is deasserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
-    if ( full ) $error("[%0tns] Full flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    assert ( empty) else $error("[%0tns] Empty flag is deasserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    assert (!full)  else $error("[%0tns] Full flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
   end else if (outstanding_count == DEPTH) begin
-    if ( empty) $error("[%0tns] Empty flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
-    if (!full ) $error("[%0tns] Full flag is deasserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    assert (!empty) else $error("[%0tns] Empty flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    assert ( full)  else $error("[%0tns] Full flag is deasserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
   end else begin
-    if ( empty) $error("[%0tns] Empty flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
-    if ( full ) $error("[%0tns] Full flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    assert (!empty) else $error("[%0tns] Empty flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
+    assert (!full)  else $error("[%0tns] Full flag is asserted. The FIFO should have %0d entries in it.", $time, outstanding_count);
   end
 endtask
 
@@ -171,7 +172,8 @@ initial begin
     @(posedge clock);
     // Check read
     if (data_expected.size() != 0) begin
-      if (read_data !== data_expected[0]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
+      assert (read_data === data_expected[0])
+        else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[0]);
       pop_trash = data_expected.pop_front();
     end else begin
       $error("[%0tns] Read enabled while FIFO should be empty.", $time);

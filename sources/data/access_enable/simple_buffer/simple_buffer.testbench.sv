@@ -82,7 +82,8 @@ endtask
 // Read task
 task automatic read;
   read_enable = 1;
-  if (read_data !== data_expected) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+  assert (read_data === data_expected)
+    else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
   @(posedge clock);
   data_expected = 'x;
   @(negedge clock);
@@ -94,12 +95,12 @@ task automatic check_flags;
   input logic expected_empty;
   input logic expected_full;
   if (empty !== expected_empty) begin
-    if (expected_empty) $error("[%0tns] Empty flag is deasserted. The buffer should be empty.", $time);
-    else $error("[%0tns] Empty flag is asserted. The buffer should be full.", $time);
+    if (expected_empty) assert ( empty) else $error("[%0tns] Empty flag is deasserted. The buffer should be empty.", $time);
+    else                assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should be full.", $time);
   end
   if (full !== expected_full) begin
-    if (expected_full) $error("[%0tns] Full flag is deasserted. The buffer should be full.", $time);
-    else $error("[%0tns] Full flag is asserted. The buffer should be empty.", $time);
+    if (expected_full) assert ( full) else $error("[%0tns] Full flag is deasserted. The buffer should be full.", $time);
+    else               assert (!full) else $error("[%0tns] Full flag is asserted. The buffer should be empty.", $time);
   end
 endtask
 

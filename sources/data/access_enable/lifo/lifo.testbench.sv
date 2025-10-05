@@ -89,7 +89,8 @@ task automatic read;
   read_enable = 1;
   @(posedge clock);
   if (data_expected.size() != 0) begin
-    if (read_data !== data_expected[$]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
+    assert (read_data === data_expected[$])
+      else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
     pop_trash = data_expected.pop_back();
     outstanding_count--;
   end else begin
@@ -102,14 +103,14 @@ endtask
 // Check flags task
 task automatic check_flags;
   if (outstanding_count == 0) begin
-    if (!empty) $error("[%0tns] Empty flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
-    if ( full ) $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    assert ( empty) else $error("[%0tns] Empty flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    assert (!full)  else $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
   end else if (outstanding_count == DEPTH) begin
-    if ( empty) $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
-    if (!full ) $error("[%0tns] Full flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    assert (!empty) else $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    assert ( full)  else $error("[%0tns] Full flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
   end else begin
-    if ( empty) $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
-    if ( full ) $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    assert (!empty) else $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+    assert (!full)  else $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
   end
 endtask
 
@@ -178,7 +179,8 @@ initial begin
     @(posedge clock);
     // Check read data (should be top of stack)
     if (data_expected.size() != 0) begin
-      if (read_data !== data_expected[$]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
+      assert (read_data === data_expected[$])
+        else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
       pop_trash = data_expected.pop_back();
     end else begin
       $error("[%0tns] Read enabled while LIFO should be empty.", $time);
@@ -190,8 +192,8 @@ initial begin
     write_enable = 0;
     write_data   = 0;
     // Should have exactly one item
-    if ( empty) $error("[%0tns] Empty flag is asserted during almost empty test.", $time);
-    if ( full ) $error("[%0tns] Full flag is asserted during almost empty test.", $time);
+    assert (!empty) else $error("[%0tns] Empty flag is asserted during almost empty test.", $time);
+    assert (!full)  else $error("[%0tns] Full flag is asserted during almost empty test.", $time);
   end
   // Read the last item
   @(negedge clock);
@@ -226,7 +228,8 @@ initial begin
     @(posedge clock);
     // Check read data (should be top of stack)
     if (data_expected.size() != 0) begin
-      if (read_data !== data_expected[$]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
+      assert (read_data === data_expected[$])
+        else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
       pop_trash = data_expected.pop_back();
     end else begin
       $error("[%0tns] Read enabled while LIFO should be empty.", $time);
@@ -238,8 +241,8 @@ initial begin
     write_enable = 0;
     write_data   = 0;
     // Should have exactly DEPTH-1 items
-    if ( empty) $error("[%0tns] Empty flag is asserted during almost full test.", $time);
-    if ( full ) $error("[%0tns] Full flag is asserted during almost full test.", $time);
+    assert (!empty) else $error("[%0tns] Empty flag is asserted during almost full test.", $time);
+    assert (!full)  else $error("[%0tns] Full flag is asserted during almost full test.", $time);
   end
   // Read all items
   while (data_expected.size() > 0) begin
@@ -297,7 +300,7 @@ initial begin
         if (read_enable) begin
           if (data_expected.size() != 0) begin
             // LIFO: read the most recently written data (last item in stack)
-            if (read_data !== data_expected[$]) $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
+            assert (read_data === data_expected[$]) else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected[$]);
             pop_trash = data_expected.pop_back();
             outstanding_count--;
           end else begin
@@ -311,14 +314,14 @@ initial begin
       forever begin
         @(negedge clock);
         if (outstanding_count == 0) begin
-          if (!empty) $error("[%0tns] Empty flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
-          if ( full ) $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+          assert (empty) else $error("[%0tns] Empty flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+          assert (!full) else $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
         end else if (outstanding_count == DEPTH) begin
-          if ( empty) $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
-          if (!full ) $error("[%0tns] Full flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+          assert (!empty) else $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+          assert (full)   else $error("[%0tns] Full flag is deasserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
         end else begin
-          if ( empty) $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
-          if ( full ) $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+          assert (!empty) else $error("[%0tns] Empty flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
+          assert (!full)  else $error("[%0tns] Full flag is asserted. The LIFO should have %0d entries in it.", $time, outstanding_count);
         end
       end
     end
@@ -344,8 +347,8 @@ initial begin
   join_any
   disable fork;
   // Final state
-  if (!empty) $error("[%0tns] Empty flag is deasserted after check 5. The LIFO should be empty.", $time);
-  if ( full ) $error("[%0tns] Full flag is asserted after check 5. The LIFO should be empty.", $time);
+  assert (empty) else $error("[%0tns] Empty flag is deasserted after check 5. The LIFO should be empty.", $time);
+  assert (!full) else $error("[%0tns] Full flag is asserted after check 5. The LIFO should be empty.", $time);
 
   repeat(10) @(posedge clock);
 
