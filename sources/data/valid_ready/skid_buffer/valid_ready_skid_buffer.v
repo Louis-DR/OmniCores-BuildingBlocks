@@ -32,22 +32,24 @@ module valid_ready_skid_buffer #(
 );
 
 wire write_enable = write_valid & write_ready;
-wire read_enable  = read_valid  & read_ready;
+wire  read_enable =  read_valid &  read_ready;
 
 skid_buffer #(
   .WIDTH ( WIDTH )
 ) skid_buffer (
   .clock        ( clock        ),
   .resetn       ( resetn       ),
+  // Write interface
   .write_enable ( write_enable ),
   .write_data   ( write_data   ),
   .full         ( full         ),
+  // Read interface
   .read_enable  ( read_enable  ),
   .read_data    ( read_data    ),
   .empty        ( empty        )
 );
 
 assign write_ready = ~full;
-assign read_valid  = ~empty;
+assign  read_valid = ~empty;
 
 endmodule

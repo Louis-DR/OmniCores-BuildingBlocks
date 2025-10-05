@@ -33,7 +33,7 @@ module valid_ready_bypass_buffer #(
 );
 
 wire write_enable = write_valid & write_ready;
-wire read_enable  = read_valid  & read_ready;
+wire  read_enable =  read_valid &  read_ready;
 
 bypass_buffer #(
   .WIDTH ( WIDTH )
@@ -51,6 +51,6 @@ bypass_buffer #(
 );
 
 assign write_ready = ~full;
-assign read_valid  = ~empty;
+assign  read_valid = ~empty;
 
 endmodule

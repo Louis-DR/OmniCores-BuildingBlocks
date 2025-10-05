@@ -41,7 +41,7 @@ module valid_ready_lifo #(
 );
 
 wire write_enable = write_valid & write_ready;
-wire read_enable  = read_valid  & read_ready;
+wire  read_enable =  read_valid &  read_ready;
 
 lifo #(
   .WIDTH ( WIDTH ),

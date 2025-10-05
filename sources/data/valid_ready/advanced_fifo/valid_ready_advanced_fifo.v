@@ -47,7 +47,7 @@ module valid_ready_advanced_fifo #(
 );
 
 wire write_enable = write_valid;
-wire read_enable  = read_ready;
+wire  read_enable =  read_ready;
 
 advanced_fifo #(
   .WIDTH ( WIDTH ),
@@ -76,6 +76,6 @@ advanced_fifo #(
 );
 
 assign write_ready = ~full;
-assign read_valid  = ~empty;
+assign  read_valid = ~empty;
 
 endmodule

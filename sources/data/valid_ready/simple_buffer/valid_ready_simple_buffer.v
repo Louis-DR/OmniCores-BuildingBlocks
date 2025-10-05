@@ -32,7 +32,7 @@ module valid_ready_simple_buffer #(
 );
 
 wire write_enable = write_valid & write_ready;
-wire read_enable  = read_valid  & read_ready;
+wire  read_enable =  read_valid &  read_ready;
 
 simple_buffer #(
   .WIDTH ( WIDTH )
@@ -50,6 +50,6 @@ simple_buffer #(
 );
 
 assign write_ready = ~full;
-assign read_valid  = ~empty;
+assign  read_valid = ~empty;
 
 endmodule

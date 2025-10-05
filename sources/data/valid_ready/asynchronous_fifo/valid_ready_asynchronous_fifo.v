@@ -38,7 +38,7 @@ module valid_ready_asynchronous_fifo #(
 );
 
 wire write_enable = write_valid & write_ready;
-wire read_enable  = read_valid  & read_ready;
+wire  read_enable =  read_valid &  read_ready;
 
 asynchronous_fifo #(
   .WIDTH  ( WIDTH  ),
@@ -60,6 +60,6 @@ asynchronous_fifo #(
 );
 
 assign write_ready = ~write_full;
-assign read_valid  = ~read_empty;
+assign  read_valid = ~read_empty;
 
 endmodule
