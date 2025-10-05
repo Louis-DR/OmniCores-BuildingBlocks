@@ -22,14 +22,12 @@
 
 
 `include "clog2.vh"
-`include "is_pow2.vh"
 
 
 
 module asynchronous_advanced_fifo #(
   parameter WIDTH        = 8,
   parameter DEPTH        = 4,
-  parameter DEPTH_LOG2   = `CLOG2(DEPTH),
   parameter STAGES_WRITE = 2,
   parameter STAGES_READ  = 2
 ) (
@@ -47,7 +45,7 @@ module asynchronous_advanced_fifo #(
   output                write_full,
   output                write_not_full,
   output                write_almost_full,
-  output reg            write_miss,
+  output                write_miss,
   // Write level and thresholds
   output [DEPTH_LOG2:0] write_level,
   input  [DEPTH_LOG2:0] write_lower_threshold_level,
@@ -68,7 +66,7 @@ module asynchronous_advanced_fifo #(
   output                read_full,
   output                read_not_full,
   output                read_almost_full,
-  output reg            read_error,
+  output                read_error,
   // Read level and thresholds
   output [DEPTH_LOG2:0] read_level,
   input  [DEPTH_LOG2:0] read_lower_threshold_level,
@@ -77,211 +75,79 @@ module asynchronous_advanced_fifo #(
   output                read_upper_threshold_status
 );
 
-// Depth properties
-localparam DEPTH_IS_POW2 = `IS_POW2(DEPTH);
-localparam DEPTH_IS_ODD  = DEPTH % 2 == 1;
+localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
-// Memory array
-reg [WIDTH-1:0] memory [DEPTH-1:0];
+// Memory interface signals
+logic                  memory_write_enable;
+logic [DEPTH_LOG2-1:0] memory_write_address;
+logic      [WIDTH-1:0] memory_write_data;
+logic                  memory_read_enable;
+logic [DEPTH_LOG2-1:0] memory_read_address;
+logic      [WIDTH-1:0] memory_read_data;
 
-
-
-// ┌────────────────────┐
-// │ Write clock domain │
-// └────────────────────┘
-
-// Write pointer counter with lap bit
-wire [DEPTH_LOG2:0] write_pointer;
-wire [DEPTH_LOG2:0] write_pointer_gray;
-
-// Write address without lap bit to index the memory
-wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
-
-// Read pointer in write clock domain
-wire [DEPTH_LOG2:0] read_pointer_gray_w;
-wire [DEPTH_LOG2:0] read_pointer_w;
-
-// Write when not full and not flushing
-wire do_write = write_enable && !write_full && !write_flush;
-
-// Write pointer counter
-// The counter range is double so the Gray MSB acts as lap bit
-gray_wrapping_counter #(
-  .RANGE        ( DEPTH*2 ),
-  .RESET_VALUE  ( 0       ),
-  .LOAD_BINARY  ( 1       )
-) write_pointer_counter (
-  .clock        ( write_clock        ),
-  .resetn       ( write_resetn       ),
-  .load_enable  ( write_flush        ),
-  .load_count   ( read_pointer_w     ),
-  .decrement    ( '0                 ),
-  .increment    ( do_write           ),
-  .count_gray   ( write_pointer_gray ),
-  .count_binary ( write_pointer      ),
-  .minimum      (                    ),
-  .maximum      (                    ),
-  .underflow    (                    ),
-  .overflow     (                    )
+// Controller
+asynchronous_advanced_fifo_controller #(
+  .WIDTH        ( WIDTH        ),
+  .DEPTH        ( DEPTH        ),
+  .STAGES_WRITE ( STAGES_WRITE ),
+  .STAGES_READ  ( STAGES_READ  )
+) controller (
+  .write_clock                   ( write_clock                   ),
+  .write_resetn                  ( write_resetn                  ),
+  .write_flush                   ( write_flush                   ),
+  .write_enable                  ( write_enable                  ),
+  .write_data                    ( write_data                    ),
+  .write_empty                   ( write_empty                   ),
+  .write_not_empty               ( write_not_empty               ),
+  .write_almost_empty            ( write_almost_empty            ),
+  .write_full                    ( write_full                    ),
+  .write_not_full                ( write_not_full                ),
+  .write_almost_full             ( write_almost_full             ),
+  .write_miss                    ( write_miss                    ),
+  .write_level                   ( write_level                   ),
+  .write_lower_threshold_level   ( write_lower_threshold_level   ),
+  .write_lower_threshold_status  ( write_lower_threshold_status  ),
+  .write_upper_threshold_level   ( write_upper_threshold_level   ),
+  .write_upper_threshold_status  ( write_upper_threshold_status  ),
+  .read_clock                    ( read_clock                    ),
+  .read_resetn                   ( read_resetn                   ),
+  .read_flush                    ( read_flush                    ),
+  .read_enable                   ( read_enable                   ),
+  .read_data                     ( read_data                     ),
+  .read_empty                    ( read_empty                    ),
+  .read_not_empty                ( read_not_empty                ),
+  .read_almost_empty             ( read_almost_empty             ),
+  .read_full                     ( read_full                     ),
+  .read_not_full                 ( read_not_full                 ),
+  .read_almost_full              ( read_almost_full              ),
+  .read_error                    ( read_error                    ),
+  .read_level                    ( read_level                    ),
+  .read_lower_threshold_level    ( read_lower_threshold_level    ),
+  .read_lower_threshold_status   ( read_lower_threshold_status   ),
+  .read_upper_threshold_level    ( read_upper_threshold_level    ),
+  .read_upper_threshold_status   ( read_upper_threshold_status   ),
+  .memory_write_enable           ( memory_write_enable           ),
+  .memory_write_address          ( memory_write_address          ),
+  .memory_write_data             ( memory_write_data             ),
+  .memory_read_enable            ( memory_read_enable            ),
+  .memory_read_address           ( memory_read_address           ),
+  .memory_read_data              ( memory_read_data              )
 );
 
-// Read pointer gray-code decoder
-gray_to_binary #(
-  .RANGE  ( DEPTH * 2 )
-) read_pointer_gray_decoder (
-  .gray   ( read_pointer_gray_w ),
-  .binary ( read_pointer_w      )
-);
-
-// Calculate FIFO level by comparing write and read pointers
-assign write_level = write_pointer - read_pointer_w;
-
-// Queue is empty if the gray-coded read and write pointers are the same
-assign write_empty        = write_pointer_gray == read_pointer_gray_w;
-assign write_not_empty    = ~write_empty;
-assign write_almost_empty = write_level == 1;
-
-// Queue is full if only the two MSB of the gray-coded pointers differ (this only works for power-of-2 depths)
-if (DEPTH_IS_POW2) assign write_full = write_pointer_gray == {~read_pointer_gray_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_gray_w[DEPTH_LOG2-2:0]};
-else               assign write_full = write_level == DEPTH;
-assign write_not_full     = ~write_full;
-assign write_almost_full  = write_level == DEPTH - 1;
-
-// Thresholds status
-assign write_lower_threshold_status = write_level <= write_lower_threshold_level;
-assign write_upper_threshold_status = write_level >= write_upper_threshold_level;
-
-// Write pointer and flag sequential logic
-always @(posedge write_clock or negedge write_resetn) begin
-  if (!write_resetn) begin
-    write_miss <= 0;
-  end else begin
-    write_miss <= 0;
-    if (!write_flush) begin
-      if (write_enable && write_full) begin
-        write_miss <= 1;
-      end
-    end
-  end
-end
-
-// Write to memory without reset
-always @(posedge write_clock) begin
-  if (write_enable && !write_full) begin
-    memory[write_address] <= write_data;
-  end
-end
-
-
-
-// ┌───────────────────┐
-// │ Read clock domain │
-// └───────────────────┘
-
-// Read pointer counter with lap bit
-wire [DEPTH_LOG2:0] read_pointer;
-wire [DEPTH_LOG2:0] read_pointer_gray;
-
-// Read address without lap bit to index the memory
-wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
-
-// Write pointer in read clock domain
-wire [DEPTH_LOG2:0] write_pointer_gray_r;
-wire [DEPTH_LOG2:0] write_pointer_r;
-
-// Read when not empty and not flushing
-wire do_read = read_enable && !read_empty && !read_flush;
-
-// Read pointer counter
-// The counter range is double so the Gray MSB acts as lap bit
-gray_wrapping_counter #(
-  .RANGE        ( DEPTH * 2 ),
-  .RESET_VALUE  ( 0         ),
-  .LOAD_BINARY  ( 1         )
-) read_pointer_counter (
-  .clock        ( read_clock        ),
-  .resetn       ( read_resetn       ),
-  .load_enable  ( read_flush        ),
-  .load_count   ( write_pointer_r   ),
-  .decrement    ( '0                ),
-  .increment    ( do_read           ),
-  .count_gray   ( read_pointer_gray ),
-  .count_binary ( read_pointer      ),
-  .minimum      (                   ),
-  .maximum      (                   ),
-  .underflow    (                   ),
-  .overflow     (                   )
-);
-
-// Write pointer gray-code decoder
-gray_to_binary #(
-  .RANGE  ( DEPTH * 2 )
-) write_pointer_gray_decoder (
-  .gray   ( write_pointer_gray_r ),
-  .binary ( write_pointer_r      )
-);
-
-// Calculate FIFO level by comparing write and read pointers
-assign read_level = write_pointer_r - read_pointer;
-
-// Queue is empty if the gray-coded read and write pointers are the same
-assign read_empty        = write_pointer_gray_r == read_pointer_gray;
-assign read_not_empty    = ~read_empty;
-assign read_almost_empty = read_level == 1;
-
-// Queue is full if only the two MSB of the gray-coded pointers differ (this only works for power-of-2 depths)
-if (DEPTH_IS_POW2) assign read_full = write_pointer_gray_r == {~read_pointer_gray[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_gray[DEPTH_LOG2-2:0]};
-else               assign read_full = read_level == DEPTH;
-assign read_not_full     = ~read_full;
-assign read_almost_full  = read_level == DEPTH - 1;
-
-// Thresholds status
-assign read_lower_threshold_status = read_level <= read_lower_threshold_level;
-assign read_upper_threshold_status = read_level >= read_upper_threshold_level;
-
-// Value at the read pointer is always on the read data bus
-assign read_data = memory[read_address];
-
-// Read pointer and flag sequential logic
-always @(posedge read_clock or negedge read_resetn) begin
-  if (!read_resetn) begin
-    read_error <= 0;
-  end else begin
-    read_error <= 0;
-    if (!read_flush) begin
-      if (read_enable && read_empty) begin
-        read_error <= 1;
-      end
-    end
-  end
-end
-
-
-
-// ┌───────────────────────┐
-// │ Clock domain crossing │
-// └───────────────────────┘
-
-// Gray-coded read pointer synchronizer
-vector_synchronizer #(
-  .WIDTH    ( DEPTH_LOG2 + 1 ),
-  .STAGES   ( STAGES_WRITE   )
-) read_pointer_gray_sync (
-  .clock    ( write_clock         ),
-  .resetn   ( write_resetn        ),
-  .data_in  ( read_pointer_gray   ),
-  .data_out ( read_pointer_gray_w )
-);
-
-// Gray-coded write pointer synchronizer
-vector_synchronizer #(
-  .WIDTH    ( DEPTH_LOG2 + 1 ),
-  .STAGES   ( STAGES_READ    )
-) write_pointer_gray_sync (
-  .clock    ( read_clock           ),
-  .resetn   ( read_resetn          ),
-  .data_in  ( write_pointer_gray   ),
-  .data_out ( write_pointer_gray_r )
+// Memory
+asynchronous_simple_dual_port_ram #(
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .REGISTERED_READ ( 0     )
+) memory (
+  .write_clock   ( write_clock          ),
+  .write_enable  ( memory_write_enable  ),
+  .write_address ( memory_write_address ),
+  .write_data    ( memory_write_data    ),
+  .read_clock    ( read_clock           ),
+  .read_enable   ( memory_read_enable   ),
+  .read_address  ( memory_read_address  ),
+  .read_data     ( memory_read_data     )
 );
 
 endmodule
