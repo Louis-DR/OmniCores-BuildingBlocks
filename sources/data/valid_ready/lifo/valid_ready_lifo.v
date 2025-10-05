@@ -8,12 +8,6 @@
 // ║ Description: Synchronous Last-In First-Out stack with valid-ready flow    ║
 // ║              control.                                                     ║
 // ║                                                                           ║
-// ║              Attempting to read and write at the same time will read the  ║
-// ║              last value of the stack then write the next value, thus not  ║
-// ║              moving the stack pointer. Passing the data from write_data   ║
-// ║              to read_data in such a case would create a single timing     ║
-// ║              path through the structure.                                  ║
-// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
@@ -40,26 +34,57 @@ module valid_ready_lifo #(
   input              read_ready
 );
 
+localparam DEPTH_LOG2 = `CLOG2(DEPTH);
+
+// Handshake logic
 wire write_enable = write_valid & write_ready;
 wire  read_enable =  read_valid &  read_ready;
 
-lifo #(
+assign write_ready = ~full;
+assign  read_valid = ~empty;
+
+// Memory interface signals
+logic                  memory_enable;
+logic                  memory_write_enable;
+logic [DEPTH_LOG2-1:0] memory_address;
+logic      [WIDTH-1:0] memory_write_data;
+logic      [WIDTH-1:0] memory_read_data;
+
+// Controller
+lifo_controller #(
   .WIDTH ( WIDTH ),
   .DEPTH ( DEPTH )
-) lifo (
-  .clock        ( clock        ),
-  .resetn       ( resetn       ),
+) controller (
+  .clock               ( clock               ),
+  .resetn              ( resetn              ),
+  .full                ( full                ),
+  .empty               ( empty               ),
   // Write interface
-  .write_enable ( write_enable ),
-  .write_data   ( write_data   ),
-  .full         ( full         ),
+  .write_enable        ( write_enable        ),
+  .write_data          ( write_data          ),
   // Read interface
-  .read_enable  ( read_enable  ),
-  .read_data    ( read_data    ),
-  .empty        ( empty        )
+  .read_enable         ( read_enable         ),
+  .read_data           ( read_data           ),
+  // Memory interface
+  .memory_enable       ( memory_enable       ),
+  .memory_write_enable ( memory_write_enable ),
+  .memory_address      ( memory_address      ),
+  .memory_write_data   ( memory_write_data   ),
+  .memory_read_data    ( memory_read_data    )
 );
 
-assign write_ready = ~full;
-assign read_valid  = ~empty;
+// Memory
+single_port_ram #(
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .REGISTERED_READ ( 0     )
+) memory (
+  .clock         ( clock               ),
+  .access_enable ( memory_enable       ),
+  .write         ( memory_write_enable ),
+  .address       ( memory_address      ),
+  .write_data    ( memory_write_data   ),
+  .read_data     ( memory_read_data    )
+);
 
 endmodule

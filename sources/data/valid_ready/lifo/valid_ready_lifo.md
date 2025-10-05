@@ -12,7 +12,9 @@
 
 ![valid_ready_lifo](valid_ready_lifo.symbol.svg)
 
-Synchronous Last-In First-Out stack for data buffering and temporary storage with configurable depth and valid-ready handshake flow control. The LIFO provides full and empty status flags and implements a handshake protocol where transfers only occur when both valid and ready signals are asserted. The handshake protocol manages and protects flow control, eliminating the need for external enable logic.
+Synchronous Last-In First-Out stack for data buffering and temporary storage with configurable depth and valid-ready handshake flow control. The LIFO provides full and empty status flags and implements a handshake protocol where transfers only occur when both valid and ready signals are asserted. The handshake protocol manages and protects flow control, providing inherent backpressure and safety.
+
+The design is structured as a modular architecture with valid-ready handshake logic wrapping a separate controller for pointer management and control logic, and a generic single-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration. The single-port RAM is sufficient because the LIFO accesses the same location for both reads and writes at the top of the stack, and simultaneous read/write operations simply replace the top element.
 
 The read data output continuously shows the value at the top of the stack when not empty, allowing instant data access without necessarily popping the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
@@ -40,11 +42,17 @@ The read data output continuously shows the value at the top of the stack when n
 
 ## Operation
 
-The valid-ready LIFO is a wrapper around the read-write enable LIFO that implements the valid-ready handshake protocol. It maintains an internal memory array indexed by a single stack pointer that tracks the current top of the stack.
+The valid-ready LIFO consists of three main components: handshake logic that implements the valid-ready protocol, a controller that manages the pointer and status flags, and a single-port RAM for data storage.
 
-For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The `write_data` is stored at the location pointed to by the stack pointer, and the stack pointer is incremented to point to the next available position.
+The **handshake logic** derives enable signals from the valid-ready protocol. A write enable is generated when both `write_valid` and `write_ready` are asserted. A read enable is generated when both `read_valid` and `read_ready` are asserted. The `write_ready` signal is driven by the inverse of the `full` flag, providing inherent backpressure when the stack is full. The `read_valid` signal is driven by the inverse of the `empty` flag, preventing reads from an empty stack.
 
-For **read operation**, a read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. The `read_data` output continuously provides the data at the top of the stack (stack pointer minus one), and after the transfer, the stack pointer is decremented to expose the previous entry as the new top.
+The **controller** maintains a single stack pointer that tracks the current top of the stack. It generates the memory interface signals and calculates the status flags. The controller doesn't store any data, only control state. When simultaneous read and write occur, the controller implements a combinational bypass to provide the written data directly to the read output, since the single-port RAM would not support simultaneous access to different addresses.
+
+The **single-port RAM** provides a single access port with combinational reads. The use of a single-port RAM is efficient for LIFO because reads and writes always target adjacent locations (top of stack), and simultaneous operations can be handled by the controller's bypass logic.
+
+For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The controller directs the RAM to store `write_data` at the location pointed to by the stack pointer, and the stack pointer is incremented to point to the next available position. When the stack is full, `write_ready` is deasserted, preventing write transfers and providing safety.
+
+For **read operation**, the `read_data` output continuously provides the data at the top of the stack (stack pointer minus one) from the RAM. A read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. The stack pointer is decremented to expose the previous entry as the new top. When the stack is empty, `read_valid` is deasserted, preventing read transfers and providing safety.
 
 If the stack is empty, data written can be read in the next cycle. When the stack is not empty nor full, it can be written to and read from at the same time, with the simultaneous operation replacing the current top item without changing the stack depth.
 
@@ -68,7 +76,7 @@ The status flags are calculated based on the stack pointer value. The stack is f
 
 In this table, the delay refers to the timing critical path, which determines the maximal operating frequency.
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array and `log₂DEPTH+1` flip-flops for the stack pointer.
+The RAM requires `WIDTH×DEPTH` flip-flops for the memory array. The controller requires `log₂DEPTH+1` flip-flops for the stack pointer. The handshake wrapper adds minimal logic for the valid-ready protocol conversion.
 
 Under tight timing constraints, the critical path delay might achieve `O(log₂ log₂ DEPTH)` complexity instead of `O(log₂ DEPTH)`, while sacrificing some area. This depends on how the synthesizer implements and optimizes the memory array indexing with the pointer, the pointer incrementation and decrementation during write and read operations, and the pointer comparison for the full and empty flags.
 
@@ -110,7 +118,12 @@ There are no synthesis and implementation constraints for this block.
 
 ## Dependencies
 
-This module has no external module dependencies.
+This module depends on the following modules:
+
+| Module            | Path                                                      | Comment                                  |
+| ----------------- | --------------------------------------------------------- | ---------------------------------------- |
+| `lifo_controller` | `omnicores-buildingblocks/sources/data/controllers/lifo`  | Controller for pointer and status logic. |
+| `single_port_ram` | `omnicores-buildingblocks/sources/memory/single_port_ram` | Single-port RAM for data storage.        |
 
 ## Related modules
 

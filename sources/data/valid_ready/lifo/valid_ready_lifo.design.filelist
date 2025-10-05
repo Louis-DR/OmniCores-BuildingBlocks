@@ -1,2 +1,3 @@
 valid_ready_lifo.v
-../../access_enable/lifo/lifo.v
+../../controllers/lifo/lifo_controller.v
+../../../memory/single_port_ram/single_port_ram.v
