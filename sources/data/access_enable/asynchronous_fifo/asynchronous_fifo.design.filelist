@@ -1,4 +1,6 @@
 asynchronous_fifo.v
+../../controllers/asynchronous_fifo/asynchronous_fifo_controller.v
+../../../encoding/gray/binary_to_gray.v
 ../../../timing/vector_synchronizer/vector_synchronizer.v
 ../../../timing/synchronizer/synchronizer.v
-../../../encoding/gray/binary_to_gray.v
+../../../memory/asynchronous_simple_dual_port_ram/asynchronous_simple_dual_port_ram.v

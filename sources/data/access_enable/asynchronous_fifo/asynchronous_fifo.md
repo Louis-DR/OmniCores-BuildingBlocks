@@ -14,7 +14,11 @@
 
 Asynchronous First-In First-Out queue for crossing clock domains. The FIFO uses a write-enable/read-enable protocol for flow control and provides full and empty status flags. It operates with separate write and read clock domains, using Gray-coded pointer synchronization to safely communicate across clock boundaries. It doesn't implement a safety mechanism against writing when full or reading when empty so the integration must use the status flags and the enable signals carefully.
 
+The design is structured as a modular architecture with a separate controller for pointer management, Gray-code conversion, clock domain crossing synchronization, and status logic, and a generic asynchronous simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
+
 The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
+
+This module integrates a separate controller (`asynchronous_fifo_controller`) for the control logic and an asynchronous simple dual-port RAM for storage. This modular design allows the storage to be replaced with physical memory blocks if needed.
 
 ## Parameters
 
@@ -41,7 +45,7 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The asynchronous FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointer each have an additional wrap bit for correct full/empty detection. Data integrity and stability is ensured through careful synchronization using Gray-coding of the pointers.
+The asynchronous FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointer each have an additional wrap bit for correct full/empty detection. Data integrity and stability is ensured through careful synchronization using Gray-coding of the pointers. The controller manages pointer synchronization and flag generation, while the asynchronous simple dual-port RAM provides the storage.
 
 The **write clock domain** contains a write pointer that indexes the shared memory array. When `write_enable` is asserted, `write_data` is stored at the write pointer location, and both the binary and Gray-coded write pointers are incremented. The Gray-coded write pointer is synchronized to the read domain for empty status generation.
 
@@ -74,7 +78,7 @@ The status flags are calculated based on the Gray-coded read and write pointers 
 
 In this table, the delay refers to the timing critical path, which determines the maximal operating frequency.
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array, `4×(log₂DEPTH+1)` flip-flops for binary and Gray pointers, and `2×(log₂DEPTH+1)×STAGES` flip-flops for the synchronizers.
+The module requires `WIDTH×DEPTH` flip-flops for the memory array (in the RAM), `4×(log₂DEPTH+1)` flip-flops for binary and Gray pointers (in the controller), and `2×(log₂DEPTH+1)×STAGES` flip-flops for the synchronizers (in the controller).
 
 ## Verification
 
@@ -125,10 +129,13 @@ Clock domain crossing constraints should be applied to the Gray pointer synchron
 
 ## Dependencies
 
-| Module                                                                              | Path                                                          | Comment                                 |
-| ----------------------------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------- |
-| [`vector_synchronizer`](../../../timing/vector_synchronizer/vector_synchronizer.md) | `omnicores-buildingblocks/sources/timing/vector_synchronizer` | For Gray pointer clock domain crossing. |
-| [`binary_to_gray`](../../../encoding/gray/binary_to_gray.md)                        | `omnicores-buildingblocks/sources/encoding/gray`              | For converting binary pointers to Gray. |
+This module depends on the following modules:
+
+| Module                         | Path                                                                   | Comment                                                    |
+| ------------------------------ | ---------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `asynchronous_fifo_controller` | `omnicores-buildingblocks/sources/data/controllers/asynchronous_fifo` | Controller for CDC-safe pointers and status logic. |
+| `asynchronous_simple_dual_port_ram`         | `omnicores-buildingblocks/sources/memory/asynchronous_simple_dual_port_ram`         | Asynchronous Simpledual-port RAM for data storage.                            |
+
 
 ## Related modules
 

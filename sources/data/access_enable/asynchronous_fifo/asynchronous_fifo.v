@@ -7,12 +7,6 @@
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Asynchronous First-In First-Out queue.                       ║
 // ║                                                                           ║
-// ║              If the FIFO isn't empty, the read_data output is the value   ║
-// ║              of the tail of the queue. Toggling the read input signal     ║
-// ║              only moves the read pointer to the next entry for the next   ║
-// ║              clock cycle. Therefore, the value can be read instantly and  ║
-// ║              without necessarily popping the value.                       ║
-// ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
 
@@ -42,134 +36,52 @@ module asynchronous_fifo #(
 
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
-// Memory array
-reg [WIDTH-1:0] memory [DEPTH-1:0];
+// Memory interface signals
+logic                  memory_write_enable;
+logic [DEPTH_LOG2-1:0] memory_write_address;
+logic      [WIDTH-1:0] memory_write_data;
+logic                  memory_read_enable;
+logic [DEPTH_LOG2-1:0] memory_read_address;
+logic      [WIDTH-1:0] memory_read_data;
 
-
-
-// ┌────────────────────┐
-// │ Write clock domain │
-// └────────────────────┘
-
-// Write pointer with wrap bit to compare with the read pointer
-reg [DEPTH_LOG2:0] write_pointer;
-
-// Write address without wrap bit to index the memory
-wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
-
-// Gray-coded pointers in write clock domain
-reg  [DEPTH_LOG2:0] write_pointer_gray_w;
-wire [DEPTH_LOG2:0] read_pointer_gray_w;
-
-// Write pointer incremented and corresponding gray-code
-wire [DEPTH_LOG2:0] write_pointer_incremented = write_pointer + 1;
-wire [DEPTH_LOG2:0] write_pointer_incremented_gray;
-
-// Write pointer gray-code encoder
-binary_to_gray #(
-  .WIDTH  ( DEPTH_LOG2+1 )
-) write_pointer_incremented_gray_encoder (
-  .binary ( write_pointer_incremented      ),
-  .gray   ( write_pointer_incremented_gray )
+// Controller
+asynchronous_fifo_controller #(
+  .WIDTH  ( WIDTH  ),
+  .DEPTH  ( DEPTH  ),
+  .STAGES ( STAGES )
+) controller (
+  .write_clock          ( write_clock          ),
+  .write_resetn         ( write_resetn         ),
+  .write_enable         ( write_enable         ),
+  .write_data           ( write_data           ),
+  .write_full           ( write_full           ),
+  .read_clock           ( read_clock           ),
+  .read_resetn          ( read_resetn          ),
+  .read_enable          ( read_enable          ),
+  .read_data            ( read_data            ),
+  .read_empty           ( read_empty           ),
+  .memory_write_enable  ( memory_write_enable  ),
+  .memory_write_address ( memory_write_address ),
+  .memory_write_data    ( memory_write_data    ),
+  .memory_read_enable   ( memory_read_enable   ),
+  .memory_read_address  ( memory_read_address  ),
+  .memory_read_data     ( memory_read_data     )
 );
 
-// The queue is full if the gray-coded read and write pointers differ only in their two most significant bits
-assign write_full =  write_pointer_gray_w[DEPTH_LOG2:DEPTH_LOG2-1] == ~read_pointer_gray_w[DEPTH_LOG2:DEPTH_LOG2-1]
-                  && write_pointer_gray_w[DEPTH_LOG2-2:0]          ==  read_pointer_gray_w[DEPTH_LOG2-2:0];
-
-// Write pointer sequential logic
-always @(posedge write_clock or negedge write_resetn) begin
-  if (!write_resetn) begin
-    write_pointer        <= 0;
-    write_pointer_gray_w <= 0;
-  end else begin
-    if (write_enable) begin
-      write_pointer        <= write_pointer_incremented;
-      write_pointer_gray_w <= write_pointer_incremented_gray;
-    end
-  end
-end
-
-// Write to memory without reset
-always @(posedge write_clock) begin
-  if (write_enable) begin
-    memory[write_address] <= write_data;
-  end
-end
-
-
-
-// ┌───────────────────┐
-// │ Read clock domain │
-// └───────────────────┘
-
-// Read pointer with wrap bit to compare with the read pointer
-reg [DEPTH_LOG2:0] read_pointer;
-
-// Read address without wrap bit to index the memory
-wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
-
-// Gray-coded pointers in read clock domain
-wire [DEPTH_LOG2:0] write_pointer_gray_r;
-reg  [DEPTH_LOG2:0] read_pointer_gray_r;
-
-// Read pointer incremented and corresponding gray-code
-wire [DEPTH_LOG2:0] read_pointer_incremented = read_pointer + 1;
-wire [DEPTH_LOG2:0] read_pointer_incremented_gray;
-
-// Read pointer gray-code encoder
-binary_to_gray #(
-  .WIDTH  ( DEPTH_LOG2+1 )
-) read_pointer_incremented_gray_encoder (
-  .binary ( read_pointer_incremented      ),
-  .gray   ( read_pointer_incremented_gray )
-);
-
-// Queue is empty if the gray-coded read and write pointers are the same
-assign read_empty = write_pointer_gray_r == read_pointer_gray_r;
-
-// Value at the read pointer is always on the read data bus
-assign read_data = memory[read_address];
-
-// Read pointer sequential logic
-always @(posedge read_clock or negedge read_resetn) begin
-  if (!read_resetn) begin
-    read_pointer        <= 0;
-    read_pointer_gray_r <= 0;
-  end else begin
-    if (read_enable) begin
-      read_pointer        <= read_pointer_incremented;
-      read_pointer_gray_r <= read_pointer_incremented_gray;
-    end
-  end
-end
-
-
-
-// ┌───────────────────────┐
-// │ Clock domain crossing │
-// └───────────────────────┘
-
-// Gray-coded read pointer synchronizer
-vector_synchronizer #(
-  .WIDTH    ( DEPTH_LOG2+1        ),
-  .STAGES   ( STAGES              )
-) read_pointer_gray_sync (
-  .clock    ( write_clock         ),
-  .resetn   ( write_resetn        ),
-  .data_in  ( read_pointer_gray_r ),
-  .data_out ( read_pointer_gray_w )
-);
-
-// Gray-coded write pointer synchronizer
-vector_synchronizer #(
-  .WIDTH    ( DEPTH_LOG2+1         ),
-  .STAGES   ( STAGES               )
-) write_pointer_gray_sync (
-  .clock    ( read_clock           ),
-  .resetn   ( read_resetn          ),
-  .data_in  ( write_pointer_gray_w ),
-  .data_out ( write_pointer_gray_r )
+// Memory
+asynchronous_simple_dual_port_ram #(
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .REGISTERED_READ ( 0     )
+) memory (
+  .write_clock   ( write_clock          ),
+  .write_enable  ( memory_write_enable  ),
+  .write_address ( memory_write_address ),
+  .write_data    ( memory_write_data    ),
+  .read_clock    ( read_clock           ),
+  .read_enable   ( memory_read_enable   ),
+  .read_address  ( memory_read_address  ),
+  .read_data     ( memory_read_data     )
 );
 
 endmodule
