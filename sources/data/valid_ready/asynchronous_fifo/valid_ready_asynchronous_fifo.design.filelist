@@ -1,5 +1,8 @@
 valid_ready_asynchronous_fifo.v
-../../access_enable/asynchronous_fifo/asynchronous_fifo.v
+../../controllers/asynchronous_fifo/asynchronous_fifo_controller.v
+../../../encoding/gray/binary_to_gray.v
+../../../encoding/gray/gray_to_binary.v
 ../../../timing/vector_synchronizer/vector_synchronizer.v
 ../../../timing/synchronizer/synchronizer.v
-../../../encoding/gray/binary_to_gray.v
+../../../memory/asynchronous_simple_dual_port_ram/asynchronous_simple_dual_port_ram.v
+../../../memory/simple_dual_port_ram/simple_dual_port_ram.v

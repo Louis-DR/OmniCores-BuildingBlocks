@@ -37,27 +37,61 @@ module valid_ready_asynchronous_fifo #(
   output             read_empty
 );
 
+localparam DEPTH_LOG2 = `CLOG2(DEPTH);
+
+// Handshake logic
 wire write_enable = write_valid & write_ready;
 wire  read_enable =  read_valid &  read_ready;
 
-asynchronous_fifo #(
+assign write_ready = ~write_full;
+assign  read_valid = ~read_empty;
+
+// Memory interface signals
+logic                  memory_write_enable;
+logic [DEPTH_LOG2-1:0] memory_write_address;
+logic      [WIDTH-1:0] memory_write_data;
+logic                  memory_read_enable;
+logic [DEPTH_LOG2-1:0] memory_read_address;
+logic      [WIDTH-1:0] memory_read_data;
+
+// Controller
+asynchronous_fifo_controller #(
   .WIDTH  ( WIDTH  ),
   .DEPTH  ( DEPTH  ),
   .STAGES ( STAGES )
-) asynchronous_fifo (
-  .write_clock  ( write_clock  ),
-  .write_resetn ( write_resetn ),
-  .write_enable ( write_enable ),
-  .write_data   ( write_data   ),
-  .write_full   ( write_full   ),
-  .read_clock   ( read_clock   ),
-  .read_resetn  ( read_resetn  ),
-  .read_enable  ( read_enable  ),
-  .read_data    ( read_data    ),
-  .read_empty   ( read_empty   )
+) controller (
+  .write_clock          ( write_clock          ),
+  .write_resetn         ( write_resetn         ),
+  .write_enable         ( write_enable         ),
+  .write_data           ( write_data           ),
+  .write_full           ( write_full           ),
+  .read_clock           ( read_clock           ),
+  .read_resetn          ( read_resetn          ),
+  .read_enable          ( read_enable          ),
+  .read_data            ( read_data            ),
+  .read_empty           ( read_empty           ),
+  .memory_write_enable  ( memory_write_enable  ),
+  .memory_write_address ( memory_write_address ),
+  .memory_write_data    ( memory_write_data    ),
+  .memory_read_enable   ( memory_read_enable   ),
+  .memory_read_address  ( memory_read_address  ),
+  .memory_read_data     ( memory_read_data     )
 );
 
-assign write_ready = ~write_full;
-assign  read_valid = ~read_empty;
+// Memory
+asynchronous_simple_dual_port_ram #(
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .REGISTERED_READ ( 0     )
+) memory (
+  .write_clock   ( write_clock          ),
+  .write_enable  ( memory_write_enable  ),
+  .write_address ( memory_write_address ),
+  .write_data    ( memory_write_data    ),
+  .read_clock    ( read_clock           ),
+  .read_enable   ( memory_read_enable   ),
+  .read_address  ( memory_read_address  ),
+  .read_data     ( memory_read_data     )
+);
 
 endmodule
