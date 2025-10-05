@@ -1,0 +1,19 @@
+Advanced FIFO Controller
+advanced_fifo_controller
+-> clock
+-> resetn
+-> flush
+-> write_enable                        read_enable <-
+=> write_data                            read_data =>
+<- write_miss                           read_error ->
+<- full                                      empty ->
+<- not_full                              not_empty ->
+<- almost_full                        almost_empty ->
+                                             level =>
+=> lower_threshold_level     upper_threshold_level <=
+<- lower_threshold_status   upper_threshold_status ->
+                               memory_write_enable ->
+                                memory_read_enable ->
+                                    memory_address =>
+                                 memory_write_data =>
+                                  memory_read_data <=
