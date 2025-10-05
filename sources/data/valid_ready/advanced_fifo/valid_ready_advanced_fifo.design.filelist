@@ -1,3 +1,5 @@
 valid_ready_advanced_fifo.v
-../../access_enable/advanced_fifo/advanced_fifo.v
+../../controllers/advanced_fifo/advanced_fifo_controller.v
 ../../../counter/advanced_wrapping_counter/advanced_wrapping_counter.v
+../../../counter/wrapping_counter/wrapping_counter.v
+../../../memory/simple_dual_port_ram/simple_dual_port_ram.v

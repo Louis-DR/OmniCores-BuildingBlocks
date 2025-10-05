@@ -12,7 +12,9 @@
 
 ![valid_ready_advanced_fifo](valid_ready_advanced_fifo.symbol.svg)
 
-Advanced synchronous First-In First-Out queue with comprehensive monitoring features and valid-ready handshake flow control. This enhanced FIFO provides level monitoring, dynamic threshold flags, flush functionality, and error protection mechanisms. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, automatically managing flow control without external enable logic.
+Advanced synchronous First-In First-Out queue with comprehensive monitoring features and valid-ready handshake flow control. This enhanced FIFO provides level monitoring, dynamic threshold flags, flush functionality, and inherent safety through the handshake protocol. The handshake protocol ensures that transfers only occur when both valid and ready signals are asserted, providing inherent backpressure and safety.
+
+The design is structured as a modular architecture with valid-ready handshake logic wrapping a separate controller for pointer management and control logic, and a generic simple dual-port RAM for data storage. This allows easy replacement of the memory with technology-specific implementations during ASIC integration.
 
 The read data output continuously shows the value at the head of the queue when not empty, allowing instant data access without necessarily consuming the entry. The internal memory array is not reset, so it will contain invalid data in silicium and Xs that could propagate in simulation if the integration doesn't handle control flow correctly.
 
@@ -47,13 +49,19 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The valid-ready advanced FIFO is a wrapper around the read-write enable advanced FIFO that implements the valid-ready handshake protocol. It maintains an internal memory array indexed by separate read and write pointers while providing comprehensive monitoring capabilities.
+The valid-ready advanced FIFO consists of three main components: handshake logic that implements the valid-ready protocol, a controller that manages pointers and status flags, and a simple dual-port RAM for data storage.
 
-For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The `write_data` is stored at the location pointed to by the write pointer, and the write pointer is incremented.
+The **handshake logic** derives enable signals from the valid-ready protocol. A write enable is generated when both `write_valid` and `write_ready` are asserted. A read enable is generated when both `read_valid` and `read_ready` are asserted. The `write_ready` signal is driven by the inverse of the `full` flag, providing inherent backpressure when the queue is full. The `read_valid` signal is driven by the inverse of the `empty` flag, preventing reads from an empty queue.
 
-For **read operation**, a read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. The `read_data` output continuously provides the data at the read pointer location, and after the transfer, only the read pointer is incremented to advance to the next entry.
+The **controller** maintains separate read and write pointers with wrap bits, generates the memory interface signals, calculates all status flags and thresholds, implements protection mechanisms, and generates error notifications (unused in valid-ready variant). The controller doesn't store any data, only control state.
 
-**Level monitoring** continuously tracks the number of entries in the queue using the `level` output. This is calculated by comparing the read and write pointers with wrap bit considerations.
+The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
+
+For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The controller directs the RAM to store `write_data` at the location pointed to by the write pointer, and the write pointer is incremented. When the queue is full, `write_ready` is deasserted, preventing write transfers and providing safety.
+
+For **read operation**, the `read_data` output continuously provides the data at the read pointer location from the RAM. A read transfer occurs when both `read_valid` and `read_ready` are asserted (high) on the same clock rising edge. Only the read pointer is incremented to advance to the next entry. When the queue is empty, `read_valid` is deasserted, preventing read transfers and providing safety.
+
+**Level monitoring** continuously tracks the number of entries in the queue using the `level` output. This is calculated by the controller comparing the read and write pointers with wrap bit considerations.
 
 **Dynamic thresholds** allow runtime configuration of upper and lower bounds for queue occupancy. The `lower_threshold_status` is asserted when the level is at or below the `lower_threshold_level`, and the `upper_threshold_status` is asserted when the level is at or above the `upper_threshold_level`.
 
@@ -84,7 +92,7 @@ When the queue is not empty nor full, it can be written to and read from at the 
 
 In this table, the delay refers to the timing critical path, which determines the maximal operating frequency.
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array, `2×(log₂DEPTH+1)` flip-flops for the read and write pointers with wrap bits, and additional logic for level calculation and threshold comparisons. The wrapper adds minimal logic for the valid-ready protocol conversion.
+The RAM requires `WIDTH×DEPTH` flip-flops for the memory array. The controller requires `2×(log₂DEPTH+1)` flip-flops for the read and write pointers with wrap bits, plus additional state for error flags. The handshake wrapper adds minimal logic for the valid-ready protocol conversion.
 
 ## Verification
 
@@ -128,9 +136,11 @@ There are no synthesis and implementation constraints for this block.
 
 This module depends on the following modules:
 
-| Module                                                                | Path                                                                | Comment                                  |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------- |
-| [`advanced_fifo`](../../access_enable/advanced_fifo/advanced_fifo.md) | `omnicores-buildingblocks/sources/data/access_enable/advanced_fifo` | Underlying advanced FIFO implementation. |
+| Module                      | Path                                                                 | Comment                                  |
+| --------------------------- | -------------------------------------------------------------------- | ---------------------------------------- |
+| `advanced_fifo_controller`  | `omnicores-buildingblocks/sources/data/controllers/advanced_fifo`    | Controller for pointer and status logic. |
+| `advanced_wrapping_counter` | `omnicores-buildingblocks/sources/counter/advanced_wrapping_counter` | For pointer management.                  |
+| `simple_dual_port_ram`      | `omnicores-buildingblocks/sources/memory/simple_dual_port_ram`       | Dual-port RAM for data storage.          |
 
 ## Related modules
 
