@@ -1,0 +1,12 @@
+LIFO Controller
+lifo_controller
+-> clock
+-> resetn
+-> write_enable   read_enable <-
+=> write_data       read_data =>
+<- full                 empty ->
+          memory_write_enable ->
+           memory_read_enable ->
+               memory_address =>
+            memory_write_data =>
+             memory_read_data <=
