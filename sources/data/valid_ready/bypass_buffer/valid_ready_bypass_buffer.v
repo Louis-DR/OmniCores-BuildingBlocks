@@ -20,16 +20,16 @@ module valid_ready_bypass_buffer #(
 ) (
   input              clock,
   input              resetn,
+  output             full,
+  output             empty,
   // Write interface
   input  [WIDTH-1:0] write_data,
   input              write_valid,
   output             write_ready,
-  output             full,
   // Read interface
   output [WIDTH-1:0] read_data,
   output             read_valid,
-  input              read_ready,
-  output             empty
+  input              read_ready
 );
 
 wire write_enable = write_valid & write_ready;

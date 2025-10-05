@@ -51,12 +51,12 @@ bypass_buffer #(
 ) bypass_buffer_dut (
   .clock        ( clock        ),
   .resetn       ( resetn       ),
+  .full         ( full         ),
+  .empty        ( empty        ),
   .write_enable ( write_enable ),
   .write_data   ( write_data   ),
-  .full         ( full         ),
   .read_enable  ( read_enable  ),
-  .read_data    ( read_data    ),
-  .empty        ( empty        )
+  .read_data    ( read_data    )
 );
 
 // Source clock generation

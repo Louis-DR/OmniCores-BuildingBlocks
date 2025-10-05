@@ -28,12 +28,12 @@ When used for bus pipelining, either back-to-back transactions work on a period 
 | -------------- | --------- | ------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------- |
 | `clock`        | input     | 1       | self         |          |             | Clock signal.                                                                       |
 | `resetn`       | input     | 1       | asynchronous | self     | `0`         | Asynchronous active-low reset.                                                      |
+| `full`         | output    | 1       | `clock`      | `resetn` | `0`         | Buffer full status.<br/>`0`: buffer is empty.<br/>`1`: buffer contains valid data.  |
+| `empty`        | output    | 1       | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>`0`: buffer contains valid data.<br/>`1`: buffer is empty. |
 | `write_enable` | input     | 1       | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write `write_data` to buffer.          |
 | `write_data`   | input     | `WIDTH` | `clock`      |          |             | Data to be written to the buffer.                                                   |
-| `full`         | output    | 1       | `clock`      | `resetn` | `0`         | Buffer full status.<br/>`0`: buffer is empty.<br/>`1`: buffer contains valid data.  |
 | `read_enable`  | input     | 1       | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read data from buffer.                  |
 | `read_data`    | output    | `WIDTH` | `clock`      | `resetn` | `0`         | Data read from the buffer.                                                          |
-| `empty`        | output    | 1       | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>`0`: buffer contains valid data.<br/>`1`: buffer is empty. |
 
 ## Operation
 

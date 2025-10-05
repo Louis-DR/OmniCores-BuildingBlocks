@@ -19,16 +19,16 @@ module valid_ready_skid_buffer #(
 ) (
   input              clock,
   input              resetn,
+  output             full,
+  output             empty,
   // Write interface
   input  [WIDTH-1:0] write_data,
   input              write_valid,
   output             write_ready,
-  output             full,
   // Read interface
   output [WIDTH-1:0] read_data,
   output             read_valid,
-  input              read_ready,
-  output             empty
+  input              read_ready
 );
 
 wire write_enable = write_valid & write_ready;
@@ -39,14 +39,14 @@ skid_buffer #(
 ) skid_buffer (
   .clock        ( clock        ),
   .resetn       ( resetn       ),
+  .full         ( full         ),
+  .empty        ( empty        ),
   // Write interface
   .write_enable ( write_enable ),
   .write_data   ( write_data   ),
-  .full         ( full         ),
   // Read interface
   .read_enable  ( read_enable  ),
-  .read_data    ( read_data    ),
-  .empty        ( empty        )
+  .read_data    ( read_data    )
 );
 
 assign write_ready = ~full;

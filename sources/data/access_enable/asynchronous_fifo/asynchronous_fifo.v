@@ -26,13 +26,13 @@ module asynchronous_fifo #(
   parameter DEPTH  = 4,
   parameter STAGES = 2
 ) (
-  // Write interface
+  // Write clock domain
   input              write_clock,
   input              write_resetn,
   input              write_enable,
   input  [WIDTH-1:0] write_data,
   output             write_full,
-  // Read interface
+  // Read clock domain
   input              read_clock,
   input              read_resetn,
   input              read_enable,

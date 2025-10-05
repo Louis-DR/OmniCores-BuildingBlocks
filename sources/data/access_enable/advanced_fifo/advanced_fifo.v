@@ -35,23 +35,23 @@ module advanced_fifo #(
   input                 resetn,
   input                 flush,
   input                 clear_flags,
-  // Write interface
-  input                 write_enable,
-  input     [WIDTH-1:0] write_data,
-  output reg            write_miss,
-  // Read interface
-  input                 read_enable,
-  output    [WIDTH-1:0] read_data,
-  output reg            read_error,
-  // Level
+  // Status flags
   output                empty,
   output                not_empty,
   output                almost_empty,
   output                full,
   output                not_full,
   output                almost_full,
+  output reg            write_miss,
+  output reg            read_error,
+  // Write interface
+  input                 write_enable,
+  input     [WIDTH-1:0] write_data,
+  // Read interface
+  input                 read_enable,
+  output    [WIDTH-1:0] read_data,
+  // Level and thresholds
   output [DEPTH_LOG2:0] level,
-  // Threshold
   input  [DEPTH_LOG2:0] lower_threshold_level,
   output                lower_threshold_status,
   input  [DEPTH_LOG2:0] upper_threshold_level,

@@ -28,12 +28,12 @@ The buffer uses two internal buffer entries with rotating write and read pointer
 | -------------- | --------- | ------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------- |
 | `clock`        | input     | 1       | self         |          |             | Clock signal.                                                                 |
 | `resetn`       | input     | 1       | asynchronous | self     | `0`         | Asynchronous active-low reset.                                                |
+| `full`         | output    | 1       | `clock`      | `resetn` | `0`         | Buffer full status.<br/>`0`: buffer has space.<br/>`1`: buffer is full.       |
+| `empty`        | output    | 1       | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>`0`: buffer contains data.<br/>`1`: buffer is empty. |
 | `write_enable` | input     | 1       | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write `write_data` to buffer.    |
 | `write_data`   | input     | `WIDTH` | `clock`      |          |             | Data to be written to the buffer.                                             |
-| `full`         | output    | 1       | `clock`      | `resetn` | `0`         | Buffer full status.<br/>`0`: buffer has space.<br/>`1`: buffer is full.       |
 | `read_enable`  | input     | 1       | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read data from buffer.            |
 | `read_data`    | output    | `WIDTH` | `clock`      | `resetn` | `0`         | Data read from the buffer.                                                    |
-| `empty`        | output    | 1       | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>`0`: buffer contains data.<br/>`1`: buffer is empty. |
 
 ## Operation
 

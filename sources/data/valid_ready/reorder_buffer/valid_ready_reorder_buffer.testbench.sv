@@ -51,6 +51,8 @@ logic                   write_ready;
 logic       [WIDTH-1:0] read_data;
 logic                   read_valid;
 logic                   read_ready;
+
+// Test variables
 logic       [WIDTH-1:0] memory_model [DEPTH-1:0];
 logic       [DEPTH-1:0] reserved_model;
 logic       [DEPTH-1:0] valid_model;

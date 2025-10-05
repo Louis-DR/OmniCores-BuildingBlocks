@@ -19,14 +19,14 @@ module skid_buffer #(
 ) (
   input              clock,
   input              resetn,
+  output             full,
+  output             empty,
   // Write interface
   input              write_enable,
   input  [WIDTH-1:0] write_data,
-  output             full,
   // Read interface
   input              read_enable,
-  output [WIDTH-1:0] read_data,
-  output             empty
+  output [WIDTH-1:0] read_data
 );
 
 // Internal buffer

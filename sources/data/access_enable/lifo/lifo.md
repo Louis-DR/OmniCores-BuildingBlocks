@@ -29,12 +29,12 @@ The read data output continuously shows the value at the top of the stack when n
 | -------------- | --------- | ------- | ------------ | -------- | ----------- | -------------------------------------------------------------------------- |
 | `clock`        | input     | 1       | self         |          |             | Clock signal.                                                              |
 | `resetn`       | input     | 1       | asynchronous | self     | active-low  | Asynchronous active-low reset.                                             |
+| `full`         | output    | 1       | `clock`      | `resetn` | `0`         | Stack full status.<br/>`0`: stack has free space.<br/>`1`: stack is full.  |
+| `empty`        | output    | 1       | `clock`      | `resetn` | `1`         | Stack empty status.<br/>`0`: stack contains data.<br/>`1`: stack is empty. |
 | `write_enable` | input     | 1       | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write (push) to stack.        |
 | `write_data`   | input     | `WIDTH` | `clock`      |          |             | Data to be written to the stack.                                           |
-| `full`         | output    | 1       | `clock`      | `resetn` | `0`         | Stack full status.<br/>`0`: stack has free space.<br/>`1`: stack is full.  |
 | `read_enable`  | input     | 1       | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from stack.         |
 | `read_data`    | output    | `WIDTH` | `clock`      | `resetn` | `0`         | Data read from the stack top.                                              |
-| `empty`        | output    | 1       | `clock`      | `resetn` | `1`         | Stack empty status.<br/>`0`: stack contains data.<br/>`1`: stack is empty. |
 
 ## Operation
 

@@ -57,14 +57,14 @@ valid_ready_fifo #(
 ) valid_ready_fifo_dut (
   .clock       ( clock       ),
   .resetn      ( resetn      ),
+  .full        ( full        ),
+  .empty       ( empty       ),
   .write_data  ( write_data  ),
   .write_valid ( write_valid ),
   .write_ready ( write_ready ),
-  .full        ( full        ),
   .read_data   ( read_data   ),
   .read_valid  ( read_valid  ),
-  .read_ready  ( read_ready  ),
-  .empty       ( empty       )
+  .read_ready  ( read_ready  )
 );
 
 // Source clock generation

@@ -58,11 +58,13 @@ out_of_order_buffer #(
 ) out_of_order_buffer (
   .clock        ( clock        ),
   .resetn       ( resetn       ),
+  .full         ( full         ),
   .empty        ( empty        ),
+  // Write interface
   .write_enable ( write_enable ),
   .write_data   ( write_data   ),
   .write_index  ( write_index  ),
-  .full         ( full         ),
+  // Read interface
   .read_enable  ( read_enable  ),
   .read_clear   ( read_clear   ),
   .read_index   ( read_index   ),

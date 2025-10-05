@@ -27,6 +27,9 @@ module valid_ready_advanced_fifo #(
   input                 clock,
   input                 resetn,
   input                 flush,
+  // Status flags
+  output                full,
+  output                empty,
   // Write interface
   input     [WIDTH-1:0] write_data,
   input                 write_valid,
@@ -35,11 +38,8 @@ module valid_ready_advanced_fifo #(
   output    [WIDTH-1:0] read_data,
   output                read_valid,
   input                 read_ready,
-  // Level
-  output                full,
-  output                empty,
+  // Level and thresholds
   output [DEPTH_LOG2:0] level,
-  // Threshold
   input  [DEPTH_LOG2:0] lower_threshold_level,
   output                lower_threshold_status,
   input  [DEPTH_LOG2:0] upper_threshold_level,
@@ -67,7 +67,7 @@ advanced_fifo #(
   .read_data              ( read_data              ),
   .read_error             (                        ),
   .empty                  ( empty                  ),
-  // Level and threshold
+  // Level and thresholds
   .level                  ( level                  ),
   .lower_threshold_level  ( lower_threshold_level  ),
   .lower_threshold_status ( lower_threshold_status ),

@@ -58,11 +58,14 @@ reorder_buffer #(
   .reserve_empty  ( reserve_empty  ),
   .data_full      ( data_full      ),
   .data_empty     ( data_empty     ),
+  // Reservation interface
   .reserve_enable ( reserve_enable ),
   .reserve_index  ( reserve_index  ),
+  // Write interface
   .write_enable   ( write_enable   ),
   .write_index    ( write_index    ),
   .write_data     ( write_data     ),
+  // Read interface
   .read_enable    ( read_enable    ),
   .read_data      ( read_data      )
 );

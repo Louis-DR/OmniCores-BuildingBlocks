@@ -26,29 +26,33 @@ module valid_ready_asynchronous_advanced_fifo #(
   parameter STAGES_WRITE = 2,
   parameter STAGES_READ  = 2
 ) (
-  // Write interface
+  // Write clock domain
   input                 write_clock,
   input                 write_resetn,
   input                 write_flush,
+  // Write interface
   input     [WIDTH-1:0] write_data,
   input                 write_valid,
   output                write_ready,
-  // Write status
+  // Write status flags
   output                write_full,
+  // Write level and thresholds
   output [DEPTH_LOG2:0] write_level,
   input  [DEPTH_LOG2:0] write_lower_threshold_level,
   output                write_lower_threshold_status,
   input  [DEPTH_LOG2:0] write_upper_threshold_level,
   output                write_upper_threshold_status,
-  // Read interface
+  // Read clock domain
   input                 read_clock,
   input                 read_resetn,
   input                 read_flush,
+  // Read interface
   output    [WIDTH-1:0] read_data,
   output                read_valid,
   input                 read_ready,
-  // Read status
+  // Read status flags
   output                read_empty,
+  // Read level and thresholds
   output [DEPTH_LOG2:0] read_level,
   input  [DEPTH_LOG2:0] read_lower_threshold_level,
   output                read_lower_threshold_status,
@@ -65,29 +69,37 @@ asynchronous_advanced_fifo #(
   .STAGES_WRITE ( STAGES_WRITE ),
   .STAGES_READ  ( STAGES_READ  )
 ) asynchronous_advanced_fifo (
-  // Write interface
   .write_clock                  ( write_clock                  ),
   .write_resetn                 ( write_resetn                 ),
   .write_flush                  ( write_flush                  ),
+  .write_clear_miss             ( 1'b0                         ),
   .write_enable                 ( write_enable                 ),
   .write_data                   ( write_data                   ),
+  .write_empty                  (                              ),
+  .write_not_empty              (                              ),
+  .write_almost_empty           (                              ),
   .write_full                   ( write_full                   ),
+  .write_not_full               (                              ),
+  .write_almost_full            (                              ),
   .write_miss                   (                              ),
-  .write_clear_miss             ( 1'b0                         ),
   .write_level                  ( write_level                  ),
   .write_lower_threshold_level  ( write_lower_threshold_level  ),
   .write_lower_threshold_status ( write_lower_threshold_status ),
   .write_upper_threshold_level  ( write_upper_threshold_level  ),
   .write_upper_threshold_status ( write_upper_threshold_status ),
-  // Read interface
   .read_clock                   ( read_clock                   ),
   .read_resetn                  ( read_resetn                  ),
   .read_flush                   ( read_flush                   ),
+  .read_clear_error             ( 1'b0                         ),
   .read_enable                  ( read_enable                  ),
   .read_data                    ( read_data                    ),
   .read_empty                   ( read_empty                   ),
+  .read_not_empty               (                              ),
+  .read_almost_empty            (                              ),
+  .read_full                    (                              ),
+  .read_not_full                (                              ),
+  .read_almost_full             (                              ),
   .read_error                   (                              ),
-  .read_clear_error             ( 1'b0                         ),
   .read_level                   ( read_level                   ),
   .read_lower_threshold_level   ( read_lower_threshold_level   ),
   .read_lower_threshold_status  ( read_lower_threshold_status  ),

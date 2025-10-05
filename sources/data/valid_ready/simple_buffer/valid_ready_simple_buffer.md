@@ -28,14 +28,14 @@ When used for bus pipelining, back-to-back transactions work on a period of two 
 | ------------- | --------- | ------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------- |
 | `clock`       | input     | 1       | self         |          |             | Clock signal.                                                                       |
 | `resetn`      | input     | 1       | asynchronous | self     | `0`         | Asynchronous active-low reset.                                                      |
+| `full`        | output    | 1       | `clock`      | `resetn` | `0`         | Buffer full status.<br/>`0`: buffer is empty.<br/>`1`: buffer contains valid data.  |
+| `empty`       | output    | 1       | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>`0`: buffer contains valid data.<br/>`1`: buffer is empty. |
 | `write_data`  | input     | `WIDTH` | `clock`      |          |             | Data to be written to the buffer.                                                   |
 | `write_valid` | input     | 1       | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.    |
 | `write_ready` | output    | 1       | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: buffer is full.<br/>`1`: buffer can accept write data. |
-| `full`        | output    | 1       | `clock`      | `resetn` | `0`         | Buffer full status.<br/>`0`: buffer is empty.<br/>`1`: buffer contains valid data.  |
 | `read_data`   | output    | `WIDTH` | `clock`      | `resetn` | `0`         | Data read from the buffer.                                                          |
 | `read_valid`  | output    | 1       | `clock`      | `resetn` | `0`         | Read valid signal.<br/>`0`: no read data available.<br/>`1`: read data is valid.    |
 | `read_ready`  | input     | 1       | `clock`      |          |             | Read ready signal.<br/>`0`: not ready to receive.<br/>`1`: ready to receive data.   |
-| `empty`       | output    | 1       | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>`0`: buffer contains valid data.<br/>`1`: buffer is empty. |
 
 ## Operation
 

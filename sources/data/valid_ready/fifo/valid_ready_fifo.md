@@ -29,14 +29,14 @@ The read data output continuously shows the value at the head of the queue when 
 | ------------- | --------- | ------- | ------------ | -------- | ----------- | --------------------------------------------------------------------------------- |
 | `clock`       | input     | 1       | self         |          |             | Clock signal.                                                                     |
 | `resetn`      | input     | 1       | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                    |
+| `full`        | output    | 1       | `clock`      | `resetn` | `0`         | Queue full status.<br/>`0`: queue has free space.<br/>`1`: queue is full.         |
+| `empty`       | output    | 1       | `clock`      | `resetn` | `1`         | Queue empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty.        |
 | `write_data`  | input     | `WIDTH` | `clock`      |          |             | Data to be written to the queue.                                                  |
 | `write_valid` | input     | 1       | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.  |
 | `write_ready` | output    | 1       | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: queue is full.<br/>`1`: queue can accept write data. |
-| `full`        | output    | 1       | `clock`      | `resetn` | `0`         | Queue full status.<br/>`0`: queue has free space.<br/>`1`: queue is full.         |
 | `read_data`   | output    | `WIDTH` | `clock`      | `resetn` | `0`         | Data read from the queue head.                                                    |
 | `read_valid`  | output    | 1       | `clock`      | `resetn` | `0`         | Read valid signal.<br/>`0`: no read data available.<br/>`1`: read data is valid.  |
 | `read_ready`  | input     | 1       | `clock`      |          |             | Read ready signal.<br/>`0`: not ready to receive.<br/>`1`: ready to receive data. |
-| `empty`       | output    | 1       | `clock`      | `resetn` | `1`         | Queue empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty.        |
 
 ## Operation
 

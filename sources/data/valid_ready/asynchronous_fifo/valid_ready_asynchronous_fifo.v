@@ -21,14 +21,14 @@ module valid_ready_asynchronous_fifo #(
   parameter DEPTH  = 4,
   parameter STAGES = 2
 ) (
-  // Write interface
+  // Write clock domain
   input              write_clock,
   input              write_resetn,
   input  [WIDTH-1:0] write_data,
   input              write_valid,
   output             write_ready,
   output             write_full,
-  // Read interface
+  // Read clock domain
   input              read_clock,
   input              read_resetn,
   output [WIDTH-1:0] read_data,
@@ -45,13 +45,11 @@ asynchronous_fifo #(
   .DEPTH  ( DEPTH  ),
   .STAGES ( STAGES )
 ) asynchronous_fifo (
-  // Write interface
   .write_clock  ( write_clock  ),
   .write_resetn ( write_resetn ),
   .write_enable ( write_enable ),
   .write_data   ( write_data   ),
   .write_full   ( write_full   ),
-  // Read interface
   .read_clock   ( read_clock   ),
   .read_resetn  ( read_resetn  ),
   .read_enable  ( read_enable  ),
