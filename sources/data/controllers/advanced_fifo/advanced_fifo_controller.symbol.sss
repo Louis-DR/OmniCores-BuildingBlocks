@@ -13,7 +13,8 @@ advanced_fifo_controller
 => lower_threshold_level     upper_threshold_level <=
 <- lower_threshold_status   upper_threshold_status ->
                                memory_write_enable ->
-                                memory_read_enable ->
-                                    memory_address =>
+                              memory_write_address =>
                                  memory_write_data =>
+                                memory_read_enable ->
+                               memory_read_address =>
                                   memory_read_data <=

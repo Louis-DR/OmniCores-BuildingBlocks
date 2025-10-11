@@ -5,8 +5,11 @@ asynchronous_fifo_controller
 -> write_enable    read_enable <-
 => write_data        read_data =>
 <- write_full       read_empty ->
+            memory_write_clock ->
            memory_write_enable ->
-            memory_read_enable ->
-                memory_address =>
+          memory_write_address =>
              memory_write_data =>
+             memory_read_clock ->
+            memory_read_enable ->
+           memory_read_address =>
               memory_read_data <=

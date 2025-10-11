@@ -12,7 +12,7 @@
                   page       = "1"
                   pageScale  = "1"
                   pageWidth  = "210"
-                  pageHeight = "250"
+                  pageHeight = "280"
                   math       = "0"
                   shadow     = "0">
       <root>
@@ -23,9 +23,9 @@
                 value       = ""
                 vertex      = "1"
                 connectable = "0"
-                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[1,0,0,0,30],[0,0,0,0,40],[1,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[0,0,0,0,90],[1,0,0,0,90],[0,0,0,0,100],[1,0,0,0,100],[0,0,0,0,110],[1,0,0,0,110],[0,0,0,0,120],[1,0,0,0,120],[0,0,0,0,130],[1,0,0,0,130],[0,0,0,0,140],[1,0,0,0,140],[0,0,0,0,150],[1,0,0,0,150],[0,0,0,0,160],[1,0,0,0,160],[0,0,0,0,170],[1,0,0,0,170],[0,0,0,0,180],[1,0,0,0,180],[0,0,0,0,190],[1,0,0,0,190],[1,0,0,0,200],[1,0,0,0,210],[1,0,0,0,220],[1,0,0,0,230],[1,0,0,0,240],[0.5,0,0,0,0],[0.5,0,0,0,250]];">
+                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[1,0,0,0,30],[0,0,0,0,40],[1,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[0,0,0,0,90],[1,0,0,0,90],[0,0,0,0,100],[1,0,0,0,100],[0,0,0,0,110],[1,0,0,0,110],[0,0,0,0,120],[1,0,0,0,120],[0,0,0,0,130],[1,0,0,0,130],[0,0,0,0,140],[1,0,0,0,140],[0,0,0,0,150],[1,0,0,0,150],[0,0,0,0,160],[1,0,0,0,160],[0,0,0,0,170],[1,0,0,0,170],[0,0,0,0,180],[1,0,0,0,180],[0,0,0,0,190],[1,0,0,0,190],[1,0,0,0,200],[1,0,0,0,210],[1,0,0,0,220],[1,0,0,0,230],[1,0,0,0,240],[1,0,0,0,250],[1,0,0,0,260],[1,0,0,0,270],[0.5,0,0,0,0],[0.5,0,0,0,280]];">
           <mxGeometry width  = "210"
-                      height = "250"
+                      height = "280"
                       as     = "geometry"/>
         </mxCell>
         <mxCell id     = "box"
@@ -36,7 +36,7 @@
           <mxGeometry x="15"
                       y="0"
                       width="180"
-                      height="250"
+                      height="280"
                       as="geometry"/>
         </mxCell>
         <mxCell id     = "title"
@@ -1047,6 +1047,35 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
+            <mxCell id="memory_write_clock-label"
+                    parent="2"
+                    value="memory_write_clock"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "200"
+                width  = "180"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_write_clock-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "210"
+                         y  = "200"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "195"
+                         y  = "200"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
             <mxCell id="memory_write_enable-label"
                     parent="2"
                     value="memory_write_enable"
@@ -1054,7 +1083,7 @@
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "200"
+                y      = "210"
                 width  = "180"
                 height = "0"
                 as     = "geometry"/>
@@ -1069,35 +1098,6 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "210"
-                         y  = "200"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "195"
-                         y  = "200"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
-            <mxCell id="memory_read_enable-label"
-                    parent="2"
-                    value="memory_read_enable"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "210"
-                width  = "180"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "memory_read_enable-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "210"
                          y  = "210"
                          as = "sourcePoint"/>
                 <mxPoint x  = "195"
@@ -1105,9 +1105,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id="memory_address-label"
+            <mxCell id="memory_write_address-label"
                     parent="2"
-                    value="memory_address"
+                    value="memory_write_address"
                     vertex="1"
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -1117,7 +1117,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "memory_address-arrow"
+            <mxCell id     = "memory_write_address-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
@@ -1163,6 +1163,93 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
+            <mxCell id="memory_read_clock-label"
+                    parent="2"
+                    value="memory_read_clock"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "240"
+                width  = "180"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_read_clock-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "210"
+                         y  = "240"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "195"
+                         y  = "240"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="memory_read_enable-label"
+                    parent="2"
+                    value="memory_read_enable"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "250"
+                width  = "180"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_read_enable-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "210"
+                         y  = "250"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "195"
+                         y  = "250"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id="memory_read_address-label"
+                    parent="2"
+                    value="memory_read_address"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "260"
+                width  = "180"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "memory_read_address-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "210"
+                         y  = "260"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "195"
+                         y  = "260"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
             <mxCell id="memory_read_data-label"
                     parent="2"
                     value="memory_read_data"
@@ -1170,7 +1257,7 @@
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "240"
+                y      = "270"
                 width  = "180"
                 height = "0"
                 as     = "geometry"/>
@@ -1185,10 +1272,10 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "210"
-                         y  = "240"
+                         y  = "270"
                          as = "sourcePoint"/>
                 <mxPoint x  = "195"
-                         y  = "240"
+                         y  = "270"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>

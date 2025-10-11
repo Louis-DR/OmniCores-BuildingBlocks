@@ -17,8 +17,11 @@ asynchronous_advanced_fifo_controller
 <- write_lower_threshold_status   read_lower_threshold_status ->
 => write_upper_threshold_level     read_upper_threshold_level <=
 <- write_upper_threshold_status   read_upper_threshold_status ->
+                                           memory_write_clock ->
                                           memory_write_enable ->
-                                           memory_read_enable ->
-                                               memory_address =>
+                                         memory_write_address =>
                                             memory_write_data =>
+                                            memory_read_clock ->
+                                           memory_read_enable ->
+                                          memory_read_address =>
                                              memory_read_data <=

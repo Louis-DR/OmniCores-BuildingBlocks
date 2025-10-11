@@ -1,5 +1,5 @@
-<svg width="320" height="360" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="110" height="170" fill="none" stroke="black" stroke-width="1" rx="5"/>
+<svg width="320" height="380" viewBox="0 0 160 190" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="5" width="110" height="180" fill="none" stroke="black" stroke-width="1" rx="5"/>
   <text x="80" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Reorder Buffer Controller</text>
   <text x="80" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">reorder_buffer_controller</text>
       <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
@@ -48,21 +48,25 @@
       <text x="133" y="125" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_write_enable</text>
         <line x1="135" y1="125" x2="149" y2="125" stroke="black" stroke-width="1"/>
         <path d="M 155 125 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="133" y="135" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_read_enable</text>
+      <text x="133" y="135" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_write_address</text>
         <line x1="135" y1="135" x2="149" y2="135" stroke="black" stroke-width="1"/>
         <path d="M 155 135 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="133" y="145" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_address</text>
+          <line x1="138" y1="133" x2="142" y2="137" stroke="black" stroke-width="1"/>
+      <text x="133" y="145" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_write_data</text>
         <line x1="135" y1="145" x2="149" y2="145" stroke="black" stroke-width="1"/>
         <path d="M 155 145 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="138" y1="143" x2="142" y2="147" stroke="black" stroke-width="1"/>
-      <text x="133" y="155" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_write_data</text>
+      <text x="133" y="155" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_read_enable</text>
         <line x1="135" y1="155" x2="149" y2="155" stroke="black" stroke-width="1"/>
         <path d="M 155 155 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="138" y1="153" x2="142" y2="157" stroke="black" stroke-width="1"/>
-      <text x="133" y="165" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_read_data</text>
-        <line x1="141" y1="165" x2="155" y2="165" stroke="black" stroke-width="1"/>
-        <path d="M 135 165 l +6 +2.0 v -4 z" fill="black"/>
-          <line x1="148" y1="163" x2="152" y2="167" stroke="black" stroke-width="1"/>
+      <text x="133" y="165" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_read_address</text>
+        <line x1="135" y1="165" x2="149" y2="165" stroke="black" stroke-width="1"/>
+        <path d="M 155 165 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="138" y1="163" x2="142" y2="167" stroke="black" stroke-width="1"/>
+      <text x="133" y="175" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">memory_read_data</text>
+        <line x1="141" y1="175" x2="155" y2="175" stroke="black" stroke-width="1"/>
+        <path d="M 135 175 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="148" y1="173" x2="152" y2="177" stroke="black" stroke-width="1"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {
