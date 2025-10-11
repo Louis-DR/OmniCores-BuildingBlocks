@@ -29,7 +29,8 @@ module asynchronous_advanced_fifo #(
   parameter WIDTH        = 8,
   parameter DEPTH        = 4,
   parameter STAGES_WRITE = 2,
-  parameter STAGES_READ  = 2
+  parameter STAGES_READ  = 2,
+  parameter DEPTH_LOG2   = `CLOG2(DEPTH)
 ) (
   // Write clock domain
   input                 write_clock,
@@ -74,8 +75,6 @@ module asynchronous_advanced_fifo #(
   input  [DEPTH_LOG2:0] read_upper_threshold_level,
   output                read_upper_threshold_status
 );
-
-localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory interface signals
 wire                  memory_write_enable;
