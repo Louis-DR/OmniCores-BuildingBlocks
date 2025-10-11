@@ -102,9 +102,9 @@ wire do_write = write_enable && !write_full && !write_flush;
 // Write pointer counter
 // The counter range is double so the Gray MSB acts as lap bit
 gray_wrapping_counter #(
-  .RANGE        ( DEPTH*2 ),
-  .RESET_VALUE  ( 0       ),
-  .LOAD_BINARY  ( 1       )
+  .RANGE        ( DEPTH * 2 ),
+  .RESET_VALUE  ( 0         ),
+  .LOAD_BINARY  ( 1         )
 ) write_pointer_counter (
   .clock        ( write_clock        ),
   .resetn       ( write_resetn       ),
@@ -160,17 +160,6 @@ always @(posedge write_clock or negedge write_resetn) begin
   end
 end
 
-// Read pointer gray-code synchronizer
-vector_synchronizer #(
-  .WIDTH  ( DEPTH_LOG2+1  ),
-  .STAGES ( STAGES_WRITE  )
-) read_pointer_gray_sync (
-  .clock    ( write_clock        ),
-  .resetn   ( write_resetn       ),
-  .data_in  ( read_pointer_gray  ),
-  .data_out ( read_pointer_gray_w )
-);
-
 
 
 // ┌───────────────────┐
@@ -194,9 +183,9 @@ wire do_read = read_enable && !read_empty && !read_flush;
 // Read pointer counter
 // The counter range is double so the Gray MSB acts as lap bit
 gray_wrapping_counter #(
-  .RANGE        ( DEPTH*2 ),
-  .RESET_VALUE  ( 0       ),
-  .LOAD_BINARY  ( 1       )
+  .RANGE        ( DEPTH * 2 ),
+  .RESET_VALUE  ( 0         ),
+  .LOAD_BINARY  ( 1         )
 ) read_pointer_counter (
   .clock        ( read_clock        ),
   .resetn       ( read_resetn       ),
@@ -252,10 +241,27 @@ always @(posedge read_clock or negedge read_resetn) begin
   end
 end
 
+
+
+// ┌───────────────────────┐
+// │ Clock domain crossing │
+// └───────────────────────┘
+
+// Read pointer gray-code synchronizer
+vector_synchronizer #(
+  .WIDTH    ( DEPTH_LOG2 + 1      ),
+  .STAGES   ( STAGES_WRITE        )
+) read_pointer_gray_sync (
+  .clock    ( write_clock         ),
+  .resetn   ( write_resetn        ),
+  .data_in  ( read_pointer_gray   ),
+  .data_out ( read_pointer_gray_w )
+);
+
 // Write pointer gray-code synchronizer
 vector_synchronizer #(
-  .WIDTH  ( DEPTH_LOG2+1 ),
-  .STAGES ( STAGES_READ  )
+  .WIDTH    ( DEPTH_LOG2 + 1       ),
+  .STAGES   ( STAGES_READ          )
 ) write_pointer_gray_sync (
   .clock    ( read_clock           ),
   .resetn   ( read_resetn          ),
