@@ -46,7 +46,7 @@ wire [SIZE-1:0] rotated_requests;
 wire [SIZE-1:0] rotated_grant;
 
 barrel_rotator_left #(
-  .WIDTH    ( SIZE )
+  .DATA_WIDTH ( SIZE )
 ) requests_rotator (
   .data_in  ( requests         ),
   .rotation ( rotating_pointer ),
@@ -62,7 +62,7 @@ static_priority_arbiter #(
 );
 
 barrel_rotator_right #(
-  .WIDTH    ( SIZE )
+  .DATA_WIDTH ( SIZE )
 ) grant_rotator (
   .data_in  ( rotated_grant    ),
   .rotation ( rotating_pointer ),
