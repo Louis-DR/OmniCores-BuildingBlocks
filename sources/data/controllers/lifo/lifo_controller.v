@@ -30,11 +30,12 @@ module lifo_controller #(
   // Read interface
   input                   read_enable,
   output      [WIDTH-1:0] read_data,
-  // Memory interface
-  output                  memory_enable,
+  // Memory interface (dual-port)
   output                  memory_write_enable,
-  output [DEPTH_LOG2-1:0] memory_address,
+  output [DEPTH_LOG2-1:0] memory_write_address,
   output      [WIDTH-1:0] memory_write_data,
+  output                  memory_read_enable,
+  output [DEPTH_LOG2-1:0] memory_read_address,
   input       [WIDTH-1:0] memory_read_data
 );
 
@@ -96,20 +97,17 @@ end
 
 // Calculate addresses
 wire [DEPTH_LOG2:0] pointer_minus_one = pointer - 1;
-wire [DEPTH_LOG2-1:0] read_address  = pointer_minus_one [DEPTH_LOG2-1:0];
-wire [DEPTH_LOG2-1:0] write_address = pointer           [DEPTH_LOG2-1:0];
 
-// Memory access logic
-// When read+write simultaneously: write to read_address (replace top)
-// When write only: write to write_address (push new)
-// When read only: read from read_address (access top)
-assign memory_enable       = write_enable || read_enable;
-assign memory_write_enable = write_enable;
-assign memory_address      = write_enable ? (read_enable ? read_address : write_address) : read_address;
-assign memory_write_data   = write_data;
+// Write port: Write to current pointer location when pushing
+// When simultaneously reading (pop+push), write to read location to replace top
+assign memory_write_enable  =  write_enable;
+assign memory_write_address = (write_enable && read_enable) ? pointer_minus_one[DEPTH_LOG2-1:0] : pointer[DEPTH_LOG2-1:0];
+assign memory_write_data    =  write_data;
 
-// Read data comes from memory
-// Even when writing, the read is combinational and shows the value before the write
-assign read_data = memory_read_data;
+// Read port: Continuously read from top of stack (pointer - 1)
+// This provides combinational access to the current top-of-stack value
+assign memory_read_enable  = !empty;
+assign memory_read_address = pointer_minus_one[DEPTH_LOG2-1:0];
+assign read_data           = memory_read_data;
 
 endmodule

@@ -36,10 +36,11 @@ module lifo #(
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory interface signals
-wire                  memory_enable;
 wire                  memory_write_enable;
-wire [DEPTH_LOG2-1:0] memory_address;
+wire [DEPTH_LOG2-1:0] memory_write_address;
 wire      [WIDTH-1:0] memory_write_data;
+wire                  memory_read_enable;
+wire [DEPTH_LOG2-1:0] memory_read_address;
 wire      [WIDTH-1:0] memory_read_data;
 
 // Controller
@@ -47,36 +48,38 @@ lifo_controller #(
   .WIDTH ( WIDTH ),
   .DEPTH ( DEPTH )
 ) controller (
-  .clock               ( clock               ),
-  .resetn              ( resetn              ),
-  .full                ( full                ),
-  .empty               ( empty               ),
+  .clock                ( clock                ),
+  .resetn               ( resetn               ),
+  .full                 ( full                 ),
+  .empty                ( empty                ),
   // Write interface
-  .write_enable        ( write_enable        ),
-  .write_data          ( write_data          ),
+  .write_enable         ( write_enable         ),
+  .write_data           ( write_data           ),
   // Read interface
-  .read_enable         ( read_enable         ),
-  .read_data           ( read_data           ),
+  .read_enable          ( read_enable          ),
+  .read_data            ( read_data            ),
   // Memory interface
-  .memory_enable       ( memory_enable       ),
-  .memory_write_enable ( memory_write_enable ),
-  .memory_address      ( memory_address      ),
-  .memory_write_data   ( memory_write_data   ),
-  .memory_read_data    ( memory_read_data    )
+  .memory_write_enable  ( memory_write_enable  ),
+  .memory_write_address ( memory_write_address ),
+  .memory_write_data    ( memory_write_data    ),
+  .memory_read_enable   ( memory_read_enable   ),
+  .memory_read_address  ( memory_read_address  ),
+  .memory_read_data     ( memory_read_data     )
 );
 
 // Memory
-single_port_ram #(
+simple_dual_port_ram #(
   .WIDTH           ( WIDTH ),
   .DEPTH           ( DEPTH ),
   .REGISTERED_READ ( 0     )
 ) memory (
-  .clock         ( clock               ),
-  .access_enable ( memory_enable       ),
-  .write         ( memory_write_enable ),
-  .address       ( memory_address      ),
-  .write_data    ( memory_write_data   ),
-  .read_data     ( memory_read_data    )
+  .clock         ( clock                ),
+  .write_enable  ( memory_write_enable  ),
+  .write_address ( memory_write_address ),
+  .write_data    ( memory_write_data    ),
+  .read_enable   ( memory_read_enable   ),
+  .read_address  ( memory_read_address  ),
+  .read_data     ( memory_read_data     )
 );
 
 endmodule

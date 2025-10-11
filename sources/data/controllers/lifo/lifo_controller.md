@@ -14,7 +14,7 @@
 
 Controller for synchronous Last-In First-Out stack pointer management and status logic. The controller manages a single stack pointer that tracks the top of the stack, generates memory interface signals, and calculates status flags. It doesn't implement a safety mechanism against writing when full or reading when empty so the integration must use the status flags and the enable signals carefully.
 
-The controller is designed to be integrated with a single-port RAM for data storage. It provides a clean separation between control logic and data storage, allowing easy replacement of the memory with technology-specific implementations during ASIC integration. The use of single-port RAM is efficient because the stack operations always target adjacent locations.
+The controller is designed to be integrated with a simple dual-port RAM for data storage. It provides a clean separation between control logic and data storage, allowing easy replacement of the memory with technology-specific implementations during ASIC integration. The dual-port interface allows the read port to continuously provide the top-of-stack value, ensuring combinational read access with zero latency.
 
 The controller passes data through without storing it. The `write_data` is forwarded to the memory write interface, and the `read_data` is provided directly from the memory read interface. The controller only maintains state for the stack pointer and status flags. When simultaneous read and write occur, the memory access targets the same location (top of stack), effectively replacing the top element.
 
@@ -60,7 +60,7 @@ If the stack is empty, data written can be read in the next cycle. When the stac
 
 The status flags are calculated based on the stack pointer value. The stack is full when the pointer equals the maximum depth. The stack is empty when the pointer equals zero.
 
-The **memory interface** provides a single-port access with enable, write enable, address, write data, and read data signals. The interface expects combinational reads from the memory, where the data at the address appears immediately on the read data output without additional latency.
+The **memory interface** uses a dual-port RAM with separate write and read ports. The write port is used for push operations, and the read port continuously reads from pointer - 1 to provide combinational access to the current top-of-stack value. The interface expects combinational reads from the memory, where the data at the read address appears immediately on the read data output without additional latency.
 
 ## Paths
 
