@@ -35,9 +35,11 @@ module asynchronous_fifo_controller #(
   output      [WIDTH-1:0] read_data,
   output                  read_empty,
   // Memory interface
+  output                  memory_write_clock,
   output                  memory_write_enable,
   output [DEPTH_LOG2-1:0] memory_write_address,
   output      [WIDTH-1:0] memory_write_data,
+  output                  memory_read_clock,
   output                  memory_read_enable,
   output [DEPTH_LOG2-1:0] memory_read_address,
   input       [WIDTH-1:0] memory_read_data
@@ -166,9 +168,11 @@ vector_synchronizer #(
 // │ Memory interface logic │
 // └────────────────────────┘
 
+assign memory_write_clock   = write_clock;
 assign memory_write_enable  = write_enable;
 assign memory_write_address = write_address;
 assign memory_write_data    = write_data;
+assign memory_read_clock    = read_clock;
 assign memory_read_enable   = read_enable;
 assign memory_read_address  = read_address;
 assign read_data            = memory_read_data;

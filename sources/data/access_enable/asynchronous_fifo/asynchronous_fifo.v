@@ -37,9 +37,11 @@ module asynchronous_fifo #(
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory interface signals
+wire                  memory_write_clock;
 wire                  memory_write_enable;
 wire [DEPTH_LOG2-1:0] memory_write_address;
 wire      [WIDTH-1:0] memory_write_data;
+wire                  memory_read_clock;
 wire                  memory_read_enable;
 wire [DEPTH_LOG2-1:0] memory_read_address;
 wire      [WIDTH-1:0] memory_read_data;
@@ -60,9 +62,11 @@ asynchronous_fifo_controller #(
   .read_enable          ( read_enable          ),
   .read_data            ( read_data            ),
   .read_empty           ( read_empty           ),
+  .memory_write_clock   ( memory_write_clock   ),
   .memory_write_enable  ( memory_write_enable  ),
   .memory_write_address ( memory_write_address ),
   .memory_write_data    ( memory_write_data    ),
+  .memory_read_clock    ( memory_read_clock    ),
   .memory_read_enable   ( memory_read_enable   ),
   .memory_read_address  ( memory_read_address  ),
   .memory_read_data     ( memory_read_data     )
@@ -74,11 +78,11 @@ asynchronous_simple_dual_port_ram #(
   .DEPTH           ( DEPTH ),
   .REGISTERED_READ ( 0     )
 ) memory (
-  .write_clock   ( write_clock          ),
+  .write_clock   ( memory_write_clock   ),
   .write_enable  ( memory_write_enable  ),
   .write_address ( memory_write_address ),
   .write_data    ( memory_write_data    ),
-  .read_clock    ( read_clock           ),
+  .read_clock    ( memory_read_clock    ),
   .read_enable   ( memory_read_enable   ),
   .read_address  ( memory_read_address  ),
   .read_data     ( memory_read_data     )

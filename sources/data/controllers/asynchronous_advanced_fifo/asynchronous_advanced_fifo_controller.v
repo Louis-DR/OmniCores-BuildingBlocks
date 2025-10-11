@@ -67,9 +67,11 @@ module asynchronous_advanced_fifo_controller #(
   input  [DEPTH_LOG2:0]   read_upper_threshold_level,
   output                  read_upper_threshold_status,
   // Memory interface
+  output                  memory_write_clock,
   output                  memory_write_enable,
   output [DEPTH_LOG2-1:0] memory_write_address,
   output      [WIDTH-1:0] memory_write_data,
+  output                  memory_read_clock,
   output                  memory_read_enable,
   output [DEPTH_LOG2-1:0] memory_read_address,
   input       [WIDTH-1:0] memory_read_data
@@ -275,9 +277,11 @@ vector_synchronizer #(
 // │ Memory interface logic │
 // └────────────────────────┘
 
+assign memory_write_clock   = write_clock;
 assign memory_write_enable  = do_write;
 assign memory_write_address = write_address;
 assign memory_write_data    = write_data;
+assign memory_read_clock    = read_clock;
 assign memory_read_enable   = 1'b1;  // Always read for combinational access
 assign memory_read_address  = read_address;
 assign read_data            = memory_read_data;

@@ -66,9 +66,11 @@ The controller passes data through without storing it. The `write_data` is forwa
 | `read_lower_threshold_status`  | output    | 1              | `read_clock`  | `read_resetn`  | `1`         | Lower threshold status in read domain.<br/>`0`: level > threshold.<br/>`1`: level ≤ threshold.                    |
 | `read_upper_threshold_level`   | input     | `DEPTH_LOG2+1` | `read_clock`  |                |             | Upper threshold level for read domain comparison.                                                                 |
 | `read_upper_threshold_status`  | output    | 1              | `read_clock`  | `read_resetn`  | `0`         | Upper threshold status in read domain.<br/>`0`: level < threshold.<br/>`1`: level ≥ threshold.                    |
+| `memory_write_clock`           | output    | 1              |               |                |             | Write clock for asynchronous dual-port memory.                                                                    |
 | `memory_write_enable`          | output    | 1              | `write_clock` |                |             | Memory write enable signal.                                                                                       |
 | `memory_write_address`         | output    | `DEPTH_LOG2`   | `write_clock` |                |             | Memory write address.                                                                                             |
 | `memory_write_data`            | output    | `WIDTH`        | `write_clock` |                |             | Memory write data.                                                                                                |
+| `memory_read_clock`            | output    | 1              |               |                |             | Read clock for asynchronous dual-port memory.                                                                     |
 | `memory_read_enable`           | output    | 1              | `read_clock`  |                |             | Memory read enable signal.                                                                                        |
 | `memory_read_address`          | output    | `DEPTH_LOG2`   | `read_clock`  |                |             | Memory read address.                                                                                              |
 | `memory_read_data`             | input     | `WIDTH`        | `read_clock`  |                |             | Memory read data.                                                                                                 |
@@ -93,7 +95,7 @@ The **flushing** can be initiated from either domain:
 
 The **clock domain crossing** uses Gray-code counters (`gray_wrapping_counter`) that maintain both binary and Gray-coded representations. The Gray-coded pointers are synchronized using multi-stage synchronizers (`vector_synchronizer`) before being converted back to binary in the opposite domain for level calculation.
 
-The **memory interface** provides separate write and read channels in their respective clock domains with enable, address, and data signals. The interface expects combinational reads from the asynchronous RAM.
+The **memory interface** provides separate write and read channels in their respective clock domains with independent clocks, enable, address, and data signals for asynchronous dual-port RAM. The controller forwards the write and read clocks (`memory_write_clock` and `memory_read_clock`) to the memory to clearly indicate the asynchronous nature of the interface. The write port operates in the write clock domain, and the read port operates in the read clock domain. The interface expects combinational reads from the asynchronous RAM.
 
 ## Paths
 
