@@ -78,12 +78,12 @@ module asynchronous_advanced_fifo #(
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory interface signals
-logic                  memory_write_enable;
-logic [DEPTH_LOG2-1:0] memory_write_address;
-logic      [WIDTH-1:0] memory_write_data;
-logic                  memory_read_enable;
-logic [DEPTH_LOG2-1:0] memory_read_address;
-logic      [WIDTH-1:0] memory_read_data;
+wire                  memory_write_enable;
+wire [DEPTH_LOG2-1:0] memory_write_address;
+wire      [WIDTH-1:0] memory_write_data;
+wire                  memory_read_enable;
+wire [DEPTH_LOG2-1:0] memory_read_address;
+wire      [WIDTH-1:0] memory_read_data;
 
 // Controller
 asynchronous_advanced_fifo_controller #(

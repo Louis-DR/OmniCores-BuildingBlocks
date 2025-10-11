@@ -36,11 +36,11 @@ module lifo #(
 localparam DEPTH_LOG2 = `CLOG2(DEPTH);
 
 // Memory interface signals
-logic                  memory_enable;
-logic                  memory_write_enable;
-logic [DEPTH_LOG2-1:0] memory_address;
-logic      [WIDTH-1:0] memory_write_data;
-logic      [WIDTH-1:0] memory_read_data;
+wire                  memory_enable;
+wire                  memory_write_enable;
+wire [DEPTH_LOG2-1:0] memory_address;
+wire      [WIDTH-1:0] memory_write_data;
+wire      [WIDTH-1:0] memory_read_data;
 
 // Controller
 lifo_controller #(
