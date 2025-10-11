@@ -19,7 +19,7 @@ module barrel_rotator_left__testbench ();
 
 // Device parameters
 localparam int DATA_WIDTH     = 8;
-localparam int ROTATION_WIDTH = `CLOG2(DATA_WIDTH);
+localparam int ROTATION_WIDTH = $clog2(DATA_WIDTH);
 
 // Derived parameters
 localparam int DATA_WIDTH_POW2 = 2 ** DATA_WIDTH;
