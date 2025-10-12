@@ -23,7 +23,7 @@
                 value       = ""
                 vertex      = "1"
                 connectable = "0"
-                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[0,0,0,0,90],[1,0,0,0,90],[0,0,0,0,100],[1,0,0,0,100],[0,0,0,0,110],[1,0,0,0,110],[1,0,0,0,120],[0,0,0,0,130],[1,0,0,0,130],[0,0,0,0,140],[1,0,0,0,140],[1,0,0,0,150],[1,0,0,0,160],[1,0,0,0,170],[1,0,0,0,180],[1,0,0,0,190],[1,0,0,0,200],[1,0,0,0,210],[0.5,0,0,0,0],[0.5,0,0,0,220]];">
+                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[0,0,0,0,90],[1,0,0,0,90],[0,0,0,0,100],[1,0,0,0,100],[0,0,0,0,110],[1,0,0,0,110],[0,0,0,0,120],[1,0,0,0,120],[0,0,0,0,130],[1,0,0,0,130],[0,0,0,0,140],[1,0,0,0,140],[1,0,0,0,150],[1,0,0,0,160],[1,0,0,0,170],[1,0,0,0,180],[1,0,0,0,190],[1,0,0,0,200],[1,0,0,0,210],[0.5,0,0,0,0],[0.5,0,0,0,220]];">
           <mxGeometry width  = "180"
                       height = "220"
                       as     = "geometry"/>
@@ -493,6 +493,35 @@
                          as = "sourcePoint"/>
                 <mxPoint x  = "165"
                          y  = "110"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "space-label"
+                    parent = "2"
+                    value  = "space"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "120"
+                width  = "150"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "space-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "120"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "120"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>

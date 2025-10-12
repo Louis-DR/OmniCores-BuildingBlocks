@@ -9,7 +9,7 @@ advanced_fifo_controller
 <- full                                      empty ->
 <- not_full                              not_empty ->
 <- almost_full                        almost_empty ->
-                                             level =>
+<= space                                     level =>
 => lower_threshold_level     upper_threshold_level <=
 <- lower_threshold_status   upper_threshold_status ->
                                       memory_clock ->

@@ -41,6 +41,7 @@ module asynchronous_advanced_fifo_controller #(
   output reg              write_miss,
   // Write level and thresholds
   output [DEPTH_LOG2:0]   write_level,
+  output [DEPTH_LOG2:0]   write_space,
   input  [DEPTH_LOG2:0]   write_lower_threshold_level,
   output                  write_lower_threshold_status,
   input  [DEPTH_LOG2:0]   write_upper_threshold_level,
@@ -62,6 +63,7 @@ module asynchronous_advanced_fifo_controller #(
   output reg              read_error,
   // Read level and thresholds
   output [DEPTH_LOG2:0]   read_level,
+  output [DEPTH_LOG2:0]   read_space,
   input  [DEPTH_LOG2:0]   read_lower_threshold_level,
   output                  read_lower_threshold_status,
   input  [DEPTH_LOG2:0]   read_upper_threshold_level,
@@ -132,6 +134,7 @@ gray_to_binary #(
 
 // Calculate FIFO level by comparing write and read pointers
 assign write_level = write_pointer - read_pointer_w;
+assign write_space = DEPTH - write_level;
 
 // Queue is empty if the gray-coded read and write pointers are the same
 assign write_empty        = write_pointer_gray == read_pointer_gray_w;
@@ -213,6 +216,7 @@ gray_to_binary #(
 
 // Calculate FIFO level by comparing write and read pointers
 assign read_level = write_pointer_r - read_pointer;
+assign read_space = DEPTH - read_level;
 
 // Queue is empty if the gray-coded read and write pointers are the same
 assign read_empty        = write_pointer_gray_r == read_pointer_gray;

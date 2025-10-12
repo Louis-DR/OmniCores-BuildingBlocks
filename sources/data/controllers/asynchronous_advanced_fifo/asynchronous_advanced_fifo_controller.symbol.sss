@@ -13,6 +13,7 @@ asynchronous_advanced_fifo_controller
 <- write_not_full                               read_not_full ->
 <- write_almost_full                         read_almost_full ->
 <= write_level                                     read_level =>
+<= write_space                                     read_space =>
 => write_lower_threshold_level     read_lower_threshold_level <=
 <- write_lower_threshold_status   read_lower_threshold_status ->
 => write_upper_threshold_level     read_upper_threshold_level <=

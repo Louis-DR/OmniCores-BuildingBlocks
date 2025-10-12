@@ -42,6 +42,7 @@ module advanced_fifo_controller #(
   output      [WIDTH-1:0] read_data,
   // Level and thresholds
   output [DEPTH_LOG2:0]   level,
+  output [DEPTH_LOG2:0]   space,
   input  [DEPTH_LOG2:0]   lower_threshold_level,
   output                  lower_threshold_status,
   input  [DEPTH_LOG2:0]   upper_threshold_level,
@@ -144,6 +145,7 @@ end else begin : gen_non_pow2_level
   // For non-power-of-2 depths, we need to handle the lap bit explicitly and use the address difference
   assign level = write_address - read_address + (write_lap == read_lap ? 0 : DEPTH);
 end
+assign space = DEPTH - level;
 
 // Queue is empty if the read and write pointers are the same and the lap bits are equal
 assign empty        = write_address == read_address && write_lap == read_lap;

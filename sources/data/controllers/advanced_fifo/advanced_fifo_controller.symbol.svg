@@ -49,6 +49,10 @@
       <text x="166" y="115" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">almost_empty</text>
         <line x1="168" y1="115" x2="182" y2="115" stroke="black" stroke-width="1"/>
         <path d="M 188 115 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="27" y="125" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">space</text>
+        <line x1="25" y1="125" x2="11" y2="125" stroke="black" stroke-width="1"/>
+        <path d="M 5 125 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="18" y1="123" x2="22" y2="127" stroke="black" stroke-width="1"/>
       <text x="166" y="125" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">level</text>
         <line x1="168" y1="125" x2="182" y2="125" stroke="black" stroke-width="1"/>
         <path d="M 188 125 l -6 +2.0 v -4 z" fill="black"/>
