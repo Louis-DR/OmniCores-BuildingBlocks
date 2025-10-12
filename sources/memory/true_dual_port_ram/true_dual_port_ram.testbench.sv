@@ -102,7 +102,7 @@ task automatic write_once;
     port_1_write_data    = data;
   end
   @(posedge clock);
-  // $display("[%0tns] Write %0d data '0x%0h' at address '0x%0h'.", $time, port_index, data, address);
+  // $display("[%t] Write %0d data '0x%0h' at address '0x%0h'.", $realtime, port_index, data, address);
   memory_model[address] = data;
   @(negedge clock);
   if (port_index == 0) begin
@@ -174,10 +174,10 @@ task automatic read_once;
   #(1);
   if (port_index == 0) begin
     assert (port_0_read_data === expected_data)
-      else $error("[%0tns] Port 0: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, port_0_read_data, address, expected_data);
+      else $error("[%t] Port 0: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, port_0_read_data, address, expected_data);
   end else begin
     assert (port_1_read_data === expected_data)
-      else $error("[%0tns] Port 1: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, port_1_read_data, address, expected_data);
+      else $error("[%t] Port 1: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, port_1_read_data, address, expected_data);
   end
   @(negedge clock);
   if (port_index == 0) begin
@@ -209,6 +209,7 @@ endtask
 initial begin
   $dumpfile("true_dual_port_ram.testbench.vcd");
   $dumpvars(0, true_dual_port_ram__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   port_0_access_enable =  0;
@@ -355,7 +356,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -387,7 +388,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -417,7 +418,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -448,7 +449,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -497,7 +498,7 @@ initial begin
             if (REGISTERED_READ) @(posedge clock);
             #(1);
             assert (port_0_read_data === expected_data)
-              else $error("[%0tns] Port 0: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, port_0_read_data, address, expected_data);
+              else $error("[%t] Port 0: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, port_0_read_data, address, expected_data);
           end
         end else begin
           port_0_access_enable = 0;
@@ -541,7 +542,7 @@ initial begin
             if (REGISTERED_READ) @(posedge clock);
             #(1);
             assert (port_1_read_data === expected_data)
-              else $error("[%0tns] Port 1: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, port_1_read_data, address, expected_data);
+              else $error("[%t] Port 1: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, port_1_read_data, address, expected_data);
             transfer_count++;
           end
         end else begin
@@ -557,7 +558,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;

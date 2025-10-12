@@ -55,6 +55,7 @@ initial begin
   // Log waves
   $dumpfile("rising_edge_detector.testbench.vcd");
   $dumpvars(0,rising_edge_detector__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   signal = 0;
@@ -68,7 +69,7 @@ initial begin
   // Check 1 : Reset state
   $display("CHECK 1 : Reset state.");
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is not low after reset.", $time);
+    else $error("[%t] Rising edge is not low after reset.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -80,10 +81,10 @@ initial begin
   signal = 1;
   @(posedge clock);
   assert (rising_edge)
-    else $error("[%0tns] Rising edge is not asserted on the rising edge.", $time);
+    else $error("[%t] Rising edge is not asserted on the rising edge.", $realtime);
   @(posedge clock);
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is still asserted after the rising edge.", $time);
+    else $error("[%t] Rising edge is still asserted after the rising edge.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -95,10 +96,10 @@ initial begin
   signal = 0;
   @(posedge clock);
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is incorrectly asserted on the falling edge.", $time);
+    else $error("[%t] Rising edge is incorrectly asserted on the falling edge.", $realtime);
   @(posedge clock);
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is still asserted after the falling edge.", $time);
+    else $error("[%t] Rising edge is still asserted after the falling edge.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -112,13 +113,13 @@ initial begin
     signal = 1;
     @(posedge clock);
     assert (rising_edge)
-      else $error("[%0tns] Rising edge is not asserted on the rising edge.", $time);
+      else $error("[%t] Rising edge is not asserted on the rising edge.", $realtime);
     // Falling edge
     @(negedge clock);
     signal = 0;
     @(posedge clock);
     assert (!rising_edge)
-      else $error("[%0tns] Rising edge is asserted on the falling edge.", $time);
+      else $error("[%t] Rising edge is asserted on the falling edge.", $realtime);
   end
 
   repeat(10) @(posedge clock);
@@ -135,7 +136,7 @@ initial begin
     rising_edge_expected = signal & ~previous_signal;
     @(posedge clock);
     assert (rising_edge === rising_edge_expected)
-      else $error("[%0tns] Incorrect rising edge during random stimulus, expected '%0b', got '%0b'.",
+      else $error("[%t] Incorrect rising edge during random stimulus, expected '%0b', got '%0b'.",
                   $time, rising_edge_expected, rising_edge);
     previous_signal = signal;
   end

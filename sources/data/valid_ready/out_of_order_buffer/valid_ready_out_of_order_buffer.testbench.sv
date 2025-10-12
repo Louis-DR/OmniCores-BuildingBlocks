@@ -90,8 +90,8 @@ task automatic write;
   write_data  = $urandom_range(WIDTH_POW2);
   @(posedge clock);
   if (write_ready) begin
-    assert (write_index < DEPTH) else $error("[%0tns] Write index '%0d' out of bounds.", $time, write_index);
-    assert (!valid_model[write_index]) else $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
+    assert (write_index < DEPTH) else $error("[%t] Write index '%0d' out of bounds.", $realtime, write_index);
+    assert (!valid_model[write_index]) else $error("[%t] Write index '%0d' was already valid in model.", $realtime, write_index);
     memory_model[write_index] = write_data;
     valid_model[write_index]  = 1;
     valid_entries_count++;
@@ -110,7 +110,7 @@ task automatic read;
   read_index = index;
   @(posedge clock);
   if (read_ready) begin
-    assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+    assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' at index '%0d' differs from model '%0h'.", $realtime, read_data, read_index, memory_model[read_index]);
   end
   @(negedge clock);
   read_valid = 0;
@@ -125,7 +125,7 @@ task automatic read_and_clear;
   read_index = index;
   @(posedge clock);
   if (read_ready) begin
-    assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+    assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' at index '%0d' differs from model '%0h'.", $realtime, read_data, read_index, memory_model[read_index]);
     valid_model[read_index] = 0;
     valid_entries_count--;
   end
@@ -138,14 +138,14 @@ endtask
 // Check flags task
 task automatic check_flags;
   if (valid_entries_count == 0) begin
-    assert (empty) else $error("[%0tns] Empty flag is deasserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
-    assert (!full) else $error("[%0tns] Full flag is asserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+    assert (empty) else $error("[%t] Empty flag is deasserted. The buffer should have %0d valid entries.", $realtime, valid_entries_count);
+    assert (!full) else $error("[%t] Full flag is asserted. The buffer should have %0d valid entries.", $realtime, valid_entries_count);
   end else if (valid_entries_count == DEPTH) begin
-    assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
-    assert (full) else $error("[%0tns] Full flag is deasserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+    assert (!empty) else $error("[%t] Empty flag is asserted. The buffer should have %0d valid entries.", $realtime, valid_entries_count);
+    assert (full) else $error("[%t] Full flag is deasserted. The buffer should have %0d valid entries.", $realtime, valid_entries_count);
   end else begin
-    assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
-    assert (!full) else $error("[%0tns] Full flag is asserted. The buffer should have %0d valid entries.", $time, valid_entries_count);
+    assert (!empty) else $error("[%t] Empty flag is asserted. The buffer should have %0d valid entries.", $realtime, valid_entries_count);
+    assert (!full) else $error("[%t] Full flag is asserted. The buffer should have %0d valid entries.", $realtime, valid_entries_count);
   end
 endtask
 
@@ -154,6 +154,7 @@ initial begin
   // Log waves
   $dumpfile("valid_ready_out_of_order_buffer.testbench.vcd");
   $dumpvars(0,valid_ready_out_of_order_buffer__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   write_data   = 0;
@@ -176,20 +177,20 @@ initial begin
   // Check 1 : Write once
   $display("CHECK 1 : Write once.");
   // Initial state
-  $display("[%0tns] After reset: full=%b empty=%b write_ready=%b read_ready=%b", $time, full, empty, write_ready, read_ready);
-  $display("[%0tns] Controller valid bits: %b", $time, valid_ready_out_of_order_buffer_dut.controller.valid);
-  $display("[%0tns] Controller outputs: full=%b empty=%b", $time, valid_ready_out_of_order_buffer_dut.controller.full, valid_ready_out_of_order_buffer_dut.controller.empty);
-  assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
-  assert (write_ready) else $error("[%0tns] Write ready is deasserted after reset.", $time);
-  assert (empty) else $error("[%0tns] Empty flag is deasserted after reset.", $time);
-  assert (!full) else $error("[%0tns] Full flag is asserted after reset.", $time);
+  $display("[%t] After reset: full=%b empty=%b write_ready=%b read_ready=%b", $realtime, full, empty, write_ready, read_ready);
+  $display("[%t] Controller valid bits: %b", $realtime, valid_ready_out_of_order_buffer_dut.controller.valid);
+  $display("[%t] Controller outputs: full=%b empty=%b", $realtime, valid_ready_out_of_order_buffer_dut.controller.full, valid_ready_out_of_order_buffer_dut.controller.empty);
+  assert (read_ready) else $error("[%t] Read ready should always be asserted for indexed reads.", $realtime);
+  assert (write_ready) else $error("[%t] Write ready is deasserted after reset.", $realtime);
+  assert (empty) else $error("[%t] Empty flag is deasserted after reset.", $realtime);
+  assert (!full) else $error("[%t] Full flag is asserted after reset.", $realtime);
   // Write operation
   @(negedge clock);
   write_valid = 1;
   write_data  = $urandom_range(WIDTH_POW2);
   @(posedge clock);
-  assert (write_index < DEPTH) else $error("[%0tns] Write index '%0d' out of bounds.", $time, write_index);
-  assert (!valid_model[write_index]) else $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
+  assert (write_index < DEPTH) else $error("[%t] Write index '%0d' out of bounds.", $realtime, write_index);
+  assert (!valid_model[write_index]) else $error("[%t] Write index '%0d' was already valid in model.", $realtime, write_index);
   memory_model[write_index] = write_data;
   valid_model[write_index]  = 1'b1;
   valid_entries_count++;
@@ -198,10 +199,10 @@ initial begin
   write_valid = 0;
   write_data  = 0;
   // Final state
-  assert (read_ready) else $error("[%0tns] Read ready is deasserted after one write.", $time);
-  assert (write_ready) else $error("[%0tns] Write ready is deasserted after one write.", $time);
-  assert (!empty) else $error("[%0tns] Empty flag is asserted after one write.", $time);
-  assert (!full) else $error("[%0tns] Full flag is asserted after only one write.", $time);
+  assert (read_ready) else $error("[%t] Read ready is deasserted after one write.", $realtime);
+  assert (write_ready) else $error("[%t] Write ready is deasserted after one write.", $realtime);
+  assert (!empty) else $error("[%t] Empty flag is asserted after one write.", $realtime);
+  assert (!full) else $error("[%t] Full flag is asserted after only one write.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -212,8 +213,8 @@ initial begin
   read_clear = 0;
   read_index = last_written_index;
   @(posedge clock);
-  assert (read_ready) else $error("[%0tns] Read ready not asserted for valid index '%0d'.", $time, read_index);
-  assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+  assert (read_ready) else $error("[%t] Read ready not asserted for valid index '%0d'.", $realtime, read_index);
+  assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' at index '%0d' differs from model '%0h'.", $realtime, read_data, read_index, memory_model[read_index]);
   @(negedge clock);
   read_valid = 0;
   read_index = 0;
@@ -233,8 +234,8 @@ initial begin
   read_clear = 1;
   read_index = last_written_index;
   @(posedge clock);
-  assert (read_ready) else $error("[%0tns] Read ready not asserted for valid index '%0d' during clear.", $time, read_index);
-  assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
+  assert (read_ready) else $error("[%t] Read ready not asserted for valid index '%0d' during clear.", $realtime, read_index);
+  assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $realtime, read_data, read_index, memory_model[read_index]);
   memory_model[read_index] = 'x;
   valid_model[read_index]  = 1'b0;
   valid_entries_count--;
@@ -243,10 +244,10 @@ initial begin
   read_clear = 0;
   read_index = 0;
   // Final state
-  assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
-  assert (write_ready) else $error("[%0tns] Write ready is deasserted after clearing the only valid entry.", $time);
-  assert (empty) else $error("[%0tns] Empty flag is deasserted after clearing the only valid entry.", $time);
-  assert (!full) else $error("[%0tns] Full flag is asserted after clearing the only valid entry.", $time);
+  assert (read_ready) else $error("[%t] Read ready should always be asserted for indexed reads.", $realtime);
+  assert (write_ready) else $error("[%t] Write ready is deasserted after clearing the only valid entry.", $realtime);
+  assert (empty) else $error("[%t] Empty flag is deasserted after clearing the only valid entry.", $realtime);
+  assert (!full) else $error("[%t] Full flag is asserted after clearing the only valid entry.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -257,9 +258,9 @@ initial begin
   read_valid = 1;
   read_index = last_written_index;
   @(posedge clock);
-  assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
+  assert (read_ready) else $error("[%t] Read ready should always be asserted for indexed reads.", $realtime);
   // Check that read_error is asserted for invalid index
-  assert (read_error) else $error("[%0tns] Read error not asserted for cleared index %0d.", $time, read_index);
+  assert (read_error) else $error("[%t] Read error not asserted for cleared index %0d.", $realtime, read_index);
   @(negedge clock);
   read_valid = 0;
   read_index = 0;
@@ -274,23 +275,23 @@ initial begin
     write_valid = 1;
     write_data  = $urandom_range(WIDTH_POW2);
     @(posedge clock);
-    assert (write_index < DEPTH) else $error("[%0tns] Write index '%0d' out of bounds during fill.", $time, write_index);
-    assert (!valid_model[write_index]) else $error("[%0tns] Write index '%0d' was already valid in model during fill.", $time, write_index);
+    assert (write_index < DEPTH) else $error("[%t] Write index '%0d' out of bounds during fill.", $realtime, write_index);
+    assert (!valid_model[write_index]) else $error("[%t] Write index '%0d' was already valid in model during fill.", $realtime, write_index);
     memory_model[write_index] = write_data;
     valid_model[write_index]  = 1'b1;
     valid_entries_count++;
     @(negedge clock);
     write_valid = 0;
     write_data  = 0;
-    assert (full || valid_entries_count != DEPTH) else $error("[%0tns] Full flag not asserted when model is full (%0d/%0d).", $time, valid_entries_count, DEPTH);
-    assert (!full || valid_entries_count >= DEPTH) else $error("[%0tns] Full flag asserted when model is not full (%0d/%0d).", $time, valid_entries_count, DEPTH);
+    assert (full || valid_entries_count != DEPTH) else $error("[%t] Full flag not asserted when model is full (%0d/%0d).", $realtime, valid_entries_count, DEPTH);
+    assert (!full || valid_entries_count >= DEPTH) else $error("[%t] Full flag asserted when model is not full (%0d/%0d).", $realtime, valid_entries_count, DEPTH);
   end
   // Final state
-  assert (read_ready) else $error("[%0tns] Read ready is deasserted after filling.", $time);
-  assert (!write_ready) else $error("[%0tns] Write ready is asserted after filling.", $time);
-  assert (!empty) else $error("[%0tns] Empty flag is asserted after filling. Should be full.", $time);
-  assert (full) else $error("[%0tns] Full flag is deasserted after filling. Should be full.", $time);
-  assert (valid_entries_count == DEPTH) else $error("[%0tns] Model count '%0d' is not equal to DEPTH '%0d' after filling.", $time, valid_entries_count, DEPTH);
+  assert (read_ready) else $error("[%t] Read ready is deasserted after filling.", $realtime);
+  assert (!write_ready) else $error("[%t] Write ready is asserted after filling.", $realtime);
+  assert (!empty) else $error("[%t] Empty flag is asserted after filling. Should be full.", $realtime);
+  assert (full) else $error("[%t] Full flag is deasserted after filling. Should be full.", $realtime);
+  assert (valid_entries_count == DEPTH) else $error("[%t] Model count '%0d' is not equal to DEPTH '%0d' after filling.", $realtime, valid_entries_count, DEPTH);
 
   repeat(10) @(posedge clock);
 
@@ -301,10 +302,10 @@ initial begin
   write_valid = 1;
   write_data  = $urandom_range(WIDTH_POW2);
   @(posedge clock);
-  assert (read_ready) else $error("[%0tns] Read ready is deasserted after write attempt when full.", $time);
-  assert (!write_ready) else $error("[%0tns] Write ready is asserted after write attempt when full.", $time);
-  assert (!empty) else $error("[%0tns] Empty flag is asserted after write attempt when full", $time);
-  assert (full) else $error("[%0tns] Full flag deasserted after write attempt when full.", $time);
+  assert (read_ready) else $error("[%t] Read ready is deasserted after write attempt when full.", $realtime);
+  assert (!write_ready) else $error("[%t] Write ready is asserted after write attempt when full.", $realtime);
+  assert (!empty) else $error("[%t] Empty flag is asserted after write attempt when full", $realtime);
+  assert (full) else $error("[%t] Full flag deasserted after write attempt when full.", $realtime);
   @(negedge clock);
   write_valid = 0;
   write_data  = 0;
@@ -319,20 +320,20 @@ initial begin
     read_valid = 1;
     read_index = read_count;
     @(posedge clock);
-    assert (read_ready) else $error("[%0tns] Read ready not asserted for valid index '%0d' during read.", $time, read_index);
-    assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during read.", $time, read_data, read_index, memory_model[read_index]);
+    assert (read_ready) else $error("[%t] Read ready not asserted for valid index '%0d' during read.", $realtime, read_index);
+    assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' at index '%0d' differs from model '%0h' during read.", $realtime, read_data, read_index, memory_model[read_index]);
     @(negedge clock);
     read_valid = 0;
     read_index = 0;
-    assert (empty || valid_entries_count != 0) else $error("[%0tns] Empty flag not asserted when model is empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
-    assert (!empty || valid_entries_count == 0) else $error("[%0tns] Empty flag asserted when model is not empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
+    assert (empty || valid_entries_count != 0) else $error("[%t] Empty flag not asserted when model is empty (%0d/%0d).", $realtime, valid_entries_count, DEPTH);
+    assert (!empty || valid_entries_count == 0) else $error("[%t] Empty flag asserted when model is not empty (%0d/%0d).", $realtime, valid_entries_count, DEPTH);
   end
   // Final state
-  assert (read_ready) else $error("[%0tns] Read ready is deasserted after reading without clearing.", $time);
-  assert (!write_ready) else $error("[%0tns] Write ready is asserted after reading without clearing.", $time);
-  assert (!empty) else $error("[%0tns] Empty flag is asserted after reading without clearing. Should be full.", $time);
-  assert (full) else $error("[%0tns] Full flag is deasserted after reading without clearing. Should be full.", $time);
-  assert (valid_entries_count == DEPTH) else $error("[%0tns] Model count '%0d' is not equal to DEPTH '%0d' after reading without clearing.", $time, valid_entries_count, DEPTH);
+  assert (read_ready) else $error("[%t] Read ready is deasserted after reading without clearing.", $realtime);
+  assert (!write_ready) else $error("[%t] Write ready is asserted after reading without clearing.", $realtime);
+  assert (!empty) else $error("[%t] Empty flag is asserted after reading without clearing. Should be full.", $realtime);
+  assert (full) else $error("[%t] Full flag is deasserted after reading without clearing. Should be full.", $realtime);
+  assert (valid_entries_count == DEPTH) else $error("[%t] Model count '%0d' is not equal to DEPTH '%0d' after reading without clearing.", $realtime, valid_entries_count, DEPTH);
   read_clear = 0;
 
   repeat(10) @(posedge clock);
@@ -345,30 +346,30 @@ initial begin
     read_valid = 1;
     read_index = clear_count;
     @(posedge clock);
-    assert (read_ready) else $error("[%0tns] Read ready not asserted for valid index '%0d' during clear.", $time, read_index);
-    assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $time, read_data, read_index, memory_model[read_index]);
+    assert (read_ready) else $error("[%t] Read ready not asserted for valid index '%0d' during clear.", $realtime, read_index);
+    assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' at index '%0d' differs from model '%0h' during clear.", $realtime, read_data, read_index, memory_model[read_index]);
     memory_model[read_index] = 'x;
     valid_model[read_index]  = 1'b0;
     valid_entries_count--;
     @(negedge clock);
     read_valid = 0;
     read_index = 0;
-    assert (empty || valid_entries_count != 0) else $error("[%0tns] Empty flag not asserted when model is empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
-    assert (!empty || valid_entries_count == 0) else $error("[%0tns] Empty flag asserted when model is not empty (%0d/%0d).", $time, valid_entries_count, DEPTH);
+    assert (empty || valid_entries_count != 0) else $error("[%t] Empty flag not asserted when model is empty (%0d/%0d).", $realtime, valid_entries_count, DEPTH);
+    assert (!empty || valid_entries_count == 0) else $error("[%t] Empty flag asserted when model is not empty (%0d/%0d).", $realtime, valid_entries_count, DEPTH);
   end
   // Final state check (should be empty)
-  assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
-  assert (write_ready) else $error("[%0tns] Write ready is deasserted after clearing all.", $time);
-  assert (empty) else $error("[%0tns] Empty flag is deasserted after clearing all. Should be empty.", $time);
-  assert (!full) else $error("[%0tns] Full flag is asserted after clearing all. Should be empty.", $time);
-  assert (valid_entries_count == 0) else $error("[%0tns] Model count (%0d) is not 0 after clearing all.", $time, valid_entries_count);
+  assert (read_ready) else $error("[%t] Read ready should always be asserted for indexed reads.", $realtime);
+  assert (write_ready) else $error("[%t] Write ready is deasserted after clearing all.", $realtime);
+  assert (empty) else $error("[%t] Empty flag is deasserted after clearing all. Should be empty.", $realtime);
+  assert (!full) else $error("[%t] Full flag is asserted after clearing all. Should be empty.", $realtime);
+  assert (valid_entries_count == 0) else $error("[%t] Model count (%0d) is not 0 after clearing all.", $realtime, valid_entries_count);
   read_clear = 0;
 
   repeat(10) @(posedge clock);
 
   // Check 9 : Continuous write & clear almost empty
   $display("CHECK 9 : Continuous write & clear almost empty.");
-  assert (empty) else $error("[%0tns] Buffer is not empty.", $time);
+  assert (empty) else $error("[%t] Buffer is not empty.", $realtime);
   last_written_index = 'x;
   for (int iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
     @(negedge clock);
@@ -378,8 +379,8 @@ initial begin
       read_clear = 1;
       read_index = last_written_index;
       #0;
-      assert (read_ready) else $error("[%0tns] Read ready not asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
-      assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
+      assert (read_ready) else $error("[%t] Read ready not asserted for index '%0d' during clear at iteration %0d.", $realtime, read_index, iteration);
+      assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $realtime, read_data, memory_model[read_index], read_index, iteration);
       memory_model[read_index] = 'x;
       valid_model[read_index]  = 1'b0;
       valid_entries_count--;
@@ -394,8 +395,8 @@ initial begin
       write_data  = $urandom_range(WIDTH_POW2);
       last_written_index = write_index;
       #0;
-      assert (write_index < DEPTH) else $error("[%0tns] Write index '%0d' out of bounds at iteration %0d.", $time, write_index, iteration);
-      assert (!valid_model[write_index]) else $error("[%0tns] Write index '%0d' was already valid in model at iteration %0d.", $time, write_index, iteration);
+      assert (write_index < DEPTH) else $error("[%t] Write index '%0d' out of bounds at iteration %0d.", $realtime, write_index, iteration);
+      assert (!valid_model[write_index]) else $error("[%t] Write index '%0d' was already valid in model at iteration %0d.", $realtime, write_index, iteration);
       memory_model[write_index] = write_data;
       valid_model[write_index]  = 1'b1;
       valid_entries_count++;
@@ -413,15 +414,15 @@ initial begin
   read_index  = 0;
   @(posedge clock);
   // Final state
-  assert (empty) else $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
-  assert (!full) else $error("[%0tns] Final state is full.", $time);
-  assert (valid_entries_count == 0) else $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
+  assert (empty) else $error("[%t] Final state not empty (%0d entries).", $realtime, valid_entries_count);
+  assert (!full) else $error("[%t] Final state is full.", $realtime);
+  assert (valid_entries_count == 0) else $error("[%t] Model count (%0d) is not 0.", $realtime, valid_entries_count);
 
   repeat(10) @(posedge clock);
 
   // Check 10 : Continuous write & clear almost full
   $display("CHECK 10 : Continuous write & clear almost full.");
-  assert (empty) else $error("[%0tns] Buffer is not empty.", $time);
+  assert (empty) else $error("[%t] Buffer is not empty.", $realtime);
   last_written_index = 'x;
   for (int iteration = 0; iteration < CONTINUOUS_CHECK_DURATION; iteration++) begin
     @(negedge clock);
@@ -431,8 +432,8 @@ initial begin
       read_clear = 1;
       read_index = last_written_index;
       #0;
-      assert (read_ready) else $error("[%0tns] Read ready not asserted for index '%0d' during clear at iteration %0d.", $time, read_index, iteration);
-      assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $time, read_data, memory_model[read_index], read_index, iteration);
+      assert (read_ready) else $error("[%t] Read ready not asserted for index '%0d' during clear at iteration %0d.", $realtime, read_index, iteration);
+      assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' differs from model '%0h' at index '%0d' during clear at iteration %0d.", $realtime, read_data, memory_model[read_index], read_index, iteration);
       memory_model[read_index] = 'x;
       valid_model[read_index]  = 1'b0;
       valid_entries_count--;
@@ -447,8 +448,8 @@ initial begin
       write_data  = $urandom_range(WIDTH_POW2);
       last_written_index = write_index;
       #0;
-      assert (write_index < DEPTH) else $error("[%0tns] Write index '%0d' out of bounds at iteration %0d.", $time, write_index, iteration);
-      assert (!valid_model[write_index]) else $error("[%0tns] Write index '%0d' was already valid in model at iteration %0d.", $time, write_index, iteration);
+      assert (write_index < DEPTH) else $error("[%t] Write index '%0d' out of bounds at iteration %0d.", $realtime, write_index, iteration);
+      assert (!valid_model[write_index]) else $error("[%t] Write index '%0d' was already valid in model at iteration %0d.", $realtime, write_index, iteration);
       memory_model[write_index] = write_data;
       valid_model[write_index]  = 1'b1;
       valid_entries_count++;
@@ -466,8 +467,8 @@ initial begin
       read_clear = 1;
       read_index = index;
       #0;
-      assert (read_ready) else $error("[%0tns] Read ready not asserted for valid index '%0d' during final read pass.", $time, read_index);
-      assert (read_data === memory_model[index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h' during final read pass.", $time, read_data, read_index, memory_model[index]);
+      assert (read_ready) else $error("[%t] Read ready not asserted for valid index '%0d' during final read pass.", $realtime, read_index);
+      assert (read_data === memory_model[index]) else $error("[%t] Read data '%0h' at index '%0d' differs from model '%0h' during final read pass.", $realtime, read_data, read_index, memory_model[index]);
       memory_model[read_index] = 'x;
       valid_model[read_index]  = 1'b0;
       valid_entries_count--;
@@ -488,9 +489,9 @@ initial begin
   read_index  = 0;
   @(posedge clock);
   // Final state
-  assert (empty) else $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
-  assert (!full) else $error("[%0tns] Final state is full.", $time);
-  assert (valid_entries_count == 0) else $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
+  assert (empty) else $error("[%t] Final state not empty (%0d entries).", $realtime, valid_entries_count);
+  assert (!full) else $error("[%t] Final state is full.", $realtime);
+  assert (valid_entries_count == 0) else $error("[%t] Model count (%0d) is not 0.", $realtime, valid_entries_count);
 
   repeat(10) @(posedge clock);
 
@@ -515,8 +516,8 @@ initial begin
         // Check
         @(posedge clock);
         if (write_valid && write_ready) begin
-          assert (write_index < DEPTH) else $error("[%0tns] Write index '%0d' out of bounds.", $time, write_index);
-          assert (!valid_model[write_index]) else $error("[%0tns] Write index '%0d' was already valid in model.", $time, write_index);
+          assert (write_index < DEPTH) else $error("[%t] Write index '%0d' out of bounds.", $realtime, write_index);
+          assert (!valid_model[write_index]) else $error("[%t] Write index '%0d' was already valid in model.", $realtime, write_index);
           memory_model[write_index] = write_data;
           valid_model[write_index]  = 1'b1;
           valid_entries_count++;
@@ -559,10 +560,10 @@ initial begin
         // Check
         @(posedge clock);
         if (read_valid && read_ready) begin
-          assert (valid_model[read_index]) else $error("[%0tns] Read from invalid index '%0d'.", $time, read_index);
-          assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' at index '%0d' differs from model '%0h'.", $time, read_data, read_index, memory_model[read_index]);
+          assert (valid_model[read_index]) else $error("[%t] Read from invalid index '%0d'.", $realtime, read_index);
+          assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' at index '%0d' differs from model '%0h'.", $realtime, read_data, read_index, memory_model[read_index]);
           // Check read_error signal
-          assert (!read_error) else $error("[%0tns] Read error asserted for valid read at index '%0d'.", $time, read_index);
+          assert (!read_error) else $error("[%t] Read error asserted for valid read at index '%0d'.", $realtime, read_index);
           if (read_clear) begin
             memory_model[read_index] = 'x;
             valid_model[read_index]  = 1'b0;
@@ -576,19 +577,19 @@ initial begin
       forever begin
         @(negedge clock);
         // Read ready is always asserted for indexed reads
-        assert (read_ready) else $error("[%0tns] Read ready should always be asserted for indexed reads.", $time);
+        assert (read_ready) else $error("[%t] Read ready should always be asserted for indexed reads.", $realtime);
         if (valid_entries_count == 0) begin
-          assert (write_ready) else $error("[%0tns] Write ready is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-          assert (empty) else $error("[%0tns] Empty flag is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-          assert (!full) else $error("[%0tns] Full flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+          assert (write_ready) else $error("[%t] Write ready is deasserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
+          assert (empty) else $error("[%t] Empty flag is deasserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
+          assert (!full) else $error("[%t] Full flag is asserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
         end else if (valid_entries_count == DEPTH) begin
-          assert (!write_ready) else $error("[%0tns] Write ready is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-          assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-          assert (full) else $error("[%0tns] Full flag is deasserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+          assert (!write_ready) else $error("[%t] Write ready is asserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
+          assert (!empty) else $error("[%t] Empty flag is asserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
+          assert (full) else $error("[%t] Full flag is deasserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
         end else begin
-          assert (write_ready) else $error("[%0tns] Write ready is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-          assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
-          assert (!full) else $error("[%0tns] Full flag is asserted. The buffer should be have %0d entries in it.", $time, valid_entries_count);
+          assert (write_ready) else $error("[%t] Write ready is asserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
+          assert (!empty) else $error("[%t] Empty flag is asserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
+          assert (!full) else $error("[%t] Full flag is asserted. The buffer should be have %0d entries in it.", $realtime, valid_entries_count);
         end
       end
     end
@@ -609,14 +610,14 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
   // Final state
-  assert (empty) else $error("[%0tns] Final state not empty (%0d entries).", $time, valid_entries_count);
-  assert (!full) else $error("[%0tns] Final state is full.", $time);
-  assert (valid_entries_count == 0) else $error("[%0tns] Model count (%0d) is not 0.", $time, valid_entries_count);
+  assert (empty) else $error("[%t] Final state not empty (%0d entries).", $realtime, valid_entries_count);
+  assert (!full) else $error("[%t] Final state is full.", $realtime);
+  assert (valid_entries_count == 0) else $error("[%t] Model count (%0d) is not 0.", $realtime, valid_entries_count);
 
   repeat(10) @(posedge clock);
 

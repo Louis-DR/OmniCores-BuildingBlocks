@@ -107,7 +107,7 @@ task automatic read_once;
   if (REGISTERED_READ) @(posedge clock);
   #(1);
   assert (read_data === expected_data)
-    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address_, expected_data);
+    else $error("[%t] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, read_data, address_, expected_data);
   @(negedge clock);
   access_enable = 0;
   address       = 'x;
@@ -125,6 +125,7 @@ initial begin
   // Log waves
   $dumpfile("single_port_ram.testbench.vcd");
   $dumpvars(0, single_port_ram__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   access_enable =  0;
@@ -219,7 +220,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;

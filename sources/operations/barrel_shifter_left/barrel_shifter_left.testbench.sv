@@ -55,6 +55,7 @@ initial begin
   // Log waves
   $dumpfile("barrel_shifter_left.testbench.vcd");
   $dumpvars(0,barrel_shifter_left__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   data_in   = 0;
@@ -72,7 +73,7 @@ initial begin
     data_out_expected = 1 << shift_index;
     #1;
     assert (data_out === data_out_expected)
-      else $error("[%0tns] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $time, data_in, shift, pad_value, data_out_expected, data_out);
+      else $error("[%t] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $realtime, data_in, shift, pad_value, data_out_expected, data_out);
   end
 
   #10;
@@ -86,7 +87,7 @@ initial begin
     data_out_expected = ~(1 << shift_index);
     #1;
     assert (data_out === data_out_expected)
-      else $error("[%0tns] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $time, data_in, shift, pad_value, data_out_expected, data_out);
+      else $error("[%t] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $realtime, data_in, shift, pad_value, data_out_expected, data_out);
   end
 
   #10;
@@ -100,7 +101,7 @@ initial begin
     data_out_expected = (1 << shift_index) | ((1 << shift_index) - 1);
     #1;
     assert (data_out === data_out_expected)
-      else $error("[%0tns] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $time, data_in, shift, pad_value, data_out_expected, data_out);
+      else $error("[%t] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $realtime, data_in, shift, pad_value, data_out_expected, data_out);
   end
 
   #10;
@@ -114,7 +115,7 @@ initial begin
     data_out_expected = (~1 << shift_index) & ((1 << DATA_WIDTH) - 1);
     #1;
     assert (data_out === data_out_expected)
-      else $error("[%0tns] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $time, data_in, shift, pad_value, data_out_expected, data_out);
+      else $error("[%t] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $realtime, data_in, shift, pad_value, data_out_expected, data_out);
   end
 
   #10;
@@ -128,7 +129,7 @@ initial begin
     data_out_expected = ((data_in << shift) | ({DATA_WIDTH{pad_value}} & ((1 << shift) - 1))) & ((1 << DATA_WIDTH) - 1);
     #1;
     assert (data_out === data_out_expected)
-      else $error("[%0tns] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $time, data_in, shift, pad_value, data_out_expected, data_out);
+      else $error("[%t] Incorrect output for input data '%b', shift '%b' and pad value '%b' : expected '%b' but got '%b'.", $realtime, data_in, shift, pad_value, data_out_expected, data_out);
     #1;
   end
 

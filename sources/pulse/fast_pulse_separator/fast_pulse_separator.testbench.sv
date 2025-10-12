@@ -64,7 +64,7 @@ end
 // Checker task for output pulse
 task automatic check_pulse_out(int duration, bool check_low_time = true);
   if (pulse_out) begin
-    $error("[%0tns] Output is already high at the start of the check.", $time);
+    $error("[%t] Output is already high at the start of the check.", $realtime);
   end
   pulse_count            = 0;
   current_pulse_length   = 0;
@@ -78,13 +78,13 @@ task automatic check_pulse_out(int duration, bool check_low_time = true);
       end
       if (waiting_first_pulse) begin
         if (current_pulse_length > SEPARATOR_LATENCY+1) begin
-          $error("[%0tns] Latency of the first pulse is too high.", $time);
+          $error("[%t] Latency of the first pulse is too high.", $realtime);
         end
       end else if (current_pulse_length > 1) begin
         if (current_pulse_polarity) begin
-          $error("[%0tns] Output pulse is more than one cycle wide.", $time);
+          $error("[%t] Output pulse is more than one cycle wide.", $realtime);
         end else if (check_low_time) begin
-          $error("[%0tns] Delay between pulses is more that one cycle.", $time);
+          $error("[%t] Delay between pulses is more that one cycle.", $realtime);
         end
       end
       current_pulse_polarity = pulse_out;
@@ -94,18 +94,18 @@ task automatic check_pulse_out(int duration, bool check_low_time = true);
     current_pulse_length += 1;
   end
   if (pulse_out) begin
-    $error("[%0tns] Output is still high at the end of the check.", $time);
+    $error("[%t] Output is still high at the end of the check.", $realtime);
   end
 endtask
 
 // Checker task for output pulse
 task automatic check_pulse_count(int expected_pulse_count);
   if (pulse_count == 0) begin
-    $error("[%0tns] No output pulse.", $time);
+    $error("[%t] No output pulse.", $realtime);
   end else if (pulse_count > expected_pulse_count) begin
-    $error("[%0tns] Too many output pulses.", $time);
+    $error("[%t] Too many output pulses.", $realtime);
   end else if (pulse_count < expected_pulse_count) begin
-    $error("[%0tns] Not enough output pulses.", $time);
+    $error("[%t] Not enough output pulses.", $realtime);
   end
 endtask
 
@@ -114,6 +114,7 @@ initial begin
   // Log waves
   $dumpfile("fast_pulse_separator.testbench.vcd");
   $dumpvars(0,fast_pulse_separator__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   pulse_in = 0;

@@ -61,6 +61,7 @@ initial begin
   // Log waves
   $dumpfile("multi_edge_detector.testbench.vcd");
   $dumpvars(0,multi_edge_detector__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   signal = 0;
@@ -74,11 +75,11 @@ initial begin
   // Check 1 : Reset state
   $display("CHECK 1 : Reset state.");
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is not low after reset.", $time);
+    else $error("[%t] Rising edge is not low after reset.", $realtime);
   assert (!falling_edge)
-    else $error("[%0tns] Falling edge is not low after reset.", $time);
+    else $error("[%t] Falling edge is not low after reset.", $realtime);
   assert (!any_edge)
-    else $error("[%0tns] Any edge is not low after reset.", $time);
+    else $error("[%t] Any edge is not low after reset.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -90,18 +91,18 @@ initial begin
   signal = 1;
   @(posedge clock);
   assert (rising_edge)
-    else $error("[%0tns] Rising edge is not asserted on the rising edge.", $time);
+    else $error("[%t] Rising edge is not asserted on the rising edge.", $realtime);
   assert (!falling_edge)
-    else $error("[%0tns] Falling edge is asserted on the rising edge.", $time);
+    else $error("[%t] Falling edge is asserted on the rising edge.", $realtime);
   assert (any_edge)
-    else $error("[%0tns] Any edge is not asserted on the rising edge.", $time);
+    else $error("[%t] Any edge is not asserted on the rising edge.", $realtime);
   @(posedge clock);
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is still asserted after the rising edge.", $time);
+    else $error("[%t] Rising edge is still asserted after the rising edge.", $realtime);
   assert (!falling_edge)
-    else $error("[%0tns] Falling edge is asserted after the rising edge.", $time);
+    else $error("[%t] Falling edge is asserted after the rising edge.", $realtime);
   assert (!any_edge)
-    else $error("[%0tns] Any edge is still asserted after the rising edge.", $time);
+    else $error("[%t] Any edge is still asserted after the rising edge.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -113,18 +114,18 @@ initial begin
   signal = 0;
   @(posedge clock);
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is asserted on the falling edge.", $time);
+    else $error("[%t] Rising edge is asserted on the falling edge.", $realtime);
   assert (falling_edge)
-    else $error("[%0tns] Falling edge is not asserted on the falling edge.", $time);
+    else $error("[%t] Falling edge is not asserted on the falling edge.", $realtime);
   assert (any_edge)
-    else $error("[%0tns] Any edge is not asserted on the falling edge.", $time);
+    else $error("[%t] Any edge is not asserted on the falling edge.", $realtime);
   @(posedge clock);
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is asserted after the falling edge.", $time);
+    else $error("[%t] Rising edge is asserted after the falling edge.", $realtime);
   assert (!falling_edge)
-    else $error("[%0tns] Falling edge is still asserted after the falling edge.", $time);
+    else $error("[%t] Falling edge is still asserted after the falling edge.", $realtime);
   assert (!any_edge)
-    else $error("[%0tns] Any edge is still asserted after the falling edge.", $time);
+    else $error("[%t] Any edge is still asserted after the falling edge.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -138,29 +139,29 @@ initial begin
     signal = 1;
     @(posedge clock);
     assert (rising_edge)
-      else $error("[%0tns] Rising edge is not asserted on the rising edge.", $time);
+      else $error("[%t] Rising edge is not asserted on the rising edge.", $realtime);
     assert (!falling_edge)
-      else $error("[%0tns] Falling edge is asserted on the rising edge.", $time);
+      else $error("[%t] Falling edge is asserted on the rising edge.", $realtime);
     assert (any_edge)
-      else $error("[%0tns] Any edge is not asserted on the rising edge.", $time);
+      else $error("[%t] Any edge is not asserted on the rising edge.", $realtime);
     // Falling edge
     @(negedge clock);
     signal = 0;
     @(posedge clock);
     assert (!rising_edge)
-      else $error("[%0tns] Rising edge is asserted on the falling edge.", $time);
+      else $error("[%t] Rising edge is asserted on the falling edge.", $realtime);
     assert (falling_edge)
-      else $error("[%0tns] Falling edge is not asserted on the falling edge.", $time);
+      else $error("[%t] Falling edge is not asserted on the falling edge.", $realtime);
     assert (any_edge)
-      else $error("[%0tns] Any edge is not asserted on the falling edge.", $time);
+      else $error("[%t] Any edge is not asserted on the falling edge.", $realtime);
   end
   @(posedge clock);
   assert (!rising_edge)
-    else $error("[%0tns] Rising edge is still asserted after the last edge.", $time);
+    else $error("[%t] Rising edge is still asserted after the last edge.", $realtime);
   assert (!falling_edge)
-    else $error("[%0tns] Falling edge is still asserted after the last edge.", $time);
+    else $error("[%t] Falling edge is still asserted after the last edge.", $realtime);
   assert (!any_edge)
-    else $error("[%0tns] Any edge is still asserted after the last edge.", $time);
+    else $error("[%t] Any edge is still asserted after the last edge.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -178,13 +179,13 @@ initial begin
     any_edge_expected   = rising_edge_expected | falling_edge_expected;
     @(posedge clock);
     assert (rising_edge === rising_edge_expected)
-      else $error("[%0tns] Incorrect rising edge during random stimulus, expected '%0b', got '%0b'.",
+      else $error("[%t] Incorrect rising edge during random stimulus, expected '%0b', got '%0b'.",
                   $time, rising_edge_expected, rising_edge);
     assert (falling_edge === falling_edge_expected)
-      else $error("[%0tns] Incorrect falling edge during random stimulus, expected '%0b', got '%0b'.",
+      else $error("[%t] Incorrect falling edge during random stimulus, expected '%0b', got '%0b'.",
                   $time, falling_edge_expected, falling_edge);
     assert (any_edge === any_edge_expected)
-      else $error("[%0tns] Incorrect any edge during random stimulus, expected '%0b', got '%0b'.",
+      else $error("[%t] Incorrect any edge during random stimulus, expected '%0b', got '%0b'.",
                   $time, any_edge_expected, any_edge);
     previous_signal = signal;
   end

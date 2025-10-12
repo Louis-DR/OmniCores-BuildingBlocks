@@ -112,6 +112,7 @@ initial begin
   // Log waves
   $dumpfile("advanced_wrapping_counter.testbench.vcd");
   $dumpvars(0,advanced_wrapping_counter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   decrement   = 0;
@@ -129,16 +130,16 @@ initial begin
   $display("CHECK 1 : Reset value.");
   expected_count = RESET_VALUE;
   if (count_no_lap != expected_count) begin
-    $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count, RESET_VALUE);
+    $error("[%t] Value at reset '%0d' is different than the one given as parameter '%0d'.", $realtime, count, RESET_VALUE);
   end
   if (minimum != (count_no_lap == COUNT_MIN)) begin
-    $error("[%0tns] Minimum flag mismatch at reset.", $time);
+    $error("[%t] Minimum flag mismatch at reset.", $realtime);
   end
   if (maximum != (count_no_lap == COUNT_MAX)) begin
-    $error("[%0tns] Maximum flag mismatch at reset.", $time);
+    $error("[%t] Maximum flag mismatch at reset.", $realtime);
   end
   if (overflow || underflow) begin
-    $error("[%0tns] Overflow/Underflow should be low at reset.", $time);
+    $error("[%t] Overflow/Underflow should be low at reset.", $realtime);
   end
 
   repeat(10) @(posedge clock);
@@ -160,13 +161,13 @@ initial begin
         @(negedge clock);
         #(1);
         if (overflow || underflow) begin
-          $error("[%0tns] No wrap expected, overflow/underflow should be low.", $time);
+          $error("[%t] No wrap expected, overflow/underflow should be low.", $realtime);
         end
         if (count_no_lap != expected_count) begin
-          $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+          $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
         end
         if (LAP_BIT && count[LAP_INDEX] != previous_lap) begin
-          $error("[%0tns] Lap bit should not toggle without wrapping.", $time);
+          $error("[%t] Lap bit should not toggle without wrapping.", $realtime);
         end
       end
     end
@@ -176,7 +177,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not reach max count.", $time);
+      $error("[%t] Timeout, could not reach max count.", $realtime);
     end
   join_any
   disable fork;
@@ -187,7 +188,7 @@ initial begin
   // Check 3 : Increment with wrapping
   $display("CHECK 3 : Increment with wrapping.");
   if (count_no_lap != COUNT_MAX) begin
-    $error("[%0tns] Counter should be at maximum '%0d' but is at '%0d'.", $time, COUNT_MAX, count);
+    $error("[%t] Counter should be at maximum '%0d' but is at '%0d'.", $realtime, COUNT_MAX, count);
   end
   @(negedge clock);
   increment = 1;
@@ -197,16 +198,16 @@ initial begin
   @(negedge clock);
   #(1);
   if (!overflow || underflow) begin
-    $error("[%0tns] Overflow pulse expected on increment at maximum (underflow should be low).", $time);
+    $error("[%t] Overflow pulse expected on increment at maximum (underflow should be low).", $realtime);
   end
   if (count_no_lap != COUNT_MIN) begin
-    $error("[%0tns] Counter should wrap to minimum '%0d' but is at '%0d'.", $time, COUNT_MIN, count);
+    $error("[%t] Counter should wrap to minimum '%0d' but is at '%0d'.", $realtime, COUNT_MIN, count);
   end
   if (!minimum || maximum) begin
-    $error("[%0tns] After wrapping up, minimum should be high and maximum low.", $time);
+    $error("[%t] After wrapping up, minimum should be high and maximum low.", $realtime);
   end
   if (LAP_BIT && count[LAP_INDEX] == previous_lap) begin
-    $error("[%0tns] Lap bit should toggle on wrap (increment at max).", $time);
+    $error("[%t] Lap bit should toggle on wrap (increment at max).", $realtime);
   end
   increment = 0;
 
@@ -215,7 +216,7 @@ initial begin
   // Check 4 : Decrement with wrapping
   $display("CHECK 4 : Decrement with wrapping.");
   if (count_no_lap != COUNT_MIN) begin
-    $error("[%0tns] Counter should be at minimum '%0d' but is at '%0d'.", $time, COUNT_MIN, count);
+    $error("[%t] Counter should be at minimum '%0d' but is at '%0d'.", $realtime, COUNT_MIN, count);
   end
   @(negedge clock);
   decrement = 1;
@@ -225,16 +226,16 @@ initial begin
   @(negedge clock);
   #(1);
   if (!underflow || overflow) begin
-    $error("[%0tns] Underflow pulse expected on decrement at minimum (overflow should be low).", $time);
+    $error("[%t] Underflow pulse expected on decrement at minimum (overflow should be low).", $realtime);
   end
   if (count_no_lap != COUNT_MAX) begin
-    $error("[%0tns] Counter should wrap to maximum '%0d' but is at '%0d'.", $time, COUNT_MAX, count);
+    $error("[%t] Counter should wrap to maximum '%0d' but is at '%0d'.", $realtime, COUNT_MAX, count);
   end
   if (!maximum || minimum) begin
-    $error("[%0tns] After wrapping down, maximum should be high and minimum low.", $time);
+    $error("[%t] After wrapping down, maximum should be high and minimum low.", $realtime);
   end
   if (LAP_BIT && count[LAP_INDEX] == previous_lap) begin
-    $error("[%0tns] Lap bit should toggle on wrap (decrement at min).", $time);
+    $error("[%t] Lap bit should toggle on wrap (decrement at min).", $realtime);
   end
   decrement = 0;
 
@@ -255,7 +256,7 @@ initial begin
         @(negedge clock);
         #(1);
         if (count_no_lap != expected_count) begin
-          $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+          $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
         end
       end
     end
@@ -265,7 +266,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not reach min count.", $time);
+      $error("[%t] Timeout, could not reach min count.", $realtime);
     end
   join_any
   disable fork;
@@ -289,24 +290,24 @@ initial begin
         @(negedge clock);
         #(1);
         if ((previous_index == COUNT_MAX) ? (!overflow) : (overflow)) begin
-          $error("[%0tns] Overflow pulse mismatch during full-cycle increment.", $time);
+          $error("[%t] Overflow pulse mismatch during full-cycle increment.", $realtime);
         end
         if (underflow) begin
-          $error("[%0tns] Underflow should be low during increment-only.", $time);
+          $error("[%t] Underflow should be low during increment-only.", $realtime);
         end
         expected_count = predict_next_count(previous_index, 1, 0);
         if (count_no_lap != expected_count) begin
-          $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+          $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
         end
         if (LAP_BIT) begin
           if ((previous_index == COUNT_MAX) ? (count[LAP_INDEX] == previous_lap) : (count[LAP_INDEX] != previous_lap)) begin
-            $error("[%0tns] Lap bit mismatch during full-cycle increment.", $time);
+            $error("[%t] Lap bit mismatch during full-cycle increment.", $realtime);
           end
         end
       end
       // Should be back to COUNT_MIN after full cycle
       if (count_no_lap != COUNT_MIN) begin
-        $error("[%0tns] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $time, COUNT_MIN, count);
+        $error("[%t] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $realtime, COUNT_MIN, count);
       end
     end
     // Timeout
@@ -315,7 +316,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not complete full increment cycle.", $time);
+      $error("[%t] Timeout, could not complete full increment cycle.", $realtime);
     end
   join_any
   disable fork;
@@ -339,24 +340,24 @@ initial begin
         @(negedge clock);
         #(1);
         if ((previous_index == COUNT_MIN) ? (!underflow) : (underflow)) begin
-          $error("[%0tns] Underflow pulse mismatch during full-cycle decrement.", $time);
+          $error("[%t] Underflow pulse mismatch during full-cycle decrement.", $realtime);
         end
         if (overflow) begin
-          $error("[%0tns] Overflow should be low during decrement-only.", $time);
+          $error("[%t] Overflow should be low during decrement-only.", $realtime);
         end
         expected_count = predict_next_count(previous_index, 0, 1);
         if (count_no_lap != expected_count) begin
-          $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+          $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
         end
         if (LAP_BIT) begin
           if ((previous_index == COUNT_MIN) ? (count[LAP_INDEX] == previous_lap) : (count[LAP_INDEX] != previous_lap)) begin
-            $error("[%0tns] Lap bit mismatch during full-cycle decrement.", $time);
+            $error("[%t] Lap bit mismatch during full-cycle decrement.", $realtime);
           end
         end
       end
       // Should be back to COUNT_MIN after full cycle
       if (count_no_lap != COUNT_MIN) begin
-        $error("[%0tns] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $time, COUNT_MIN, count);
+        $error("[%t] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $realtime, COUNT_MIN, count);
       end
     end
     // Timeout
@@ -365,7 +366,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not complete full decrement cycle.", $time);
+      $error("[%t] Timeout, could not complete full decrement cycle.", $realtime);
     end
   join_any
   disable fork;
@@ -396,16 +397,16 @@ initial begin
       logic expected_underflow;
       expected_overflow  = (increment && !decrement && previous_index == COUNT_MAX);
       expected_underflow = (decrement && !increment && previous_index == COUNT_MIN);
-      if (overflow != expected_overflow) $error("[%0tns] Overflow pulse mismatch in random test.", $time);
-      if (underflow != expected_underflow) $error("[%0tns] Underflow pulse mismatch in random test.", $time);
+      if (overflow != expected_overflow) $error("[%t] Overflow pulse mismatch in random test.", $realtime);
+      if (underflow != expected_underflow) $error("[%t] Underflow pulse mismatch in random test.", $realtime);
       if (LAP_BIT) begin
-        if ((count[LAP_INDEX] != previous_lap) != (expected_overflow || expected_underflow)) $error("[%0tns] Lap bit toggle mismatch in random test.", $time);
+        if ((count[LAP_INDEX] != previous_lap) != (expected_overflow || expected_underflow)) $error("[%t] Lap bit toggle mismatch in random test.", $realtime);
       end
     end
     expected_count = predict_next_count(previous_index, increment, decrement);
-    if (count_no_lap != expected_count) $error("[%0tns] Counter value mismatch in random test.", $time);
-    if (minimum != (expected_count == COUNT_MIN)) $error("[%0tns] Minimum flag mismatch in random test.", $time);
-    if (maximum != (expected_count == COUNT_MAX)) $error("[%0tns] Maximum flag mismatch in random test.", $time);
+    if (count_no_lap != expected_count) $error("[%t] Counter value mismatch in random test.", $realtime);
+    if (minimum != (expected_count == COUNT_MIN)) $error("[%t] Minimum flag mismatch in random test.", $realtime);
+    if (maximum != (expected_count == COUNT_MAX)) $error("[%t] Maximum flag mismatch in random test.", $realtime);
   end
   decrement = 0;
   increment = 0;
@@ -417,14 +418,14 @@ initial begin
   load_enable = 1;
   @(posedge clock);
   if (overflow || underflow) begin
-    $error("[%0tns] Overflow/Underflow should be low on load.", $time);
+    $error("[%t] Overflow/Underflow should be low on load.", $realtime);
   end
   @(negedge clock);
   if (count_no_lap != COUNT_MAX) begin
-    $error("[%0tns] Load to COUNT_MAX failed.", $time);
+    $error("[%t] Load to COUNT_MAX failed.", $realtime);
   end
   if (!maximum || minimum) begin
-    $error("[%0tns] Maximum should be high and minimum low after load to COUNT_MAX.", $time);
+    $error("[%t] Maximum should be high and minimum low after load to COUNT_MAX.", $realtime);
   end
   load_enable = 0;
 

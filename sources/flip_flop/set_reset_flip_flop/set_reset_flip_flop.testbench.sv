@@ -53,6 +53,7 @@ initial begin
   // Log waves
   $dumpfile("set_reset_flip_flop.testbench.vcd");
   $dumpvars(0,set_reset_flip_flop__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   set   = 0;
@@ -73,7 +74,7 @@ initial begin
     else if (reset) state_expected = 0;
     #1;
     assert (state === state_expected)
-      else $error("[%0tns] State output value differs from the expected value (%b != %b).", $time, state, state_expected);
+      else $error("[%t] State output value differs from the expected value (%b != %b).", $realtime, state, state_expected);
   end
 
   // End of test

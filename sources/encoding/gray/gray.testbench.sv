@@ -82,7 +82,7 @@ task check_conversion(input logic [WIDTH-1:0] binary_value);
   binary_to_gray_binary = binary_value;
   #1;
   assert (binary_to_gray_gray === expected_gray)
-    else $error("[%0tns] Incorrect binary-to-gray conversion for input '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect binary-to-gray conversion for input '%b'. Expected '%b', got '%b'.",
                 $time, binary_value, expected_gray, binary_to_gray_gray);
 
   // Test gray-to-binary conversion (round-trip test)
@@ -90,10 +90,10 @@ task check_conversion(input logic [WIDTH-1:0] binary_value);
   #1;
   expected_binary = reference_gray_to_binary(binary_to_gray_gray);
   assert (gray_to_binary_binary === binary_value)
-    else $error("[%0tns] Incorrect round-trip conversion. Original binary '%b' -> Gray '%b' -> Decoded binary '%b'.",
+    else $error("[%t] Incorrect round-trip conversion. Original binary '%b' -> Gray '%b' -> Decoded binary '%b'.",
                 $time, binary_value, binary_to_gray_gray, gray_to_binary_binary);
   assert (gray_to_binary_binary === expected_binary)
-    else $error("[%0tns] Incorrect gray-to-binary conversion for input '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect gray-to-binary conversion for input '%b'. Expected '%b', got '%b'.",
                 $time, binary_to_gray_gray, expected_binary, gray_to_binary_binary);
 endtask
 
@@ -104,7 +104,7 @@ task check_bit_difference(input logic [WIDTH-1:0] gray1, input logic [WIDTH-1:0]
   `COUNT_BIT_DIFFERENCES(WIDTH, gray1, gray2, bit_differences)
 
   assert (bit_differences === 1)
-    else $error("[%0tns] More than one bit difference between successive gray codes '%b' and '%b': %0d bit differences.",
+    else $error("[%t] More than one bit difference between successive gray codes '%b' and '%b': %0d bit differences.",
                 $time, gray1, gray2, bit_differences);
 endtask
 
@@ -141,6 +141,7 @@ initial begin
   // Log waves
   $dumpfile("gray.testbench.vcd");
   $dumpvars(0, gray__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   binary_to_gray_binary = 0;

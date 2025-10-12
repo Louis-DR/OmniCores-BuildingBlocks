@@ -83,7 +83,7 @@ endtask
 task automatic read;
   read_enable = 1;
   assert (read_data === data_expected)
-    else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+    else $error("[%t] Read data '%0h' is not as expected '%0h'.", $realtime, read_data, data_expected);
   @(posedge clock);
   data_expected = 'x;
   @(negedge clock);
@@ -95,12 +95,12 @@ task automatic check_flags;
   input logic expected_empty;
   input logic expected_full;
   if (empty !== expected_empty) begin
-    if (expected_empty) assert ( empty) else $error("[%0tns] Empty flag is deasserted. The buffer should be empty.", $time);
-    else                assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should be full.", $time);
+    if (expected_empty) assert ( empty) else $error("[%t] Empty flag is deasserted. The buffer should be empty.", $realtime);
+    else                assert (!empty) else $error("[%t] Empty flag is asserted. The buffer should be full.", $realtime);
   end
   if (full !== expected_full) begin
-    if (expected_full) assert ( full) else $error("[%0tns] Full flag is deasserted. The buffer should be full.", $time);
-    else               assert (!full) else $error("[%0tns] Full flag is asserted. The buffer should be empty.", $time);
+    if (expected_full) assert ( full) else $error("[%t] Full flag is deasserted. The buffer should be full.", $realtime);
+    else               assert (!full) else $error("[%t] Full flag is asserted. The buffer should be empty.", $realtime);
   end
 endtask
 
@@ -109,6 +109,7 @@ initial begin
   // Log waves
   $dumpfile("simple_buffer.testbench.vcd");
   $dumpvars(0,simple_buffer__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   write_data   = 0;
@@ -198,7 +199,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;

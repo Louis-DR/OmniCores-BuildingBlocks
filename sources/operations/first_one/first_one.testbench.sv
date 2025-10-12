@@ -52,6 +52,7 @@ initial begin
   // Log waves
   $dumpfile("first_one.testbench.vcd");
   $dumpvars(0,first_one__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   data = 0;
@@ -76,9 +77,9 @@ initial begin
     #1;
     // Check the first one output
     assert (first_one_small === first_one_expected)
-      else $error("[%0tns] Incorrect first_one (small) for data configuration %b. Expected %b, got %b.", $time, data_configuration, first_one_expected, first_one_small);
+      else $error("[%t] Incorrect first_one (small) for data configuration %b. Expected %b, got %b.", $realtime, data_configuration, first_one_expected, first_one_small);
     assert (first_one_fast === first_one_expected)
-      else $error("[%0tns] Incorrect first_one (fast) for data configuration %b. Expected %b, got %b.", $time, data_configuration, first_one_expected, first_one_fast);
+      else $error("[%t] Incorrect first_one (fast) for data configuration %b. Expected %b, got %b.", $realtime, data_configuration, first_one_expected, first_one_fast);
     // Small delay before next configuration
     #1;
   end

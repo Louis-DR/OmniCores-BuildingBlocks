@@ -83,6 +83,7 @@ initial begin
   // Log waves
   $dumpfile("wrapping_increment_counter.testbench.vcd");
   $dumpvars(0,wrapping_increment_counter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   increment = 0;
@@ -97,7 +98,7 @@ initial begin
   $display("CHECK 1 : Reset value.");
   expected_count = RESET_VALUE;
   if (count != expected_count) begin
-    $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count, RESET_VALUE);
+    $error("[%t] Value at reset '%0d' is different than the one given as parameter '%0d'.", $realtime, count, RESET_VALUE);
   end
 
   repeat(10) @(posedge clock);
@@ -116,7 +117,7 @@ initial begin
         expected_count += 1;
         @(negedge clock);
         if (count != expected_count) begin
-          $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+          $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
         end
       end
     end
@@ -126,7 +127,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not reach max count.", $time);
+      $error("[%t] Timeout, could not reach max count.", $realtime);
     end
   join_any
   disable fork;
@@ -137,13 +138,13 @@ initial begin
   // Check 3 : Increment with wrapping
   $display("CHECK 3 : Increment with wrapping.");
   if (count != COUNT_MAX) begin
-    $error("[%0tns] Counter should be at maximum '%0d' but is at '%0d'.", $time, COUNT_MAX, count);
+    $error("[%t] Counter should be at maximum '%0d' but is at '%0d'.", $realtime, COUNT_MAX, count);
   end
   @(negedge clock);
   increment = 1;
   @(negedge clock);
   if (count != COUNT_MIN) begin
-    $error("[%0tns] Counter should wrap to minimum '%0d' but is at '%0d'.", $time, COUNT_MIN, count);
+    $error("[%t] Counter should wrap to minimum '%0d' but is at '%0d'.", $realtime, COUNT_MIN, count);
   end
   increment = 0;
 
@@ -163,12 +164,12 @@ initial begin
         expected_count = predict_next_count(count, 1);
         @(negedge clock);
         if (count != expected_count) begin
-          $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+          $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
         end
       end
       // Should be back to minimum after full cycle
       if (count != COUNT_MIN) begin
-        $error("[%0tns] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $time, COUNT_MIN, count);
+        $error("[%t] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $realtime, COUNT_MIN, count);
       end
     end
     // Timeout
@@ -177,7 +178,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not complete full increment cycle.", $time);
+      $error("[%t] Timeout, could not complete full increment cycle.", $realtime);
     end
   join_any
   disable fork;
@@ -200,7 +201,7 @@ initial begin
     expected_count = predict_next_count(count, increment);
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   increment = 0;

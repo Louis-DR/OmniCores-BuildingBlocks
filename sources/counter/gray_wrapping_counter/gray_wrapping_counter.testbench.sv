@@ -103,7 +103,7 @@ task check_bit_difference;
   int bit_differences;
   `COUNT_BIT_DIFFERENCES(WIDTH, gray1, gray2, bit_differences)
   assert (bit_differences === 1)
-    else $error("[%0tns] More than one bit difference between successive gray codes '%b' and '%b': %0d bit differences.",
+    else $error("[%t] More than one bit difference between successive gray codes '%b' and '%b': %0d bit differences.",
                 $time, gray1, gray2, bit_differences);
 endtask
 
@@ -134,6 +134,7 @@ initial begin
   // Log waves
   $dumpfile("gray_wrapping_counter.testbench.vcd");
   $dumpvars(0,gray_wrapping_counter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   decrement   = 0;
@@ -152,16 +153,16 @@ initial begin
   $display("CHECK 1 : Reset value.");
   expected_count = RESET_VALUE;
   assert (count_binary == expected_count)
-    else $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count_binary, RESET_VALUE);
+    else $error("[%t] Value at reset '%0d' is different than the one given as parameter '%0d'.", $realtime, count_binary, RESET_VALUE);
   assert (minimum == (count_binary == COUNT_MIN))
-    else $error("[%0tns] Minimum flag mismatch at reset.", $time);
+    else $error("[%t] Minimum flag mismatch at reset.", $realtime);
   assert (maximum == (count_binary == COUNT_MAX))
-    else $error("[%0tns] Maximum flag mismatch at reset.", $time);
+    else $error("[%t] Maximum flag mismatch at reset.", $realtime);
   assert (!(overflow || underflow))
-    else $error("[%0tns] Overflow/Underflow should be low at reset.", $time);
+    else $error("[%t] Overflow/Underflow should be low at reset.", $realtime);
   // Gray mapping check at reset
   assert (count_gray == reference_binary_to_gray(count_binary))
-    else $error("[%0tns] Gray code does not match binary at reset.", $time);
+    else $error("[%t] Gray code does not match binary at reset.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -181,13 +182,13 @@ initial begin
         @(negedge clock);
         #(1);
         assert (!(overflow || underflow))
-          else $error("[%0tns] No wrap expected, overflow/underflow should be low.", $time);
+          else $error("[%t] No wrap expected, overflow/underflow should be low.", $realtime);
         assert (count_binary == expected_count)
-          else $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count_binary, expected_count);
+          else $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count_binary, expected_count);
         // Gray single-bit difference and mapping
         check_bit_difference(previous_gray, count_gray);
         assert (count_gray == reference_binary_to_gray(count_binary))
-          else $error("[%0tns] Gray mapping mismatch after increment.", $time);
+          else $error("[%t] Gray mapping mismatch after increment.", $realtime);
       end
     end
     // Timeout
@@ -196,7 +197,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not reach max count.", $time);
+      $error("[%t] Timeout, could not reach max count.", $realtime);
     end
   join_any
   disable fork;
@@ -207,7 +208,7 @@ initial begin
   // Check 3 : Increment with wrapping
   $display("CHECK 3 : Increment with wrapping.");
   assert (count_binary == COUNT_MAX)
-    else $error("[%0tns] Counter should be at maximum '%0d' but is at '%0d'.", $time, COUNT_MAX, count_binary);
+    else $error("[%t] Counter should be at maximum '%0d' but is at '%0d'.", $realtime, COUNT_MAX, count_binary);
   previous_binary = count_binary;
   previous_gray   = count_gray;
   @(negedge clock);
@@ -217,14 +218,14 @@ initial begin
   @(negedge clock);
   #(1);
   assert (overflow && !underflow)
-    else $error("[%0tns] Overflow pulse expected on increment at maximum (underflow should be low).", $time);
+    else $error("[%t] Overflow pulse expected on increment at maximum (underflow should be low).", $realtime);
   assert (count_binary == COUNT_MIN)
-    else $error("[%0tns] Counter should wrap to minimum '%0d' but is at '%0d'.", $time, COUNT_MIN, count_binary);
+    else $error("[%t] Counter should wrap to minimum '%0d' but is at '%0d'.", $realtime, COUNT_MIN, count_binary);
   assert (minimum && !maximum)
-    else $error("[%0tns] After wrapping up, minimum should be high and maximum low.", $time);
+    else $error("[%t] After wrapping up, minimum should be high and maximum low.", $realtime);
   check_bit_difference(previous_gray, count_gray);
   assert (count_gray == reference_binary_to_gray(count_binary))
-    else $error("[%0tns] Gray mapping mismatch after wrap up.", $time);
+    else $error("[%t] Gray mapping mismatch after wrap up.", $realtime);
   increment = 0;
 
   repeat(10) @(posedge clock);
@@ -232,7 +233,7 @@ initial begin
   // Check 4 : Decrement with wrapping
   $display("CHECK 4 : Decrement with wrapping.");
   assert (count_binary == COUNT_MIN)
-    else $error("[%0tns] Counter should be at minimum '%0d' but is at '%0d'.", $time, COUNT_MIN, count_binary);
+    else $error("[%t] Counter should be at minimum '%0d' but is at '%0d'.", $realtime, COUNT_MIN, count_binary);
   previous_binary = count_binary;
   previous_gray   = count_gray;
   @(negedge clock);
@@ -242,14 +243,14 @@ initial begin
   @(negedge clock);
   #(1);
   assert (underflow && !overflow)
-    else $error("[%0tns] Underflow pulse expected on decrement at minimum (overflow should be low).", $time);
+    else $error("[%t] Underflow pulse expected on decrement at minimum (overflow should be low).", $realtime);
   assert (count_binary == COUNT_MAX)
-    else $error("[%0tns] Counter should wrap to maximum '%0d' but is at '%0d'.", $time, COUNT_MAX, count_binary);
+    else $error("[%t] Counter should wrap to maximum '%0d' but is at '%0d'.", $realtime, COUNT_MAX, count_binary);
   assert (maximum && !minimum)
-    else $error("[%0tns] After wrapping down, maximum should be high and minimum low.", $time);
+    else $error("[%t] After wrapping down, maximum should be high and minimum low.", $realtime);
   check_bit_difference(previous_gray, count_gray);
   assert (count_gray == reference_binary_to_gray(count_binary))
-    else $error("[%0tns] Gray mapping mismatch after wrap down.", $time);
+    else $error("[%t] Gray mapping mismatch after wrap down.", $realtime);
   decrement = 0;
 
   repeat(10) @(posedge clock);
@@ -270,11 +271,11 @@ initial begin
         @(negedge clock);
         #(1);
         assert (count_binary == expected_count)
-          else $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count_binary, expected_count);
+          else $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count_binary, expected_count);
         // Gray single-bit difference and mapping
         check_bit_difference(previous_gray, count_gray);
         assert (count_gray == reference_binary_to_gray(count_binary))
-          else $error("[%0tns] Gray mapping mismatch after decrement.", $time);
+          else $error("[%t] Gray mapping mismatch after decrement.", $realtime);
       end
     end
     // Timeout
@@ -283,7 +284,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not reach min count.", $time);
+      $error("[%t] Timeout, could not reach min count.", $realtime);
     end
   join_any
   disable fork;
@@ -308,18 +309,18 @@ initial begin
         @(negedge clock);
         #(1);
         assert ( (previous_binary == COUNT_MAX) ? overflow : !overflow )
-          else $error("[%0tns] Overflow pulse mismatch during full-cycle increment.", $time);
+          else $error("[%t] Overflow pulse mismatch during full-cycle increment.", $realtime);
         assert (!underflow)
-          else $error("[%0tns] Underflow should be low during increment-only.", $time);
+          else $error("[%t] Underflow should be low during increment-only.", $realtime);
         assert (count_binary == expected_count)
-          else $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count_binary, expected_count);
+          else $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count_binary, expected_count);
         check_bit_difference(previous_gray, count_gray);
         assert (count_gray == reference_binary_to_gray(count_binary))
-          else $error("[%0tns] Gray mapping mismatch during full-cycle increment.", $time);
+          else $error("[%t] Gray mapping mismatch during full-cycle increment.", $realtime);
       end
       // Should be back to COUNT_MIN after full cycle
       assert (count_binary == COUNT_MIN)
-        else $error("[%0tns] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $time, COUNT_MIN, count_binary);
+        else $error("[%t] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $realtime, COUNT_MIN, count_binary);
     end
     // Timeout
     begin
@@ -327,7 +328,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not complete full increment cycle.", $time);
+      $error("[%t] Timeout, could not complete full increment cycle.", $realtime);
     end
   join_any
   disable fork;
@@ -352,18 +353,18 @@ initial begin
         @(negedge clock);
         #(1);
         assert ( (previous_binary == COUNT_MIN) ? underflow : !underflow )
-          else $error("[%0tns] Underflow pulse mismatch during full-cycle decrement.", $time);
+          else $error("[%t] Underflow pulse mismatch during full-cycle decrement.", $realtime);
         assert (!overflow)
-          else $error("[%0tns] Overflow should be low during decrement-only.", $time);
+          else $error("[%t] Overflow should be low during decrement-only.", $realtime);
         assert (count_binary == expected_count)
-          else $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count_binary, expected_count);
+          else $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count_binary, expected_count);
         check_bit_difference(previous_gray, count_gray);
         assert (count_gray == reference_binary_to_gray(count_binary))
-          else $error("[%0tns] Gray mapping mismatch during full-cycle decrement.", $time);
+          else $error("[%t] Gray mapping mismatch during full-cycle decrement.", $realtime);
       end
       // Should be back to COUNT_MIN after full cycle
       assert (count_binary == COUNT_MIN)
-        else $error("[%0tns] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $time, COUNT_MIN, count_binary);
+        else $error("[%t] Counter should be back to minimum '%0d' after full cycle but is at '%0d'.", $realtime, COUNT_MIN, count_binary);
     end
     // Timeout
     begin
@@ -371,7 +372,7 @@ initial begin
         @(posedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout, could not complete full decrement cycle.", $time);
+      $error("[%t] Timeout, could not complete full decrement cycle.", $realtime);
     end
   join_any
   disable fork;
@@ -403,19 +404,19 @@ initial begin
       logic expected_underflow;
       expected_overflow  = (increment && !decrement && previous_binary == COUNT_MAX);
       expected_underflow = (decrement && !increment && previous_binary == COUNT_MIN);
-      assert (overflow  == expected_overflow)  else $error("[%0tns] Overflow pulse mismatch in random test.",  $time);
-      assert (underflow == expected_underflow) else $error("[%0tns] Underflow pulse mismatch in random test.", $time);
+      assert (overflow  == expected_overflow)  else $error("[%t] Overflow pulse mismatch in random test.",  $time);
+      assert (underflow == expected_underflow) else $error("[%t] Underflow pulse mismatch in random test.", $realtime);
       if (increment ^ decrement) begin
         check_bit_difference(previous_gray, count_gray);
       end else begin
         // No change expected
-        assert (count_gray === previous_gray) else $error("[%0tns] Gray code changed without a step.", $time);
+        assert (count_gray === previous_gray) else $error("[%t] Gray code changed without a step.", $realtime);
       end
     end
-    assert (count_binary == expected_count) else $error("[%0tns] Counter value mismatch in random test.", $time);
-    assert (minimum == (expected_count == COUNT_MIN)) else $error("[%0tns] Minimum flag mismatch in random test.", $time);
-    assert (maximum == (expected_count == COUNT_MAX)) else $error("[%0tns] Maximum flag mismatch in random test.", $time);
-    assert (count_gray == reference_binary_to_gray(count_binary)) else $error("[%0tns] Gray mapping mismatch in random test.", $time);
+    assert (count_binary == expected_count) else $error("[%t] Counter value mismatch in random test.", $realtime);
+    assert (minimum == (expected_count == COUNT_MIN)) else $error("[%t] Minimum flag mismatch in random test.", $realtime);
+    assert (maximum == (expected_count == COUNT_MAX)) else $error("[%t] Maximum flag mismatch in random test.", $realtime);
+    assert (count_gray == reference_binary_to_gray(count_binary)) else $error("[%t] Gray mapping mismatch in random test.", $realtime);
   end
   decrement = 0;
   increment = 0;
@@ -426,11 +427,11 @@ initial begin
   if (LOAD_BINARY) load_count = COUNT_MAX; else load_count = reference_binary_to_gray(COUNT_MAX);
   load_enable = 1;
   @(posedge clock);
-  assert (!(overflow || underflow)) else $error("[%0tns] Overflow/Underflow should be low on load.", $time);
+  assert (!(overflow || underflow)) else $error("[%t] Overflow/Underflow should be low on load.", $realtime);
   @(negedge clock);
-  assert (maximum && !minimum) else $error("[%0tns] Maximum should be high and minimum low after load to COUNT_MAX.", $time);
-  assert (count_binary == COUNT_MAX) else $error("[%0tns] Load to maximum failed.", $time);
-  assert (count_gray == reference_binary_to_gray(count_binary)) else $error("[%0tns] Gray mapping mismatch after load.", $time);
+  assert (maximum && !minimum) else $error("[%t] Maximum should be high and minimum low after load to COUNT_MAX.", $realtime);
+  assert (count_binary == COUNT_MAX) else $error("[%t] Load to maximum failed.", $realtime);
+  assert (count_gray == reference_binary_to_gray(count_binary)) else $error("[%t] Gray mapping mismatch after load.", $realtime);
   load_enable = 0;
 
   // End of test

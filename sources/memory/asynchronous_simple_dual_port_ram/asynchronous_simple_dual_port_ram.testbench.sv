@@ -63,7 +63,7 @@ task automatic write_once;
   write_address = address;
   write_data    = data;
   @(posedge write_clock);
-  // $display("[%0tns] Write data '0x%0h' at address '0x%0h'.", $time, data, address);
+  // $display("[%t] Write data '0x%0h' at address '0x%0h'.", $realtime, data, address);
   memory_model[address] = data;
   @(negedge write_clock);
   write_enable = 0;
@@ -86,7 +86,7 @@ task automatic read_once;
   expected_data = memory_model[address];
   #(1fs);
   assert (read_data === expected_data)
-    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address, expected_data);
+    else $error("[%t] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, read_data, address, expected_data);
   @(negedge read_clock);
   read_enable = 0;
 endtask
@@ -129,6 +129,7 @@ end
 initial begin
   $dumpfile("asynchronous_simple_dual_port_ram.testbench.vcd");
   $dumpvars(0, asynchronous_simple_dual_port_ram__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   write_enable  =  0;
@@ -214,7 +215,7 @@ initial begin
         @(negedge write_clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -254,7 +255,7 @@ initial begin
           expected_data = memory_model[read_address];
           @(posedge read_clock);
           assert (read_data === expected_data)
-            else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, read_address, expected_data);
+            else $error("[%t] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, read_data, read_address, expected_data);
         end else begin
           read_enable = 0;
         end
@@ -266,7 +267,7 @@ initial begin
         @(negedge write_clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;

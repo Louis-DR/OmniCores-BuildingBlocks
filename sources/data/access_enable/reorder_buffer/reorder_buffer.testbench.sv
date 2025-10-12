@@ -98,8 +98,8 @@ end
 task automatic reserve();
   reserve_enable = 1;
   @(posedge clock);
-  assert (reserve_index < DEPTH) else $error("[%0tns] Reserve index '%0d' out of bounds.", $time, reserve_index);
-  assert (!valid_model[reserve_index]) else $error("[%0tns] Reserve index '%0d' was already valid in model.", $time, reserve_index);
+  assert (reserve_index < DEPTH) else $error("[%t] Reserve index '%0d' out of bounds.", $realtime, reserve_index);
+  assert (!valid_model[reserve_index]) else $error("[%t] Reserve index '%0d' was already valid in model.", $realtime, reserve_index);
   reserved_indices_for_write.push_back(reserve_index);
   reserved_indices_for_read.push_back(reserve_index);
   reserved_model [reserve_index] = 1;
@@ -126,7 +126,7 @@ task automatic read();
   read_enable = 1;
   read_index  = reserved_indices_for_read.pop_front();
   @(posedge clock);
-  assert (read_data === memory_model[read_index]) else $error("[%0tns] Read data '%0h' differs from model '%0h'.", $time, read_data, memory_model[read_index]);
+  assert (read_data === memory_model[read_index]) else $error("[%t] Read data '%0h' differs from model '%0h'.", $realtime, read_data, memory_model[read_index]);
   reserved_model [read_index] = 0;
   valid_model    [read_index] = 0;
   @(negedge clock);
@@ -149,14 +149,14 @@ task automatic check_flags;
   input logic  expect_data_full;
   input logic  expect_data_empty;
   input string context_string;
-  if (expect_reserve_full)  assert (reserve_full)  else $error("[%0tns] Reserve full flag is not asserted%s.",  $time, context_string);
-  if (expect_reserve_empty) assert (reserve_empty) else $error("[%0tns] Reserve empty flag is not asserted%s.", $time, context_string);
-  if (expect_data_full)     assert (data_full)     else $error("[%0tns] Data full flag is not asserted%s.",     $time, context_string);
-  if (expect_data_empty)    assert (data_empty)    else $error("[%0tns] Data empty flag is not asserted%s.",    $time, context_string);
-  if (!expect_reserve_full)  assert (!reserve_full)  else $error("[%0tns] Reserve full flag is asserted%s.",      $time, context_string);
-  if (!expect_reserve_empty) assert (!reserve_empty) else $error("[%0tns] Reserve empty flag is asserted%s.",     $time, context_string);
-  if (!expect_data_full)     assert (!data_full)     else $error("[%0tns] Data full flag is asserted%s.",         $time, context_string);
-  if (!expect_data_empty)    assert (!data_empty)    else $error("[%0tns] Data empty flag is asserted%s.",        $time, context_string);
+  if (expect_reserve_full)  assert (reserve_full)  else $error("[%t] Reserve full flag is not asserted%s.",  $time, context_string);
+  if (expect_reserve_empty) assert (reserve_empty) else $error("[%t] Reserve empty flag is not asserted%s.", $realtime, context_string);
+  if (expect_data_full)     assert (data_full)     else $error("[%t] Data full flag is not asserted%s.",     $time, context_string);
+  if (expect_data_empty)    assert (data_empty)    else $error("[%t] Data empty flag is not asserted%s.",    $time, context_string);
+  if (!expect_reserve_full)  assert (!reserve_full)  else $error("[%t] Reserve full flag is asserted%s.",      $time, context_string);
+  if (!expect_reserve_empty) assert (!reserve_empty) else $error("[%t] Reserve empty flag is asserted%s.",     $time, context_string);
+  if (!expect_data_full)     assert (!data_full)     else $error("[%t] Data full flag is asserted%s.",         $time, context_string);
+  if (!expect_data_empty)    assert (!data_empty)    else $error("[%t] Data empty flag is asserted%s.",        $time, context_string);
 endtask
 
 // Main block
@@ -164,6 +164,7 @@ initial begin
   // Log waves
   $dumpfile("reorder_buffer.testbench.vcd");
   $dumpvars(0,reorder_buffer__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   reserve_enable = 0;
@@ -375,7 +376,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -407,7 +408,7 @@ initial begin
   write_data   = $urandom_range(WIDTH_POW2);
   write_index  = 0;
   @(posedge clock);
-  assert (write_error) else $error("[%0tns] Write error not asserted for unreserved index write.", $time);
+  assert (write_error) else $error("[%t] Write error not asserted for unreserved index write.", $realtime);
   @(negedge clock);
   write_enable = 0;
   write_data   = 0;
@@ -420,7 +421,7 @@ initial begin
   write_data   = $urandom_range(WIDTH_POW2);
   write_index  = 0;
   @(posedge clock);
-  assert (write_error) else $error("[%0tns] Write error not asserted for already-written index write.", $time);
+  assert (write_error) else $error("[%t] Write error not asserted for already-written index write.", $realtime);
   @(negedge clock);
   write_enable = 0;
   write_data   = 0;

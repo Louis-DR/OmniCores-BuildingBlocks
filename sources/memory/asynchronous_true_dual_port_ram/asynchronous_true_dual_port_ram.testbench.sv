@@ -162,7 +162,7 @@ task automatic read_once;
     expected_data = memory_model[address];
     #(1fs);
     assert (port_0_read_data === expected_data)
-      else $error("[%0tns] Port 0: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, port_0_read_data, address, expected_data);
+      else $error("[%t] Port 0: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, port_0_read_data, address, expected_data);
     @(negedge port_0_clock);
     port_0_access_enable = 0;
   end else begin
@@ -173,7 +173,7 @@ task automatic read_once;
     expected_data = memory_model[address];
     #(1fs);
     assert (port_1_read_data === expected_data)
-      else $error("[%0tns] Port 1: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, port_1_read_data, address, expected_data);
+      else $error("[%t] Port 1: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, port_1_read_data, address, expected_data);
     @(negedge port_1_clock);
     port_1_access_enable = 0;
   end
@@ -212,6 +212,7 @@ endtask
 initial begin
   $dumpfile("asynchronous_true_dual_port_ram.testbench.vcd");
   $dumpvars(0, asynchronous_true_dual_port_ram__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   port_0_access_enable = 0;
@@ -348,7 +349,7 @@ initial begin
         @(negedge port_0_clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -379,7 +380,7 @@ initial begin
         @(negedge port_0_clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -408,7 +409,7 @@ initial begin
         @(negedge port_0_clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -438,7 +439,7 @@ initial begin
         @(negedge port_0_clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -483,7 +484,7 @@ initial begin
         @(negedge port_0_clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;

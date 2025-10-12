@@ -55,6 +55,7 @@ initial begin
   // Log waves
   $dumpfile("edge_detector.testbench.vcd");
   $dumpvars(0,edge_detector__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   signal = 0;
@@ -68,7 +69,7 @@ initial begin
   // Check 1 : Reset state
   $display("CHECK 1 : Reset state.");
   assert (!edge_pulse)
-    else $error("[%0tns] Edge pulse is not low after reset.", $time);
+    else $error("[%t] Edge pulse is not low after reset.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -80,10 +81,10 @@ initial begin
   signal = 1;
   @(posedge clock);
   assert (edge_pulse)
-    else $error("[%0tns] Edge pulse is not asserted on the rising edge.", $time);
+    else $error("[%t] Edge pulse is not asserted on the rising edge.", $realtime);
   @(posedge clock);
   assert (!edge_pulse)
-    else $error("[%0tns] Edge pulse is still asserted after the rising edge.", $time);
+    else $error("[%t] Edge pulse is still asserted after the rising edge.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -95,10 +96,10 @@ initial begin
   signal = 0;
   @(posedge clock);
   assert (edge_pulse)
-    else $error("[%0tns] Edge pulse is not asserted on the falling edge.", $time);
+    else $error("[%t] Edge pulse is not asserted on the falling edge.", $realtime);
   @(posedge clock);
   assert (!edge_pulse)
-    else $error("[%0tns] Edge pulse is still asserted after the falling edge.", $time);
+    else $error("[%t] Edge pulse is still asserted after the falling edge.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -109,11 +110,11 @@ initial begin
     signal = ~signal;
     @(posedge clock);
     assert (edge_pulse)
-      else $error("[%0tns] Edge pulse is not asserted on consecutive edges.", $time);
+      else $error("[%t] Edge pulse is not asserted on consecutive edges.", $realtime);
   end
   @(posedge clock);
   assert (!edge_pulse)
-    else $error("[%0tns] Edge pulse is still asserted after the last edge.", $time);
+    else $error("[%t] Edge pulse is still asserted after the last edge.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -129,7 +130,7 @@ initial begin
     edge_pulse_expected = signal ^ previous_signal;
     @(posedge clock);
     assert (edge_pulse === edge_pulse_expected)
-      else $error("[%0tns] Incorrect edge pulse during random stimulus, expected '%0b', got '%0b'.",
+      else $error("[%t] Incorrect edge pulse during random stimulus, expected '%0b', got '%0b'.",
                   $time, edge_pulse_expected, edge_pulse);
     previous_signal = signal;
   end

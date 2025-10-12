@@ -43,6 +43,7 @@ initial begin
   // Log waves
   $dumpfile("static_priority_arbiter.testbench.vcd");
   $dumpvars(0,static_priority_arbiter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   requests = 0;
@@ -70,7 +71,7 @@ initial begin
 
     // Check the grant output
     assert (grant === grant_expected) else begin
-      $error("[%0tns] Incorrect grant for request configuration %b. Expected %b, got %b.", $time, requests, grant_expected, grant);
+      $error("[%t] Incorrect grant for request configuration %b. Expected %b, got %b.", $realtime, requests, grant_expected, grant);
     end
 
     // Small delay before next configuration if desired

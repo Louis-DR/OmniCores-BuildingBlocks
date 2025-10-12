@@ -73,15 +73,15 @@ end
 
 // Assertion 1: At most one grant
 assert property (@(posedge clock) $countones(grant) <= 1)
-  else $error("[%0tns] More than one grant asserted : %b", $time, grant);
+  else $error("[%t] More than one grant asserted : %b", $realtime, grant);
 
 // Assertion 2: Grant implies request
 assert property (@(posedge clock) (grant !== '0) |-> ((grant & requests) === grant))
-  else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
+  else $error("[%t] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $realtime, grant, requests);
 
 // Assertion 3: Requests implies exactly one grant
 assert property (@(posedge clock) resetn |-> (|requests) |-> ($countones(grant) == 1))
-  else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
+  else $error("[%t] Requests active (requests=%b), but grant count is not one (grant=%b).", $realtime, requests, grant);
 
 // Procedural Assertions Fallback
 `else
@@ -95,15 +95,15 @@ always @(posedge clock) begin
   if (resetn) begin
     // Assertion 1: At most one grant
     assert ($countones(grant) <= 1)
-      else $error("[%0tns] More than one grant asserted : %b", $time, grant);
+      else $error("[%t] More than one grant asserted : %b", $realtime, grant);
 
     // Assertion 2: Grant implies request
     assert ((grant === '0) || ((grant & requests) === grant))
-      else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
+      else $error("[%t] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $realtime, grant, requests);
 
     // Assertion 3: Requests implies exactly one grant
     assert (!(|requests) || ($countones(grant) == 1))
-      else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
+      else $error("[%t] Requests active (requests=%b), but grant count is not one (grant=%b).", $realtime, requests, grant);
   end
 end
 
@@ -155,6 +155,7 @@ initial begin
   // Log waves
   $dumpfile("dynamic_priority_arbiter.testbench.vcd");
   $dumpvars(0,dynamic_priority_arbiter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   requests   = '0;
@@ -179,7 +180,7 @@ initial begin
       @(posedge clock);
       // Grant should always match the single request
       assert (grant === requests)
-        else $error("[%0tns] Grant doesn't match the only active request (requests=%b, grant=%b).", $time, requests, grant);
+        else $error("[%t] Grant doesn't match the only active request (requests=%b, grant=%b).", $realtime, requests, grant);
     end
   end
   requests = '0;
@@ -198,7 +199,7 @@ initial begin
     @(posedge clock);
     // Grant must be given to active request with the highest priority
     assert ((grant & highest_priority_requests) === grant) else begin
-      $error("[%0tns] Grant is not given to an active request with the highest priority (requests=%b, priorities=%h, grant=%b, expected=%b).", $time, requests, priorities, grant, highest_priority_requests);
+      $error("[%t] Grant is not given to an active request with the highest priority (requests=%b, priorities=%h, grant=%b, expected=%b).", $realtime, requests, priorities, grant, highest_priority_requests);
     end
   end
   requests   = '0;
@@ -218,7 +219,7 @@ initial begin
     @(posedge clock);
     // Grant must be given to active request with the highest priority
     assert ((grant & highest_priority_requests) === grant) else begin
-      $error("[%0tns] Grant is not given to an active request with the highest priority (requests=%b, priorities=%h, grant=%b, expected=%b).", $time, requests, priorities, grant, highest_priority_requests);
+      $error("[%t] Grant is not given to an active request with the highest priority (requests=%b, priorities=%h, grant=%b, expected=%b).", $realtime, requests, priorities, grant, highest_priority_requests);
     end
   end
 

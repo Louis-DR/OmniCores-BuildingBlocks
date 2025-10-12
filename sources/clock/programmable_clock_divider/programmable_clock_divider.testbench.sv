@@ -66,6 +66,7 @@ initial begin
   // Log waves
   $dumpfile("programmable_clock_divider.testbench.vcd");
   $dumpvars(0,programmable_clock_divider__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   division = 0;
@@ -92,9 +93,9 @@ initial begin
       expected_clock_out_frequency = clock_in_frequency / (division+1);
     end
     `MEASURE_FREQUENCY(clock_out, clock_out_frequency, FREQUENCY_MEASUREMENT_DURATION, FREQUENCY_MEASUREMENT_TIMEOUT)
-    if      (clock_out_frequency == 0) $error("[%0tns] Output clock with division factor of %0d is not running.", $time,  division);
+    if      (clock_out_frequency == 0) $error("[%t] Output clock with division factor of %0d is not running.", $realtime,  division);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
-      $error("[%0tns] Output clock frequency (%d%s) with division factor of %0d doesn't match the expected clock frequency (%d%s).",
+      $error("[%t] Output clock frequency (%d%s) with division factor of %0d doesn't match the expected clock frequency (%d%s).",
              $time, clock_out_frequency, FREQUENCY_UNIT, division, expected_clock_out_frequency, FREQUENCY_UNIT);
     end
   end

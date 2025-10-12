@@ -64,7 +64,7 @@ task check_count(input logic [DATA_WIDTH-1:0] data_value);
   // Check
   expected_count = reference_count_ones(data_value);
   assert (count === expected_count)
-    else $error("[%0tns] Incorrect count for input '%b'. Expected '%0d', got '%0d'.",
+    else $error("[%t] Incorrect count for input '%b'. Expected '%0d', got '%0d'.",
                 $time, data_value, expected_count, count);
 endtask
 
@@ -73,6 +73,7 @@ initial begin
   // Log waves
   $dumpfile("count_ones.testbench.vcd");
   $dumpvars(0, count_ones__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   data = 0;

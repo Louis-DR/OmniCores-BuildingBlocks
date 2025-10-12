@@ -105,6 +105,7 @@ initial begin
   // Log waves
   $dumpfile("repetition.testbench.vcd");
   $dumpvars(0, repetition__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   encoder_data = 0;
@@ -132,10 +133,10 @@ initial begin
 
     // Check encoder outputs
     assert (encoder_code === expected_code)
-      else $error("[%0tns] Incorrect encoder code for data %b. Expected %b, got %b.",
+      else $error("[%t] Incorrect encoder code for data %b. Expected %b, got %b.",
                   $time, data_configuration, expected_code, encoder_code);
     assert (encoder_block === expected_block)
-      else $error("[%0tns] Incorrect encoder block for data %b. Expected %b, got %b.",
+      else $error("[%t] Incorrect encoder block for data %b. Expected %b, got %b.",
                   $time, data_configuration, expected_block, encoder_block);
 
     // Small delay before next configuration
@@ -156,7 +157,7 @@ initial begin
 
     // Should not detect any error with correct repetition
     assert (!checker_error)
-      else $error("[%0tns] False error detected for correct repetition. Data: %b, Code: %b",
+      else $error("[%t] False error detected for correct repetition. Data: %b, Code: %b",
                   $time, test_data, test_code);
 
     // Small delay before next configuration
@@ -177,7 +178,7 @@ initial begin
 
     // Should detect error with incorrect repetition
     assert (checker_error)
-      else $error("[%0tns] Failed to detect error for incorrect repetition. Data: %b, Code: %b",
+      else $error("[%t] Failed to detect error for incorrect repetition. Data: %b, Code: %b",
                   $time, test_data, test_code);
 
     // Small delay before next configuration
@@ -198,7 +199,7 @@ initial begin
 
     // Should not detect any error with correct repetition block
     assert (!block_checker_error)
-      else $error("[%0tns] False error detected for correct repetition block. Block: %b",
+      else $error("[%t] False error detected for correct repetition block. Block: %b",
                   $time, test_block);
 
     // Small delay before next configuration
@@ -219,7 +220,7 @@ initial begin
 
     // Should detect error with incorrect repetition block
     assert (block_checker_error)
-      else $error("[%0tns] Failed to detect error for incorrect repetition block. Block: %b",
+      else $error("[%t] Failed to detect error for incorrect repetition block. Block: %b",
                   $time, test_block);
 
     // Small delay before next configuration
@@ -239,7 +240,7 @@ initial begin
 
     // Should not detect any error in the complete cycle
     assert (!block_checker_error)
-      else $error("[%0tns] Error detected in complete encode-decode cycle for data %b.",
+      else $error("[%t] Error detected in complete encode-decode cycle for data %b.",
                   $time, data_configuration);
 
     // Step 3: Use the individual code and data with the checker
@@ -249,7 +250,7 @@ initial begin
 
     // Should not detect any error in the complete cycle
     assert (!checker_error)
-      else $error("[%0tns] Error detected in complete encode-check cycle for data %b.",
+      else $error("[%t] Error detected in complete encode-check cycle for data %b.",
                   $time, data_configuration);
 
     // Small delay before next configuration
@@ -274,7 +275,7 @@ initial begin
 
       // Should detect the single bit error
       assert (block_checker_error)
-        else $error("[%0tns] Failed to detect single bit error at position %0d for data %b.",
+        else $error("[%t] Failed to detect single bit error at position %0d for data %b.",
                     $time, error_position, data_configuration);
 
       // Test with block corrector
@@ -283,10 +284,10 @@ initial begin
 
       // Should detect the error and correct the data
       assert (block_corrector_error)
-        else $error("[%0tns] Failed to detect single bit error at position %0d for data %b.",
+        else $error("[%t] Failed to detect single bit error at position %0d for data %b.",
                     $time, error_position, data_configuration);
       assert (block_corrector_corrected_data === encoder_data)
-        else $error("[%0tns] Failed to correct single bit error at position %0d for data %b. Expected %b, got %b.",
+        else $error("[%t] Failed to correct single bit error at position %0d for data %b. Expected %b, got %b.",
                     $time, error_position, data_configuration, encoder_data, block_corrector_corrected_data);
 
       // Small delay before next error position
@@ -311,10 +312,10 @@ initial begin
 
     // Should not detect any error and output the original data
     assert (!corrector_error)
-      else $error("[%0tns] False error detected for correct repetition. Data: %b, Code: %b",
+      else $error("[%t] False error detected for correct repetition. Data: %b, Code: %b",
                   $time, test_data, test_code);
     assert (corrector_corrected_data === test_data)
-      else $error("[%0tns] Incorrect corrected data for correct repetition. Data: %b, Expected: %b, Got: %b",
+      else $error("[%t] Incorrect corrected data for correct repetition. Data: %b, Expected: %b, Got: %b",
                   $time, test_data, test_data, corrector_corrected_data);
 
     // Small delay before next configuration
@@ -337,10 +338,10 @@ initial begin
 
       // Should detect error and correct the data
       assert (corrector_error)
-        else $error("[%0tns] Failed to detect single bit data error at position %0d for data %b.",
+        else $error("[%t] Failed to detect single bit data error at position %0d for data %b.",
                     $time, error_position, data_configuration);
       assert (corrector_corrected_data === encoder_data)
-        else $error("[%0tns] Failed to correct single bit data error at position %0d for data %b. Expected %b, got %b.",
+        else $error("[%t] Failed to correct single bit data error at position %0d for data %b. Expected %b, got %b.",
                     $time, error_position, data_configuration, encoder_data, corrector_corrected_data);
 
       // Small delay before next error position
@@ -369,7 +370,7 @@ initial begin
 
     // Should detect the error
     assert (block_checker_error)
-      else $error("[%0tns] Failed to detect double bit error for data %b.",
+      else $error("[%t] Failed to detect double bit error for data %b.",
                   $time, data_configuration);
 
     // Test with block corrector - may not correct properly with double errors
@@ -378,7 +379,7 @@ initial begin
 
     // Should detect the error
     assert (block_corrector_error)
-      else $error("[%0tns] Failed to detect double bit error for data %b.",
+      else $error("[%t] Failed to detect double bit error for data %b.",
                   $time, data_configuration);
 
     // Small delay before next configuration

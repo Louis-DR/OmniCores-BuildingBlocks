@@ -61,6 +61,7 @@ initial begin
   // Log waves
   $dumpfile("reset_synchronizer.testbench.vcd");
   $dumpvars(0,reset_synchronizer__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   resetn_in = 0;
@@ -86,7 +87,7 @@ initial begin
         #1ps;
         resetn_out_expected = 0;
         assert (resetn_out === resetn_out_expected)
-          else $error("[%0tns] Ouput resetn '%b' differs from the expected value '%b'.", $time, resetn_out, resetn_out_expected);
+          else $error("[%t] Ouput resetn '%b' differs from the expected value '%b'.", $realtime, resetn_out, resetn_out_expected);
       end
     end
     // Check synchronized output reset deassertion
@@ -98,7 +99,7 @@ initial begin
         if (resetn_queue.size() == STAGES) begin
           resetn_out_expected = resetn_queue.pop_front();
           assert (resetn_out === resetn_out_expected)
-            else $error("[%0tns] Ouput resetn '%b' differs from the expected value '%b'.", $time, resetn_out, resetn_out_expected);
+            else $error("[%t] Ouput resetn '%b' differs from the expected value '%b'.", $realtime, resetn_out, resetn_out_expected);
         end
       end
     end
@@ -111,7 +112,7 @@ initial begin
         time_posedge_resetn_out = $realtime;
         resetn_out_pulse_duration = time_posedge_resetn_out - time_negedge_resetn_out;
         assert (resetn_out_pulse_duration >= CLOCK_PERIOD)
-          else $error("[%0tns] Glitch detected on the output resetn.", $time);
+          else $error("[%t] Glitch detected on the output resetn.", $realtime);
       end
     end
   join_any

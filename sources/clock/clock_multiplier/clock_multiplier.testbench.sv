@@ -61,6 +61,7 @@ initial begin
   // Log waves
   $dumpfile("clock_multiplier.testbench.vcd");
   $dumpvars(0,clock_multiplier__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Measure the input clock frequency
   @(posedge clock_in);
@@ -71,9 +72,9 @@ initial begin
   for (int multiplication = 1; multiplication <= MAX_TEST_MULTIPLICATION; multiplication++) begin
     expected_clock_out_frequency = clock_in_frequency * multiplication;
     `MEASURE_FREQUENCY(clock_out[multiplication], clock_out_frequency, FREQUENCY_MEASUREMENT_DURATION)
-    if      (clock_out_frequency == 0) $error("[%0tns] Output clock with multiplication factor of %0d is not running.", $time,  multiplication);
+    if      (clock_out_frequency == 0) $error("[%t] Output clock with multiplication factor of %0d is not running.", $realtime,  multiplication);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency)
-      $error("[%0tns] Output clock frequency (%d%s) with multiplication factor of %0d doesn't match the expected clock frequency (%d%s).",
+      $error("[%t] Output clock frequency (%d%s) with multiplication factor of %0d doesn't match the expected clock frequency (%d%s).",
              $time, clock_out_frequency, FREQUENCY_UNIT, multiplication, clock_in_frequency*multiplication, FREQUENCY_UNIT);
   end
 

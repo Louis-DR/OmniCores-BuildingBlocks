@@ -95,6 +95,7 @@ initial begin
   // Log waves
   $dumpfile("hysteresis_saturating_counter.testbench.vcd");
   $dumpvars(0,hysteresis_saturating_counter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   decrement = 0;
@@ -109,7 +110,7 @@ initial begin
   // Check 1 : Reset value
   $display("CHECK 1 : Reset value.");
   if (count != RESET_VALUE) begin
-    $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count, RESET_VALUE);
+    $error("[%t] Value at reset '%0d' is different than the one given as parameter '%0d'.", $realtime, count, RESET_VALUE);
   end
 
   repeat(10) @(posedge clock);
@@ -124,7 +125,7 @@ initial begin
     expected_count += 1;
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   increment = 0;
@@ -134,13 +135,13 @@ initial begin
   // Check 3 : Hysteresis jump up
   $display("CHECK 3 : Hysteresis jump up.");
   if (count != COUNT_HALF_LOW) begin
-    $error("[%0tns] Counter should be at half-low '%0d' but is at '%0d'.", $time, COUNT_HALF_LOW, count);
+    $error("[%t] Counter should be at half-low '%0d' but is at '%0d'.", $realtime, COUNT_HALF_LOW, count);
   end
   @(negedge clock);
   increment = 1;
   @(negedge clock);
   if (count != COUNT_JUMP_HIGH) begin
-    $error("[%0tns] Counter should jump to '%0d' but is at '%0d'.", $time, COUNT_JUMP_HIGH, count);
+    $error("[%t] Counter should jump to '%0d' but is at '%0d'.", $realtime, COUNT_JUMP_HIGH, count);
   end
   increment = 0;
 
@@ -156,7 +157,7 @@ initial begin
     expected_count += 1;
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   increment = 0;
@@ -173,7 +174,7 @@ initial begin
     expected_count -= 1;
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   decrement = 0;
@@ -183,13 +184,13 @@ initial begin
   // Check 6 : Hysteresis jump down
   $display("CHECK 6 : Hysteresis jump down.");
   if (count != COUNT_HALF_HIGH) begin
-    $error("[%0tns] Counter should be at half-high '%0d' but is at '%0d'.", $time, COUNT_HALF_HIGH, count);
+    $error("[%t] Counter should be at half-high '%0d' but is at '%0d'.", $realtime, COUNT_HALF_HIGH, count);
   end
   @(negedge clock);
   decrement = 1;
   @(negedge clock);
   if (count != COUNT_JUMP_LOW) begin
-    $error("[%0tns] Counter should jump to '%0d' but is at '%0d'.", $time, COUNT_JUMP_LOW, count);
+    $error("[%t] Counter should jump to '%0d' but is at '%0d'.", $realtime, COUNT_JUMP_LOW, count);
   end
   decrement = 0;
 
@@ -205,7 +206,7 @@ initial begin
     expected_count -= 1;
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   decrement = 0;
@@ -229,7 +230,7 @@ initial begin
     expected_count = predict_next_count(count, increment, decrement);
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   decrement = 0;

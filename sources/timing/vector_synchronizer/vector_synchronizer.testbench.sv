@@ -69,6 +69,7 @@ initial begin
   // Log waves
   $dumpfile("vector_synchronizer.testbench.vcd");
   $dumpvars(0,vector_synchronizer__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   data_in = 0;
@@ -98,7 +99,7 @@ initial begin
         if (data_queue.size() == STAGES) begin
           data_out_expected = data_queue.pop_front();
           assert (data_out === data_out_expected)
-            else $error("[%0tns] Ouput data '%b' differs from the expected value '%b'.", $time, data_out, data_out_expected);
+            else $error("[%t] Ouput data '%b' differs from the expected value '%b'.", $realtime, data_out, data_out_expected);
         end
       end
     end
@@ -111,7 +112,7 @@ initial begin
         time_negedge_data_out = $realtime;
         data_out_pulse_duration = time_negedge_data_out - time_posedge_data_out;
         assert (absolute(real_modulo(data_out_pulse_duration, CLOCK_PERIOD)) < GLITCH_PERIOD_TOLERANCE * CLOCK_PERIOD)
-          else $error("[%0tns] Glitch detected on the output data.", $time);
+          else $error("[%t] Glitch detected on the output data.", $realtime);
       end
     end
   join_any

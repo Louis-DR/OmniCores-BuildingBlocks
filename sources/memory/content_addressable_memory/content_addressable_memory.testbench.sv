@@ -124,15 +124,15 @@ task automatic read;
   read_tag    = tag_to_read;
   @(posedge clock);
   if (delete_enable) begin
-    assert (!read_hit) else $error("[%0tns] Read search hit while reading and deleting at the same time.", $time);
+    assert (!read_hit) else $error("[%t] Read search hit while reading and deleting at the same time.", $realtime);
   end else begin
-    assert (!delete_hit) else $error("[%0tns] Delete hit during reading without deleting.", $time);
+    assert (!delete_hit) else $error("[%t] Delete hit during reading without deleting.", $realtime);
     if (model_memory.exists(tag_to_read)) begin
-      assert (read_hit) else $error("[%0tns] Read search incorrect miss for tag '0x%0h'.", $time, tag_to_read);
+      assert (read_hit) else $error("[%t] Read search incorrect miss for tag '0x%0h'.", $realtime, tag_to_read);
       assert (read_data === model_memory[tag_to_read])
-        else $error("[%0tns] Read data '0x%0h' doesn't match expected value '0x%0h' from the model for tag '0x%0h'.", $time, read_data, model_memory[tag_to_read], tag_to_read);
+        else $error("[%t] Read data '0x%0h' doesn't match expected value '0x%0h' from the model for tag '0x%0h'.", $realtime, read_data, model_memory[tag_to_read], tag_to_read);
     end else begin
-      assert (!read_hit) else $error("[%0tns] Read search incorrect hit for tag '0x%0h'.", $time, tag_to_read);
+      assert (!read_hit) else $error("[%t] Read search incorrect hit for tag '0x%0h'.", $realtime, tag_to_read);
     end
   end
   @(negedge clock);
@@ -163,13 +163,13 @@ task automatic delete;
   delete_enable = 1;
   delete_tag    = tag_to_delete;
   @(posedge clock);
-  assert (!read_hit) else $error("[%0tns] Read hit during deletion.", $time);
+  assert (!read_hit) else $error("[%t] Read hit during deletion.", $realtime);
   if (model_memory.exists(tag_to_delete)) begin
-    assert (delete_hit) else $error("[%0tns] Delete search incorrect miss for tag '0x%0h'.", $time, tag_to_delete);
+    assert (delete_hit) else $error("[%t] Delete search incorrect miss for tag '0x%0h'.", $realtime, tag_to_delete);
     number_entries--;
     model_memory.delete(tag_to_delete);
   end else begin
-    assert (!delete_hit) else $error("[%0tns] Delete search incorrect hit for tag '0x%0h'.", $time, tag_to_delete);
+    assert (!delete_hit) else $error("[%t] Delete search incorrect hit for tag '0x%0h'.", $realtime, tag_to_delete);
   end
   @(negedge clock);
   delete_enable = 0;
@@ -180,10 +180,10 @@ task automatic check_flags;
   input string context_string;
   logic expect_full  = model_memory.size() == DEPTH;
   logic expect_empty = model_memory.size() == 0;
-  if ( expect_full ) assert ( full ) else $error("[%0tns] Full flag is not asserted%s.",  $time, context_string);
-  if ( expect_empty) assert ( empty) else $error("[%0tns] Empty flag is not asserted%s.", $time, context_string);
-  if (!expect_full ) assert (!full ) else $error("[%0tns] Full flag is asserted%s.",      $time, context_string);
-  if (!expect_empty) assert (!empty) else $error("[%0tns] Empty flag is asserted%s.",     $time, context_string);
+  if ( expect_full ) assert ( full ) else $error("[%t] Full flag is not asserted%s.",  $time, context_string);
+  if ( expect_empty) assert ( empty) else $error("[%t] Empty flag is not asserted%s.", $realtime, context_string);
+  if (!expect_full ) assert (!full ) else $error("[%t] Full flag is asserted%s.",      $time, context_string);
+  if (!expect_empty) assert (!empty) else $error("[%t] Empty flag is asserted%s.",     $time, context_string);
 endtask
 
 // Main block
@@ -191,6 +191,7 @@ initial begin
   // Log waves
   $dumpfile("content_addressable_memory.testbench.vcd");
   $dumpvars(0,content_addressable_memory__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   write_enable  = 0;
@@ -326,7 +327,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -395,7 +396,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;

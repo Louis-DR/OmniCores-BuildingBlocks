@@ -80,6 +80,7 @@ initial begin
   // Log waves
   $dumpfile("fast_clock_multiplexer.testbench.vcd");
   $dumpvars(0,fast_clock_multiplexer__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   select = 0;
@@ -107,9 +108,9 @@ initial begin
     #(STAGES*(CLOCK_0_PERIOD+CLOCK_1_PERIOD));
     `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
     expected_clock_out_frequency = select ? clock_1_frequency : clock_0_frequency;
-    if      (clock_out_frequency == 0) $error("[%0tns] Output clock is not running with select at %0d.", $time, select);
+    if      (clock_out_frequency == 0) $error("[%t] Output clock is not running with select at %0d.", $realtime, select);
     else if (absolute(expected_clock_out_frequency - clock_out_frequency) > FREQUENCY_MEASUREMENT_TOLERANCE * expected_clock_out_frequency) begin
-      $error("[%0tns] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) with select at %0d.",
+      $error("[%t] Output clock frequency (%d%s) doesn't match the expected clock %0d frequency (%d%s) with select at %0d.",
              $time, clock_out_frequency, FREQUENCY_UNIT, select, expected_clock_out_frequency, FREQUENCY_UNIT, select);
     end
   end
@@ -133,7 +134,7 @@ initial begin
         time_negedge_clock_out = $realtime;
         if (   absolute(time_negedge_clock_out-time_posedge_clock_out - CLOCK_0_PERIOD/2) > GLITCH_PERIOD_TOLERANCE * CLOCK_0_PERIOD/2
             && absolute(time_negedge_clock_out-time_posedge_clock_out - CLOCK_1_PERIOD/2) > GLITCH_PERIOD_TOLERANCE * CLOCK_1_PERIOD/2) begin
-          $error("[%0tns] Glitch detected on the output clock.", $time);
+          $error("[%t] Glitch detected on the output clock.", $realtime);
         end
       end
     end

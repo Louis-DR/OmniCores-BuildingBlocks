@@ -113,10 +113,10 @@ task automatic search(input [WIDTH-1:0] tag_to_search);
   @(posedge clock);
   // Check DUT
   if (expected_hit) begin
-    assert (search_hit) else $error("[%0tns] Search miss for allocated tag '0x%0h'.", $time, search_tag);
-    assert (search_index == expected_index) else $error("[%0tns] Index of searched tag is incorrect (expected '0x%0d', got '0x%0d').", $time, expected_index, search_index);
+    assert (search_hit) else $error("[%t] Search miss for allocated tag '0x%0h'.", $realtime, search_tag);
+    assert (search_index == expected_index) else $error("[%t] Index of searched tag is incorrect (expected '0x%0d', got '0x%0d').", $realtime, expected_index, search_index);
   end else begin
-    assert (!search_hit) else $error("[%0tns] Search hit on unallocated tag '0x%0h' at index '%0d'.", $time, search_tag, search_index);
+    assert (!search_hit) else $error("[%t] Search hit on unallocated tag '0x%0h' at index '%0d'.", $realtime, search_tag, search_index);
   end
   @(negedge clock);
   search_tag = 0;
@@ -136,10 +136,10 @@ task automatic check_flags;
   input logic  expect_full;
   input logic  expect_empty;
   input string context_string;
-  if ( expect_full ) assert ( full ) else $error("[%0tns] Full flag is not asserted%s.",  $time, context_string);
-  if ( expect_empty) assert ( empty) else $error("[%0tns] Empty flag is not asserted%s.", $time, context_string);
-  if (!expect_full ) assert (!full ) else $error("[%0tns] Full flag is asserted%s.",      $time, context_string);
-  if (!expect_empty) assert (!empty) else $error("[%0tns] Empty flag is asserted%s.",     $time, context_string);
+  if ( expect_full ) assert ( full ) else $error("[%t] Full flag is not asserted%s.",  $time, context_string);
+  if ( expect_empty) assert ( empty) else $error("[%t] Empty flag is not asserted%s.", $realtime, context_string);
+  if (!expect_full ) assert (!full ) else $error("[%t] Full flag is asserted%s.",      $time, context_string);
+  if (!expect_empty) assert (!empty) else $error("[%t] Empty flag is asserted%s.",     $time, context_string);
 endtask
 
 // Device under test
@@ -174,6 +174,7 @@ initial begin
   // Log waves
   $dumpfile("tag_directory.testbench.vcd");
   $dumpvars(0,tag_directory__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   allocate_enable = 0;
@@ -294,7 +295,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -356,7 +357,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;

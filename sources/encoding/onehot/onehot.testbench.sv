@@ -78,7 +78,7 @@ task check_conversion(input logic [WIDTH_BINARY-1:0] binary_value);
   binary_to_onehot_binary = binary_value;
   #1;
   assert (binary_to_onehot_onehot === expected_onehot)
-    else $error("[%0tns] Incorrect binary-to-onehot conversion for input '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect binary-to-onehot conversion for input '%b'. Expected '%b', got '%b'.",
                 $time, binary_value, expected_onehot, binary_to_onehot_onehot);
 
   // Test onehot-to-binary conversion (round-trip test)
@@ -86,10 +86,10 @@ task check_conversion(input logic [WIDTH_BINARY-1:0] binary_value);
   #1;
   expected_binary = reference_onehot_to_binary(binary_to_onehot_onehot);
   assert (onehot_to_binary_binary === binary_value)
-    else $error("[%0tns] Incorrect round-trip conversion. Original binary '%b' -> Onehot '%b' -> Decoded binary '%b'.",
+    else $error("[%t] Incorrect round-trip conversion. Original binary '%b' -> Onehot '%b' -> Decoded binary '%b'.",
                 $time, binary_value, binary_to_onehot_onehot, onehot_to_binary_binary);
   assert (onehot_to_binary_binary === expected_binary)
-    else $error("[%0tns] Incorrect onehot-to-binary conversion for input '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect onehot-to-binary conversion for input '%b'. Expected '%b', got '%b'.",
                 $time, binary_to_onehot_onehot, expected_binary, onehot_to_binary_binary);
 endtask
 
@@ -100,7 +100,7 @@ task check_onehot_property(input logic [WIDTH_ONEHOT-1:0] onehot_value);
   `COUNT_ONES(WIDTH_ONEHOT, onehot_value, bit_count)
 
   assert (bit_count === 1)
-    else $error("[%0tns] One-hot should have exactly one bit set, but value '%b' has %0d bits set.",
+    else $error("[%t] One-hot should have exactly one bit set, but value '%b' has %0d bits set.",
                 $time, onehot_value, bit_count);
 endtask
 
@@ -109,6 +109,7 @@ initial begin
   // Log waves
   $dumpfile("onehot.testbench.vcd");
   $dumpvars(0, onehot__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   binary_to_onehot_binary = 0;

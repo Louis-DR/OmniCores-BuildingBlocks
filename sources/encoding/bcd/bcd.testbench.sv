@@ -115,7 +115,7 @@ task check_conversion(input logic [WIDTH_BINARY-1:0] binary_value);
   binary_to_bcd_binary = binary_value;
   #1;
   assert (binary_to_bcd_bcd === expected_bcd)
-    else $error("[%0tns] Incorrect binary-to-BCD conversion for input '%b' (%0d). Expected '%b' (%0d), got '%b' (%0d).",
+    else $error("[%t] Incorrect binary-to-BCD conversion for input '%b' (%0d). Expected '%b' (%0d), got '%b' (%0d).",
                 $time, binary_value, binary_value, expected_bcd, expected_bcd, binary_to_bcd_bcd, binary_to_bcd_bcd);
 
   // Test BCD-to-binary conversion (round-trip test)
@@ -123,10 +123,10 @@ task check_conversion(input logic [WIDTH_BINARY-1:0] binary_value);
   #1;
   expected_binary = reference_bcd_to_binary(binary_to_bcd_bcd);
   assert (bcd_to_binary_binary === binary_value)
-    else $error("[%0tns] Incorrect round-trip conversion. Original binary '%b' (%0d) -> BCD '%b' -> Decoded binary '%b' (%0d).",
+    else $error("[%t] Incorrect round-trip conversion. Original binary '%b' (%0d) -> BCD '%b' -> Decoded binary '%b' (%0d).",
                 $time, binary_value, binary_value, binary_to_bcd_bcd, bcd_to_binary_binary, bcd_to_binary_binary);
   assert (bcd_to_binary_binary === expected_binary)
-    else $error("[%0tns] Incorrect BCD-to-binary conversion for input '%b' (%0d). Expected '%b' (%0d), got '%b' (%0d).",
+    else $error("[%t] Incorrect BCD-to-binary conversion for input '%b' (%0d). Expected '%b' (%0d), got '%b' (%0d).",
                 $time, binary_to_bcd_bcd, binary_to_bcd_bcd, expected_binary, expected_binary, bcd_to_binary_binary, bcd_to_binary_binary);
 endtask
 
@@ -137,7 +137,7 @@ task check_bcd_property(input logic [WIDTH_BCD-1:0] bcd_value);
   for (int digit_index = 0; digit_index < NUMBER_BCD_DIGITS; digit_index++) begin
     digit_value = bcd_value[BCD_DIGIT_WIDTH * digit_index +: BCD_DIGIT_WIDTH];
     assert (digit_value <= 9)
-      else $error("[%0tns] BCD digit %0d should be ≤ 9, but digit at position %0d has value %0d in BCD '%b'.",
+      else $error("[%t] BCD digit %0d should be ≤ 9, but digit at position %0d has value %0d in BCD '%b'.",
                   $time, digit_value, digit_index, digit_value, bcd_value);
   end
 endtask
@@ -147,6 +147,7 @@ initial begin
   // Log waves
   $dumpfile("bcd.testbench.vcd");
   $dumpvars(0, bcd__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   binary_to_bcd_binary = 0;

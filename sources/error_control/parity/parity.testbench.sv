@@ -70,6 +70,7 @@ initial begin
   // Log waves
   $dumpfile("parity.testbench.vcd");
   $dumpvars(0, parity__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   encoder_data        = 0;
@@ -94,10 +95,10 @@ initial begin
 
     // Check encoder outputs
     assert (encoder_code === expected_code)
-      else $error("[%0tns] Incorrect encoder code for data %b. Expected %b, got %b.",
+      else $error("[%t] Incorrect encoder code for data %b. Expected %b, got %b.",
                   $time, data_configuration, expected_code, encoder_code);
     assert (encoder_block === expected_block)
-      else $error("[%0tns] Incorrect encoder block for data %b. Expected %b, got %b.",
+      else $error("[%t] Incorrect encoder block for data %b. Expected %b, got %b.",
                   $time, data_configuration, expected_block, encoder_block);
 
     // Small delay before next configuration
@@ -118,7 +119,7 @@ initial begin
 
     // Should not detect any error with correct parity
     assert (!checker_error)
-      else $error("[%0tns] False error detected for correct parity. Data: %b, Code: %b",
+      else $error("[%t] False error detected for correct parity. Data: %b, Code: %b",
                   $time, test_data, test_code);
 
     // Small delay before next configuration
@@ -139,7 +140,7 @@ initial begin
 
     // Should detect error with incorrect parity
     assert (checker_error)
-      else $error("[%0tns] Failed to detect error for incorrect parity. Data: %b, Code: %b",
+      else $error("[%t] Failed to detect error for incorrect parity. Data: %b, Code: %b",
                   $time, test_data, test_code);
 
     // Small delay before next configuration
@@ -160,7 +161,7 @@ initial begin
 
     // Should not detect any error with correct parity block
     assert (!block_checker_error)
-      else $error("[%0tns] False error detected for correct parity block. Block: %b",
+      else $error("[%t] False error detected for correct parity block. Block: %b",
                   $time, test_block);
 
     // Small delay before next configuration
@@ -181,7 +182,7 @@ initial begin
 
     // Should detect error with incorrect parity block
     assert (block_checker_error)
-      else $error("[%0tns] Failed to detect error for incorrect parity block. Block: %b",
+      else $error("[%t] Failed to detect error for incorrect parity block. Block: %b",
                   $time, test_block);
 
     // Small delay before next configuration
@@ -201,7 +202,7 @@ initial begin
 
     // Should not detect any error in the complete cycle
     assert (!block_checker_error)
-      else $error("[%0tns] Error detected in complete encode-decode cycle for data %b.",
+      else $error("[%t] Error detected in complete encode-decode cycle for data %b.",
                   $time, data_configuration);
 
     // Feed the code and data to the checker
@@ -211,7 +212,7 @@ initial begin
 
     // Should not detect any error in the complete cycle
     assert (!checker_error)
-      else $error("[%0tns] Error detected in complete encode-check cycle for data %b.",
+      else $error("[%t] Error detected in complete encode-check cycle for data %b.",
                   $time, data_configuration);
 
     // Small delay before next configuration
@@ -236,7 +237,7 @@ initial begin
 
       // Should detect the single bit error
       assert (block_checker_error)
-        else $error("[%0tns] Failed to detect single bit error at position %0d for data %b.",
+        else $error("[%t] Failed to detect single bit error at position %0d for data %b.",
                     $time, error_position, data_configuration);
 
       // Test with normal checker
@@ -246,7 +247,7 @@ initial begin
         #1;
 
         assert (checker_error)
-          else $error("[%0tns] Failed to detect single bit data error at position %0d for data %b.",
+          else $error("[%t] Failed to detect single bit data error at position %0d for data %b.",
                       $time, error_position, data_configuration);
       end
 

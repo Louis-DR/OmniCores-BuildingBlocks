@@ -69,15 +69,15 @@ end
 
 // Assertion 1: At most one grant
 assert property (@(posedge clock) $countones(grant) <= 1)
-  else $error("[%0tns] More than one grant asserted : %b", $time, grant);
+  else $error("[%t] More than one grant asserted : %b", $realtime, grant);
 
 // Assertion 2: Grant implies request
 assert property (@(posedge clock) (grant !== '0) |-> ((grant & requests) === grant))
-  else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
+  else $error("[%t] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $realtime, grant, requests);
 
 // Assertion 3: Requests implies exactly one grant
 assert property (@(posedge clock) resetn |-> (|requests) |-> ($countones(grant) == 1))
-  else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
+  else $error("[%t] Requests active (requests=%b), but grant count is not one (grant=%b).", $realtime, requests, grant);
 
 `else // Procedural Assertions Fallback
 
@@ -90,15 +90,15 @@ always @(posedge clock) begin
   if (resetn) begin
     // Assertion 1: At most one grant
     assert ($countones(grant) <= 1)
-      else $error("[%0tns] More than one grant asserted : %b", $time, grant);
+      else $error("[%t] More than one grant asserted : %b", $realtime, grant);
 
     // Assertion 2: Grant implies request
     assert ((grant === '0) || ((grant & requests) === grant))
-      else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
+      else $error("[%t] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $realtime, grant, requests);
 
     // Assertion 3: Requests implies exactly one grant
     assert (!(|requests) || ($countones(grant) == 1))
-      else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
+      else $error("[%t] Requests active (requests=%b), but grant count is not one (grant=%b).", $realtime, requests, grant);
   end
 end
 
@@ -109,6 +109,7 @@ initial begin
   // Log waves
   $dumpfile("balanced_round_robin_arbiter.testbench.vcd");
   $dumpvars(0,balanced_round_robin_arbiter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   requests = 0;
@@ -130,7 +131,7 @@ initial begin
       @(posedge clock);
       // Grant should always match the single request
       assert (grant === requests)
-        else $error("[%0tns] Grant doesn't match the only active request (requests=%b, grant=%b).", $time, requests, grant);
+        else $error("[%t] Grant doesn't match the only active request (requests=%b, grant=%b).", $realtime, requests, grant);
     end
   end
   requests = '0;
@@ -150,7 +151,7 @@ initial begin
   requests = '0;
   // Verify that all requests received a grant at least once
   assert (granted_mask === '1)
-    else $error("[%0tns] Not all requests received a grant when all were active (granted_mask=%b).", $time, granted_mask);
+    else $error("[%t] Not all requests received a grant when all were active (granted_mask=%b).", $realtime, granted_mask);
 
   repeat(10) @(posedge clock);
 
@@ -180,9 +181,9 @@ initial begin
   for (int channel_index = 0; channel_index < SIZE; channel_index++) begin
     grant_ratio = real'(grant_counts[channel_index]) / real'(request_counts[channel_index]);
     assert (grant_ratio >= FAIRNESS_THRESHOLD_LOWER)
-      else $error("[%0tns] Channel %0d made %0d requests but only got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
+      else $error("[%t] Channel %0d made %0d requests but only got %0d grants (%0f). The arbiter might not be fair.", $realtime, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
     assert (grant_ratio <= FAIRNESS_THRESHOLD_UPPER)
-      else $error("[%0tns] Channel %0d made only %0d requests but got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
+      else $error("[%t] Channel %0d made only %0d requests but got %0d grants (%0f). The arbiter might not be fair.", $realtime, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
   end
 
   // End of test

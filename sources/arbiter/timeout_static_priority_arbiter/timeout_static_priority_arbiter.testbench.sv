@@ -80,15 +80,15 @@ end
 
 // Assertion 1: At most one grant
 assert property (@(negedge clock) #1 $countones(grant) <= 1)
-  else $error("[%0tns] More than one grant asserted : %b", $time, grant);
+  else $error("[%t] More than one grant asserted : %b", $realtime, grant);
 
 // Assertion 2: Grant implies request
 assert property (@(negedge clock) #1 (grant !== '0) |-> ((grant & requests) === grant))
-  else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
+  else $error("[%t] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $realtime, grant, requests);
 
 // Assertion 3: Requests implies exactly one grant
 assert property (@(negedge clock) #1 resetn |-> (|requests) |-> ($countones(grant) == 1))
-  else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
+  else $error("[%t] Requests active (requests=%b), but grant count is not one (grant=%b).", $realtime, requests, grant);
 
 `else // Procedural Assertions Fallback
 
@@ -101,15 +101,15 @@ always @(posedge clock) begin
   if (resetn) begin
     // Assertion 1: At most one grant
     assert ($countones(grant) <= 1)
-      else $error("[%0tns] More than one grant asserted : %b", $time, grant);
+      else $error("[%t] More than one grant asserted : %b", $realtime, grant);
 
     // Assertion 2: Grant implies request
     assert ((grant === '0) || ((grant & requests) === grant))
-      else $error("[%0tns] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $time, grant, requests);
+      else $error("[%t] Grant given (grant=%b), but corresponding request is not active (requests=%b).", $realtime, grant, requests);
 
     // Assertion 3: Requests implies exactly one grant
     assert (!(|requests) || ($countones(grant) == 1))
-      else $error("[%0tns] Requests active (requests=%b), but grant count is not one (grant=%b).", $time, requests, grant);
+      else $error("[%t] Requests active (requests=%b), but grant count is not one (grant=%b).", $realtime, requests, grant);
   end
 end
 
@@ -120,6 +120,7 @@ initial begin
   // Log waves
   $dumpfile("timeout_static_priority_arbiter.testbench.vcd");
   $dumpvars(0,timeout_static_priority_arbiter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   requests = 0;
@@ -150,7 +151,7 @@ initial begin
       // Check the grant output
       @(posedge clock);
       assert (grant === grant_expected) else begin
-        $error("[%0tns] Incorrect grant for request configuration %b. Expected %b, got %b.", $time, requests, grant_expected, grant);
+        $error("[%t] Incorrect grant for request configuration %b. Expected %b, got %b.", $realtime, requests, grant_expected, grant);
       end
       // Reset the timeout countdowns
       @(negedge clock);
@@ -177,7 +178,7 @@ initial begin
     for (int wait_cycles = 0; wait_cycles < TIMEOUT_CHECK_DURATION; wait_cycles++) begin
       // Check the grant output
       assert (grant === grant_expected) else begin
-        $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, wait_cycles, TIMEOUT, request_index, grant_expected, grant);
+        $error("[%t] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $realtime, requests, wait_cycles, TIMEOUT, request_index, grant_expected, grant);
       end
       // Update the expected grant when the timeout countdowns are updated
       @(posedge clock);
@@ -212,7 +213,7 @@ initial begin
   for (int wait_cycles = 0; wait_cycles < TIMEOUT_CHECK_DURATION; wait_cycles++) begin
     // Check the grant output
     assert (grant === grant_expected) else begin
-      $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, wait_cycles, TIMEOUT, 0, grant_expected, grant);
+      $error("[%t] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $realtime, requests, wait_cycles, TIMEOUT, 0, grant_expected, grant);
     end
     @(posedge clock);
     // Update the pattern position
@@ -267,7 +268,7 @@ initial begin
       #1; // Propagate the requests to the grant
       // Check the grant output
       assert (grant === grant_expected) else begin
-        $error("[%0tns] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $time, requests, wait_cycles, TIMEOUT, request_index, grant_expected, grant);
+        $error("[%t] Incorrect grant for requests %b stable for %0d cycles, with timeout of %0d cycles for channel %0d. Expected %b, got %b.", $realtime, requests, wait_cycles, TIMEOUT, request_index, grant_expected, grant);
       end
     end
     // Reset the timeout countdowns
@@ -308,9 +309,9 @@ initial begin
   for (int channel_index = 1; channel_index < SIZE; channel_index++) begin
     grant_ratio = real'(grant_counts[channel_index]) / real'(request_counts[channel_index]);
     assert (grant_ratio >= FAIRNESS_THRESHOLD_LOWER)
-      else $error("[%0tns] Channel %0d made %0d requests but only got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
+      else $error("[%t] Channel %0d made %0d requests but only got %0d grants (%0f). The arbiter might not be fair.", $realtime, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
     assert (grant_ratio <= FAIRNESS_THRESHOLD_UPPER)
-      else $error("[%0tns] Channel %0d made only %0d requests but got %0d grants (%0f). The arbiter might not be fair.", $time, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
+      else $error("[%t] Channel %0d made only %0d requests but got %0d grants (%0f). The arbiter might not be fair.", $realtime, channel_index, request_counts[channel_index], grant_counts[channel_index], grant_ratio);
   end
 
   repeat(10) @(posedge clock);

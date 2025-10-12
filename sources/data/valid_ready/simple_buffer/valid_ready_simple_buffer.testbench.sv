@@ -88,7 +88,7 @@ endtask
 // Read task
 task automatic read;
   read_ready = 1;
-  assert (read_data === data_expected) else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+  assert (read_data === data_expected) else $error("[%t] Read data '%0h' is not as expected '%0h'.", $realtime, read_data, data_expected);
   @(posedge clock);
   if (read_valid) begin
     data_expected = 'x;
@@ -102,14 +102,14 @@ task automatic check_flags;
   input logic expected_empty;
   input logic expected_full;
   if (expected_empty) begin
-    assert (empty) else $error("[%0tns] Empty flag is deasserted. The buffer should be empty.", $time);
+    assert (empty) else $error("[%t] Empty flag is deasserted. The buffer should be empty.", $realtime);
   end else begin
-    assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should be full.", $time);
+    assert (!empty) else $error("[%t] Empty flag is asserted. The buffer should be full.", $realtime);
   end
   if (expected_full) begin
-    assert (full) else $error("[%0tns] Full flag is deasserted. The buffer should be full.", $time);
+    assert (full) else $error("[%t] Full flag is deasserted. The buffer should be full.", $realtime);
   end else begin
-    assert (!full) else $error("[%0tns] Full flag is asserted. The buffer should be empty.", $time);
+    assert (!full) else $error("[%t] Full flag is asserted. The buffer should be empty.", $realtime);
   end
 endtask
 
@@ -118,6 +118,7 @@ initial begin
   // Log waves
   $dumpfile("valid_ready_simple_buffer.testbench.vcd");
   $dumpvars(0,valid_ready_simple_buffer__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   write_data  = 0;
@@ -133,17 +134,17 @@ initial begin
   // Check 1 : Writing to full
   $display("CHECK 1 : Writing to full.");
   // Initial state
-  assert (!read_valid) else $error("[%0tns] Read valid is asserted after reset with data '%0h'. The buffer should be empty.", $time, read_data);
-  assert (write_ready) else $error("[%0tns] Write ready is deasserted after reset with data '%0h'. The buffer should be empty.", $time, read_data);
-  assert (empty) else $error("[%0tns] Empty flag is deasserted after reset with data '%0h'. The buffer should be empty.", $time, read_data);
-  assert (!full) else $error("[%0tns] Full flag is asserted after reset with data '%0h'. The buffer should be empty.", $time, read_data);
+  assert (!read_valid) else $error("[%t] Read valid is asserted after reset with data '%0h'. The buffer should be empty.", $realtime, read_data);
+  assert (write_ready) else $error("[%t] Write ready is deasserted after reset with data '%0h'. The buffer should be empty.", $realtime, read_data);
+  assert (empty) else $error("[%t] Empty flag is deasserted after reset with data '%0h'. The buffer should be empty.", $realtime, read_data);
+  assert (!full) else $error("[%t] Full flag is asserted after reset with data '%0h'. The buffer should be empty.", $realtime, read_data);
   // Write
   @(negedge clock); write_valid = 1; write_data = 8'b10101010; data_expected = write_data;
   @(negedge clock); write_valid = 0; write_data = 0;
-  assert (read_valid) else $error("[%0tns] Read valid is deasserted after write. The buffer should be full.", $time);
-  assert (!write_ready) else $error("[%0tns] Write ready is asserted after write. The buffer should be full.", $time);
-  assert (!empty) else $error("[%0tns] Empty flag is asserted after write. The buffer should be full.", $time);
-  assert (full) else $error("[%0tns] Full flag is deasserted after write. The buffer should be full.", $time);
+  assert (read_valid) else $error("[%t] Read valid is deasserted after write. The buffer should be full.", $realtime);
+  assert (!write_ready) else $error("[%t] Write ready is asserted after write. The buffer should be full.", $realtime);
+  assert (!empty) else $error("[%t] Empty flag is asserted after write. The buffer should be full.", $realtime);
+  assert (full) else $error("[%t] Full flag is deasserted after write. The buffer should be full.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -151,12 +152,12 @@ initial begin
   $display("CHECK 2 : Reading to empty.");
   // Read
   @(negedge clock); read_ready = 1;
-  assert (read_data === data_expected) else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+  assert (read_data === data_expected) else $error("[%t] Read data '%0h' is not as expected '%0h'.", $realtime, read_data, data_expected);
   @(negedge clock); read_ready = 0; data_expected = 'x;
-  assert (!read_valid) else $error("[%0tns] Read valid is asserted after read with data '%0h'. The buffer should be empty.", $time, read_data);
-  assert (write_ready) else $error("[%0tns] Write ready is deasserted after read with data '%0h'. The buffer should be empty.", $time, read_data);
-  assert (empty) else $error("[%0tns] Empty flag is deasserted after read with data '%0h'. The buffer should be empty.", $time, read_data);
-  assert (!full) else $error("[%0tns] Full flag is asserted after read with data '%0h'. The buffer should be empty.", $time, read_data);
+  assert (!read_valid) else $error("[%t] Read valid is asserted after read with data '%0h'. The buffer should be empty.", $realtime, read_data);
+  assert (write_ready) else $error("[%t] Write ready is deasserted after read with data '%0h'. The buffer should be empty.", $realtime, read_data);
+  assert (empty) else $error("[%t] Empty flag is deasserted after read with data '%0h'. The buffer should be empty.", $realtime, read_data);
+  assert (!full) else $error("[%t] Full flag is asserted after read with data '%0h'. The buffer should be empty.", $realtime, read_data);
 
   repeat(10) @(posedge clock);
 
@@ -167,24 +168,24 @@ initial begin
   for (int iteration = 0; iteration < THROUGHPUT_CHECK_DURATION; iteration++) begin
     // Write
     @(negedge clock);
-    assert (!read_valid) else $error("[%0tns] Read valid is asserted with data '%0h'. The buffer should be empty.", $time, read_data);
-    assert (write_ready) else $error("[%0tns] Write ready is deasserted with data '%0h'. The buffer should be empty.", $time, read_data);
-    assert (empty) else $error("[%0tns] Empty flag is deasserted with data '%0h'. The buffer should be empty.", $time, read_data);
-    assert (!full) else $error("[%0tns] Full flag is asserted with data '%0h'. The buffer should be empty.", $time, read_data);
+    assert (!read_valid) else $error("[%t] Read valid is asserted with data '%0h'. The buffer should be empty.", $realtime, read_data);
+    assert (write_ready) else $error("[%t] Write ready is deasserted with data '%0h'. The buffer should be empty.", $realtime, read_data);
+    assert (empty) else $error("[%t] Empty flag is deasserted with data '%0h'. The buffer should be empty.", $realtime, read_data);
+    assert (!full) else $error("[%t] Full flag is asserted with data '%0h'. The buffer should be empty.", $realtime, read_data);
     write_valid = 1;
     read_ready  = 0;
     @(posedge clock);
     data_expected = write_data;
     // Read
     @(negedge clock);
-    assert (read_valid) else $error("[%0tns] Read valid is deasserted. The buffer should be full.", $time, read_data);
-    assert (!write_ready) else $error("[%0tns] Write ready is asserted. The buffer should be full.", $time, read_data);
-    assert (!empty) else $error("[%0tns] Empty flag is asserted. The buffer should be full.", $time, read_data);
-    assert (full) else $error("[%0tns] Full flag is deasserted. The buffer should be full.", $time, read_data);
+    assert (read_valid) else $error("[%t] Read valid is deasserted. The buffer should be full.", $realtime, read_data);
+    assert (!write_ready) else $error("[%t] Write ready is asserted. The buffer should be full.", $realtime, read_data);
+    assert (!empty) else $error("[%t] Empty flag is asserted. The buffer should be full.", $realtime, read_data);
+    assert (full) else $error("[%t] Full flag is deasserted. The buffer should be full.", $realtime, read_data);
     write_data   = write_data+1;
     write_valid = 0;
     read_ready  = 1;
-    assert (read_data === data_expected) else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+    assert (read_data === data_expected) else $error("[%t] Read data '%0h' is not as expected '%0h'.", $realtime, read_data, data_expected);
     @(posedge clock);
     data_expected = 'x;
   end
@@ -195,10 +196,10 @@ initial begin
   read_ready = 0;
   data_expected = 'x;
   // Final state
-  assert (!read_valid) else $error("[%0tns] Read valid is asserted after check 3. The buffer should be empty.", $time);
-  assert (write_ready) else $error("[%0tns] Write ready is deasserted after check 3. The buffer should be empty.", $time);
-  assert (empty) else $error("[%0tns] Empty flag is deasserted after check 3. The buffer should be empty.", $time);
-  assert (!full) else $error("[%0tns] Full flag is asserted after check 3. The buffer should be empty.", $time);
+  assert (!read_valid) else $error("[%t] Read valid is asserted after check 3. The buffer should be empty.", $realtime);
+  assert (write_ready) else $error("[%t] Write ready is deasserted after check 3. The buffer should be empty.", $realtime);
+  assert (empty) else $error("[%t] Empty flag is deasserted after check 3. The buffer should be empty.", $realtime);
+  assert (!full) else $error("[%t] Full flag is asserted after check 3. The buffer should be empty.", $realtime);
 
   repeat(10) @(posedge clock);
 
@@ -241,7 +242,7 @@ initial begin
         // Check
         @(posedge clock);
         if (read_valid && read_ready) begin
-          assert (read_data === data_expected) else $error("[%0tns] Read data '%0h' is not as expected '%0h'.", $time, read_data, data_expected);
+          assert (read_data === data_expected) else $error("[%t] Read data '%0h' is not as expected '%0h'.", $realtime, read_data, data_expected);
           data_expected = 'x;
         end
       end
@@ -263,7 +264,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -272,10 +273,10 @@ initial begin
   read_ready  = 0;
   data_expected = 'x;
   // Final state
-  assert (!read_valid) else $error("[%0tns] Read valid is asserted after check 4. The buffer should be empty.", $time);
-  assert (write_ready) else $error("[%0tns] Write ready is deasserted after check 4. The buffer should be empty.", $time);
-  assert (empty) else $error("[%0tns] Empty flag is deasserted after check 4. The buffer should be empty.", $time);
-  assert (!full) else $error("[%0tns] Full flag is asserted after check 4. The buffer should be empty.", $time);
+  assert (!read_valid) else $error("[%t] Read valid is asserted after check 4. The buffer should be empty.", $realtime);
+  assert (write_ready) else $error("[%t] Write ready is deasserted after check 4. The buffer should be empty.", $realtime);
+  assert (empty) else $error("[%t] Empty flag is deasserted after check 4. The buffer should be empty.", $realtime);
+  assert (!full) else $error("[%t] Full flag is asserted after check 4. The buffer should be empty.", $realtime);
 
   repeat(10) @(posedge clock);
 

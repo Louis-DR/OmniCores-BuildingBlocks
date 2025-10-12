@@ -80,7 +80,7 @@ end
 // Checker task for synchronizer output
 task automatic check_pulse_out(logic [MAX_TEST_STAGES:1] pulse_out_expected);
   if (pulse_out != pulse_out_expected) begin
-    $error("[%0tns] Synchronizer output value differs from the expected value (%b != %b).", $time, pulse_out, pulse_out_expected);
+    $error("[%t] Synchronizer output value differs from the expected value (%b != %b).", $realtime, pulse_out, pulse_out_expected);
   end
 endtask
 
@@ -89,6 +89,7 @@ initial begin
   // Log waves
   $dumpfile("toggle_pulse_synchronizer.testbench.vcd");
   $dumpvars(0,toggle_pulse_synchronizer__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   pulse_in = 0;

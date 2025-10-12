@@ -63,7 +63,7 @@ end
 // Checker task for output pulse
 task automatic check_pulse_out(int duration);
   if (pulse_out) begin
-    $error("[%0tns] Output is already high at the start of the check.", $time);
+    $error("[%t] Output is already high at the start of the check.", $realtime);
   end
   current_pulse_length   = 0;
   current_pulse_polarity = 0;
@@ -73,7 +73,7 @@ task automatic check_pulse_out(int duration);
     if (pulse_out != current_pulse_polarity) begin
       if (current_pulse_polarity && current_pulse_length < PULSE_LENGTH) begin
         if (current_pulse_polarity) begin
-          $error("[%0tns] Output pulse length '%0d' is narrower than the extender parameter '%0d'.", $time, current_pulse_length, PULSE_LENGTH);
+          $error("[%t] Output pulse length '%0d' is narrower than the extender parameter '%0d'.", $realtime, current_pulse_length, PULSE_LENGTH);
         end
       end
       current_pulse_polarity = pulse_out;
@@ -81,7 +81,7 @@ task automatic check_pulse_out(int duration);
     end
   end
   if (pulse_out) begin
-    $error("[%0tns] Output is still high at the end of the check.", $time);
+    $error("[%t] Output is still high at the end of the check.", $realtime);
   end
 endtask
 
@@ -90,6 +90,7 @@ initial begin
   // Log waves
   $dumpfile("pulse_extender.testbench.vcd");
   $dumpvars(0,pulse_extender__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   pulse_in = 0;

@@ -141,7 +141,7 @@ function logic [PARITY_WIDTH-1:0] hamming_code(input logic [DATA_WIDTH-1:0] data
     7: hamming_code = hamming_127_120(data);
     8: hamming_code = hamming_255_247(data);
     default: begin
-      $fatal(1, "[%0tns] Unsupported parity width '%0d' for reference Hamming code function.", $time, PARITY_WIDTH);
+      $fatal(1, "[%t] Unsupported parity width '%0d' for reference Hamming code function.", $realtime, PARITY_WIDTH);
       return 0;
     end
   endcase
@@ -169,7 +169,7 @@ function logic [BLOCK_WIDTH-1:0] hamming_block_pack(input logic [DATA_WIDTH-1:0]
   expected_block[    63] = code[    6];
   expected_block[126:64] = data[119:57];
   if (PARITY_WIDTH < 8) return expected_block;
-  $fatal(1, "[%0tns] Unsupported parity width '%0d' for reference Hamming block packing function.", $time, PARITY_WIDTH);
+  $fatal(1, "[%t] Unsupported parity width '%0d' for reference Hamming block packing function.", $realtime, PARITY_WIDTH);
   return 0;
 endfunction
 
@@ -191,10 +191,10 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
   encoder_data = test_data;
   #1;
   assert (encoder_code === expected_code)
-    else $error("[%0tns] Incorrect code from encoder for data '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect code from encoder for data '%b'. Expected '%b', got '%b'.",
                 $time, test_data, expected_code, encoder_code);
   assert (encoder_block === expected_block)
-    else $error("[%0tns] Incorrect block from encoder for data '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect block from encoder for data '%b'. Expected '%b', got '%b'.",
                 $time, test_data, expected_block, encoder_block);
 
   // Check the packer
@@ -202,17 +202,17 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
   packer_code = expected_code;
   #1;
   assert (packer_block === expected_block)
-    else $error("[%0tns] Incorrect block from packer for data '%b' and code '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect block from packer for data '%b' and code '%b'. Expected '%b', got '%b'.",
                 $time, test_data, expected_code, expected_block, packer_block);
 
   // Check the unpacker
   unpacker_block = packer_block;
   #1;
   assert (unpacker_data === test_data)
-    else $error("[%0tns] Incorrect data from unpacker for block '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect data from unpacker for block '%b'. Expected '%b', got '%b'.",
                 $time, packer_block, test_data, unpacker_data);
   assert (unpacker_code === expected_code)
-    else $error("[%0tns] Incorrect code from unpacker for block '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect code from unpacker for block '%b'. Expected '%b', got '%b'.",
                 $time, packer_block, expected_code, unpacker_code);
 
   // Check the checker
@@ -220,7 +220,7 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
   checker_code = expected_code;
   #1;
   assert (!checker_error)
-    else $error("[%0tns] False error detected by checker for data '%b' and code '%b'.",
+    else $error("[%t] False error detected by checker for data '%b' and code '%b'.",
                 $time, test_data, expected_code);
 
   // Check the corrector
@@ -228,27 +228,27 @@ task check_all_modules_no_error(input logic [DATA_WIDTH-1:0] test_data);
   corrector_code = expected_code;
   #1;
   assert (!corrector_error)
-    else $error("[%0tns] False error detected by corrector for data '%b' and code '%b'.",
+    else $error("[%t] False error detected by corrector for data '%b' and code '%b'.",
                 $time, test_data, expected_code);
   assert (corrector_corrected_data === test_data)
-    else $error("[%0tns] Incorrect corrected data by corrector for data '%b' and code '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect corrected data by corrector for data '%b' and code '%b'. Expected '%b', got '%b'.",
                 $time, test_data, expected_code, test_data, corrector_corrected_data);
 
   // Check the block checker
   block_checker_block = expected_block;
   #1;
   assert (!block_checker_error)
-    else $error("[%0tns] False error detected by block checker for block '%b'.",
+    else $error("[%t] False error detected by block checker for block '%b'.",
                 $time, expected_block);
 
   // Check the block corrector
   block_corrector_block = expected_block;
   #1;
   assert (!block_corrector_error)
-    else $error("[%0tns] False error detected by block corrector for block '%b'.",
+    else $error("[%t] False error detected by block corrector for block '%b'.",
                 $time, expected_block);
   assert (block_corrector_corrected_block === expected_block)
-    else $error("[%0tns] Incorrect corrected block by block corrector for block '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Incorrect corrected block by block corrector for block '%b'. Expected '%b', got '%b'.",
                 $time, expected_block, expected_block, block_corrector_corrected_block);
 endtask
 
@@ -273,7 +273,7 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   checker_code = poisoned_code;
   #1;
   assert (checker_error)
-    else $error("[%0tns] Single-bit error not detected by checker for data '%b' and code '%b'.",
+    else $error("[%t] Single-bit error not detected by checker for data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
 
   // Check the corrector
@@ -281,33 +281,33 @@ task check_checker_and_corrector_single_bit_error(input logic [DATA_WIDTH-1:0] t
   corrector_code = poisoned_code;
   #1;
   assert (corrector_error)
-    else $error("[%0tns] Single-bit error not detected by corrector for poisoned data '%b' and code '%b'.",
+    else $error("[%t] Single-bit error not detected by corrector for poisoned data '%b' and code '%b'.",
                 $time, poisoned_data, poisoned_code);
   assert (corrector_corrected_data === test_data)
-    else $error("[%0tns] Single-bit error not corrected by corrector for poisoned data '%b' and code '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Single-bit error not corrected by corrector for poisoned data '%b' and code '%b'. Expected '%b', got '%b'.",
                 $time, poisoned_data, poisoned_code, test_data, corrector_corrected_data);
   assert (corrector_corrected_error_position === error_position)
-    else $error("[%0tns] Incorrect single-bit error position returned by corrector for poisoned data '%b' and code '%b'. Expected '%0d', got '%0d'.",
+    else $error("[%t] Incorrect single-bit error position returned by corrector for poisoned data '%b' and code '%b'. Expected '%0d', got '%0d'.",
                 $time, poisoned_data, poisoned_code, error_position, corrector_corrected_error_position);
 
   // Check the block checker
   block_checker_block = poisoned_block;
   #1;
   assert (block_checker_error)
-    else $error("[%0tns] Single-bit error not detected by block checker for poisoned block '%b'.",
+    else $error("[%t] Single-bit error not detected by block checker for poisoned block '%b'.",
                 $time, poisoned_block);
 
   // Check the block corrector
   block_corrector_block = poisoned_block;
   #1;
   assert (block_corrector_error)
-    else $error("[%0tns] Single-bit error not detected by block corrector for poisoned block '%b'.",
+    else $error("[%t] Single-bit error not detected by block corrector for poisoned block '%b'.",
                 $time, poisoned_block);
   assert (block_corrector_corrected_block === expected_block)
-    else $error("[%0tns] Single-bit error not corrected by block corrector for poisoned block '%b'. Expected '%b', got '%b'.",
+    else $error("[%t] Single-bit error not corrected by block corrector for poisoned block '%b'. Expected '%b', got '%b'.",
                 $time, poisoned_block, expected_block, block_corrector_corrected_block);
   assert (block_corrector_corrected_error_position === error_position)
-    else $error("[%0tns] Incorrect single-bit error position returned by block corrector for poisoned block '%b'. Expected '%0d', got '%0d'.",
+    else $error("[%t] Incorrect single-bit error position returned by block corrector for poisoned block '%b'. Expected '%0d', got '%0d'.",
                 $time, poisoned_block, error_position, block_corrector_corrected_error_position);
 endtask
 
@@ -316,6 +316,7 @@ initial begin
   // Log waves
   $dumpfile("hamming.testbench.vcd");
   $dumpvars(0, hamming__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   encoder_data          = 0;

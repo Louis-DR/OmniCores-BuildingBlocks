@@ -113,7 +113,7 @@ task automatic read_once;
   if (REGISTERED_READ) @(posedge clock);
   #(1);
   assert (read_data === expected_data)
-    else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, address, expected_data);
+    else $error("[%t] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, read_data, address, expected_data);
   @(negedge clock);
   read_enable = 0;
 endtask
@@ -129,6 +129,7 @@ endtask
 initial begin
   $dumpfile("simple_dual_port_ram.testbench.vcd");
   $dumpvars(0, simple_dual_port_ram__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   write_enable  =  0;
@@ -217,7 +218,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;
@@ -265,7 +266,7 @@ initial begin
           if (REGISTERED_READ) @(posedge clock);
           #(1);
           assert (read_data === expected_data)
-            else $error("[%0tns] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $time, read_data, read_address, expected_data);
+            else $error("[%t] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, read_data, read_address, expected_data);
         end else begin
           read_enable = 0;
         end
@@ -277,7 +278,7 @@ initial begin
         @(negedge clock);
         timeout_countdown--;
       end
-      $error("[%0tns] Timeout.", $time);
+      $error("[%t] Timeout.", $realtime);
     end
   join_any
   disable fork;

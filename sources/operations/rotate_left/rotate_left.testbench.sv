@@ -52,6 +52,7 @@ initial begin
   // Log waves
   $dumpfile("rotate_left.testbench.vcd");
   $dumpvars(0,rotate_left__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   data_in = 0;
@@ -65,7 +66,7 @@ initial begin
     data_out_expected = 1 << ((bit_index + ROTATION_MOD) % WIDTH);
     #1;
     assert (data_out === data_out_expected)
-      else $error("[%0tns] Incorrect output for input data '%b' : expected '%b' but got '%b'.", $time, data_in, data_out_expected, data_out);
+      else $error("[%t] Incorrect output for input data '%b' : expected '%b' but got '%b'.", $realtime, data_in, data_out_expected, data_out);
   end
 
   #10;
@@ -77,7 +78,7 @@ initial begin
     data_out_expected = ~(1 << ((bit_index + ROTATION_MOD) % WIDTH));
     #1;
     assert (data_out === data_out_expected)
-      else $error("[%0tns] Incorrect output for input data '%b' : expected '%b' but got '%b'.", $time, data_in, data_out_expected, data_out);
+      else $error("[%t] Incorrect output for input data '%b' : expected '%b' but got '%b'.", $realtime, data_in, data_out_expected, data_out);
   end
 
   #10;
@@ -89,7 +90,7 @@ initial begin
     data_out_expected = (data_in << ROTATION_MOD) | (data_in >> (WIDTH - ROTATION_MOD));
     #1;
     assert (data_out === data_out_expected)
-      else $error("[%0tns] Incorrect output for input data '%b' : expected '%b' but got '%b'.", $time, data_in, data_out_expected, data_out);
+      else $error("[%t] Incorrect output for input data '%b' : expected '%b' but got '%b'.", $realtime, data_in, data_out_expected, data_out);
     #1;
   end
 

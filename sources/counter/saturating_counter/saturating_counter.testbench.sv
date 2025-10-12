@@ -70,6 +70,7 @@ initial begin
   // Log waves
   $dumpfile("saturating_counter.testbench.vcd");
   $dumpvars(0,saturating_counter__testbench);
+  $timeformat(-9, 0, " ns", 0);
 
   // Initialization
   decrement = 0;
@@ -84,7 +85,7 @@ initial begin
   // Check 1 : Reset value
   $display("CHECK 1 : Reset value.");
   if (count != RESET_VALUE) begin
-    $error("[%0tns] Value at reset '%0d' is different than the one given as parameter '%0d'.", $time, count, RESET_VALUE);
+    $error("[%t] Value at reset '%0d' is different than the one given as parameter '%0d'.", $realtime, count, RESET_VALUE);
   end
 
   repeat(10) @(posedge clock);
@@ -99,7 +100,7 @@ initial begin
     expected_count += 1;
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   increment = 0;
@@ -116,7 +117,7 @@ initial begin
     expected_count -= 1;
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   decrement = 0;
@@ -146,7 +147,7 @@ initial begin
     end
     @(negedge clock);
     if (count != expected_count) begin
-      $error("[%0tns] Counter value is '%0d' instead of expected value '%0d'.", $time, count, expected_count);
+      $error("[%t] Counter value is '%0d' instead of expected value '%0d'.", $realtime, count, expected_count);
     end
   end
   decrement = 0;
