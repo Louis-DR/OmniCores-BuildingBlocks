@@ -99,6 +99,7 @@ There are no synthesis and implementation constraints for this block.
 | Module                                                        | Path                                                        | Comment |
 | ------------------------------------------------------------- | ----------------------------------------------------------- | ------- |
 | [`repetition_block_corrector`](repetition_block_corrector.md) | `omnicores-buildingblocks/sources/error_control/repetition` |         |
+| [`count_ones`](../../operations/count_ones/count_ones.md)     | `omnicores-buildingblocks/sources/operations/count_ones`    |         |
 
 ## Related modules
 

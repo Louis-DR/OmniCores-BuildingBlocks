@@ -1,1 +1,3 @@
 repetition_corrector.v
+repetition_block_corrector.v
+../../operations/count_ones/count_ones.v
