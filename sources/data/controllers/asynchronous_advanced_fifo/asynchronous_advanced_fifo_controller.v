@@ -33,11 +33,13 @@ module asynchronous_advanced_fifo_controller #(
   input       [WIDTH-1:0] write_data,
   // Write status flags
   output                  write_empty,
-  output                  write_not_empty,
   output                  write_almost_empty,
-  output                  write_full,
+  output                  write_half_empty,
+  output                  write_not_empty,
   output                  write_not_full,
+  output                  write_half_full,
   output                  write_almost_full,
+  output                  write_full,
   output reg              write_miss,
   // Write level and thresholds
   output [DEPTH_LOG2:0]   write_level,
@@ -55,11 +57,13 @@ module asynchronous_advanced_fifo_controller #(
   output      [WIDTH-1:0] read_data,
   // Read status flags
   output                  read_empty,
-  output                  read_not_empty,
   output                  read_almost_empty,
-  output                  read_full,
+  output                  read_half_empty,
+  output                  read_not_empty,
   output                  read_not_full,
+  output                  read_half_full,
   output                  read_almost_full,
+  output                  read_full,
   output reg              read_error,
   // Read level and thresholds
   output [DEPTH_LOG2:0]   read_level,
@@ -137,15 +141,17 @@ assign write_level = write_pointer - read_pointer_w;
 assign write_space = DEPTH - write_level;
 
 // Queue is empty if the gray-coded read and write pointers are the same
-assign write_empty        = write_pointer_gray == read_pointer_gray_w;
+assign write_empty        =  write_pointer_gray == read_pointer_gray_w;
+assign write_almost_empty =  write_level == 1;
+assign write_half_empty   =  write_level <= (DEPTH + 1) / 2;
 assign write_not_empty    = ~write_empty;
-assign write_almost_empty = write_level == 1;
 
 // Queue is full if only the two MSB of the gray-coded pointers differ (this only works for power-of-2 depths)
 if (DEPTH_IS_POW2) assign write_full = write_pointer_gray == {~read_pointer_gray_w[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_gray_w[DEPTH_LOG2-2:0]};
 else               assign write_full = write_level == DEPTH;
-assign write_not_full     = ~write_full;
-assign write_almost_full  = write_level == DEPTH - 1;
+assign write_almost_full =  write_space ==  1;
+assign write_half_full   =  write_space <= DEPTH / 2;
+assign write_not_full    = ~write_full;
 
 // Thresholds status
 assign write_lower_threshold_status = write_level <= write_lower_threshold_level;
@@ -219,15 +225,17 @@ assign read_level = write_pointer_r - read_pointer;
 assign read_space = DEPTH - read_level;
 
 // Queue is empty if the gray-coded read and write pointers are the same
-assign read_empty        = write_pointer_gray_r == read_pointer_gray;
+assign read_empty        =  write_pointer_gray_r == read_pointer_gray;
+assign read_almost_empty =  read_level == 1;
+assign read_half_empty   =  read_level <= (DEPTH + 1) / 2;
 assign read_not_empty    = ~read_empty;
-assign read_almost_empty = read_level == 1;
 
 // Queue is full if only the two MSB of the gray-coded pointers differ (this only works for power-of-2 depths)
 if (DEPTH_IS_POW2) assign read_full = write_pointer_gray_r == {~read_pointer_gray[DEPTH_LOG2:DEPTH_LOG2-1], read_pointer_gray[DEPTH_LOG2-2:0]};
 else               assign read_full = read_level == DEPTH;
+assign read_almost_full  =  read_space ==  1;
+assign read_half_full    =  read_space <= DEPTH / 2;
 assign read_not_full     = ~read_full;
-assign read_almost_full  = read_level == DEPTH - 1;
 
 // Thresholds status
 assign read_lower_threshold_status = read_level <= read_lower_threshold_level;
