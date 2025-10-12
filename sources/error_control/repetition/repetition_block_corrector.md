@@ -93,7 +93,9 @@ There are no synthesis and implementation constraints for this block.
 
 ## Dependencies
 
-This module has no external module dependencies.
+| Module                                                    | Path                                                     | Comment |
+| --------------------------------------------------------- | -------------------------------------------------------- | ------- |
+| [`count_ones`](../../operations/count_ones/count_ones.md) | `omnicores-buildingblocks/sources/operations/count_ones` |         |
 
 ## Related modules
 

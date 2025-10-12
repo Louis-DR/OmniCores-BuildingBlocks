@@ -11,6 +11,10 @@
 
 
 
+`include "clog2.vh"
+
+
+
 module repetition_block_corrector #(
   parameter DATA_WIDTH = 8,
   parameter REPETITION = 3
@@ -19,6 +23,8 @@ module repetition_block_corrector #(
   output                            error,
   output           [DATA_WIDTH-1:0] corrected_data
 );
+
+localparam ONES_COUNT_WIDTH = `CLOG2(REPETITION+1);
 
 genvar repetition_index;
 genvar bit_index;
@@ -33,14 +39,25 @@ generate
   end
 endgenerate
 
-// Detect repetition errors
+// Detect repetition errors and correct data using majority voting
 wire [DATA_WIDTH-1:0] error_position;
 generate
   for (bit_index = 0; bit_index < DATA_WIDTH; bit_index = bit_index+1) begin : gen_bits
+    // Error detection
     wire all_ones  =  & grouped_bits[bit_index];
     wire all_zeros = ~| grouped_bits[bit_index];
     assign error_position[bit_index] = ~(all_ones | all_zeros);
-    assign corrected_data[bit_index] = ($countones(grouped_bits[bit_index]) > (REPETITION / 2)) ? 1'b1 : 1'b0;
+
+    // Error correction
+    wire [ONES_COUNT_WIDTH-1:0] ones_count;
+    count_ones #(
+      .DATA_WIDTH  ( REPETITION       ),
+      .COUNT_WIDTH ( ONES_COUNT_WIDTH )
+    ) count_ones (
+      .data  (grouped_bits[bit_index]),
+      .count (ones_count)
+    );
+    assign corrected_data[bit_index] = (ones_count > (REPETITION / 2)) ? 1'b1 : 1'b0;
   end
 endgenerate
 
