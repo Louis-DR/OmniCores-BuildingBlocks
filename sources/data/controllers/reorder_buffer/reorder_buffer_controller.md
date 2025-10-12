@@ -43,6 +43,7 @@ The controller passes data through without storing it. The `write_data` is forwa
 | `write_data`           | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                                   |
 | `read_enable`          | input     | 1             | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read next data in order.                                |
 | `read_data`            | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer in order.                                                                 |
+| `memory_clock`         | output    | 1             |              |          |             | Clock for synchronous RAM.                                                                          |
 | `memory_write_enable`  | output    | 1             | `clock`      |          |             | Memory write enable signal.                                                                         |
 | `memory_write_address` | output    | `INDEX_WIDTH` | `clock`      |          |             | Memory write address.                                                                               |
 | `memory_write_data`    | output    | `WIDTH`       | `clock`      |          |             | Memory write data.                                                                                  |

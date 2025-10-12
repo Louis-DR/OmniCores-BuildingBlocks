@@ -37,12 +37,14 @@ The controller passes data through without storing it. The `write_data` is forwa
 | `write_enable`        | input     | 1            | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write (push) to stack.        |
 | `write_data`          | input     | `WIDTH`      | `clock`      |          |             | Data to be written to the stack.                                           |
 | `read_enable`         | input     | 1            | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from stack.         |
-| `read_data`           | output    | `WIDTH`      | `clock`      | `resetn` | `0`         | Data read from the stack top.                                              |
-| `memory_enable`       | output    | 1            | `clock`      |          |             | Memory access enable signal.                                               |
-| `memory_write_enable` | output    | 1            | `clock`      |          |             | Memory write enable signal.                                                |
-| `memory_address`      | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory access address.                                                     |
-| `memory_write_data`   | output    | `WIDTH`      | `clock`      |          |             | Memory write data.                                                         |
-| `memory_read_data`    | input     | `WIDTH`      | `clock`      |          |             | Memory read data.                                                          |
+| `read_data`            | output    | `WIDTH`      | `clock`      | `resetn` | `0`         | Data read from the stack top.                                              |
+| `memory_clock`         | output    | 1            |              |          |             | Clock for synchronous RAM.                                                 |
+| `memory_write_enable`  | output    | 1            | `clock`      |          |             | Memory write enable signal.                                                |
+| `memory_write_address` | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory write address.                                                      |
+| `memory_write_data`    | output    | `WIDTH`      | `clock`      |          |             | Memory write data.                                                         |
+| `memory_read_enable`   | output    | 1            | `clock`      |          |             | Memory read enable signal.                                                 |
+| `memory_read_address`  | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory read address.                                                       |
+| `memory_read_data`     | input     | `WIDTH`      | `clock`      |          |             | Memory read data.                                                          |
 
 ## Operation
 

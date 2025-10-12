@@ -78,6 +78,7 @@ reorder_buffer_controller #(
   .write_error          ( write_error          ),
   .read_enable          ( read_enable          ),
   .read_data            ( read_data            ),
+  .memory_clock         ( memory_clock         ),
   .memory_write_enable  ( memory_write_enable  ),
   .memory_write_address ( memory_write_address ),
   .memory_write_data    ( memory_write_data    ),
@@ -92,7 +93,7 @@ simple_dual_port_ram #(
   .DEPTH           ( DEPTH ),
   .REGISTERED_READ ( 0     )
 ) memory (
-  .clock         ( clock                ),
+  .clock         ( memory_clock         ),
   .write_enable  ( memory_write_enable  ),
   .write_address ( memory_write_address ),
   .write_data    ( memory_write_data    ),

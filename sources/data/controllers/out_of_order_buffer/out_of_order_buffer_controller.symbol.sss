@@ -7,6 +7,7 @@ out_of_order_buffer_controller
 => write_data       read_data =>
 <= write_index     read_index <=
 <- full                 empty ->
+                 memory_clock ->
           memory_write_enable ->
          memory_write_address =>
             memory_write_data =>

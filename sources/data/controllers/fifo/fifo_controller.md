@@ -38,6 +38,7 @@ The controller passes data through without storing it. The `write_data` is forwa
 | `write_data`           | input     | `WIDTH`      | `clock`      |          |             | Data to be written to the queue.                                           |
 | `read_enable`          | input     | 1            | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from queue.         |
 | `read_data`            | output    | `WIDTH`      | `clock`      | `resetn` | `0`         | Data read from the queue head.                                             |
+| `memory_clock`         | output    | 1            |              |          |             | Clock for synchronous RAM.                                                 |
 | `memory_write_enable`  | output    | 1            | `clock`      |          |             | Memory write enable signal.                                                |
 | `memory_write_address` | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory write address.                                                      |
 | `memory_write_data`    | output    | `WIDTH`      | `clock`      |          |             | Memory write data.                                                         |

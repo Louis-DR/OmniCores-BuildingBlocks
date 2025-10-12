@@ -47,6 +47,7 @@ module advanced_fifo_controller #(
   input  [DEPTH_LOG2:0]   upper_threshold_level,
   output                  upper_threshold_status,
   // Memory interface
+  output                  memory_clock,
   output                  memory_write_enable,
   output [DEPTH_LOG2-1:0] memory_write_address,
   output      [WIDTH-1:0] memory_write_data,
@@ -189,6 +190,7 @@ end
 // │ Memory interface logic │
 // └────────────────────────┘
 
+assign memory_clock         = clock;
 assign memory_write_enable  = do_write;
 assign memory_write_address = write_address;
 assign memory_write_data    = write_data;

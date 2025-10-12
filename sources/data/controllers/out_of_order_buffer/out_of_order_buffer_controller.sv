@@ -31,6 +31,7 @@ module out_of_order_buffer_controller #(
   output       [WIDTH-1:0] read_data,
   output logic             read_error,
   // Memory interface
+  output                   memory_clock,
   output logic             memory_write_enable,
   output [INDEX_WIDTH-1:0] memory_write_address,
   output       [WIDTH-1:0] memory_write_data,
@@ -99,6 +100,7 @@ always_ff @(posedge clock or negedge resetn) begin
 end
 
 // Memory interface logic
+assign memory_clock         = clock;
 assign memory_write_enable  = write_enable;
 assign memory_write_address = first_free_index;
 assign memory_write_data    = write_data;

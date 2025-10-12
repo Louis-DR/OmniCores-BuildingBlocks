@@ -30,7 +30,8 @@ module lifo_controller #(
   // Read interface
   input                   read_enable,
   output      [WIDTH-1:0] read_data,
-  // Memory interface (dual-port)
+  // Memory interface
+  output                  memory_clock,
   output                  memory_write_enable,
   output [DEPTH_LOG2-1:0] memory_write_address,
   output      [WIDTH-1:0] memory_write_data,
@@ -100,9 +101,10 @@ wire [DEPTH_LOG2:0] pointer_minus_one = pointer - 1;
 
 // Write port: Write to current pointer location when pushing
 // When simultaneously reading (pop+push), write to read location to replace top
-assign memory_write_enable  =  write_enable;
+assign memory_clock         = clock;
+assign memory_write_enable  = write_enable;
 assign memory_write_address = (write_enable && read_enable) ? pointer_minus_one[DEPTH_LOG2-1:0] : pointer[DEPTH_LOG2-1:0];
-assign memory_write_data    =  write_data;
+assign memory_write_data    = write_data;
 
 // Read port: Continuously read from top of stack (pointer - 1)
 // This provides combinational access to the current top-of-stack value

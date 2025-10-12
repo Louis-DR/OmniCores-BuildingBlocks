@@ -41,6 +41,7 @@ The controller passes data through without storing it. The `write_data` is forwa
 | `read_clear`           | input     | 1             | `clock`      |          |             | Clear enable signal.<br/>`0`: read only.<br/>`1`: clear slot after reading.           |
 | `read_index`           | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to read from.                                                       |
 | `read_data`            | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer at the specified index.                                     |
+| `memory_clock`         | output    | 1             |              |          |             | Clock for synchronous RAM.                                                            |
 | `memory_write_enable`  | output    | 1             | `clock`      |          |             | Memory write enable signal.                                                           |
 | `memory_write_address` | output    | `INDEX_WIDTH` | `clock`      |          |             | Memory write address.                                                                 |
 | `memory_write_data`    | output    | `WIDTH`       | `clock`      |          |             | Memory write data.                                                                    |

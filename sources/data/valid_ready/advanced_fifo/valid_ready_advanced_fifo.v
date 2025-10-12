@@ -51,6 +51,7 @@ assign write_ready = ~full;
 assign  read_valid = ~empty;
 
 // Memory interface signals
+wire                  memory_clock;
 wire                  memory_write_enable;
 wire [DEPTH_LOG2-1:0] memory_write_address;
 wire      [WIDTH-1:0] memory_write_data;
@@ -91,6 +92,7 @@ advanced_fifo_controller #(
   .lower_threshold_status  ( lower_threshold_status  ),
   .upper_threshold_level   ( upper_threshold_level   ),
   .upper_threshold_status  ( upper_threshold_status  ),
+  .memory_clock            ( memory_clock            ),
   .memory_write_enable     ( memory_write_enable     ),
   .memory_write_address    ( memory_write_address    ),
   .memory_write_data       ( memory_write_data       ),
@@ -105,7 +107,7 @@ simple_dual_port_ram #(
   .DEPTH           ( DEPTH ),
   .REGISTERED_READ ( 0     )
 ) memory (
-  .clock         ( clock                ),
+  .clock         ( memory_clock         ),
   .write_enable  ( memory_write_enable  ),
   .write_address ( memory_write_address ),
   .write_data    ( memory_write_data    ),

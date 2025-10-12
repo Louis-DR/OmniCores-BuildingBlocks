@@ -31,6 +31,7 @@ module fifo_controller #(
   input                   read_enable,
   output      [WIDTH-1:0] read_data,
   // Memory interface
+  output                  memory_clock,
   output                  memory_write_enable,
   output [DEPTH_LOG2-1:0] memory_write_address,
   output      [WIDTH-1:0] memory_write_data,
@@ -113,6 +114,7 @@ end
 // │ Memory interface logic │
 // └────────────────────────┘
 
+assign memory_clock         = clock;
 assign memory_write_enable  = write_enable;
 assign memory_write_address = write_address;
 assign memory_write_data    = write_data;

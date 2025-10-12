@@ -35,6 +35,7 @@ module reorder_buffer_controller #(
   input                    read_enable,
   output       [WIDTH-1:0] read_data,
   // Memory interface
+  output                   memory_clock,
   output logic             memory_write_enable,
   output [INDEX_WIDTH-1:0] memory_write_address,
   output       [WIDTH-1:0] memory_write_data,
@@ -129,6 +130,7 @@ always_ff @(posedge clock or negedge resetn) begin
 end
 
 // Memory interface logic
+assign memory_clock         = clock;
 assign memory_write_enable  = write_enable;
 assign memory_write_address = write_index;
 assign memory_write_data    = write_data;

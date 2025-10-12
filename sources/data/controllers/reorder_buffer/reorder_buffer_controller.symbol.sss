@@ -9,6 +9,7 @@ reorder_buffer_controller
 => write_data         read_data =>
 <- reserve_full       data_full ->
 <- reserve_empty     data_empty ->
+                   memory_clock ->
             memory_write_enable ->
            memory_write_address =>
               memory_write_data =>
