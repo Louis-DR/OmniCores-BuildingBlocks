@@ -20,13 +20,13 @@ The controller passes data through without storing it. The `write_data` is forwa
 
 ## Parameters
 
-| Name           | Type    | Allowed Values | Default       | Description                                                 |
-| -------------- | ------- | -------------- | ------------- | ----------------------------------------------------------- |
-| `WIDTH`        | integer | `≥1`           | `8`           | Bit width of the data vector.                               |
-| `DEPTH`        | integer | `≥2`           | `4`           | Number of entries in the queue. Non-power-of-two supported. |
-| `DEPTH_LOG2`   | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated).             |
-| `STAGES_WRITE` | integer | `≥2`           | `2`           | Number of synchronizer stages for write domain CDC.         |
-| `STAGES_READ`  | integer | `≥2`           | `2`           | Number of synchronizer stages for read domain CDC.          |
+| Name           | Type    | Allowed Values | Default       | Description                                         |
+| -------------- | ------- | -------------- | ------------- | --------------------------------------------------- |
+| `WIDTH`        | integer | `≥1`           | `8`           | Bit width of the data vector.                       |
+| `DEPTH`        | integer | `≥2` even      | `4`           | Number of entries in the queue.                     |
+| `DEPTH_LOG2`   | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated).     |
+| `STAGES_WRITE` | integer | `≥2`           | `2`           | Number of synchronizer stages for write domain CDC. |
+| `STAGES_READ`  | integer | `≥2`           | `2`           | Number of synchronizer stages for read domain CDC.  |
 
 ## Ports
 
