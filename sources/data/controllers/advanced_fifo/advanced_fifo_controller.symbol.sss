@@ -7,8 +7,9 @@ advanced_fifo_controller
 => write_data                            read_data =>
 <- write_miss                           read_error ->
 <- full                                      empty ->
-<- not_full                              not_empty ->
 <- almost_full                        almost_empty ->
+<- half_full                            half_empty ->
+<- not_full                              not_empty ->
 <= space                                     level =>
 => lower_threshold_level     upper_threshold_level <=
 <- lower_threshold_status   upper_threshold_status ->

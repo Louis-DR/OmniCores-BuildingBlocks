@@ -27,11 +27,13 @@ module advanced_fifo_controller #(
   input                   flush,
   // Status flags
   output                  empty,
-  output                  not_empty,
   output                  almost_empty,
-  output                  full,
+  output                  half_empty,
+  output                  not_empty,
   output                  not_full,
+  output                  half_full,
   output                  almost_full,
+  output                  full,
   output reg              write_miss,
   output reg              read_error,
   // Write interface
@@ -149,13 +151,15 @@ assign space = DEPTH - level;
 
 // Queue is empty if the read and write pointers are the same and the lap bits are equal
 assign empty        = write_address == read_address && write_lap == read_lap;
-assign not_empty    = ~empty;
 assign almost_empty = level == 1;
+assign half_empty   = level <= (DEPTH + 1) / 2;
+assign not_empty    = ~empty;
 
 // Queue is full if the read and write pointers are the same but the lap bits are different
 assign full         = write_address == read_address && write_lap != read_lap;
+assign almost_full  = space ==  1;
+assign half_full    = space <= DEPTH / 2;
 assign not_full     = ~full;
-assign almost_full  = level == DEPTH - 1;
 
 // Thresholds status
 assign lower_threshold_status = level <= lower_threshold_level;
