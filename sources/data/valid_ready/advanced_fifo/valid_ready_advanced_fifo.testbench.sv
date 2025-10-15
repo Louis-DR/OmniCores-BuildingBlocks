@@ -44,9 +44,16 @@ logic                write_ready;
 logic    [WIDTH-1:0] read_data;
 logic                read_valid;
 logic                read_ready;
-logic                full;
 logic                empty;
+logic                almost_empty;
+logic                half_empty;
+logic                not_empty;
+logic                not_full;
+logic                half_full;
+logic                almost_full;
+logic                full;
 logic [DEPTH_LOG2:0] level;
+logic [DEPTH_LOG2:0] space;
 logic [DEPTH_LOG2:0] lower_threshold_level;
 logic                lower_threshold_status;
 logic [DEPTH_LOG2:0] upper_threshold_level;
@@ -69,8 +76,14 @@ valid_ready_advanced_fifo #(
   .clock                  ( clock                  ),
   .resetn                 ( resetn                 ),
   .flush                  ( flush                  ),
-  .full                   ( full                   ),
   .empty                  ( empty                  ),
+  .almost_empty           ( almost_empty           ),
+  .half_empty             ( half_empty             ),
+  .not_empty              ( not_empty              ),
+  .not_full               ( not_full               ),
+  .half_full              ( half_full              ),
+  .almost_full            ( almost_full            ),
+  .full                   ( full                   ),
   .write_data             ( write_data             ),
   .write_valid            ( write_valid            ),
   .write_ready            ( write_ready            ),
@@ -78,6 +91,7 @@ valid_ready_advanced_fifo #(
   .read_valid             ( read_valid             ),
   .read_ready             ( read_ready             ),
   .level                  ( level                  ),
+  .space                  ( space                  ),
   .lower_threshold_level  ( lower_threshold_level  ),
   .lower_threshold_status ( lower_threshold_status ),
   .upper_threshold_level  ( upper_threshold_level  ),

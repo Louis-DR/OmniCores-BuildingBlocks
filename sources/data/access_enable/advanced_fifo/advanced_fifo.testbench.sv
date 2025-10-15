@@ -38,16 +38,22 @@ localparam int  RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 logic                clock;
 logic                resetn;
 logic                flush;
-logic                clear_flags;
 logic                write_enable;
 logic    [WIDTH-1:0] write_data;
 logic                write_miss;
+logic                empty;
+logic                almost_empty;
+logic                half_empty;
+logic                not_empty;
+logic                not_full;
+logic                half_full;
+logic                almost_full;
 logic                full;
 logic                read_enable;
 logic    [WIDTH-1:0] read_data;
 logic                read_error;
-logic                empty;
 logic [DEPTH_LOG2:0] level;
+logic [DEPTH_LOG2:0] space;
 logic [DEPTH_LOG2:0] lower_threshold_level;
 logic                lower_threshold_status;
 logic [DEPTH_LOG2:0] upper_threshold_level;
@@ -71,11 +77,13 @@ advanced_fifo #(
   .resetn                 ( resetn                 ),
   .flush                  ( flush                  ),
   .empty                  ( empty                  ),
-  .not_empty              ( not_empty              ),
   .almost_empty           ( almost_empty           ),
-  .full                   ( full                   ),
+  .half_empty             ( half_empty             ),
+  .not_empty              ( not_empty              ),
   .not_full               ( not_full               ),
+  .half_full              ( half_full              ),
   .almost_full            ( almost_full            ),
+  .full                   ( full                   ),
   .write_miss             ( write_miss             ),
   .read_error             ( read_error             ),
   .write_enable           ( write_enable           ),
@@ -83,6 +91,7 @@ advanced_fifo #(
   .read_enable            ( read_enable            ),
   .read_data              ( read_data              ),
   .level                  ( level                  ),
+  .space                  ( space                  ),
   .lower_threshold_level  ( lower_threshold_level  ),
   .lower_threshold_status ( lower_threshold_status ),
   .upper_threshold_level  ( upper_threshold_level  ),

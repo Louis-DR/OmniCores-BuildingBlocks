@@ -28,24 +28,31 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Ports
 
-| Name                     | Direction | Width          | Clock        | Reset    | Reset value | Description                                                                       |
-| ------------------------ | --------- | -------------- | ------------ | -------- | ----------- | --------------------------------------------------------------------------------- |
-| `clock`                  | input     | 1              | self         |          |             | Clock signal.                                                                     |
-| `resetn`                 | input     | 1              | asynchronous | self     | `0`         | Asynchronous active-low reset.                                                    |
-| `flush`                  | input     | 1              | `clock`      |          |             | Flush control.<br/>`0`: normal operation.<br/>`1`: flush queue to empty state.    |
-| `write_data`             | input     | `WIDTH`        | `clock`      |          |             | Data to be written to the queue.                                                  |
-| `write_valid`            | input     | 1              | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.  |
-| `write_ready`            | output    | 1              | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: queue is full.<br/>`1`: queue can accept write data. |
-| `read_data`              | output    | `WIDTH`        | `clock`      | `resetn` | `0`         | Data read from the queue head.                                                    |
-| `read_valid`             | output    | 1              | `clock`      | `resetn` | `0`         | Read valid signal.<br/>`0`: no read data available.<br/>`1`: read data is valid.  |
-| `read_ready`             | input     | 1              | `clock`      |          |             | Read ready signal.<br/>`0`: not ready to receive.<br/>`1`: ready to receive data. |
-| `full`                   | output    | 1              | `clock`      | `resetn` | `0`         | Queue full status.<br/>`0`: queue has free space.<br/>`1`: queue is full.         |
-| `empty`                  | output    | 1              | `clock`      | `resetn` | `1`         | Queue empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty.        |
-| `level`                  | output    | `DEPTH_LOG2+1` | `clock`      | `resetn` | `0`         | Current number of entries in the queue.                                           |
-| `lower_threshold_level`  | input     | `DEPTH_LOG2+1` | `clock`      |          |             | Lower threshold level for comparison.                                             |
-| `lower_threshold_status` | output    | 1              | `clock`      | `resetn` | `1`         | Lower threshold status.<br/>`1`: level ≤ threshold.                               |
-| `upper_threshold_level`  | input     | `DEPTH_LOG2+1` | `clock`      |          |             | Upper threshold level for comparison.                                             |
-| `upper_threshold_status` | output    | 1              | `clock`      | `resetn` | `0`         | Upper threshold status.<br/>`1`: level ≥ threshold.                               |
+| Name                     | Direction | Width          | Clock        | Reset    | Reset value | Description                                                                                                                  |
+| ------------------------ | --------- | -------------- | ------------ | -------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `clock`                  | input     | 1              | self         |          |             | Clock signal.                                                                                                                |
+| `resetn`                 | input     | 1              | asynchronous | self     | `0`         | Asynchronous active-low reset.                                                                                               |
+| `flush`                  | input     | 1              | `clock`      |          |             | Flush control.<br/>`0`: normal operation.<br/>`1`: flush queue to empty state.                                               |
+| `write_data`             | input     | `WIDTH`        | `clock`      |          |             | Data to be written to the queue.                                                                                             |
+| `write_valid`            | input     | 1              | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.                                             |
+| `write_ready`            | output    | 1              | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: queue is full.<br/>`1`: queue can accept write data.                                            |
+| `read_data`              | output    | `WIDTH`        | `clock`      | `resetn` | `0`         | Data read from the queue head.                                                                                               |
+| `read_valid`             | output    | 1              | `clock`      | `resetn` | `0`         | Read valid signal.<br/>`0`: no read data available.<br/>`1`: read data is valid.                                             |
+| `read_ready`             | input     | 1              | `clock`      |          |             | Read ready signal.<br/>`0`: not ready to receive.<br/>`1`: ready to receive data.                                            |
+| `empty`                  | output    | 1              | `clock`      | `resetn` | `1`         | Queue empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty.                                                   |
+| `almost_empty`           | output    | 1              | `clock`      | `resetn` | `0`         | Queue almost empty status.<br/>`0`: queue is empty or has more than one entry.<br/>`1`: queue has exactly one entry.         |
+| `half_empty`             | output    | 1              | `clock`      | `resetn` | `0`         | Queue half empty status.<br/>`0`: queue half full.<br/>`1`: queue half empty.                                                |
+| `not_empty`              | output    | 1              | `clock`      | `resetn` | `0`         | Queue not empty status.<br/>`0`: queue is empty.<br/>`1`: queue contains data.                                               |
+| `not_full`               | output    | 1              | `clock`      | `resetn` | `1`         | Queue not full status.<br/>`0`: queue is full.<br/>`1`: queue has free space.                                                |
+| `half_full`              | output    | 1              | `clock`      | `resetn` | `0`         | Queue half full status.<br/>`0`: queue half empty.<br/>`1`: queue half full.                                                 |
+| `almost_full`            | output    | 1              | `clock`      | `resetn` | `0`         | Queue almost full status.<br/>`0`: queue is full or has more than one free space.<br/>`1`: queue has exactly one free space. |
+| `full`                   | output    | 1              | `clock`      | `resetn` | `0`         | Queue full status.<br/>`0`: queue has free space.<br/>`1`: queue is full.                                                    |
+| `level`                  | output    | `DEPTH_LOG2+1` | `clock`      | `resetn` | `0`         | Current number of entries in the queue.                                                                                      |
+| `space`                  | output    | `DEPTH_LOG2+1` | `clock`      | `resetn` | `0`         | Current number of free entries in the queue.                                                                                 |
+| `lower_threshold_level`  | input     | `DEPTH_LOG2+1` | `clock`      |          |             | Lower threshold level for comparison.                                                                                        |
+| `lower_threshold_status` | output    | 1              | `clock`      | `resetn` | `1`         | Lower threshold status.<br/>`1`: level ≤ threshold.                                                                          |
+| `upper_threshold_level`  | input     | `DEPTH_LOG2+1` | `clock`      |          |             | Upper threshold level for comparison.                                                                                        |
+| `upper_threshold_status` | output    | 1              | `clock`      | `resetn` | `0`         | Upper threshold status.<br/>`1`: level ≥ threshold.                                                                          |
 
 ## Operation
 

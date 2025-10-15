@@ -6,7 +6,15 @@ valid_ready_asynchronous_advanced_fifo
 -> write_valid                                     read_valid ->
 <- write_ready                                     read_ready <-
 => write_data                                       read_data =>
-<- write_full                                      read_empty ->
+<- write_empty                                     read_empty ->
+<- write_almost_empty                       read_almost_empty ->
+<- write_half_empty                           read_half_empty ->
+<- write_not_empty                             read_not_empty ->
+<- write_not_full                               read_not_full ->
+<- write_half_full                             read_half_full ->
+<- write_almost_full                         read_almost_full ->
+<- write_full                                       read_full ->
+<= write_space                                     read_space =>
 <= write_level                                     read_level =>
 => write_lower_threshold_level     read_lower_threshold_level <=
 <- write_lower_threshold_status   read_lower_threshold_status ->

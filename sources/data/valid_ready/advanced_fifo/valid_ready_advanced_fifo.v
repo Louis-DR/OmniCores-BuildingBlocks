@@ -25,8 +25,14 @@ module valid_ready_advanced_fifo #(
   input                 resetn,
   input                 flush,
   // Status flags
-  output                full,
   output                empty,
+  output                almost_empty,
+  output                half_empty,
+  output                not_empty,
+  output                not_full,
+  output                half_full,
+  output                almost_full,
+  output                full,
   // Write interface
   input     [WIDTH-1:0] write_data,
   input                 write_valid,
@@ -37,6 +43,7 @@ module valid_ready_advanced_fifo #(
   input                 read_ready,
   // Level and thresholds
   output [DEPTH_LOG2:0] level,
+  output [DEPTH_LOG2:0] space,
   input  [DEPTH_LOG2:0] lower_threshold_level,
   output                lower_threshold_status,
   input  [DEPTH_LOG2:0] upper_threshold_level,
@@ -60,10 +67,6 @@ wire [DEPTH_LOG2-1:0] memory_read_address;
 wire      [WIDTH-1:0] memory_read_data;
 
 // Internal signals for unused controller outputs
-wire not_empty;
-wire almost_empty;
-wire not_full;
-wire almost_full;
 wire write_miss;
 wire read_error;
 
@@ -76,11 +79,13 @@ advanced_fifo_controller #(
   .resetn                  ( resetn                  ),
   .flush                   ( flush                   ),
   .empty                   ( empty                   ),
-  .not_empty               ( not_empty               ),
   .almost_empty            ( almost_empty            ),
-  .full                    ( full                    ),
+  .half_empty              ( half_empty              ),
+  .not_empty               ( not_empty               ),
   .not_full                ( not_full                ),
+  .half_full               ( half_full               ),
   .almost_full             ( almost_full             ),
+  .full                    ( full                    ),
   .write_miss              ( write_miss              ),
   .read_error              ( read_error              ),
   .write_enable            ( write_enable            ),
@@ -88,6 +93,7 @@ advanced_fifo_controller #(
   .read_enable             ( read_enable             ),
   .read_data               ( read_data               ),
   .level                   ( level                   ),
+  .space                   ( space                   ),
   .lower_threshold_level   ( lower_threshold_level   ),
   .lower_threshold_status  ( lower_threshold_status  ),
   .upper_threshold_level   ( upper_threshold_level   ),

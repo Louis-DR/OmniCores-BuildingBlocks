@@ -49,8 +49,16 @@ logic                write_flush;
 logic    [WIDTH-1:0] write_data;
 logic                write_valid;
 logic                write_ready;
+logic                write_empty;
+logic                write_almost_empty;
+logic                write_half_empty;
+logic                write_not_empty;
+logic                write_not_full;
+logic                write_half_full;
+logic                write_almost_full;
 logic                write_full;
 logic [DEPTH_LOG2:0] write_level;
+logic [DEPTH_LOG2:0] write_space;
 logic [DEPTH_LOG2:0] write_lower_threshold_level;
 logic                write_lower_threshold_status;
 logic [DEPTH_LOG2:0] write_upper_threshold_level;
@@ -62,7 +70,15 @@ logic    [WIDTH-1:0] read_data;
 logic                read_valid;
 logic                read_ready;
 logic                read_empty;
+logic                read_almost_empty;
+logic                read_half_empty;
+logic                read_not_empty;
+logic                read_not_full;
+logic                read_half_full;
+logic                read_almost_full;
+logic                read_full;
 logic [DEPTH_LOG2:0] read_level;
+logic [DEPTH_LOG2:0] read_space;
 logic [DEPTH_LOG2:0] read_lower_threshold_level;
 logic                read_lower_threshold_status;
 logic [DEPTH_LOG2:0] read_upper_threshold_level;
@@ -89,8 +105,16 @@ valid_ready_asynchronous_advanced_fifo #(
   .write_data                   ( write_data                   ),
   .write_valid                  ( write_valid                  ),
   .write_ready                  ( write_ready                  ),
+  .write_empty                  ( write_empty                  ),
+  .write_almost_empty           ( write_almost_empty           ),
+  .write_half_empty             ( write_half_empty             ),
+  .write_not_empty              ( write_not_empty              ),
+  .write_not_full               ( write_not_full               ),
+  .write_half_full              ( write_half_full              ),
+  .write_almost_full            ( write_almost_full            ),
   .write_full                   ( write_full                   ),
   .write_level                  ( write_level                  ),
+  .write_space                  ( write_space                  ),
   .write_lower_threshold_level  ( write_lower_threshold_level  ),
   .write_lower_threshold_status ( write_lower_threshold_status ),
   .write_upper_threshold_level  ( write_upper_threshold_level  ),
@@ -102,7 +126,15 @@ valid_ready_asynchronous_advanced_fifo #(
   .read_valid                   ( read_valid                   ),
   .read_ready                   ( read_ready                   ),
   .read_empty                   ( read_empty                   ),
+  .read_almost_empty            ( read_almost_empty            ),
+  .read_half_empty              ( read_half_empty              ),
+  .read_not_empty               ( read_not_empty               ),
+  .read_not_full                ( read_not_full                ),
+  .read_half_full               ( read_half_full               ),
+  .read_almost_full             ( read_almost_full             ),
+  .read_full                    ( read_full                    ),
   .read_level                   ( read_level                   ),
+  .read_space                   ( read_space                   ),
   .read_lower_threshold_level   ( read_lower_threshold_level   ),
   .read_lower_threshold_status  ( read_lower_threshold_status  ),
   .read_upper_threshold_level   ( read_upper_threshold_level   ),
