@@ -24,16 +24,16 @@ When both read and write operations occur simultaneously on an empty buffer, dat
 
 ## Ports
 
-| Name           | Direction | Width   | Clock        | Reset    | Reset value | Description                                                                                                          |
-| -------------- | --------- | ------- | ------------ | -------- | ----------- | -------------------------------------------------------------------------------------------------------------------- |
-| `clock`        | input     | 1       | self         |          |             | Clock signal.                                                                                                        |
-| `resetn`       | input     | 1       | asynchronous | self     | `0`         | Asynchronous active-low reset.                                                                                       |
-| `full`         | output    | 1       | `clock`      | `resetn` | `0`         | Buffer full status.<br/>`0`: buffer has space or being read.<br/>`1`: buffer is full and not being read.             |
-| `empty`        | output    | 1       | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>`0`: buffer contains data or being written.<br/>`1`: buffer is empty and not being written. |
-| `write_enable` | input     | 1       | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write `write_data` to buffer.                                           |
-| `write_data`   | input     | `WIDTH` | `clock`      |          |             | Data to be written to the buffer.                                                                                    |
-| `read_enable`  | input     | 1       | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read data from buffer.                                                   |
-| `read_data`    | output    | `WIDTH` | `clock`      | `resetn` | `0`         | Data read from the buffer or bypass path.                                                                            |
+| Name           | Direction | Width   | Clock        | Reset    | Reset value | Description                                                                                                              |
+| -------------- | --------- | ------- | ------------ | -------- | ----------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `clock`        | input     | 1       | self         |          |             | Clock signal.                                                                                                            |
+| `resetn`       | input     | 1       | asynchronous | self     | `0`         | Asynchronous active-low reset.                                                                                           |
+| `full`         | output    | 1       | `clock`      | `resetn` | `0`         | Buffer full status.<br/>• `0`: buffer has space or being read.<br/>• `1`: buffer is full and not being read.             |
+| `empty`        | output    | 1       | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>• `0`: buffer contains data or being written.<br/>• `1`: buffer is empty and not being written. |
+| `write_enable` | input     | 1       | `clock`      |          |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write `write_data` to buffer.                                           |
+| `write_data`   | input     | `WIDTH` | `clock`      |          |             | Data to be written to the buffer.                                                                                        |
+| `read_enable`  | input     | 1       | `clock`      |          |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read data from buffer.                                                   |
+| `read_data`    | output    | `WIDTH` | `clock`      | `resetn` | `0`         | Data read from the buffer or bypass path.                                                                                |
 
 ## Operation
 

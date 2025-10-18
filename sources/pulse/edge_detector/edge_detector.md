@@ -22,12 +22,12 @@ This module has no parameters.
 
 ## Ports
 
-| Name         | Direction | Width | Clock        | Reset    | Reset value | Description                                                                                 |
-| ------------ | --------- | ----- | ------------ | -------- | ----------- | ------------------------------------------------------------------------------------------- |
-| `clock`      | input     | 1     | self         |          |             | Clock signal.                                                                               |
-| `resetn`     | input     | 1     | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                              |
-| `signal`     | input     | 1     | `clock`      |          |             | Input signal to detect edges on.                                                            |
-| `edge_pulse` | output    | 1     | `clock`      | `resetn` | `0`         | Edge detection output.<br/>`0`: no edge detected.<br/>`1`: rising or falling edge detected. |
+| Name         | Direction | Width | Clock        | Reset    | Reset value | Description                                                                                     |
+| ------------ | --------- | ----- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| `clock`      | input     | 1     | self         |          |             | Clock signal.                                                                                   |
+| `resetn`     | input     | 1     | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                  |
+| `signal`     | input     | 1     | `clock`      |          |             | Input signal to detect edges on.                                                                |
+| `edge_pulse` | output    | 1     | `clock`      | `resetn` | `0`         | Edge detection output.<br/>• `0`: no edge detected.<br/>• `1`: rising or falling edge detected. |
 
 ## Operation
 

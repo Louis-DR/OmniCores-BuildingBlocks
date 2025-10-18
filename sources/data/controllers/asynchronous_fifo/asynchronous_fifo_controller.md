@@ -29,26 +29,26 @@ The controller passes data through without storing it. The `write_data` is forwa
 
 ## Ports
 
-| Name                   | Direction | Width        | Clock         | Reset          | Reset value | Description                                                                |
-| ---------------------- | --------- | ------------ | ------------- | -------------- | ----------- | -------------------------------------------------------------------------- |
-| `write_clock`          | input     | 1            | self          |                |             | Write clock signal.                                                        |
-| `write_resetn`         | input     | 1            | asynchronous  | self           | active-low  | Asynchronous active-low reset for write domain.                            |
-| `write_enable`         | input     | 1            | `write_clock` |                |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write (push) to queue.        |
-| `write_data`           | input     | `WIDTH`      | `write_clock` |                |             | Data to be written to the queue.                                           |
-| `write_full`           | output    | 1            | `write_clock` | `write_resetn` | `0`         | Queue full status in write domain.<br/>`0`: free space.<br/>`1`: full.     |
-| `read_clock`           | input     | 1            | self          |                |             | Read clock signal.                                                         |
-| `read_resetn`          | input     | 1            | asynchronous  | self           | active-low  | Asynchronous active-low reset for read domain.                             |
-| `read_enable`          | input     | 1            | `read_clock`  |                |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from queue.         |
-| `read_data`            | output    | `WIDTH`      | `read_clock`  | `read_resetn`  | `0`         | Data read from the queue head.                                             |
-| `read_empty`           | output    | 1            | `read_clock`  | `read_resetn`  | `1`         | Queue empty status in read domain.<br/>`0`: contains data.<br/>`1`: empty. |
-| `memory_write_clock`   | output    | 1            |               |                |             | Write clock for asynchronous dual-port memory.                             |
-| `memory_write_enable`  | output    | 1            | `write_clock` |                |             | Memory write enable signal.                                                |
-| `memory_write_address` | output    | `DEPTH_LOG2` | `write_clock` |                |             | Memory write address.                                                      |
-| `memory_write_data`    | output    | `WIDTH`      | `write_clock` |                |             | Memory write data.                                                         |
-| `memory_read_clock`    | output    | 1            |               |                |             | Read clock for asynchronous dual-port memory.                              |
-| `memory_read_enable`   | output    | 1            | `read_clock`  |                |             | Memory read enable signal.                                                 |
-| `memory_read_address`  | output    | `DEPTH_LOG2` | `read_clock`  |                |             | Memory read address.                                                       |
-| `memory_read_data`     | input     | `WIDTH`      | `read_clock`  |                |             | Memory read data.                                                          |
+| Name                   | Direction | Width        | Clock         | Reset          | Reset value | Description                                                                    |
+| ---------------------- | --------- | ------------ | ------------- | -------------- | ----------- | ------------------------------------------------------------------------------ |
+| `write_clock`          | input     | 1            | self          |                |             | Write clock signal.                                                            |
+| `write_resetn`         | input     | 1            | asynchronous  | self           | active-low  | Asynchronous active-low reset for write domain.                                |
+| `write_enable`         | input     | 1            | `write_clock` |                |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write (push) to queue.        |
+| `write_data`           | input     | `WIDTH`      | `write_clock` |                |             | Data to be written to the queue.                                               |
+| `write_full`           | output    | 1            | `write_clock` | `write_resetn` | `0`         | Queue full status in write domain.<br/>• `0`: free space.<br/>• `1`: full.     |
+| `read_clock`           | input     | 1            | self          |                |             | Read clock signal.                                                             |
+| `read_resetn`          | input     | 1            | asynchronous  | self           | active-low  | Asynchronous active-low reset for read domain.                                 |
+| `read_enable`          | input     | 1            | `read_clock`  |                |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read (pop) from queue.         |
+| `read_data`            | output    | `WIDTH`      | `read_clock`  | `read_resetn`  | `0`         | Data read from the queue head.                                                 |
+| `read_empty`           | output    | 1            | `read_clock`  | `read_resetn`  | `1`         | Queue empty status in read domain.<br/>• `0`: contains data.<br/>• `1`: empty. |
+| `memory_write_clock`   | output    | 1            |               |                |             | Write clock for asynchronous dual-port memory.                                 |
+| `memory_write_enable`  | output    | 1            | `write_clock` |                |             | Memory write enable signal.                                                    |
+| `memory_write_address` | output    | `DEPTH_LOG2` | `write_clock` |                |             | Memory write address.                                                          |
+| `memory_write_data`    | output    | `WIDTH`      | `write_clock` |                |             | Memory write data.                                                             |
+| `memory_read_clock`    | output    | 1            |               |                |             | Read clock for asynchronous dual-port memory.                                  |
+| `memory_read_enable`   | output    | 1            | `read_clock`  |                |             | Memory read enable signal.                                                     |
+| `memory_read_address`  | output    | `DEPTH_LOG2` | `read_clock`  |                |             | Memory read address.                                                           |
+| `memory_read_data`     | input     | `WIDTH`      | `read_clock`  |                |             | Memory read data.                                                              |
 
 ## Operation
 

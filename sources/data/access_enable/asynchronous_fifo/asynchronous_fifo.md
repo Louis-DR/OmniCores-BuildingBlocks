@@ -30,18 +30,18 @@ This module integrates a separate controller (`asynchronous_fifo_controller`) fo
 
 ## Ports
 
-| Name           | Direction | Width   | Clock         | Reset          | Reset value | Description                                                                      |
-| -------------- | --------- | ------- | ------------- | -------------- | ----------- | -------------------------------------------------------------------------------- |
-| `write_clock`  | input     | 1       | self          |                |             | Write domain clock signal.                                                       |
-| `write_resetn` | input     | 1       | asynchronous  | self           | active-low  | Write domain asynchronous active-low reset.                                      |
-| `write_enable` | input     | 1       | `write_clock` |                |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write (push) to queue.              |
-| `write_data`   | input     | `WIDTH` | `write_clock` |                |             | Data to be written to the queue.                                                 |
-| `write_full`   | output    | 1       | `write_clock` | `write_resetn` | `0`         | Write domain full status.<br/>`0`: queue has free space.<br/>`1`: queue is full. |
-| `read_clock`   | input     | 1       | self          |                |             | Read domain clock signal.                                                        |
-| `read_resetn`  | input     | 1       | asynchronous  | self           | active-low  | Read domain asynchronous active-low reset.                                       |
-| `read_enable`  | input     | 1       | `read_clock`  |                |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from queue.               |
-| `read_data`    | output    | `WIDTH` | `read_clock`  | `read_resetn`  | `0`         | Data read from the queue head.                                                   |
-| `read_empty`   | output    | 1       | `read_clock`  | `read_resetn`  | `1`         | Read domain empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty. |
+| Name           | Direction | Width   | Clock         | Reset          | Reset value | Description                                                                          |
+| -------------- | --------- | ------- | ------------- | -------------- | ----------- | ------------------------------------------------------------------------------------ |
+| `write_clock`  | input     | 1       | self          |                |             | Write domain clock signal.                                                           |
+| `write_resetn` | input     | 1       | asynchronous  | self           | active-low  | Write domain asynchronous active-low reset.                                          |
+| `write_enable` | input     | 1       | `write_clock` |                |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write (push) to queue.              |
+| `write_data`   | input     | `WIDTH` | `write_clock` |                |             | Data to be written to the queue.                                                     |
+| `write_full`   | output    | 1       | `write_clock` | `write_resetn` | `0`         | Write domain full status.<br/>• `0`: queue has free space.<br/>• `1`: queue is full. |
+| `read_clock`   | input     | 1       | self          |                |             | Read domain clock signal.                                                            |
+| `read_resetn`  | input     | 1       | asynchronous  | self           | active-low  | Read domain asynchronous active-low reset.                                           |
+| `read_enable`  | input     | 1       | `read_clock`  |                |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read (pop) from queue.               |
+| `read_data`    | output    | `WIDTH` | `read_clock`  | `read_resetn`  | `0`         | Data read from the queue head.                                                       |
+| `read_empty`   | output    | 1       | `read_clock`  | `read_resetn`  | `1`         | Read domain empty status.<br/>• `0`: queue contains data.<br/>• `1`: queue is empty. |
 
 ## Operation
 
@@ -131,10 +131,10 @@ Clock domain crossing constraints should be applied to the Gray pointer synchron
 
 This module depends on the following modules:
 
-| Module                         | Path                                                                   | Comment                                                    |
-| ------------------------------ | ---------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `asynchronous_fifo_controller` | `omnicores-buildingblocks/sources/data/controllers/asynchronous_fifo` | Controller for CDC-safe pointers and status logic. |
-| `asynchronous_simple_dual_port_ram`         | `omnicores-buildingblocks/sources/memory/asynchronous_simple_dual_port_ram`         | Asynchronous Simpledual-port RAM for data storage.                            |
+| Module                              | Path                                                                        | Comment                                            |
+| ----------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------- |
+| `asynchronous_fifo_controller`      | `omnicores-buildingblocks/sources/data/controllers/asynchronous_fifo`       | Controller for CDC-safe pointers and status logic. |
+| `asynchronous_simple_dual_port_ram` | `omnicores-buildingblocks/sources/memory/asynchronous_simple_dual_port_ram` | Asynchronous Simpledual-port RAM for data storage. |
 
 
 ## Related modules

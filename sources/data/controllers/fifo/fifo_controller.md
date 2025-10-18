@@ -28,23 +28,23 @@ The controller passes data through without storing it. The `write_data` is forwa
 
 ## Ports
 
-| Name                   | Direction | Width        | Clock        | Reset    | Reset value | Description                                                                |
-| ---------------------- | --------- | ------------ | ------------ | -------- | ----------- | -------------------------------------------------------------------------- |
-| `clock`                | input     | 1            | self         |          |             | Clock signal.                                                              |
-| `resetn`               | input     | 1            | asynchronous | self     | active-low  | Asynchronous active-low reset.                                             |
-| `full`                 | output    | 1            | `clock`      | `resetn` | `0`         | Queue full status.<br/>`0`: queue has free space.<br/>`1`: queue is full.  |
-| `empty`                | output    | 1            | `clock`      | `resetn` | `1`         | Queue empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty. |
-| `write_enable`         | input     | 1            | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write (push) to queue.        |
-| `write_data`           | input     | `WIDTH`      | `clock`      |          |             | Data to be written to the queue.                                           |
-| `read_enable`          | input     | 1            | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from queue.         |
-| `read_data`            | output    | `WIDTH`      | `clock`      | `resetn` | `0`         | Data read from the queue head.                                             |
-| `memory_clock`         | output    | 1            |              |          |             | Clock for synchronous RAM.                                                 |
-| `memory_write_enable`  | output    | 1            | `clock`      |          |             | Memory write enable signal.                                                |
-| `memory_write_address` | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory write address.                                                      |
-| `memory_write_data`    | output    | `WIDTH`      | `clock`      |          |             | Memory write data.                                                         |
-| `memory_read_enable`   | output    | 1            | `clock`      |          |             | Memory read enable signal.                                                 |
-| `memory_read_address`  | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory read address.                                                       |
-| `memory_read_data`     | input     | `WIDTH`      | `clock`      |          |             | Memory read data.                                                          |
+| Name                   | Direction | Width        | Clock        | Reset    | Reset value | Description                                                                    |
+| ---------------------- | --------- | ------------ | ------------ | -------- | ----------- | ------------------------------------------------------------------------------ |
+| `clock`                | input     | 1            | self         |          |             | Clock signal.                                                                  |
+| `resetn`               | input     | 1            | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                 |
+| `full`                 | output    | 1            | `clock`      | `resetn` | `0`         | Queue full status.<br/>• `0`: queue has free space.<br/>• `1`: queue is full.  |
+| `empty`                | output    | 1            | `clock`      | `resetn` | `1`         | Queue empty status.<br/>• `0`: queue contains data.<br/>• `1`: queue is empty. |
+| `write_enable`         | input     | 1            | `clock`      |          |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write (push) to queue.        |
+| `write_data`           | input     | `WIDTH`      | `clock`      |          |             | Data to be written to the queue.                                               |
+| `read_enable`          | input     | 1            | `clock`      |          |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read (pop) from queue.         |
+| `read_data`            | output    | `WIDTH`      | `clock`      | `resetn` | `0`         | Data read from the queue head.                                                 |
+| `memory_clock`         | output    | 1            |              |          |             | Clock for synchronous RAM.                                                     |
+| `memory_write_enable`  | output    | 1            | `clock`      |          |             | Memory write enable signal.                                                    |
+| `memory_write_address` | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory write address.                                                          |
+| `memory_write_data`    | output    | `WIDTH`      | `clock`      |          |             | Memory write data.                                                             |
+| `memory_read_enable`   | output    | 1            | `clock`      |          |             | Memory read enable signal.                                                     |
+| `memory_read_address`  | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory read address.                                                           |
+| `memory_read_data`     | input     | `WIDTH`      | `clock`      |          |             | Memory read data.                                                              |
 
 ## Operation
 

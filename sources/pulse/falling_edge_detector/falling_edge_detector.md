@@ -22,12 +22,12 @@ This module has no parameters.
 
 ## Ports
 
-| Name           | Direction | Width | Clock        | Reset    | Reset value | Description                                                                              |
-| -------------- | --------- | ----- | ------------ | -------- | ----------- | ---------------------------------------------------------------------------------------- |
-| `clock`        | input     | 1     | self         |          |             | Clock signal.                                                                            |
-| `resetn`       | input     | 1     | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                           |
-| `signal`       | input     | 1     | `clock`      |          |             | Input signal to detect falling edges on.                                                 |
-| `falling_edge` | output    | 1     | `clock`      | `resetn` | `0`         | Falling edge detection output.<br/>`0`: no falling edge.<br/>`1`: falling edge detected. |
+| Name           | Direction | Width | Clock        | Reset    | Reset value | Description                                                                                  |
+| -------------- | --------- | ----- | ------------ | -------- | ----------- | -------------------------------------------------------------------------------------------- |
+| `clock`        | input     | 1     | self         |          |             | Clock signal.                                                                                |
+| `resetn`       | input     | 1     | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                               |
+| `signal`       | input     | 1     | `clock`      |          |             | Input signal to detect falling edges on.                                                     |
+| `falling_edge` | output    | 1     | `clock`      | `resetn` | `0`         | Falling edge detection output.<br/>• `0`: no falling edge.<br/>• `1`: falling edge detected. |
 
 ## Operation
 

@@ -28,22 +28,22 @@ When writing, the data is stored in the first free slot and the corresponding in
 
 ## Ports
 
-| Name          | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                           |
-| ------------- | --------- | ------------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------------------------- |
-| `clock`       | input     | 1             | self         |          |             | Clock signal.                                                                                         |
-| `resetn`      | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                        |
-| `full`        | output    | 1             | `clock`      | `resetn` | `0`         | Buffer full status.<br/>`0`: buffer has free space.<br/>`1`: buffer is full.                          |
-| `empty`       | output    | 1             | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>`0`: buffer contains data.<br/>`1`: buffer is empty.                         |
-| `write_valid` | input     | 1             | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.                      |
-| `write_data`  | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                                     |
-| `write_index` | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the allocated slot for the written data.                                                     |
-| `write_ready` | output    | 1             | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: buffer is full.<br/>`1`: buffer can accept write data.                   |
-| `read_valid`  | input     | 1             | `clock`      |          |             | Read valid signal.<br/>`0`: no read transaction.<br/>`1`: read data from buffer at specified index.   |
-| `read_clear`  | input     | 1             | `clock`      |          |             | Clear enable signal.<br/>`0`: read only.<br/>`1`: clear slot after reading.                           |
-| `read_index`  | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to read from.                                                                       |
-| `read_data`   | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer at the specified index.                                                     |
-| `read_ready`  | output    | 1             | `clock`      | `resetn` | `0`         | Read ready signal.<br/>`0`: no valid data at index.<br/>`1`: valid data available at specified index. |
-| `read_error`  | output    | 1             | `clock`      | `resetn` | `0`         | Read error pulse.<br/>`0`: no error.<br/>`1`: invalid index read attempted.                           |
+| Name          | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                               |
+| ------------- | --------- | ------------- | ------------ | -------- | ----------- | --------------------------------------------------------------------------------------------------------- |
+| `clock`       | input     | 1             | self         |          |             | Clock signal.                                                                                             |
+| `resetn`      | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                            |
+| `full`        | output    | 1             | `clock`      | `resetn` | `0`         | Buffer full status.<br/>• `0`: buffer has free space.<br/>• `1`: buffer is full.                          |
+| `empty`       | output    | 1             | `clock`      | `resetn` | `1`         | Buffer empty status.<br/>• `0`: buffer contains data.<br/>• `1`: buffer is empty.                         |
+| `write_valid` | input     | 1             | `clock`      |          |             | Write valid signal.<br/>• `0`: no write transaction.<br/>• `1`: write data is valid.                      |
+| `write_data`  | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                                         |
+| `write_index` | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the allocated slot for the written data.                                                         |
+| `write_ready` | output    | 1             | `clock`      | `resetn` | `1`         | Write ready signal.<br/>• `0`: buffer is full.<br/>• `1`: buffer can accept write data.                   |
+| `read_valid`  | input     | 1             | `clock`      |          |             | Read valid signal.<br/>• `0`: no read transaction.<br/>• `1`: read data from buffer at specified index.   |
+| `read_clear`  | input     | 1             | `clock`      |          |             | Clear enable signal.<br/>• `0`: read only.<br/>• `1`: clear slot after reading.                           |
+| `read_index`  | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to read from.                                                                           |
+| `read_data`   | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer at the specified index.                                                         |
+| `read_ready`  | output    | 1             | `clock`      | `resetn` | `0`         | Read ready signal.<br/>• `0`: no valid data at index.<br/>• `1`: valid data available at specified index. |
+| `read_error`  | output    | 1             | `clock`      | `resetn` | `0`         | Read error pulse.<br/>• `0`: no error.<br/>• `1`: invalid index read attempted.                           |
 
 ## Operation
 

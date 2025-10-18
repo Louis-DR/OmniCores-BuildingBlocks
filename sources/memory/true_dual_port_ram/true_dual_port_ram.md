@@ -16,25 +16,25 @@ A synchronous random access memory with two fully independent read-write ports t
 
 ## Parameters
 
-| Name              | Type    | Allowed Values | Default | Description                                                                                                                         |
-| ----------------- | ------- | -------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                       |
-| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                    |
-| `WRITE_THROUGH`   | integer | `0`, `1`       | `0`     | Write-through mode selection.<br/>`0`: Read before write.<br/>`1`: Write-through forwarding when addresses match.                   |
-| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>`0`: Combinational read (data available same cycle).<br/>`1`: Registered read (data available next cycle). |
+| Name              | Type    | Allowed Values | Default | Description                                                                                                                             |
+| ----------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                           |
+| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                        |
+| `WRITE_THROUGH`   | integer | `0`, `1`       | `0`     | Write-through mode selection.<br/>• `0`: Read before write.<br/>• `1`: Write-through forwarding when addresses match.                   |
+| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>• `0`: Combinational read (data available same cycle).<br/>• `1`: Registered read (data available next cycle). |
 
 ## Ports
 
 | Name                   | Direction | Width           | Clock   | Reset | Reset value | Description                                                                                      |
 | ---------------------- | --------- | --------------- | ------- | ----- | ----------- | ------------------------------------------------------------------------------------------------ |
 | `clock`                | input     | 1               | self    |       |             | Clock signal.                                                                                    |
-| `port_0_access_enable` | input     | 1               | `clock` |       |             | Port 0 access enable signal.<br/>`0`: Idle.<br/>`1`: Perform read or write operation.            |
-| `port_0_write`         | input     | 1               | `clock` |       |             | Port 0 operation mode selector.<br/>`0`: Read operation.<br/>`1`: Write operation.               |
+| `port_0_access_enable` | input     | 1               | `clock` |       |             | Port 0 access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.        |
+| `port_0_write`         | input     | 1               | `clock` |       |             | Port 0 operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.           |
 | `port_0_address`       | input     | `ADDRESS_WIDTH` | `clock` |       |             | Port 0 address of the memory location to access.                                                 |
 | `port_0_write_data`    | input     | `WIDTH`         | `clock` |       |             | Port 0 data to be written to the memory.                                                         |
 | `port_0_read_data`     | output    | `WIDTH`         | `clock` |       |             | Port 0 data read from the memory. Valid same cycle or next cycle depending on `REGISTERED_READ`. |
-| `port_1_access_enable` | input     | 1               | `clock` |       |             | Port 1 access enable signal.<br/>`0`: Idle.<br/>`1`: Perform read or write operation.            |
-| `port_1_write`         | input     | 1               | `clock` |       |             | Port 1 operation mode selector.<br/>`0`: Read operation.<br/>`1`: Write operation.               |
+| `port_1_access_enable` | input     | 1               | `clock` |       |             | Port 1 access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.        |
+| `port_1_write`         | input     | 1               | `clock` |       |             | Port 1 operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.           |
 | `port_1_address`       | input     | `ADDRESS_WIDTH` | `clock` |       |             | Port 1 address of the memory location to access.                                                 |
 | `port_1_write_data`    | input     | `WIDTH`         | `clock` |       |             | Port 1 data to be written to the memory.                                                         |
 | `port_1_read_data`     | output    | `WIDTH`         | `clock` |       |             | Port 1 data read from the memory. Valid same cycle or next cycle depending on `REGISTERED_READ`. |

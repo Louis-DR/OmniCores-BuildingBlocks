@@ -30,22 +30,22 @@ The read data output continuously shows the value at the head of the buffer, all
 
 ## Ports
 
-| Name             | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                     |
-| ---------------- | --------- | ------------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------------------- |
-| `clock`          | input     | 1             | self         |          |             | Clock signal.                                                                                   |
-| `resetn`         | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                  |
-| `reserve_full`   | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>`0`: buffer has free reservation slots.<br/>`1`: buffer is full.   |
-| `reserve_empty`  | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>`0`: buffer has reserved slots.<br/>`1`: buffer is empty.         |
-| `data_full`      | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>`0`: buffer has unwritten slots.<br/>`1`: all reserved slots are written. |
-| `data_empty`     | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>`0`: buffer has written data.<br/>`1`: no written data available.        |
-| `reserve_enable` | input     | 1             | `clock`      |          |             | Reserve enable signal.<br/>`0`: idle.<br/>`1`: reserve slot and get index.                      |
-| `reserve_index`  | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                     |
-| `write_enable`   | input     | 1             | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write data to reserved slot.                       |
-| `write_index`    | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to write to (must be previously reserved).                                    |
-| `write_data`     | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                               |
-| `write_error`    | output    | 1             | `clock`      | `resetn` | `0`         | Write error pulse.<br/>`0`: no error.<br/>`1`: invalid index write attempted.                   |
-| `read_enable`    | input     | 1             | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read data from head of queue.                       |
-| `read_data`      | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the head of the queue.                                                           |
+| Name             | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                         |
+| ---------------- | --------- | ------------- | ------------ | -------- | ----------- | --------------------------------------------------------------------------------------------------- |
+| `clock`          | input     | 1             | self         |          |             | Clock signal.                                                                                       |
+| `resetn`         | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                      |
+| `reserve_full`   | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>• `0`: buffer has free reservation slots.<br/>• `1`: buffer is full.   |
+| `reserve_empty`  | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>• `0`: buffer has reserved slots.<br/>• `1`: buffer is empty.         |
+| `data_full`      | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>• `0`: buffer has unwritten slots.<br/>• `1`: all reserved slots are written. |
+| `data_empty`     | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>• `0`: buffer has written data.<br/>• `1`: no written data available.        |
+| `reserve_enable` | input     | 1             | `clock`      |          |             | Reserve enable signal.<br/>• `0`: idle.<br/>• `1`: reserve slot and get index.                      |
+| `reserve_index`  | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                         |
+| `write_enable`   | input     | 1             | `clock`      |          |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write data to reserved slot.                       |
+| `write_index`    | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to write to (must be previously reserved).                                        |
+| `write_data`     | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                                   |
+| `write_error`    | output    | 1             | `clock`      | `resetn` | `0`         | Write error pulse.<br/>• `0`: no error.<br/>• `1`: invalid index write attempted.                   |
+| `read_enable`    | input     | 1             | `clock`      |          |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read data from head of queue.                       |
+| `read_data`      | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the head of the queue.                                                               |
 
 ## Operation
 

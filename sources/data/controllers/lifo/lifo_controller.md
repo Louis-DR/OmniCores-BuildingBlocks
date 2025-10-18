@@ -52,23 +52,23 @@ The input `clock` of the user interfaces is forwarded on `memory_clock` to drive
 
 ## Ports
 
-| Name                  | Direction | Width        | Clock        | Reset    | Reset value | Description                                                                |
-| --------------------- | --------- | ------------ | ------------ | -------- | ----------- | -------------------------------------------------------------------------- |
-| `clock`               | input     | 1            | self         |          |             | Clock signal.                                                              |
-| `resetn`              | input     | 1            | asynchronous | self     | active-low  | Asynchronous active-low reset.                                             |
-| `full`                | output    | 1            | `clock`      | `resetn` | `0`         | Stack full status.<br/>`0`: stack has free space.<br/>`1`: stack is full.  |
-| `empty`               | output    | 1            | `clock`      | `resetn` | `1`         | Stack empty status.<br/>`0`: stack contains data.<br/>`1`: stack is empty. |
-| `write_enable`        | input     | 1            | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write (push) to stack.        |
-| `write_data`          | input     | `WIDTH`      | `clock`      |          |             | Data to be written to the stack.                                           |
-| `read_enable`         | input     | 1            | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read (pop) from stack.         |
-| `read_data`            | output    | `WIDTH`      | `clock`      | `resetn` | `0`         | Data read from the stack top.                                              |
-| `memory_clock`         | output    | 1            |              |          |             | Clock for synchronous RAM.                                                 |
-| `memory_write_enable`  | output    | 1            | `clock`      |          |             | Memory write enable signal.                                                |
-| `memory_write_address` | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory write address.                                                      |
-| `memory_write_data`    | output    | `WIDTH`      | `clock`      |          |             | Memory write data.                                                         |
-| `memory_read_enable`   | output    | 1            | `clock`      |          |             | Memory read enable signal.                                                 |
-| `memory_read_address`  | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory read address.                                                       |
-| `memory_read_data`     | input     | `WIDTH`      | `clock`      |          |             | Memory read data.                                                          |
+| Name                   | Direction | Width        | Clock        | Reset    | Reset value | Description                                                                     |
+| ---------------------- | --------- | ------------ | ------------ | -------- | ----------- | ------------------------------------------------------------------------------- |
+| `clock`                | input     | 1            | self         |          |             | Clock signal.                                                                   |
+| `resetn`               | input     | 1            | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                  |
+| `full`                 | output    | 1            | `clock`      | `resetn` | `0`         | Stack full status.<br/>• `0`: stack has free space.<br/>• `1`: stack is full.   |
+| `empty`                | output    | 1            | `clock`      | `resetn` | `1`         | Stack empty status.<br/>•  `0`: stack contains data.<br/>• `1`: stack is empty. |
+| `write_enable`         | input     | 1            | `clock`      |          |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write (push) to stack.         |
+| `write_data`           | input     | `WIDTH`      | `clock`      |          |             | Data to be written to the stack.                                                |
+| `read_enable`          | input     | 1            | `clock`      |          |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read (pop) from stack.          |
+| `read_data`            | output    | `WIDTH`      | `clock`      | `resetn` | `0`         | Data read from the stack top.                                                   |
+| `memory_clock`         | output    | 1            |              |          |             | Clock for synchronous RAM.                                                      |
+| `memory_write_enable`  | output    | 1            | `clock`      |          |             | Memory write enable signal.                                                     |
+| `memory_write_address` | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory write address.                                                           |
+| `memory_write_data`    | output    | `WIDTH`      | `clock`      |          |             | Memory write data.                                                              |
+| `memory_read_enable`   | output    | 1            | `clock`      |          |             | Memory read enable signal.                                                      |
+| `memory_read_address`  | output    | `DEPTH_LOG2` | `clock`      |          |             | Memory read address.                                                            |
+| `memory_read_data`     | input     | `WIDTH`      | `clock`      |          |             | Memory read data.                                                               |
 
 ## Operation
 

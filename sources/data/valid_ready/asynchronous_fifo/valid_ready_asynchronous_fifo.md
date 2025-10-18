@@ -28,20 +28,20 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Ports
 
-| Name           | Direction | Width   | Clock         | Reset          | Reset value | Description                                                                       |
-| -------------- | --------- | ------- | ------------- | -------------- | ----------- | --------------------------------------------------------------------------------- |
-| `write_clock`  | input     | 1       | self          |                |             | Write domain clock signal.                                                        |
-| `write_resetn` | input     | 1       | asynchronous  | self           | active-low  | Write domain asynchronous active-low reset.                                       |
-| `write_data`   | input     | `WIDTH` | `write_clock` |                |             | Data to be written to the queue.                                                  |
-| `write_valid`  | input     | 1       | `write_clock` |                |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.  |
-| `write_ready`  | output    | 1       | `write_clock` | `write_resetn` | `1`         | Write ready signal.<br/>`0`: queue is full.<br/>`1`: queue can accept write data. |
-| `write_full`   | output    | 1       | `write_clock` | `write_resetn` | `0`         | Write domain full status.<br/>`0`: queue has space.<br/>`1`: queue is full.       |
-| `read_clock`   | input     | 1       | self          |                |             | Read domain clock signal.                                                         |
-| `read_resetn`  | input     | 1       | asynchronous  | self           | active-low  | Read domain asynchronous active-low reset.                                        |
-| `read_data`    | output    | `WIDTH` | `read_clock`  | `read_resetn`  | `0`         | Data read from the queue head.                                                    |
-| `read_valid`   | output    | 1       | `read_clock`  | `read_resetn`  | `0`         | Read valid signal.<br/>`0`: no read data available.<br/>`1`: read data is valid.  |
-| `read_ready`   | input     | 1       | `read_clock`  |                |             | Read ready signal.<br/>`0`: not ready to receive.<br/>`1`: ready to receive data. |
-| `read_empty`   | output    | 1       | `read_clock`  | `read_resetn`  | `1`         | Read domain empty status.<br/>`0`: queue contains data.<br/>`1`: queue is empty.  |
+| Name           | Direction | Width   | Clock         | Reset          | Reset value | Description                                                                           |
+| -------------- | --------- | ------- | ------------- | -------------- | ----------- | ------------------------------------------------------------------------------------- |
+| `write_clock`  | input     | 1       | self          |                |             | Write domain clock signal.                                                            |
+| `write_resetn` | input     | 1       | asynchronous  | self           | active-low  | Write domain asynchronous active-low reset.                                           |
+| `write_data`   | input     | `WIDTH` | `write_clock` |                |             | Data to be written to the queue.                                                      |
+| `write_valid`  | input     | 1       | `write_clock` |                |             | Write valid signal.<br/>• `0`: no write transaction.<br/>• `1`: write data is valid.  |
+| `write_ready`  | output    | 1       | `write_clock` | `write_resetn` | `1`         | Write ready signal.<br/>• `0`: queue is full.<br/>• `1`: queue can accept write data. |
+| `write_full`   | output    | 1       | `write_clock` | `write_resetn` | `0`         | Write domain full status.<br/>• `0`: queue has space.<br/>• `1`: queue is full.       |
+| `read_clock`   | input     | 1       | self          |                |             | Read domain clock signal.                                                             |
+| `read_resetn`  | input     | 1       | asynchronous  | self           | active-low  | Read domain asynchronous active-low reset.                                            |
+| `read_data`    | output    | `WIDTH` | `read_clock`  | `read_resetn`  | `0`         | Data read from the queue head.                                                        |
+| `read_valid`   | output    | 1       | `read_clock`  | `read_resetn`  | `0`         | Read valid signal.<br/>• `0`: no read data available.<br/>• `1`: read data is valid.  |
+| `read_ready`   | input     | 1       | `read_clock`  |                |             | Read ready signal.<br/>• `0`: not ready to receive.<br/>• `1`: ready to receive data. |
+| `read_empty`   | output    | 1       | `read_clock`  | `read_resetn`  | `1`         | Read domain empty status.<br/>• `0`: queue contains data.<br/>• `1`: queue is empty.  |
 
 ## Operation
 

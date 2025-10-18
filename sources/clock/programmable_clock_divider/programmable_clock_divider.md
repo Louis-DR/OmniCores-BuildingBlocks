@@ -18,10 +18,10 @@ Divides the frequency of the input clock `clock_in` by a programmable factor pro
 
 ## Parameters
 
-| Name             | Type    | Allowed Values | Default | Description                                                                                            |
-| ---------------- | ------- | -------------- | ------- | ------------------------------------------------------------------------------------------------------ |
-| `DIVISION_WIDTH` | integer | `>0`           | `4`     | Width of the `division` input port.                                                                    |
-| `POWER_OF_TWO`   | integer | `0`, `1`       | `0`     | Selects the division mode.<br/>`0`: division by `division + 1`.<br/>`1`: for division by `2^division`. |
+| Name             | Type    | Allowed Values | Default | Description                                                                                                |
+| ---------------- | ------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `DIVISION_WIDTH` | integer | `>0`           | `4`     | Width of the `division` input port.                                                                        |
+| `POWER_OF_TWO`   | integer | `0`, `1`       | `0`     | Selects the division mode.<br/>• `0`: division by `division + 1`.<br/>• `1`: for division by `2^division`. |
 
 ## Ports
 

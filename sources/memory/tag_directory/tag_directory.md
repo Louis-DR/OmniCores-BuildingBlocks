@@ -29,20 +29,20 @@ The eviction interface is used to invalidate and free the slot at a specified in
 
 ## Ports
 
-| Name              | Direction | Width         | Clock   | Reset    | Reset value | Description                                                                            |
-| ----------------- | --------- | ------------- | ------- | -------- | ----------- | -------------------------------------------------------------------------------------- |
-| `clock`           | input     | 1             | self    |          |             | Clock signal.                                                                          |
-| `resetn`          | input     | 1             | `clock` | self     | active-low  | Asynchronous active-low reset.                                                         |
-| `full`            | output    | 1             | `clock` | `resetn` | `0`         | Directory full status.<br/>`0`: Directory has free space.<br/>`1`: Directory is full.  |
-| `empty`           | output    | 1             | `clock` | `resetn` | `1`         | Directory empty status.<br/>`0`: Directory contains data.<br/>`1`: Directory is empty. |
-| `allocate_enable` | input     | 1             | `clock` |          |             | Allocate enable signal.<br/>`0`: Idle.<br/>`1`: Allocate a new tag.                    |
-| `allocate_tag`    | input     | `WIDTH`       | `clock` |          |             | Tag to be written to the directory.                                                    |
-| `allocate_index`  | output    | `INDEX_WIDTH` | `clock` |          |             | Index of the newly allocated tag.                                                      |
-| `search_tag`      | input     | `WIDTH`       | `clock` |          |             | Tag to be searched for in the directory.                                               |
-| `search_index`    | output    | `INDEX_WIDTH` | `clock` |          |             | Index of the first matching tag found.                                                 |
-| `search_hit`      | output    | 1             | `clock` |          |             | Search hit status.<br/>`0`: No match found (miss).<br/>`1`: Match found (hit).         |
-| `evict_enable`    | input     | 1             | `clock` |          |             | Evict enable signal.<br/>`0`: Idle.<br/>`1`: Evict a tag.                              |
-| `evict_index`     | input     | `INDEX_WIDTH` | `clock` |          |             | Index of the tag to be evicted.                                                        |
+| Name              | Direction | Width         | Clock   | Reset    | Reset value | Description                                                                                |
+| ----------------- | --------- | ------------- | ------- | -------- | ----------- | ------------------------------------------------------------------------------------------ |
+| `clock`           | input     | 1             | self    |          |             | Clock signal.                                                                              |
+| `resetn`          | input     | 1             | `clock` | self     | active-low  | Asynchronous active-low reset.                                                             |
+| `full`            | output    | 1             | `clock` | `resetn` | `0`         | Directory full status.<br/>• `0`: Directory has free space.<br/>• `1`: Directory is full.  |
+| `empty`           | output    | 1             | `clock` | `resetn` | `1`         | Directory empty status.<br/>• `0`: Directory contains data.<br/>• `1`: Directory is empty. |
+| `allocate_enable` | input     | 1             | `clock` |          |             | Allocate enable signal.<br/>• `0`: Idle.<br/>• `1`: Allocate a new tag.                    |
+| `allocate_tag`    | input     | `WIDTH`       | `clock` |          |             | Tag to be written to the directory.                                                        |
+| `allocate_index`  | output    | `INDEX_WIDTH` | `clock` |          |             | Index of the newly allocated tag.                                                          |
+| `search_tag`      | input     | `WIDTH`       | `clock` |          |             | Tag to be searched for in the directory.                                                   |
+| `search_index`    | output    | `INDEX_WIDTH` | `clock` |          |             | Index of the first matching tag found.                                                     |
+| `search_hit`      | output    | 1             | `clock` |          |             | Search hit status.<br/>• `0`: No match found (miss).<br/>• `1`: Match found (hit).         |
+| `evict_enable`    | input     | 1             | `clock` |          |             | Evict enable signal.<br/>• `0`: Idle.<br/>• `1`: Evict a tag.                              |
+| `evict_index`     | input     | `INDEX_WIDTH` | `clock` |          |             | Index of the tag to be evicted.                                                            |
 
 ## Operation
 

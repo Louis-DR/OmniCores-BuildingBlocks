@@ -28,28 +28,28 @@ The controller passes data through without storing it. The `write_data` is forwa
 
 ## Ports
 
-| Name                   | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                         |
-| ---------------------- | --------- | ------------- | ------------ | -------- | ----------- | --------------------------------------------------------------------------------------------------- |
-| `clock`                | input     | 1             | self         |          |             | Clock signal.                                                                                       |
-| `resetn`               | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                      |
-| `reserve_full`         | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>`0`: slots available for reservation.<br/>`1`: all slots reserved.     |
-| `reserve_empty`        | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>`0`: slots are reserved.<br/>`1`: no slots reserved.                  |
-| `data_full`            | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>`0`: not all reserved slots have data.<br/>`1`: all reserved slots have data. |
-| `data_empty`           | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>`0`: some slots have valid data.<br/>`1`: no slots have valid data.          |
-| `reserve_enable`       | input     | 1             | `clock`      |          |             | Reservation enable signal.<br/>`0`: idle.<br/>`1`: reserve next slot in order.                      |
-| `reserve_index`        | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                         |
-| `write_enable`         | input     | 1             | `clock`      |          |             | Write enable signal.<br/>`0`: idle.<br/>`1`: write data to specified reserved index.                |
-| `write_index`          | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot to write to.                                                             |
-| `write_data`           | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                                   |
-| `read_enable`          | input     | 1             | `clock`      |          |             | Read enable signal.<br/>`0`: idle.<br/>`1`: read next data in order.                                |
-| `read_data`            | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer in order.                                                                 |
-| `memory_clock`         | output    | 1             |              |          |             | Clock for synchronous RAM.                                                                          |
-| `memory_write_enable`  | output    | 1             | `clock`      |          |             | Memory write enable signal.                                                                         |
-| `memory_write_address` | output    | `INDEX_WIDTH` | `clock`      |          |             | Memory write address.                                                                               |
-| `memory_write_data`    | output    | `WIDTH`       | `clock`      |          |             | Memory write data.                                                                                  |
-| `memory_read_enable`   | output    | 1             | `clock`      |          |             | Memory read enable signal.                                                                          |
-| `memory_read_address`  | output    | `INDEX_WIDTH` | `clock`      |          |             | Memory read address.                                                                                |
-| `memory_read_data`     | input     | `WIDTH`       | `clock`      |          |             | Memory read data.                                                                                   |
+| Name                   | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                             |
+| ---------------------- | --------- | ------------- | ------------ | -------- | ----------- | ------------------------------------------------------------------------------------------------------- |
+| `clock`                | input     | 1             | self         |          |             | Clock signal.                                                                                           |
+| `resetn`               | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                          |
+| `reserve_full`         | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>• `0`: slots available for reservation.<br/>• `1`: all slots reserved.     |
+| `reserve_empty`        | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>• `0`: slots are reserved.<br/>• `1`: no slots reserved.                  |
+| `data_full`            | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>• `0`: not all reserved slots have data.<br/>• `1`: all reserved slots have data. |
+| `data_empty`           | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>• `0`: some slots have valid data.<br/>• `1`: no slots have valid data.          |
+| `reserve_enable`       | input     | 1             | `clock`      |          |             | Reservation enable signal.<br/>• `0`: idle.<br/>• `1`: reserve next slot in order.                      |
+| `reserve_index`        | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                             |
+| `write_enable`         | input     | 1             | `clock`      |          |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write data to specified reserved index.                |
+| `write_index`          | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot to write to.                                                                 |
+| `write_data`           | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                                       |
+| `read_enable`          | input     | 1             | `clock`      |          |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read next data in order.                                |
+| `read_data`            | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the buffer in order.                                                                     |
+| `memory_clock`         | output    | 1             |              |          |             | Clock for synchronous RAM.                                                                              |
+| `memory_write_enable`  | output    | 1             | `clock`      |          |             | Memory write enable signal.                                                                             |
+| `memory_write_address` | output    | `INDEX_WIDTH` | `clock`      |          |             | Memory write address.                                                                                   |
+| `memory_write_data`    | output    | `WIDTH`       | `clock`      |          |             | Memory write data.                                                                                      |
+| `memory_read_enable`   | output    | 1             | `clock`      |          |             | Memory read enable signal.                                                                              |
+| `memory_read_address`  | output    | `INDEX_WIDTH` | `clock`      |          |             | Memory read address.                                                                                    |
+| `memory_read_data`     | input     | `WIDTH`       | `clock`      |          |             | Memory read data.                                                                                       |
 
 ## Operation
 

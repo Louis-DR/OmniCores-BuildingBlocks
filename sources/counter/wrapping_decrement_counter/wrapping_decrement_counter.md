@@ -25,12 +25,12 @@ The counter supports both power-of-2 and non-power-of-2 ranges with optimized im
 
 ## Ports
 
-| Name        | Direction | Width         | Clock        | Reset    | Reset value   | Description                                                          |
-| ----------- | --------- | ------------- | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
-| `clock`     | input     | 1             | self         |          |               | Clock signal.                                                        |
-| `resetn`    | input     | 1             | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
-| `decrement` | input     | 1             | `clock`      |          |               | Decrement control signal.<br/>`0`: idle.<br/>`1`: decrement counter. |
-| `count`     | output    | `log₂(RANGE)` | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
+| Name        | Direction | Width         | Clock        | Reset    | Reset value   | Description                                                              |
+| ----------- | --------- | ------------- | ------------ | -------- | ------------- | ------------------------------------------------------------------------ |
+| `clock`     | input     | 1             | self         |          |               | Clock signal.                                                            |
+| `resetn`    | input     | 1             | asynchronous | self     | active-low    | Asynchronous active-low reset.                                           |
+| `decrement` | input     | 1             | `clock`      |          |               | Decrement control signal.<br/>• `0`: idle.<br/>• `1`: decrement counter. |
+| `count`     | output    | `log₂(RANGE)` | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                                   |
 
 ## Operation
 

@@ -16,20 +16,20 @@ Arbiters between different request channels using a round-robin scheme. The gran
 
 ## Parameters
 
-| Name              | Type    | Allowed Values                   | Default      | Description                                         |
-| ----------------- | ------- | -------------------------------- | ------------ | --------------------------------------------------- |
-| `SIZE`            | integer | `>1`                             | `4`          | Number of channels.                                 |
-| `ROTATE_ON_GRANT` | integer | `0`,`1`                          | `0`          | `0`: rotate every cycles.<br/>`1`: rotate on grant. |
-| `VARIANT`         | string  | `"small"`,`"balanced"`, `"fast"` | `"balanced"` | Implementation variant.                             |
+| Name              | Type    | Allowed Values                   | Default      | Description                                           |
+| ----------------- | ------- | -------------------------------- | ------------ | ----------------------------------------------------- |
+| `SIZE`            | integer | `>1`                             | `4`          | Number of channels.                                   |
+| `ROTATE_ON_GRANT` | integer | `0`,`1`                          | `0`          | `0`: rotate every cycles.<br/>• `1`: rotate on grant. |
+| `VARIANT`         | string  | `"small"`,`"balanced"`, `"fast"` | `"balanced"` | Implementation variant.                               |
 
 ## Ports
 
-| Name       | Direction | Width  | Clock        | Reset    | Reset value | Description                                                                             |
-| ---------- | --------- | ------ | ------------ | -------- | ----------- | --------------------------------------------------------------------------------------- |
-| `clock`    | input     | 1      | self         |          |             | Clock signal.                                                                           |
-| `resetn`   | input     | 1      | asynchronous | self     | `0`         | Asynchronous reset signal. Resets the priority pointer.                                 |
-| `requests` | input     | `SIZE` | `clock`      |          |             | Request channels.<br/>`1`: requesting a grant.<br/>`0`: idle.                           |
-| `grant`    | output    | `SIZE` | `clock`      | `resetn` |             | Channel receiving the grant. One-hot encoding.<br/>`1`: grant given.<br/>`0`: no grant. |
+| Name       | Direction | Width  | Clock        | Reset    | Reset value | Description                                                                                 |
+| ---------- | --------- | ------ | ------------ | -------- | ----------- | ------------------------------------------------------------------------------------------- |
+| `clock`    | input     | 1      | self         |          |             | Clock signal.                                                                               |
+| `resetn`   | input     | 1      | asynchronous | self     | `0`         | Asynchronous reset signal. Resets the priority pointer.                                     |
+| `requests` | input     | `SIZE` | `clock`      |          |             | Request channels.<br/>• `1`: requesting a grant.<br/>• `0`: idle.                           |
+| `grant`    | output    | `SIZE` | `clock`      | `resetn` |             | Channel receiving the grant. One-hot encoding.<br/>• `1`: grant given.<br/>• `0`: no grant. |
 
 ## Operation
 

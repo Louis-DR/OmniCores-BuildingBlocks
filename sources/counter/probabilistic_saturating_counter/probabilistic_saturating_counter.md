@@ -27,14 +27,14 @@ The counter supports non-power-of-two range. Trying to increment and decrement w
 
 ## Ports
 
-| Name            | Direction | Width                 | Clock        | Reset    | Reset value   | Description                                                          |
-| --------------- | --------- | --------------------- | ------------ | -------- | ------------- | -------------------------------------------------------------------- |
-| `clock`         | input     | 1                     | self         |          |               | Clock signal.                                                        |
-| `resetn`        | input     | 1                     | asynchronous | self     | active-low    | Asynchronous active-low reset.                                       |
-| `decrement`     | input     | 1                     | `clock`      |          |               | Decrement control signal.<br/>`0`: idle.<br/>`1`: decrement counter. |
-| `increment`     | input     | 1                     | `clock`      |          |               | Increment control signal.<br/>`0`: idle.<br/>`1`: increment counter. |
-| `random_number` | input     | `RANDOM_NUMBER_WIDTH` | `clock`      |          |               | Random number input for probability calculations.                    |
-| `count`         | output    | `log₂(RANGE)`         | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                               |
+| Name            | Direction | Width                 | Clock        | Reset    | Reset value   | Description                                                              |
+| --------------- | --------- | --------------------- | ------------ | -------- | ------------- | ------------------------------------------------------------------------ |
+| `clock`         | input     | 1                     | self         |          |               | Clock signal.                                                            |
+| `resetn`        | input     | 1                     | asynchronous | self     | active-low    | Asynchronous active-low reset.                                           |
+| `decrement`     | input     | 1                     | `clock`      |          |               | Decrement control signal.<br/>• `0`: idle.<br/>• `1`: decrement counter. |
+| `increment`     | input     | 1                     | `clock`      |          |               | Increment control signal.<br/>• `0`: idle.<br/>• `1`: increment counter. |
+| `random_number` | input     | `RANDOM_NUMBER_WIDTH` | `clock`      |          |               | Random number input for probability calculations.                        |
+| `count`         | output    | `log₂(RANGE)`         | `clock`      | `resetn` | `RESET_VALUE` | Current counter value.                                                   |
 
 ## Operation
 

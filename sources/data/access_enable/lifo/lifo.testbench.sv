@@ -87,7 +87,6 @@ endtask
 // Read task
 task automatic read;
   read_enable = 1;
-  @(posedge clock);
   if (data_expected.size() != 0) begin
     assert (read_data === data_expected[$])
       else $error("[%t] Read data '%0h' is not as expected '%0h'.", $realtime, read_data, data_expected[$]);
@@ -96,6 +95,7 @@ task automatic read;
   end else begin
     $error("[%t] Read enabled while LIFO should be empty.", $realtime);
   end
+  @(posedge clock);
   @(negedge clock);
   read_enable = 0;
 endtask

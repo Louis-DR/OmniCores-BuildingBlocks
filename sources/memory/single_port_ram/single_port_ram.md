@@ -16,19 +16,19 @@ A synchronous random access memory with a single port shared for both read and w
 
 ## Parameters
 
-| Name              | Type    | Allowed Values | Default | Description                                                                                                                         |
-| ----------------- | ------- | -------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                       |
-| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                    |
-| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>`0`: Combinational read (data available same cycle).<br/>`1`: Registered read (data available next cycle). |
+| Name              | Type    | Allowed Values | Default | Description                                                                                                                             |
+| ----------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                           |
+| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                        |
+| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>• `0`: Combinational read (data available same cycle).<br/>• `1`: Registered read (data available next cycle). |
 
 ## Ports
 
 | Name            | Direction | Width           | Clock   | Reset | Reset value | Description                                                                                       |
 | --------------- | --------- | --------------- | ------- | ----- | ----------- | ------------------------------------------------------------------------------------------------- |
 | `clock`         | input     | 1               | self    |       |             | Clock signal.                                                                                     |
-| `access_enable` | input     | 1               | `clock` |       |             | Access enable signal.<br/>`0`: Idle.<br/>`1`: Perform read or write operation.                    |
-| `write`         | input     | 1               | `clock` |       |             | Operation mode selector.<br/>`0`: Read operation.<br/>`1`: Write operation.                       |
+| `access_enable` | input     | 1               | `clock` |       |             | Access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.                |
+| `write`         | input     | 1               | `clock` |       |             | Operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.                   |
 | `address`       | input     | `ADDRESS_WIDTH` | `clock` |       |             | Address of the memory location to access.                                                         |
 | `write_data`    | input     | `WIDTH`         | `clock` |       |             | Data to be written to the memory.                                                                 |
 | `read_data`     | output    | `WIDTH`         | `clock` |       |             | Data read from the memory. Valid same cycle or next cycle depending on `REGISTERED_READ` setting. |

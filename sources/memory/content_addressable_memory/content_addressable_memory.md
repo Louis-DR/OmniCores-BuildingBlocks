@@ -24,22 +24,22 @@ An associative memory that stores key-value pairs, where keys are `tags` and val
 
 ## Ports
 
-| Name            | Direction | Width        | Clock   | Reset    | Reset value | Description                                                                    |
-| --------------- | --------- | ------------ | ------- | -------- | ----------- | ------------------------------------------------------------------------------ |
-| `clock`         | input     | 1            | self    |          |             | Clock signal.                                                                  |
-| `resetn`        | input     | 1            | `clock` | self     | active-low  | Asynchronous active-low reset.                                                 |
-| `full`          | output    | 1            | `clock` | `resetn` | `0`         | Memory full status.<br/>`0`: Memory has free space.<br/>`1`: Memory is full.   |
-| `empty`         | output    | 1            | `clock` | `resetn` | `1`         | Memory empty status.<br/>`0`: Memory contains data.<br/>`1`: Memory is empty.  |
-| `write_enable`  | input     | 1            | `clock` |          |             | Write enable signal.<br/>`0`: Idle.<br/>`1`: Write a new tag-data pair.        |
-| `write_tag`     | input     | `TAG_WIDTH`  | `clock` |          |             | Tag to be written to the memory.                                               |
-| `write_data`    | input     | `DATA_WIDTH` | `clock` |          |             | Data to be written to the memory.                                              |
-| `read_enable`   | input     | 1            | `clock` |          |             | Read enable signal.<br/>`0`: Idle.<br/>`1`: Read data by tag.                  |
-| `read_tag`      | input     | `TAG_WIDTH`  | `clock` |          |             | Tag to be searched for in the memory.                                          |
-| `read_data`     | output    | `DATA_WIDTH` | `clock` | `resetn` | `X`         | Data corresponding to `read_tag`. Valid one cycle after a hit.                 |
-| `read_hit`      | output    | 1            | `clock` |          |             | Read hit status.<br/>`0`: No match found (miss).<br/>`1`: Match found (hit).   |
-| `delete_enable` | input     | 1            | `clock` |          |             | Delete enable signal.<br/>`0`: Idle.<br/>`1`: Delete an entry by tag.          |
-| `delete_tag`    | input     | `TAG_WIDTH`  | `clock` |          |             | Tag of the entry to be deleted.                                                |
-| `delete_hit`    | output    | 1            | `clock` |          |             | Delete hit status.<br/>`0`: No match found (miss).<br/>`1`: Match found (hit). |
+| Name            | Direction | Width        | Clock   | Reset    | Reset value | Description                                                                        |
+| --------------- | --------- | ------------ | ------- | -------- | ----------- | ---------------------------------------------------------------------------------- |
+| `clock`         | input     | 1            | self    |          |             | Clock signal.                                                                      |
+| `resetn`        | input     | 1            | `clock` | self     | active-low  | Asynchronous active-low reset.                                                     |
+| `full`          | output    | 1            | `clock` | `resetn` | `0`         | Memory full status.<br/>• `0`: Memory has free space.<br/>• `1`: Memory is full.   |
+| `empty`         | output    | 1            | `clock` | `resetn` | `1`         | Memory empty status.<br/>• `0`: Memory contains data.<br/>• `1`: Memory is empty.  |
+| `write_enable`  | input     | 1            | `clock` |          |             | Write enable signal.<br/>• `0`: Idle.<br/>• `1`: Write a new tag-data pair.        |
+| `write_tag`     | input     | `TAG_WIDTH`  | `clock` |          |             | Tag to be written to the memory.                                                   |
+| `write_data`    | input     | `DATA_WIDTH` | `clock` |          |             | Data to be written to the memory.                                                  |
+| `read_enable`   | input     | 1            | `clock` |          |             | Read enable signal.<br/>• `0`: Idle.<br/>• `1`: Read data by tag.                  |
+| `read_tag`      | input     | `TAG_WIDTH`  | `clock` |          |             | Tag to be searched for in the memory.                                              |
+| `read_data`     | output    | `DATA_WIDTH` | `clock` | `resetn` | `X`         | Data corresponding to `read_tag`. Valid one cycle after a hit.                     |
+| `read_hit`      | output    | 1            | `clock` |          |             | Read hit status.<br/>• `0`: No match found (miss).<br/>• `1`: Match found (hit).   |
+| `delete_enable` | input     | 1            | `clock` |          |             | Delete enable signal.<br/>• `0`: Idle.<br/>• `1`: Delete an entry by tag.          |
+| `delete_tag`    | input     | `TAG_WIDTH`  | `clock` |          |             | Tag of the entry to be deleted.                                                    |
+| `delete_hit`    | output    | 1            | `clock` |          |             | Delete hit status.<br/>• `0`: No match found (miss).<br/>• `1`: Match found (hit). |
 
 ## Operation
 

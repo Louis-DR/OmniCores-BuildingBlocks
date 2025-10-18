@@ -24,12 +24,12 @@ Arbiters between different request channels. The grant is given to the first rea
 
 ## Ports
 
-| Name       | Direction | Width  | Clock        | Reset | Reset value | Description                                                                             |
-| ---------- | --------- | ------ | ------------ | ----- | ----------- | --------------------------------------------------------------------------------------- |
-| `clock`    | input     | 1      | self         |       |             | Clock signal.                                                                           |
-| `resetn`   | input     | 1      | asynchronous | self  | `0`         | Asynchronous reset signal. Resets the registers of the timeout logic.                   |
-| `requests` | input     | `SIZE` | asynchronous |       |             | Request channels.<br/>`1`: requesting a grant.<br/>`0`: idle.                           |
-| `grant`    | output    | `SIZE` | `clock`      |       |             | Channel receiving the grant. One-hot encoding.<br/>`1`: grant given.<br/>`0`: no grant. |
+| Name       | Direction | Width  | Clock        | Reset | Reset value | Description                                                                                 |
+| ---------- | --------- | ------ | ------------ | ----- | ----------- | ------------------------------------------------------------------------------------------- |
+| `clock`    | input     | 1      | self         |       |             | Clock signal.                                                                               |
+| `resetn`   | input     | 1      | asynchronous | self  | `0`         | Asynchronous reset signal. Resets the registers of the timeout logic.                       |
+| `requests` | input     | `SIZE` | asynchronous |       |             | Request channels.<br/>• `1`: requesting a grant.<br/>• `0`: idle.                           |
+| `grant`    | output    | `SIZE` | `clock`      |       |             | Channel receiving the grant. One-hot encoding.<br/>• `1`: grant given.<br/>• `0`: no grant. |
 
 ## Operation
 

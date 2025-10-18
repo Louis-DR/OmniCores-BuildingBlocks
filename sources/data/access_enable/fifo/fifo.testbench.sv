@@ -41,9 +41,11 @@ logic             read_enable;
 logic [WIDTH-1:0] read_data;
 logic             empty;
 
+// Test signals
+logic [WIDTH-1:0] data_expected[$];
+logic [WIDTH-1:0] pop_trash;
+
 // Test variables
-int data_expected[$];
-int pop_trash;
 int transfer_count;
 int outstanding_count;
 int timeout_countdown;
@@ -87,7 +89,6 @@ endtask
 // Read task
 task automatic read;
   read_enable = 1;
-  @(posedge clock);
   if (data_expected.size() != 0) begin
     assert (read_data === data_expected[0])
       else $error("[%t] Read data '%0h' is not as expected '%0h'.", $realtime, read_data, data_expected[0]);
@@ -96,6 +97,7 @@ task automatic read;
   end else begin
     $error("[%t] Read enabled while FIFO should be empty.", $realtime);
   end
+  @(posedge clock);
   @(negedge clock);
   read_enable = 0;
 endtask
@@ -224,7 +226,7 @@ initial begin
     // Status check
     begin
       forever begin
-        @(negedge clock);
+        @(posedge clock); #1;
         check_flags();
       end
     end

@@ -30,9 +30,9 @@ Arbiters between different request channels based on externally supplied priorit
 | ------------ | --------- | ----------------------- | ------------ | -------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `clock`      | input     | 1                       | self         |          |             | Clock signal.                                                                                                                                 |
 | `resetn`     | input     | 1                       | asynchronous | self     | `0`         | Asynchronous reset signal. Resets the priority pointer.                                                                                       |
-| `requests`   | input     | `SIZE`                  | `clock`      |          |             | Request channels.<br/>`1`: requesting a grant.<br/>`0`: idle.                                                                                 |
+| `requests`   | input     | `SIZE`                  | `clock`      |          |             | Request channels.<br/>• `1`: requesting a grant.<br/>• `0`: idle.                                                                             |
 | `priorities` | input     | `SIZE × PRIORITY_WIDTH` | `clock`      |          |             | Priority values for each channel.<br/>Packed array: `{priority[N-1], ..., priority[1], priority[0]}`.<br/>Higher value means higher priority. |
-| `grant`      | output    | `SIZE`                  | `clock`      | `resetn` |             | Channel receiving the grant. One-hot encoding.<br/>`1`: grant given.<br/>`0`: no grant.                                                       |
+| `grant`      | output    | `SIZE`                  | `clock`      | `resetn` |             | Channel receiving the grant. One-hot encoding.<br/>• `1`: grant given.<br/>• `0`: no grant.                                                   |
 
 ## Operation
 

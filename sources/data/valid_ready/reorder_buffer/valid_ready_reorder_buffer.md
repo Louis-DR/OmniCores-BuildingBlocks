@@ -28,25 +28,25 @@ The buffer maintains separate reservation and read pointers to track the order o
 
 ## Ports
 
-| Name            | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                     |
-| --------------- | --------- | ------------- | ------------ | -------- | ----------- | ----------------------------------------------------------------------------------------------- |
-| `clock`         | input     | 1             | self         |          |             | Clock signal.                                                                                   |
-| `resetn`        | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                  |
-| `reserve_full`  | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>`0`: buffer has free reservation slots.<br/>`1`: buffer is full.   |
-| `reserve_empty` | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>`0`: buffer has reserved slots.<br/>`1`: buffer is empty.         |
-| `data_full`     | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>`0`: buffer has unwritten slots.<br/>`1`: all reserved slots are written. |
-| `data_empty`    | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>`0`: buffer has written data.<br/>`1`: no written data available.        |
-| `reserve_valid` | input     | 1             | `clock`      |          |             | Reserve valid signal.<br/>`0`: no reserve transaction.<br/>`1`: request slot reservation.       |
-| `reserve_index` | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                     |
-| `reserve_ready` | output    | 1             | `clock`      | `resetn` | `1`         | Reserve ready signal.<br/>`0`: buffer is full.<br/>`1`: buffer can accept reservation.          |
-| `write_valid`   | input     | 1             | `clock`      |          |             | Write valid signal.<br/>`0`: no write transaction.<br/>`1`: write data is valid.                |
-| `write_index`   | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to write to (must be previously reserved).                                    |
-| `write_data`    | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                               |
-| `write_ready`   | output    | 1             | `clock`      | `resetn` | `1`         | Write ready signal.<br/>`0`: buffer data is full.<br/>`1`: buffer can accept write data.        |
-| `write_error`   | output    | 1             | `clock`      | `resetn` | `0`         | Write error pulse.<br/>`0`: no error.<br/>`1`: invalid index write attempted.                   |
-| `read_valid`    | output    | 1             | `clock`      | `resetn` | `0`         | Read valid signal.<br/>`0`: no data at head.<br/>`1`: valid data available at head of queue.    |
-| `read_data`     | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the head of the queue.                                                           |
-| `read_ready`    | input     | 1             | `clock`      |          |             | Read ready signal.<br/>`0`: not ready to receive.<br/>`1`: ready to receive data from buffer.   |
+| Name            | Direction | Width         | Clock        | Reset    | Reset value | Description                                                                                         |
+| --------------- | --------- | ------------- | ------------ | -------- | ----------- | --------------------------------------------------------------------------------------------------- |
+| `clock`         | input     | 1             | self         |          |             | Clock signal.                                                                                       |
+| `resetn`        | input     | 1             | asynchronous | self     | active-low  | Asynchronous active-low reset.                                                                      |
+| `reserve_full`  | output    | 1             | `clock`      | `resetn` | `0`         | Reservation full status.<br/>• `0`: buffer has free reservation slots.<br/>• `1`: buffer is full.   |
+| `reserve_empty` | output    | 1             | `clock`      | `resetn` | `1`         | Reservation empty status.<br/>• `0`: buffer has reserved slots.<br/>• `1`: buffer is empty.         |
+| `data_full`     | output    | 1             | `clock`      | `resetn` | `0`         | Data full status.<br/>• `0`: buffer has unwritten slots.<br/>• `1`: all reserved slots are written. |
+| `data_empty`    | output    | 1             | `clock`      | `resetn` | `1`         | Data empty status.<br/>• `0`: buffer has written data.<br/>• `1`: no written data available.        |
+| `reserve_valid` | input     | 1             | `clock`      |          |             | Reserve valid signal.<br/>• `0`: no reserve transaction.<br/>• `1`: request slot reservation.       |
+| `reserve_index` | output    | `INDEX_WIDTH` | `clock`      |          |             | Index of the reserved slot.                                                                         |
+| `reserve_ready` | output    | 1             | `clock`      | `resetn` | `1`         | Reserve ready signal.<br/>• `0`: buffer is full.<br/>• `1`: buffer can accept reservation.          |
+| `write_valid`   | input     | 1             | `clock`      |          |             | Write valid signal.<br/>• `0`: no write transaction.<br/>• `1`: write data is valid.                |
+| `write_index`   | input     | `INDEX_WIDTH` | `clock`      |          |             | Index of the slot to write to (must be previously reserved).                                        |
+| `write_data`    | input     | `WIDTH`       | `clock`      |          |             | Data to be written to the buffer.                                                                   |
+| `write_ready`   | output    | 1             | `clock`      | `resetn` | `1`         | Write ready signal.<br/>• `0`: buffer data is full.<br/>• `1`: buffer can accept write data.        |
+| `write_error`   | output    | 1             | `clock`      | `resetn` | `0`         | Write error pulse.<br/>• `0`: no error.<br/>• `1`: invalid index write attempted.                   |
+| `read_valid`    | output    | 1             | `clock`      | `resetn` | `0`         | Read valid signal.<br/>• `0`: no data at head.<br/>• `1`: valid data available at head of queue.    |
+| `read_data`     | output    | `WIDTH`       | `clock`      | `resetn` | `0`         | Data read from the head of the queue.                                                               |
+| `read_ready`    | input     | 1             | `clock`      |          |             | Read ready signal.<br/>• `0`: not ready to receive.<br/>• `1`: ready to receive data from buffer.   |
 
 ## Operation
 

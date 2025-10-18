@@ -16,22 +16,22 @@ A synchronous random access memory with separate read and write ports for simult
 
 ## Parameters
 
-| Name              | Type    | Allowed Values | Default | Description                                                                                                                         |
-| ----------------- | ------- | -------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                       |
-| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                    |
-| `WRITE_THROUGH`   | integer | `0`, `1`       | `0`     | Write-through mode selection.<br/>`0`: Read before write.<br/>`1`: Write-through forwarding when addresses match.                   |
-| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>`0`: Combinational read (data available same cycle).<br/>`1`: Registered read (data available next cycle). |
+| Name              | Type    | Allowed Values | Default | Description                                                                                                                             |
+| ----------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                           |
+| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                        |
+| `WRITE_THROUGH`   | integer | `0`, `1`       | `0`     | Write-through mode selection.<br/>• `0`: Read before write.<br/>• `1`: Write-through forwarding when addresses match.                   |
+| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>• `0`: Combinational read (data available same cycle).<br/>• `1`: Registered read (data available next cycle). |
 
 ## Ports
 
 | Name            | Direction | Width           | Clock   | Reset | Reset value | Description                                                                                       |
 | --------------- | --------- | --------------- | ------- | ----- | ----------- | ------------------------------------------------------------------------------------------------- |
 | `clock`         | input     | 1               | self    |       |             | Clock signal.                                                                                     |
-| `write_enable`  | input     | 1               | `clock` |       |             | Write enable signal.<br/>`0`: Idle.<br/>`1`: Write operation.                                     |
+| `write_enable`  | input     | 1               | `clock` |       |             | Write enable signal.<br/>• `0`: Idle.<br/>• `1`: Write operation.                                 |
 | `write_address` | input     | `ADDRESS_WIDTH` | `clock` |       |             | Address of the memory location to write.                                                          |
 | `write_data`    | input     | `WIDTH`         | `clock` |       |             | Data to be written to the memory.                                                                 |
-| `read_enable`   | input     | 1               | `clock` |       |             | Read enable signal.<br/>`0`: Idle.<br/>`1`: Read operation.                                       |
+| `read_enable`   | input     | 1               | `clock` |       |             | Read enable signal.<br/>• `0`: Idle.<br/>• `1`: Read operation.                                   |
 | `read_address`  | input     | `ADDRESS_WIDTH` | `clock` |       |             | Address of the memory location to read.                                                           |
 | `read_data`     | output    | `WIDTH`         | `clock` |       |             | Data read from the memory. Valid same cycle or next cycle depending on `REGISTERED_READ` setting. |
 

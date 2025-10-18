@@ -184,6 +184,27 @@ wavedrom: $(WAVEDROM_SVG_FILES)
 	sed -i '' 's/style="stroke:none;fill:white"/style="stroke:none;fill:none"/g' $@
 	sed -i '' 's/<\/style>/@media(prefers-color-scheme:dark){:root{filter:invert(100%)hue-rotate(180deg);}.s8,.s9,.s10,.s11,.s12,.s13,.s14{filter:invert(30%);}}<\/style>/g' $@
 	sed -i '' 's/.info{fill:#0041c4}/info{fill:#000000}/g' $@
+
+datasheet_pdf:
+	pandoc --from=markdown                       \
+	       --to=pdf                              \
+	       --pdf-engine=xelatex                  \
+	       -V mainfont:Helvetica                 \
+	       -V sansfont:Helvetica                 \
+	       -V geometry:a4paper                   \
+	       -V monofont:Consolas                  \
+	       -H pandoc_fullwidth_tables_header.tex \
+	       --lua-filter=pandoc_ports_colwidths.lua \
+	       --lua-filter=pandoc_html_br_to_linebreak.lua \
+	       lifo_controller.md                    \
+	       -o lifo_controller.pdf
+
+datasheet_html:
+	pandoc --from=markdown          \
+	       --to=html5               \
+	       lifo_controller.md       \
+	       -o lifo_controller.html
+
 # Clean-up the generated files
 clean:
 	rm -rf ./$(VERILATOR_DIRECTORY)

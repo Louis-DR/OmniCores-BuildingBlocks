@@ -16,22 +16,22 @@ A random access memory with separate read and write ports operating in independe
 
 ## Parameters
 
-| Name              | Type    | Allowed Values | Default | Description                                                                                                                         |
-| ----------------- | ------- | -------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                       |
-| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                    |
-| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>`0`: Combinational read (data available same cycle).<br/>`1`: Registered read (data available next cycle). |
+| Name              | Type    | Allowed Values | Default | Description                                                                                                                             |
+| ----------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                           |
+| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                        |
+| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>• `0`: Combinational read (data available same cycle).<br/>• `1`: Registered read (data available next cycle). |
 
 ## Ports
 
 | Name            | Direction | Width           | Clock         | Reset | Reset value | Description                                                                                       |
 | --------------- | --------- | --------------- | ------------- | ----- | ----------- | ------------------------------------------------------------------------------------------------- |
 | `write_clock`   | input     | 1               | self          |       |             | Write clock signal.                                                                               |
-| `write_enable`  | input     | 1               | `write_clock` |       |             | Write enable signal.<br/>`0`: Idle.<br/>`1`: Write operation.                                     |
+| `write_enable`  | input     | 1               | `write_clock` |       |             | Write enable signal.<br/>• `0`: Idle.<br/>• `1`: Write operation.                                 |
 | `write_address` | input     | `ADDRESS_WIDTH` | `write_clock` |       |             | Address of the memory location to write.                                                          |
 | `write_data`    | input     | `WIDTH`         | `write_clock` |       |             | Data to be written to the memory.                                                                 |
 | `read_clock`    | input     | 1               | self          |       |             | Read clock signal.                                                                                |
-| `read_enable`   | input     | 1               | `read_clock`  |       |             | Read enable signal.<br/>`0`: Idle.<br/>`1`: Read operation.                                       |
+| `read_enable`   | input     | 1               | `read_clock`  |       |             | Read enable signal.<br/>• `0`: Idle.<br/>• `1`: Read operation.                                   |
 | `read_address`  | input     | `ADDRESS_WIDTH` | `read_clock`  |       |             | Address of the memory location to read.                                                           |
 | `read_data`     | output    | `WIDTH`         | `read_clock`  |       |             | Data read from the memory. Valid same cycle or next cycle depending on `REGISTERED_READ` setting. |
 
