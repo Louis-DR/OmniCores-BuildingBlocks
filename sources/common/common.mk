@@ -174,6 +174,16 @@ waves_visualizer:
 
 waves: waves_gtkwave
 
+WAVEDROM_JSON_FILES := $(wildcard *.wavedrom.json)
+WAVEDROM_SVG_FILES  := $(WAVEDROM_JSON_FILES:.wavedrom.json=.wavedrom.svg)
+
+.PHONY: wavedrom FORCE
+wavedrom: $(WAVEDROM_SVG_FILES)
+%.wavedrom.svg: %.wavedrom.json FORCE
+	wavedrom-cli -i $< -s $@
+	sed -i '' 's/style="stroke:none;fill:white"/style="stroke:none;fill:none"/g' $@
+	sed -i '' 's/<\/style>/@media(prefers-color-scheme:dark){:root{filter:invert(100%)hue-rotate(180deg);}.s8,.s9,.s10,.s11,.s12,.s13,.s14{filter:invert(30%);}}<\/style>/g' $@
+	sed -i '' 's/.info{fill:#0041c4}/info{fill:#000000}/g' $@
 # Clean-up the generated files
 clean:
 	rm -rf ./$(VERILATOR_DIRECTORY)
