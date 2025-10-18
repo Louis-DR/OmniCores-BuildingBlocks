@@ -12,11 +12,35 @@
 
 ![lifo_controller](lifo_controller.symbol.svg)
 
-Controller for synchronous Last-In First-Out stack pointer management and status logic. The controller manages a single stack pointer that tracks the top of the stack, generates memory interface signals, and calculates status flags. It doesn't implement a safety mechanism against writing when full or reading when empty so the integration must use the status flags and the enable signals carefully.
+Controller for synchronous Last-In First-Out stack. The controller manages the logic of the access-enable user interface, controls the memory interface, and computes the status flags. It is designed to be integrated with a simple dual-port RAM for data storage.
 
-The controller is designed to be integrated with a simple dual-port RAM for data storage. It provides a clean separation between control logic and data storage, allowing easy replacement of the memory with technology-specific implementations during ASIC integration. The dual-port interface allows the read port to continuously provide the top-of-stack value, ensuring combinational read access with zero latency.
+## Usage
 
-The controller passes data through without storing it. The `write_data` is forwarded to the memory write interface, and the `read_data` is provided directly from the memory read interface. The controller only maintains state for the stack pointer and status flags. When simultaneous read and write occur, the memory access targets the same location (top of stack), effectively replacing the top element.
+The `resetn` can be asserted asynchronously, but must be deasserted synchronously to `clock`, or when `clock` is not running. The stack can be used one cycle after the reset is deasserted.
+
+Both the write (push) and the read (pop) interfaces use an enable signal for flow control, and they are both synchronous to the `clock`. The `empty` and `full` outputs give information about the filling status of the stack.
+
+![lifo_controller_standard_access](lifo_controller_standard_access.wavedrom.svg)
+
+When `write_enable` is high at the rising edge of the `clock`, the value of `write_data` is written to the storage in the same cycle by asserting `memory_write_enable`, forwarding the data on `memory_write_data`, and setting the correct address on `memory_write_address`. On the next cycle, the controller is ready to read the data that was just written, or write another entry on the stack.
+
+![lifo_controller_memory_write](lifo_controller_memory_write.wavedrom.svg)
+
+The `read_data` always corresponds to the value at the top of the stack when it is not empty, as `memory_read_enable` is kept high as long as the stack is not empty. The data at the top of the stack can be read continuously. Only when `read_enable` is high at the rising edge of the `clock` that the entry is popped from the stack. Then, on the next cycle, the data of the next entry is available for reading or another entry can be written at the top of the stack.
+
+![lifo_controller_memory_read](lifo_controller_memory_read.wavedrom.svg)
+
+The controller doesn't implement a safety mechanism against writing when full or reading when empty, so the integration must use the status flags and the enable signals carefully.
+
+The `write_enable` and `read_enable` can be maintained high for mutliple cycles to perform back-to-back accesses.
+
+![lifo_controller_back_to_back](lifo_controller_back_to_back.wavedrom.svg)
+
+When writing and reading at the same time, the data at the top of the stack is replaced. The data read corresponds to the old value, and the write data replaces it at the rising edge of the clock. Therefore, it is possible to write and read at the same time when the stack is full.
+
+![lifo_controller_simultaneous_read_write](lifo_controller_simultaneous_read_write.wavedrom.svg)
+
+The input `clock` of the user interfaces is forwarded on `memory_clock` to drive the simple dual-port RAM.
 
 ## Parameters
 
@@ -48,21 +72,21 @@ The controller passes data through without storing it. The `write_data` is forwa
 
 ## Operation
 
-The controller maintains a single stack pointer that tracks the current top of the stack. It generates the memory interface signals and calculates the status flags. The controller doesn't store any data, only control state.
+The controller maintains a single stack pointer that tracks the current top of the stack. The stack pointer is zero out of reset. It is used to address the memory.
 
-For **write operation**, when `write_enable` is asserted, the controller generates `memory_enable` and `memory_write_enable`, provides the write address from the stack pointer, and forwards `write_data` to `memory_write_data`. The stack pointer is then incremented to point to the next available position.
+During write operation, when `write_enable` is high and `read_enable` is low, the `memory_write_address` is set to the stack pointer, `memory_write_data` forwards the value from `write_data`, and `memory_write_enable` is asserted to signal a write transaction to the memory. At the rising edge of `clock`, the stack pointer is incremented.
 
-There is no safety mechanism against writing when full. The stack pointer will be incremented beyond the valid range, potentially overwriting data and corrupting the full and empty flags, breaking the LIFO.
+There is no safety mechanism against writing when full. The stack pointer will be incremented beyond the valid range, potentially overwriting data and corrupting the full and empty flags, breaking the stack and requirering a reset.
 
-For **read operation**, the controller continuously provides the read address (stack pointer minus one) to `memory_address`, and the `read_data` output directly reflects `memory_read_data`. When `read_enable` is asserted, `memory_enable` is generated and the stack pointer is decremented to expose the previous entry as the new top.
+Whenever the stack is not empty, meaning there is at least one entry in the stack, the controller continuously reads from the memory by asserting `memory_read_enable`, setting `memory_read_address` to the stack pointer minus one (to point to the last valid data), and the `memory_read_data` is forwarded on the `read_data` output. When `read_enable` is high at the rising edge of the `clock`, the stack pointer is decremented.
 
-There is no safety mechanism against reading when empty. The stack pointer will be decremented below zero, causing undefined behavior and corrupting the full and empty flags, breaking the LIFO.
+There is no safety mechanism against reading when empty. The stack pointer will be decremented below zero, causing undefined behavior and corrupting the full and empty flags, breaking the stack and requirering a reset.
 
-If the stack is empty, data written can be read in the next cycle. When the stack is not empty nor full, it can be written to and read from at the same time. In this case, the memory address points to the top of the stack (read address), effectively replacing the current top item without changing the stack depth.
+When both `write_enable` and `read_enable` are high, meaning both writing and reading from the stack, the last data on the stack is still forwarded to `read_data`, but the `write_data` is written at the address of the stack pointer minus one on `memory_write_address` to replace the previous top entry.
 
-The status flags are calculated based on the stack pointer value. The stack is full when the pointer equals the maximum depth. The stack is empty when the pointer equals zero.
+The status flags are calculated based on the stack pointer value and are combinational outputs. The stack is full when the pointer equals the maximum depth. The stack is empty when the pointer equals zero.
 
-The **memory interface** uses a dual-port RAM with separate write and read ports. The write port is used for push operations, and the read port continuously reads from pointer - 1 to provide combinational access to the current top-of-stack value. The interface expects combinational reads from the memory, where the data at the read address appears immediately on the read data output without additional latency.
+The stack supports non-power-of-two even or odd depth, and the width of the stack pointer will correspond to the upper power-of-two range.
 
 ## Paths
 
