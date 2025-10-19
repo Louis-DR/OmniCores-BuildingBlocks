@@ -123,7 +123,7 @@ assign memory_write_address = write_address;
 assign memory_write_data    = write_data;
 
 // Read port
-// Continuously read from tail of queue for low latency read
+// Continuously read from head of queue for low latency read
 assign memory_read_enable   = ~empty;
 assign memory_read_address  = read_address;
 assign read_data            = memory_read_data;

@@ -1,0 +1,9 @@
+{"signal": [
+  { "name": "clock",        "wave": "p.................." },
+  { "name": "write_enable", "wave": "01...0............." },
+  { "name": "write_data",   "wave": "x5973x.............", "data":["A","B","C","D"] },
+  { "name": "read_enable",  "wave": "0.........1...0...." },
+  { "name": "read_data",    "wave": "x.5........973x....", "data":["A","B","C","D"] },
+  { "name": "empty",        "wave": "1.0...........1...." },
+  { "name": "full",         "wave": "0....1.....0......." }
+], "config":{"skin": "narrow"}}

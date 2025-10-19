@@ -16,7 +16,7 @@ Controller for synchronous Last-In First-Out stack. The controller manages the l
 
 ## Usage
 
-The `resetn` can be asserted asynchronously, but must be deasserted synchronously to `clock`, or when `clock` is not running. The stack can be used one cycle after the reset is deasserted.
+The `resetn` can be asserted asynchronously, but must be deasserted synchronously to `clock`, or when `clock` is not running. The stack can be used one cycle after the reset is deasserted. The reset is not propagated to the memory interface and the storage module and its content may or may not be reset.
 
 Both the write (push) and the read (pop) interfaces use an enable signal for flow control, and they are both synchronous to the `clock`. The `empty` and `full` outputs give information about the filling status of the stack.
 
@@ -26,7 +26,7 @@ When `write_enable` is high at the rising edge of the `clock`, the value of `wri
 
 ![lifo_controller_memory_write](lifo_controller_memory_write.wavedrom.svg)
 
-The `read_data` always corresponds to the value at the top of the stack when it is not empty, as `memory_read_enable` is kept high as long as the stack is not empty. The data at the top of the stack can be read continuously. Only when `read_enable` is high at the rising edge of the `clock` that the entry is popped from the stack. Then, on the next cycle, the data of the next entry is available for reading or another entry can be written at the top of the stack.
+The `read_data` always corresponds to the value at the top of the stack when it is not empty, as `memory_read_enable` is kept high as long as the stack is not empty. The data at the top of the stack can be read continuously without popping. Only when `read_enable` is high at the rising edge of the `clock` that the entry is popped from the stack. Then, on the next cycle, the data of the next entry is available for reading or another entry can be written at the top of the stack.
 
 ![lifo_controller_memory_read](lifo_controller_memory_read.wavedrom.svg)
 
@@ -86,7 +86,7 @@ When both `write_enable` and `read_enable` are high, meaning both writing and re
 
 The status flags are calculated based on the stack pointer value and are combinational outputs. The stack is full when the pointer equals the maximum depth. The stack is empty when the pointer equals zero.
 
-The stack supports non-power-of-two even or odd depth, and the width of the stack pointer will correspond to the upper power-of-two range.
+The stack supports power-of-two and non-power-of-two even or odd depth, and the width of the stack pointer will correspond to the upper power-of-two range.
 
 ## Paths
 
