@@ -96,19 +96,22 @@ end
 // │ Memory interface logic │
 // └────────────────────────┘
 
-// Calculate addresses
+// Pointer is the top empty entry
+// Pointer minus one is the top valid entry
 wire [DEPTH_LOG2:0] pointer_minus_one = pointer - 1;
 
-// Write port: Write to current pointer location when pushing
-// When simultaneously reading (pop+push), write to read location to replace top
-assign memory_clock         = clock;
+// Forward the clock
+assign memory_clock = clock;
+
+// Write port
+// When simultaneously reading (pop+push), write to read location to replace top valid entry
 assign memory_write_enable  = write_enable;
 assign memory_write_address = (write_enable && read_enable) ? pointer_minus_one[DEPTH_LOG2-1:0] : pointer[DEPTH_LOG2-1:0];
 assign memory_write_data    = write_data;
 
-// Read port: Continuously read from top of stack (pointer - 1)
-// This provides combinational access to the current top-of-stack value
-assign memory_read_enable  = !empty;
+// Read port
+// Continuously read from top of stack for low latency read
+assign memory_read_enable  = ~empty;
 assign memory_read_address = pointer_minus_one[DEPTH_LOG2-1:0];
 assign read_data           = memory_read_data;
 
