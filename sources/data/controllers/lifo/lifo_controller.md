@@ -90,19 +90,16 @@ The stack supports non-power-of-two even or odd depth, and the width of the stac
 
 ## Paths
 
-| From               | To                    | Type          | Comment                                      |
-| ------------------ | --------------------- | ------------- | -------------------------------------------- |
-| `write_data`       | `memory_write_data`   | combinational | Direct pass-through.                         |
-| `write_enable`     | `memory_enable`       | combinational | Direct pass-through (combined with read).    |
-| `write_enable`     | `memory_write_enable` | combinational | Direct pass-through.                         |
-| `write_enable`     | `memory_address`      | combinational | Address from stack pointer logic.            |
-| `write_enable`     | `full`                | sequential    | Control path through internal stack pointer. |
-| `write_enable`     | `empty`               | sequential    | Control path through internal stack pointer. |
-| `read_enable`      | `memory_enable`       | combinational | Direct pass-through (combined with write).   |
-| `read_enable`      | `memory_address`      | combinational | Address from stack pointer logic.            |
-| `read_enable`      | `full`                | sequential    | Control path through internal stack pointer. |
-| `read_enable`      | `empty`               | sequential    | Control path through internal stack pointer. |
-| `memory_read_data` | `read_data`           | combinational | Direct pass-through.                         |
+| From                          | To                     | Type          | Comment                                      |
+| ----------------------------- | ---------------------- | ------------- | -------------------------------------------- |
+| `write_enable`                | `full`, `empty`        | sequential    | Control path through internal stack pointer. |
+| `write_data`                  | `memory_write_data`    | pass-through  | Direct pass-through.                         |
+| `write_enable`                | `memory_write_enable`  | pass-through  | Direct pass-through.                         |
+| `write_enable`, `read_enable` | `memory_write_address` | sequential    | Address from stack pointer logic.            |
+| `read_enable`                 | `full`, `empty`        | sequential    | Control path through internal stack pointer. |
+| `read_enable`                 | `memory_read_enable`   | combinational | Only inverted.                               |
+| `read_enable`, `write_enable` | `memory_read_address`  | sequential    | Address from stack pointer logic.            |
+| `memory_read_data`            | `read_data`            | pass-through  | Direct pass-through.                         |
 
 ## Complexity
 
