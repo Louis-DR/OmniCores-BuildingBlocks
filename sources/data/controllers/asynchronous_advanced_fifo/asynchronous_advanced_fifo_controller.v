@@ -289,12 +289,16 @@ vector_synchronizer #(
 // │ Memory interface logic │
 // └────────────────────────┘
 
+// Write port
 assign memory_write_clock   = write_clock;
 assign memory_write_enable  = do_write;
 assign memory_write_address = write_address;
 assign memory_write_data    = write_data;
+
+// Read port
+// Continuously read from head of queue for low latency read
 assign memory_read_clock    = read_clock;
-assign memory_read_enable   = 1'b1;  // Always read for combinational access
+assign memory_read_enable   = ~read_empty;
 assign memory_read_address  = read_address;
 assign read_data            = memory_read_data;
 

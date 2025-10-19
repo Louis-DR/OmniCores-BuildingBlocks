@@ -196,11 +196,17 @@ end
 // │ Memory interface logic │
 // └────────────────────────┘
 
-assign memory_clock         = clock;
+// Forward the clock
+assign memory_clock = clock;
+
+// Write port
 assign memory_write_enable  = do_write;
 assign memory_write_address = write_address;
 assign memory_write_data    = write_data;
-assign memory_read_enable   = do_read;
+
+// Read port
+// Continuously read from head of queue for low latency read
+assign memory_read_enable   = ~empty;
 assign memory_read_address  = read_address;
 assign read_data            = memory_read_data;
 
