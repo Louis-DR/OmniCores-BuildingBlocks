@@ -185,11 +185,11 @@ wavedrom: $(WAVEDROM_SVG_FILES)
 	sed -i '' 's/<\/style>/@media(prefers-color-scheme:dark){:root{filter:invert(100%)hue-rotate(180deg);}.s8,.s9,.s10,.s11,.s12,.s13,.s14{filter:invert(30%);}}<\/style>/g' $@
 	sed -i '' 's/.info{fill:#0041c4}/info{fill:#000000}/g' $@
 
+DATASHEET_MARKDOWN := $(DESIGN_NAME).md
+DATASHEET_HTML     := $(DESIGN_NAME).html
+
 datasheet_html:
-	pandoc --from=markdown          \
-	       --to=html5               \
-	       lifo_controller.md       \
-	       -o lifo_controller.html
+	pandoc --from=markdown $(DATASHEET_MARKDOWN) --to=html5 -o $(DATASHEET_HTML)
 
 # Clean-up the generated files
 clean:
