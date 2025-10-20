@@ -1,9 +1,9 @@
 {"signal": [
   { "name": "clock",        "wave": "p.................." },
-  { "name": "write_enable", "wave": "01......0.........." },
-  { "name": "write_data",   "wave": "x5973684x..........", "data":["A","B","C","D","E","F","G"] },
-  { "name": "read_enable",  "wave": "0.1......0........." },
-  { "name": "read_data",    "wave": "x.5973684x.........", "data":["A","B","C","D","E","F","G"] },
-  { "name": "empty",        "wave": "1.0......1........." },
-  { "name": "full",         "wave": "0.................." }
+  { "name": "write_enable", "wave": "01...........0....." },
+  { "name": "write_data",   "wave": "x597368459736x.....", "data":["A","B","C","D","E","F","G","H","I","J","K","L"] },
+  { "name": "read_enable",  "wave": "0.1...0...1.......0" },
+  { "name": "read_data",    "wave": "x.59736....8459736x", "data":["A","B","C","D","E","F","G","H","I","J","K","L"] },
+  { "name": "empty",        "wave": "1.0...............1" },
+  { "name": "full",         "wave": "0.........1..0....." }
 ], "config":{"skin": "narrow"}}

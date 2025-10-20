@@ -1,0 +1,17 @@
+
+{"signal": [
+  { "name": "clock",                "wave": "p.................." },
+  { "name": "write_enable",         "wave": "0.................." },
+  { "name": "write_data",           "wave": "x.................." },
+  { "name": "read_enable",          "wave": "0.10..10..10..10..." },
+  { "name": "read_data",            "wave": "5..9...7...3...x...", "data":["A","B","C","D"] },
+  { "name": "empty",                "wave": "0..............1..." },
+  { "name": "full",                 "wave": "1..0..............." },
+  { "name": "memory_clock",         "wave": "p.................." },
+  { "name": "memory_write_enable",  "wave": "0.................." },
+  { "name": "memory_write_address", "wave": "x.................." },
+  { "name": "memory_write_data",    "wave": "x.................." },
+  { "name": "memory_read_enable",   "wave": "1..............0..." },
+  { "name": "memory_read_address",  "wave": "=..=...=...=...x...", "data":["0","1","2","3"] },
+  { "name": "memory_read_data",     "wave": "5..9...7...3...x...", "data":["A","B","C","D"] }
+], "config":{"skin": "narrow"}}

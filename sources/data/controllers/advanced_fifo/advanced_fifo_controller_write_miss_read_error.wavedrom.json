@@ -1,0 +1,11 @@
+{"signal": [
+  { "name": "clock",        "wave": "p.................." },
+  { "name": "write_enable", "wave": "01...010..........." },
+  { "name": "write_data",   "wave": "x5973x6x...........", "data":["A","B","C","D","E"] },
+  { "name": "write_miss",   "wave": "0......10.........." },
+  { "name": "read_enable",  "wave": "0.........1...010.." },
+  { "name": "read_data",    "wave": "x.5........973x....", "data":["A","B","C","D"] },
+  { "name": "read_error",   "wave": "0...............10." },
+  { "name": "empty",        "wave": "1.0...........1...." },
+  { "name": "full",         "wave": "0....1.....0......." }
+], "config":{"skin": "narrow"}}

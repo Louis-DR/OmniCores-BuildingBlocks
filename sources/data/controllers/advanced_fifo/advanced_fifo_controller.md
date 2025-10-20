@@ -12,11 +12,43 @@
 
 ![advanced_fifo_controller](advanced_fifo_controller.symbol.svg)
 
-Controller for synchronous First-In First-Out queue with advanced features including protection mechanisms, error reporting, extended status flags, level monitoring, and dynamic thresholds. The controller manages separate read and write pointers with wrap bits, generates memory interface signals, implements protection logic, calculates status flags, monitors level and thresholds, and generates error notifications.
+Controller for synchronous First-In First-Out queue with advanced features including protection mechanisms, error reporting, extended status flags, level monitoring, and dynamic thresholds. The controller manages the logic of the access-enable user interface, controls the memory interface, and computes the status flags. It is designed to be integrated with a simple dual-port RAM for data storage.
 
-The controller is designed to be integrated with a simple dual-port RAM for data storage. It provides a clean separation between control logic and data storage, allowing easy replacement of the memory with technology-specific implementations during ASIC integration.
+## Usage
 
-The controller passes data through without storing it. The `write_data` is forwarded to the memory write interface, and the `read_data` is provided directly from the memory read interface. The controller only maintains state for pointers, status flags, and error notifications.
+The `resetn` can be asserted asynchronously, but must be deasserted synchronously to `clock`, or when `clock` is not running. The queue can be used one cycle after the reset is deasserted. The reset is not propagated to the memory interface and the storage module and its content may or may not be reset.
+
+Both the write (push) and the read (pop) interfaces use an enable signal for flow control, and they are both synchronous to the `clock`.
+
+The `empty`, `full`, and the other status outputs report the filling status of the queue. The `almost_empty` and `almost_full` outputs are asserted when the queue has only one valid entry and one free entry respectively. The `half_empty` and `half_full` outputs are asserted when up to half of the queue's entries are free and valid respectively (they are exclusive for odd depths, and are both asserted for even depths when the queue is exactly half full and half empty). The `not_empty` and `not_full` outputs are the inverted versions of `empty` and `full`.
+
+The `level` and `space` outputs indicate the number of valid entried and free slots in the queue respectively. Their sum is equal to the depth of the queue.
+
+Two dynamically configurable thresholds are provided. The `lower_threshold_status` is asserted when the queue level is less than or equal to `lower_threshold_level`. The `upper_threshold_status` is asserted when the queue level is greater than or equal to `upper_threshold_level`.
+
+![advanced_fifo_controller_standard_access](advanced_fifo_controller_standard_access.wavedrom.svg)
+
+When `write_enable` is high at the rising edge of the `clock`, the value of `write_data` is written to the storage in the same cycle by asserting `memory_write_enable`, forwarding the data on `memory_write_data`, and setting the correct address on `memory_write_address`. On the next cycle, the controller is ready to read the data that was just written if the queue contains only one entry, and/or to write another entry at the tail of the queue.
+
+![advanced_fifo_controller_memory_write](advanced_fifo_controller_memory_write.wavedrom.svg)
+
+The `read_data` always corresponds to the value at the head of the queue when it is not empty, as `memory_read_enable` is kept high as long as the queue is not empty. The data at the head of the queue can be read continuously without popping. Only when `read_enable` is high at the rising edge of the `clock` that the entry is popped from the queue. Then, on the next cycle, the data of the next entry is available for reading.
+
+![advanced_fifo_controller_memory_read](advanced_fifo_controller_memory_read.wavedrom.svg)
+
+The controller does implement a safety mechanism against writing when full or reading when empty. A one cycle pulse is emitted on `write_miss` or `read_error` following a write-when-full or read-when-empty occurence respectively. The queue will not break in either cases as its internal state will not be affected: the write is ignored and the read returns invalid data. However, the integration must handle those cases such that the missed write data is not lost or lost in a way that doesn't break the the system, and the invalid read data is not breaking the system either.
+
+![advanced_fifo_controller_write_miss_read_error](advanced_fifo_controller_write_miss_read_error.wavedrom.svg)
+
+The `write_enable` and `read_enable` can be maintained high for multiple cycles to perform back-to-back accesses.
+
+![advanced_fifo_controller_back_to_back](advanced_fifo_controller_back_to_back.wavedrom.svg)
+
+When writing and reading at the same time, the head entry is read out while the `write_data` is stored at the tail. Occupancy remains unchanged. This is valid even when the queue is full: the read frees one slot and the write fills it in the same cycle.
+
+![advanced_fifo_controller_simultaneous_read_write](advanced_fifo_controller_simultaneous_read_write.wavedrom.svg)
+
+The input `clock` of the user interfaces is forwarded on `memory_clock` to drive the simple dual-port RAM.
 
 ## Parameters
 
@@ -62,23 +94,25 @@ The controller passes data through without storing it. The `write_data` is forwa
 
 ## Operation
 
-The controller maintains separate read and write pointers, each with an additional wrap bit for correct level calculation, implemented with `advanced_wrapping_counter`. It generates the memory interface signals, calculates all status flags and thresholds, implements protection mechanisms, and generates error notifications. The controller doesn't store any data, only control state.
+The controller maintains independent write and read pointers, each composed of an index and a lap bit for unambiguous level calculation. The pointers are implemented with instances of the `advanced_wrapping_counter` modyle. They are zero out of reset. They are used for memory addressing and level calculation.
 
-For **write operation**, when `write_enable` is asserted, the controller checks if the queue is full. If not full and not flushing, it generates `memory_write_enable`, provides the write address from the write pointer, and forwards `write_data` to `memory_write_data`. The write pointer is then incremented. If full, the write is ignored and `write_miss` pulses for one clock cycle.
+The internal `can_write` wire indicates that the queue is not full (or full but a read is also occuring), and not flushing. When a write is requested (`write_enable` is asserted) and it is allowed (`can_write` is asserted), then the internal wire `do_write` is asserted and a write occurs: the `memory_write_address` is set to the write pointer stripped of its lap bit, `memory_write_data` forwards the value from `write_data`, and `memory_write_enable` is asserted to signal a write transaction to the memory. At the rising edge of `clock`, the write pointer is incremented.
 
-The write safety mechanism prevents writing when full. The write will be ignored, the pointers will not be updated, and the data will be lost. The `write_miss` pulse notification will assert for one clock cycle to signal the error, then automatically clear. The FIFO can continue operating normally.
+If a write is requested (`write_enable` is asserted) but it isn't allowed (`can_write` is deasserted), then the write is ignored - the write port of the memory interface stays idle and the write pointer is unchanged - but the `write_miss` output is asserted for one cycle.
 
-For **read operation**, the controller continuously provides the read address from the read pointer to `memory_read_address`, and the `read_data` output directly reflects `memory_read_data`. When `read_enable` is asserted, the controller checks if the queue is empty. If not empty, `memory_read_enable` is generated and the read pointer is incremented. If empty, the read is ignored and `read_error` pulses for one clock cycle.
+Whenever the queue is not empty, meaning there is at least one entry in the queue, the controller continuously reads from the memory by asserting `memory_read_enable`, setting `memory_read_address` to the read pointer stripped of its lap bit, and the `memory_read_data` is forwarded on the `read_data` output. The internal `can_read` wire indicates that the queue is not empty and not flushing. When a read is requested (`read_enable` is asserted) and it is allowed (`can_read` is asserted), then the internal wire `do_write` is asserted and a read occurs at the rising edge: at the rising edge of the `clock`, the read pointer is incremented.
 
-The read safety mechanism prevents reading when empty. The `read_data` will be invalid and the pointers will not be updated. The `read_error` pulse notification will assert for one clock cycle to signal the error, then automatically clear. The FIFO can continue operating normally.
+If a read is requested (`read_enable` is asserted) but it isn't allowed (`can_read` is deasserted), then the read is ignored - the read port of the memory interface stays idle, the read data is invalid, and the read pointer is unchanged - but the `read_error` output is asserted for one cycle.
 
-If the queue is empty, data written can be read in the next cycle. When the queue is not empty nor full, it can be written to and read from at the same time with back-to-back transactions at full throughput.
+The simple status flags are directly calculated based on the read and write pointers with their lap bits and are combinational outputs. The queue is full (`full` output asserted) when the pointers are the same but the lap bits are different. The queue is empty (`empty` output asserted) when the pointers are the same and the lap bits are equal. The inverted outputs `not_full` and `not_empty` are derived from them.
 
-The level, status, and threshold outputs are calculated based on the read and write pointers. The level represents the current number of entries in the queue. The threshold statuses are calculated by comparing the current level with the programmable threshold levels.
+The `level` output is computed by subtracting the read pointer from the write pointer. For power-of-two depths, the binary subtraction with the lap bit works efficiently, but for non-power-of-two depths, an offset of `DEPTH` must be added if the lap bits are equal to get a positive result. The `space` output is derived from the `level` output.
 
-Asserting the `flush` input empties the whole FIFO at the next rising edge of the clock by advancing the read pointer to the write pointer. During a flush cycle, read and write pointer increments are gated so no entry is consumed or written concurrently.
+The advanced status flags `almost_empty`, `half_empty`, `almost_full`, and `half_full`, as well as the dynamic threshold flags `lower_threshold_status` and `upper_threshold_status` are all derived from the `level` and `space` outputs with the corresponding static or dynamic comparisons.
 
-The **memory interface** provides separate write and read channels with enable, address, and data signals. The interface expects combinational reads from the memory, where the data at the read address appears immediately on the read data output without additional latency.
+The queue supports power-of-two and non-power-of-two even or odd depths, and the width of the stack pointer will correspond to the upper power-of-two range. The logic will be slightly faster and more efficient for power-of-two depths as it can rely on the natural wrapping when the binary counter overflows.
+
+When the `flush` input is asserted, the read pointer is realigned to the write pointer at the rising edge of the `clock`. This effectively empties the queue. When the `flush` input is asserted, `write_enable` and `read_enable` must stay deasserted. If a write or read is requested anyway, it will trigger a `write_miss` or `read_error` respectively. Note that this implementation of the flush feature is inefficient and will be replaced.
 
 ## Paths
 
