@@ -25,6 +25,14 @@ module advanced_fifo_controller #(
   input                   clock,
   input                   resetn,
   input                   flush,
+  // Write interface
+  input                   write_enable,
+  input       [WIDTH-1:0] write_data,
+  output reg              write_miss,
+  // Read interface
+  input                   read_enable,
+  output      [WIDTH-1:0] read_data,
+  output reg              read_error,
   // Status flags
   output                  empty,
   output                  almost_empty,
@@ -34,14 +42,6 @@ module advanced_fifo_controller #(
   output                  half_full,
   output                  almost_full,
   output                  full,
-  output reg              write_miss,
-  output reg              read_error,
-  // Write interface
-  input                   write_enable,
-  input       [WIDTH-1:0] write_data,
-  // Read interface
-  input                   read_enable,
-  output      [WIDTH-1:0] read_data,
   // Level and thresholds
   output [DEPTH_LOG2:0]   level,
   output [DEPTH_LOG2:0]   space,
@@ -74,8 +74,9 @@ wire [DEPTH_LOG2-1:0] write_address = write_pointer[DEPTH_LOG2-1:0];
 // Write lap bit
 wire write_lap = write_pointer[DEPTH_LOG2];
 
-// Write when not full and not flushing
-wire do_write = write_enable && !full && !flush;
+// Write when not full (or full and reading) and not flushing
+wire can_write = (~full | read_enable) & ~flush;
+wire do_write  = write_enable & can_write;
 
 // Write pointer counter
 advanced_wrapping_counter #(
@@ -112,7 +113,8 @@ wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 wire read_lap = read_pointer[DEPTH_LOG2];
 
 // Read when not empty and not flushing
-wire do_read = read_enable && !empty && !flush;
+wire can_read = ~empty & ~flush;
+wire do_read  = read_enable & can_read;
 
 // Read pointer counter with flush control
 advanced_wrapping_counter #(
@@ -180,10 +182,10 @@ always @(posedge clock or negedge resetn) begin
     write_miss <= 0;
     read_error <= 0;
     if (!flush) begin
-      if (write_enable && full) begin
+      if (write_enable && !can_write) begin
         write_miss <= 1;
       end
-      if (read_enable && empty) begin
+      if (read_enable && !can_read) begin
         read_error <= 1;
       end
     end

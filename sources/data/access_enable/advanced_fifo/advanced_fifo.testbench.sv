@@ -41,6 +41,9 @@ logic                flush;
 logic                write_enable;
 logic    [WIDTH-1:0] write_data;
 logic                write_miss;
+logic                read_enable;
+logic    [WIDTH-1:0] read_data;
+logic                read_error;
 logic                empty;
 logic                almost_empty;
 logic                half_empty;
@@ -49,9 +52,6 @@ logic                not_full;
 logic                half_full;
 logic                almost_full;
 logic                full;
-logic                read_enable;
-logic    [WIDTH-1:0] read_data;
-logic                read_error;
 logic [DEPTH_LOG2:0] level;
 logic [DEPTH_LOG2:0] space;
 logic [DEPTH_LOG2:0] lower_threshold_level;
@@ -76,6 +76,12 @@ advanced_fifo #(
   .clock                  ( clock                  ),
   .resetn                 ( resetn                 ),
   .flush                  ( flush                  ),
+  .write_enable           ( write_enable           ),
+  .write_data             ( write_data             ),
+  .write_miss             ( write_miss             ),
+  .read_enable            ( read_enable            ),
+  .read_data              ( read_data              ),
+  .read_error             ( read_error             ),
   .empty                  ( empty                  ),
   .almost_empty           ( almost_empty           ),
   .half_empty             ( half_empty             ),
@@ -84,12 +90,6 @@ advanced_fifo #(
   .half_full              ( half_full              ),
   .almost_full            ( almost_full            ),
   .full                   ( full                   ),
-  .write_miss             ( write_miss             ),
-  .read_error             ( read_error             ),
-  .write_enable           ( write_enable           ),
-  .write_data             ( write_data             ),
-  .read_enable            ( read_enable            ),
-  .read_data              ( read_data              ),
   .level                  ( level                  ),
   .space                  ( space                  ),
   .lower_threshold_level  ( lower_threshold_level  ),
@@ -375,7 +375,7 @@ initial begin
         end
         // Check
         @(posedge clock);
-        if (write_enable && !full) begin
+        if (write_enable && (!full || read_enable)) begin
           data_expected.push_back(write_data);
           transfer_count++;
           outstanding_count++;
