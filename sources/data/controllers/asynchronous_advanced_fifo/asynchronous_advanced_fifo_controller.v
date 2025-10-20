@@ -143,7 +143,7 @@ assign write_space = DEPTH - write_level;
 // Queue is empty if the gray-coded read and write pointers are the same
 assign write_empty        =  write_pointer_gray == read_pointer_gray_w;
 assign write_almost_empty =  write_level == 1;
-assign write_half_empty   =  write_level <= (DEPTH + 1) / 2;
+assign write_half_empty   =  write_level <= DEPTH / 2;
 assign write_not_empty    = ~write_empty;
 
 // Queue is full if only the two MSB of the gray-coded pointers differ (this only works for power-of-2 depths)

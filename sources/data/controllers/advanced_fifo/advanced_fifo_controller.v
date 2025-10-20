@@ -152,7 +152,7 @@ assign space = DEPTH - level;
 // Queue is empty if the read and write pointers are the same and the lap bits are equal
 assign empty        = write_address == read_address && write_lap == read_lap;
 assign almost_empty = level == 1;
-assign half_empty   = level <= (DEPTH + 1) / 2;
+assign half_empty   = level <= DEPTH / 2;
 assign not_empty    = ~empty;
 
 // Queue is full if the read and write pointers are the same but the lap bits are different
