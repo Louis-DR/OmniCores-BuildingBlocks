@@ -119,7 +119,6 @@ There are no specific synthesis or implementation constraints for this block.
 | ------------------ | ------------------------------------------------ | ----------------------------------------------- |
 | `clog2.vh`         | `omnicores-buildingblocks/sources/common`        | Macro for calculating log₂ of parameter values. |
 | `is_pow2.vh`       | `omnicores-buildingblocks/sources/common`        | Macro to detect power-of-2 ranges.              |
-| `gray.vh`          | `omnicores-buildingblocks/sources/encoding/gray` | Macros for Gray/Binary conversion (power-of-2). |
 | `binary_to_gray.v` | `omnicores-buildingblocks/sources/encoding/gray` | Encoder used for general ranges.                |
 | `gray_to_binary.v` | `omnicores-buildingblocks/sources/encoding/gray` | Decoder used for gray-load mode.                |
 

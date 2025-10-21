@@ -14,7 +14,6 @@
 
 `include "clog2.vh"
 `include "is_pow2.vh"
-`include "gray.vh"
 
 
 
@@ -38,13 +37,13 @@ module gray_wrapping_counter #(
   output reg         overflow
 );
 
-localparam COUNTER_MIN = 0;
-localparam COUNTER_MAX = RANGE - 1;
+localparam COUNTER_BINARY_MIN = 0;
+localparam COUNTER_BINARY_MAX = RANGE - 1;
 
 // Counter register
 reg  [WIDTH-1:0] counter_binary;
-wire [WIDTH-1:0] counter_binary_decremented = minimum ? COUNTER_MAX : counter_binary - 1;
-wire [WIDTH-1:0] counter_binary_incremented = maximum ? COUNTER_MIN : counter_binary + 1;
+wire [WIDTH-1:0] counter_binary_decremented = minimum ? COUNTER_BINARY_MAX : counter_binary - 1;
+wire [WIDTH-1:0] counter_binary_incremented = maximum ? COUNTER_BINARY_MIN : counter_binary + 1;
 reg  [WIDTH-1:0] counter_gray;
 wire [WIDTH-1:0] counter_gray_decremented;
 wire [WIDTH-1:0] counter_gray_incremented;
@@ -67,23 +66,16 @@ binary_to_gray #(
   .gray   ( counter_gray_incremented   )
 );
 
-// Reset Gray value
+// Reset counter values
+wire [WIDTH-1:0] reset_count_binary = RESET_VALUE[WIDTH-1:0];
 wire [WIDTH-1:0] reset_count_gray;
-generate
-  if (`IS_POW2(RANGE)) begin : gen_reset_gray_pow2
-    // Static assignment for power-of-two ranges
-    assign reset_count_gray = `BINARY_TO_GRAY(RESET_VALUE[WIDTH-1:0]);
-  end else begin : gen_reset_gray_non_pow2
-    // Fallback to module for non-power-of-two ranges
-    binary_to_gray #(
-      .RANGE ( RANGE ),
-      .WIDTH ( WIDTH )
-    ) reset_gray_encoder (
-      .binary ( RESET_VALUE[WIDTH-1:0] ),
-      .gray   ( reset_count_gray       )
-    );
-  end
-endgenerate
+binary_to_gray #(
+  .RANGE ( RANGE ),
+  .WIDTH ( WIDTH )
+) reset_gray_encoder (
+  .binary ( reset_count_binary ),
+  .gray   ( reset_count_gray   )
+);
 
 // Convert load to binary or Gray
 wire [WIDTH-1:0] load_count_binary_value;
@@ -111,15 +103,16 @@ generate
 endgenerate
 
 // Minimum and maximum flags
-assign minimum = counter_binary == COUNTER_MIN;
-assign maximum = counter_binary == COUNTER_MAX;
+assign minimum = counter_binary == COUNTER_BINARY_MIN;
+assign maximum = counter_binary == COUNTER_BINARY_MAX;
 
+// Sequential logic
 generate
   // If the range is a power of 2, wrapping is automatic
   if (`IS_POW2(RANGE)) begin : gen_pow2_counter
     always @(posedge clock or negedge resetn) begin
       if (!resetn) begin
-        counter_binary <= RESET_VALUE;
+        counter_binary <= reset_count_binary;
         counter_gray   <= reset_count_gray;
         underflow      <= 0;
         overflow       <= 0;
