@@ -8,14 +8,14 @@
       <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
         <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="171" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">count_binary</text>
+      <text x="171" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">count_gray</text>
         <line x1="173" y1="45" x2="187" y2="45" stroke="black" stroke-width="1"/>
         <path d="M 193 45 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="176" y1="43" x2="180" y2="47" stroke="black" stroke-width="1"/>
       <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">decrement</text>
         <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="171" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">count_gray</text>
+      <text x="171" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">count_binary</text>
         <line x1="173" y1="55" x2="187" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 193 55 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="176" y1="53" x2="180" y2="57" stroke="black" stroke-width="1"/>

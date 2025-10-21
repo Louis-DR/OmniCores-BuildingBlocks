@@ -1,5 +1,5 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.1.1 Chrome/132.0.6834.210 Electron/34.3.3 Safari/537.36" version="26.1.1">
-  <diagram name="Gray Wrapping Decrement Counter" id="Gray-Wrapping-Decrement-Counter">
+  <diagram name="Gray Wrapping Counter" id="Gray-Wrapping-Counter">
     <mxGraphModel dx         = "0"
                   dy         = "0"
                   grid       = "1"
@@ -11,8 +11,8 @@
                   fold       = "1"
                   page       = "1"
                   pageScale  = "1"
-                  pageWidth  = "180"
-                  pageHeight = "60"
+                  pageWidth  = "140"
+                  pageHeight = "70"
                   math       = "0"
                   shadow     = "0">
       <root>
@@ -23,9 +23,9 @@
                 value       = ""
                 vertex      = "1"
                 connectable = "0"
-                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[1,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0.5,0,0,0,0],[0.5,0,0,0,60]];">
-          <mxGeometry width  = "180"
-                      height = "60"
+                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[1,0,0,0,50],[0,0,0,0,60],[1,0,0,0,60],[0.5,0,0,0,0],[0.5,0,0,0,70]];">
+          <mxGeometry width  = "140"
+                      height = "70"
                       as     = "geometry"/>
         </mxCell>
         <mxCell id     = "box"
@@ -35,29 +35,29 @@
                 style  = "rounded=1;arcSize=5;fillColor=none;strokeWidth=1;strokeColor=black;whiteSpace=wrap;html=1;connectable=0;">
           <mxGeometry x="15"
                       y="0"
-                      width="150"
-                      height="60"
+                      width="110"
+                      height="70"
                       as="geometry"/>
         </mxCell>
         <mxCell id     = "title"
                 parent = "2"
-                value  = "Gray Wrapping Decrement Counter"
+                value  = "Gray Wrapping Counter"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontStyle=1;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"
                       y      = "7"
-                      width  = "150"
+                      width  = "110"
                       height = "0"
                       as     = "geometry"/>
         </mxCell>
         <mxCell id     = "subtitle"
                 parent = "2"
-                value  = "gray_wrapping_decrement_counter"
+                value  = "gray_wrapping_counter"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"
                       y      = "16"
-                      width  = "150"
+                      width  = "110"
                       height = "0"
                       as     = "geometry"/>
         </mxCell>
@@ -69,7 +69,7 @@
               <mxGeometry
                 x      = "15"
                 y      = "30"
-                width  = "150"
+                width  = "110"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -98,7 +98,7 @@
               <mxGeometry
                 x      = "15"
                 y      = "40"
-                width  = "150"
+                width  = "110"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -119,35 +119,6 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id="count_gray-label"
-                    parent="2"
-                    value="count_gray"
-                    vertex="1"
-                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "40"
-                width  = "150"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "count_gray-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "180"
-                         y  = "40"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "165"
-                         y  = "40"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
             <mxCell id     = "decrement-label"
                     parent = "2"
                     value  = "decrement"
@@ -156,7 +127,7 @@
               <mxGeometry
                 x      = "15"
                 y      = "50"
-                width  = "150"
+                width  = "110"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -177,6 +148,64 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
+            <mxCell id="count_gray-label"
+                    parent="2"
+                    value="count_gray"
+                    vertex="1"
+                    style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "50"
+                width  = "110"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "count_gray-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=dash;endFill=1;endSize=2;endArrow=none;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "140"
+                         y  = "50"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "125"
+                         y  = "50"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
+            <mxCell id     = "increment-label"
+                    parent = "2"
+                    value  = "increment"
+                    vertex = "1"
+                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry
+                x      = "15"
+                y      = "60"
+                width  = "110"
+                height = "0"
+                as     = "geometry"/>
+            </mxCell>
+            <mxCell id     = "increment-arrow"
+                    parent = "2"
+                    value  = ""
+                    edge   = "1"
+                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
+              <mxGeometry width    = "50"
+                          height   = "50"
+                          relative = "1"
+                          as       = "geometry">
+                <mxPoint x  = "0"
+                         y  = "60"
+                         as = "sourcePoint"/>
+                <mxPoint x  = "15"
+                         y  = "60"
+                         as = "targetPoint"/>
+              </mxGeometry>
+            </mxCell>
             <mxCell id="count_binary-label"
                     parent="2"
                     value="count_binary"
@@ -184,8 +213,8 @@
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "50"
-                width  = "150"
+                y      = "60"
+                width  = "110"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -198,11 +227,11 @@
                           height   = "50"
                           relative = "1"
                           as       = "geometry">
-                <mxPoint x  = "180"
-                         y  = "50"
+                <mxPoint x  = "140"
+                         y  = "60"
                          as = "sourcePoint"/>
-                <mxPoint x  = "165"
-                         y  = "50"
+                <mxPoint x  = "125"
+                         y  = "60"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>

@@ -119,9 +119,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id="count_binary-label"
+            <mxCell id="count_gray-label"
                     parent="2"
-                    value="count_binary"
+                    value="count_gray"
                     vertex="1"
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -131,7 +131,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "count_binary-arrow"
+            <mxCell id     = "count_gray-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
@@ -177,9 +177,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id="count_gray-label"
+            <mxCell id="count_binary-label"
                     parent="2"
-                    value="count_gray"
+                    value="count_binary"
                     vertex="1"
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
@@ -189,7 +189,7 @@
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "count_gray-arrow"
+            <mxCell id     = "count_binary-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
