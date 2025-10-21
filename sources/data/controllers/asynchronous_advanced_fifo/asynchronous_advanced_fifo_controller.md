@@ -83,7 +83,7 @@ The controller passes data through without storing it. The `write_data` is forwa
 
 ## Operation
 
-The controller maintains separate read and write pointers in their respective clock domains, implements Gray-code conversion and synchronization using `gray_wrapping_counter` for CDC-safe pointer transfer, calculates all status flags, levels, and thresholds in both domains, implements protection mechanisms, and generates error notifications. The controller doesn't store any data, only control state.
+The controller maintains separate read and write pointers in their respective clock domains, implements Gray-code conversion and synchronization using `gray_advanced_wrapping_counter` for CDC-safe pointer transfer, calculates all status flags, levels, and thresholds in both domains, implements protection mechanisms, and generates error notifications. The controller doesn't store any data, only control state.
 
 For **write operation** (in write clock domain), when `write_enable` is asserted, the controller checks if the queue is full. If not full and not flushing, it generates `memory_write_enable`, provides the write address from the write pointer, and forwards `write_data` to `memory_write_data`. The write pointer counter advances and automatically converts to Gray code. If full, the write is ignored and `write_miss` pulses for one clock cycle.
 
@@ -99,7 +99,7 @@ The **flushing** can be initiated from either domain:
 - **Write flush**: Synchronizes to read domain and forces read pointer to match write pointer.
 - **Read flush**: Synchronizes to write domain and forces read pointer to match write pointer.
 
-The **clock domain crossing** uses Gray-code counters (`gray_wrapping_counter`) that maintain both binary and Gray-coded representations. The Gray-coded pointers are synchronized using multi-stage synchronizers (`vector_synchronizer`) before being converted back to binary in the opposite domain for level calculation.
+The **clock domain crossing** uses Gray-code counters (`gray_advanced_wrapping_counter`) that maintain both binary and Gray-coded representations. The Gray-coded pointers are synchronized using multi-stage synchronizers (`vector_synchronizer`) before being converted back to binary in the opposite domain for level calculation.
 
 The **memory interface** provides separate write and read channels in their respective clock domains with independent clocks, enable, address, and data signals for asynchronous dual-port RAM. The controller forwards the write and read clocks (`memory_write_clock` and `memory_read_clock`) to the memory to clearly indicate the asynchronous nature of the interface. The write port operates in the write clock domain, and the read port operates in the read clock domain. The interface expects combinational reads from the asynchronous RAM.
 
@@ -149,12 +149,12 @@ The module requires proper timing constraints for clock domain crossing:
 
 This module depends on the following modules:
 
-| Module                  | Path                                                             | Comment                                             |
-| ----------------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| `gray_wrapping_counter` | `omnicores-buildingblocks/sources/counter/gray_wrapping_counter` | For CDC-safe pointer management with Gray encoding. |
-| `binary_to_gray`        | `omnicores-buildingblocks/sources/encoding/gray`                 | For converting values to Gray code.                 |
-| `gray_to_binary`        | `omnicores-buildingblocks/sources/encoding/gray`                 | For converting values from Gray code.               |
-| `vector_synchronizer`   | `omnicores-buildingblocks/sources/timing/vector_synchronizer`    | For CDC-safe pointer and signal synchronization.    |
+| Module                           | Path                                                                      | Comment                                             |
+| -------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------- |
+| `gray_advanced_wrapping_counter` | `omnicores-buildingblocks/sources/counter/gray_advanced_wrapping_counter` | For CDC-safe pointer management with Gray encoding. |
+| `binary_to_gray`                 | `omnicores-buildingblocks/sources/encoding/gray`                          | For converting values to Gray code.                 |
+| `gray_to_binary`                 | `omnicores-buildingblocks/sources/encoding/gray`                          | For converting values from Gray code.               |
+| `vector_synchronizer`            | `omnicores-buildingblocks/sources/timing/vector_synchronizer`             | For CDC-safe pointer and signal synchronization.    |
 
 ## Related modules
 

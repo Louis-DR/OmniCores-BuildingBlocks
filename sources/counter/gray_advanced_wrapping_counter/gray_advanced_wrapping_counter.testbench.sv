@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        gray_wrapping_counter.testbench.sv                           ║
+// ║ File:        gray_advanced_wrapping_counter.testbench.sv                           ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the gray wrapping counter.                     ║
 // ║                                                                           ║
@@ -18,7 +18,7 @@
 
 
 
-module gray_wrapping_counter__testbench ();
+module gray_advanced_wrapping_counter__testbench ();
 
 // Device parameters
 localparam int  RANGE        = 4;
@@ -60,11 +60,11 @@ logic [WIDTH-1:0] previous_binary;
 logic [WIDTH-1:0] previous_gray;
 
 // Device under test
-gray_wrapping_counter #(
+gray_advanced_wrapping_counter #(
   .RANGE        ( RANGE        ),
   .RESET_VALUE  ( RESET_VALUE  ),
   .LOAD_BINARY  ( LOAD_BINARY  )
-) gray_wrapping_counter_dut (
+) gray_advanced_wrapping_counter_dut (
   .clock        ( clock        ),
   .resetn       ( resetn       ),
   .load_enable  ( load_enable  ),
@@ -132,8 +132,8 @@ endfunction
 // Main block
 initial begin
   // Log waves
-  $dumpfile("gray_wrapping_counter.testbench.vcd");
-  $dumpvars(0,gray_wrapping_counter__testbench);
+  $dumpfile("gray_advanced_wrapping_counter.testbench.vcd");
+  $dumpvars(0,gray_advanced_wrapping_counter__testbench);
   $timeformat(-9, 0, " ns", 0);
 
   // Initialization

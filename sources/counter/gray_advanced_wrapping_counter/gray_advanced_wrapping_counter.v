@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        gray_wrapping_counter.v                                      ║
+// ║ File:        gray_advanced_wrapping_counter.v                             ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Counts up and down and wraps around in both directions.      ║
 // ║              Handles power-of-2 and non-power-of-2 ranges for wrapping.   ║
@@ -17,7 +17,7 @@
 
 
 
-module gray_wrapping_counter #(
+module gray_advanced_wrapping_counter #(
   parameter RANGE       = 4,
   parameter RESET_VALUE = 0,
   parameter LOAD_BINARY = 0,

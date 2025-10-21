@@ -75,7 +75,7 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Operation
 
-The asynchronous advanced FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointers are implemented with `gray_wrapping_counter` which provides both binary and Gray-coded values. The range of the counter is double the depth such that the pointers have an additional lap bit for correct level calculation. Data integrity and stability is ensured through careful synchronization of the Gray-coding of the pointers.
+The asynchronous advanced FIFO maintains an internal memory array indexed by separate read and write pointers each operating in their respective clock domain. The pointers are implemented with `gray_advanced_wrapping_counter` which provides both binary and Gray-coded values. The range of the counter is double the depth such that the pointers have an additional lap bit for correct level calculation. Data integrity and stability is ensured through careful synchronization of the Gray-coding of the pointers.
 
 The **write clock domain** contains a write pointer that indexes the shared memory array. When `write_enable` is asserted, `write_data` is stored at the write pointer location, and both the binary and Gray-coded write pointers are incremented. The Gray-coded write pointer is synchronized to the read domain for level calculations.
 

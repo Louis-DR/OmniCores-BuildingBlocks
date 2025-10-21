@@ -1,6 +1,6 @@
 asynchronous_advanced_fifo.v
 ../../controllers/asynchronous_advanced_fifo/asynchronous_advanced_fifo_controller.v
-../../../counter/gray_wrapping_counter/gray_wrapping_counter.v
+../../../counter/gray_advanced_wrapping_counter/gray_advanced_wrapping_counter.v
 ../../../counter/wrapping_counter/wrapping_counter.v
 ../../../encoding/gray/binary_to_gray.v
 ../../../encoding/gray/gray_to_binary.v

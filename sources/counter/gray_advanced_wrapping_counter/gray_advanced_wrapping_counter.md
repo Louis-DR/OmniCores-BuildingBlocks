@@ -1,8 +1,8 @@
-# Gray Wrapping Counter
+# Gray Advanced Wrapping Counter
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Gray Wrapping Counter                                                            |
+| Module  | Gray Advanced Wrapping Counter                                                   |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,7 +10,7 @@
 
 ## Overview
 
-![gray_wrapping_counter](gray_wrapping_counter.symbol.svg)
+![gray_advanced_wrapping_counter](gray_advanced_wrapping_counter.symbol.svg)
 
 Synchronous bidirectional counter that increments and decrements within a configurable range with wrapping behavior. In addition to the binary count, it provides the corresponding Gray-coded output and supports a load interface that accepts either binary or Gray values based on a parameter. Minimum/maximum flags and single-cycle overflow/underflow pulses are provided. There is no lap bit.
 
@@ -103,15 +103,15 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                                           | Description                                         |
-| ----------------- | ------------------------------------------------------------------------------ | --------------------------------------------------- |
-| Design            | [`gray_wrapping_counter.v`](gray_wrapping_counter.v)                           | Verilog design.                                     |
-| Testbench         | [`gray_wrapping_counter.testbench.sv`](gray_wrapping_counter.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`gray_wrapping_counter.testbench.gtkw`](gray_wrapping_counter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`gray_wrapping_counter.symbol.sss`](gray_wrapping_counter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`gray_wrapping_counter.symbol.svg`](gray_wrapping_counter.symbol.svg)         | Generated vector image of the symbol.               |
-| Symbol shape      | [`gray_wrapping_counter.symbol.drawio`](gray_wrapping_counter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
-| Datasheet         | [`gray_wrapping_counter.md`](gray_wrapping_counter.md)                         | Markdown documentation datasheet.                   |
+| Type              | File                                                                                             | Description                                         |
+| ----------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
+| Design            | [`gray_advanced_wrapping_counter.v`](gray_advanced_wrapping_counter.v)                           | Verilog design.                                     |
+| Testbench         | [`gray_advanced_wrapping_counter.testbench.sv`](gray_advanced_wrapping_counter.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`gray_advanced_wrapping_counter.testbench.gtkw`](gray_advanced_wrapping_counter.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`gray_advanced_wrapping_counter.symbol.sss`](gray_advanced_wrapping_counter.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`gray_advanced_wrapping_counter.symbol.svg`](gray_advanced_wrapping_counter.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`gray_advanced_wrapping_counter.symbol.drawio`](gray_advanced_wrapping_counter.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`gray_advanced_wrapping_counter.md`](gray_advanced_wrapping_counter.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

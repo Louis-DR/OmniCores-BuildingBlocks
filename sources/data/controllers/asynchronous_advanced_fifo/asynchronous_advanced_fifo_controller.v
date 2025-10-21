@@ -109,7 +109,7 @@ wire do_write = write_enable && !write_full && !write_flush;
 
 // Write pointer counter
 // The counter range is double so the Gray MSB acts as lap bit
-gray_wrapping_counter #(
+gray_advanced_wrapping_counter #(
   .RANGE        ( DEPTH * 2 ),
   .RESET_VALUE  ( 0         ),
   .LOAD_BINARY  ( 1         )
@@ -193,7 +193,7 @@ wire do_read = read_enable && !read_empty && !read_flush;
 
 // Read pointer counter
 // The counter range is double so the Gray MSB acts as lap bit
-gray_wrapping_counter #(
+gray_advanced_wrapping_counter #(
   .RANGE        ( DEPTH * 2 ),
   .RESET_VALUE  ( 0         ),
   .LOAD_BINARY  ( 1         )
