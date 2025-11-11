@@ -12,11 +12,65 @@
 
 ![asynchronous_fifo_controller](asynchronous_fifo_controller.symbol.svg)
 
-Controller for asynchronous First-In First-Out queue for safe clock domain crossing. The controller manages separate read and write pointers in their respective clock domains, implements Gray-code conversion and synchronization for CDC-safe pointer transfer, generates memory interface signals, and calculates domain-specific full/empty status flags.
+Controller for asynchronous First-In First-Out queue. The controller manages the logic of the access-enable user interface, controls the memory interface, computes the status flags, and ensures correct clock domain crossing. It is designed to be integrated with an asynchronous simple dual-port RAM for data storage.
 
-The controller is designed to be integrated with an asynchronous simple dual-port RAM for data storage. It provides a clean separation between control logic and data storage, allowing easy replacement of the memory with technology-specific implementations during ASIC integration.
+## Usage
 
-The controller passes data through without storing it. The `write_data` is forwarded to the memory write interface, and the `read_data` is provided directly from the memory read interface. The controller only maintains state for pointers in each clock domain and CDC synchronizers.
+The controller has two clock domains: the write domain on `write_clock` and the the read domain on `read_clock`. The clock can be synchronous or asynchronous, and have any phase shift and frequency ratio.
+
+The clock domains have their own reset - `write_resetn` and `read_resetn` - which can be asserted asynchronously, but must be deasserted synchronously to their respective clocks, or when the clocks are not running. The queue can be used `STAGES+1` clock cycles after both resets are deasserted to allows the propagation accross clock domains. The resets are not propagated to the memory interface and the storage module and its content may or may not be reset.
+
+Both the write (push) and the read (pop) interfaces use an enable signal for flow control, `write_enable` and `read_enable`, and they are synchronous to their respective clocks. The `write_full` and `read_empty` outputs report the filling status of the queue in the corresponding domains.
+
+Fast write slow read:
+
+![asynchronous_fifo_controller_standard_write_fast_read_slow](asynchronous_fifo_controller_standard_write_fast_read_slow.wavedrom.svg)
+
+Same frequency different phase:
+
+![asynchronous_fifo_controller_standard_same_frequency](asynchronous_fifo_controller_standard_same_frequency.wavedrom.svg)
+
+Slow write fast read:
+
+![asynchronous_fifo_controller_standard_write_slow_read_fast](asynchronous_fifo_controller_standard_write_slow_read_fast.wavedrom.svg)
+
+When `write_enable` is high at the rising edge of the `write_clock`, the value of `write_data` is written to the storage in the same cycle by asserting `memory_write_enable`, forwarding the data on `memory_write_data`, and setting the correct address on `memory_write_address`. The controller can write another entry to the queue on the next cycle of the `write_clock`, and to read the data that was just written after `STAGES` cycles of the `read_clock`.
+
+The `read_data` always corresponds to the value at the head of the queue when it is not empty in the read clock domain, as `memory_read_enable` is kept high as long as the queue is not empty. The data at the head of the queue can be read continuously without popping. Only when `read_enable` is high at the rising edge of the `read_clock` that the entry is popped from the queue. Then, on the next `read_clock` cycle, the data of the next entry is available for reading.
+
+![asynchronous_fifo_controller_memory_interface](asynchronous_fifo_controller_memory_interface.wavedrom.svg)
+
+The controller doesn't implement a safety mechanism against writing when full or reading when empty, so the integration must use the status flags and the enable signals carefully.
+
+The `write_enable` and `read_enable` can be maintained high for multiple cycles to perform back-to-back accesses.
+
+Fast write slow read:
+
+![asynchronous_fifo_controller_back_to_back_write_fast_read_slow](asynchronous_fifo_controller_back_to_back_write_fast_read_slow.wavedrom.svg)
+
+Same frequency different phase:
+
+![asynchronous_fifo_controller_back_to_back_same_frequency](asynchronous_fifo_controller_back_to_back_same_frequency.wavedrom.svg)
+
+Slow write fast read:
+
+![asynchronous_fifo_controller_back_to_back_write_slow_read_fast](asynchronous_fifo_controller_back_to_back_write_slow_read_fast.wavedrom.svg)
+
+It is possible to write to and read from the queue at the same time as long as the occupancy of the queue within the two clock domains allows it. Depending on the ratio of the clock frequencies and the number of synchronization stages (`STAGES`), writing and reading continuously can result in oscillations of full and empty states.
+
+Fast write slow read:
+
+![asynchronous_fifo_controller_simultaneous_write_fast_read_slow](asynchronous_fifo_controller_simultaneous_write_fast_read_slow.wavedrom.svg)
+
+Same frequency different phase:
+
+![asynchronous_fifo_controller_simultaneous_write_read_same_frequency](asynchronous_fifo_controller_simultaneous_write_read_same_frequency.wavedrom.svg)
+
+Slow write fast read:
+
+![asynchronous_fifo_controller_simultaneous_write_slow_read_fast](asynchronous_fifo_controller_simultaneous_write_slow_read_fast.wavedrom.svg)
+
+The inputs `write_clock` and `read_clock` of the user interfaces are forwarded on `memory_write_clock` and `memory_read_clock` to drive the simple dual-port RAM.
 
 ## Parameters
 
@@ -29,46 +83,46 @@ The controller passes data through without storing it. The `write_data` is forwa
 
 ## Ports
 
-| Name                   | Direction | Width        | Clock         | Reset          | Reset value | Description                                                                    |
-| ---------------------- | --------- | ------------ | ------------- | -------------- | ----------- | ------------------------------------------------------------------------------ |
-| `write_clock`          | input     | 1            | self          |                |             | Write clock signal.                                                            |
-| `write_resetn`         | input     | 1            | asynchronous  | self           | active-low  | Asynchronous active-low reset for write domain.                                |
-| `write_enable`         | input     | 1            | `write_clock` |                |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write (push) to queue.        |
-| `write_data`           | input     | `WIDTH`      | `write_clock` |                |             | Data to be written to the queue.                                               |
-| `write_full`           | output    | 1            | `write_clock` | `write_resetn` | `0`         | Queue full status in write domain.<br/>• `0`: free space.<br/>• `1`: full.     |
-| `read_clock`           | input     | 1            | self          |                |             | Read clock signal.                                                             |
-| `read_resetn`          | input     | 1            | asynchronous  | self           | active-low  | Asynchronous active-low reset for read domain.                                 |
-| `read_enable`          | input     | 1            | `read_clock`  |                |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read (pop) from queue.         |
-| `read_data`            | output    | `WIDTH`      | `read_clock`  | `read_resetn`  | `0`         | Data read from the queue head.                                                 |
-| `read_empty`           | output    | 1            | `read_clock`  | `read_resetn`  | `1`         | Queue empty status in read domain.<br/>• `0`: contains data.<br/>• `1`: empty. |
-| `memory_write_clock`   | output    | 1            |               |                |             | Write clock for asynchronous dual-port memory.                                 |
-| `memory_write_enable`  | output    | 1            | `write_clock` |                |             | Memory write enable signal.                                                    |
-| `memory_write_address` | output    | `DEPTH_LOG2` | `write_clock` |                |             | Memory write address.                                                          |
-| `memory_write_data`    | output    | `WIDTH`      | `write_clock` |                |             | Memory write data.                                                             |
-| `memory_read_clock`    | output    | 1            |               |                |             | Read clock for asynchronous dual-port memory.                                  |
-| `memory_read_enable`   | output    | 1            | `read_clock`  |                |             | Memory read enable signal.                                                     |
-| `memory_read_address`  | output    | `DEPTH_LOG2` | `read_clock`  |                |             | Memory read address.                                                           |
-| `memory_read_data`     | input     | `WIDTH`      | `read_clock`  |                |             | Memory read data.                                                              |
+| Name                   | Direction | Width        | Clock                | Reset          | Reset value | Description                                                                    |
+| ---------------------- | --------- | ------------ | -------------------- | -------------- | ----------- | ------------------------------------------------------------------------------ |
+| `write_clock`          | input     | 1            | self                 |                |             | Write clock signal.                                                            |
+| `write_resetn`         | input     | 1            | asynchronous         | self           | active-low  | Asynchronous active-low reset for write domain.                                |
+| `write_enable`         | input     | 1            | `write_clock`        |                |             | Write enable signal.<br/>• `0`: idle.<br/>• `1`: write (push) to queue.        |
+| `write_data`           | input     | `WIDTH`      | `write_clock`        |                |             | Data to be written to the queue.                                               |
+| `write_full`           | output    | 1            | `write_clock`        | `write_resetn` | `0`         | Queue full status in write domain.<br/>• `0`: free space.<br/>• `1`: full.     |
+| `read_clock`           | input     | 1            | self                 |                |             | Read clock signal.                                                             |
+| `read_resetn`          | input     | 1            | asynchronous         | self           | active-low  | Asynchronous active-low reset for read domain.                                 |
+| `read_enable`          | input     | 1            | `read_clock`         |                |             | Read enable signal.<br/>• `0`: idle.<br/>• `1`: read (pop) from queue.         |
+| `read_data`            | output    | `WIDTH`      | `read_clock`         | `read_resetn`  | `0`         | Data read from the queue head.                                                 |
+| `read_empty`           | output    | 1            | `read_clock`         | `read_resetn`  | `1`         | Queue empty status in read domain.<br/>• `0`: contains data.<br/>• `1`: empty. |
+| `memory_write_clock`   | output    | 1            | self                 |                |             | Write clock for asynchronous dual-port memory.                                 |
+| `memory_write_enable`  | output    | 1            | `memory_write_clock` | `write_resetn` | `0`         | Memory write enable signal.                                                    |
+| `memory_write_address` | output    | `DEPTH_LOG2` | `memory_write_clock` | `write_resetn` | `0`         | Memory write address.                                                          |
+| `memory_write_data`    | output    | `WIDTH`      | `memory_write_clock` | `write_resetn` | `0`         | Memory write data.                                                             |
+| `memory_read_clock`    | output    | 1            | self                 |                |             | Read clock for asynchronous dual-port memory.                                  |
+| `memory_read_enable`   | output    | 1            | `memory_read_clock`  | `read_resetn`  | `0`         | Memory read enable signal.                                                     |
+| `memory_read_address`  | output    | `DEPTH_LOG2` | `memory_read_clock`  | `read_resetn`  | `0`         | Memory read address.                                                           |
+| `memory_read_data`     | input     | `WIDTH`      | `memory_read_clock`  |                |             | Memory read data.                                                              |
 
 ## Operation
 
-The controller maintains separate read and write pointers in their respective clock domains. It implements Gray-code conversion and synchronization for safe clock domain crossing, and calculates domain-specific full/empty flags. The controller doesn't store any data, only control state.
+The controller maintains independent write and read pointers in their respective clock domains, each composed of an index and a lap bit for unambiguous full and empty detection. The pointers are zero out of reset. They are used for memory addressing.
 
-For **write operation** (in write clock domain), when `write_enable` is asserted, the controller generates `memory_write_enable`, provides the write address from the write pointer, and forwards `write_data` to `memory_write_data`. The write pointer is then incremented and converted to Gray code. The Gray-coded write pointer is synchronized to the read clock domain for empty flag calculation.
+The write and read pointers are synchronized from their respective clock domain to the other, such that both domains have both pointer values to compute the full/empty flags. As the synchronization takes some cycles, there is a delay for an update of a pointer to propagate to the other domain. The flags are therefore naturally conservative.
 
-There is no safety mechanism against writing when full. The write pointer will advance and potentially overwrite unread data, corrupting the FIFO state.
+Both a standard binary and Gray-coded value is stored for each pointer and updated at the same time when incrementing or decrementing. The standard value is used to address the memory. They Gray-coded value is the one synchronized accross domains and used for full/empty flag computation. Synchronization of the pointers is performed by standard multi-stage synchronizers.
 
-For **read operation** (in read clock domain), the controller continuously provides the read address from the read pointer to `memory_read_address`, and the `read_data` output directly reflects `memory_read_data`. When `read_enable` is asserted, `memory_read_enable` is generated and the read pointer is incremented and converted to Gray code. The Gray-coded read pointer is synchronized to the write clock domain for full flag calculation.
+During write operation, when `write_enable` is high, the `memory_write_address` is set to the write pointer stripped of its lap bit, `memory_write_data` forwards the value from `write_data`, and `memory_write_enable` is asserted to signal a write transaction to the memory. At the rising edge of `write_clock`, the write pointer is incremented.
 
-There is no safety mechanism against reading when empty. The read pointer will advance and potentially read invalid data, corrupting the FIFO state.
+There is no safety mechanism against writing when full. The write pointer will be incremented over the read pointer, overwriting the head data and corrupting the full and empty flags, breaking the queue and requirering a reset.
 
-The **status flags** are calculated in each domain:
-- **Full flag** (write domain): Compares write pointer with synchronized read pointer. Full when they differ only in the two MSBs (in Gray code).
-- **Empty flag** (read domain): Compares read pointer with synchronized write pointer. Empty when they are equal (in Gray code).
+Whenever the queue is not empty, meaning there is at least one entry in the queue as seen in the read clock domain, the controller continuously reads from the memory by asserting `memory_read_enable`, setting `memory_read_address` to the read pointer stripped of its lap bit, and the `memory_read_data` is forwarded on the `read_data` output. When `read_enable` is high at the rising edge of the `read_clock`, the read pointer is incremented.
 
-The **clock domain crossing** uses Gray-code encoding to ensure only one bit changes at a time, preventing metastability issues. The Gray-coded pointers are synchronized using multi-stage synchronizers (`vector_synchronizer`) before being used in the opposite domain.
+There is no safety mechanism against reading when empty. The read pointer will be incremented over the write pointer, reading invalid data and corrupting the full and empty flags, breaking the queue and requirering a reset.
 
-The **memory interface** provides separate write and read channels in their respective clock domains with independent clocks, enable, address, and data signals for asynchronous dual-port RAM. The controller forwards the write and read clocks (`memory_write_clock` and `memory_read_clock`) to the memory to clearly indicate the asynchronous nature of the interface. The write port operates in the write clock domain, and the read port operates in the read clock domain. The interface expects combinational reads from the asynchronous RAM.
+The status flags are calculated based on the read and write pointers with their lap bits and are combinational outputs. The queue is full when the Gray-coded pointers only differ by their two most significant bits in the write clock domain. The queue is empty when the Gray-coded pointers are equal in the read clock domain.
+
+The queue supports power-of-two depth only, as it relies on the automatic wrapping of the pointers when they overflow.
 
 ## Paths
 

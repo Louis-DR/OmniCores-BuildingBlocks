@@ -1,0 +1,16 @@
+{"signal": [
+  { "name": "write_clock",  "wave": "p..............................." },
+  { "name": "write_enable", "wave": "01...0...101010101010..........." },
+  { "name": "write_data",   "wave": "x5973x...6x8x4x5x9x7x...........", "data":"A B C D E F G H I J" },
+  { "name": "write_empty",  "wave": "1.0........................1...." },
+  { "name": "write_full",   "wave": "0....1...0101010101010.........." },
+  {},
+  { "name": "read_clock",   "wave": "p...............", "period": 2, "phase": 0.5 },
+  { "name": "read_enable",  "wave": "0..1.........0..", "period": 2, "phase": 0.5 },
+  { "name": "read_data",    "wave": "x..5973684597x..", "period": 2, "phase": 0.5, "data":"A B C D E F G H I J" },
+  { "name": "read_empty",   "wave": "1..0.........1..", "period": 2, "phase": 0.5 },
+  { "name": "read_full",    "wave": "0...............", "period": 2, "phase": 0.5 }
+], "config":{
+  "skin": "narrow",
+  "hbounds":[0,31]
+}}
