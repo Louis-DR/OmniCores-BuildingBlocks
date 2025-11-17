@@ -12,7 +12,7 @@
                   page       = "1"
                   pageScale  = "1"
                   pageWidth  = "110"
-                  pageHeight = "90"
+                  pageHeight = "80"
                   math       = "0"
                   shadow     = "0">
       <root>
@@ -23,9 +23,9 @@
                 value       = ""
                 vertex      = "1"
                 connectable = "0"
-                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[0,0,0,0,60],[0,0,0,0,70],[0,0,0,0,80],[1,0,0,0,80],[0.5,0,0,0,0],[0.5,0,0,0,90]];">
+                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[0,0,0,0,40],[0,0,0,0,50],[0,0,0,0,60],[0,0,0,0,70],[1,0,0,0,70],[0.5,0,0,0,0],[0.5,0,0,0,80]];">
           <mxGeometry width  = "110"
-                      height = "90"
+                      height = "80"
                       as     = "geometry"/>
         </mxCell>
         <mxCell id     = "box"
@@ -36,7 +36,7 @@
           <mxGeometry x="15"
                       y="0"
                       width="80"
-                      height="90"
+                      height="80"
                       as="geometry"/>
         </mxCell>
         <mxCell id     = "title"
@@ -90,35 +90,6 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "resetn-label"
-                    parent = "2"
-                    value  = "resetn"
-                    vertex = "1"
-                    style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry
-                x      = "15"
-                y      = "40"
-                width  = "80"
-                height = "0"
-                as     = "geometry"/>
-            </mxCell>
-            <mxCell id     = "resetn-arrow"
-                    parent = "2"
-                    value  = ""
-                    edge   = "1"
-                    style  = "html=1;rounded=1;strokeWidth=1;strokeColor=black;startFill=0;startSize=2;startArrow=none;endFill=1;endSize=2;endArrow=blockThin;sourcePerimeterSpacing=0;">
-              <mxGeometry width    = "50"
-                          height   = "50"
-                          relative = "1"
-                          as       = "geometry">
-                <mxPoint x  = "0"
-                         y  = "40"
-                         as = "sourcePoint"/>
-                <mxPoint x  = "15"
-                         y  = "40"
-                         as = "targetPoint"/>
-              </mxGeometry>
-            </mxCell>
             <mxCell id     = "access_enable-label"
                     parent = "2"
                     value  = "access_enable"
@@ -126,7 +97,7 @@
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "50"
+                y      = "40"
                 width  = "80"
                 height = "0"
                 as     = "geometry"/>
@@ -141,10 +112,10 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "0"
-                         y  = "50"
+                         y  = "40"
                          as = "sourcePoint"/>
                 <mxPoint x  = "15"
-                         y  = "50"
+                         y  = "40"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
@@ -155,7 +126,7 @@
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "60"
+                y      = "50"
                 width  = "80"
                 height = "0"
                 as     = "geometry"/>
@@ -170,10 +141,10 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "0"
-                         y  = "60"
+                         y  = "50"
                          as = "sourcePoint"/>
                 <mxPoint x  = "15"
-                         y  = "60"
+                         y  = "50"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
@@ -184,7 +155,7 @@
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "70"
+                y      = "60"
                 width  = "80"
                 height = "0"
                 as     = "geometry"/>
@@ -199,10 +170,10 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "0"
-                         y  = "70"
+                         y  = "60"
                          as = "sourcePoint"/>
                 <mxPoint x  = "15"
-                         y  = "70"
+                         y  = "60"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
@@ -213,7 +184,7 @@
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "80"
+                y      = "70"
                 width  = "80"
                 height = "0"
                 as     = "geometry"/>
@@ -228,10 +199,10 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "0"
-                         y  = "80"
+                         y  = "70"
                          as = "sourcePoint"/>
                 <mxPoint x  = "15"
-                         y  = "80"
+                         y  = "70"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
@@ -242,7 +213,7 @@
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "15"
-                y      = "80"
+                y      = "70"
                 width  = "80"
                 height = "0"
                 as     = "geometry"/>
@@ -257,10 +228,10 @@
                           relative = "1"
                           as       = "geometry">
                 <mxPoint x  = "110"
-                         y  = "80"
+                         y  = "70"
                          as = "sourcePoint"/>
                 <mxPoint x  = "95"
-                         y  = "80"
+                         y  = "70"
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>

@@ -10,7 +10,7 @@
 
 ## Overview
 
-![advanced_advanced_wrapping_counter](advanced_advanced_wrapping_counter.symbol.svg)
+![advanced_wrapping_counter](advanced_wrapping_counter.symbol.svg)
 
 Synchronous bidirectional counter that increments and decrements within a configurable range with wrapping behavior. This advanced variant adds a load interface, optional lap bit, minimum/maximum flags, and single-cycle overflow/underflow pulses. It is suitable for circular counting (e.g., buffer indexing, modular arithmetic) and pointer-style use-cases when the lap bit is enabled.
 
