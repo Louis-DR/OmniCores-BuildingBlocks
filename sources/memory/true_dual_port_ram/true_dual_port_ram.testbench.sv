@@ -20,10 +20,10 @@
 module true_dual_port_ram__testbench ();
 
 // Device parameters
-localparam int  WIDTH           = 8;
-localparam int  DEPTH           = 16;
-localparam bit  WRITE_THROUGH   = 0;
-localparam bit  REGISTERED_READ = 1;
+localparam int  WIDTH         = 8;
+localparam int  DEPTH         = 16;
+localparam bit  WRITE_THROUGH = 0;
+localparam bit  READ_LATENCY  = 1;
 
 // Derived parameters
 localparam int  ADDRESS_WIDTH   = $clog2(DEPTH);
@@ -61,10 +61,10 @@ int               timeout_countdown;
 
 // Device under test
 true_dual_port_ram #(
-  .WIDTH           ( WIDTH           ),
-  .DEPTH           ( DEPTH           ),
-  .WRITE_THROUGH   ( WRITE_THROUGH   ),
-  .REGISTERED_READ ( REGISTERED_READ )
+  .WIDTH         ( WIDTH         ),
+  .DEPTH         ( DEPTH         ),
+  .WRITE_THROUGH ( WRITE_THROUGH ),
+  .READ_LATENCY  ( READ_LATENCY  )
 ) true_dual_port_ram_dut (
   .clock                ( clock                ),
   .port_0_access_enable ( port_0_access_enable ),
@@ -170,7 +170,7 @@ task automatic read_once;
   end else begin
     expected_data = memory_model[address];
   end
-  if (REGISTERED_READ) @(posedge clock);
+  if (READ_LATENCY) @(posedge clock);
   #(1);
   if (port_index == 0) begin
     assert (port_0_read_data === expected_data)
@@ -495,7 +495,7 @@ initial begin
             end else begin
               expected_data = memory_model[address];
             end
-            if (REGISTERED_READ) @(posedge clock);
+            if (READ_LATENCY) @(posedge clock);
             #(1);
             assert (port_0_read_data === expected_data)
               else $error("[%t] Port 0: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, port_0_read_data, address, expected_data);
@@ -539,7 +539,7 @@ initial begin
             end else begin
               expected_data = memory_model[address];
             end
-            if (REGISTERED_READ) @(posedge clock);
+            if (READ_LATENCY) @(posedge clock);
             #(1);
             assert (port_1_read_data === expected_data)
               else $error("[%t] Port 1: Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, port_1_read_data, address, expected_data);

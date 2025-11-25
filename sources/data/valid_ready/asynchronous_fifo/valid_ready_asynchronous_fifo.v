@@ -84,9 +84,9 @@ asynchronous_fifo_controller #(
 
 // Memory
 asynchronous_simple_dual_port_ram #(
-  .WIDTH           ( WIDTH ),
-  .DEPTH           ( DEPTH ),
-  .REGISTERED_READ ( 0     )
+  .WIDTH        ( WIDTH ),
+  .DEPTH        ( DEPTH ),
+  .READ_LATENCY ( 0     )
 ) memory (
   .write_clock   ( memory_write_clock   ),
   .write_enable  ( memory_write_enable  ),

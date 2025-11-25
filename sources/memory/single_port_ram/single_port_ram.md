@@ -16,22 +16,22 @@ A synchronous random access memory with a single port shared for both read and w
 
 ## Parameters
 
-| Name              | Type    | Allowed Values | Default | Description                                                                                                                             |
-| ----------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `WIDTH`           | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                           |
-| `DEPTH`           | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                        |
-| `REGISTERED_READ` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>• `0`: Combinational read (data available same cycle).<br/>• `1`: Registered read (data available next cycle). |
+| Name           | Type    | Allowed Values | Default | Description                                                                                                                             |
+| -------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `WIDTH`        | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                           |
+| `DEPTH`        | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                        |
+| `READ_LATENCY` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>• `0`: Combinational read (data available same cycle).<br/>• `1`: Registered read (data available next cycle). |
 
 ## Ports
 
-| Name            | Direction | Width           | Clock   | Reset | Reset value | Description                                                                                       |
-| --------------- | --------- | --------------- | ------- | ----- | ----------- | ------------------------------------------------------------------------------------------------- |
-| `clock`         | input     | 1               | self    |       |             | Clock signal.                                                                                     |
-| `access_enable` | input     | 1               | `clock` |       |             | Access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.                |
-| `write`         | input     | 1               | `clock` |       |             | Operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.                   |
-| `address`       | input     | `ADDRESS_WIDTH` | `clock` |       |             | Address of the memory location to access.                                                         |
-| `write_data`    | input     | `WIDTH`         | `clock` |       |             | Data to be written to the memory.                                                                 |
-| `read_data`     | output    | `WIDTH`         | `clock` |       |             | Data read from the memory. Valid same cycle or next cycle depending on `REGISTERED_READ` setting. |
+| Name            | Direction | Width           | Clock   | Reset | Reset value | Description                                                                                    |
+| --------------- | --------- | --------------- | ------- | ----- | ----------- | ---------------------------------------------------------------------------------------------- |
+| `clock`         | input     | 1               | self    |       |             | Clock signal.                                                                                  |
+| `access_enable` | input     | 1               | `clock` |       |             | Access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.             |
+| `write`         | input     | 1               | `clock` |       |             | Operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.                |
+| `address`       | input     | `ADDRESS_WIDTH` | `clock` |       |             | Address of the memory location to access.                                                      |
+| `write_data`    | input     | `WIDTH`         | `clock` |       |             | Data to be written to the memory.                                                              |
+| `read_data`     | output    | `WIDTH`         | `clock` |       |             | Data read from the memory. Valid same cycle or next cycle depending on `READ_LATENCY` setting. |
 
 ## Operation
 
@@ -39,19 +39,19 @@ The single-port RAM manages an internal memory array indexed by the `address` in
 
 For **write operation**, when `access_enable` and `write` are both asserted, `write_data` is stored at the memory location specified by `address` on the rising edge of `clock`.
 
-For **read operation**, when `access_enable` is asserted and `write` is deasserted, the data at the memory location specified by `address` is driven on `read_data`. The timing depends on the `REGISTERED_READ` parameter:
-- If `REGISTERED_READ = 0`, the read is combinational and `read_data` is valid in the same clock cycle.
-- If `REGISTERED_READ = 1`, the read is registered and `read_data` is valid in the next clock cycle after the read operation is initiated.
+For **read operation**, when `access_enable` is asserted and `write` is deasserted, the data at the memory location specified by `address` is driven on `read_data`. The timing depends on the `READ_LATENCY` parameter:
+- If `READ_LATENCY = 0`, the read is combinational and `read_data` is valid in the same clock cycle.
+- If `READ_LATENCY = 1`, the read is registered and `read_data` is valid in the next clock cycle after the read operation is initiated.
 
 The memory contents are not initialized and will contain unpredictable values after power-up or reset.
 
 ## Paths
 
-| From                                              | To          | Type          | Comment                                                       |
-| ------------------------------------------------- | ----------- | ------------- | ------------------------------------------------------------- |
-| `access_enable`, `write`, `address`, `write_data` | `read_data` | sequential    | Data path through internal memory array.                      |
-| `access_enable`, `write`, `address`               | `read_data` | combinational | Address decoding (if `REGISTERED_READ = 0`).                  |
-| `access_enable`, `write`, `address`               | `read_data` | sequential    | Address decoding through register (if `REGISTERED_READ = 1`). |
+| From                                              | To          | Type          | Comment                                                    |
+| ------------------------------------------------- | ----------- | ------------- | ---------------------------------------------------------- |
+| `access_enable`, `write`, `address`, `write_data` | `read_data` | sequential    | Data path through internal memory array.                   |
+| `access_enable`, `write`, `address`               | `read_data` | combinational | Address decoding (if `READ_LATENCY = 0`).                  |
+| `access_enable`, `write`, `address`               | `read_data` | sequential    | Address decoding through register (if `READ_LATENCY = 1`). |
 
 ## Complexity
 
@@ -59,7 +59,7 @@ The memory contents are not initialized and will contain unpredictable values af
 | --------------- | ---------------- | ---------------------------------------------------------------- |
 | `O(log₂ DEPTH)` | `O(WIDTH×DEPTH)` | Critical path is the address decoding and memory array indexing. |
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array. When `REGISTERED_READ = 1`, an additional `WIDTH` flip-flops are required for the read data register.
+The module requires `WIDTH×DEPTH` flip-flops for the memory array. When `READ_LATENCY = 1`, an additional `WIDTH` flip-flops are required for the read data register.
 
 ## Verification
 
@@ -78,9 +78,9 @@ The following table lists the checks performed by the testbench.
 
 The following table lists the parameter values verified by the testbench.
 
-| `WIDTH` | `DEPTH` | `REGISTERED_READ` |           |
-| ------- | ------- | ----------------- | --------- |
-| 8       | 16      | 1                 | (default) |
+| `WIDTH` | `DEPTH` | `READ_LATENCY` |           |
+| ------- | ------- | -------------- | --------- |
+| 8       | 16      | 1              | (default) |
 
 ## Constraints
 

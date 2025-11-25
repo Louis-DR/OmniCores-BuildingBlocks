@@ -18,9 +18,9 @@
 module simple_dual_port_ram #(
   parameter WIDTH = 8,
   parameter DEPTH = 16,
-  parameter WRITE_THROUGH   = 0,
-  parameter REGISTERED_READ = 1,
-  parameter ADDRESS_WIDTH   = `CLOG2(DEPTH)
+  parameter WRITE_THROUGH = 0,
+  parameter READ_LATENCY  = 1,
+  parameter ADDRESS_WIDTH = `CLOG2(DEPTH)
 ) (
   input                     clock,
   // Write interface
@@ -45,7 +45,7 @@ end
 wire same_address = write_address == read_address;
 
 // Registered read logic
-if (REGISTERED_READ) begin
+if (READ_LATENCY) begin
   reg [WIDTH-1:0] registered_read_data;
   always @(posedge clock) begin
     if (read_enable) begin

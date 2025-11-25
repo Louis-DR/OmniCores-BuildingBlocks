@@ -20,10 +20,10 @@
 module simple_dual_port_ram__testbench ();
 
 // Device parameters
-localparam int  WIDTH           = 8;
-localparam int  DEPTH           = 16;
-localparam bit  WRITE_THROUGH   = 0;
-localparam bit  REGISTERED_READ = 1;
+localparam int  WIDTH         = 8;
+localparam int  DEPTH         = 16;
+localparam bit  WRITE_THROUGH = 0;
+localparam bit  READ_LATENCY  = 1;
 
 // Derived parameters
 localparam int  ADDRESS_WIDTH   = $clog2(DEPTH);
@@ -56,10 +56,10 @@ int               timeout_countdown;
 
 // Device under test
 simple_dual_port_ram #(
-  .WIDTH           ( WIDTH           ),
-  .DEPTH           ( DEPTH           ),
-  .WRITE_THROUGH   ( WRITE_THROUGH   ),
-  .REGISTERED_READ ( REGISTERED_READ )
+  .WIDTH         ( WIDTH         ),
+  .DEPTH         ( DEPTH         ),
+  .WRITE_THROUGH ( WRITE_THROUGH ),
+  .READ_LATENCY  ( READ_LATENCY  )
 ) simple_dual_port_ram_dut (
   .clock         ( clock         ),
   .write_enable  ( write_enable  ),
@@ -110,7 +110,7 @@ task automatic read_once;
   end else begin
     expected_data = memory_model[address];
   end
-  if (REGISTERED_READ) @(posedge clock);
+  if (READ_LATENCY) @(posedge clock);
   #(1);
   assert (read_data === expected_data)
     else $error("[%t] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, read_data, address, expected_data);
@@ -263,7 +263,7 @@ initial begin
           end else begin
             expected_data = memory_model[read_address];
           end
-          if (REGISTERED_READ) @(posedge clock);
+          if (READ_LATENCY) @(posedge clock);
           #(1);
           assert (read_data === expected_data)
             else $error("[%t] Read data '0x%0h' at address '0x%0h' does not match expected '0x%0h'.", $realtime, read_data, read_address, expected_data);

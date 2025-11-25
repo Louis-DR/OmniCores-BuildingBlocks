@@ -20,9 +20,9 @@
 module asynchronous_simple_dual_port_ram__testbench ();
 
 // Device parameters
-localparam int  WIDTH           = 8;
-localparam int  DEPTH           = 16;
-localparam bit  REGISTERED_READ = 1;
+localparam int  WIDTH        = 8;
+localparam int  DEPTH        = 16;
+localparam bit  READ_LATENCY = 1;
 
 // Derived parameters
 localparam int  ADDRESS_WIDTH   = $clog2(DEPTH);
@@ -82,7 +82,7 @@ task automatic read_once;
   input [ADDRESS_WIDTH-1:0] address;
   read_enable   = 1;
   read_address  = address;
-  if (REGISTERED_READ) @(posedge read_clock);
+  if (READ_LATENCY) @(posedge read_clock);
   expected_data = memory_model[address];
   #(1fs);
   assert (read_data === expected_data)
@@ -102,7 +102,7 @@ endtask
 asynchronous_simple_dual_port_ram #(
   .WIDTH           ( WIDTH           ),
   .DEPTH           ( DEPTH           ),
-  .REGISTERED_READ ( REGISTERED_READ )
+  .READ_LATENCY ( READ_LATENCY )
 ) asynchronous_simple_dual_port_ram_dut (
   .write_clock   ( write_clock   ),
   .write_enable  ( write_enable  ),
@@ -251,7 +251,7 @@ initial begin
         if (random_boolean(RANDOM_READ_PROBABILITY)) begin
           read_enable   = 1;
           read_address  = $urandom_range(DEPTH);
-          if (REGISTERED_READ) @(posedge read_clock);
+          if (READ_LATENCY) @(posedge read_clock);
           expected_data = memory_model[read_address];
           @(posedge read_clock);
           assert (read_data === expected_data)

@@ -20,9 +20,9 @@
 module asynchronous_true_dual_port_ram__testbench ();
 
 // Device parameters
-localparam int  WIDTH           = 8;
-localparam int  DEPTH           = 16;
-localparam bit  REGISTERED_READ = 1;
+localparam int  WIDTH        = 8;
+localparam int  DEPTH        = 16;
+localparam bit  READ_LATENCY = 1;
 
 // Derived parameters
 localparam int  ADDRESS_WIDTH   = $clog2(DEPTH);
@@ -60,9 +60,9 @@ int               timeout_countdown;
 
 // Device under test
 asynchronous_true_dual_port_ram #(
-  .WIDTH           ( WIDTH           ),
-  .DEPTH           ( DEPTH           ),
-  .REGISTERED_READ ( REGISTERED_READ )
+  .WIDTH        ( WIDTH        ),
+  .DEPTH        ( DEPTH        ),
+  .READ_LATENCY ( READ_LATENCY )
 ) asynchronous_true_dual_port_ram_dut (
   .port_0_clock         ( port_0_clock         ),
   .port_0_access_enable ( port_0_access_enable ),
@@ -158,7 +158,7 @@ task automatic read_once;
     port_0_access_enable = 1;
     port_0_write         = 0;
     port_0_address       = address;
-    if (REGISTERED_READ) @(posedge port_0_clock);
+    if (READ_LATENCY) @(posedge port_0_clock);
     expected_data = memory_model[address];
     #(1fs);
     assert (port_0_read_data === expected_data)
@@ -169,7 +169,7 @@ task automatic read_once;
     port_1_access_enable = 1;
     port_1_write         = 0;
     port_1_address       = address;
-    if (REGISTERED_READ) @(posedge port_1_clock);
+    if (READ_LATENCY) @(posedge port_1_clock);
     expected_data = memory_model[address];
     #(1fs);
     assert (port_1_read_data === expected_data)
