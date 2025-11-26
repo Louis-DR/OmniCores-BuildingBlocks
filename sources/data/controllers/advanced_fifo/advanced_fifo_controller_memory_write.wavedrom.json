@@ -4,7 +4,7 @@
   { "name": "write_enable",         "wave": "0.10..10..10..10..." },
   { "name": "write_data",           "wave": "x.5x..9x..7x..3x...", "data":["A","B","C","D"] },
   { "name": "read_enable",          "wave": "0.................." },
-  { "name": "read_data",            "wave": "x..5...9...7...3...", "data":["A","B","C","D"] },
+  { "name": "read_data",            "wave": "x..5...............", "data":["A","B","C","D"] },
   { "name": "empty",                "wave": "1..0..............." },
   { "name": "full",                 "wave": "0..............1..." },
   { "name": "memory_clock",         "wave": "p.................." },
