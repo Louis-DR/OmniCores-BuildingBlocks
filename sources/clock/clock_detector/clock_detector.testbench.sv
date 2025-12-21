@@ -34,7 +34,7 @@ logic clock_is_running;
 
 // Test variables
 int  check;
-bool enabled_observed_clock = true;
+bool enabled_observed_clock = false;
 
 // Device under test
 clock_detector #(
@@ -57,7 +57,7 @@ end
 
 // Observed clock generation
 initial begin
-  observed_clock = 1;
+  observed_clock = 0;
   forever begin
     if (enabled_observed_clock) begin
       #(OBSERVED_CLOCK_PERIOD/2) observed_clock = ~observed_clock;
@@ -83,11 +83,15 @@ initial begin
   resetn = 1;
   @(posedge reference_clock);
 
+  repeat(10) @(posedge reference_clock);
+
   // Check 1 : Disabled observed clock
   $display("CHECK 1 : Disabled observed clock."); check = 1;
   enabled_observed_clock = false;
   repeat (DETECTOR_STAGES+SYNCHRONIZER_STAGES+1) @(posedge reference_clock);
   assert(!clock_is_running) else $error("[%t] Clock detector detects a clock while the observed clock is disabled.", $realtime);
+
+  repeat(10) @(posedge reference_clock);
 
   // Check 2 : Enabled observed clock
   $display("CHECK 2 : Enabled observed clock."); check = 2;
@@ -95,12 +99,16 @@ initial begin
   repeat (DETECTOR_STAGES+SYNCHRONIZER_STAGES+1) @(posedge reference_clock);
   assert(clock_is_running) else $error("[%t] Clock detector detects no clock while the observed clock is enabled.", $realtime);
 
+  repeat(10) @(posedge reference_clock);
+
   // Check 3 : Disabled observed clock
   $display("CHECK 3 : Disabled observed clock."); check = 3;
   @(negedge observed_clock);
   enabled_observed_clock = false;
   repeat (DETECTOR_STAGES+SYNCHRONIZER_STAGES+1) @(posedge reference_clock);
   assert(!clock_is_running) else $error("[%t] Clock detector detects a clock while the observed clock is disabled.", $realtime);
+
+  repeat(10) @(posedge reference_clock);
 
   // End of test
   $finish;
