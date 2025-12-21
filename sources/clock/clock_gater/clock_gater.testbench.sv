@@ -66,8 +66,8 @@ initial begin
   @(posedge clock_in);
   `MEASURE_FREQUENCY(clock_in, clock_in_frequency)
 
-  // Check 1 : Normal disbale-enable-disable sequence
-  $display("CHECK 1 : Normal disbale-enable-disable sequence.");
+  // Check 1 : Normal disable-enable-disable sequence
+  $display("CHECK 1 : Normal disable-enable-disable sequence.");
   @(posedge clock_in);
   enable = 0;
   `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
@@ -82,8 +82,8 @@ initial begin
   `MEASURE_FREQUENCY(clock_out, clock_out_frequency)
   if (clock_out_frequency != 0) $error("[%t] Output clock is running but should be gated.", $realtime);
 
-  // Check 2 : Test mode disbale-enable-disable sequence
-  $display("CHECK 2 : Test mode disbale-enable-disable sequence.");
+  // Check 2 : Test mode disable-enable-disable sequence
+  $display("CHECK 2 : Test mode disable-enable-disable sequence.");
   @(posedge clock_in);
   test_enable = 0;
   `MEASURE_FREQUENCY(clock_out, clock_out_frequency)

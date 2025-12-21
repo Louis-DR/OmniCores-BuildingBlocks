@@ -50,8 +50,8 @@ The clock gater is verified using a SystemVerilog testbench with four check sequ
 
 | Number | Check                                     | Description                                                                                                           |
 | ------ | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| 1      | Normal disbale-enable-disable sequence    | Stimulate the normal enable signal and check that the clock is gated when the enable is high.                         |
-| 2      | Test mode disbale-enable-disable sequence | Stimulate the test mode enable signal and check that the clock is gated when the enable is high.                      |
+| 1      | Normal disable-enable-disable sequence    | Stimulate the normal enable signal and check that the clock is gated when the enable is high.                         |
+| 2      | Test mode disable-enable-disable sequence | Stimulate the test mode enable signal and check that the clock is gated when the enable is high.                      |
 | 3      | Clock frequency division with enable      | Toggle the enable signal at each clock cycle and check that the output frequency is divided by two.                   |
 | 4      | Glitch-free output clock                  | Toggle the enable signal at random time during the clock cycle and check that the output clock pulses are glitchless. |
 
