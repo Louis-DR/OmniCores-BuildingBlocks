@@ -22,11 +22,11 @@ Slow to fast switching :
 
 ![clock_multiplexer](clock_multiplexer_slow2fast.wavedrom.svg)
 
-The formula for the average switching time between the edge of the `select` to the first rising edge of the new frequency on the `clock_out` port noted $T_{switch\ avg}$, and for the average downtime being the duration for which `clock_out` is low between the last pulse at the old frequency and the first pulse at the new frequency noted $T_{downtime\ avg}$ are given below. They both depend on $STAGES$ the number of stages of the synchronizers, and $T_{from}$ and $T_{to}$ the periods of the old and new clocks. The formula are also given with the frequencies $f_{from}$ and $f_{to}$.
+The formula for the average switching time between the edge of the `select` to the first rising edge of the new frequency on the `clock_out` port noted $T_{\text{switch}}$, and for the average downtime being the duration for which `clock_out` is low between the last pulse at the old frequency and the first pulse at the new frequency noted $T_{\text{downtime}}$ are given below. They both depend on $\text{STAGES}$ the number of stages of the synchronizers, and $T_{from}$ and $T_{\text{to}}$ the periods of the old and new clocks. The formula are also given with the frequencies $f_{from}$ and $f_{\text{to}}$.
 
-$$T_{switch\ avg} = (STAGES - 0.5) \times T_{from} + STAGES \times T_{to} = \frac{STAGES - 0.5}{f_{from}} + \frac{STAGES}{f_{to}} $$
+$$T_{\text{switch}} = (\text{STAGES} - 0.5) \times T_{from} + \text{STAGES} \times T_{\text{to}} = \frac{\text{STAGES} - 0.5}{f_{from}} + \frac{\text{STAGES}}{f_{\text{to}}}$$
 
-$$T_{downtime\ avg} = STAGES \times T_{to} = \frac{STAGES}{f_{to}} $$
+$$T_{\text{downtime}} = \text{STAGES} \times T_{\text{to}} = \frac{\text{STAGES}}{f_{\text{to}}}$$
 
 ## Parameters
 
@@ -53,7 +53,7 @@ The enable signals for both clocks, `enable_clock_0` and `enable_clock_1`, are s
 
 The enable signals are driven by the correct value of `select` (`0` for `enable_clock_0` and `1` for `enable_clock_1`), but only when the synchronized enable signal of the other clock is low. This ensures that both clocks cannot be enabled at once.
 
-Those two mecanisms ensure the glitch-free operation of the multiplexer. The clocks are gated by their enable signal using a simple AND gate, and are then ORed together to get `clock_out`.
+Those two mechanisms ensure the glitch-free operation of the multiplexer. The clocks are gated by their enable signal using a simple AND gate, and are then ORed together to get `clock_out`.
 
 ## Paths
 
