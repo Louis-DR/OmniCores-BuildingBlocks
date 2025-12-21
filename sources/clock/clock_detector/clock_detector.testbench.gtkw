@@ -1,0 +1,19 @@
+[dumpfile] "clock_detector.testbench.vcd"
+[savefile] "clock_detector.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-4.900577 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@24
+clock_detector__testbench.check
+@28
+clock_detector__testbench.reference_clock
+clock_detector__testbench.observed_clock
+clock_detector__testbench.resetn
+clock_detector__testbench.clock_is_running
+[pattern_trace] 1
+[pattern_trace] 0
