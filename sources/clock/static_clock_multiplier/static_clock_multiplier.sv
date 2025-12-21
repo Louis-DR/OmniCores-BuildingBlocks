@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_multiplier.sv                                          ║
+// ║ File:        static_clock_multiplier.sv                                   ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Multiplies the frequency of the clock by the MULTIPLICATION  ║
 // ║              factor.                                                      ║
@@ -23,7 +23,7 @@
 
 
 
-module clock_multiplier #(
+module static_clock_multiplier #(
   parameter MULTIPLICATION = 2
 ) (
   input  clock_in,

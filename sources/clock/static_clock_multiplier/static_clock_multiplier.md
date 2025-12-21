@@ -1,8 +1,8 @@
-# Clock Multiplier
+# Static Clock Multiplier
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Clock Multiplier                                                                 |
+| Module  | Static Clock Multiplier                                                          |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,11 +10,11 @@
 
 ## Overview
 
-![clock_multiplier](clock_multiplier.symbol.svg)
+![static_clock_multiplier](static_clock_multiplier.symbol.svg)
 
 Multiplies the frequency of the input clock `clock_in` by the `MULTIPLICATION` factor. The output clock `clock_out` runs `MULTIPLICATION` times faster than the input clock. If `MULTIPLICATION` is 1 or less, `clock_in` is directly passed through to `clock_out` without any logic. If `MULTIPLICATION` is 2 or more, a behavioral process measures the input period and toggles `clock_out` at the right period.
 
-![clock_multiplier](clock_multiplier.wavedrom.svg)
+![static_clock_multiplier](static_clock_multiplier.wavedrom.svg)
 
 ## Parameters
 
@@ -78,17 +78,17 @@ There are no synthesis and implementation constraints for this block as it is a 
 
 ## Deliverables
 
-| Type                | File                                                                 | Description                                         |
-| ------------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
-| Design              | [`clock_multiplier.sv`](clock_multiplier.sv)                         | SystemVerilog design.                               |
-| Testbench           | [`clock_multiplier.testbench.sv`](clock_multiplier.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script     | [`clock_multiplier.testbench.gtkw`](clock_multiplier.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor   | [`clock_multiplier.symbol.sss`](clock_multiplier.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image        | [`clock_multiplier.symbol.svg`](clock_multiplier.symbol.svg)         | Generated vector image of the symbol.               |
-| Symbol shape        | [`clock_multiplier.symbol.drawio`](clock_multiplier.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
-| Waveform descriptor | [`clock_multiplier.wavedrom.json`](clock_multiplier.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
-| Waveform image      | [`clock_multiplier.wavedrom.svg`](clock_multiplier.wavedrom.svg)     | Generated image of the waveform.                    |
-| Datasheet           | [`clock_multiplier.md`](clock_multiplier.md)                         | Markdown documentation datasheet.                   |
+| Type                | File                                                                               | Description                                         |
+| ------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design              | [`static_clock_multiplier.sv`](static_clock_multiplier.sv)                         | SystemVerilog design.                               |
+| Testbench           | [`static_clock_multiplier.testbench.sv`](static_clock_multiplier.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script     | [`static_clock_multiplier.testbench.gtkw`](static_clock_multiplier.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor   | [`static_clock_multiplier.symbol.sss`](static_clock_multiplier.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image        | [`static_clock_multiplier.symbol.svg`](static_clock_multiplier.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape        | [`static_clock_multiplier.symbol.drawio`](static_clock_multiplier.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
+| Waveform descriptor | [`static_clock_multiplier.wavedrom.json`](static_clock_multiplier.wavedrom.json)   | Waveform descriptor for Wavedrom.                   |
+| Waveform image      | [`static_clock_multiplier.wavedrom.svg`](static_clock_multiplier.wavedrom.svg)     | Generated image of the waveform.                    |
+| Datasheet           | [`static_clock_multiplier.md`](static_clock_multiplier.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

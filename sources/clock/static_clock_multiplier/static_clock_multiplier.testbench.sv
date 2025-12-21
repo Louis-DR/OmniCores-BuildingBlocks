@@ -3,9 +3,9 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_multiplier.testbench.sv                                ║
+// ║ File:        static_clock_multiplier.testbench.sv                         ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
-// ║ Description: Testbench for the clock multiplier.                          ║
+// ║ Description: Testbench for the static clock multiplier.                   ║
 // ║                                                                           ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 
@@ -39,7 +39,7 @@ real expected_clock_out_frequency;
 generate
   for (genvar multiplication = 1; multiplication <= MAX_TEST_MULTIPLICATION; multiplication++) begin : gen_multiplication
     // Device under test
-    clock_multiplier #(
+    static_clock_multiplier #(
       .MULTIPLICATION ( multiplication )
     ) clock_multiplier_dut (
       .clock_in  ( clock_in                  ),
@@ -59,7 +59,7 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("clock_multiplier.testbench.vcd");
+  $dumpfile("static_clock_multiplier.testbench.vcd");
   $dumpvars(0,clock_multiplier__testbench);
   $timeformat(-9, 0, " ns", 0);
 
