@@ -29,19 +29,27 @@ module synchronizer #(
   output data_out
 );
 
-reg [STAGES-1:0] stages;
-integer stage_index;
-
-always @(posedge clock or negedge resetn) begin
-  if (!resetn) stages <= 0;
-  else begin
-    stages[0] <= data_in;
-    for (stage_index = 1; stage_index < STAGES; stage_index = stage_index+1) begin
-      stages[stage_index] <= stages[stage_index-1];
-    end
-  end
+// Passthrough mode
+if (STAGES == 0) begin
+  assign data_out = data_in;
 end
 
-assign data_out = stages[STAGES-1];
+// Normal flip-flop synchronizer
+else begin
+  reg [STAGES-1:0] stages;
+  integer stage_index;
+
+  always @(posedge clock or negedge resetn) begin
+    if (!resetn) stages <= 0;
+    else begin
+      stages[0] <= data_in;
+      for (stage_index = 1; stage_index < STAGES; stage_index = stage_index+1) begin
+        stages[stage_index] <= stages[stage_index-1];
+      end
+    end
+  end
+
+  assign data_out = stages[STAGES-1];
+end
 
 endmodule

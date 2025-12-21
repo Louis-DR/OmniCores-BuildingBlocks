@@ -22,7 +22,7 @@ To prevent glitches at the capture stage, there should be no combinational logic
 
 | Name     | Type    | Allowed Values | Default | Description                                     |
 | -------- | ------- | -------------- | ------- | ----------------------------------------------- |
-| `STAGES` | integer | `≥1`           | `2`     | Number of flip-flop stages in the synchronizer. |
+| `STAGES` | integer | `≥0`           | `2`     | Number of flip-flop stages in the synchronizer. |
 
 ## Ports
 
@@ -36,6 +36,8 @@ To prevent glitches at the capture stage, there should be no combinational logic
 ## Operation
 
 The `synchronizer` module consists of a chain of `STAGES` D-type flip-flops. On each rising edge of `clock`, the value of `data_in` is captured by the first flip-flop in the chain (called the capture stage). Subsequent flip-flops (called synchronization stages) capture the output of the preceding flip-flop in the chain. The `data_out` signal is the output of the last flip-flop in the chain.
+
+If the `STAGES` parameter is set to zero, the module just passes through `data_in` to `data_out`.
 
 ## Paths
 
