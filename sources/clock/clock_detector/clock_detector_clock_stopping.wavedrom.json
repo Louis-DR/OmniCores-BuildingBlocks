@@ -1,0 +1,5 @@
+{"signal": [
+  {"name": "reference_clock",  "wave": "hlhlhlhlhlhlhlhlhlh"},
+  {"name": "observed_clock",   "wave": "p.....l............"},
+  {"name": "clock_is_running", "wave": "1...........0......"}
+], "config":{"skin": "narrow"}}

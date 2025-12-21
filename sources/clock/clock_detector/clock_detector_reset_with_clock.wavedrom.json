@@ -1,0 +1,6 @@
+{"signal": [
+  {"name": "reference_clock",  "wave": "hlhlhlhlhlhlhlhlhlh"},
+  {"name": "observed_clock",   "wave": "p.................."},
+  {"name": "resetn",           "wave": "x..0..1............"},
+  {"name": "clock_is_running", "wave": "x..0......1........"}
+], "config":{"skin": "narrow"}}

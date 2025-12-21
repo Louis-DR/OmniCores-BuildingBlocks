@@ -24,9 +24,9 @@ Slow to fast switching :
 
 The formula for the average switching time between the edge of the `select` to the first rising edge of the new frequency on the `clock_out` port noted $T_{\text{switch}}$, and for the average downtime being the duration for which `clock_out` is low between the last pulse at the old frequency and the first pulse at the new frequency noted $T_{\text{downtime}}$ are given below. They both depend on $\text{STAGES}$ the number of stages of the synchronizers, and $T_{\text{from}}$ and $T_{\text{to}}$ the periods of the old and new clocks. The formula are also given with the frequencies $f_{\text{from}}$ and $f_{\text{to}}$.
 
-$$T_{\text{switch}} = (\text{STAGES}/2 - 0.25) \times T_{\text{from}} + (\text{STAGES}/2 + 0.25) \times T_{\text{to}} = \frac{\text{STAGES}/2 - 0.25}{f_{\text{from}}} + \frac{\text{STAGES}/2 + 0.25}{f_{\text{to}}}$$
+$$T_{\text{switch}} = (\text{STAGES}/2 - 0.25) \mathrm T_{\text{from}} + (\text{STAGES}/2 + 0.25) \mathrm T_{\text{to}} = \frac{\text{STAGES}/2 - 0.25}{f_{\text{from}}} + \frac{\text{STAGES}/2 + 0.25}{f_{\text{to}}}$$
 
-$$T_{\text{downtime}} = (\text{STAGES}/2 + 0.25) \times T_{\text{to}} = \frac{\text{STAGES}/2 + 0.25}{f_{\text{to}}}$$
+$$T_{\text{downtime}} = (\text{STAGES}/2 + 0.25) \mathrm T_{\text{to}} = \frac{\text{STAGES}/2 + 0.25}{f_{\text{to}}}$$
 
 ## Parameters
 
