@@ -12,7 +12,7 @@
 
 
 module clock_detector #(
-  parameter DETECTOR_STAGES     = 2
+  parameter DETECTOR_STAGES     = 2,
   parameter SYNCHRONIZER_STAGES = 2
 ) (
   input  reference_clock,
@@ -21,12 +21,17 @@ module clock_detector #(
   output clock_is_running
 );
 
+// Detection flip-flop stages
 reg [DETECTOR_STAGES-1:0] detection_stages;
 integer stage_index;
 
+// Synthesize as flip-flops with asynchronous set and clear
 always @(posedge reference_clock or posedge observed_clock or negedge resetn) begin
+  // Reset low
   if      (!resetn)        detection_stages <= '0;
+  // Set high by the observed clock
   else if (observed_clock) detection_stages <= '1;
+  // Low value propagated by reference clock
   else begin
     detection_stages[0] <= 0;
     for (stage_index = 1; stage_index < DETECTOR_STAGES; stage_index = stage_index+1) begin
@@ -35,8 +40,10 @@ always @(posedge reference_clock or posedge observed_clock or negedge resetn) be
   end
 end
 
-wire clock_is_running_unstable = detection_stages[DETECTOR_STAGES-1]
+// Unstable value because of the asynchronous set by the observed clock
+wire clock_is_running_unstable = detection_stages[DETECTOR_STAGES-1];
 
+// Resynchronized to the reference clock
 synchronizer #(
   .STAGES   ( SYNCHRONIZER_STAGES )
 ) synchronizer (
@@ -44,6 +51,6 @@ synchronizer #(
   .resetn   ( resetn                    ),
   .data_in  ( clock_is_running_unstable ),
   .data_out ( clock_is_running          )
-)
+);
 
 endmodule
