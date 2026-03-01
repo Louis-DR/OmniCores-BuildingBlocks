@@ -12,90 +12,83 @@
 
 ![gray_wrapping_counter](gray_wrapping_counter.symbol.svg)
 
-Synchronous bidirectional counter that increments and decrements within a configurable range with wrapping behavior. In addition to the binary count, it provides the corresponding Gray-coded output and supports a load interface that accepts either binary or Gray values based on a parameter. Minimum/maximum flags and single-cycle overflow/underflow pulses are provided. There is no lap bit.
+Synchronous bidirectional counter that increments and decrements within a configurable range with wrapping behavior, providing its output in both binary and Gray code. The counter provides overflow and underflow wrapping, allowing it to cycle continuously through its range, making it ideal for applications requiring circular counting across asynchronous clock domains (using the Gray-coded output), such as asynchronous FIFO pointers, or distributed modular arithmetic operations.
 
-The counter supports both power-of-2 and non-power-of-2 ranges. Note that the Gray count for zero when the range is not a power-of-two is not zero. This is especially important at reset if some other registers or synchronizers are reset to all zero.
-
-Also note that the MSB of the Gray encoding is low for the first half of the range and high for the second, and sequence of the rest of the bits is symetrical after the half depth. This can be useful to use the MSB as a lap bit.
-
-When both `increment` and `decrement` are asserted in the same cycle, the count does not change.
+The counter supports both power-of-2 and non-power-of-2 ranges (even ranges restricted for Gray code continuity) with optimized implementations for each case. Trying to increment and decrement within the same cycle is ignored and the count doesn't change.
 
 ## Parameters
 
-| Name          | Type    | Allowed Values   | Default | Description                                                              |
-| ------------- | ------- | ---------------- | ------- | ------------------------------------------------------------------------ |
-| `RANGE`       | integer | `≥2`             | `4`     | Counter range. Counter counts from `0` to `RANGE-1`.                     |
-| `RESET_VALUE` | integer | `0` to `RANGE-1` | `0`     | Initial counter value after reset. Must be within `[0, RANGE-1]`.        |
-| `LOAD_BINARY` | integer | `0` or `1`       | `0`     | Selects load encoding: `1` loads a binary value, `0` loads a Gray value. |
+| Name          | Type    | Allowed Values | Default | Description                                                                       |
+| ------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------- |
+| `RANGE`       | integer | `≥2`, even     | `4`     | Counter range. Counter counts from `0` to `RANGE-1`. Must be even for Gray code.  |
+| `RESET_VALUE` | integer | `0 to RANGE-1` | `0`     | Initial counter value after reset. Must be within the valid range `[0, RANGE-1]`. |
 
 ## Ports
 
-| Name           | Direction | Width         | Clock        | Reset    | Reset value         | Description                                                          |
-| -------------- | --------- | ------------- | ------------ | -------- | ------------------- | -------------------------------------------------------------------- |
-| `clock`        | input     | 1             | self         |          |                     | Clock signal.                                                        |
-| `resetn`       | input     | 1             | asynchronous | self     | active-low          | Asynchronous active-low reset.                                       |
-| `load_enable`  | input     | 1             | `clock`      |          |                     | Synchronous load enable. Loads `load_count` on the next rising edge. |
-| `load_count`   | input     | `log₂(RANGE)` | `clock`      |          |                     | Value to load (encoding set by `LOAD_BINARY`).                       |
-| `decrement`    | input     | 1             | `clock`      |          |                     | Decrement control signal.                                            |
-| `increment`    | input     | 1             | `clock`      |          |                     | Increment control signal.                                            |
-| `count_binary` | output    | `log₂(RANGE)` | `clock`      | `resetn` | `RESET_VALUE`       | Current binary counter value.                                        |
-| `count_gray`   | output    | `log₂(RANGE)` | `clock`      | `resetn` | `gray(RESET_VALUE)` | Gray-coded representation of the current count.                      |
-| `minimum`      | output    | 1             | `clock`      |          |                     | High when the index is at `0`.                                       |
-| `maximum`      | output    | 1             | `clock`      |          |                     | High when the index is at `RANGE-1`.                                 |
-| `underflow`    | output    | 1 (pulse)     | `clock`      |          |                     | One-cycle pulse when decrementing at minimum wraps to maximum.       |
-| `overflow`     | output    | 1 (pulse)     | `clock`      |          |                     | One-cycle pulse when incrementing at maximum wraps to minimum.       |
+| Name           | Direction | Width         | Clock        | Reset    | Reset value         | Description                                                              |
+| -------------- | --------- | ------------- | ------------ | -------- | ------------------- | ------------------------------------------------------------------------ |
+| `clock`        | input     | 1             | self         |          |                     | Clock signal.                                                            |
+| `resetn`       | input     | 1             | asynchronous | self     | active-low          | Asynchronous active-low reset.                                           |
+| `decrement`    | input     | 1             | `clock`      |          |                     | Decrement control signal.<br/>• `0`: idle.<br/>• `1`: decrement counter. |
+| `increment`    | input     | 1             | `clock`      |          |                     | Increment control signal.<br/>• `0`: idle.<br/>• `1`: increment counter. |
+| `count_gray`   | output    | `log₂(RANGE)` | `clock`      | `resetn` | `gray(RESET_VALUE)` | Current counter value in Gray code.                                      |
+| `count_binary` | output    | `log₂(RANGE)` | `clock`      | `resetn` | `RESET_VALUE`       | Current counter value in standard binary.                                |
 
 ## Operation
 
-The counter maintains a binary count within the range `[0, RANGE-1]` and derives a Gray-coded output each cycle.
+The gray wrapping counter maintains a count value within the range `[0, RANGE-1]`. On each rising edge of the clock, the counter responds to the increment and decrement control signals.
 
-- Decrement: If `decrement` is asserted and the counter is not at minimum, the binary count decreases by 1. At minimum, it wraps to `RANGE-1` and asserts `underflow` for one cycle.
-- Increment: If `increment` is asserted and the counter is not at maximum, the binary count increases by 1. At maximum, it wraps to `0` and asserts `overflow` for one cycle.
-- Simultaneous `increment` and `decrement` is ignored (no change).
-- Load: When `load_enable=1`, the counter synchronously loads `load_count`. The encoding is selected by `LOAD_BINARY`: binary when `1`, Gray when `0`. Pulses remain low on load.
+For **decrement operation**, when `decrement` is asserted and the counter is not at its minimum value (`0`), the counter decreases by 1. If the counter is at the minimum value, asserting `decrement` causes the counter to wrap around to the maximum value (`RANGE-1`).
 
-Power-of-2 ranges leverage natural wrapping in binary and a simple XOR network to form the Gray output. Non-power-of-2 ranges use explicit boundary handling for wrapping while preserving a consistent Gray mapping (offset-based for the encoder/decoder).
+For **increment operation**, when `increment` is asserted and the counter is not at its maximum value (`RANGE-1`), the counter increases by 1. If the counter is at the maximum value, asserting `increment` causes the counter to wrap around to the minimum value (`0`).
 
-The counter is asynchronously reset to `RESET_VALUE` (binary). The corresponding Gray output at reset equals the Gray encoding of `RESET_VALUE` (for power-of-2 ranges, computed via a macro).
+The counter exhibits **wrapping behavior** at both boundaries, providing overflow wrapping when incrementing at maximum value and underflow wrapping when decrementing at minimum value. This makes it suitable for applications requiring circular or modular counting behavior. If both `increment` and `decrement` are asserted simultaneously, the counter value is not changed.
+
+The outputs are provided simultaneously in both standard binary (`count_binary`) and Gray code (`count_gray`). The Gray-coded output guarantees that only one bit changes its state between any two successive counter values, including during the wrap-around from maximum to minimum or minimum to maximum, ensuring glitch-free sampling across asynchronous clock boundaries. This restriction is why the `RANGE` parameter must be an even number.
+
+The implementation is optimized for different range types. For power-of-2 ranges, the wrapping behavior is automatic due to the natural overflow of binary arithmetic. For non-power-of-2 even ranges, explicit boundary detection and wrapping logic is implemented to ensure correct modular behavior.
+
+The counter is reset to `RESET_VALUE` (and its Gray code equivalent) when `resetn` is asserted (active-low). The reset operation is asynchronous and takes precedence over all other operations.
 
 ## Paths
 
-| From          | To                           | Type          | Comment                                                    |
-| ------------- | ---------------------------- | ------------- | ---------------------------------------------------------- |
-| `decrement`   | `count_binary`, `count_gray` | sequential    | Decrement path through binary register and Gray encoder.   |
-| `increment`   | `count_binary`, `count_gray` | sequential    | Increment path through binary register and Gray encoder.   |
-| `load_enable` | `count_binary`, `count_gray` | sequential    | Synchronous load (encoding set by `LOAD_BINARY`).          |
-| `load_count`  | `count_binary`, `count_gray` | sequential    | Synchronous load path.                                     |
-| `decrement`   | `minimum`, `maximum`         | combinational | Flags computed from binary index value.                    |
-| `increment`   | `minimum`, `maximum`         | combinational | Flags computed from binary index value.                    |
-| `decrement`   | `underflow`                  | sequential    | Pulse asserted for one cycle when decrementing at minimum. |
-| `increment`   | `overflow`                   | sequential    | Pulse asserted for one cycle when incrementing at maximum. |
+| From        | To             | Type       | Comment                                                  |
+| ----------- | -------------- | ---------- | -------------------------------------------------------- |
+| `decrement` | `count_binary` | sequential | Decrement control path through internal binary register. |
+| `decrement` | `count_gray`   | sequential | Decrement control path through internal Gray register.   |
+| `increment` | `count_binary` | sequential | Increment control path through internal binary register. |
+| `increment` | `count_gray`   | sequential | Increment control path through internal Gray register.   |
 
 ## Complexity
 
-| Delay                | Gates           | Comment                                                                                  |
-| -------------------- | --------------- | ---------------------------------------------------------------------------------------- |
-| `O(log₂ log₂ RANGE)` | `O(log₂ RANGE)` | Binary add/subtract plus compare (for non-2ⁿ) and a small XOR network for Gray encoding. |
+| Delay                | Gates           | Comment |
+| -------------------- | --------------- | ------- |
+| `O(log₂ log₂ RANGE)` | `O(log₂ RANGE)` |         |
 
-The module uses `log₂(RANGE)` flip-flops for the binary counter and the same for the registered Gray output. The Gray encoder is an XOR network; for non-power-of-2 ranges, boundary compares add minimal overhead.
+The module requires `2 * log₂(RANGE)` flip-flops for the counter registers (one for binary, one for Gray code), plus combinational logic for boundary detection (in non-power-of-2 cases), increment/decrement operations, and Gray encoding. For power-of-2 ranges, the binary implementation is more efficient as it leverages natural binary overflow behavior. The critical path includes the counter comparison logic (for non-power-of-2 ranges), the increment/decrement arithmetic, and the Gray encoders.
 
 ## Verification
 
-The gray wrapping counter is verified using a SystemVerilog testbench with nine checks that validate operations, flags, pulses, load behavior, and Gray properties (single-bit difference and correct mapping).
+The gray wrapping counter is verified using a SystemVerilog testbench with eight check sequences that validate the counter operations, boundary conditions, wrapping behavior, and Gray code validity.
 
-| Number | Check                      | Description                                                                                   |
-| ------ | -------------------------- | --------------------------------------------------------------------------------------------- |
-| 1      | Reset value                | Verifies reset value, flags, no pulses, and Gray equals the encoding of the reset value.      |
-| 2      | Increment without wrapping | Steps up without crossing maximum; ensures no pulses and correct Gray mapping.                |
-| 3      | Increment with wrapping    | Increments at maximum; verifies wrap, overflow pulse, flags, and Gray mapping.                |
-| 4      | Decrement with wrapping    | Decrements at minimum; verifies wrap, underflow pulse, flags, and Gray mapping.               |
-| 5      | Decrement without wrapping | Steps down without crossing minimum; ensures no pulses and correct Gray mapping.              |
-| 6      | Full cycle increment       | Completes one full cycle, checking pulses at boundaries and Gray single-bit transitions.      |
-| 7      | Full cycle decrement       | Completes one full cycle down, checking pulses at boundaries and Gray single-bit transitions. |
-| 8      | Random                     | Random inc/dec; checks pulses, flags/values, and Gray mapping each step.                      |
-| 9      | Load behavior              | Loads a value; verifies no pulses on load, flags afterward, and Gray mapping.                 |
+The following table lists the checks performed by the testbench.
 
-Parameter sweeps outside the testbench can set `LOAD_BINARY` to verify both binary-load and gray-load modes.
+| Number | Check                      | Description                                                                                                               |
+| ------ | -------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 1      | Reset value                | Verifies that the counter initializes to the specified `RESET_VALUE` and its Gray equivalent after reset.                 |
+| 2      | Increment without wrapping | Tests incrementing from minimum towards maximum value without reaching the boundary, verifying 1-bit changes.             |
+| 3      | Increment with wrapping    | Tests increment wrapping behavior from maximum value back to minimum value, verifying 1-bit changes.                      |
+| 4      | Decrement with wrapping    | Tests decrement wrapping behavior from minimum value back to maximum value, verifying 1-bit changes.                      |
+| 5      | Decrement without wrapping | Tests decrementing from maximum towards minimum value without reaching the boundary, verifying 1-bit changes.             |
+| 6      | Full cycle increment       | Tests a complete increment cycle through all values and verifies return to starting point and 1-bit changes.              |
+| 7      | Full cycle decrement       | Tests a complete decrement cycle through all values and verifies return to starting point and 1-bit changes.              |
+| 8      | Random                     | Performs random increment and decrement operations and verifies counter behavior and Gray coding against expected values. |
+
+The following table lists the parameter values verified by the testbench.
+
+| `RANGE` | `RESET_VALUE` |           |
+| ------- | ------------- | --------- |
+| 4       | 0             | (default) |
 
 ## Constraints
 
@@ -115,19 +108,16 @@ There are no specific synthesis or implementation constraints for this block.
 
 ## Dependencies
 
-| Module / Header    | Path                                             | Comment                                         |
-| ------------------ | ------------------------------------------------ | ----------------------------------------------- |
-| `clog2.vh`         | `omnicores-buildingblocks/sources/common`        | Macro for calculating log₂ of parameter values. |
-| `is_pow2.vh`       | `omnicores-buildingblocks/sources/common`        | Macro to detect power-of-2 ranges.              |
-| `binary_to_gray.v` | `omnicores-buildingblocks/sources/encoding/gray` | Encoder used for general ranges.                |
-| `gray_to_binary.v` | `omnicores-buildingblocks/sources/encoding/gray` | Decoder used for gray-load mode.                |
+| Module           | Path                                             | Comment                                         |
+| ---------------- | ------------------------------------------------ | ----------------------------------------------- |
+| `clog2.vh`       | `omnicores-buildingblocks/sources/common`        | Macro for calculating log₂ of parameter values. |
+| `is_pow2.vh`     | `omnicores-buildingblocks/sources/common`        | Macro for checking if a value is a power of 2.  |
+| `binary_to_gray` | `omnicores-buildingblocks/sources/encoding/gray` | Binary to Gray encoder module.                  |
 
 ## Related modules
 
-| Module                                                                                                    | Path                                                                       | Comment                                      |
-| --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------- |
-| [`wrapping_counter`](../wrapping_counter/wrapping_counter.md)                                             | `omnicores-buildingblocks/sources/counter/wrapping_counter`                | Binary wrapping counter (no Gray outputs).   |
-| [`gray_wrapping_increment_counter`](../gray_wrapping_increment_counter/gray_wrapping_increment_counter.v) | `omnicores-buildingblocks/sources/counter/gray_wrapping_increment_counter` | Gray-coded increment-only counter.           |
-| [`gray_wrapping_decrement_counter`](../gray_wrapping_decrement_counter/gray_wrapping_decrement_counter.v) | `omnicores-buildingblocks/sources/counter/gray_wrapping_decrement_counter` | Gray-coded decrement-only counter.           |
-| [`wrapping_increment_counter`](../wrapping_increment_counter/wrapping_increment_counter.md)               | `omnicores-buildingblocks/sources/counter/wrapping_increment_counter`      | Increment-only binary counter with wrapping. |
-| [`wrapping_decrement_counter`](../wrapping_decrement_counter/wrapping_decrement_counter.md)               | `omnicores-buildingblocks/sources/counter/wrapping_decrement_counter`      | Decrement-only binary counter with wrapping. |
+| Module                                                                                                     | Path                                                                       | Comment                                                   |
+| ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------- |
+| [`gray_wrapping_increment_counter`](../gray_wrapping_increment_counter/gray_wrapping_increment_counter.md) | `omnicores-buildingblocks/sources/counter/gray_wrapping_increment_counter` | Gray-coded increment-only variant with wrapping behavior. |
+| [`gray_wrapping_decrement_counter`](../gray_wrapping_decrement_counter/gray_wrapping_decrement_counter.md) | `omnicores-buildingblocks/sources/counter/gray_wrapping_decrement_counter` | Gray-coded decrement-only variant with wrapping behavior. |
+| [`wrapping_counter`](../wrapping_counter/wrapping_counter.md)                                              | `omnicores-buildingblocks/sources/counter/wrapping_counter`                | Standard binary bidirectional counter without Gray code.  |
