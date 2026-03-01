@@ -1,0 +1,8 @@
+{"signal": [
+  {"name": "clock_in",                    "wave": "lh.....l.....h"},
+  {"name": "clock_out MULTIPLICATION=1",  "wave": "lh.....l.....h"},
+  {"name": "clock_out MULTIPLICATION=2",  "wave": "lh..l..h..l..h"},
+  {"name": "clock_out MULTIPLICATION=3",  "wave": "lh.l.h.l.h.l.h"},
+  {"name": "clock_out MULTIPLICATION=6",  "wave": "lhlhlhlhlhlhlh"},
+  {"name": "clock_out MULTIPLICATION=12", "wave": "p............."}
+]}
