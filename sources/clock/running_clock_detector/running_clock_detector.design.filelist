@@ -1,2 +1,2 @@
-clock_detector.v
+running_clock_detector.v
 ../../timing/synchronizer/synchronizer.v

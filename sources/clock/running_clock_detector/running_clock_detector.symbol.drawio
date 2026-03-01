@@ -1,5 +1,5 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.1.1 Chrome/132.0.6834.210 Electron/34.3.3 Safari/537.36" version="26.1.1">
-  <diagram name="Clock Detector" id="Clock-Detector">
+  <diagram name="Running Clock Detector" id="Running-Clock-Detector">
     <mxGraphModel dx         = "0"
                   dy         = "0"
                   grid       = "1"
@@ -41,7 +41,7 @@
         </mxCell>
         <mxCell id     = "title"
                 parent = "2"
-                value  = "Clock Detector"
+                value  = "Running Clock Detector"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontStyle=1;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"
@@ -52,7 +52,7 @@
         </mxCell>
         <mxCell id     = "subtitle"
                 parent = "2"
-                value  = "clock_detector"
+                value  = "running_clock_detector"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
           <mxGeometry x      = "15"

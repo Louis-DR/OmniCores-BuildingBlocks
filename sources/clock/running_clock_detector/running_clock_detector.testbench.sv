@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_detector.testbench.sv                                  ║
+// ║ File:        running_clock_detector.testbench.sv                          ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Testbench for the clock detector.                            ║
 // ║                                                                           ║
@@ -16,7 +16,7 @@
 
 
 
-module clock_detector__testbench ();
+module running_clock_detector__testbench ();
 
 // Device parameters
 localparam int DETECTOR_STAGES     = 2;
@@ -37,10 +37,10 @@ int  check;
 bool enabled_observed_clock = false;
 
 // Device under test
-clock_detector #(
+running_clock_detector #(
   .DETECTOR_STAGES     ( DETECTOR_STAGES     ),
   .SYNCHRONIZER_STAGES ( SYNCHRONIZER_STAGES )
-) clock_detector_dut (
+) running_clock_detector_dut (
   .reference_clock  ( reference_clock  ),
   .observed_clock   ( observed_clock   ),
   .resetn           ( resetn           ),
@@ -70,8 +70,8 @@ end
 // Main block
 initial begin
   // Log waves
-  $dumpfile("clock_detector.testbench.vcd");
-  $dumpvars(0,clock_detector__testbench);
+  $dumpfile("running_clock_detector.testbench.vcd");
+  $dumpvars(0,running_clock_detector__testbench);
   $timeformat(-9, 0, " ns", 0);
 
   // Initialization

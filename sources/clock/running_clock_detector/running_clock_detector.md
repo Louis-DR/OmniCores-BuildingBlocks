@@ -1,8 +1,8 @@
-# Clock Detector
+# Running Clock Detector
 
 |         |                                                                                  |
 | ------- | -------------------------------------------------------------------------------- |
-| Module  | Clock Detector                                                                   |
+| Module  | Running Clock Detector                                                           |
 | Project | [OmniCores-BuildingBlocks](https://github.com/Louis-DR/OmniCores-BuildingBlocks) |
 | Author  | Louis Duret-Robert - [louisduret@gmail.com](mailto:louisduret@gmail.com)         |
 | Website | [louis-dr.github.io](https://louis-dr.github.io)                                 |
@@ -10,7 +10,7 @@
 
 ## Overview
 
-![clock_detector](clock_detector.symbol.svg)
+![running_clock_detector](running_clock_detector.symbol.svg)
 
 Detects if an observed clock is running or not using a reference clock.
 
@@ -18,15 +18,15 @@ Detects if an observed clock is running or not using a reference clock.
 
 The `resetn` can be asserted asynchronously, but must be deasserted synchronously to `reference_clock`, or when `reference_clock` is not running. During and after reset, the `clock_is_running` output is deasserted. If `observed_clock` is running when `resetn` is deasserted, `clock_is_running` is asserted on average `SYNCHRONIZER_STAGES` after.
 
-![clock_detector_reset_with_clock](clock_detector_reset_with_clock.wavedrom.svg)
+![running_clock_detector_reset_with_clock](running_clock_detector_reset_with_clock.wavedrom.svg)
 
 When the `observed_clock` starts, the `clock_is_running` is asserted after a short delay.
 
-![clock_detector_clock_starting](clock_detector_clock_starting.wavedrom.svg)
+![running_clock_detector_clock_starting](running_clock_detector_clock_starting.wavedrom.svg)
 
 When the `observed_clock` stops, the `clock_is_running` is deasserted after a short delay.
 
-![clock_detector_clock_stopping](clock_detector_clock_stopping.wavedrom.svg)
+![running_clock_detector_clock_stopping](running_clock_detector_clock_stopping.wavedrom.svg)
 
 The average delay for assertion and deassertion are noted $T_{assertion}$ and $T_{deassertion}$ respectively. They depend on `SYNCHRONIZER_STAGES`, the number of synchronization stages, and `DETECTOR_STAGES`, the number of detection stages. Their formulae are given below, with $T_{\mathrm{reference}}$ and $f_{\mathrm{reference}}$ the period and frequency of the reference clock,.
 
@@ -95,19 +95,19 @@ The clock detector is verified using a SystemVerilog testbench with four check s
 
 ## Constraints
 
-As this is a behavioral model, the primary constraint is that it should not be synthesized directly. Use vendor-specific ICG cells instead.
+There are no specific synthesis or implementation constraints for this block.
 
 ## Deliverables
 
-| Type              | File                                                             | Description                                         |
-| ----------------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-| Design            | [`clock_detector.v`](clock_detector.v)                           | Verilog design.                                     |
-| Testbench         | [`clock_detector.testbench.sv`](clock_detector.testbench.sv)     | SystemVerilog verification testbench.               |
-| Waveform script   | [`clock_detector.testbench.gtkw`](clock_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
-| Symbol descriptor | [`clock_detector.symbol.sss`](clock_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
-| Symbol image      | [`clock_detector.symbol.svg`](clock_detector.symbol.svg)         | Generated vector image of the symbol.               |
-| Symbol shape      | [`clock_detector.symbol.drawio`](clock_detector.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
-| Datasheet         | [`clock_detector.md`](clock_detector.md)                         | Markdown documentation datasheet.                   |
+| Type              | File                                                                             | Description                                         |
+| ----------------- | -------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Design            | [`running_clock_detector.v`](running_clock_detector.v)                           | Verilog design.                                     |
+| Testbench         | [`running_clock_detector.testbench.sv`](running_clock_detector.testbench.sv)     | SystemVerilog verification testbench.               |
+| Waveform script   | [`running_clock_detector.testbench.gtkw`](running_clock_detector.testbench.gtkw) | Script to load the waveforms in GTKWave.            |
+| Symbol descriptor | [`running_clock_detector.symbol.sss`](running_clock_detector.symbol.sss)         | Symbol descriptor for SiliconSuite-SymbolGenerator. |
+| Symbol image      | [`running_clock_detector.symbol.svg`](running_clock_detector.symbol.svg)         | Generated vector image of the symbol.               |
+| Symbol shape      | [`running_clock_detector.symbol.drawio`](running_clock_detector.symbol.drawio)   | Generated DrawIO shape of the symbol.               |
+| Datasheet         | [`running_clock_detector.md`](running_clock_detector.md)                         | Markdown documentation datasheet.                   |
 
 ## Dependencies
 

@@ -3,7 +3,7 @@
 // ║ Author:      Louis Duret-Robert - louisduret@gmail.com                    ║
 // ║ Website:     louis-dr.github.io                                           ║
 // ║ License:     MIT License                                                  ║
-// ║ File:        clock_detector.v                                             ║
+// ║ File:        running_clock_detector.v                                     ║
 // ╟───────────────────────────────────────────────────────────────────────────╢
 // ║ Description: Detects if a clock is running.                               ║
 // ║                                                                           ║
@@ -11,7 +11,7 @@
 
 
 
-module clock_detector #(
+module running_clock_detector #(
   parameter DETECTOR_STAGES     = 2,
   parameter SYNCHRONIZER_STAGES = 2
 ) (
