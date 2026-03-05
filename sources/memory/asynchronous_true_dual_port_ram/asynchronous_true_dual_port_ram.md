@@ -16,28 +16,29 @@ A random access memory with two fully independent read-write ports operating in 
 
 ## Parameters
 
-| Name           | Type    | Allowed Values | Default | Description                                                                                                                             |
-| -------------- | ------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `WIDTH`        | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                           |
-| `DEPTH`        | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                        |
-| `READ_LATENCY` | integer | `0`, `1`       | `1`     | Read mode selection.<br/>• `0`: Combinational read (data available same cycle).<br/>• `1`: Registered read (data available next cycle). |
+| Name               | Type    | Allowed Values | Default | Description                                                                                                                                  |
+| ------------------ | ------- | -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `WIDTH`            | integer | `≥1`           | `8`     | Bit width of the data vector.                                                                                                                |
+| `DEPTH`            | integer | `≥2`           | `16`    | Number of entries in the memory.                                                                                                             |
+| `SEQUENTIAL_READ`  | integer | `0`, `1`       | `1`     | Read mode selection.<br/>• `0`: Combinational read (data available same cycle).<br/>• `1`: Registered read (data available next cycle).      |
+| `READ_RETURN_TO_X` | integer | `0`, `1`       | `0`     | Return-to-X behavior when `SEQUENTIAL_READ = 1`.<br/>• `0`: Hold last read value.<br/>• `1`: Drive `read_data` to X when read is not active. |
 
 ## Ports
 
-| Name                   | Direction | Width           | Clock          | Reset | Reset value | Description                                                                                   |
-| ---------------------- | --------- | --------------- | -------------- | ----- | ----------- | --------------------------------------------------------------------------------------------- |
-| `port_0_clock`         | input     | 1               | self           |       |             | Port 0 clock signal.                                                                          |
-| `port_0_access_enable` | input     | 1               | `port_0_clock` |       |             | Port 0 access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.     |
-| `port_0_write`         | input     | 1               | `port_0_clock` |       |             | Port 0 operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.        |
-| `port_0_address`       | input     | `ADDRESS_WIDTH` | `port_0_clock` |       |             | Port 0 address of the memory location to access.                                              |
-| `port_0_write_data`    | input     | `WIDTH`         | `port_0_clock` |       |             | Port 0 data to be written to the memory.                                                      |
-| `port_0_read_data`     | output    | `WIDTH`         | `port_0_clock` |       |             | Port 0 data read from the memory. Valid same cycle or next cycle depending on `READ_LATENCY`. |
-| `port_1_clock`         | input     | 1               | self           |       |             | Port 1 clock signal.                                                                          |
-| `port_1_access_enable` | input     | 1               | `port_1_clock` |       |             | Port 1 access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.     |
-| `port_1_write`         | input     | 1               | `port_1_clock` |       |             | Port 1 operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.        |
-| `port_1_address`       | input     | `ADDRESS_WIDTH` | `port_1_clock` |       |             | Port 1 address of the memory location to access.                                              |
-| `port_1_write_data`    | input     | `WIDTH`         | `port_1_clock` |       |             | Port 1 data to be written to the memory.                                                      |
-| `port_1_read_data`     | output    | `WIDTH`         | `port_1_clock` |       |             | Port 1 data read from the memory. Valid same cycle or next cycle depending on `READ_LATENCY`. |
+| Name                   | Direction | Width           | Clock          | Reset | Reset value | Description                                                                                      |
+| ---------------------- | --------- | --------------- | -------------- | ----- | ----------- | ------------------------------------------------------------------------------------------------ |
+| `port_0_clock`         | input     | 1               | self           |       |             | Port 0 clock signal.                                                                             |
+| `port_0_access_enable` | input     | 1               | `port_0_clock` |       |             | Port 0 access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.        |
+| `port_0_write`         | input     | 1               | `port_0_clock` |       |             | Port 0 operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.           |
+| `port_0_address`       | input     | `ADDRESS_WIDTH` | `port_0_clock` |       |             | Port 0 address of the memory location to access.                                                 |
+| `port_0_write_data`    | input     | `WIDTH`         | `port_0_clock` |       |             | Port 0 data to be written to the memory.                                                         |
+| `port_0_read_data`     | output    | `WIDTH`         | `port_0_clock` |       |             | Port 0 data read from the memory. Valid same cycle or next cycle depending on `SEQUENTIAL_READ`. |
+| `port_1_clock`         | input     | 1               | self           |       |             | Port 1 clock signal.                                                                             |
+| `port_1_access_enable` | input     | 1               | `port_1_clock` |       |             | Port 1 access enable signal.<br/>• `0`: Idle.<br/>• `1`: Perform read or write operation.        |
+| `port_1_write`         | input     | 1               | `port_1_clock` |       |             | Port 1 operation mode selector.<br/>• `0`: Read operation.<br/>• `1`: Write operation.           |
+| `port_1_address`       | input     | `ADDRESS_WIDTH` | `port_1_clock` |       |             | Port 1 address of the memory location to access.                                                 |
+| `port_1_write_data`    | input     | `WIDTH`         | `port_1_clock` |       |             | Port 1 data to be written to the memory.                                                         |
+| `port_1_read_data`     | output    | `WIDTH`         | `port_1_clock` |       |             | Port 1 data read from the memory. Valid same cycle or next cycle depending on `SEQUENTIAL_READ`. |
 
 ## Operation
 
@@ -45,9 +46,9 @@ The asynchronous true dual-port RAM manages an internal memory array with two fu
 
 For **write operation** on either port, when the port's `access_enable` and `write` signals are both asserted, the port's `write_data` is stored at the memory location specified by the port's `address` on the rising edge of the port's clock.
 
-For **read operation** on either port, when the port's `access_enable` is asserted and `write` is deasserted, the data at the memory location specified by the port's `address` is driven on the port's `read_data`. The timing depends on the `READ_LATENCY` parameter:
-- If `READ_LATENCY = 0`, the read is combinational and `read_data` is valid in the same clock cycle.
-- If `READ_LATENCY = 1`, the read is registered and `read_data` is valid in the next clock cycle after the read operation is initiated.
+For **read operation** on either port, when the port's `access_enable` is asserted and `write` is deasserted, the data at the memory location specified by the port's `address` is driven on the port's `read_data`. The timing depends on the `SEQUENTIAL_READ` parameter:
+- If `SEQUENTIAL_READ = 0`, the read is combinational and `read_data` is valid in the same clock cycle.
+- If `SEQUENTIAL_READ = 1`, the read is registered and `read_data` is valid in the next clock cycle after the read operation is initiated.
 
 Since the two ports operate in independent clock domains, there is no write-through functionality. When both ports access the same address simultaneously (in different clock domains), the behavior depends on the operation types:
 - **Two simultaneous writes** to the same address: The behavior is unspecified and should be avoided. The integration logic must ensure that both ports do not write to the same address simultaneously.
@@ -61,10 +62,10 @@ The memory contents are not initialized and will contain unpredictable values af
 | ----------------------------------------------------------------------------- | -------------------------------------- | ------------- | ------------------------------------------------------------- |
 | `port_0_access_enable`, `port_0_write`, `port_0_address`, `port_0_write_data` | `port_0_read_data`, `port_1_read_data` | asynchronous  | Data path through internal memory array across clock domains. |
 | `port_1_access_enable`, `port_1_write`, `port_1_address`, `port_1_write_data` | `port_0_read_data`, `port_1_read_data` | asynchronous  | Data path through internal memory array across clock domains. |
-| `port_0_access_enable`, `port_0_write`, `port_0_address`                      | `port_0_read_data`                     | combinational | Address decoding (if `READ_LATENCY = 0`).                     |
-| `port_0_access_enable`, `port_0_write`, `port_0_address`                      | `port_0_read_data`                     | sequential    | Address decoding through register (if `READ_LATENCY = 1`).    |
-| `port_1_access_enable`, `port_1_write`, `port_1_address`                      | `port_1_read_data`                     | combinational | Address decoding (if `READ_LATENCY = 0`).                     |
-| `port_1_access_enable`, `port_1_write`, `port_1_address`                      | `port_1_read_data`                     | sequential    | Address decoding through register (if `READ_LATENCY = 1`).    |
+| `port_0_access_enable`, `port_0_write`, `port_0_address`                      | `port_0_read_data`                     | combinational | Address decoding (if `SEQUENTIAL_READ = 0`).                  |
+| `port_0_access_enable`, `port_0_write`, `port_0_address`                      | `port_0_read_data`                     | sequential    | Address decoding through register (if `SEQUENTIAL_READ = 1`). |
+| `port_1_access_enable`, `port_1_write`, `port_1_address`                      | `port_1_read_data`                     | combinational | Address decoding (if `SEQUENTIAL_READ = 0`).                  |
+| `port_1_access_enable`, `port_1_write`, `port_1_address`                      | `port_1_read_data`                     | sequential    | Address decoding through register (if `SEQUENTIAL_READ = 1`). |
 
 ## Complexity
 
@@ -72,7 +73,7 @@ The memory contents are not initialized and will contain unpredictable values af
 | --------------- | ---------------- | ---------------------------------------------------------------- |
 | `O(log₂ DEPTH)` | `O(WIDTH×DEPTH)` | Critical path is the address decoding and memory array indexing. |
 
-The module requires `WIDTH×DEPTH` flip-flops for the memory array. When `READ_LATENCY = 1`, an additional `2×WIDTH` flip-flops are required for the read data registers of both ports.
+The module requires `WIDTH×DEPTH` flip-flops for the memory array. When `SEQUENTIAL_READ = 1`, an additional `2×WIDTH` flip-flops are required for the read data registers of both ports.
 
 ## Verification
 
@@ -100,9 +101,9 @@ The following table lists the checks performed by the testbench.
 
 The following table lists the parameter values verified by the testbench.
 
-| `WIDTH` | `DEPTH` | `READ_LATENCY` |           |
-| ------- | ------- | -------------- | --------- |
-| 8       | 16      | 1              | (default) |
+| `WIDTH` | `DEPTH` | `SEQUENTIAL_READ` |           |
+| ------- | ------- | ----------------- | --------- |
+| 8       | 16      | 1                 | (default) |
 
 ## Constraints
 

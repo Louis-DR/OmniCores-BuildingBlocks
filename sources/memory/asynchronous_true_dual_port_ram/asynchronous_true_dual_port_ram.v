@@ -18,8 +18,9 @@
 module asynchronous_true_dual_port_ram #(
   parameter WIDTH = 8,
   parameter DEPTH = 16,
-  parameter READ_LATENCY  = 1,
-  parameter ADDRESS_WIDTH = `CLOG2(DEPTH)
+  parameter SEQUENTIAL_READ  = 1,
+  parameter READ_RETURN_TO_X = 0,
+  parameter ADDRESS_WIDTH    = `CLOG2(DEPTH)
 ) (
   // First read-write interface
   input                     port_0_clock,
@@ -57,18 +58,26 @@ always @(posedge port_1_clock) begin
 end
 
 // Registered read logic
-if (READ_LATENCY) begin
+if (SEQUENTIAL_READ) begin
   // Read port 0
   reg [WIDTH-1:0] port_0_registered_read_data;
   always @(posedge port_0_clock) begin
-    if (port_0_read_enable) port_0_registered_read_data <= memory[port_0_address];
+    if (port_0_read_enable) begin
+      port_0_registered_read_data <= memory[port_0_address];
+    end else if (READ_RETURN_TO_X) begin
+      port_0_registered_read_data <= 'x;
+    end
   end
   assign port_0_read_data = port_0_registered_read_data;
 
   // Read port 1
   reg [WIDTH-1:0] port_1_registered_read_data;
   always @(posedge port_1_clock) begin
-    if (port_1_read_enable) port_1_registered_read_data <= memory[port_1_address];
+    if (port_1_read_enable) begin
+      port_1_registered_read_data <= memory[port_1_address];
+    end else if (READ_RETURN_TO_X) begin
+      port_1_registered_read_data <= 'x;
+    end
   end
   assign port_1_read_data = port_1_registered_read_data;
 end

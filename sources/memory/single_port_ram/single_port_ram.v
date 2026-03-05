@@ -18,8 +18,9 @@
 module single_port_ram #(
   parameter WIDTH = 8,
   parameter DEPTH = 16,
-  parameter READ_LATENCY  = 1,
-  parameter ADDRESS_WIDTH = `CLOG2(DEPTH)
+  parameter SEQUENTIAL_READ  = 1,
+  parameter READ_RETURN_TO_X = 0,
+  parameter ADDRESS_WIDTH    = `CLOG2(DEPTH)
 ) (
   input                     clock,
   // Read-write interface
@@ -43,10 +44,14 @@ always @(posedge clock) begin
 end
 
 // Registered read logic
-if (READ_LATENCY) begin
+if (SEQUENTIAL_READ) begin
   reg [WIDTH-1:0] registered_read_data;
   always @(posedge clock) begin
-    if (read_enable) registered_read_data <= memory[address];
+    if (read_enable) begin
+      registered_read_data <= memory[address];
+    end else if (READ_RETURN_TO_X) begin
+      registered_read_data <= 'x;
+    end
   end
   assign read_data = registered_read_data;
 end

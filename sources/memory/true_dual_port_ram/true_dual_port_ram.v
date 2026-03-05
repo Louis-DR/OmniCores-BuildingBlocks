@@ -18,9 +18,10 @@
 module true_dual_port_ram #(
   parameter WIDTH = 8,
   parameter DEPTH = 16,
-  parameter WRITE_THROUGH = 0,
-  parameter READ_LATENCY  = 1,
-  parameter ADDRESS_WIDTH = `CLOG2(DEPTH)
+  parameter WRITE_THROUGH    = 0,
+  parameter SEQUENTIAL_READ  = 1,
+  parameter READ_RETURN_TO_X = 0,
+  parameter ADDRESS_WIDTH    = `CLOG2(DEPTH)
 ) (
   input                     clock,
   // First read-write interface
@@ -56,7 +57,7 @@ end
 wire same_address = port_0_address == port_1_address;
 
 // Registered read logic
-if (READ_LATENCY) begin
+if (SEQUENTIAL_READ) begin
   reg [WIDTH-1:0] port_0_registered_read_data;
   reg [WIDTH-1:0] port_1_registered_read_data;
   always @(posedge clock) begin
@@ -69,6 +70,8 @@ if (READ_LATENCY) begin
       end else begin
         port_0_registered_read_data <= memory[port_0_address];
       end
+    end else if (READ_RETURN_TO_X) begin
+      port_0_registered_read_data <= 'x;
     end
     // Port 1 read logic
     if (port_1_read_enable) begin
@@ -79,6 +82,8 @@ if (READ_LATENCY) begin
       end else begin
         port_1_registered_read_data <= memory[port_1_address];
       end
+    end else if (READ_RETURN_TO_X) begin
+      port_1_registered_read_data <= 'x;
     end
   end
   assign port_0_read_data = port_0_registered_read_data;
