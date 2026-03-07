@@ -29,7 +29,7 @@ module galois_lfsr #(
 
 wire feedback = value[0];
 
-wire [WIDTH-1:0] value_next = {feedback, ({WIDTH-1{feedback}} & TAPS) ^ value[WIDTH-1:1]};
+wire [WIDTH-1:0] value_next = {feedback, ({WIDTH-1{feedback}} & TAPS[WIDTH-2:0]) ^ value[WIDTH-1:1]};
 
 always @(posedge clock or negedge resetn) begin
   if (!resetn) begin
