@@ -12,10 +12,14 @@
 
 
 
+`include "galois_lfsr.vh"
+
+
+
 module galois_lfsr #(
   parameter WIDTH = 8,
-  parameter TAPS  = 7'b0111000,
-  parameter SEED  = 1
+  parameter SEED  = 1,
+  parameter TAPS  = `GET_GALOIS_LFSR_TAPS(WIDTH)
 ) (
   input                  clock,
   input                  resetn,

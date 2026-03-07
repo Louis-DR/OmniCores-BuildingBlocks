@@ -12,10 +12,14 @@
 
 
 
+`include "fibonacci_lfsr.vh"
+
+
+
 module fibonacci_lfsr #(
   parameter WIDTH = 8,
-  parameter TAPS  = 8'b00011101,
-  parameter SEED  = 1
+  parameter SEED  = 1,
+  parameter TAPS  = `GET_FIBONACCI_LFSR_TAPS(WIDTH)
 ) (
   input                  clock,
   input                  resetn,
