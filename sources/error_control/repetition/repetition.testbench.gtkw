@@ -1,0 +1,46 @@
+[dumpfile] "repetition.testbench.vcd"
+[savefile] "repetition.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-12.261353 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@22
+repetition__testbench.encoder_data[7:0]
+repetition__testbench.encoder_code[15:0]
+repetition__testbench.encoder_block[23:0]
+@200
+-
+@22
+repetition__testbench.checker_data[7:0]
+repetition__testbench.checker_code[15:0]
+@28
+repetition__testbench.checker_error
+@200
+-
+@22
+repetition__testbench.corrector_data[7:0]
+repetition__testbench.corrector_code[15:0]
+@28
+repetition__testbench.corrector_error
+@22
+repetition__testbench.corrector_corrected_data[7:0]
+@200
+-
+@22
+repetition__testbench.block_checker_block[23:0]
+@28
+repetition__testbench.block_checker_error
+@200
+-
+@22
+repetition__testbench.block_corrector_block[23:0]
+@28
+repetition__testbench.block_corrector_error
+@22
+repetition__testbench.block_corrector_corrected_data[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

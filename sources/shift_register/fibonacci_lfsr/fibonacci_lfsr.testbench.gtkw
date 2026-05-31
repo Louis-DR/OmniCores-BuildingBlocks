@@ -12,6 +12,7 @@
 fibonacci_lfsr__testbench.clock
 fibonacci_lfsr__testbench.resetn
 fibonacci_lfsr__testbench.enable
+@22
 fibonacci_lfsr__testbench.value[7:0]
 [pattern_trace] 1
 [pattern_trace] 0

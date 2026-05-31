@@ -8,36 +8,38 @@
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
-@28
+@22
 hamming__testbench.encoder_data[3:0]
 hamming__testbench.encoder_code[2:0]
 hamming__testbench.encoder_block[6:0]
 @200
 -
-@28
+@22
 hamming__testbench.packer_data[3:0]
 hamming__testbench.packer_code[2:0]
 hamming__testbench.packer_block[6:0]
 @200
 -
-@28
+@22
 hamming__testbench.unpacker_block[6:0]
 hamming__testbench.unpacker_data[3:0]
 hamming__testbench.unpacker_code[2:0]
 @200
 -
-@28
+@22
 hamming__testbench.checker_data[3:0]
 hamming__testbench.checker_code[2:0]
+@28
 hamming__testbench.checker_error
 @200
 -
-@28
+@22
 hamming__testbench.block_checker_block[6:0]
+@28
 hamming__testbench.block_checker_error
 @200
 -
-@28
+@22
 hamming__testbench.corrector_data[3:0]
 hamming__testbench.corrector_code[2:0]
 hamming__testbench.corrector_corrected_data[3:0]
@@ -47,7 +49,7 @@ hamming__testbench.corrector_corrected_error_position[2:0]
 hamming__testbench.corrector_error
 @200
 -
-@28
+@22
 hamming__testbench.block_corrector_block[6:0]
 hamming__testbench.block_corrector_corrected_block[6:0]
 @24
@@ -58,7 +60,7 @@ hamming__testbench.block_corrector_error
 -
 @420
 hamming__testbench.check_checker_and_corrector_single_bit_error.error_position
-@28
+@22
 hamming__testbench.test_data[3:0]
 hamming__testbench.expected_code[2:0]
 hamming__testbench.expected_block[7:0]

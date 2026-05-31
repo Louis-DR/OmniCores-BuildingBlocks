@@ -13,8 +13,10 @@ closed_loop_vector_synchronizer__testbench.source_resetn
 closed_loop_vector_synchronizer__testbench.destination_resetn
 closed_loop_vector_synchronizer__testbench.source_clock
 closed_loop_vector_synchronizer__testbench.destination_clock
+@22
 closed_loop_vector_synchronizer__testbench.data_in[7:0]
 closed_loop_vector_synchronizer__testbench.data_out[7:0]
+@28
 closed_loop_vector_synchronizer__testbench.busy
 [pattern_trace] 1
 [pattern_trace] 0

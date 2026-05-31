@@ -17,7 +17,7 @@
 
 
 
-module clock_multiplier__testbench ();
+module static_clock_multiplier__testbench ();
 
 // Test parameters
 localparam real   CLOCK_PERIOD                    = 10;
@@ -60,7 +60,7 @@ end
 initial begin
   // Log waves
   $dumpfile("static_clock_multiplier.testbench.vcd");
-  $dumpvars(0,clock_multiplier__testbench);
+  $dumpvars(0,static_clock_multiplier__testbench);
   $timeformat(-9, 0, " ns", 0);
 
   // Measure the input clock frequency

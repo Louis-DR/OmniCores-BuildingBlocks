@@ -8,20 +8,24 @@
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
-@28
+@22
 parity__testbench.encoder_data[7:0]
+@28
 parity__testbench.encoder_code
+@22
 parity__testbench.encoder_block[8:0]
 @200
 -
-@28
+@22
 parity__testbench.checker_data[7:0]
+@28
 parity__testbench.checker_code
 parity__testbench.checker_error
 @200
 -
-@28
+@22
 parity__testbench.block_checker_block[8:0]
+@28
 parity__testbench.block_checker_error
 [pattern_trace] 1
 [pattern_trace] 0

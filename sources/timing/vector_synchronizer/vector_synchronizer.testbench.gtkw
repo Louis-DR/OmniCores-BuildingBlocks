@@ -11,6 +11,7 @@
 @28
 vector_synchronizer__testbench.clock
 vector_synchronizer__testbench.resetn
+@22
 vector_synchronizer__testbench.data_in[7:0]
 vector_synchronizer__testbench.data_out[7:0]
 [pattern_trace] 1

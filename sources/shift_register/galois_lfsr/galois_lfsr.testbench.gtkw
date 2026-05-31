@@ -12,6 +12,7 @@
 galois_lfsr__testbench.clock
 galois_lfsr__testbench.resetn
 galois_lfsr__testbench.enable
+@22
 galois_lfsr__testbench.value[7:0]
 [pattern_trace] 1
 [pattern_trace] 0

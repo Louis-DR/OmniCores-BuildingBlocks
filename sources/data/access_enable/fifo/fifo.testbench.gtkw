@@ -1,16 +1,10 @@
-[*]
-[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
-[*] Mon Mar  2 20:51:36 2026
-[*]
-[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/data/access_enable/fifo/fifo.testbench.vcd"
-[dumpfile_mtime] "Mon Mar  2 20:50:07 2026"
-[dumpfile_size] 87281
-[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/data/access_enable/fifo/fifo.testbench.gtkw"
+[dumpfile] "fifo.testbench.vcd"
+[savefile] "fifo.testbench.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
 *-10.071673 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[sst_width] 255
+[sst_width] 200
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
