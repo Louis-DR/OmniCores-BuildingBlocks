@@ -17,9 +17,10 @@
 
 
 module valid_ready_advanced_fifo #(
-  parameter WIDTH      = 8,
-  parameter DEPTH      = 4,
-  parameter DEPTH_LOG2 = `CLOG2(DEPTH)
+  parameter WIDTH                  = 8,
+  parameter DEPTH                  = 4,
+  parameter DEPTH_LOG2             = `CLOG2(DEPTH),
+  parameter MEMORY_SEQUENTIAL_READ = 0
 ) (
   input                 clock,
   input                 resetn,
@@ -72,46 +73,48 @@ wire read_error;
 
 // Controller
 advanced_fifo_controller #(
-  .WIDTH ( WIDTH ),
-  .DEPTH ( DEPTH )
+  .WIDTH                  ( WIDTH                  ),
+  .DEPTH                  ( DEPTH                  ),
+  .MEMORY_SEQUENTIAL_READ ( MEMORY_SEQUENTIAL_READ )
 ) controller (
-  .clock                   ( clock                   ),
-  .resetn                  ( resetn                  ),
-  .flush                   ( flush                   ),
-  .empty                   ( empty                   ),
-  .almost_empty            ( almost_empty            ),
-  .half_empty              ( half_empty              ),
-  .not_empty               ( not_empty               ),
-  .not_full                ( not_full                ),
-  .half_full               ( half_full               ),
-  .almost_full             ( almost_full             ),
-  .full                    ( full                    ),
-  .write_miss              ( write_miss              ),
-  .read_error              ( read_error              ),
-  .write_enable            ( write_enable            ),
-  .write_data              ( write_data              ),
-  .read_enable             ( read_enable             ),
-  .read_data               ( read_data               ),
-  .level                   ( level                   ),
-  .space                   ( space                   ),
-  .lower_threshold_level   ( lower_threshold_level   ),
-  .lower_threshold_status  ( lower_threshold_status  ),
-  .upper_threshold_level   ( upper_threshold_level   ),
-  .upper_threshold_status  ( upper_threshold_status  ),
-  .memory_clock            ( memory_clock            ),
-  .memory_write_enable     ( memory_write_enable     ),
-  .memory_write_address    ( memory_write_address    ),
-  .memory_write_data       ( memory_write_data       ),
-  .memory_read_enable      ( memory_read_enable      ),
-  .memory_read_address     ( memory_read_address     ),
-  .memory_read_data        ( memory_read_data        )
+  .clock                  ( clock                  ),
+  .resetn                 ( resetn                 ),
+  .flush                  ( flush                  ),
+  .empty                  ( empty                  ),
+  .almost_empty           ( almost_empty           ),
+  .half_empty             ( half_empty             ),
+  .not_empty              ( not_empty              ),
+  .not_full               ( not_full               ),
+  .half_full              ( half_full              ),
+  .almost_full            ( almost_full            ),
+  .full                   ( full                   ),
+  .write_miss             ( write_miss             ),
+  .read_error             ( read_error             ),
+  .write_enable           ( write_enable           ),
+  .write_data             ( write_data             ),
+  .read_enable            ( read_enable            ),
+  .read_data              ( read_data              ),
+  .level                  ( level                  ),
+  .space                  ( space                  ),
+  .lower_threshold_level  ( lower_threshold_level  ),
+  .lower_threshold_status ( lower_threshold_status ),
+  .upper_threshold_level  ( upper_threshold_level  ),
+  .upper_threshold_status ( upper_threshold_status ),
+  .memory_clock           ( memory_clock           ),
+  .memory_write_enable    ( memory_write_enable    ),
+  .memory_write_address   ( memory_write_address   ),
+  .memory_write_data      ( memory_write_data      ),
+  .memory_read_enable     ( memory_read_enable     ),
+  .memory_read_address    ( memory_read_address    ),
+  .memory_read_data       ( memory_read_data       )
 );
 
 // Memory
 simple_dual_port_ram #(
-  .WIDTH        ( WIDTH ),
-  .DEPTH        ( DEPTH ),
-  .READ_LATENCY ( 0     )
+  .WIDTH           ( WIDTH                  ),
+  .DEPTH           ( DEPTH                  ),
+  .WRITE_THROUGH   ( MEMORY_SEQUENTIAL_READ ),
+  .SEQUENTIAL_READ ( MEMORY_SEQUENTIAL_READ )
 ) memory (
   .clock         ( memory_clock         ),
   .write_enable  ( memory_write_enable  ),

@@ -20,11 +20,12 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Parameters
 
-| Name         | Type    | Allowed Values | Default       | Description                                     |
-| ------------ | ------- | -------------- | ------------- | ----------------------------------------------- |
-| `WIDTH`      | integer | `≥1`           | `8`           | Bit width of the data vector.                   |
-| `DEPTH`      | integer | `≥2`           | `4`           | Number of entries in the queue.                 |
-| `DEPTH_LOG2` | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated). |
+| Name                     | Type    | Allowed Values | Default       | Description                                                                                             |
+| ------------------------ | ------- | -------------- | ------------- | ------------------------------------------------------------------------------------------------------- |
+| `WIDTH`                  | integer | `≥1`           | `8`           | Bit width of the data vector.                                                                           |
+| `DEPTH`                  | integer | `≥2`           | `4`           | Number of entries in the queue.                                                                         |
+| `DEPTH_LOG2`             | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated).                                                         |
+| `MEMORY_SEQUENTIAL_READ` | integer | `0`, `1`       | `0`           | Latency of the memory read port.<br/>• `0`: combinational read.<br/>• `1`: sequential read (one cycle). |
 
 ## Ports
 
@@ -62,7 +63,7 @@ The **handshake logic** derives enable signals from the valid-ready protocol. A 
 
 The **controller** maintains separate read and write pointers with wrap bits, generates the memory interface signals, calculates all status flags and thresholds, implements protection mechanisms, and generates error notifications (unused in valid-ready variant). The controller doesn't store any data, only control state.
 
-The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
+The **simple dual-port RAM** provides independent read and write ports. The queue storage supports two read modes configured via `MEMORY_SEQUENTIAL_READ`: a combinational read (`0`) allowing the data at the read address to appear immediately on the read data output, or a sequential read (`1`) where the memory has one cycle of read latency and the controller pre-fetches the next entry (acting as a First-Word Fall-Through queue).
 
 For **write operation**, a write transfer occurs when both `write_valid` and `write_ready` are asserted (high) on the same clock rising edge. The controller directs the RAM to store `write_data` at the location pointed to by the write pointer, and the write pointer is incremented. When the queue is full, `write_ready` is deasserted, preventing write transfers and providing safety.
 

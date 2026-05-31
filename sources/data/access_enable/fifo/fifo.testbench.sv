@@ -13,16 +13,18 @@
 
 `timescale 1ns/1ns
 `include "random.svh"
+`include "boolean.svh"
 
 
 
 module fifo__testbench ();
 
 // Test parameters
-localparam real CLOCK_PERIOD = 10;
-localparam int  WIDTH        = 8;
-localparam int  WIDTH_POW2   = 2**WIDTH;
-localparam int  DEPTH        = 4;
+localparam real CLOCK_PERIOD           = 10;
+localparam int  WIDTH                  = 8;
+localparam int  WIDTH_POW2             = 2**WIDTH;
+localparam int  DEPTH                  = 4;
+localparam int  MEMORY_SEQUENTIAL_READ = 0;
 
 // Check parameters
 localparam int  THROUGHPUT_CHECK_DURATION      = 100;
@@ -46,14 +48,16 @@ logic [WIDTH-1:0] data_expected[$];
 logic [WIDTH-1:0] pop_trash;
 
 // Test variables
+int check;
 int transfer_count;
 int outstanding_count;
 int timeout_countdown;
 
 // Device under test
 fifo #(
-  .WIDTH ( WIDTH ),
-  .DEPTH ( DEPTH )
+  .WIDTH                  ( WIDTH                  ),
+  .DEPTH                  ( DEPTH                  ),
+  .MEMORY_SEQUENTIAL_READ ( MEMORY_SEQUENTIAL_READ )
 ) fifo_dut (
   .clock        ( clock        ),
   .resetn       ( resetn       ),
@@ -136,7 +140,7 @@ initial begin
   @(posedge clock);
 
   // Check 1 : Writing to full
-  $display("CHECK 1 : Writing to full.");
+  $display("CHECK 1 : Writing to full."); check = 1;
   // Initial state
   check_flags();
   // Writing
@@ -150,7 +154,7 @@ initial begin
   repeat(10) @(posedge clock);
 
   // Check 2 : Reading to empty
-  $display("CHECK 2 : Reading to empty.");
+  $display("CHECK 2 : Reading to empty."); check = 2;
   // Reading
   for (int read_count = 1; read_count <= DEPTH; read_count++) begin
     @(negedge clock);
@@ -161,8 +165,34 @@ initial begin
 
   repeat(10) @(posedge clock);
 
-  // Check 3 : Back-to-back transfers for full throughput
-  $display("CHECK 3 : Back-to-back transfers for full throughput.");
+  // Check 3 : Write burst to full
+  $display("CHECK 3 : Write burst to full."); check = 3;
+  // Initial state
+  check_flags();
+  // Writing
+  @(negedge clock);
+  for (int write_count = 1; write_count <= DEPTH; write_count++) begin
+    write($urandom_range(WIDTH_POW2));
+  end
+  // Final state
+  check_flags();
+
+  repeat(10) @(posedge clock);
+
+  // Check 4 : Read burst to empty
+  $display("CHECK 4 : Read burst to empty."); check = 4;
+  // Reading
+  @(negedge clock);
+  for (int read_count = 1; read_count <= DEPTH; read_count++) begin
+    read();
+  end
+  // Final state
+  check_flags();
+
+  repeat(10) @(posedge clock);
+
+  // Check 5 : Back-to-back transfers for full throughput
+  $display("CHECK 5 : Back-to-back transfers for full throughput."); check =5;
   // First write
   @(negedge clock);
   write(0);
@@ -197,7 +227,7 @@ initial begin
   repeat(10) @(posedge clock);
 
   // Check 4 : Random stimulus
-  $display("CHECK 4 : Random stimulus.");
+  $display("CHECK 4 : Random stimulus."); check = 4;
   @(negedge clock);
   transfer_count    = 0;
   outstanding_count = 0;

@@ -17,8 +17,9 @@
 
 
 module valid_ready_fifo #(
-  parameter WIDTH = 8,
-  parameter DEPTH = 4
+  parameter WIDTH                  = 8,
+  parameter DEPTH                  = 4,
+  parameter MEMORY_SEQUENTIAL_READ = 0
 ) (
   input              clock,
   input              resetn,
@@ -54,8 +55,9 @@ wire      [WIDTH-1:0] memory_read_data;
 
 // Controller
 fifo_controller #(
-  .WIDTH ( WIDTH ),
-  .DEPTH ( DEPTH )
+  .WIDTH                  ( WIDTH                  ),
+  .DEPTH                  ( DEPTH                  ),
+  .MEMORY_SEQUENTIAL_READ ( MEMORY_SEQUENTIAL_READ )
 ) controller (
   .clock                ( clock                ),
   .resetn               ( resetn               ),
@@ -79,9 +81,10 @@ fifo_controller #(
 
 // Memory
 simple_dual_port_ram #(
-  .WIDTH        ( WIDTH ),
-  .DEPTH        ( DEPTH ),
-  .READ_LATENCY ( 0     )
+  .WIDTH           ( WIDTH                  ),
+  .DEPTH           ( DEPTH                  ),
+  .WRITE_THROUGH   ( MEMORY_SEQUENTIAL_READ ),
+  .SEQUENTIAL_READ ( MEMORY_SEQUENTIAL_READ )
 ) memory (
   .clock         ( memory_clock         ),
   .write_enable  ( memory_write_enable  ),

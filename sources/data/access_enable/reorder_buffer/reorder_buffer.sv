@@ -74,9 +74,9 @@ reorder_buffer_controller #(
 
 // Memory
 simple_dual_port_ram #(
-  .WIDTH        ( WIDTH ),
-  .DEPTH        ( DEPTH ),
-  .READ_LATENCY ( 0     )
+  .WIDTH           ( WIDTH ),
+  .DEPTH           ( DEPTH ),
+  .SEQUENTIAL_READ ( 0     )
 ) memory (
   .clock         ( memory_clock         ),
   .write_enable  ( memory_write_enable  ),

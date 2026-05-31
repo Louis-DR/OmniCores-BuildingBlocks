@@ -20,11 +20,12 @@ The read data output continuously shows the value at the head of the queue when 
 
 ## Parameters
 
-| Name         | Type    | Allowed Values | Default       | Description                                                 |
-| ------------ | ------- | -------------- | ------------- | ----------------------------------------------------------- |
-| `WIDTH`      | integer | `≥1`           | `8`           | Bit width of the data vector.                               |
-| `DEPTH`      | integer | `≥2`           | `4`           | Number of entries in the queue. Non-power-of-two supported. |
-| `DEPTH_LOG2` | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated).             |
+| Name                     | Type    | Allowed Values | Default       | Description                                                                                             |
+| ------------------------ | ------- | -------------- | ------------- | ------------------------------------------------------------------------------------------------------- |
+| `WIDTH`                  | integer | `≥1`           | `8`           | Bit width of the data vector.                                                                           |
+| `DEPTH`                  | integer | `≥2`           | `4`           | Number of entries in the queue. Non-power-of-two supported.                                             |
+| `DEPTH_LOG2`             | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated).                                                         |
+| `MEMORY_SEQUENTIAL_READ` | integer | `0`, `1`       | `0`           | Latency of the memory read port.<br/>• `0`: combinational read.<br/>• `1`: sequential read (one cycle). |
 
 ## Ports
 
@@ -60,7 +61,7 @@ The FIFO consists of two main components: a controller that manages pointers, st
 
 The **controller** maintains separate read and write pointers, each with an additional lap bit for correct level calculation, implemented with `advanced_wrapping_counter`. It generates the memory interface signals, calculates all status flags and thresholds, implements protection mechanisms, and generates error notifications. The controller doesn't store any data, only control state.
 
-The **simple dual-port RAM** provides independent read and write ports with combinational reads, allowing the data at the read address to appear immediately on the read data output.
+The **simple dual-port RAM** provides independent read and write ports. The queue supports two read modes configured via `MEMORY_SEQUENTIAL_READ`: a combinational read (`0`) allowing the data at the read address to appear immediately on the read data output, or a sequential read (`1`) where the memory has one cycle of read latency and the controller pre-fetches the next entry (acting as a First-Word Fall-Through queue).
 
 For **write operation**, when `write_enable` is asserted, the controller directs the RAM to store `write_data` at the location pointed to by the write pointer, and the write pointer is incremented. Writing when full is ignored and the data is lost.
 

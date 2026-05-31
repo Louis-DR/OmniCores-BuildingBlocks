@@ -44,11 +44,12 @@ The input `clock` of the user interfaces is forwarded on `memory_clock` to drive
 
 ## Parameters
 
-| Name         | Type    | Allowed Values    | Default       | Description                                     |
-| ------------ | ------- | ----------------- | ------------- | ----------------------------------------------- |
-| `WIDTH`      | integer | `≥1`              | `8`           | Bit width of the data vector.                   |
-| `DEPTH`      | integer | `≥2` power-of-two | `4`           | Number of entries in the queue.                 |
-| `DEPTH_LOG2` | integer | `≥1`              | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated). |
+| Name                  | Type    | Allowed Values    | Default       | Description                                                                                             |
+| --------------------- | ------- | ----------------- | ------------- | ------------------------------------------------------------------------------------------------------- |
+| `WIDTH`               | integer | `≥1`              | `8`           | Bit width of the data vector.                                                                           |
+| `DEPTH`               | integer | `≥2` power-of-two | `4`           | Number of entries in the queue.                                                                         |
+| `DEPTH_LOG2`          | integer | `≥1`              | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated).                                                         |
+| `MEMORY_SEQUENTIAL_READ` | integer | `0`, `1`          | `0`           | Latency of the memory read port.<br/>• `0`: combinational read.<br/>• `1`: sequential read (one cycle). |
 
 ## Ports
 
@@ -78,7 +79,7 @@ During write operation, when `write_enable` is high, the `memory_write_address` 
 
 There is no safety mechanism against writing when full. The write pointer will be incremented over the read pointer, overwriting the head data and corrupting the full and empty flags, breaking the queue and requirering a reset.
 
-Whenever the queue is not empty, meaning there is at least one entry in the queue, the controller continuously reads from the memory by asserting `memory_read_enable`, setting `memory_read_address` to the read pointer stripped of its lap bit, and the `memory_read_data` is forwarded on the `read_data` output. When `read_enable` is high at the rising edge of the `clock`, the read pointer is incremented.
+Whenever the queue is not empty, meaning there is at least one entry in the queue, the controller continuously reads from the memory by asserting `memory_read_enable`. If configured with combinational read (`MEMORY_SEQUENTIAL_READ = 0`), the `memory_read_address` gets the read pointer stripped of its lap bit. If configured with sequential read (`MEMORY_SEQUENTIAL_READ = 1`), the controller operates as a First-Word Fall-Through (FWFT) queue and points the `memory_read_address` to the pre-fetched next entry when needed. In all cases, the `memory_read_data` is forwarded on the `read_data` output. When `read_enable` is high at the rising edge of the `clock`, the read pointer is incremented.
 
 There is no safety mechanism against reading when empty. The read pointer will be incremented over the write pointer, reading invalid data and corrupting the full and empty flags, breaking the queue and requirering a reset.
 

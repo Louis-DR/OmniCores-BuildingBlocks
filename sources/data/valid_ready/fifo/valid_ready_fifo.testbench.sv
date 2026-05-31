@@ -19,10 +19,11 @@
 module valid_ready_fifo__testbench ();
 
 // Test parameters
-localparam real CLOCK_PERIOD = 10;
-localparam int  WIDTH        = 8;
-localparam int  WIDTH_POW2   = 2**WIDTH;
-localparam int  DEPTH        = 4;
+localparam real CLOCK_PERIOD           = 10;
+localparam int  WIDTH                  = 8;
+localparam int  WIDTH_POW2             = 2**WIDTH;
+localparam int  DEPTH                  = 4;
+localparam int  MEMORY_SEQUENTIAL_READ = 0;
 
 // Check parameters
 localparam int  THROUGHPUT_CHECK_DURATION      = 100;
@@ -52,8 +53,9 @@ int timeout_countdown;
 
 // Device under test
 valid_ready_fifo #(
-  .WIDTH ( WIDTH ),
-  .DEPTH ( DEPTH )
+  .WIDTH                  ( WIDTH                  ),
+  .DEPTH                  ( DEPTH                  ),
+  .MEMORY_SEQUENTIAL_READ ( MEMORY_SEQUENTIAL_READ )
 ) valid_ready_fifo_dut (
   .clock       ( clock       ),
   .resetn      ( resetn      ),

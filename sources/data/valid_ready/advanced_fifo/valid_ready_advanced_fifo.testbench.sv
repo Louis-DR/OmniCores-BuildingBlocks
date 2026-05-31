@@ -20,18 +20,19 @@
 module valid_ready_advanced_fifo__testbench ();
 
 // Test parameters
-localparam real CLOCK_PERIOD = 10;
-localparam int  WIDTH        = 8;
-localparam int  WIDTH_POW2   = 2**WIDTH;
-localparam int  DEPTH        = 4;
-localparam int  DEPTH_LOG2   = $clog2(DEPTH);
+localparam real CLOCK_PERIOD           = 10;
+localparam int  WIDTH                  = 8;
+localparam int  WIDTH_POW2             = 2**WIDTH;
+localparam int  DEPTH                  = 4;
+localparam int  DEPTH_LOG2             = $clog2(DEPTH);
+localparam int  MEMORY_SEQUENTIAL_READ = 0;
 
 // Check parameters
-localparam int  THROUGHPUT_CHECK_DURATION      = 100;
-localparam int  RANDOM_CHECK_DURATION          = 500;
-localparam real RANDOM_CHECK_WRITE_PROBABILITY = 0.5;
-localparam real RANDOM_CHECK_READ_PROBABILITY  = 0.5;
-localparam int  RANDOM_CHECK_TIMEOUT           = 5000;
+localparam int  THROUGHPUT_CHECK_DURATION            = 100;
+localparam int  RANDOM_CHECK_DURATION                = 500;
+localparam real RANDOM_CHECK_WRITE_PROBABILITY       = 0.5;
+localparam real RANDOM_CHECK_READ_PROBABILITY        = 0.5;
+localparam int  RANDOM_CHECK_TIMEOUT                 = 5000;
 localparam int  RANDOM_CHECK_THRESHOLD_CHANGE_PERIOD = 25;
 
 // Device ports
@@ -70,8 +71,9 @@ bool write_outstanding;
 
 // Device under test
 valid_ready_advanced_fifo #(
-  .WIDTH ( WIDTH ),
-  .DEPTH ( DEPTH )
+  .WIDTH                  ( WIDTH                  ),
+  .DEPTH                  ( DEPTH                  ),
+  .MEMORY_SEQUENTIAL_READ ( MEMORY_SEQUENTIAL_READ )
 ) valid_ready_advanced_fifo_dut (
   .clock                  ( clock                  ),
   .resetn                 ( resetn                 ),

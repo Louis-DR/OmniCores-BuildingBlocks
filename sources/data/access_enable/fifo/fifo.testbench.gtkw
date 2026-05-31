@@ -1,10 +1,16 @@
-[dumpfile] "fifo.testbench.vcd"
-[savefile] "fifo.testbench.gtkw"
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Mon Mar  2 20:51:36 2026
+[*]
+[dumpfile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/data/access_enable/fifo/fifo.testbench.vcd"
+[dumpfile_mtime] "Mon Mar  2 20:50:07 2026"
+[dumpfile_size] 87281
+[savefile] "/Users/louis/Library/CloudStorage/Dropbox/Projets/OmniCores-BuildingBlocks/sources/data/access_enable/fifo/fifo.testbench.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
-*-9.563104 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[sst_width] 200
+*-10.071673 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 255
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 300
@@ -22,10 +28,24 @@ fifo__testbench.full
 @200
 -
 @28
+fifo__testbench.fifo_dut.controller.memory_write_enable
+fifo__testbench.fifo_dut.controller.memory_write_address[1:0]
+@22
+fifo__testbench.fifo_dut.controller.memory_write_data[7:0]
+@200
+-
+@28
 fifo__testbench.read_enable
 @22
 fifo__testbench.read_data[7:0]
 @28
 fifo__testbench.empty
+@200
+-
+@28
+fifo__testbench.fifo_dut.controller.memory_read_enable
+fifo__testbench.fifo_dut.controller.memory_read_address[1:0]
+@22
+fifo__testbench.fifo_dut.controller.memory_read_data[7:0]
 [pattern_trace] 1
 [pattern_trace] 0

@@ -153,7 +153,7 @@ asynchronous_advanced_fifo_controller #(
 asynchronous_simple_dual_port_ram #(
   .WIDTH        ( WIDTH ),
   .DEPTH        ( DEPTH ),
-  .READ_LATENCY ( 0     )
+  .SEQUENTIAL_READ ( 0     )
 ) memory (
   .write_clock   ( memory_write_clock   ),
   .write_enable  ( memory_write_enable  ),

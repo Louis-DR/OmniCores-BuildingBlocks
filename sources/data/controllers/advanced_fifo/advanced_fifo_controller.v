@@ -20,7 +20,8 @@
 module advanced_fifo_controller #(
   parameter WIDTH      = 8,
   parameter DEPTH      = 4,
-  parameter DEPTH_LOG2 = `CLOG2(DEPTH)
+  parameter DEPTH_LOG2 = `CLOG2(DEPTH),
+  parameter MEMORY_SEQUENTIAL_READ = 0
 ) (
   input                   clock,
   input                   resetn,
@@ -112,6 +113,9 @@ wire [DEPTH_LOG2-1:0] read_address = read_pointer[DEPTH_LOG2-1:0];
 // Read lap bit
 wire read_lap = read_pointer[DEPTH_LOG2];
 
+// Queue is empty if the read and write pointers are the same and the lap bits are equal
+assign empty = write_address == read_address && write_lap == read_lap;
+
 // Read when not empty and not flushing
 wire can_read = ~empty & ~flush;
 wire do_read  = read_enable & can_read;
@@ -152,7 +156,6 @@ end
 assign space = DEPTH - level;
 
 // Queue is empty if the read and write pointers are the same and the lap bits are equal
-assign empty        = write_address == read_address && write_lap == read_lap;
 assign almost_empty = level == 1;
 assign half_empty   = level <= DEPTH / 2;
 assign not_empty    = ~empty;
@@ -207,9 +210,48 @@ assign memory_write_address = write_address;
 assign memory_write_data    = write_data;
 
 // Read port
-// Continuously read from head of queue for low latency read
-assign memory_read_enable   = ~empty;
-assign memory_read_address  = read_address;
-assign read_data            = memory_read_data;
+generate
+  // With sequential read (one cycle latency), use a head buffer to decouple
+  // read_data from the RAM output. The buffer acts as the true FIFO head.
+  if (MEMORY_SEQUENTIAL_READ) begin : gen_sequential_read
+    // Head buffer register
+    reg [WIDTH-1:0] head_buffer;
+
+    // Bypass write data to head buffer when:
+    // 1. Writing to empty FIFO, or
+    // 2. Simultaneous read+write when FIFO has exactly one entry
+    wire head_bypass = do_write & (empty | (do_read & almost_empty));
+
+    always @(posedge clock) begin
+      if (head_bypass) begin
+        head_buffer <= write_data;
+      end else if (do_read) begin
+        head_buffer <= memory_read_data;
+      end
+    end
+
+    // Read data comes from head buffer
+    assign read_data = head_buffer;
+
+    // Memory continuously pre-fetches
+    assign memory_read_enable = ~empty;
+
+    // Pre-fetch address accounts for reads advancing the pointer
+    if (`IS_POW2(DEPTH)) begin : gen_pow2_prefetch
+      assign memory_read_address = read_address + 1'b1 + do_read;
+    end else begin : gen_non_pow2_prefetch
+      // For non-power-of-2, compute next address with wrap
+      wire [DEPTH_LOG2-1:0] read_address_plus1 = (read_address == DEPTH[DEPTH_LOG2-1:0] - 1) ? {DEPTH_LOG2{1'b0}} : read_address + 1;
+      wire [DEPTH_LOG2-1:0] read_address_plus2 = (read_address_plus1 == DEPTH[DEPTH_LOG2-1:0] - 1) ? {DEPTH_LOG2{1'b0}} : read_address_plus1 + 1;
+      assign memory_read_address = do_read ? read_address_plus2 : read_address_plus1;
+    end
+  end
+  // With combinational read (zero cycle latency), continuously read from head of queue
+  else begin : gen_combinational_read
+    assign read_data            = memory_read_data;
+    assign memory_read_enable   = ~empty | do_write;
+    assign memory_read_address  = read_address;
+  end
+endgenerate
 
 endmodule

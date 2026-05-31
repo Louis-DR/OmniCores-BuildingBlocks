@@ -52,11 +52,12 @@ The input `clock` of the user interfaces is forwarded on `memory_clock` to drive
 
 ## Parameters
 
-| Name         | Type    | Allowed Values | Default       | Description                                     |
-| ------------ | ------- | -------------- | ------------- | ----------------------------------------------- |
-| `WIDTH`      | integer | `≥1`           | `8`           | Bit width of the data vector.                   |
-| `DEPTH`      | integer | `≥2`           | `4`           | Number of entries in the queue .                |
-| `DEPTH_LOG2` | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated). |
+| Name                  | Type    | Allowed Values | Default       | Description                                                                                             |
+| --------------------- | ------- | -------------- | ------------- | ------------------------------------------------------------------------------------------------------- |
+| `WIDTH`               | integer | `≥1`           | `8`           | Bit width of the data vector.                                                                           |
+| `DEPTH`               | integer | `≥2`           | `4`           | Number of entries in the queue .                                                                        |
+| `DEPTH_LOG2`          | integer | `≥1`           | `log₂(DEPTH)` | Log base 2 of depth (automatically calculated).                                                         |
+| `MEMORY_SEQUENTIAL_READ` | integer | `0`, `1`       | `0`           | Latency of the memory read port.<br/>• `0`: combinational read.<br/>• `1`: sequential read (one cycle). |
 
 ## Ports
 
@@ -100,7 +101,7 @@ The internal `can_write` wire indicates that the queue is not full (or full but 
 
 If a write is requested (`write_enable` is asserted) but it isn't allowed (`can_write` is deasserted), then the write is ignored - the write port of the memory interface stays idle and the write pointer is unchanged - but the `write_miss` output is asserted for one cycle.
 
-Whenever the queue is not empty, meaning there is at least one entry in the queue, the controller continuously reads from the memory by asserting `memory_read_enable`, setting `memory_read_address` to the read pointer stripped of its lap bit, and the `memory_read_data` is forwarded on the `read_data` output. The internal `can_read` wire indicates that the queue is not empty and not flushing. When a read is requested (`read_enable` is asserted) and it is allowed (`can_read` is asserted), then the internal wire `do_write` is asserted and a read occurs at the rising edge: at the rising edge of the `clock`, the read pointer is incremented.
+Whenever the queue is not empty, meaning there is at least one entry in the queue, the controller continuously reads from the memory by asserting `memory_read_enable`. If configured with combinational read (`MEMORY_SEQUENTIAL_READ = 0`), the `memory_read_address` gets the read pointer stripped of its lap bit. If configured with sequential read (`MEMORY_SEQUENTIAL_READ = 1`), the controller operates as a First-Word Fall-Through (FWFT) queue and points the `memory_read_address` to the pre-fetched next entry when needed. In all cases, the `memory_read_data` is forwarded on the `read_data` output. The internal `can_read` wire indicates that the queue is not empty and not flushing. When a read is requested (`read_enable` is asserted) and it is allowed (`can_read` is asserted), then the internal wire `do_read` is asserted and a read occurs at the rising edge: at the rising edge of the `clock`, the read pointer is incremented.
 
 If a read is requested (`read_enable` is asserted) but it isn't allowed (`can_read` is deasserted), then the read is ignored - the read port of the memory interface stays idle, the read data is invalid, and the read pointer is unchanged - but the `read_error` output is asserted for one cycle.
 
