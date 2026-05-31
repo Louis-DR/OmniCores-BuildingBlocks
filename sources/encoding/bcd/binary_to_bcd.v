@@ -35,16 +35,18 @@ wire [SCRATCH_WIDTH-1:0] scratch [NUMBER_ITERATIONS:0];
 // Initialize the scratch with the binary input
 assign scratch[0] = {{WIDTH_BCD{1'b0}}, binary};
 
+genvar iteration;
+genvar digit;
 generate
-  for (genvar iteration = 0; iteration < NUMBER_ITERATIONS; iteration = iteration + 1) begin : double_dabble
+  for (iteration = 0; iteration < NUMBER_ITERATIONS; iteration = iteration + 1) begin : double_dabble
     // Decode the BCD digits from the current scratch
     wire [3:0] bcd_digits [NUMBER_BCD_DIGITS-1:0];
-    for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : decode_bcd_digits
+    for (digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : decode_bcd_digits
       assign bcd_digits[digit] = scratch[iteration][WIDTH_BINARY + BCD_DIGIT_WIDTH*digit +: BCD_DIGIT_WIDTH];
     end
     // Add 3 to any BCD digit which is at least 5
     wire [SCRATCH_WIDTH-1:0] scratch_temporary;
-    for (genvar digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : add_3_to_bcd_digits
+    for (digit = 0; digit < NUMBER_BCD_DIGITS; digit = digit + 1) begin : add_3_to_bcd_digits
       assign scratch_temporary[WIDTH_BINARY + BCD_DIGIT_WIDTH*digit +: BCD_DIGIT_WIDTH] =
              (bcd_digits[digit] >= 5) ? bcd_digits[digit] + 3 : bcd_digits[digit];
     end
