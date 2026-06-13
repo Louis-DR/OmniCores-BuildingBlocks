@@ -1,8 +1,8 @@
 Advanced Wrapping Counter
 advanced_wrapping_counter
--> clock           minimum ->
--> resetn          maximum ->
--> decrement     underflow ->
--> increment      overflow ->
-=> load_count        count =>
--> load_enable
+-----------------> clock           minimum ----------------->
+-----------------> resetn          maximum ----------------->
+-----------------> decrement     underflow ----------------->
+-----------------> increment      overflow ----------------->
+==[log₂(RANGE)]==> load_count        count ==[log₂(RANGE)]==>
+-----------------> load_enable

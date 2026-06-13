@@ -1,10 +1,10 @@
 Tag Directory
 tag_directory
--> clock
--> resetn
-<- full                     empty ->
--> allocate_enable     search_hit ->
-=> allocate_tag        search_tag <=
-<= allocate_index    search_index =>
-                     evict_enable <-
-                      evict_index <=
+-----------------> clock
+-----------------> resetn
+<----------------- full                     empty ----------------->
+-----------------> allocate_enable     search_hit ----------------->
+=====[WIDTH]=====> allocate_tag        search_tag <=====[WIDTH]=====
+<==[log₂(DEPTH)]== allocate_index    search_index ==[log₂(DEPTH)]==>
+                                     evict_enable <-----------------
+                                      evict_index <==[log₂(DEPTH)]==

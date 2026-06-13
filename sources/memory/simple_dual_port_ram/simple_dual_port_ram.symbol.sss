@@ -1,6 +1,6 @@
 Simple Dual-Port RAM
 simple_dual_port_ram
--> clock
--> write_enable   read_enable <-
-=> write_address read_address <=
-=> write_data       read_data =>
+-----------------> clock
+-----------------> write_enable     read_enable <-----------------
+==[log₂(DEPTH)]==> write_address   read_address <==[log₂(DEPTH)]==
+=====[WIDTH]=====> write_data         read_data =====[WIDTH]=====>

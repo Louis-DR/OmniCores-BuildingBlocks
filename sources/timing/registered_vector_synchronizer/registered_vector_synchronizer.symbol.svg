@@ -1,27 +1,29 @@
-<svg width="366" height="140" viewBox="0 0 183 70" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="133" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="91" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Registered Vector Synchronizer</text>
-  <text x="91" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">registered_vector_synchronizer</text>
-      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">source_clock</text>
-        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="156" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">destination_clock</text>
-        <line x1="164" y1="35" x2="178" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 158 35 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">source_resetn</text>
-        <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="156" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">destination_resetn</text>
-        <line x1="164" y1="45" x2="178" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 158 45 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">data_in</text>
-        <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
+<svg width="398" height="140" viewBox="0 0 199 70" xmlns="http://www.w3.org/2000/svg">
+  <rect x="33" y="5" width="133" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="99" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Registered Vector Synchronizer</text>
+  <text x="99" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">registered_vector_synchronizer</text>
+      <text x="35" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">source_clock</text>
+        <line x1="27" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 33 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="164" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">destination_clock</text>
+        <line x1="172" y1="35" x2="194" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 166 35 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="35" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">source_resetn</text>
+        <line x1="27" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 33 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="164" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">destination_resetn</text>
+        <line x1="172" y1="45" x2="194" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 166 45 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="35" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">data_in</text>
+        <line x1="27" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 33 55 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="53" x2="12" y2="57" stroke="black" stroke-width="1"/>
-      <text x="156" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">data_out</text>
-        <line x1="158" y1="55" x2="172" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 178 55 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="161" y1="53" x2="165" y2="57" stroke="black" stroke-width="1"/>
+          <text x="19" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">WIDTH</text>
+      <text x="164" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">data_out</text>
+        <line x1="166" y1="55" x2="188" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 194 55 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="169" y1="53" x2="173" y2="57" stroke="black" stroke-width="1"/>
+          <text x="180" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">WIDTH</text>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

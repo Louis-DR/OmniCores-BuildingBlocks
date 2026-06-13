@@ -1,9 +1,9 @@
 Out-of-Order Buffer
 out_of_order_buffer
--> clock
--> resetn
--> write_enable   read_enable <-
-                   read_clear <-
-=> write_data       read_data =>
-<= write_index     read_index <=
-<- full                 empty ->
+-----------------> clock
+-----------------> resetn
+-----------------> write_enable   read_enable <-----------------
+                                   read_clear <-----------------
+=====[WIDTH]=====> write_data       read_data =====[WIDTH]=====>
+<==[log₂(DEPTH)]== write_index     read_index <==[log₂(DEPTH)]==
+<----------------- full                 empty ----------------->

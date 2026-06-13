@@ -1,15 +1,15 @@
 Asynchronous FIFO Controller
 asynchronous_fifo_controller
--> write_clock      read_clock <-
--> write_resetn    read_resetn <-
--> write_enable    read_enable <-
-=> write_data        read_data =>
-<- write_full       read_empty ->
-            memory_write_clock ->
-           memory_write_enable ->
-          memory_write_address =>
-             memory_write_data =>
-             memory_read_clock ->
-            memory_read_enable ->
-           memory_read_address =>
-              memory_read_data <=
+-----------> write_clock      read_clock <-----------------
+-----------> write_resetn    read_resetn <-----------------
+-----------> write_enable    read_enable <-----------------
+==[WIDTH]==> write_data        read_data =====[WIDTH]=====>
+<----------- write_full       read_empty ----------------->
+                      memory_write_clock ----------------->
+                     memory_write_enable ----------------->
+                    memory_write_address ==[log₂(DEPTH)]==>
+                       memory_write_data =====[WIDTH]=====>
+                       memory_read_clock ----------------->
+                      memory_read_enable ----------------->
+                     memory_read_address ==[log₂(DEPTH)]==>
+                        memory_read_data <=====[WIDTH]=====

@@ -1,21 +1,23 @@
-<svg width="284" height="140" viewBox="0 0 142 70" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="92" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="71" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Round-Robin Arbiter</text>
-  <text x="71" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">round_robin_arbiter</text>
-      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
-        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
-        <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">requests</text>
-        <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
+<svg width="300" height="140" viewBox="0 0 150 70" xmlns="http://www.w3.org/2000/svg">
+  <rect x="29" y="5" width="92" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="75" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Round-Robin Arbiter</text>
+  <text x="75" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">round_robin_arbiter</text>
+      <text x="31" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
+        <line x1="23" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 29 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="31" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
+        <line x1="23" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 29 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="31" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">requests</text>
+        <line x1="23" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 29 55 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="53" x2="12" y2="57" stroke="black" stroke-width="1"/>
-      <text x="115" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">grant</text>
-        <line x1="117" y1="55" x2="131" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 137 55 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="120" y1="53" x2="124" y2="57" stroke="black" stroke-width="1"/>
+          <text x="17" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">SIZE</text>
+      <text x="119" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">grant</text>
+        <line x1="121" y1="55" x2="139" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 145 55 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="124" y1="53" x2="128" y2="57" stroke="black" stroke-width="1"/>
+          <text x="133" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">SIZE</text>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

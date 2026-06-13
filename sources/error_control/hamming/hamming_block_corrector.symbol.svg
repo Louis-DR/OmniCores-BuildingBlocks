@@ -1,22 +1,25 @@
-<svg width="322" height="140" viewBox="0 0 161 70" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="111" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="80" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Hamming Block Corrector</text>
-  <text x="80" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">hamming_block_corrector</text>
-      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">block</text>
-        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+<svg width="554" height="140" viewBox="0 0 277 70" xmlns="http://www.w3.org/2000/svg">
+  <rect x="83" y="5" width="111" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="138" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Hamming Block Corrector</text>
+  <text x="138" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">hamming_block_corrector</text>
+      <text x="85" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">block</text>
+        <line x1="77" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 83 35 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="33" x2="12" y2="37" stroke="black" stroke-width="1"/>
-      <text x="134" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_block</text>
-        <line x1="136" y1="35" x2="150" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 156 35 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="139" y1="33" x2="143" y2="37" stroke="black" stroke-width="1"/>
-      <text x="134" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_error_position</text>
-        <line x1="136" y1="45" x2="150" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 156 45 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="139" y1="43" x2="143" y2="47" stroke="black" stroke-width="1"/>
-      <text x="134" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">error</text>
-        <line x1="136" y1="55" x2="150" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 156 55 l -6 +2.0 v -4 z" fill="black"/>
+          <text x="44" y="32" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">DATA_WIDTH+PARITY_WIDTH</text>
+      <text x="192" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_block</text>
+        <line x1="194" y1="35" x2="266" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 272 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="197" y1="33" x2="201" y2="37" stroke="black" stroke-width="1"/>
+          <text x="233" y="32" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">DATA_WIDTH+PARITY_WIDTH</text>
+      <text x="192" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_error_position</text>
+        <line x1="194" y1="45" x2="266" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 272 45 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="197" y1="43" x2="201" y2="47" stroke="black" stroke-width="1"/>
+          <text x="233" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">log₂(BLOCK_WIDTH)</text>
+      <text x="192" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">error</text>
+        <line x1="194" y1="55" x2="266" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 272 55 l -6 +2.0 v -4 z" fill="black"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

@@ -1,4 +1,4 @@
-<svg width="304" height="160" viewBox="0 0 152 80" xmlns="http://www.w3.org/2000/svg">
+<svg width="342" height="160" viewBox="0 0 171 80" xmlns="http://www.w3.org/2000/svg">
   <rect x="25" y="5" width="102" height="70" fill="none" stroke="black" stroke-width="1" rx="5"/>
   <text x="76" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Gray Wrapping Counter</text>
   <text x="76" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">gray_wrapping_counter</text>
@@ -12,16 +12,18 @@
         <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
         <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
       <text x="125" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">count_gray</text>
-        <line x1="127" y1="55" x2="141" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 147 55 l -6 +2.0 v -4 z" fill="black"/>
+        <line x1="127" y1="55" x2="160" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 166 55 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="130" y1="53" x2="134" y2="57" stroke="black" stroke-width="1"/>
+          <text x="146" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">log₂(RANGE)</text>
       <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">increment</text>
         <line x1="19" y1="65" x2="5" y2="65" stroke="black" stroke-width="1"/>
         <path d="M 25 65 l -6 +2.0 v -4 z" fill="black"/>
       <text x="125" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">count_binary</text>
-        <line x1="127" y1="65" x2="141" y2="65" stroke="black" stroke-width="1"/>
-        <path d="M 147 65 l -6 +2.0 v -4 z" fill="black"/>
+        <line x1="127" y1="65" x2="160" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 166 65 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="130" y1="63" x2="134" y2="67" stroke="black" stroke-width="1"/>
+          <text x="146" y="62" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">log₂(RANGE)</text>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

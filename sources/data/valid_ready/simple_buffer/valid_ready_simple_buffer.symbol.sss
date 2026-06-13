@@ -1,8 +1,8 @@
 Valid-Ready Simple Buffer
 valid_ready_simple_buffer
--> clock
--> resetn
-=> write_data     read_data =>
--> write_valid   read_valid ->
-<- write_ready   read_ready <-
-<- full               empty ->
+-----------> clock
+-----------> resetn
+==[WIDTH]==> write_data     read_data ==[WIDTH]==>
+-----------> write_valid   read_valid ----------->
+<----------- write_ready   read_ready <-----------
+<----------- full               empty ----------->

@@ -1,25 +1,28 @@
-<svg width="398" height="160" viewBox="0 0 199 80" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="149" height="70" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="99" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Extented Hamming Block Corrector</text>
-  <text x="99" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">extended_hamming_block_corrector</text>
-      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">block</text>
-        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+<svg width="630" height="160" viewBox="0 0 315 80" xmlns="http://www.w3.org/2000/svg">
+  <rect x="83" y="5" width="149" height="70" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="157" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Extented Hamming Block Corrector</text>
+  <text x="157" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">extended_hamming_block_corrector</text>
+      <text x="85" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">block</text>
+        <line x1="77" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 83 35 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="33" x2="12" y2="37" stroke="black" stroke-width="1"/>
-      <text x="172" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_block</text>
-        <line x1="174" y1="35" x2="188" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 194 35 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="177" y1="33" x2="181" y2="37" stroke="black" stroke-width="1"/>
-      <text x="172" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_error_position</text>
-        <line x1="174" y1="45" x2="188" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 194 45 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="177" y1="43" x2="181" y2="47" stroke="black" stroke-width="1"/>
-      <text x="172" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">correctable_error</text>
-        <line x1="174" y1="55" x2="188" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 194 55 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="172" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">uncorrectable_error</text>
-        <line x1="174" y1="65" x2="188" y2="65" stroke="black" stroke-width="1"/>
-        <path d="M 194 65 l -6 +2.0 v -4 z" fill="black"/>
+          <text x="44" y="32" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">DATA_WIDTH+PARITY_WIDTH</text>
+      <text x="230" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_block</text>
+        <line x1="232" y1="35" x2="304" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 310 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="235" y1="33" x2="239" y2="37" stroke="black" stroke-width="1"/>
+          <text x="271" y="32" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">DATA_WIDTH+PARITY_WIDTH</text>
+      <text x="230" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">corrected_error_position</text>
+        <line x1="232" y1="45" x2="304" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 310 45 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="235" y1="43" x2="239" y2="47" stroke="black" stroke-width="1"/>
+          <text x="271" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">log₂(BLOCK_WIDTH)</text>
+      <text x="230" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">correctable_error</text>
+        <line x1="232" y1="55" x2="304" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 310 55 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="230" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">uncorrectable_error</text>
+        <line x1="232" y1="65" x2="304" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 310 65 l -6 +2.0 v -4 z" fill="black"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

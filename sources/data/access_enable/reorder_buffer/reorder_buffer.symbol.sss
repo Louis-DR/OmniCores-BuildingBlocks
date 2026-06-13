@@ -1,11 +1,11 @@
 Reorder Buffer
 reorder_buffer
--> clock
--> resetn
--> reserve_enable
-<= reserve_index
--> write_enable     read_enable <-
-=> write_index
-=> write_data         read_data =>
-<- reserve_full       data_full ->
-<- reserve_empty     data_empty ->
+-----------------> clock
+-----------------> resetn
+-----------------> reserve_enable
+<==[log₂(DEPTH)]== reserve_index
+-----------------> write_enable     read_enable <-----------
+==[log₂(DEPTH)]==> write_index
+=====[WIDTH]=====> write_data         read_data ==[WIDTH]==>
+<----------------- reserve_full       data_full ----------->
+<----------------- reserve_empty     data_empty ----------->

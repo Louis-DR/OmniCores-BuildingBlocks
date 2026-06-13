@@ -1,6 +1,6 @@
 Asynchronous simple Dual-Port RAM
 asynchronous_simple_dual_port_ram
--> write_clock       read_clock <-
--> write_enable     read_enable <-
-=> write_address   read_address <=
-=> write_data         read_data =>
+-----------------> write_clock       read_clock <-----------------
+-----------------> write_enable     read_enable <-----------------
+==[log₂(DEPTH)]==> write_address   read_address <==[log₂(DEPTH)]==
+=====[WIDTH]=====> write_data         read_data =====[WIDTH]=====>

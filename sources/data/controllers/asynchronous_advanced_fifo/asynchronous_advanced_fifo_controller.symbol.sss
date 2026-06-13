@@ -1,30 +1,30 @@
 Asynchronous Advanced FIFO Controller
 asynchronous_advanced_fifo_controller
--> write_clock                                     read_clock <-
--> write_resetn                                   read_resetn <-
--> write_flush                                     read_flush <-
--> write_enable                                   read_enable <-
-=> write_data                                       read_data =>
-<- write_miss                                      read_error ->
-<- write_empty                                     read_empty ->
-<- write_almost_empty                       read_almost_empty ->
-<- write_half_empty                           read_half_empty ->
-<- write_not_empty                             read_not_empty ->
-<- write_not_full                               read_not_full ->
-<- write_half_full                             read_half_full ->
-<- write_almost_full                         read_almost_full ->
-<- write_full                                       read_full ->
-<= write_level                                     read_level =>
-<= write_space                                     read_space =>
-=> write_lower_threshold_level     read_lower_threshold_level <=
-<- write_lower_threshold_status   read_lower_threshold_status ->
-=> write_upper_threshold_level     read_upper_threshold_level <=
-<- write_upper_threshold_status   read_upper_threshold_status ->
-                                           memory_write_clock ->
-                                          memory_write_enable ->
-                                         memory_write_address =>
-                                            memory_write_data =>
-                                            memory_read_clock ->
-                                           memory_read_enable ->
-                                          memory_read_address =>
-                                             memory_read_data <=
+-------------------> write_clock                                     read_clock <-------------------
+-------------------> write_resetn                                   read_resetn <-------------------
+-------------------> write_flush                                     read_flush <-------------------
+-------------------> write_enable                                   read_enable <-------------------
+======[WIDTH]======> write_data                                       read_data ======[WIDTH]======>
+<------------------- write_miss                                      read_error ------------------->
+<------------------- write_empty                                     read_empty ------------------->
+<------------------- write_almost_empty                       read_almost_empty ------------------->
+<------------------- write_half_empty                           read_half_empty ------------------->
+<------------------- write_not_empty                             read_not_empty ------------------->
+<------------------- write_not_full                               read_not_full ------------------->
+<------------------- write_half_full                             read_half_full ------------------->
+<------------------- write_almost_full                         read_almost_full ------------------->
+<------------------- write_full                                       read_full ------------------->
+<==[log₂(DEPTH)+1]== write_level                                     read_level ==[log₂(DEPTH)+1]==>
+<==[log₂(DEPTH)+1]== write_space                                     read_space ==[log₂(DEPTH)+1]==>
+==[log₂(DEPTH)+1]==> write_lower_threshold_level     read_lower_threshold_level <==[log₂(DEPTH)+1]==
+<------------------- write_lower_threshold_status   read_lower_threshold_status ------------------->
+==[log₂(DEPTH)+1]==> write_upper_threshold_level     read_upper_threshold_level <==[log₂(DEPTH)+1]==
+<------------------- write_upper_threshold_status   read_upper_threshold_status ------------------->
+                                                             memory_write_clock ------------------->
+                                                            memory_write_enable ------------------->
+                                                           memory_write_address ===[log₂(DEPTH)]===>
+                                                              memory_write_data ======[WIDTH]======>
+                                                              memory_read_clock ------------------->
+                                                             memory_read_enable ------------------->
+                                                            memory_read_address ===[log₂(DEPTH)]===>
+                                                               memory_read_data <======[WIDTH]======

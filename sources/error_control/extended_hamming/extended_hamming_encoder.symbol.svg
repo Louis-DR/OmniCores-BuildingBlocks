@@ -1,19 +1,22 @@
-<svg width="342" height="120" viewBox="0 0 171 60" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="121" height="50" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="85" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Extended Hamming Encoder</text>
-  <text x="85" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">extended_hamming_encoder</text>
-      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">data</text>
-        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
+<svg width="504" height="120" viewBox="0 0 252 60" xmlns="http://www.w3.org/2000/svg">
+  <rect x="48" y="5" width="121" height="50" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="108" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Extended Hamming Encoder</text>
+  <text x="108" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">extended_hamming_encoder</text>
+      <text x="50" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">data</text>
+        <line x1="42" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 48 35 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="33" x2="12" y2="37" stroke="black" stroke-width="1"/>
-      <text x="144" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">code</text>
-        <line x1="146" y1="35" x2="160" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 166 35 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="149" y1="33" x2="153" y2="37" stroke="black" stroke-width="1"/>
-      <text x="144" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">block</text>
-        <line x1="146" y1="45" x2="160" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 166 45 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="149" y1="43" x2="153" y2="47" stroke="black" stroke-width="1"/>
+          <text x="26" y="32" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">DATA_WIDTH</text>
+      <text x="167" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">code</text>
+        <line x1="169" y1="35" x2="241" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 247 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="172" y1="33" x2="176" y2="37" stroke="black" stroke-width="1"/>
+          <text x="208" y="32" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">PARITY_WIDTH</text>
+      <text x="167" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">block</text>
+        <line x1="169" y1="45" x2="241" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 247 45 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="172" y1="43" x2="176" y2="47" stroke="black" stroke-width="1"/>
+          <text x="208" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">DATA_WIDTH+PARITY_WIDTH</text>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

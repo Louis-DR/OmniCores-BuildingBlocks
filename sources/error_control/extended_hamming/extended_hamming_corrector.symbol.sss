@@ -1,6 +1,6 @@
 Extented Hamming Corrector
 extended_hamming_corrector
-=> data             corrected_data =>
-=> code   corrected_error_position =>
-                 correctable_error ->
-               uncorrectable_error ->
+===[DATA_WIDTH]===> data             corrected_data ======[DATA_WIDTH]=====>
+==[PARITY_WIDTH]==> code   corrected_error_position ==[log₂(BLOCK_WIDTH)]==>
+                                  correctable_error ----------------------->
+                                uncorrectable_error ----------------------->

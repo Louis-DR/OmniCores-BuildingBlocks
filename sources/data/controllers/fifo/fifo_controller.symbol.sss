@@ -1,14 +1,14 @@
 FIFO Controller
 fifo_controller
--> clock
--> resetn
-<- full                 empty ->
--> write_enable   read_enable <-
-=> write_data       read_data =>
-                 memory_clock ->
-          memory_write_enable ->
-         memory_write_address =>
-            memory_write_data =>
-           memory_read_enable ->
-          memory_read_address =>
-             memory_read_data <=
+-----------> clock
+-----------> resetn
+-----------> write_enable   read_enable <-----------------
+==[WIDTH]==> write_data       read_data =====[WIDTH]=====>
+<----------- full                 empty ----------------->
+                           memory_clock ----------------->
+                    memory_write_enable ----------------->
+                   memory_write_address ==[log₂(DEPTH)]==>
+                      memory_write_data =====[WIDTH]=====>
+                     memory_read_enable ----------------->
+                    memory_read_address ==[log₂(DEPTH)]==>
+                       memory_read_data <=====[WIDTH]=====

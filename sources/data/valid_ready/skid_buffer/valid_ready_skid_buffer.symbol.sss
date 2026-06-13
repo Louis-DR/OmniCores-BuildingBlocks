@@ -1,8 +1,8 @@
 Valid-Ready Skid Buffer
 valid_ready_skid_buffer
--> clock
--> resetn
--> write_valid   read_valid ->
-<- write_ready   read_ready <-
-=> write_data     read_data =>
-<- full               empty ->
+-----------> clock
+-----------> resetn
+-----------> write_valid   read_valid ----------->
+<----------- write_ready   read_ready <-----------
+==[WIDTH]==> write_data     read_data ==[WIDTH]==>
+<----------- full               empty ----------->

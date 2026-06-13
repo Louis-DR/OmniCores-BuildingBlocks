@@ -1,15 +1,15 @@
 Advanced FIFO
 advanced_fifo
--> clock
--> resetn
--> flush
--> write_enable                        read_enable <-
-=> write_data                            read_data =>
-<- write_miss                           read_error ->
-<- full                                      empty ->
-<- almost_full                        almost_empty ->
-<- half_full                            half_empty ->
-<- not_full                              not_empty ->
-<= space                                     level =>
-=> lower_threshold_level     upper_threshold_level <=
-<- lower_threshold_status   upper_threshold_status ->
+-------------------> clock
+-------------------> resetn
+-------------------> flush
+-------------------> write_enable                        read_enable <-------------------
+======[WIDTH]======> write_data                            read_data ======[WIDTH]======>
+<------------------- write_miss                           read_error ------------------->
+<------------------- full                                      empty ------------------->
+<------------------- almost_full                        almost_empty ------------------->
+<------------------- half_full                            half_empty ------------------->
+<------------------- not_full                              not_empty ------------------->
+<==[log₂(DEPTH)+1]== space                                     level ==[log₂(DEPTH)+1]==>
+==[log₂(DEPTH)+1]==> lower_threshold_level     upper_threshold_level <==[log₂(DEPTH)+1]==
+<------------------- lower_threshold_status   upper_threshold_status ------------------->

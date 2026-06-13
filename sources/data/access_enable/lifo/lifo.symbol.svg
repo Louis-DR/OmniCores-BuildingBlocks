@@ -1,33 +1,35 @@
-<svg width="262" height="180" viewBox="0 0 131 90" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="81" height="80" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="65" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">LIFO</text>
-  <text x="65" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">lifo</text>
-      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
-        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
-        <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_enable</text>
-        <line x1="19" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 25 55 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="104" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_enable</text>
-        <line x1="112" y1="55" x2="126" y2="55" stroke="black" stroke-width="1"/>
-        <path d="M 106 55 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_data</text>
-        <line x1="19" y1="65" x2="5" y2="65" stroke="black" stroke-width="1"/>
-        <path d="M 25 65 l -6 +2.0 v -4 z" fill="black"/>
+<svg width="294" height="180" viewBox="0 0 147 90" xmlns="http://www.w3.org/2000/svg">
+  <rect x="33" y="5" width="81" height="80" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="73" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">LIFO</text>
+  <text x="73" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">lifo</text>
+      <text x="35" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock</text>
+        <line x1="27" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 33 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="35" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">resetn</text>
+        <line x1="27" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 33 45 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="35" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_enable</text>
+        <line x1="27" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 33 55 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="112" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_enable</text>
+        <line x1="120" y1="55" x2="142" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 114 55 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="35" y="65" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">write_data</text>
+        <line x1="27" y1="65" x2="5" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 33 65 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="63" x2="12" y2="67" stroke="black" stroke-width="1"/>
-      <text x="104" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_data</text>
-        <line x1="106" y1="65" x2="120" y2="65" stroke="black" stroke-width="1"/>
-        <path d="M 126 65 l -6 +2.0 v -4 z" fill="black"/>
-          <line x1="109" y1="63" x2="113" y2="67" stroke="black" stroke-width="1"/>
-      <text x="27" y="75" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">full</text>
-        <line x1="25" y1="75" x2="11" y2="75" stroke="black" stroke-width="1"/>
+          <text x="19" y="62" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">WIDTH</text>
+      <text x="112" y="65" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">read_data</text>
+        <line x1="114" y1="65" x2="136" y2="65" stroke="black" stroke-width="1"/>
+        <path d="M 142 65 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="117" y1="63" x2="121" y2="67" stroke="black" stroke-width="1"/>
+          <text x="128" y="62" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">WIDTH</text>
+      <text x="35" y="75" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">full</text>
+        <line x1="33" y1="75" x2="11" y2="75" stroke="black" stroke-width="1"/>
         <path d="M 5 75 l +6 +2.0 v -4 z" fill="black"/>
-      <text x="104" y="75" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">empty</text>
-        <line x1="106" y1="75" x2="120" y2="75" stroke="black" stroke-width="1"/>
-        <path d="M 126 75 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="112" y="75" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">empty</text>
+        <line x1="114" y1="75" x2="136" y2="75" stroke="black" stroke-width="1"/>
+        <path d="M 142 75 l -6 +2.0 v -4 z" fill="black"/>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {

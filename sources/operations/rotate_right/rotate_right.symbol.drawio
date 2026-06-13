@@ -11,7 +11,7 @@
                   fold       = "1"
                   page       = "1"
                   pageScale  = "1"
-                  pageWidth  = "90"
+                  pageWidth  = "120"
                   pageHeight = "40"
                   math       = "0"
                   shadow     = "0">
@@ -23,8 +23,8 @@
                 value       = ""
                 vertex      = "1"
                 connectable = "0"
-                style       = "group;connectable=1;points=[[0,0,0,15,0],[0,0,0,25,0],[0,0,0,15,10],[1,0,0,-15,0],[1,0,0,-25,0],[1,0,0,-15,10],[0,0,0,0,30],[1,0,0,0,30],[0.5,0,0,0,0],[0.5,0,0,0,40]];">
-          <mxGeometry width  = "90"
+                style       = "group;connectable=1;points=[[0,0,0,30,0],[0,0,0,40,0],[0,0,0,30,10],[1,0,0,-30,0],[1,0,0,-40,0],[1,0,0,-30,10],[0,0,0,0,30],[1,0,0,0,30],[0.5,0,0,0,0],[0.5,0,0,0,40]];">
+          <mxGeometry width  = "120"
                       height = "40"
                       as     = "geometry"/>
         </mxCell>
@@ -33,7 +33,7 @@
                 value  = ""
                 vertex = "1"
                 style  = "rounded=1;arcSize=5;fillColor=none;strokeWidth=1;strokeColor=black;whiteSpace=wrap;html=1;connectable=0;">
-          <mxGeometry x="15"
+          <mxGeometry x="30"
                       y="0"
                       width="60"
                       height="40"
@@ -44,7 +44,7 @@
                 value  = "Rotate Right"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontStyle=1;fontColor=black;connectable=0;">
-          <mxGeometry x      = "15"
+          <mxGeometry x      = "30"
                       y      = "7"
                       width  = "60"
                       height = "0"
@@ -55,7 +55,7 @@
                 value  = "rotate_right"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
-          <mxGeometry x      = "15"
+          <mxGeometry x      = "30"
                       y      = "16"
                       width  = "60"
                       height = "0"
@@ -67,7 +67,7 @@
                     vertex = "1"
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
-                x      = "15"
+                x      = "30"
                 y      = "30"
                 width  = "60"
                 height = "0"
@@ -85,10 +85,21 @@
                 <mxPoint x  = "0"
                          y  = "30"
                          as = "sourcePoint"/>
-                <mxPoint x  = "15"
+                <mxPoint x  = "30"
                          y  = "30"
                          as = "targetPoint"/>
               </mxGeometry>
+            </mxCell>
+            <mxCell id     = "data_in-width"
+                    parent = "2"
+                    value  = "WIDTH"
+                    vertex = "1"
+                    style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=4;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry x      = "15"
+                          y      = "27"
+                          width  = "0"
+                          height = "0"
+                          as     = "geometry"/>
             </mxCell>
             <mxCell id="data_out-label"
                     parent="2"
@@ -96,7 +107,7 @@
                     vertex="1"
                     style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
-                x      = "15"
+                x      = "30"
                 y      = "30"
                 width  = "60"
                 height = "0"
@@ -111,13 +122,24 @@
                           height   = "50"
                           relative = "1"
                           as       = "geometry">
-                <mxPoint x  = "90"
+                <mxPoint x  = "120"
                          y  = "30"
                          as = "sourcePoint"/>
-                <mxPoint x  = "75"
+                <mxPoint x  = "90"
                          y  = "30"
                          as = "targetPoint"/>
               </mxGeometry>
+            </mxCell>
+            <mxCell id     = "data_out-width"
+                    parent = "2"
+                    value  = "WIDTH"
+                    vertex = "1"
+                    style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=4;fontStyle=0;fontColor=black;connectable=0;">
+              <mxGeometry x      = "105"
+                          y      = "27"
+                          width  = "0"
+                          height = "0"
+                          as     = "geometry"/>
             </mxCell>
       </root>
     </mxGraphModel>

@@ -1,17 +1,18 @@
-<svg width="358" height="120" viewBox="0 0 179 60" xmlns="http://www.w3.org/2000/svg">
-  <rect x="25" y="5" width="129" height="50" fill="none" stroke="black" stroke-width="1" rx="5"/>
-  <text x="89" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Programmable Clock Multiplier</text>
-  <text x="89" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">programmable_clock_multiplier</text>
-      <text x="27" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock_in</text>
-        <line x1="19" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 25 35 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="152" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock_out</text>
-        <line x1="154" y1="35" x2="168" y2="35" stroke="black" stroke-width="1"/>
-        <path d="M 174 35 l -6 +2.0 v -4 z" fill="black"/>
-      <text x="27" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">multiplication</text>
-        <line x1="19" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
-        <path d="M 25 45 l -6 +2.0 v -4 z" fill="black"/>
+<svg width="450" height="120" viewBox="0 0 225 60" xmlns="http://www.w3.org/2000/svg">
+  <rect x="71" y="5" width="129" height="50" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="135" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Programmable Clock Multiplier</text>
+  <text x="135" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">programmable_clock_multiplier</text>
+      <text x="73" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock_in</text>
+        <line x1="65" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 71 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="198" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">clock_out</text>
+        <line x1="200" y1="35" x2="214" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 220 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="73" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">multiplication</text>
+        <line x1="65" y1="45" x2="5" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 71 45 l -6 +2.0 v -4 z" fill="black"/>
           <line x1="8" y1="43" x2="12" y2="47" stroke="black" stroke-width="1"/>
+          <text x="38" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">MULTIPLICATION_WIDTH</text>
     <style>
       @media (prefers-color-scheme: dark) {
         :root {
