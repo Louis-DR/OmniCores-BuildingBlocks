@@ -1,0 +1,18 @@
+[dumpfile] "array_onehot_select.testbench.vcd"
+[savefile] "array_onehot_select.testbench.gtkw"
+[timestart] 0
+[size] 1728 1051
+[pos] -1 -1
+*-8.449950 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 200
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@22
+array_onehot_select__testbench.array[31:0]
+@28
+array_onehot_select__testbench.onehot_select[3:0]
+@22
+array_onehot_select__testbench.element[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
