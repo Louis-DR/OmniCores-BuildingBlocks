@@ -1,0 +1,38 @@
+<svg width="572" height="140" viewBox="0 0 286 70" xmlns="http://www.w3.org/2000/svg">
+  <rect x="103" y="5" width="126" height="60" fill="none" stroke="black" stroke-width="1" rx="5"/>
+  <text x="166" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="8" font-weight="bold" fill="black">Static Priority Stream Arbiter</text>
+  <text x="166" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">static_priority_stream_arbiter</text>
+      <text x="105" y="35" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">upstream_valids</text>
+        <line x1="97" y1="35" x2="5" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 103 35 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="33" x2="12" y2="37" stroke="black" stroke-width="1"/>
+          <text x="54" y="32" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">NUMBER_STREAMS</text>
+      <text x="227" y="35" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">downstream_valid</text>
+        <line x1="229" y1="35" x2="275" y2="35" stroke="black" stroke-width="1"/>
+        <path d="M 281 35 l -6 +2.0 v -4 z" fill="black"/>
+      <text x="105" y="45" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">upstream_readys</text>
+        <line x1="103" y1="45" x2="11" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 5 45 l +6 +2.0 v -4 z" fill="black"/>
+          <line x1="96" y1="43" x2="100" y2="47" stroke="black" stroke-width="1"/>
+          <text x="54" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">NUMBER_STREAMS</text>
+      <text x="227" y="45" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">downstream_ready</text>
+        <line x1="235" y1="45" x2="281" y2="45" stroke="black" stroke-width="1"/>
+        <path d="M 229 45 l +6 +2.0 v -4 z" fill="black"/>
+      <text x="105" y="55" text-anchor="start" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">upstream_payloads</text>
+        <line x1="97" y1="55" x2="5" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 103 55 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="8" y1="53" x2="12" y2="57" stroke="black" stroke-width="1"/>
+          <text x="54" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">NUMBER_STREAMS×PAYLOAD_WIDTH</text>
+      <text x="227" y="55" text-anchor="end" dominant-baseline="middle" font-family="Helvetica" font-size="6" font-weight="regular" fill="black">downstream_payload</text>
+        <line x1="229" y1="55" x2="275" y2="55" stroke="black" stroke-width="1"/>
+        <path d="M 281 55 l -6 +2.0 v -4 z" fill="black"/>
+          <line x1="232" y1="53" x2="236" y2="57" stroke="black" stroke-width="1"/>
+          <text x="255" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica" font-size="4" font-weight="regular" fill="black">PAYLOAD_WIDTH</text>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          filter: invert(100%) hue-rotate(180deg);
+        }
+      }
+    </style>
+</svg>
