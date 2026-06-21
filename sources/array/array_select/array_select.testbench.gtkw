@@ -1,5 +1,5 @@
-[dumpfile] "array_onehot_select.testbench.vcd"
-[savefile] "array_onehot_select.testbench.gtkw"
+[dumpfile] "array_select.testbench.vcd"
+[savefile] "array_select.testbench.gtkw"
 [timestart] 0
 [size] 1728 1051
 [pos] -1 -1
@@ -9,10 +9,10 @@
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @22
-array_onehot_select__testbench.array[31:0]
+array_select__testbench.array[31:0]
 @28
-array_onehot_select__testbench.onehot_select[3:0]
+array_select__testbench.select[3:0]
 @22
-array_onehot_select__testbench.element[7:0]
+array_select__testbench.element[7:0]
 [pattern_trace] 1
 [pattern_trace] 0

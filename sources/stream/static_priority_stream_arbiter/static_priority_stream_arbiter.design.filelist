@@ -4,4 +4,4 @@ static_priority_stream_arbiter.v
 ../../operations/small_first_one/small_first_one.v
 ../../operations/fast_first_one/fast_first_one.v
 ../../operations/shift_left/shift_left.v
-../../array/array_onehot_select/array_onehot_select.v
+../../array/array_select/array_select.v

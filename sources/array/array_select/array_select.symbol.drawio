@@ -1,5 +1,5 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.1.1 Chrome/132.0.6834.210 Electron/34.3.3 Safari/537.36" version="26.1.1">
-  <diagram name="Array One-Hot Select" id="Array-One-Hot-Select">
+  <diagram name="Array Select" id="Array-Select">
     <mxGraphModel dx         = "0"
                   dy         = "0"
                   grid       = "1"
@@ -11,7 +11,7 @@
                   fold       = "1"
                   page       = "1"
                   pageScale  = "1"
-                  pageWidth  = "240"
+                  pageWidth  = "210"
                   pageHeight = "50"
                   math       = "0"
                   shadow     = "0">
@@ -24,7 +24,7 @@
                 vertex      = "1"
                 connectable = "0"
                 style       = "group;connectable=1;points=[[0,0,0,90,0],[0,0,0,100,0],[0,0,0,90,10],[1,0,0,-90,0],[1,0,0,-100,0],[1,0,0,-90,10],[0,0,0,0,30],[1,0,0,0,30],[0,0,0,0,40],[0.5,0,0,0,0],[0.5,0,0,0,50]];">
-          <mxGeometry width  = "240"
+          <mxGeometry width  = "210"
                       height = "50"
                       as     = "geometry"/>
         </mxCell>
@@ -35,29 +35,29 @@
                 style  = "rounded=1;arcSize=5;fillColor=none;strokeWidth=1;strokeColor=black;whiteSpace=wrap;html=1;connectable=0;">
           <mxGeometry x="90"
                       y="0"
-                      width="90"
+                      width="60"
                       height="50"
                       as="geometry"/>
         </mxCell>
         <mxCell id     = "title"
                 parent = "2"
-                value  = "Array One-Hot Select"
+                value  = "Array Select"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontStyle=1;fontColor=black;connectable=0;">
           <mxGeometry x      = "90"
                       y      = "7"
-                      width  = "90"
+                      width  = "60"
                       height = "0"
                       as     = "geometry"/>
         </mxCell>
         <mxCell id     = "subtitle"
                 parent = "2"
-                value  = "array_onehot_select"
+                value  = "array_select"
                 vertex = "1"
                 style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
           <mxGeometry x      = "90"
                       y      = "16"
-                      width  = "90"
+                      width  = "60"
                       height = "0"
                       as     = "geometry"/>
         </mxCell>
@@ -69,7 +69,7 @@
               <mxGeometry
                 x      = "90"
                 y      = "30"
-                width  = "90"
+                width  = "60"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -109,7 +109,7 @@
               <mxGeometry
                 x      = "90"
                 y      = "30"
-                width  = "90"
+                width  = "60"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
@@ -122,10 +122,10 @@
                           height   = "50"
                           relative = "1"
                           as       = "geometry">
-                <mxPoint x  = "240"
+                <mxPoint x  = "210"
                          y  = "30"
                          as = "sourcePoint"/>
-                <mxPoint x  = "180"
+                <mxPoint x  = "150"
                          y  = "30"
                          as = "targetPoint"/>
               </mxGeometry>
@@ -135,25 +135,25 @@
                     value  = "ELEMENT_WIDTH"
                     vertex = "1"
                     style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=4;fontStyle=0;fontColor=black;connectable=0;">
-              <mxGeometry x      = "210"
+              <mxGeometry x      = "180"
                           y      = "27"
                           width  = "0"
                           height = "0"
                           as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "onehot_select-label"
+            <mxCell id     = "select-label"
                     parent = "2"
-                    value  = "onehot_select"
+                    value  = "select"
                     vertex = "1"
                     style  = "text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=6;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry
                 x      = "90"
                 y      = "40"
-                width  = "90"
+                width  = "60"
                 height = "0"
                 as     = "geometry"/>
             </mxCell>
-            <mxCell id     = "onehot_select-arrow"
+            <mxCell id     = "select-arrow"
                     parent = "2"
                     value  = ""
                     edge   = "1"
@@ -170,9 +170,9 @@
                          as = "targetPoint"/>
               </mxGeometry>
             </mxCell>
-            <mxCell id     = "onehot_select-width"
+            <mxCell id     = "select-width"
                     parent = "2"
-                    value  = "ARRAY_SIZE"
+                    value  = "SELECT_WIDTH"
                     vertex = "1"
                     style  = "text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=4;fontStyle=0;fontColor=black;connectable=0;">
               <mxGeometry x      = "45"

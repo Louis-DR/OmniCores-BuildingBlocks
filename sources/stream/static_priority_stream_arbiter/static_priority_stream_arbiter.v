@@ -37,13 +37,14 @@ static_priority_arbiter #(
 assign downstream_valid = |upstream_valids;
 assign upstream_readys  = downstream_ready ? upstream_grant : '0;
 
-array_onehot_select #(
+array_select #(
   .ELEMENT_WIDTH ( PAYLOAD_WIDTH  ),
-  .ARRAY_SIZE    ( NUMBER_STREAMS )
+  .ARRAY_SIZE    ( NUMBER_STREAMS ),
+  .SELECT_ONEHOT ( 1              )
 ) payload_selector (
-  .array         ( upstream_payloads  ),
-  .onehot_select ( upstream_grant     ),
-  .element       ( downstream_payload )
+  .array   ( upstream_payloads  ),
+  .select  ( upstream_grant     ),
+  .element ( downstream_payload )
 );
 
 endmodule
