@@ -9,11 +9,11 @@
 [sst_expanded] 1
 [sst_vpaned_height] 300
 @28
-static_clock_divider__testbench.clock_in
-static_clock_divider__testbench.resetn
+programmable_clock_divider__testbench.clock_in
+programmable_clock_divider__testbench.resetn
 @24
-static_clock_divider__testbench.division[3:0]
+programmable_clock_divider__testbench.division[3:0]
 @28
-static_clock_divider__testbench.clock_out
+programmable_clock_divider__testbench.clock_out
 [pattern_trace] 1
 [pattern_trace] 0
