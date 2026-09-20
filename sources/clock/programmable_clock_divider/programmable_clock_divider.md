@@ -12,7 +12,7 @@
 
 ![programmable_clock_divider](programmable_clock_divider.symbol.svg)
 
-Divides the frequency of the input clock `clock_in` by a programmable factor provided by the `division` input. The output clock `clock_out` is guaranteed to be glitch-free, even when the division factor is changed dynamically (but it must stay synchronous to the input clock). The module has two variants selected by the `POWER_OF_TWO` parameter: decimal division (division by `division + 1`) and power-of-two division (division by `2^division`). When `division = 0`, `clock_in` is directly passed through to `clock_out` via an internal glitchless clock multiplexer, this is the passthrough mode.
+Divides the frequency of the input clock `clock_in` by a programmable factor provided by the `division` input. The output clock `clock_out` is guaranteed to be glitch-free, even when the division factor is changed dynamically (but it must stay synchronous to the input clock). The module has two variants selected by the `POWER_OF_TWO` parameter: decimal division (division by `division + 1`) and power-of-two division (division by `2^division`). When `division = 0`, `clock_in` is directly passed through to `clock_out` via an internal glitch-less clock multiplexer, this is the passthrough mode.
 
 ![programmable_clock_divider](programmable_clock_divider.wavedrom.svg)
 
@@ -34,7 +34,7 @@ Divides the frequency of the input clock `clock_in` by a programmable factor pro
 
 ## Operation
 
-The `division` factor is registered internally to ensure glitch-free operation. The new division factor from the input is sampled at the end of a full output clock cycle, allowing the division rate to be changed dynamically without corrupting the output clock. For `division = 0`, the module operates in passthrough mode, forwarding `clock_in` to `clock_out`.
+When the division factor changes, the current half-cycle finishes with the previous period duration. For `division = 0`, the module operates in passthrough mode, forwarding `clock_in` to `clock_out`. The `passthrough_mode` factor is registered internally to ensure glitch-free operation and avoid stopping the output clock when switching to the bypass since the internal divided clock is stopped and the multiplexer is not free-running.
 
 The module's behavior is determined by the `POWER_OF_TWO` parameter:
 
@@ -85,7 +85,7 @@ set minimum_division_factor 1
 
 The procedure fetches all the clocks defined on the input clock pin, and creates a generated clock on the output clock pin for each of them. Since the division factor is programmable, the generated clock are defined with a `divide_by` and the minimum division factor required. By default, this minimum is a division by 1 (`division = 0`), meaning that the clock is passed through at the same frequency. Another minimum division factor can be provided as an argument of the procedure.
 
-The procedure also calls the contraints of the clock multiplexer for the instanced used for the pass-through mode.
+The procedure also calls the constraints of the clock multiplexer for the instanced used for the pass-through mode.
 
 To call the procedure automatically on all instances of the clock divider, use the common procedure `::omnicores::common::apply_constraints_to_all_module_instances` with the module name `programmable_clock_divider` and the constraints procedure `::omnicores::buildingblocks::timing::programmable_clock_divider::apply_constraints_to_instance`. It will search the design for all instances of the module and call the constraints procedure on each.
 
